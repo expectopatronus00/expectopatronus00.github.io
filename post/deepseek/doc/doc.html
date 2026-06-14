@@ -1,0 +1,2775 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>院校教程DeepSeek文档资源 - DeepSeek专题</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto Mono', monospace, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0e17 0%, #101520 100%);
+            color: #f8f9fa;
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(10, 14, 23, 0.8);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #00f3ff, #6a00ff);
+            border-radius: 4px;
+        }
+
+        ::selection {
+            background: rgba(0, 243, 255, 0.3);
+            color: #fff;
+        }
+
+        /* 容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 头部 */
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            padding: 1rem;
+            border-radius: 15px;
+            background: rgba(0, 10, 30, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            background: linear-gradient(45deg, #00f3ff, #6a00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(106, 0, 255, 0.5);
+            letter-spacing: 0.1em;
+            transition: all 0.3s ease;
+            margin-bottom: 0.5rem;
+        }
+
+        .header h1:hover {
+            transform: scale(1.05);
+            letter-spacing: 0.12em;
+            text-shadow: 0 0 30px rgba(106, 0, 255, 0.8);
+        }
+
+        /* 面包屑导航 */
+        .breadcrumb {
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            font-size: 1rem;
+            padding: 0.8rem 1.2rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+            border-left: 3px solid #00f3ff;
+        }
+
+        .breadcrumb a {
+            color: #00f3ff;
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+            padding: 0 5px;
+        }
+
+        .breadcrumb a:hover {
+            color: #6a00ff;
+        }
+
+        .breadcrumb a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: #6a00ff;
+            transition: width 0.3s ease;
+        }
+
+        .breadcrumb a:hover::after {
+            width: 100%;
+        }
+
+        .breadcrumb span {
+            margin: 0 10px;
+            color: #666;
+        }
+
+        /* 快速导航 */
+        .quick-nav {
+            background: rgba(0, 243, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1.5rem 0 2.5rem;
+            border: 2px solid rgba(106, 0, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(8px);
+            transform: translateZ(0);
+            transition: all 0.3s ease;
+        }
+
+        .quick-nav:hover {
+            border-color: rgba(0, 243, 255, 0.5);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3), 0 0 15px rgba(0, 243, 255, 0.2);
+        }
+
+        .quick-nav h3 {
+            color: #00f3ff;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-size: 1.4rem;
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .quick-nav h3::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00f3ff, transparent);
+        }
+        
+        .doc-total {
+            font-size: 0.9rem;
+            font-weight: normal;
+            color: rgba(255, 255, 255, 0.8);
+            background: rgba(106, 0, 255, 0.2);
+            padding: 0.2rem 0.6rem;
+            border-radius: 15px;
+            margin-left: 10px;
+            display: inline-block;
+            vertical-align: middle;
+            border: 1px solid rgba(106, 0, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .quick-nav:hover .doc-total {
+            background: rgba(106, 0, 255, 0.3);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .uni-nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem;
+        }
+
+        .uni-nav a {
+            background: rgba(0, 243, 255, 0.1);
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .uni-nav a::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(0, 243, 255, 0.1), rgba(106, 0, 255, 0.2));
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+
+        .uni-nav a:hover::before {
+            width: 100%;
+        }
+
+        .uni-nav a i {
+            margin-right: 5px;
+            font-size: 0.9em;
+        }
+
+        .uni-nav a:hover {
+            background: rgba(0, 243, 255, 0.2);
+            transform: translateY(-3px);
+            color: #fff;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+            border-color: rgba(0, 243, 255, 0.8);
+        }
+
+        /* 文档计数样式 */
+        .doc-count {
+            display: inline-block;
+            background: rgba(0, 243, 255, 0.2);
+            padding: 0.15rem 0.4rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-left: 5px;
+            border: 1px solid rgba(0, 243, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .uni-nav a:hover .doc-count {
+            background: rgba(0, 243, 255, 0.4);
+            transform: scale(1.05);
+            border-color: rgba(0, 243, 255, 0.8);
+            box-shadow: 0 0 8px rgba(0, 243, 255, 0.3);
+        }
+
+        /* 搜索和筛选区域 */
+        .search-filter-container {
+            margin-bottom: 3rem;
+        }
+
+        /* 搜索框 */
+        .search-container {
+            margin: 2.5rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .search-container::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(0, 243, 255, 0.5), transparent);
+        }
+
+        .search-container::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(106, 0, 255, 0.5), transparent);
+        }
+
+        .search-title {
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
+        }
+
+        .search-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0;
+            max-width: 650px;
+            margin: 0 auto;
+            position: relative;
+            background: rgba(13, 17, 23, 0.6);
+            border-radius: 30px;
+            padding: 0.5rem;
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus-within {
+            border-color: rgba(0, 243, 255, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 15px rgba(0, 243, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            color: rgba(255, 255, 255, 0.5);
+            pointer-events: none;
+            transition: all 0.3s;
+        }
+
+        .search-box:focus-within .search-icon {
+            color: #00f3ff;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.8rem 1.5rem 0.8rem 3rem;
+            border: none;
+            border-radius: 25px;
+            background: transparent;
+            color: #fff;
+            font-size: 1rem;
+            font-family: inherit;
+            width: 100%;
+            transition: all 0.3s;
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+        }
+
+        .search-input:focus::placeholder {
+            color: rgba(0, 243, 255, 0.5);
+            transform: translateX(5px);
+        }
+
+        .search-btn {
+            background: linear-gradient(45deg, #00f3ff, #6a00ff);
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .search-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(45deg, #6a00ff, #00f3ff);
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+
+        .search-btn:hover::before {
+            width: 100%;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .search-btn:active {
+            transform: translateY(0);
+        }
+
+        .search-btn i {
+            font-size: 1rem;
+        }
+
+        /* 过滤选项 */
+        .filter-options {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-btn {
+            background: transparent;
+            color: #fff;
+            border: 2px solid #00f3ff;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: rgba(0, 243, 255, 0.2);
+            color: #00f3ff;
+        }
+
+        /* 视图切换 */
+        .view-toggle {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .view-toggle button {
+            background: transparent;
+            border: none;
+            color: #ccc;
+            cursor: pointer;
+            padding: 0.3rem 0.8rem;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .view-toggle button:hover, .view-toggle button.active {
+            color: #00f3ff;
+        }
+
+        /* 院校分类 */
+        .university-section {
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.6s ease-out;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .university-title {
+            font-size: 2rem;
+            color: #fff;
+            margin-bottom: 1.5rem;
+            padding-bottom: 10px;
+            border-bottom: 3px solid;
+            border-image: linear-gradient(90deg, #00f3ff, #6a00ff) 1;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+
+        .university-title i {
+            color: #00f3ff;
+            margin-right: 10px;
+            transform: translateY(0);
+            display: inline-block;
+            transition: transform 0.3s;
+        }
+
+        .university-section:hover .university-title i {
+            transform: translateY(-5px);
+        }
+
+        /* 分类过滤按钮 */
+        .category-filter {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            background: rgba(106, 0, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(106, 0, 255, 0.5);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+
+        .category-btn:hover, .category-btn.active {
+            background: rgba(106, 0, 255, 0.3);
+        }
+
+        /* 文档卡片网格 */
+        .docs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .docs-grid.list-view {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .docs-grid.list-view .doc-card {
+            flex-direction: row;
+            align-items: center;
+            text-align: left;
+            padding: 1.5rem;
+            position: relative;
+            gap: 1.5rem;
+        }
+
+        .docs-grid.list-view .doc-icon {
+            font-size: 2rem;
+            margin: 0;
+            min-width: 2rem;
+        }
+
+        .docs-grid.list-view .doc-info {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .docs-grid.list-view .doc-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .docs-grid.list-view .doc-desc {
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+            max-width: 600px;
+        }
+
+        .docs-grid.list-view .button-container {
+            flex-direction: row;
+            margin-left: auto;
+            min-width: 220px;
+            justify-content: flex-end;
+            gap: 0.8rem;
+        }
+        
+        .docs-grid.list-view .meta-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.3rem;
+        }
+        
+        .docs-grid.list-view .doc-date,
+        .docs-grid.list-view .doc-type,
+        .docs-grid.list-view .doc-new,
+        .docs-grid.list-view .doc-views {
+            position: static;
+            margin: 0;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        /* 点击量样式 */
+        .doc-views {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            background: rgba(0, 112, 255, 0.2);
+            color: #0070ff;
+            padding: 0.2rem 0.6rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            display: none;
+        }
+        
+        .docs-grid.list-view .doc-views {
+            display: inline-flex;
+        }
+        
+        .doc-views i {
+            margin-right: 5px;
+            font-size: 0.7rem;
+        }
+
+        /* 文档卡片 */
+        .doc-card {
+            background: rgba(13, 17, 23, 0.6);
+            border-radius: 12px;
+            padding: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+
+        .doc-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 243, 255, 0.05) 0%, rgba(106, 0, 255, 0.05) 100%);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .doc-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(0, 243, 255, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 0 15px rgba(0, 243, 255, 0.1);
+        }
+
+        .doc-card:hover::before {
+            opacity: 1;
+        }
+
+        .doc-card .doc-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 0.5rem 0;
+            color: #fff;
+            transition: color 0.3s;
+        }
+
+        .doc-card:hover .doc-title {
+            color: #00f3ff;
+        }
+
+        .doc-card .doc-desc {
+            color: #aaa;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .doc-card .button-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: auto;
+            min-width: 220px;
+        }
+
+        .view-btn, .download-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+        }
+
+        .view-btn {
+            background: rgba(0, 243, 255, 0.1);
+            color: #00f3ff;
+            border: 1px solid rgba(0, 243, 255, 0.3);
+        }
+
+        .download-btn {
+            background: rgba(106, 0, 255, 0.1);
+            color: #bf95ff;
+            border: 1px solid rgba(106, 0, 255, 0.3);
+        }
+
+        .view-btn:hover, .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .view-btn:hover {
+            background: rgba(0, 243, 255, 0.2);
+            border-color: rgba(0, 243, 255, 0.6);
+        }
+
+        .download-btn:hover {
+            background: rgba(106, 0, 255, 0.2);
+            border-color: rgba(106, 0, 255, 0.6);
+        }
+
+        .view-btn i, .download-btn i {
+            margin-right: 5px;
+        }
+
+        .doc-date, .doc-type, .doc-new {
+            display: inline;
+            font-size: 0.75rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            margin-left: 10px;
+            font-weight: 500;
+            position: static;
+        }
+
+        .doc-date {
+            color: #00f3ff;
+            background: rgba(0, 243, 255, 0.1);
+            border: 1px solid rgba(0, 243, 255, 0.3);
+        }
+
+        .doc-type {
+            color: #bf95ff;
+            background: rgba(106, 0, 255, 0.1);
+            border: 1px solid rgba(106, 0, 255, 0.3);
+        }
+
+        .doc-new {
+            color: #ff6b6b;
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(255, 107, 107, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 107, 107, 0);
+            }
+        }
+
+        /* 按钮容器 */
+        .button-container {
+            display: flex;
+            justify-content: space-around; 
+            margin-top: 1rem;
+            gap: 0.5rem; 
+        }
+
+        /* 查看按钮 */
+        .view-btn {
+            display: inline-block;
+            padding: 0.5rem 1rem; 
+            background: rgba(0, 243, 255, 0.1); 
+            color: #00f3ff;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: 2px solid #00f3ff;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 243, 255, 0.2);
+            font-size: 0.9rem; 
+        }
+
+        .view-btn:hover {
+            background: #00f3ff;
+            color: #0a0e17;
+            box-shadow: 0 4px 15px rgba(0, 243, 255, 0.5);
+        }
+
+        .view-btn i {
+            margin-right: 5px; 
+            font-size: 0.8rem; 
+        }
+
+        /* 下载按钮 */
+        .download-btn {
+            display: inline-block;
+            padding: 0.5rem 1rem; 
+            background: linear-gradient(45deg, #00f3ff, #6a00ff);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 243, 255, 0.3);
+            font-size: 0.9rem; 
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 243, 255, 0.5);
+        }
+
+        .download-btn i {
+            margin-right: 5px;
+            font-size: 0.8rem;
+        }
+
+        /* 标签云 */
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem;
+            margin: 1.5rem 0 2.5rem;
+            background: rgba(0, 10, 20, 0.3);
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(8px);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 243, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .tag-cloud::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 243, 255, 0.05) 0%, rgba(106, 0, 255, 0.05) 100%);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .tag-cloud:hover::before {
+            opacity: 1;
+        }
+
+        .tag-cloud:hover {
+            border-color: rgba(0, 243, 255, 0.3);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3), 0 0 15px rgba(0, 243, 255, 0.1);
+        }
+
+        .tag-cloud-title {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #00f3ff;
+            font-size: 1.2rem;
+            position: relative;
+        }
+
+        .tag-cloud-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00f3ff, transparent);
+        }
+
+        .tag {
+            background: rgba(106, 0, 255, 0.1);
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid rgba(106, 0, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            display: inline-flex;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .tag::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(0, 243, 255, 0.1), rgba(106, 0, 255, 0.2));
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+
+        .tag:hover::before {
+            width: 100%;
+        }
+
+        .tag:hover {
+            background: rgba(106, 0, 255, 0.2);
+            transform: translateY(-3px);
+            color: #fff;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+            border-color: rgba(106, 0, 255, 0.5);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tag.active {
+            background: linear-gradient(135deg, #00f3ff 0%, #6a00ff 100%);
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 0 15px rgba(106, 0, 255, 0.5);
+            transform: translateY(-3px);
+        }
+        
+        /* 不同类型的标签使用不同的颜色 */
+        .tag[data-category="lecture"] {
+            background: rgba(255, 69, 58, 0.1);
+            border-color: rgba(255, 69, 58, 0.3);
+        }
+        
+        .tag[data-category="lecture"]:hover,
+        .tag[data-category="lecture"].active {
+            background: linear-gradient(135deg, #ff454a 0%, #ff8f70 100%);
+            border-color: transparent;
+            box-shadow: 0 0 15px rgba(255, 69, 58, 0.5);
+        }
+        
+        .tag[data-category="research"] {
+            background: rgba(106, 0, 255, 0.1);
+            border-color: rgba(106, 0, 255, 0.3);
+        }
+        
+        .tag[data-category="research"]:hover,
+        .tag[data-category="research"].active {
+            background: linear-gradient(135deg, #6a00ff 0%, #9b6bff 100%);
+            border-color: transparent;
+            box-shadow: 0 0 15px rgba(106, 0, 255, 0.5);
+        }
+        
+        .tag[data-category="application"] {
+            background: rgba(255, 169, 0, 0.1);
+            border-color: rgba(255, 169, 0, 0.3);
+        }
+        
+        .tag[data-category="application"]:hover,
+        .tag[data-category="application"].active {
+            background: linear-gradient(135deg, #ffa900 0%, #ffcc00 100%);
+            border-color: transparent;
+            box-shadow: 0 0 15px rgba(255, 169, 0, 0.5);
+        }
+        
+        .tag[data-category="tutorial"] {
+            background: rgba(0, 112, 255, 0.1);
+            border-color: rgba(0, 112, 255, 0.3);
+        }
+        
+        .tag[data-category="tutorial"]:hover,
+        .tag[data-category="tutorial"].active {
+            background: linear-gradient(135deg, #0070ff 0%, #00a2ff 100%);
+            border-color: transparent;
+            box-shadow: 0 0 15px rgba(0, 112, 255, 0.5);
+        }
+
+        /* 热门文档 */
+        .hot-docs {
+            margin-bottom: 3rem;
+            background: rgba(255, 69, 58, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 2px solid rgba(255, 69, 58, 0.3);
+        }
+
+        .hot-docs h3 {
+            color: #ff454a;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        .hot-docs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+        
+        /* 热门推荐文档中的按钮文字大小 */
+        .hot-docs .view-btn,
+        .hot-docs .download-btn {
+            font-size: 0.8rem;
+            padding: 0.4rem 0.6rem;
+            white-space: nowrap;
+        }
+        
+        .hot-docs .view-btn i,
+        .hot-docs .download-btn i {
+            font-size: 0.7rem;
+        }
+        
+        .hot-docs .button-container {
+            justify-content: center;
+            flex-wrap: nowrap;
+        }
+
+        /* 分页控制 */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+            gap: 10px;
+        }
+
+        .pagination button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid rgba(0, 243, 255, 0.3);
+            background: rgba(0, 243, 255, 0.1);
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            font-size: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pagination button.active {
+            background: linear-gradient(45deg, #00f3ff, #6a00ff);
+            border-color: transparent;
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.5);
+        }
+
+        .pagination button:hover:not(.active) {
+            background: rgba(0, 243, 255, 0.3);
+            transform: translateY(-3px);
+        }
+
+        /* 返回顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #00f3ff, #6a00ff);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            z-index: 100;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ccc;
+        }
+
+        .footer a {
+            color: #00f3ff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer a:hover {
+            color: #6a00ff;
+            text-decoration: underline;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #00f3ff, transparent);
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            gap: 2rem;
+        }
+
+        .footer-logo {
+            font-size: 1.3rem;
+            color: #00f3ff;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-logo i {
+            font-size: 1.5rem;
+            background: linear-gradient(45deg, #00f3ff, #6a00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .footer-links a:hover {
+            color: #00f3ff;
+            transform: translateY(-2px);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(0, 243, 255, 0.1);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: 1px solid rgba(0, 243, 255, 0.2);
+        }
+
+        .social-icon:hover {
+            background: linear-gradient(45deg, #00f3ff, #6a00ff);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border-color: transparent;
+        }
+
+        .copyright {
+            color: #666;
+            font-size: 0.85rem;
+            text-align: center;
+            margin-top: 1rem;
+            line-height: 1.6;
+        }
+
+        /* 高亮动画 */
+        @keyframes highlight {
+            0% { box-shadow: 0 0 0 0 rgba(0, 243, 255, 0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(0, 243, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 243, 255, 0); }
+        }
+
+        .highlight-section {
+            animation: highlight 2s ease-out;
+        }
+
+        /* 视图切换动画 */
+        .docs-grid, .hot-docs-grid {
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        /* 无搜索结果提示 */
+        .no-results {
+            text-align: center;
+            margin: 2rem auto;
+            padding: 1.5rem;
+            background: rgba(255, 107, 107, 0.05);
+            border: 1px solid rgba(255, 107, 107, 0.2);
+            border-radius: 10px;
+            color: #ff6b6b;
+            max-width: 600px;
+            font-size: 1.1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        .no-results i {
+            font-size: 1.4rem;
+            margin-right: 10px;
+            animation: pulse 2s infinite;
+        }
+
+        /* 阅读计数动画 */
+        @keyframes count-animation {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); color: #00f3ff; }
+            100% { transform: scale(1); }
+        }
+
+        .count-animation {
+            animation: count-animation 0.5s ease-out;
+        }
+
+        /* 当前导航高亮 */
+        .uni-nav a.current {
+            background: rgba(0, 243, 255, 0.3);
+            border-color: rgba(0, 243, 255, 0.8);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 1024px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hot-docs-grid, .docs-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .hot-docs-grid, .docs-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .uni-nav {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .uni-nav a {
+                width: 80%;
+                margin-bottom: 5px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 2rem 1rem;
+            }
+            
+            .doc-card {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 粒子背景 -->
+    <div id="particles-js" style="position: fixed; width: 100%; height: 100%; top: 0; left: 0; z-index: -1;"></div>
+
+    <div class="container">
+        <!-- 头部 -->
+        <header class="header">
+            <h1>院校教程DeepSeek文档资源</h1>
+        </header>
+
+        <!-- 面包屑导航 -->
+        <div class="breadcrumb">
+            <a href="../../../index.html"><i class="fas fa-home"></i> 首页</a>
+            <span>/</span>
+            <a href="../deepseek.html">DeepSeek专题</a>
+            <span>/</span>
+            <span>院校教程DeepSeek文档</span>
+        </div>
+
+        <!-- 快速导航 -->
+        <div class="quick-nav">
+            <h3>快速导航 <span class="doc-total">共47篇文档</span></h3>
+            <div class="uni-nav">
+                <a href="#tsinghua"><i class="fas fa-graduation-cap"></i> 清华大学 <span class="doc-count">10篇</span></a>
+                <a href="#pku"><i class="fas fa-graduation-cap"></i> 北京大学 <span class="doc-count">8篇</span></a>
+                <a href="#xmu"><i class="fas fa-graduation-cap"></i> 厦门大学 <span class="doc-count">4篇</span></a>
+                <a href="#zju"><i class="fas fa-graduation-cap"></i> 浙江大学 <span class="doc-count">16篇</span></a>
+                <a href="#hunu"><i class="fas fa-graduation-cap"></i> 湖南大学 <span class="doc-count">1篇</span></a>
+                <a href="#sdu"><i class="fas fa-graduation-cap"></i> 山东大学 <span class="doc-count">1篇</span></a>
+                <a href="#tju"><i class="fas fa-graduation-cap"></i> 天津大学 <span class="doc-count">1篇</span></a>
+                <a href="#nau"><i class="fas fa-graduation-cap"></i> 南京审计大学 <span class="doc-count">2篇</span></a>
+                <a href="#hit"><i class="fas fa-graduation-cap"></i> 哈尔滨工业大学 <span class="doc-count">1篇</span></a>
+                <a href="#hust"><i class="fas fa-graduation-cap"></i> 华中科技大学 <span class="doc-count">1篇</span></a>
+                <a href="#others"><i class="fas fa-book"></i> 其他资源 <span class="doc-count">2篇</span></a>
+            </div>
+        </div>
+        
+        <!-- 热门文档 -->
+        <section class="hot-docs">
+            <h3><i class="fas fa-fire"></i> 热门推荐文档</h3>
+            <div class="hot-docs-grid">
+                <!-- 热门文档1 -->
+                <div class="doc-card" data-keywords="清华 DeepSeek 文科生 零基础 AI编程 入门指南 编程学习 AI教育 教学资源" data-category="tutorial" data-date="2025-03-08">
+                    <span class="doc-date">2025-03-08</span>
+                    <span class="doc-views"><i class="fas fa-eye"></i> <span class="view-count">0</span> 次阅读</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">清华大学：文科生零基础AI编程</h3>
+                    <p class="doc-desc">专为文科背景学生设计的AI编程入门指南，快速掌握DeepSeek平台编程技能。</p>
+                    <div class="button-container">
+                        <a href="./Tsinghua_University/清华大学第八弹：文科生零基础AI编程：快速提升想象力和实操能力.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Tsinghua_University/清华大学第八弹：文科生零基础AI编程：快速提升想象力和实操能力.pdf" class="download-btn" download="清华大学第八弹：文科生零基础AI编程：快速提升想象力和实操能力.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 热门文档2 -->
+                <div class="doc-card" data-keywords="北大 DeepSeek 原理 落地 应用 技术解析 落地实践 案例分析 DeepSeek模型 算法原理" data-category="research" data-date="2025-03-01">
+                    <span class="doc-date">2025-03-01</span>
+                    <span class="doc-views"><i class="fas fa-eye"></i> <span class="view-count">0</span> 次阅读</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">北京大学：DeepSeek原理与落地应用</h3>
+                    <p class="doc-desc">北京大学对DeepSeek底层原理及其在实际场景中的应用进行深入剖析。</p>
+                    <div class="button-container">
+                        <a href="./Peking_University/北京大学DeepSeek系列_DeepSeek原理与落地应用PPT.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Peking_University/北京大学DeepSeek系列_DeepSeek原理与落地应用PPT.pdf" class="download-btn" download="北京大学DeepSeek系列_DeepSeek原理与落地应用PPT.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 热门文档3 -->
+                <div class="doc-card" data-keywords="浙大 DeepSeek 燎原 扩散 朱朝阳 行业应用 应用场景 科研应用 技术解析 落地实践" data-category="lecture" data-date="2025-02-20">
+                    <span class="doc-date">2025-02-20</span>
+                    <span class="doc-views"><i class="fas fa-eye"></i> <span class="view-count">0</span> 次阅读</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">浙江大学：DeepSeek之火可以燎原</h3>
+                    <p class="doc-desc">朱朝阳教授阐述DeepSeek技术的广泛扩散潜力，以及如何在各行各业产生深远影响。</p>
+                    <div class="button-container">
+                        <a href="./Zhejiang_University/第四期：DeepSeek之火 可以燎原 -朱朝阳.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Zhejiang_University/第四期：DeepSeek之火 可以燎原 -朱朝阳.pdf" class="download-btn" download="第四期：DeepSeek之火 可以燎原 -朱朝阳.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 标签云 -->
+        <div class="tag-cloud">
+            <span class="tag s4" onclick="filterByTag('入门指南')">入门指南</span>
+            <span class="tag s5" onclick="filterByTag('应用场景')">应用场景</span>
+            <span class="tag s3" onclick="filterByTag('编程学习')">编程学习</span>
+            <span class="tag s4" onclick="filterByTag('AI教育')">AI教育</span>
+            <span class="tag s3" onclick="filterByTag('DeepSeek模型')">DeepSeek模型</span>
+            <span class="tag s2" onclick="filterByTag('算法原理')">算法原理</span>
+            <span class="tag s5" onclick="filterByTag('落地实践')">落地实践</span>
+            <span class="tag s3" onclick="filterByTag('科研应用')">科研应用</span>
+            <span class="tag s2" onclick="filterByTag('教学资源')">教学资源</span>
+            <span class="tag s4" onclick="filterByTag('技术解析')">技术解析</span>
+            <span class="tag s3" onclick="filterByTag('案例分析')">案例分析</span>
+            <span class="tag s2" onclick="filterByTag('行业应用')">行业应用</span>
+            <span class="tag s5" onclick="clearFilter()" style="background: rgba(0, 243, 255, 0.2); color: #00f3ff;"><i class="fas fa-sync-alt"></i> 查看全部</span>
+        </div>
+
+        <!-- 搜索和筛选区域 -->
+        <div class="search-filter-container">
+            <!-- 搜索框 -->
+            <div class="search-container">
+                <h3 class="search-title"><i class="fas fa-search"></i> 智能文档搜索</h3>
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="doc-search" class="search-input" placeholder="输入关键词、标签或院校名称搜索...">
+                    <button id="search-btn" class="search-btn"><i class="fas fa-bolt"></i>搜索</button>
+                </div>
+            </div>
+            
+            <!-- 筛选选项 -->
+            <div class="filter-options">
+                <button class="filter-btn active" onclick="filterDocuments('all')">全部</button>
+                <button class="filter-btn" onclick="filterDocuments('latest')">最新文档</button>
+                <button class="filter-btn" onclick="filterDocuments('application')">应用类</button>
+                <button class="filter-btn" onclick="filterDocuments('theory')">理论类</button>
+                <button class="filter-btn" onclick="filterDocuments('tutorial')">教程类</button>
+                <button class="filter-btn" onclick="filterDocuments('lecture')">公开课</button>
+            </div>
+            
+            <!-- 视图切换已移除 -->
+        </div>
+
+        <!-- 清华大学文档 -->
+        <section class="university-section" id="tsinghua">
+            <h2 class="university-title"><i class="fas fa-university"></i> 清华大学 DeepSeek资源</h2>
+            <div class="docs-grid">
+                <!-- 文档卡片1 -->
+                <div class="doc-card" data-keywords="清华 DeepSeek 入门 精通" data-category="tutorial" data-date="2025-02-05">
+                    <span class="doc-date">2025-02-05</span>
+                    <span class="doc-type">技术文章</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <div class="doc-info">
+                        <h3 class="doc-title">DeepSeek从入门到精通</h3>
+                        <p class="doc-desc">清华大学关于DeepSeek的入门教程，帮助你快速了解和掌握DeepSeek。</p>
+                    </div>
+                    <div class="button-container">
+                        <a href="./Tsinghua_University/清华大学第一弹_DeepSeek从入门到精通.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Tsinghua_University/清华大学第一弹_DeepSeek从入门到精通.pdf" class="download-btn" download="清华大学第一弹_DeepSeek从入门到精通.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 文档卡片2 -->
+                <div class="doc-card" data-keywords="清华 DeepSeek 职场 应用" data-category="application" data-date="2025-02-10">
+                    <span class="doc-date">2025-02-10</span>
+                    <span class="doc-type">技术文章</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">DeepSeek如何赋能职场应用</h3>
+                    <p class="doc-desc">探讨DeepSeek在职场中的应用，提供实际案例和解决方案。</p>
+                    <div class="button-container">
+                        <a href="./Tsinghua_University/清华大学第二弹_DeepSeek如何赋能职场应用.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Tsinghua_University/清华大学第二弹_DeepSeek如何赋能职场应用.pdf" class="download-btn" download="清华大学第二弹_DeepSeek如何赋能职场应用.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 文档卡片3 -->
+                <div class="doc-card" data-keywords="清华 DeepSeek 红利 普通人" data-category="application" data-date="2025-02-15">
+                    <span class="doc-date">2025-02-15</span>
+                    <span class="doc-type">技术文章</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">普通人如何抓住DeepSeek红利</h3>
+                    <p class="doc-desc">分析DeepSeek带来的机遇，为普通人提供抓住红利的策略和方法。</p>
+                    <div class="button-container">
+                        <a href="./Tsinghua_University/清华大学第三弹_普通人如何抓住DeepSeek红利.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Tsinghua_University/清华大学第三弹_普通人如何抓住DeepSeek红利.pdf" class="download-btn" download="清华大学第三弹_普通人如何抓住DeepSeek红利.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 文档卡片4 -->
+                <div class="doc-card" data-keywords="清华 DeepSeek 科研 DeepResearch 聊天" data-category="research" data-date="2025-02-20">
+                    <span class="doc-date">2025-02-20</span>
+                    <span class="doc-type">技术文章</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">DeepSeek+DeepResearch:让科研像聊天一样简单</h3>
+                    <p class="doc-desc">介绍DeepSeek与DeepResearch结合，如何简化科研流程，提高效率。</p>
+                    <div class="button-container">
+                        <a href="./Tsinghua_University/清华大学第四弹_DeepSeek+DeepResearch：让科研像聊天一样简单.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Tsinghua_University/清华大学第四弹_DeepSeek+DeepResearch：让科研像聊天一样简单.pdf" class="download-btn" download="清华大学第四弹_DeepSeek+DeepResearch：让科研像聊天一样简单.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 文档卡片5 -->
+                <div class="doc-card" data-keywords="清华 DeepSeek AI 幻觉" data-category="research" data-date="2025-02-23">
+                    <span class="doc-date">2025-02-23</span>
+                    <span class="doc-type">技术文章</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">DeepSeek与AI幻觉</h3>
+                    <p class="doc-desc">探讨DeepSeek在解决AI幻觉问题上的作用和方法。</p>
+                    <div class="button-container">
+                        <a href="./Tsinghua_University/清华大学第五弹_DeepSeek与AI幻觉.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Tsinghua_University/清华大学第五弹_DeepSeek与AI幻觉.pdf" class="download-btn" download="清华大学第五弹_DeepSeek与AI幻觉.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 文档卡片6 -->
+                <div class="doc-card" data-keywords="清华 DeepSeek AIGC 发展 研究" data-category="research" data-date="2025-02-25">
+                    <span class="doc-date">2025-02-25</span>
+                    <span class="doc-type">技术文章</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">AIGC发展研究3.0版</h3>
+                    <p class="doc-desc">清华大学对AIGC（AI Generated Content）发展的研究报告。</p>
+                    <div class="button-container">
+                        <a href="./Tsinghua_University/清华大学第六弹_AIGC发展研究3.0版.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Tsinghua_University/清华大学第六弹_AIGC发展研究3.0版.pdf" class="download-btn" download="清华大学第六弹_AIGC发展研究3.0版.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 文档卡片7 -->
+                <div class="doc-card" data-keywords="清华 DeepSeek 家庭 教育 赋能" data-category="application" data-date="2025-03-01">
+                    <span class="doc-date">2025-03-01</span>
+                    <span class="doc-type">技术文章</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">实用DeepSeek赋能家庭教育</h3>
+                    <p class="doc-desc">探讨DeepSeek如何应用于家庭教育领域，提供个性化学习体验和亲子互动方案。</p>
+                    <div class="button-container">
+                        <a href="./Tsinghua_University/清华大学第七弹：实用DeepSeek赋能家庭教育.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Tsinghua_University/清华大学第七弹：实用DeepSeek赋能家庭教育.pdf" class="download-btn" download="清华大学第七弹：实用DeepSeek赋能家庭教育.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 文档卡片8 -->
+                <div class="doc-card" data-keywords="清华 DeepSeek 文科生 零基础 AI编程 实操 想象力" data-category="tutorial" data-date="2025-03-08">
+                    <span class="doc-date">2025-03-08</span>
+                    <span class="doc-new">新</span>
+                    <span class="doc-type">技术文章</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">文科生零基础AI编程：快速提升想象力和实操能力</h3>
+                    <p class="doc-desc">专为文科背景学生设计的AI编程入门指南，借助DeepSeek平台快速掌握基础编程技能，提升实际操作能力和创意实现能力。</p>
+                    <div class="button-container">
+                        <a href="./Tsinghua_University/清华大学第八弹：文科生零基础AI编程：快速提升想象力和实操能力.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Tsinghua_University/清华大学第八弹：文科生零基础AI编程：快速提升想象力和实操能力.pdf" class="download-btn" download="清华大学第八弹：文科生零基础AI编程：快速提升想象力和实操能力.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 文档卡片9 -->
+                <div class="doc-card" data-keywords="清华大学 DeepSeek 政务应用 解决方案" data-category="tutorial" data-date="2024-03-24">
+                    <span class="doc-date">2024-03-24</span>
+                    <span class="doc-type">技术文章</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">清华大学第九弹：DeepSeek政务应用场景与解决方案</h3>
+                    <p class="doc-desc">探索DeepSeek在政务领域的应用场景和解决方案，助力政府数字化转型。</p>
+                    <div class="button-container">
+                        <a href="./Tsinghua_University/清华大学第九弹：DeepSeek政务应用场景与解决方案.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Tsinghua_University/清华大学第九弹：DeepSeek政务应用场景与解决方案.pdf" class="download-btn" download="清华大学第九弹：DeepSeek政务应用场景与解决方案.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 文档卡片10 -->
+                <div class="doc-card" data-keywords="清华大学 DeepSeek AI 教学 实验 未来教育" data-category="research" data-date="2025-04-01">
+                    <span class="doc-date">2025-04-01</span>
+                    <span class="doc-new">新</span>
+                    <span class="doc-type">技术文章</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">迈向未来的AI教学实验</h3>
+                    <p class="doc-desc">清华大学探索DeepSeek在教育领域的创新应用，展示AI驱动的教学实验和未来课堂模式。</p>
+                    <div class="button-container">
+                        <a href="./Tsinghua_University/清华大学第十弹：迈向未来的AI教学实验.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Tsinghua_University/清华大学第十弹：迈向未来的AI教学实验.pdf" class="download-btn" download="清华大学第十弹：迈向未来的AI教学实验.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 北京大学文档 -->
+        <section class="university-section" id="pku">
+            <h2 class="university-title"><i class="fas fa-university"></i> 北京大学 DeepSeek资源</h2>       
+            <div class="docs-grid">
+
+                <!-- 文档卡片1 -->
+                <div class="doc-card" data-keywords="北大 DeepSeek 提示词 工程 落地" data-category="application" data-date="2025-02-10">
+                    <span class="doc-date">2025-02-10</span>
+                    <span class="doc-type">技术文章</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">DeepSeek_提示词工程和落地场景</h3>
+                    <p class="doc-desc">北京大学关于DeepSeek提示词工程和落地场景的分析。</p>
+                    <div class="button-container">
+                        <a href="./Peking_University/北京大学DeepSeek_提示词工程和落地场景.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Peking_University/北京大学DeepSeek_提示词工程和落地场景.pdf" class="download-btn" download="北京大学DeepSeek_提示词工程和落地场景.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 文档卡片2 -->
+                <div class="doc-card" data-keywords="北大 DeepSeek AIGC 应用" data-category="application" data-date="2025-02-15">
+                    <span class="doc-date">2025-02-15</span>
+                    <span class="doc-type">技术文章</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">DeepSeek与AIGC应用</h3>
+                    <p class="doc-desc">探讨DeepSeek在AIGC（AI Generated Content）领域的应用。</p>
+                    <div class="button-container">
+                        <a href="./Peking_University/北京大学DeepSeek_DeepSeek与AIGC应用.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Peking_University/北京大学DeepSeek_DeepSeek与AIGC应用.pdf" class="download-btn" download="北京大学DeepSeek_DeepSeek与AIGC应用.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 文档卡片3 -->
+                <div class="doc-card" data-keywords="北大 DeepSeek R1 强推理 模型" data-category="research" data-date="2025-02-20">
+                    <span class="doc-date">2025-02-20</span>
+                    <span class="doc-type">技术文章</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">R1及类强推理模型开发解读</h3>
+                    <p class="doc-desc">北京大学对DeepSeek R1及类强推理模型的开发解读。</p>
+                    <div class="button-container">
+                        <a href="./Peking_University/北京大学DeepSeek_R1及类强推理模型开发解读.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Peking_University/北京大学DeepSeek_R1及类强推理模型开发解读.pdf" class="download-btn" download="北京大学DeepSeek_R1及类强推理模型开发解读.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 文档卡片4 -->
+                <div class="doc-card" data-keywords="北大 DeepSeek 私有化 部署 一体机" data-category="tutorial" data-date="2025-02-25">
+                    <span class="doc-date">2025-02-25</span>
+                    <span class="doc-type">技术文章</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">DeepSeek私有化部署和一体机</h3>
+                    <p class="doc-desc">北京大学关于DeepSeek私有化部署方案和一体机解决方案的详细介绍。</p>
+                    <div class="button-container">
+                        <a href="./Peking_University/北京大学DeepSeek系列_DeepSeek私有化部署和一体机PPT.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Peking_University/北京大学DeepSeek系列_DeepSeek私有化部署和一体机PPT.pdf" class="download-btn" download="北京大学DeepSeek系列_DeepSeek私有化部署和一体机PPT.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 文档卡片5 -->
+                <div class="doc-card" data-keywords="北大 DeepSeek 原理 落地 应用" data-category="research" data-date="2025-03-01">
+                    <span class="doc-date">2025-03-01</span>
+                    <span class="doc-type">技术文章</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">DeepSeek原理与落地应用</h3>
+                    <p class="doc-desc">北京大学对DeepSeek底层原理及其在实际场景中的落地应用进行深入剖析和探讨。</p>
+                    <div class="button-container">
+                        <a href="./Peking_University/北京大学DeepSeek系列_DeepSeek原理与落地应用PPT.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Peking_University/北京大学DeepSeek系列_DeepSeek原理与落地应用PPT.pdf" class="download-btn" download="北京大学DeepSeek系列_DeepSeek原理与落地应用PPT.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 文档卡片6 -->
+                <div class="doc-card" data-keywords="北大 DeepSeek 安全 问题 隐私 伦理" data-category="research" data-date="2025-03-05">
+                    <span class="doc-date">2025-03-05</span>
+                    <span class="doc-new">新</span>
+                    <span class="doc-type">技术文章</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">详解DeepSeek的十个安全问题</h3>
+                    <p class="doc-desc">北京大学全面分析DeepSeek模型在使用过程中可能面临的十大安全隐患，并提出相应的解决方案和防护策略。</p>
+                    <div class="button-container">
+                        <a href="./Peking_University/北京大学DeepSeek系列_详解DeepSeek的十个安全问题.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Peking_University/北京大学DeepSeek系列_详解DeepSeek的十个安全问题.pdf" class="download-btn" download="北京大学DeepSeek系列_详解DeepSeek的十个安全问题.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 文档卡片7 -->
+                <div class="doc-card" data-keywords="北大 DeepSeek R1Kimi 强推理 模型 开发" data-category="research" data-date="2025-03-10">
+                    <span class="doc-date">2025-03-25</span>
+                    <span class="doc-new">新</span>
+                    <span class="doc-type">技术文章</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">DeepSeek-R1Kimi 1.5及类强推理模型开发</h3>
+                    <p class="doc-desc">北京大学深入解析DeepSeek-R1Kimi 1.5模型的开发过程和技术特点，探讨强推理模型的发展方向。</p>
+                    <div class="button-container">
+                        <a href="./Peking_University/北京大学DS指南：DeepSeek-R1Kimi 1.5及类强推理模型开发.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Peking_University/北京大学DS指南：DeepSeek-R1Kimi 1.5及类强推理模型开发.pdf" class="download-btn" download="北京大学DS指南：DeepSeek-R1Kimi 1.5及类强推理模型开发.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 文档卡片8 -->
+                <div class="doc-card" data-keywords="北大 DeepSeek 新媒体 运营 内容创作 社交媒体" data-category="application" data-date="2025-05-28">
+                    <span class="doc-date">2025-05-28</span>
+                    <span class="doc-new">新</span>
+                    <span class="doc-type">技术文章</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">DeepSeek与新媒体运营</h3>
+                    <p class="doc-desc">北京大学深入探讨DeepSeek在新媒体运营中的应用，包括内容创作、社交媒体管理、用户互动等多个维度的实践指南。</p>
+                    <div class="button-container">
+                        <a href="./Peking_University/北京大学DeepSeek系列_DeepSeek与新媒体运营.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Peking_University/北京大学DeepSeek系列_DeepSeek与新媒体运营.pdf" class="download-btn" download="北京大学DeepSeek系列_DeepSeek与新媒体运营.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 厦门大学文档 -->
+        <section class="university-section" id="xmu">
+            <h2 class="university-title"><i class="fas fa-university"></i> 厦门大学 DeepSeek资源</h2>
+            <div class="docs-grid">
+                <!-- 文档卡片1 -->
+                <div class="doc-card" data-keywords="厦大 DeepSeek 大模型 概念 技术 应用" data-category="tutorial" data-date="2025-02-05">
+                    <span class="doc-date">2025-02-05</span>
+                    <span class="doc-type">技术文章</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">DeepSeek大模型概念、技术与应用实践</h3>
+                    <p class="doc-desc">厦门大学对DeepSeek大模型概念、技术与应用实践的介绍。</p>
+                    <div class="button-container">
+                        <a href="./Xiamen_University/厦门大学第一篇：DeepSeek大模型概念、技术与应用实践.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Xiamen_University/厦门大学第一篇：DeepSeek大模型概念、技术与应用实践.pdf" class="download-btn" download="厦门大学第一篇：DeepSeek大模型概念、技术与应用实践.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 文档卡片2 -->
+                <div class="doc-card" data-keywords="厦大 DeepSeek 大模型 高校 教学 科研" data-category="application" data-date="2025-02-12">
+                    <span class="doc-date">2025-02-12</span>
+                    <span class="doc-type">技术文章</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">DeepSeek大模型赋能高校教学和科研</h3>
+                    <p class="doc-desc">探讨DeepSeek大模型如何赋能高校教学和科研。</p>
+                    <div class="button-container">
+                        <a href="./Xiamen_University/厦大团队第二篇：DeepSeek大模型赋能高校教学和科研.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Xiamen_University/厦大团队第二篇：DeepSeek大模型赋能高校教学和科研.pdf" class="download-btn" download="厦大团队第二篇：DeepSeek大模型赋能高校教学和科研.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 文档卡片3 -->
+                <div class="doc-card" data-keywords="厦大 DeepSeek 大模型 企业 应用 实践" data-category="application" data-date="2025-02-20">
+                    <span class="doc-date">2025-02-20</span>
+                    <span class="doc-type">技术文章</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">DeepSeek大模型及其企业应用实践</h3>
+                    <p class="doc-desc">厦门大学对DeepSeek大模型及其企业应用实践的介绍。</p>
+                    <div class="button-container">
+                        <a href="./Xiamen_University/厦大团队第三篇：DeepSeek大模型及其企业应用实践.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Xiamen_University/厦大团队第三篇：DeepSeek大模型及其企业应用实践.pdf" class="download-btn" download="厦大团队第三篇：DeepSeek大模型及其企业应用实践.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 文档卡片4 -->
+                <div class="doc-card" data-keywords="厦大 DeepSeek 大模型 政府 数字化 转型 智慧政务" data-category="application" data-date="2025-02-28">
+                    <span class="doc-date">2025-02-28</span>
+                    <span class="doc-type">技术文章</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">DeepSeek大模型赋能政府数字化转型</h3>
+                    <p class="doc-desc">厦门大学研究团队探讨DeepSeek大模型如何助力政府数字化转型，提升智慧政务水平与公共服务效能。</p>
+                    <div class="button-container">
+                        <a href="./Xiamen_University/厦大团队第四篇：DeepSeek大模型赋能政府数字化转型.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Xiamen_University/厦大团队第四篇：DeepSeek大模型赋能政府数字化转型.pdf" class="download-btn" download="厦大团队第四篇：DeepSeek大模型赋能政府数字化转型.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 浙江大学文档 -->
+        <section class="university-section" id="zju">
+            <h2 class="university-title"><i class="fas fa-university"></i> 浙江大学 DeepSeek资源</h2>
+                <div class="docs-grid">
+                <!-- 技术研究文档1 -->
+                <div class="doc-card" data-keywords="浙大 DeepSeek 模型 解读" data-category="research" data-date="2025-02-08">
+                    <span class="doc-date">2025-02-08</span>
+                    <span class="doc-type">技术文章</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">DeepSeek模型解读</h3>
+                    <p class="doc-desc">浙江大学对DeepSeek模型的解读。</p>
+                    <div class="button-container">
+                        <a href="./Zhejiang_University/浙江大学第二弹：DeepSeek模型解读.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Zhejiang_University/浙江大学第二弹：DeepSeek模型解读.pdf" class="download-btn" download="浙江大学第二弹：DeepSeek模型解读.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 技术研究文档2 -->
+                <div class="doc-card" data-keywords="浙大 DeepSeek 行业 应用 案例 解锁 智能 变革" data-category="research" data-date="2025-02-05">
+                    <span class="doc-date">2025-02-05</span>
+                    <span class="doc-type">技术文章</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">2025年DeepSeek行业应用案例集解锁智能变革密码</h3>
+                    <p class="doc-desc">浙江大学对2025年DeepSeek行业应用案例集的分析。</p>
+                    <div class="button-container">
+                        <a href="./Zhejiang_University/浙江大学第一弹：2025年DeepSeek行业应用案例集解锁智能变革密码153页.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Zhejiang_University/浙江大学第一弹：2025年DeepSeek行业应用案例集解锁智能变革密码153页.pdf" class="download-btn" download="浙江大学第一弹：2025年DeepSeek行业应用案例集解锁智能变革密码153页.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 公开课第一期：吴飞 -->
+                <div class="doc-card" data-keywords="浙大 DeepSeek 吴飞 AI三大主义 通识教育 公开课" data-category="lecture" data-date="2025-02-10">
+                    <span class="doc-date">2025-02-10</span>
+                    <span class="doc-type">公开课</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">第一期：吴飞（浙江大学）DeepSeek：回望AI三大主义与加强通识教育</h3>
+                    <p class="doc-desc">浙江大学吴飞教授解析AI三大主义的发展历程，探讨在DeepSeek时代加强通识教育的重要性。</p>
+                    <div class="button-container">
+                        <a href="./Zhejiang_University/第一期：吴飞（浙江大学）DeepSeek：回望AI三大主义与加强通识教育.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Zhejiang_University/第一期：吴飞（浙江大学）DeepSeek：回望AI三大主义与加强通识教育.pdf" class="download-btn" download="第一期：吴飞（浙江大学）DeepSeek：回望AI三大主义与加强通识教育.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 公开课第一期：陈文智 -->
+                <div class="doc-card" data-keywords="浙大 DeepSeek 陈文智 Chatting Acting 突破边界 未来图景 公开课" data-category="lecture" data-date="2025-02-12">
+                    <span class="doc-date">2025-02-12</span>
+                    <span class="doc-type">公开课</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">第一期：陈文智（浙江大学）Chatting+or+Acting：DeepSeek的突破边界与浙大先生的未来图景</h3>
+                    <p class="doc-desc">浙江大学陈文智教授探讨DeepSeek在交互模式上的突破，以及这些突破将如何塑造浙大学子的未来。</p>
+                    <div class="button-container">
+                        <a href="./Zhejiang_University/第一期：陈文智（浙江大学）Chatting+or+Acting：DeepSeek的突破边界与浙大先生的未来图景.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Zhejiang_University/第一期：陈文智（浙江大学）Chatting+or+Acting：DeepSeek的突破边界与浙大先生的未来图景.pdf" class="download-btn" download="第一期：陈文智（浙江大学）Chatting+or+Acting：DeepSeek的突破边界与浙大先生的未来图景.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 公开课第二期：孙凌云 -->
+                <div class="doc-card" data-keywords="浙大 DeepSeek 孙凌云 智能时代 人机协作 公开课" data-category="lecture" data-date="2025-02-15">
+                    <span class="doc-date">2025-02-15</span>
+                    <span class="doc-type">公开课</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">第二期：孙凌云（浙江大学）DeepSeek：智能时代的全面到来和人机协作的新常态</h3>
+                    <p class="doc-desc">浙江大学孙凌云教授探讨DeepSeek带来的智能时代全面到来，以及人机协作成为新常态的趋势。</p>
+                    <div class="button-container">
+                        <a href="./Zhejiang_University/第二期：孙凌云（浙江大学）DeepSeek：智能时代的全面到来和人机协作的新常态.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Zhejiang_University/第二期：孙凌云（浙江大学）DeepSeek：智能时代的全面到来和人机协作的新常态.pdf" class="download-btn" download="第二期：孙凌云（浙江大学）DeepSeek：智能时代的全面到来和人机协作的新常态.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 公开课第二期：模型优势 -->
+                <div class="doc-card" data-keywords="浙大 DeepSeek 模型优势 算力 成本 分析 公开课" data-category="lecture" data-date="2025-02-18">
+                    <span class="doc-date">2025-02-18</span>
+                    <span class="doc-type">公开课</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">第二期：DeepSeek模型优势：算力、成本角度解读</h3>
+                    <p class="doc-desc">从算力和成本角度分析DeepSeek模型的优势和竞争力。</p>
+                    <div class="button-container">
+                        <a href="./Zhejiang_University/第二期：DeepSeek模型优势：算力、成本角度解读.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Zhejiang_University/第二期：DeepSeek模型优势：算力、成本角度解读.pdf" class="download-btn" download="第二期：DeepSeek模型优势：算力、成本角度解读.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 公开课第三期：吴超 -->
+                <div class="doc-card" data-keywords="浙大 DeepSeek 吴超 数字社会 群体智慧 公开课" data-category="lecture" data-date="2025-02-22">
+                    <span class="doc-date">2025-02-22</span>
+                    <span class="doc-type">公开课</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">第三期：吴超（浙江大学）走向数字社会：从Deepseek到群体智慧</h3>
+                    <p class="doc-desc">浙江大学吴超教授探讨DeepSeek在推动数字社会发展和群体智慧构建中的作用。</p>
+                    <div class="button-container">
+                        <a href="./Zhejiang_University/第三期：吴超（浙江大学）走向数字社会：从Deepseek到群体智慧.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Zhejiang_University/第三期：吴超（浙江大学）走向数字社会：从Deepseek到群体智慧.pdf" class="download-btn" download="第三期：吴超（浙江大学）走向数字社会：从Deepseek到群体智慧.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 公开课第三期：陈静远 -->
+                <div class="doc-card" data-keywords="浙大 DeepSeek 陈静远 语言解码 人类经验 AI算法 公开课" data-category="lecture" data-date="2025-02-25">
+                    <span class="doc-date">2025-02-25</span>
+                    <span class="doc-type">公开课</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">第三期：陈静远（浙江大学）语言解码双生花：人类经验与AI算法的镜像之旅</h3>
+                    <p class="doc-desc">浙江大学陈静远教授分析人类语言经验与AI算法之间的相互映射关系，探索DeepSeek的语言解码能力。</p>
+                    <div class="button-container">
+                        <a href="./Zhejiang_University/第三期：陈静远（浙江大学）语言解码双生花：人类经验与AI算法的镜像之旅.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Zhejiang_University/第三期：陈静远（浙江大学）语言解码双生花：人类经验与AI算法的镜像之旅.pdf" class="download-btn" download="第三期：陈静远（浙江大学）语言解码双生花：人类经验与AI算法的镜像之旅.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 公开课第四期：朱朝阳 -->
+                <div class="doc-card" data-keywords="浙大 DeepSeek 朱朝阳 燎原 扩散 应用前景 公开课" data-category="lecture" data-date="2025-03-01">
+                    <span class="doc-date">2025-03-01</span>
+                    <span class="doc-type">公开课</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">第四期：DeepSeek之火 可以燎原 -朱朝阳</h3>
+                    <p class="doc-desc">浙江大学朱朝阳教授阐述DeepSeek技术的广泛扩散潜力，以及如何在各行各业产生深远影响。</p>
+                    <div class="button-container">
+                        <a href="./Zhejiang_University/第四期：DeepSeek之火 可以燎原 -朱朝阳.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Zhejiang_University/第四期：DeepSeek之火 可以燎原 -朱朝阳.pdf" class="download-btn" download="第四期：DeepSeek之火 可以燎原 -朱朝阳.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 公开课第四期：陈建海 -->
+                <div class="doc-card" data-keywords="浙大 DeepSeek 陈建海 本地化部署 AI通识教育 公开课" data-category="lecture" data-date="2025-03-01">
+                    <span class="doc-date">2025-03-01</span>
+                    <span class="doc-type">公开课</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">第四期：陈建海（浙江大学）DeepSeek的本地化部署与AI通识教育之未来</h3>
+                    <p class="doc-desc">浙江大学陈建海教授详解DeepSeek的本地化部署方案，并探讨AI通识教育的未来发展趋势。</p>
+                    <div class="button-container">
+                        <a href="./Zhejiang_University/第四期：陈建海（浙江大学）DeepSeek的本地化部署与AI通识教育之未来.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Zhejiang_University/第四期：陈建海（浙江大学）DeepSeek的本地化部署与AI通识教育之未来.pdf" class="download-btn" download="第四期：陈建海（浙江大学）DeepSeek的本地化部署与AI通识教育之未来.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 第二季第一期 - 肖俊 -->
+                <div class="doc-card" data-keywords="浙大 DeepSeek 第二季 肖俊 大模型 智能体 产业大脑 公开课" data-category="lecture" data-date="2025-04-01">
+                    <span class="doc-date">2025-04-01</span>
+                    <span class="doc-new">新</span>
+                    <span class="doc-type">公开课</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">第二季 第一期：肖俊（浙江大学）从大模型、智能体到复杂AI应用系统的构建——以产业大脑为例</h3>
+                    <p class="doc-desc">浙江大学肖俊教授详细讲解如何从大模型和智能体构建复杂AI应用系统，以产业大脑为实际案例进行深入剖析。</p>
+                    <div class="button-container">
+                        <a href="./Zhejiang_University/第二季/第二季1/第二季 第一期：肖俊（浙江大学）从大模型、智能体到复杂AI应用系统的构建——以产业大脑为例.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Zhejiang_University/第二季/第二季1/第二季 第一期：肖俊（浙江大学）从大模型、智能体到复杂AI应用系统的构建——以产业大脑为例.pdf" class="download-btn" download="第二季 第一期：肖俊-从大模型、智能体到复杂AI应用系统的构建.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 第二季第一期 - 朱强 -->
+                <div class="doc-card" data-keywords="浙大 DeepSeek 第二季 朱强 技术溯源 前沿探索 公开课" data-category="lecture" data-date="2025-04-01">
+                    <span class="doc-date">2025-04-01</span>
+                    <span class="doc-new">新</span>
+                    <span class="doc-type">公开课</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">第二季 第一期：朱强（浙江大学）DeepSeek技术溯源及前沿探索</h3>
+                    <p class="doc-desc">浙江大学朱强教授深入解析DeepSeek技术发展历程，探讨技术溯源和未来前沿探索方向。</p>
+                    <div class="button-container">
+                        <a href="./Zhejiang_University/第二季/第二季1/第二季 第一期：朱强（浙江大学）DeepSeek技术溯源及前沿探索.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Zhejiang_University/第二季/第二季1/第二季 第一期：朱强（浙江大学）DeepSeek技术溯源及前沿探索.pdf" class="download-btn" download="第二季 第一期：朱强-DeepSeek技术溯源及前沿探索.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 第二季第二期 - 朱霖潮 -->
+                <div class="doc-card" data-keywords="浙大 DeepSeek 第二季 朱霖潮 人工智能 科学工程 研究 公开课" data-category="lecture" data-date="2025-04-08">
+                    <span class="doc-date">2025-04-08</span>
+                    <span class="doc-new">新</span>
+                    <span class="doc-type">公开课</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">第二季 第二期：朱霖潮（浙江大学）人工智能重塑科学与工程研究</h3>
+                    <p class="doc-desc">浙江大学朱霖潮教授详解人工智能如何重塑传统科学与工程研究范式，展示前沿应用案例。</p>
+                    <div class="button-container">
+                        <a href="./Zhejiang_University/第二季/第二季2/第二季 第二期：朱霖潮（浙江大学）人工智能重塑科学与工程研究.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Zhejiang_University/第二季/第二季2/第二季 第二期：朱霖潮（浙江大学）人工智能重塑科学与工程研究.pdf" class="download-btn" download="第二季 第二期：朱霖潮-人工智能重塑科学与工程研究.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 第二季第二期 - 郑小林 -->
+                <div class="doc-card" data-keywords="浙大 DeepSeek 第二季 郑小林 智能金融 AI驱动 金融变革 公开课" data-category="lecture" data-date="2025-04-08">
+                    <span class="doc-date">2025-04-08</span>
+                    <span class="doc-new">新</span>
+                    <span class="doc-type">公开课</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">第二季 第二期：郑小林（浙江大学）智能金融：AI 驱动的金融变革</h3>
+                    <p class="doc-desc">浙江大学郑小林教授分析AI驱动的智能金融变革趋势，探讨金融科技创新发展与应用前景。</p>
+                    <div class="button-container">
+                        <a href="./Zhejiang_University/第二季/第二季2/第二季 第二期：郑小林（浙江大学）智能金融：AI 驱动的金融变革.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Zhejiang_University/第二季/第二季2/第二季 第二期：郑小林（浙江大学）智能金融：AI 驱动的金融变革.pdf" class="download-btn" download="第二季 第二期：郑小林-智能金融：AI驱动的金融变革.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 第二季第三期 - 况琨 -->
+                <div class="doc-card" data-keywords="浙大 DeepSeek 第二季 况琨 生成式AI 智慧司法 公开课" data-category="lecture" data-date="2025-04-15">
+                    <span class="doc-date">2025-04-15</span>
+                    <span class="doc-new">新</span>
+                    <span class="doc-type">公开课</span>
+                    <i class="fas fa-file-powerpoint doc-icon"></i>
+                    <h3 class="doc-title">第二季 第三期：况琨（浙江大学）生成式人工智能赋能智慧司法及相关思考</h3>
+                    <p class="doc-desc">浙江大学况琨教授深入探讨生成式人工智能在智慧司法领域的应用与挑战，提出创新解决方案。</p>
+                    <div class="button-container">
+                        <a href="./Zhejiang_University/第二季/第二季3/第二季 第三期：生成式人工智能赋能智慧司法及相关思考 - 况琨.pptx" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Zhejiang_University/第二季/第二季3/第二季 第三期：生成式人工智能赋能智慧司法及相关思考 - 况琨.pptx" class="download-btn" download="第二季 第三期：况琨-生成式人工智能赋能智慧司法及相关思考.pptx">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 第二季第三期 - 姚畅 -->
+                <div class="doc-card" data-keywords="浙大 DeepSeek 第二季 姚畅 AI大模型 医疗 破局 公开课" data-category="lecture" data-date="2025-04-15">
+                    <span class="doc-date">2025-04-15</span>
+                    <span class="doc-new">新</span>
+                    <span class="doc-type">公开课</span>
+                    <i class="fas fa-file-powerpoint doc-icon"></i>
+                    <h3 class="doc-title">第二季 第三期：姚畅（浙江大学）AI大模型如何破局传统医疗</h3>
+                    <p class="doc-desc">浙江大学姚畅教授剖析AI大模型在传统医疗领域的创新应用，分享医疗行业智能化转型的实践案例。</p>
+                    <div class="button-container">
+                        <a href="./Zhejiang_University/第二季/第二季3/第二季 第三期：AI大模型如何破局传统医疗 - 姚畅.pptx" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Zhejiang_University/第二季/第二季3/第二季 第三期：AI大模型如何破局传统医疗 - 姚畅.pptx" class="download-btn" download="第二季 第三期：姚畅-AI大模型如何破局传统医疗.pptx">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 湖南大学 DeepSeek资源 -->
+        <section class="university-section" id="hnu">
+            <h2 class="university-title"><i class="fas fa-university"></i> 湖南大学 DeepSeek资源</h2>
+            <div class="docs-grid">
+                <!-- 文档卡片1 -->
+                <div class="doc-card" data-keywords="湖南大学 DeepSeek what how why next" data-category="research" data-date="2025-02-20">
+                    <span class="doc-date">2025-02-20</span>
+                    <span class="doc-type">技术文章</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">我们该如何看待DeepSeek</h3>
+                    <p class="doc-desc">湖南大学从what、how、why和next四个维度深入剖析DeepSeek大模型，提供全面的认知框架。</p>
+                    <div class="button-container">
+                        <a href="./Hunan_University/湖南大学：我们该如何看待DeepSeek_what_how_why and next.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Hunan_University/湖南大学：我们该如何看待DeepSeek_what_how_why and next.pdf" class="download-btn" download="湖南大学：我们该如何看待DeepSeek_what_how_why and next.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 山东大学 DeepSeek资源 -->
+        <section class="university-section" id="sdu">
+            <h2 class="university-title"><i class="fas fa-university"></i> 山东大学 DeepSeek资源</h2>
+            <div class="docs-grid">
+                <!-- 文档卡片1 -->
+                <div class="doc-card" data-keywords="山东大学 DeepSeek 应用 部署" data-category="tutorial" data-date="2025-02-20">
+                    <span class="doc-date">2025-02-20</span>
+                    <span class="doc-type">技术文章</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">DeepSeek应用与部署</h3>
+                    <p class="doc-desc">山东大学提供的DeepSeek模型应用与部署指南，全面阐述实际落地过程与最佳实践。</p>
+                    <div class="button-container">
+                        <a href="./Shandong_University/山东大学：DeepSeek应用与部署.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Shandong_University/山东大学：DeepSeek应用与部署.pdf" class="download-btn" download="山东大学：DeepSeek应用与部署.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 天津大学 DeepSeek资源 -->
+        <section class="university-section" id="tju">
+            <h2 class="university-title"><i class="fas fa-university"></i> 天津大学 DeepSeek资源</h2>
+            <div class="docs-grid">
+                <!-- 文档卡片1 -->
+                <div class="doc-card" data-keywords="天津大学 DeepSeek 深度解读 原理 效应" data-category="research" data-date="2025-02-20">
+                    <span class="doc-date">2025-02-20</span>
+                    <span class="doc-type">技术文章</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">深度解读DeepSeek——原理与效应</h3>
+                    <p class="doc-desc">天津大学对DeepSeek模型的底层原理与技术效应进行全面深入解读。</p>
+                    <div class="button-container">
+                        <a href="./Tianjin_University/天津大学：深度解读DeepSeek——原理与效应.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Tianjin_University/天津大学：深度解读DeepSeek——原理与效应.pdf" class="download-btn" download="天津大学：深度解读DeepSeek——原理与效应.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 南京审计大学 DeepSeek资源 -->
+        <section class="university-section" id="nau">
+            <h2 class="university-title"><i class="fas fa-university"></i> 南京审计大学 DeepSeek资源</h2>
+            <div class="docs-grid">
+                <!-- 文档卡片1 -->
+                <div class="doc-card" data-keywords="南京审计大学 DeepSeek 审计行业 操作指南" data-category="tutorial" data-date="2025-02-25">
+                    <span class="doc-date">2025-02-25</span>
+                    <span class="doc-type">技术文章</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">面向审计行业DeepSeek大模型操作指南</h3>
+                    <p class="doc-desc">南京审计大学专为审计行业打造的DeepSeek大模型应用指南，帮助审计从业人员提升工作效率。</p>
+                    <div class="button-container">
+                        <a href="./Nanjing_Audit_University/《面向审计行业DeepSeek大模型操作指南v1.0》.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Nanjing_Audit_University/《面向审计行业DeepSeek大模型操作指南v1.0》.pdf" class="download-btn" download="《面向审计行业DeepSeek大模型操作指南v1.0》.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 文档卡片2 -->
+                <div class="doc-card" data-keywords="南京审计大学 DeepSeek 工程审计 应用指南" data-category="tutorial" data-date="2025-02-28">
+                    <span class="doc-date">2025-02-28</span>
+                    <span class="doc-type">技术文章</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">面向工程审计行业的DeepSeek大模型应用指南</h3>
+                    <p class="doc-desc">南京审计大学针对工程审计领域特点定制的DeepSeek应用指南，详解大模型如何提升工程审计效率和准确性。</p>
+                    <div class="button-container">
+                        <a href="./Nanjing_Audit_University/附件： 面向工程审计行业的DeepSeek大模型应用指南-v1.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Nanjing_Audit_University/附件： 面向工程审计行业的DeepSeek大模型应用指南-v1.pdf" class="download-btn" download="附件： 面向工程审计行业的DeepSeek大模型应用指南-v1.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 哈尔滨工业大学 DeepSeek资源 -->
+        <section class="university-section" id="hit">
+            <h2 class="university-title"><i class="fas fa-university"></i> 哈尔滨工业大学 DeepSeek资源</h2>
+            <div class="docs-grid">
+                <!-- 文档卡片1 -->
+                <div class="doc-card" data-keywords="哈工大 哈尔滨工业大学 DeepSeek 图灵测试 人工智能 公开课" data-category="lecture" data-date="2025-04-05">
+                    <span class="doc-date">2025-04-05</span>
+                    <span class="doc-new">新</span>
+                    <span class="doc-type">技术文章</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">人工智能：从图灵测试到DeepSeek</h3>
+                    <p class="doc-desc">哈尔滨工业大学深入解析人工智能发展历程，从图灵测试到DeepSeek大模型，展现AI技术的演进与未来展望。</p>
+                    <div class="button-container">
+                        <a href="./Harbin_Institute_of_Technology/【哈尔滨工业大学DeepSeek公开课】人工智能：从图灵测试到DeepSeek.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Harbin_Institute_of_Technology/【哈尔滨工业大学DeepSeek公开课】人工智能：从图灵测试到DeepSeek.pdf" class="download-btn" download="【哈尔滨工业大学DeepSeek公开课】人工智能：从图灵测试到DeepSeek.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 华中科技大学 DeepSeek资源 -->
+        <section class="university-section" id="hust">
+            <h2 class="university-title"><i class="fas fa-university"></i> 华中科技大学 DeepSeek资源</h2>
+            <div class="docs-grid">
+                <!-- 文档卡片1 -->
+                <div class="doc-card" data-keywords="华科 华中科技大学 DeepSeek Manus AI 企业价值 重塑" data-category="application" data-date="2025-03-15">
+                    <span class="doc-date">2025-03-15</span>
+                    <span class="doc-new">新</span>
+                    <span class="doc-type">技术文章</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">从DeepSeek到Manus：AI如何重塑企业价值</h3>
+                    <p class="doc-desc">华中科技大学深入分析DeepSeek和Manus在企业数字化转型中的应用价值，探讨AI技术如何重塑企业核心竞争力。</p>
+                    <div class="button-container">
+                        <a href="./Huazhong_University/华中科技大学-从DeepSeek到Manus：AI如何重塑企业价值-60页.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Huazhong_University/华中科技大学-从DeepSeek到Manus：AI如何重塑企业价值-60页.pdf" class="download-btn" download="华中科技大学-从DeepSeek到Manus：AI如何重塑企业价值-60页.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 其他 DeepSeek资源 -->
+        <section class="university-section" id="others">
+            <h2 class="university-title"><i class="fas fa-university"></i> 其他 DeepSeek资源</h2>
+            <div class="docs-grid">
+                <!-- 新增文档卡片 -->
+                <div class="doc-card" data-keywords="腾讯 DeepSeek 模型训练 优化 数据处理 技术精髓" data-category="research" data-date="2025-05-25">
+                    <span class="doc-date">2025-05-25</span>
+                    <span class="doc-new">新</span>
+                    <span class="doc-type">技术文章</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">详解DeepSeek： 模型训练、优化及数据处理的技术精髓（腾讯）</h3>
+                    <p class="doc-desc">腾讯AI团队深入剖析DeepSeek模型的训练流程、优化策略和数据处理方法，为开发者提供全面的技术指南和最佳实践。</p>
+                    <div class="button-container">
+                        <a href="./Tencent/详解DeepSeek： 模型训练、优化及数据处理的技术精髓（腾讯）.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./Tencent/详解DeepSeek： 模型训练、优化及数据处理的技术精髓（腾讯）.pdf" class="download-btn" download="详解DeepSeek： 模型训练、优化及数据处理的技术精髓（腾讯）.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 现有的文档卡片 -->
+                <div class="doc-card" data-keywords="大任智库 DeepSeek 企业应用 落地实践" data-category="tutorial" data-date="2024-03-24">
+                    <span class="doc-date">2024-03-24</span>
+                    <span class="doc-type">技术文章</span>
+                    <i class="fas fa-file-pdf doc-icon"></i>
+                    <h3 class="doc-title">大任智库版DeepSeek企业落地应用讲义精华全版</h3>
+                    <p class="doc-desc">大任智库精心编制的DeepSeek企业落地应用指南，全面解析企业实践案例与解决方案。</p>
+                    <div class="button-container">
+                        <a href="./others/大任智库版DeepSeek企业落地应用讲义精华全版（258页）.pdf" class="view-btn" target="_blank">
+                            <i class="fas fa-eye"></i> 在线查看
+                        </a>
+                        <a href="./others/大任智库版DeepSeek企业落地应用讲义精华全版（258页）.pdf" class="download-btn" download="大任智库版DeepSeek企业落地应用讲义精华全版（258页）.pdf">
+                            <i class="fas fa-download"></i> 下载文档
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 分页导航 -->
+        <div class="pagination" style="display:none;">
+            <button class="active">1</button>
+            <button>2</button>
+            <button>3</button>
+            <button><i class="fas fa-angle-right"></i></button>
+        </div>
+
+        <!-- 返回顶部按钮 -->
+        <div class="back-to-top" id="back-to-top">
+            <i class="fas fa-arrow-up"></i>
+        </div>
+
+        <!-- 页脚 -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <i class="fas fa-brain"></i> DeepSeek资源中心
+                </div>
+                <div class="footer-social">
+                    <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-weixin"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-weibo"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-zhihu"></i></a>
+                </div>
+            </div>
+            <p class="copyright">© 2025 DeepSeek资源中心 - 提供前沿AI学习资源 <br>学习资源共享</p>
+        </footer>
+    </div>
+
+    <!-- 粒子背景JS -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+    <script>
+        // 页面加载完成后初始化所有功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化粒子背景
+            try {
+                particlesJS('particles-js', {
+                    "particles": {
+                        "number": {
+                            "value": 80,
+                            "density": {
+                                "enable": true,
+                                "value_area": 800
+                            }
+                        },
+                        "color": {
+                            "value": "#00f3ff"
+                        },
+                        "shape": {
+                            "type": "circle",
+                            "stroke": {
+                                "width": 0,
+                                "color": "#000000"
+                            }
+                        },
+                        "opacity": {
+                            "value": 0.5,
+                            "random": false,
+                            "anim": {
+                                "enable": false,
+                                "speed": 1
+                            }
+                        },
+                        "size": {
+                            "value": 3,
+                            "random": true
+                        },
+                        "line_linked": {
+                            "enable": true,
+                            "distance": 150,
+                            "color": "#00f3ff",
+                            "opacity": 0.4,
+                            "width": 1
+                        },
+                        "move": {
+                            "enable": true,
+                            "speed": 2,
+                            "direction": "none",
+                            "random": false,
+                            "straight": false,
+                            "out_mode": "out"
+                        }
+                    },
+                    "interactivity": {
+                        "detect_on": "canvas",
+                        "events": {
+                            "onhover": {
+                                "enable": true,
+                                "mode": "grab"
+                            },
+                            "onclick": {
+                                "enable": true,
+                                "mode": "push"
+                            },
+                            "resize": true
+                        }
+                    },
+                    "retina_detect": true
+                });
+            } catch (e) {
+                console.error("粒子背景初始化失败:", e);
+            }
+
+            // 返回顶部按钮
+            const backToTopBtn = document.getElementById('back-to-top');
+            if (backToTopBtn) {
+                window.addEventListener('scroll', () => {
+                    if (window.pageYOffset > 300) {
+                        backToTopBtn.classList.add('visible');
+                    } else {
+                        backToTopBtn.classList.remove('visible');
+                    }
+                });
+
+                backToTopBtn.addEventListener('click', () => {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+
+            // 搜索功能 - 实时搜索
+            const searchInput = document.getElementById('doc-search');
+            const searchBtn = document.getElementById('search-btn');
+            const docCards = document.querySelectorAll('.doc-card');
+
+            if (searchInput && searchBtn) {
+                function performSearch() {
+                    const searchTerm = searchInput.value.toLowerCase().trim();
+                    
+                    // 重置所有标签的高亮状态
+                    document.querySelectorAll('.tag').forEach(tagEl => {
+                        tagEl.classList.remove('active');
+                    });
+                    
+                    // 如果搜索框为空，显示所有文档
+                    if (searchTerm === '') {
+                        docCards.forEach(card => {
+                            card.style.display = 'flex';
+                            setTimeout(() => {
+                                card.style.opacity = '1';
+                                card.style.transform = 'translateY(0)';
+                            }, 50);
+                        });
+                        
+                        // 隐藏无结果消息
+                        const noResultsEl = document.getElementById('no-results-message');
+                        if (noResultsEl) {
+                            noResultsEl.style.display = 'none';
+                        }
+                        
+                        return;
+                    }
+                    
+                    // 初始设置所有卡片不可见
+                    docCards.forEach(card => {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(20px)';
+                    });
+
+                    let hasResults = false;
+                    let delay = 0;
+                    
+                    // 检查每个卡片是否匹配搜索词
+                    docCards.forEach(card => {
+                        const keywords = card.getAttribute('data-keywords').toLowerCase();
+                        const title = card.querySelector('.doc-title').textContent.toLowerCase();
+                        const desc = card.querySelector('.doc-desc').textContent.toLowerCase();
+                        
+                        if (keywords.includes(searchTerm) || title.includes(searchTerm) || desc.includes(searchTerm)) {
+                            hasResults = true;
+                            card.style.display = 'flex';
+                            
+                            // 添加渐入动画
+                            setTimeout(() => {
+                                card.style.opacity = '1';
+                                card.style.transform = 'translateY(0)';
+                            }, delay);
+                            delay += 50; // 增加每个卡片出现的延迟
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                    
+                    // 处理无结果情况
+                    const noResultsEl = document.getElementById('no-results-message');
+                    if (!hasResults) {
+                        if (!noResultsEl) {
+                            const message = document.createElement('div');
+                            message.id = 'no-results-message';
+                            message.className = 'no-results';
+                            message.innerHTML = `<i class="fas fa-search"></i> 未找到 "${searchTerm}" 相关的文档`;
+                            
+                            const firstSection = document.querySelector('.university-section, .hot-docs');
+                            firstSection.after(message);
+                            
+                            setTimeout(() => {
+                                message.style.opacity = '1';
+                            }, 10);
+                        } else {
+                            noResultsEl.innerHTML = `<i class="fas fa-search"></i> 未找到 "${searchTerm}" 相关的文档`;
+                            noResultsEl.style.display = 'block';
+                            setTimeout(() => {
+                                noResultsEl.style.opacity = '1';
+                            }, 10);
+                        }
+                    } else if (noResultsEl) {
+                        noResultsEl.style.opacity = '0';
+                        setTimeout(() => {
+                            noResultsEl.style.display = 'none';
+                        }, 300);
+                    }
+                }
+
+                // 实时搜索事件监听
+                searchInput.addEventListener('input', performSearch);
+                searchBtn.addEventListener('click', performSearch);
+            }
+
+            // 卡片交互效果增强
+            document.querySelectorAll('.doc-card').forEach((card, index) => {
+                // 设置初始状态和延迟加载动画
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'all 0.3s ease-out';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 + (index * 50)); // 错开每个卡片的出现时间
+                
+                // 鼠标悬停时添加轻微的3D效果
+                card.addEventListener('mousemove', function(e) {
+                    const cardRect = card.getBoundingClientRect();
+                    const cardCenterX = cardRect.left + cardRect.width / 2;
+                    const cardCenterY = cardRect.top + cardRect.height / 2;
+                    const mouseX = e.clientX - cardCenterX;
+                    const mouseY = e.clientY - cardCenterY;
+                    
+                    // 计算旋转角度，值越小旋转越明显
+                    const rotateY = mouseX / 20;
+                    const rotateX = -mouseY / 20;
+                    
+                    // 应用效果
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+                });
+                
+                // 鼠标离开时恢复正常
+                card.addEventListener('mouseleave', function() {
+                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+                });
+            });
+
+            // 平滑滚动导航
+            document.querySelectorAll('.uni-nav a, .breadcrumb a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId.startsWith('#')) {
+                        e.preventDefault();
+                        
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            // 添加高亮动画效果
+                            targetElement.classList.add('highlight-section');
+                            
+                            // 平滑滚动
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 80, // 顶部留出空间
+                                behavior: 'smooth'
+                            });
+                            
+                            // 移除高亮效果
+                            setTimeout(() => {
+                                targetElement.classList.remove('highlight-section');
+                            }, 2000);
+                        }
+                    }
+                });
+            });
+            
+            // 统计文档阅读量
+            document.querySelectorAll('.view-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const card = this.closest('.doc-card');
+                    if (card) {
+                        const viewCountEl = card.querySelector('.view-count');
+                        if (viewCountEl) {
+                            let count = parseInt(viewCountEl.textContent) || 0;
+                            count++;
+                            viewCountEl.textContent = count;
+                            
+                            // 添加数字变化动画
+                            viewCountEl.classList.add('count-animation');
+                            setTimeout(() => {
+                                viewCountEl.classList.remove('count-animation');
+                            }, 1000);
+                        }
+                    }
+                });
+            });
+
+            // 添加视差滚动效果
+            window.addEventListener('scroll', function() {
+                const scrollTop = window.pageYOffset;
+                const parallaxElements = document.querySelectorAll('.header h1');
+                
+                parallaxElements.forEach(el => {
+                    const speed = 0.5;
+                    el.style.transform = `translateY(${scrollTop * speed}px)`;
+                });
+            });
+
+            // 初始化导航高亮
+            const highlightCurrentSection = () => {
+                const scrollPosition = window.scrollY + 200; // 提前一点高亮
+                const sections = document.querySelectorAll('.university-section');
+                const navLinks = document.querySelectorAll('.uni-nav a');
+                
+                if (sections.length > 0 && navLinks.length > 0) {
+                    sections.forEach((section, index) => {
+                        if (index < navLinks.length) {
+                            const sectionTop = section.offsetTop;
+                            const sectionHeight = section.offsetHeight;
+                            
+                            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                                navLinks.forEach(link => link.classList.remove('current'));
+                                navLinks[index].classList.add('current');
+                            }
+                        }
+                    });
+                }
+            };
+            
+            window.addEventListener('scroll', highlightCurrentSection);
+            highlightCurrentSection(); // 初始化当前高亮
+        });
+        
+        // 标签筛选功能
+        function filterByTag(tagText) {
+            const searchInput = document.getElementById('doc-search');
+            if (searchInput) {
+                searchInput.value = tagText;
+                performSearch();
+            }
+        }
+        
+        // 清空筛选
+        function clearFilter() {
+            const searchInput = document.getElementById('doc-search');
+            if (searchInput) {
+                searchInput.value = '';
+                performSearch();
+            }
+            
+            // 取消标签高亮
+            document.querySelectorAll('.tag').forEach(tag => {
+                tag.classList.remove('active');
+            });
+        }
+
+        // 全局定义performSearch函数，以便标签筛选可以调用
+        function performSearch() {
+            const searchInput = document.getElementById('doc-search');
+            const docCards = document.querySelectorAll('.doc-card');
+            
+            if (!searchInput) return;
+            
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            
+            // 重置所有标签的高亮状态
+            document.querySelectorAll('.tag').forEach(tagEl => {
+                tagEl.classList.remove('active');
+            });
+            
+            // 如果搜索框为空，显示所有文档
+            if (searchTerm === '') {
+                docCards.forEach(card => {
+                    card.style.display = 'flex';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                });
+                
+                // 隐藏无结果消息
+                const noResultsEl = document.getElementById('no-results-message');
+                if (noResultsEl) {
+                    noResultsEl.style.display = 'none';
+                }
+                
+                return;
+            }
+            
+            let hasResults = false;
+            
+            // 检查每个卡片是否匹配搜索词
+            docCards.forEach(card => {
+                const keywords = card.getAttribute('data-keywords') ? card.getAttribute('data-keywords').toLowerCase() : '';
+                const title = card.querySelector('.doc-title') ? card.querySelector('.doc-title').textContent.toLowerCase() : '';
+                const desc = card.querySelector('.doc-desc') ? card.querySelector('.doc-desc').textContent.toLowerCase() : '';
+                
+                if (keywords.includes(searchTerm) || title.includes(searchTerm) || desc.includes(searchTerm)) {
+                    hasResults = true;
+                    card.style.display = 'flex';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // 处理无结果情况
+            const noResultsEl = document.getElementById('no-results-message');
+            if (!hasResults) {
+                if (!noResultsEl) {
+                    const message = document.createElement('div');
+                    message.id = 'no-results-message';
+                    message.className = 'no-results';
+                    message.innerHTML = `<i class="fas fa-search"></i> 未找到 "${searchTerm}" 相关的文档`;
+                    
+                    const firstSection = document.querySelector('.university-section, .hot-docs');
+                    if (firstSection) {
+                        firstSection.after(message);
+                        message.style.opacity = '1';
+                    }
+                } else {
+                    noResultsEl.innerHTML = `<i class="fas fa-search"></i> 未找到 "${searchTerm}" 相关的文档`;
+                    noResultsEl.style.display = 'block';
+                    noResultsEl.style.opacity = '1';
+                }
+            } else if (noResultsEl) {
+                noResultsEl.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+
+</html>

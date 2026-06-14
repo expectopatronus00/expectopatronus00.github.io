@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deepseek 智能工具导航</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto Mono', monospace; /* 更具科技感的字体 */
+            scroll-behavior: smooth; /* 平滑滚动 */
+        }
+
+        body {
+            background: #0a0e17;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* 容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem; /* 增加上下内边距 */
+        }
+
+        /* 头部 */
+        .header {
+            text-align: center;
+            margin-bottom: 4rem; /* 增加底部外边距 */
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 4rem; /* 增大标题字体 */
+            background: linear-gradient(45deg, #00f3ff, #6a00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(106, 0, 255, 0.5); /* 增强阴影 */
+            letter-spacing: 0.1em; /* 增加字间距 */
+            transition: transform 0.3s ease; /* 添加过渡效果 */
+        }
+
+        .header h1:hover {
+            transform: scale(1.05); /* 鼠标悬停时放大 */
+        }
+
+        /* 搜索框 */
+        .search-box {
+            margin-top: 2rem; /* 增加顶部外边距 */
+        }
+
+        .search-input {
+            padding: 0.75rem 1rem; /* 增大内边距 */
+            border-radius: 25px; /* 更圆润的边框 */
+            border: 2px solid #6a00ff; /* 紫色边框 */
+            background: rgba(255, 255, 255, 0.05); /* 半透明背景 */
+            width: 400px; /* 增大宽度 */
+            font-size: 1.1rem; /* 增大字体 */
+            color: #fff; /* 白色文字 */
+            outline: none; /* 移除焦点边框 */
+            transition: border-color 0.3s ease; /* 添加过渡效果 */
+        }
+
+        .search-input:focus {
+            border-color: #00f3ff; /* 焦点时改变边框颜色 */
+        }
+
+        /* 分类标题 */
+        .category {
+            font-size: 2.5rem; /* 增大字体 */
+            margin: 3rem 0 1.5rem; /* 增大上下外边距 */
+            border-bottom: 3px solid #6a00ff; /* 加粗边框 */
+            padding-bottom: 0.75rem; /* 增大底部内边距 */
+            letter-spacing: 0.05em; /* 增加字间距 */
+            color: #00f3ff; /* 调整颜色 */
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.5); /* 增加阴影 */
+        }
+
+        /* 网格布局 */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* 增大最小宽度 */
+            gap: 2rem; /* 增大间距 */
+        }
+
+        /* 卡片 */
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px; /* 更圆润的边框 */
+            padding: 2rem; /* 增大内边距 */
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid rgba(106, 0, 255, 0.3); /* 加粗边框 */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* 增强阴影 */
+        }
+
+        .card:hover {
+            transform: translateY(-10px); /* 增大悬停移动距离 */
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7); /* 增强悬停阴影 */
+        }
+
+        /* 卡片图标 */
+        .card-icon {
+            font-size: 4rem; /* 增大字体 */
+            margin-bottom: 1.5rem; /* 增大底部外边距 */
+            color: #00f3ff;
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.5); /* 增加阴影 */
+        }
+
+        /* 卡片标题 */
+        .card-title a {
+            color: inherit;
+            text-decoration: none;
+            position: relative;
+            font-size: 1.5rem; /* 增大字体 */
+            transition: color 0.3s ease; /* 添加颜色过渡效果 */
+        }
+
+        .card-title a:hover {
+            color: #00f3ff; /* 鼠标悬停时改变颜色 */
+        }
+
+        .card-title a::after {
+            content: "";
+            position: absolute;
+            bottom: -5px; /* 调整位置 */
+            left: 0;
+            width: 0;
+            height: 3px; /* 加粗线条 */
+            background: #6a00ff;
+            transition: width 0.3s;
+        }
+
+        .card-title a:hover::after {
+            width: 100%;
+        }
+
+        /* 卡片描述 */
+        .card-desc {
+            margin-top: 1rem; /* 增大顶部外边距 */
+            font-size: 1rem; /* 增大字体 */
+            color: #ccc;
+        }
+
+        /* 文章 */
+        .article {
+            margin-top: 4rem; /* 增大顶部外边距 */
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px; /* 更圆润的边框 */
+            padding: 2rem; /* 增大内边距 */
+            border: 2px solid rgba(106, 0, 255, 0.3); /* 加粗边框 */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* 增强阴影 */
+        }
+
+        .article p {
+            font-size: 1.1rem; /* 增大字体 */
+        }
+
+        .article a {
+            color: #00f3ff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .article a:hover {
+            color: #6a00ff;
+        }
+
+        /* 媒体查询 */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 3rem;
+            }
+
+            .search-input {
+                width: 100%;
+            }
+
+            .grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Deepseek Nav</h1>
+        </header>
+
+        <h2 class="category">开发工具</h2>
+        <div class="grid">
+            <div class="card">
+                <i class="fab fa-github card-icon"></i>
+                <h3 class="card-title"><a href="https://coder.deepseek.com" target="_blank">Deepseek Coder</a></h3>
+                <p class="card-desc">智能代码生成工具，支持全栈开发</p>
+            </div>
+            <div class="card">
+                <i class="fab fa-codepen card-icon"></i>
+                <h3 class="card-title"><a href="https://lab.deepseek.com" target="_blank">AI Lab</a></h3>
+                <p class="card-desc">在线AI实验平台，快速验证算法</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-code card-icon"></i>
+                <h3 class="card-title"><a href="./api/api.html" target="_blank">API 中心</a></h3>
+                <p class="card-desc">一体化API管理平台</p>
+            </div>
+        </div>
+
+        <h2 class="category">文档资源</h2>
+        <div class="grid">
+            <div class="card">
+                <i class="fab fa-figma card-icon"></i>
+                <h3 class="card-title"><a href="./doc/doc.html" target="_blank">院校教程归档</a></h3>
+                <p class="card-desc">院校教程</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-palette card-icon"></i>
+                <h3 class="card-title"><a href="https://brand.deepseek.com" target="_blank">品牌指南</a></h3>
+                <p class="card-desc">品牌视觉规范与设计指南</p>
+            </div>
+        </div>
+
+        <h2 class="category">AI 工具</h2>
+        <div class="grid">
+            <div class="card">
+                <i class="fas fa-brain card-icon"></i>
+                <h3 class="card-title"><a href="https://chat.deepseek.com" target="_blank">智能助手</a></h3>
+                <p class="card-desc">新一代对话式AI解决方案</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-robot card-icon"></i>
+                <h3 class="card-title"><a href="https://modelhub.deepseek.com" target="_blank">模型中心</a></h3>
+                <p class="card-desc">预训练模型库与部署平台</p>
+            </div>
+        </div>
+
+        <div class="article">
+            <p>技术文章请点击：<a href="article/deepseek-article.html" target="_blank">点击访问</a></p>
+        </div>
+
+    </div>
+</body>
+
+</html>
+
