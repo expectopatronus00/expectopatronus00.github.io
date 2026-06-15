@@ -1,716 +1,474 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark">
 <head>
+<script>(function(){try{const t=localStorage.getItem('theme')||'dark';if(t==='light')document.documentElement.dataset.theme='light';}catch(e){}})();</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EXPECTOPATRONUS · BLOG</title>
-<meta name="description" content="技术、工具、AI、生活。一名学习者的数字自留地。">
-<meta name="keywords" content="博客,技术,Linux,AI,工具,DevOps,DeepSeek">
-<meta property="og:title" content="EXPECTOPATRONUS · BLOG">
-<meta property="og:description" content="技术 · 工具 · AI · 生活">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://expectopatronus00.github.io/">
-<link rel="shortcut icon" href="home/50.png" type="image/png">
+<title>EXPECTOPATRONUS · Ship Faster With AI</title>
+<meta name="description" content="AI 辅助内容创作 · 科技博客 · 抖音搬运 · 深度好文">
+<link rel="shortcut icon" href="./home/50.png" type="image/png">
 <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<script>(function(){try{const t=localStorage.getItem('theme')||'dark';if(t==='light')document.documentElement.dataset.theme='light';}catch(e){}})();</script>
 <style>
-  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-  :root {
+  :root{
     --bg-0:#03040a;
     --bg-1:#06081a;
-    --ink:#e7ebff;
-    --mute:#8a93bf;
+    --bg-2:#0b0f26;
+    --ink:#e5eaff;
+    --ink-soft:#a7adc7;
+    --mute:#5b648c;
+    --line:rgba(120,150,255,.14);
+    --line-2:rgba(120,150,255,.28);
     --cyan:#00e5ff;
     --blue:#3b82ff;
     --violet:#8b5cf6;
-    --pink:#ff3bd4;
-    --gold:#ffd166;
-    --line:rgba(120,150,255,.22);
-    --line-strong:rgba(120,150,255,.40);
+    --pink:#ff4284;
+    --grad-1:linear-gradient(135deg,#00e5ff 0%,#3b82ff 50%,#8b5cf6 100%);
+    --grad-soft:linear-gradient(135deg,rgba(0,229,255,.10),rgba(139,92,246,.10));
+    --shadow-glow:0 0 60px -10px rgba(59,130,255,.35);
+    --radius-lg:18px;
+    --radius-md:12px;
   }
   [data-theme="light"]{
     --bg-0:#f6f8ff;
     --bg-1:#ffffff;
+    --bg-2:#eef1f8;
     --ink:#0b1230;
-    --mute:#4a5580;
-    --cyan:#008cff;
+    --ink-soft:#2a3770;
+    --mute:#5a6590;
+    --line:rgba(20,40,120,.14);
+    --line-2:rgba(20,40,120,.28);
+    --cyan:#0078f2;
     --blue:#3b82ff;
     --violet:#6d28d9;
-    --line:rgba(20,40,120,.14);
-    --line-strong:rgba(20,40,120,.30);
+    --pink:#e11d48;
+    --grad-1:linear-gradient(135deg,#0078f2 0%,#3b82ff 50%,#6d28d9 100%);
+    --grad-soft:linear-gradient(135deg,rgba(0,120,242,.08),rgba(109,40,217,.08));
+    --shadow-glow:0 20px 60px -20px rgba(59,130,255,.35);
   }
-  html, body {
-    height:100%;
-    background:
-      radial-gradient(1200px 700px at 15% 10%, rgba(59,130,255,.22), transparent 60%),
-      radial-gradient(900px 600px at 85% 90%, rgba(139,92,246,.20), transparent 60%),
-      radial-gradient(700px 500px at 50% 50%, rgba(0,229,255,.08), transparent 60%),
-      linear-gradient(180deg,#03040a 0%,#06081a 55%,#020309 100%);
-    color:var(--ink);
-    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", Roboto, "Helvetica Neue", Arial, sans-serif;
-    overflow:hidden;
-    -webkit-font-smoothing: antialiased;
-    transition: background .35s ease, color .35s ease;
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC","Microsoft YaHei",Segoe UI,Helvetica,Arial,sans-serif;
+    background:var(--bg-0);color:var(--ink);
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
   }
-  [data-theme="light"] html,
-  [data-theme="light"] body {
-    background:
-      radial-gradient(1200px 700px at 15% 10%, rgba(59,130,255,.15), transparent 60%),
-      radial-gradient(900px 600px at 85% 90%, rgba(139,92,246,.12), transparent 60%),
-      linear-gradient(180deg,#f6f8ff 0%,#ffffff 55%,#f0f4ff 100%);
+  a{color:inherit;text-decoration:none}
+  .stars{
+    position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:radial-gradient(ellipse at top, rgba(59,130,255,.12), transparent 60%),
+                radial-gradient(ellipse at 80% 0, rgba(139,92,246,.08), transparent 55%),
+                radial-gradient(ellipse at bottom, rgba(0,229,255,.06), transparent 60%);
   }
-
-  /* ── 星空 canvas ─────────────────────────────── */
-  #stars, #glow {
-    position:fixed; inset:0; width:100%; height:100%;
-  }
-  #stars { z-index:0; opacity:.85; }
-  [data-theme="light"] #stars { opacity:.08; }
-  #glow {
-    z-index:1;
-    background:
-      radial-gradient(600px 400px at 50% 40%, rgba(0,229,255,.12), transparent 60%),
-      radial-gradient(800px 500px at 50% 40%, rgba(139,92,246,.10), transparent 60%);
-    mix-blend-mode: screen;
-    pointer-events:none;
-    transition: opacity .35s ease;
-  }
-  [data-theme="light"] #glow {
-    background:
-      radial-gradient(600px 400px at 50% 40%, rgba(59,130,255,.18), transparent 60%),
-      radial-gradient(800px 500px at 50% 40%, rgba(139,92,246,.12), transparent 60%);
-    opacity:.5;
+  .grid-bg{
+    position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.35;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:44px 44px;
+    mask-image:radial-gradient(ellipse at center, black 30%, transparent 80%);
+    -webkit-mask-image:radial-gradient(ellipse at center, black 30%, transparent 80%);
   }
 
-  /* ── 布局 ───────────────────────────────────── */
-  .stage{
-    position:relative; z-index:10;
-    height:100%;
-    display:grid; place-items:center;
+  /* ── Nav ── */
+  .nav{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(20px) saturate(160%);
+    background:color-mix(in oklab, var(--bg-0) 82%, transparent);
+    border-bottom:1px solid var(--line);
   }
-  .card{
-    width:min(92vw, 880px);
-    padding:56px 48px;
-    border-radius:24px;
-    background:linear-gradient(140deg, rgba(255,255,255,.04), rgba(255,255,255,.015));
-    border:1px solid var(--line);
-    box-shadow:
-      0 0 0 1px rgba(59,130,255,.10) inset,
-      0 30px 80px -20px rgba(0,0,0,.7),
-      0 0 120px -30px rgba(0,229,255,.35);
-    backdrop-filter: blur(14px) saturate(140%);
-    -webkit-backdrop-filter: blur(14px) saturate(140%);
-    text-align:center;
-    position:relative;
-    animation: rise 900ms cubic-bezier(.2,.7,.2,1) both;
-    transition: background .35s ease, border-color .35s ease, box-shadow .35s ease;
+  .nav-inner{
+    max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;
+    padding:14px 24px;
   }
-  [data-theme="light"] .card{
-    background: linear-gradient(140deg, rgba(255,255,255,.96), rgba(246,248,255,.92));
-    border:1px solid var(--line);
-    box-shadow:
-      0 0 0 1px rgba(59,130,255,.08) inset,
-      0 20px 50px -15px rgba(30,60,150,.25),
-      0 0 60px -20px rgba(59,130,255,.15);
+  .brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:1rem;letter-spacing:.04em}
+  .brand .logo{
+    width:32px;height:32px;border-radius:9px;
+    background:var(--grad-1);display:grid;place-items:center;color:#fff;font-weight:800;
+    box-shadow:0 6px 20px -6px rgba(59,130,255,.6);
   }
-  .card::before, .card::after{
-    content:"";
-    position:absolute;
-    inset:-1px;
-    border-radius:24px;
-    padding:1px;
-    background:conic-gradient(from -20deg at 50% 50%, transparent, rgba(0,229,255,.8) 20%, transparent 40%, transparent 60%, rgba(139,92,246,.8) 80%, transparent);
-    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite:xor; mask-composite:exclude;
-    pointer-events:none;
-    opacity:.7;
-    animation: spin 18s linear infinite;
-    transition: opacity .35s ease;
+  .brand .logo::after{content:"E";font-size:.95rem}
+  .brand span{background:var(--grad-1);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .nav-links{display:flex;gap:4px;font-size:.9rem;flex-wrap:wrap}
+  .nav-links a{
+    padding:8px 14px;border-radius:10px;color:var(--ink-soft);
+    transition:all .25s;display:flex;gap:8px;align-items:center;
   }
-  [data-theme="light"] .card::before,
-  [data-theme="light"] .card::after{ opacity:.35; }
-  .card::after{ opacity:.25; filter: blur(8px); animation-duration:40s; }
+  .nav-links a:hover{color:var(--ink);background:rgba(255,255,255,.04)}
+  .nav-links a.active{background:rgba(59,130,255,.12);color:var(--cyan)}
 
-  @keyframes rise{ from{opacity:0; transform:translateY(24px) scale(.98)} to{opacity:1; transform:none} }
-  @keyframes spin{ to{ transform: rotate(360deg); } }
+  #theme-toggle{
+    width:38px;height:38px;border-radius:50%;display:grid;place-items:center;cursor:pointer;
+    border:1px solid var(--line-2);background:rgba(255,255,255,.03);color:var(--ink-soft);
+    transition:all .25s cubic-bezier(.2,.7,.2,1);
+  }
+  #theme-toggle:hover{transform:scale(1.08) rotate(-15deg);color:var(--cyan);border-color:var(--cyan);box-shadow:0 0 24px rgba(0,229,255,.3)}
 
-  /* ── 标题 ───────────────────────────────────── */
-  .brand{
-    font-size:14px; letter-spacing:.4em;
-    color:var(--mute); text-transform:uppercase;
-    margin-bottom:18px;
-    font-weight:500;
+  /* ── Hero ── */
+  .hero{
+    position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:80px 24px 60px;text-align:center;
   }
-  h1{
-    font-size:clamp(2rem, 5.5vw, 4.8rem);
-    line-height:1.05;
-    font-weight:800;
-    letter-spacing:-.02em;
-    margin-bottom:18px;
+  .hero-badge{
+    display:inline-flex;align-items:center;gap:10px;padding:8px 18px;border-radius:999px;
+    border:1px solid var(--line-2);background:rgba(255,255,255,.03);color:var(--ink-soft);font-size:.82rem;margin-bottom:24px;
   }
-  h1 .neon{
-    background:linear-gradient(120deg, #00e5ff 0%, #3b82ff 35%, #8b5cf6 65%, #ff3bd4 95%);
-    -webkit-background-clip:text; background-clip:text; color:transparent;
-    background-size:240% 100%;
-    animation: shimmer 7s ease-in-out infinite alternate;
+  .hero-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+  .hero h1{
+    font-size:clamp(2.2rem,5.5vw,4.2rem);line-height:1.12;font-weight:800;margin-bottom:20px;letter-spacing:-.02em;
   }
-  [data-theme="light"] h1 .neon{
-    background:linear-gradient(120deg, #008cff 0%, #3b82ff 35%, #6d28d9 65%, #db2777 95%);
-    -webkit-background-clip:text; background-clip:text; color:transparent;
+  .hero h1 em{
+    font-style:normal;background:var(--grad-1);-webkit-background-clip:text;background-clip:text;color:transparent;
   }
-  @keyframes shimmer{ from{ background-position: 0% 50%;} to{ background-position: 100% 50%;} }
-
-  .tagline{
-    font-size:1.05rem; color:var(--mute);
-    max-width:620px; margin:0 auto 36px; line-height:1.7;
+  .hero p{
+    max-width:720px;margin:0 auto;font-size:1.05rem;color:var(--ink-soft);line-height:1.7;
   }
-
-  /* ── 按钮 ─────────────────────────────────────── */
-  .actions{
-    display:flex; gap:14px; flex-wrap:wrap; justify-content:center;
-    margin-bottom:36px;
+  .hero-ctas{
+    display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:36px;
   }
   .btn{
-    display:inline-flex; align-items:center; gap:10px;
-    padding:13px 26px; border-radius:999px;
-    font-weight:600; font-size:.95rem;
-    text-decoration:none; color:var(--ink);
-    border:1px solid var(--line);
-    background: linear-gradient(140deg, rgba(59,130,255,.28), rgba(139,92,246,.18));
-    box-shadow:
-      0 8px 30px -10px rgba(59,130,255,.6),
-      0 0 0 1px rgba(255,255,255,.05) inset;
-    transition: transform .25s ease, box-shadow .35s ease, background .3s ease, border-color .3s ease, color .3s ease;
-    letter-spacing:.01em;
+    display:inline-flex;align-items:center;gap:10px;padding:13px 24px;border-radius:12px;font-size:.95rem;font-weight:600;
+    border:1px solid transparent;cursor:pointer;transition:all .25s;
   }
-  [data-theme="light"] .btn{
-    color:#fff;
-    background: linear-gradient(140deg, rgba(59,130,255,.92), rgba(109,40,217,.88));
-    border-color:rgba(59,130,255,.5);
-    box-shadow:0 6px 20px -10px rgba(59,130,255,.5);
+  .btn-primary{
+    background:var(--grad-1);color:#fff;box-shadow:0 16px 40px -20px rgba(59,130,255,.55);
   }
-  .btn.ghost{
-    background: rgba(255,255,255,.04);
-    box-shadow: none;
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 24px 60px -24px rgba(59,130,255,.7)}
+  .btn-ghost{
+    background:rgba(255,255,255,.03);color:var(--ink);border-color:var(--line-2);
   }
-  [data-theme="light"] .btn.ghost{
-    background: rgba(255,255,255,.96);
-    color:#3b82ff;
-    border-color:rgba(59,130,255,.35);
-    box-shadow: 0 2px 10px -2px rgba(59,130,255,.18);
-  }
-  .btn:hover{
-    transform: translateY(-2px);
-    border-color: var(--line-strong);
-    box-shadow:
-      0 14px 40px -12px rgba(0,229,255,.55),
-      0 0 0 1px rgba(255,255,255,.08) inset;
-  }
-  [data-theme="light"] .btn:hover{
-    box-shadow: 0 10px 28px -12px rgba(59,130,255,.55);
-    border-color:rgba(59,130,255,.7);
-  }
-  .btn .dot{
-    width:8px; height:8px; border-radius:50%;
-    background:#00e5ff;
-    box-shadow:0 0 14px #00e5ff;
-    animation: pulse 2s ease-in-out infinite;
-  }
-  @keyframes pulse{ 0%,100%{opacity:.9; transform:scale(1)} 50%{opacity:.4; transform:scale(.7)} }
+  .btn-ghost:hover{background:rgba(255,255,255,.07);border-color:var(--cyan);color:var(--cyan)}
 
-  /* ── 一言 ─────────────────────────────────────── */
-  .hitokoto{
-    padding:14px 22px;
-    border-radius:14px;
-    background: linear-gradient(120deg, rgba(0,229,255,.08), rgba(139,92,246,.08));
-    border:1px dashed var(--line);
-    color:#cfd6ff; font-size:.95rem;
-    margin-bottom:24px;
-    min-height:54px;
-    display:flex; align-items:center; justify-content:center;
-    transition: background .35s ease, color .35s ease, border-color .35s ease;
+  /* ── Partners / Marquee ── */
+  .partners{position:relative;z-index:2;margin:40px 0 60px;overflow:hidden}
+  .partners-track{
+    display:flex;gap:48px;align-items:center;justify-content:center;flex-wrap:wrap;
+    font-size:.95rem;color:var(--mute);font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+    padding:24px 40px;
   }
-  [data-theme="light"] .hitokoto{
-    background: linear-gradient(120deg, rgba(59,130,255,.08), rgba(139,92,246,.06));
-    color:#1a2764;
-    border-color:rgba(59,130,255,.35);
-  }
+  .partners-track span i{margin-right:8px;color:var(--cyan)}
 
-  /* ── 运行时间 ─────────────────────────────────── */
-  .uptime{
-    font-size:.8rem; color:var(--mute); letter-spacing:.05em;
+  /* ── Features ── */
+  .features{
+    position:relative;z-index:2;max-width:1200px;margin:40px auto 80px;padding:0 24px;
   }
-  .uptime b{ color:var(--cyan); }
-  [data-theme="light"] .uptime b{ color:#3b82ff; }
+  .section-head{text-align:center;margin-bottom:40px}
+  .section-head h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;margin-bottom:10px;letter-spacing:-.01em}
+  .section-head h2 span{background:var(--grad-1);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .section-head p{color:var(--ink-soft)}
 
-  /* ── 社交 ─────────────────────────────────────── */
-  .social{
-    position:absolute; bottom:30px; left:50%; transform:translateX(-50%);
-    display:flex; gap:12px;
-    z-index:20;
+  .grid{
+    display:grid;gap:20px;
+    grid-template-columns:repeat(3,1fr);
   }
-  .social a{
-    width:40px; height:40px; border-radius:50%;
-    display:grid; place-items:center;
-    color:var(--ink); font-size:1rem;
-    background: rgba(255,255,255,.04);
-    border:1px solid var(--line);
-    text-decoration:none;
-    transition: transform .25s ease, color .25s ease, border-color .25s ease, background .35s ease;
+  .card{
+    position:relative;padding:28px;background:var(--bg-2);
+    border:1px solid var(--line);border-radius:var(--radius-lg);
+    transition:all .3s cubic-bezier(.2,.7,.2,1);
+    overflow:hidden;
   }
-  [data-theme="light"] .social a{
-    background: rgba(255,255,255,.96);
-    color:#1a2764;
-    border-color:rgba(59,130,255,.3);
+  .card::before{
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background:var(--grad-soft);opacity:0;transition:opacity .3s;
   }
-  .social a:hover{
-    color:var(--cyan); transform: translateY(-3px);
-    border-color: var(--line-strong);
+  .card:hover{border-color:var(--line-2);transform:translateY(-4px);box-shadow:var(--shadow-glow)}
+  .card:hover::before{opacity:1}
+  .card .icon{
+    width:44px;height:44px;border-radius:12px;display:grid;place-items:center;margin-bottom:18px;
+    background:var(--grad-1);color:#fff;font-size:1.1rem;font-weight:800;
+    box-shadow:0 8px 24px -12px rgba(59,130,255,.6);
   }
-  [data-theme="light"] .social a:hover{
-    color:#3b82ff;
-    border-color:rgba(59,130,255,.6);
+  .card h3{font-size:1.05rem;font-weight:700;margin-bottom:8px}
+  .card p{font-size:.9rem;color:var(--ink-soft);line-height:1.7}
+  .card .link{
+    margin-top:18px;display:inline-flex;gap:8px;color:var(--cyan);font-size:.85rem;font-weight:600;
   }
+  .card .link i{transition:transform .25s}
+  .card:hover .link i{transform:translateX(4px)}
 
-  /* ── 主题切换 ─────────────────────────────────── */
-  #theme-toggle{
-    position:fixed;top:18px;right:18px;z-index:60;
-    width:40px;height:40px;border-radius:50%;
-    display:grid;place-items:center;
-    color:#e5eaff;font-size:1rem;cursor:pointer;
-    border:1px solid rgba(120,150,255,.22);
-    background: rgba(255,255,255,.04);
-    backdrop-filter: blur(10px) saturate(140%);
-    -webkit-backdrop-filter: blur(10px) saturate(140%);
-    transition: all .3s cubic-bezier(.2,.7,.2,1);
+  .card.large{
+    grid-column:span 2;display:flex;gap:28px;align-items:center;padding:36px;
+    background:var(--grad-soft);
   }
-  #theme-toggle:hover{
-    color:#00e5ff;
-    border-color:rgba(0,229,255,.55);
-    background: rgba(0,229,255,.08);
-    transform: scale(1.08) rotate(-15deg);
-    box-shadow:0 0 24px rgba(0,229,255,.35);
+  .card.large .visual{
+    flex-shrink:0;width:220px;height:160px;border-radius:14px;overflow:hidden;position:relative;
+    background:linear-gradient(135deg,#0f1b3a,#1b2a5a);border:1px solid var(--line);
   }
-  #theme-toggle:active{ transform: scale(.92); }
-  [data-theme="light"] #theme-toggle{
-    color:#1a2764;
-    background: rgba(255,255,255,.85);
-    border-color:rgba(59,130,255,.4);
-    box-shadow: 0 4px 16px -4px rgba(59,130,255,.3);
-    backdrop-filter: blur(10px) saturate(140%);
-    -webkit-backdrop-filter: blur(10px) saturate(140%);
-  }
-  [data-theme="light"] #theme-toggle:hover{
-    color:#3b82ff;
-    border-color:rgba(59,130,255,.7);
-    background:#fff;
-    transform: scale(1.08) rotate(-15deg);
-    box-shadow: 0 6px 22px -4px rgba(59,130,255,.45);
-  }
+  .card.large .visual video,.card.large .visual img{width:100%;height:100%;object-fit:cover;display:block}
 
-  /* ── 滚动条 & 选中文本 ──────────────────────────── */
-  ::-webkit-scrollbar{ width:10px; height:10px; }
-  ::-webkit-scrollbar-track{ background:transparent; }
-  ::-webkit-scrollbar-thumb{
-    background:linear-gradient(180deg,#00e5ff,#3b82ff,#8b5cf6);
-    border-radius:10px;border:2px solid #03040a;
-  }
-  [data-theme="light"] ::-webkit-scrollbar-thumb{
-    background:linear-gradient(180deg,#008cff,#3b82ff,#6d28d9);
-    border-color:#f0f4ff;
-  }
-  ::-webkit-scrollbar-thumb:hover{ background:linear-gradient(180deg,#00e5ff,#8b5cf6); }
-  [data-theme="light"] ::-webkit-scrollbar-thumb:hover{ background:linear-gradient(180deg,#008cff,#6d28d9); }
-  ::selection{ background:rgba(0,229,255,.28); color:#fff; }
-  [data-theme="light"] ::selection{ background:rgba(59,130,255,.25); color:#0b1230; }
+  /* ── Hot Posts ── */
+  .posts{position:relative;z-index:2;max-width:1200px;margin:0 auto 100px;padding:0 24px}
+  .posts h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;margin-bottom:28px;letter-spacing:-.01em}
+  .posts h2 span{background:var(--grad-1);-webkit-background-clip:text;background-clip:text;color:transparent}
 
-  /* ── 天气跑马 ────────────────────────────────── */
-  .ticker{
-    position:fixed; top:0; left:0; right:0;
-    z-index:5; height:32px;
-    background:linear-gradient(180deg, rgba(5,8,26,.9), rgba(5,8,26,.0));
-    font-size:.78rem; color:#b4bce0;
-    white-space:nowrap; overflow:hidden;
-    display:flex; align-items:center;
-    border-bottom:1px solid rgba(120,150,255,.12);
-    transition: background .35s ease, color .35s ease, border-color .35s ease;
-  }
-  [data-theme="light"] .ticker{
-    background:linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.0));
-    color:#4a5580;
-    border-bottom-color:rgba(59,130,255,.25);
-  }
-  .ticker span{
-    display:inline-block; padding-left:100%;
-    animation: slide 60s linear infinite;
-  }
-  @keyframes slide{ from{ transform: translateX(0);} to{ transform: translateX(-100%);} }
+  .posts-grid{display:grid;gap:20px;grid-template-columns:repeat(3,1fr)}
 
-  /* ── 公告 ─────────────────────────────────────── */
-  .modal{
-    position:fixed; inset:0; z-index:99;
-    display:none; grid-template-areas:"m";
-    place-items:center;
-    background:rgba(2,4,14,.75); backdrop-filter:blur(6px);
+  .posts-grid .card{padding:0;overflow:hidden}
+  .posts-grid .card .thumb{
+    aspect-ratio:16/9;position:relative;overflow:hidden;
+    background:var(--grad-1);
   }
-  .modal.show{ display:grid; animation: fade .25s ease; }
-  @keyframes fade{ from{opacity:0} to{opacity:1} }
-  .modal-box{
-    grid-area:m;
-    width:min(90vw, 460px);
-    padding:28px; border-radius:20px;
-    background: linear-gradient(160deg, #0a0f26, #06081a);
-    border:1px solid rgba(120,150,255,.22);
-    box-shadow:0 30px 80px -20px rgba(0,0,0,.7), 0 0 60px -20px rgba(0,229,255,.3);
+  .posts-grid .card .thumb-img{width:100%;height:100%;object-fit:cover;display:block}
+  .posts-grid .card .thumb-tag{
+    position:absolute;top:12px;left:12px;padding:5px 12px;border-radius:8px;font-size:.72rem;font-weight:700;
+    background:rgba(0,0,0,.55);color:#fff;backdrop-filter:blur(10px);
   }
-  [data-theme="light"] .modal-box{
-    background: linear-gradient(160deg, #ffffff, #f0f4ff);
-    border-color:rgba(59,130,255,.35);
-    box-shadow:0 20px 50px -15px rgba(30,60,150,.35);
-  }
-  .modal-box h3{
-    font-size:1.1rem; font-weight:700; margin-bottom:12px;
-    background:linear-gradient(120deg, #00e5ff, #8b5cf6);
-    -webkit-background-clip:text; background-clip:text; color:transparent;
-  }
-  [data-theme="light"] .modal-box h3{
-    background:linear-gradient(120deg, #008cff, #6d28d9);
-    -webkit-background-clip:text; background-clip:text; color:transparent;
-  }
-  .modal-box p{ color:#b4bce0; line-height:1.75; font-size:.92rem; margin-bottom:8px; }
-  [data-theme="light"] .modal-box p{ color:#3a4470; }
-  .modal-box label{ display:flex; gap:8px; color:#8a93bf; font-size:.85rem; margin-top:14px; align-items:center; }
-  [data-theme="light"] .modal-box label{ color:#5a6490; }
-  .modal-box .row{ display:flex; gap:10px; margin-top:18px; justify-content:flex-end; }
-  .modal-box button{
-    padding:8px 18px; border-radius:999px; border:1px solid rgba(120,150,255,.22);
-    background:rgba(255,255,255,.05); color:#e7ebff; cursor:pointer;
-    font-weight:600; font-size:.9rem;
-  }
-  [data-theme="light"] .modal-box button{
-    background:rgba(255,255,255,.95);
-    color:#3a4470;
-    border-color:rgba(59,130,255,.35);
-  }
-  .modal-box button.primary{
-    background:linear-gradient(120deg, rgba(0,229,255,.25), rgba(139,92,246,.25));
-    border-color:rgba(0,229,255,.45);
-  }
-  [data-theme="light"] .modal-box button.primary{
-    background:linear-gradient(120deg, #3b82ff, #6d28d9);
-    color:#fff; border-color:transparent;
-  }
-  .modal-box button:hover{ transform: translateY(-1px); }
+  .posts-grid .card .body{padding:22px 24px 26px}
+  .posts-grid .card .title{font-size:1rem;font-weight:700;line-height:1.5;margin-bottom:10px}
+  .posts-grid .card .summary{font-size:.86rem;color:var(--ink-soft);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .posts-grid .card .meta{margin-top:14px;display:flex;gap:16px;font-size:.78rem;color:var(--mute)}
 
-  /* ── 响应式 ───────────────────────────────────── */
-  @media (max-width: 1024px) and (min-width: 769px){
-    .card{ width:min(92vw, 720px); padding:48px 40px; }
-    h1{ font-size:clamp(1.8rem, 5vw, 3.6rem); }
-    .tagline{ font-size:.98rem; }
+  /* ── Footer ── */
+  .footer{
+    position:relative;z-index:2;margin-top:40px;
+    border-top:1px solid var(--line);background:rgba(0,0,0,.2);
+    backdrop-filter:blur(12px);
   }
-  @media (max-width: 768px){
-    html, body{ overflow:auto; }
-    .ticker{ height:28px; font-size:.72rem; }
-    #theme-toggle{ top:5px; right:10px; width:36px; height:36px; font-size:.9rem; }
-    .card{ padding:40px 22px; border-radius:20px; width:min(94vw, 620px); }
-    .brand{ letter-spacing:.28em; font-size:11px; margin-bottom:14px; }
-    h1{ font-size:clamp(1.7rem, 8vw, 2.8rem); margin-bottom:14px; }
-    .tagline{ font-size:.95rem; margin:0 auto 28px; }
-    .actions{ gap:10px; margin-bottom:28px; }
-    .btn{ padding:11px 20px; font-size:.9rem; flex:1; justify-content:center; min-width:0; }
-    .hitokoto{ padding:12px 16px; font-size:.9rem; min-height:50px; margin-bottom:20px; }
-    .social{ bottom:22px; gap:8px; }
-    .social a{ width:36px; height:36px; font-size:.92rem; }
+  [data-theme="light"] .footer{background:rgba(255,255,255,.5)}
+  .footer-inner{
+    max-width:1200px;margin:0 auto;padding:40px 24px;display:grid;
+    grid-template-columns:2fr 1fr 1fr 1fr;gap:36px;
   }
-  @media (max-width: 420px){
-    html, body{ overflow:auto; }
-    .card{ padding:32px 16px; border-radius:16px; width:min(96vw, 360px); }
-    .brand{ letter-spacing:.22em; font-size:10px; }
-    h1{ font-size:clamp(1.5rem, 10vw, 2.2rem); }
-    .tagline{ font-size:.9rem; max-width:280px; }
-    .actions{ flex-direction:column; align-items:stretch; }
-    .btn{ padding:11px 16px; }
-    .social a{ width:34px; height:34px; }
-    .modal-box{ padding:22px; width:min(92vw, 340px); }
-    .modal-box h3{ font-size:1rem; }
-    .modal-box p{ font-size:.88rem; }
+  .footer .brand{margin-bottom:14px}
+  .footer p{color:var(--ink-soft);font-size:.88rem;line-height:1.7;max-width:340px}
+  .footer h4{font-size:.9rem;font-weight:700;margin-bottom:14px;color:var(--ink)}
+  .footer ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+  .footer ul a{color:var(--ink-soft);font-size:.88rem;transition:color .2s}
+  .footer ul a:hover{color:var(--cyan)}
+  .bottom-bar{
+    max-width:1200px;margin:0 auto;padding:18px 24px;display:flex;justify-content:space-between;align-items:center;
+    border-top:1px solid var(--line);font-size:.78rem;color:var(--mute);
   }
-  @media (max-height: 640px){
-    .stage{ height:auto; min-height:100vh; padding:60px 0 80px; }
-    .card{ padding:28px 24px; width:min(94vw, 720px); }
-    .brand{ font-size:11px; margin-bottom:10px; letter-spacing:.3em; }
-    h1{ font-size:clamp(1.6rem, 5vw, 2.6rem); margin-bottom:10px; }
-    .tagline{ font-size:.92rem; margin-bottom:20px; }
-    .actions{ margin-bottom:20px; }
-    .hitokoto{ padding:10px 14px; min-height:44px; font-size:.88rem; margin-bottom:16px; }
-    .social{ bottom:18px; }
+  .socials{display:flex;gap:14px}
+  .socials a{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;border:1px solid var(--line);color:var(--ink-soft);transition:all .25s}
+  .socials a:hover{color:var(--cyan);border-color:var(--cyan);transform:translateY(-2px)}
+
+  /* ── Responsive ── */
+  @media (max-width:1024px){
+    .grid{grid-template-columns:repeat(2,1fr)}
+    .card.large{grid-column:span 2;flex-direction:column;text-align:center}
+    .card.large .visual{width:100%}
+    .posts-grid{grid-template-columns:repeat(2,1fr)}
+    .footer-inner{grid-template-columns:repeat(2,1fr)}
+  }
+  @media (max-width:680px){
+    .grid,.posts-grid,.footer-inner{grid-template-columns:1fr}
+    .nav-links a{padding:6px 10px;font-size:.85rem}
+    .hero{padding:60px 20px 40px}
+    .hero h1{font-size:2.2rem}
+    .hero-ctas .btn{flex:1;min-width:140px;justify-content:center}
+    .card.large{padding:26px}
+    .features,.posts{padding:0 16px}
+    .brand span{display:none}
   }
 </style>
 </head>
 <body>
 
-<div class="ticker" id="ticker"><span>天气加载中…</span></div>
+<div class="stars"></div>
+<div class="grid-bg"></div>
 
-<button id="theme-toggle" aria-label="主题切换"><i class="fa-solid fa-moon"></i></button>
-
-<canvas id="stars"></canvas>
-<div id="glow"></div>
-
-<div class="stage">
-  <div class="card">
-    <div class="brand">// EXPECTOPATRONUS // BLOG</div>
-    <h1>你好，<br><span class="neon">数字流浪者</span></h1>
-    <p class="tagline">
-      分享技术、工具、AI 和生活。从 Linux 到 DeepSeek，从 PXE 到 Caddy，
-      把散落的知识，拼成一张看得见的地图。
-    </p>
-
-    <div class="hitokoto" id="hitokoto">正在检索今日一言…</div>
-
-    <div class="actions">
-      <a class="btn" href="home/home.html">
-        <span class="dot"></span>
-        进入文章
-        <i class="fa-solid fa-arrow-right"></i>
-      </a>
-      <a class="btn ghost" href="https://github.com/expectopatronus00" target="_blank">
-        <i class="fa-brands fa-github"></i>
-        GitHub
-      </a>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="./index.html" class="brand"><div class="logo"></div><span>EXPECTOPATRONUS</span></a>
+    <div class="nav-links">
+      <a href="./index.html" class="active"><i class="fa-solid fa-house"></i> 首页</a>
+      <a href="./home/home.html"><i class="fa-solid fa-newspaper"></i> 文章</a>
+      <a href="./post/deepseek/deepseek.html"><i class="fa-solid fa-robot"></i> DeepSeek</a>
+      <a href="http://expectopatronus.top:5005/" target="_blank"><i class="fa-solid fa-compass"></i> 导航</a>
     </div>
+    <button id="theme-toggle" aria-label="主题切换"><i class="fa-solid fa-moon"></i></button>
+  </div>
+</nav>
 
-    <div class="uptime">
-      博客已运行 <b id="days">--</b> 天
+<section class="hero">
+  <div class="hero-badge"><span class="dot"></span>AI 驱动 · 内容创作 · 自动发布</div>
+  <h1>Ship Faster With <em>AI Agents</em></h1>
+  <p>给我一个抖音链接，一个视频，一句话。剩下的事交给我。<br>解析 · 生成 · 排版 · 推送，<b>全自动</b>。</p>
+  <div class="hero-ctas">
+    <a href="./home/home.html" class="btn btn-primary"><i class="fa-solid fa-sparkles"></i> 浏览文章</a>
+    <a href="./home/home.html" class="btn btn-ghost"><i class="fa-brands fa-github"></i> GitHub Pages</a>
+  </div>
+</section>
+
+<section class="partners">
+  <div class="partners-track">
+    <span><i class="fa-solid fa-microchip"></i> DOUYIN</span>
+    <span><i class="fa-solid fa-brain"></i> DEEPSEEK</span>
+    <span><i class="fa-solid fa-bolt"></i> GEMINI</span>
+    <span><i class="fa-solid fa-wand-magic-sparkles"></i> TRAE</span>
+    <span><i class="fa-solid fa-rocket"></i> GITHUB PAGES</span>
+  </div>
+</section>
+
+<section class="features">
+  <div class="section-head">
+    <h2>一个链接，<span>全链路自动化</span></h2>
+    <p>从抖音公开视频生成一篇结构完整的深度文章</p>
+  </div>
+  <div class="grid">
+    <div class="card large">
+      <div class="visual">
+        <img src="https://p26-sign.douyinpic.com/tos-cn-i-dy/67354461040f442ebd8434d3b5dfdcb6~tplv-dy-resize-walign-adapt-aq:540:q75.webp?lk3s=138a59ce&x-expires=1782658800&x-signature=dUKEXPSY4MB%2Fb6NgdZSl067ukzw%3D&from=327834062&s=PackSourceEnum_DOUYIN_REFLOW&se=false&sc=cover&biz_tag=aweme_video&l=2026061423361830EB883819F5428D7EB5" alt="cover">
+      </div>
+      <div>
+        <h3 style="font-size:1.25rem;margin-bottom:10px">抖音 → 文章，<span style="background:var(--grad-1);-webkit-background-clip:text;background-clip:text;color:transparent">一秒生成</span></h3>
+        <p style="color:var(--ink-soft);line-height:1.75">识别 v.douyin.com 短链，提取作者 / 封面 / 无水印直链，自动排版成可访问、可播放、可分享的博客文章。</p>
+        <a href="./home/home.html" class="link" style="margin-top:18px;display:inline-flex;gap:8px;color:var(--cyan);font-weight:600">看第一篇搬运 <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="icon"><i class="fa-solid fa-globe"></i></div>
+      <h3>响应式布局</h3>
+      <p>笔记本 · 平板 · 手机三端自适应，断点 1024 / 680 像素，无横向滚动条。</p>
+    </div>
+    <div class="card">
+      <div class="icon"><i class="fa-solid fa-moon"></i></div>
+      <h3>主题随心切</h3>
+      <p>深色 / 浅色一键切换，偏好存在 localStorage，刷新不丢失。</p>
+    </div>
+    <div class="card">
+      <div class="icon"><i class="fa-solid fa-code"></i></div>
+      <h3>代码高亮</h3>
+      <p>集成 highlight.js，霓虹深色配色，100+ 语法高亮。</p>
+    </div>
+    <div class="card">
+      <div class="icon"><i class="fa-solid fa-cloud"></i></div>
+      <h3>免服务器部署</h3>
+      <p>GitHub Pages 托管，绑定自定义域名，HTTPS 自动签发。</p>
+    </div>
+    <div class="card">
+      <div class="icon"><i class="fa-solid fa-wind"></i></div>
+      <h3>真·无水印播放</h3>
+      <p>直接用抖音官方 aweme/v1/play 接口返回 mp4 源，无需解析第三方服务。</p>
     </div>
   </div>
-</div>
+</section>
 
-<div class="social">
-  <a href="https://github.com/expectopatronus00" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
-  <a href="#" id="wechat" title="微信"><i class="fa-brands fa-weixin"></i></a>
-  <a href="tencent://message/?uin=1018938913" title="QQ 1018938913"><i class="fa-brands fa-qq"></i></a>
-  <a href="https://weibo.com/u/6888368987" target="_blank" title="微博"><i class="fa-brands fa-weibo"></i></a>
-  <a href="http://expectopatronus.top:5005/" target="_blank" title="导航"><i class="fa-solid fa-compass"></i></a>
-</div>
+<section class="posts">
+  <div class="section-head" style="margin-bottom:28px">
+    <h2>最新 <span>抖音搬运</span></h2>
+    <p>从公开视频生成，点击进入可直接播放</p>
+  </div>
+  <div class="posts-grid" id="posts-grid"></div>
+  <div style="text-align:center;margin-top:28px">
+    <a href="./home/home.html" class="btn btn-ghost"><i class="fa-solid fa-angles-right"></i> 查看全部文章</a>
+  </div>
+</section>
 
-<div class="modal" id="modal">
-  <div class="modal-box">
-    <h3>欢迎访问</h3>
-    <p>这里是 EXPECTOPATRONUS 的个人博客。</p>
-    <p>文章收录在 <b class="neon" style="color:#00e5ff">home/</b>，DeepSeek 专题在 <b class="neon" style="color:#8b5cf6">post/deepseek/</b>。</p>
-    <p>联系我可以用下方的微信 / QQ 图标。</p>
-    <label><input type="checkbox" id="never"> 下次不再提醒</label>
-    <div class="row">
-      <button class="primary" id="close">进入</button>
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <a href="./index.html" class="brand"><div class="logo"></div><span>EXPECTOPATRONUS</span></a>
+      <p>一个由 AI 驱动的个人科技博客 · 抖音搬运 · DeepSeek 精选 · 工具链 · 自动化。</p>
+      <div class="socials" style="margin-top:18px">
+        <a href="https://github.com/expectopatronus00" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+        <a href="http://expectopatronus.top:5005/" target="_blank" title="导航"><i class="fa-solid fa-compass"></i></a>
+        <a href="mailto:expectopatronus00@users.noreply.github.com" title="Email"><i class="fa-regular fa-envelope"></i></a>
+      </div>
+    </div>
+    <div>
+      <h4>内容</h4>
+      <ul>
+        <li><a href="./home/home.html">文章列表</a></li>
+        <li><a href="./post/deepseek/deepseek.html">DeepSeek</a></li>
+        <li><a href="./index.html#posts">最新搬运</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>技术</h4>
+      <ul>
+        <li><a href="https://trae.ai" target="_blank">TRAE IDE</a></li>
+        <li><a href="https://pages.github.com" target="_blank">GitHub Pages</a></li>
+        <li><a href="https://developer.mozilla.org" target="_blank">MDN</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>站点</h4>
+      <ul>
+        <li><a href="./index.html">首页</a></li>
+        <li><a href="http://expectopatronus.top:5005/" target="_blank">导航站</a></li>
+        <li><a href="./home/home.html">RSS</a></li>
+      </ul>
     </div>
   </div>
-</div>
+  <div class="bottom-bar">
+    <span>© 2026 EXPECTOPATRONUS · 由 AI Agents 驱动的个人博客</span>
+    <span>Made with <i class="fa-solid fa-heart" style="color:#ff4284"></i> on Trae</span>
+  </div>
+</footer>
 
 <script>
-/* ── 星空粒子 ──────────────────────────── */
-(function(){
-  const canvas = document.getElementById('stars');
-  const ctx = canvas.getContext('2d');
-  let W = 0, H = 0;
-  const DPR = Math.min(window.devicePixelRatio || 1, 2);
-  const count = 140;
-  const stars = [];
-  const mouse = { x: 9999, y: 9999 };
-
-  function resize(){
-    W = canvas.clientWidth = window.innerWidth;
-    H = canvas.clientHeight = window.innerHeight;
-    canvas.width = W * DPR;
-    canvas.height = H * DPR;
-    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-  }
-  function init(){
-    stars.length = 0;
-    for(let i=0;i<count;i++){
-      stars.push({
-        x: Math.random()*W,
-        y: Math.random()*H,
-        z: Math.random()*1 + .2,
-        r: Math.random()*1.3 + .3,
-        hue: 200 + Math.random()*90,
-        off: Math.random()*Math.PI*2,
-      });
+  // ── Theme ──
+  (function(){
+    const t=document.getElementById('theme-toggle'),i=t.querySelector('i');
+    function apply(){
+      const d=document.documentElement.dataset.theme||'dark';
+      i.className=d==='light'?'fa-regular fa-sun':'fa-solid fa-moon';
     }
-  }
-  function draw(t){
-    ctx.clearRect(0,0,W,H);
-    for(const s of stars){
-      s.off += 0.02;
-      const twinkle = 0.6 + Math.sin(s.off)*0.4;
-      const dx = mouse.x - s.x, dy = mouse.y - s.y;
-      const d2 = dx*dx + dy*dy;
-      let fx = 0, fy = 0;
-      if(d2 < 16000){
-        const f = (16000 - d2)/16000 * 12;
-        fx = -dx/Math.sqrt(d2)*f;
-        fy = -dy/Math.sqrt(d2)*f;
-      }
-      s.x += (Math.sin(s.off*0.3)*0.25 + fx) * s.z;
-      s.y += (Math.cos(s.off*0.27)*0.25 + fy) * s.z;
-      if(s.x < 0) s.x += W; if(s.x > W) s.x -= W;
-      if(s.y < 0) s.y += H; if(s.y > H) s.y -= H;
+    apply();
+    t.onclick=()=>{
+      const next=document.documentElement.dataset.theme==='light'?'dark':'light';
+      document.documentElement.dataset.theme=next;
+      try{localStorage.setItem('theme',next);}catch(e){}
+      apply();
+    };
+  })();
 
-      ctx.beginPath();
-      ctx.arc(s.x, s.y, s.r * twinkle, 0, Math.PI*2);
-      const g = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r*6);
-      g.addColorStop(0, `hsla(${s.hue}, 90%, 70%, ${0.9*twinkle})`);
-      g.addColorStop(0.4, `hsla(${s.hue+20}, 80%, 60%, ${0.25*twinkle})`);
-      g.addColorStop(1, 'hsla(220,0%,0%,0)');
-      ctx.fillStyle = g;
-      ctx.fill();
+  // ── Hot posts ──
+  const postsGrid=document.getElementById('posts-grid');
+  const articles=[
+    {
+      id:"7641962519699017001",
+      title:"Gemini3.5Flash 携手 Composer2.5 踢馆赛",
+      url:"./post/dy-7641962519699017001/dy-7641962519699017001.html",
+      summary:"两个新出的模型挑战全球十六强，谁将上位，谁将出局？",
+      category:"抖音搬运",
+      date:"2026-06-14",
+      cover:"https://p26-sign.douyinpic.com/tos-cn-i-dy/67354461040f442ebd8434d3b5dfdcb6~tplv-dy-resize-walign-adapt-aq:540:q75.webp?lk3s=138a59ce&x-expires=1782658800&x-signature=dUKEXPSY4MB%2Fb6NgdZSl067ukzw%3D&from=327834062&s=PackSourceEnum_DOUYIN_REFLOW&se=false&sc=cover&biz_tag=aweme_video&l=2026061423361830EB883819F5428D7EB5"
+    },
+    {
+      id:"deepseek",
+      title:"DeepSeek-R1 深度解析",
+      url:"./post/deepseek/deepseek.html",
+      summary:"DeepSeek 系列模型从架构到推理优化的完整梳理。",
+      category:"AI",
+      date:"2026-06-10",
+      cover:"./home/50.png"
+    },
+    {
+      id:"pxe",
+      title:"5分钟掌握 PXE 批量装机",
+      url:"https://mp.weixin.qq.com/s/nEuLct9v9YhxG2Wq1kNasw",
+      summary:"从搭建到自动化部署全流程，一张网卡搞定百台机器。",
+      category:"IT运维",
+      date:"2025-06-02",
+      cover:"./home/502.png"
     }
-  }
-  let raf = 0;
-  function loop(t){ draw(t); raf = requestAnimationFrame(loop); }
-  window.addEventListener('resize', () => { resize(); init(); });
-  window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
-  window.addEventListener('mouseleave', () => { mouse.x = mouse.y = 9999; });
-  resize(); init(); loop(0);
-})();
-
-/* ── 一言 ─────────────────────────────── */
-async function hitokoto(){
-  try{
-    const r = await fetch('https://api.vvhan.com/api/ian/rand', {cache:'no-store'});
-    if(!r.ok) throw 0;
-    const t = (await r.text()).trim();
-    document.getElementById('hitokoto').textContent = t || '人生如逆旅，我亦是行人。';
-  }catch{
-    document.getElementById('hitokoto').textContent = '人生如逆旅，我亦是行人。';
-  }
-}
-
-/* ── 天气（wttr.in 免费接口） ──────────────── */
-async function weather(){
-  const bar = document.getElementById('ticker');
-  const span = bar?.querySelector('span');
-  if(!span) return;
-  const cities = [
-    {name:'郑州',  q:'Zhengzhou'},
-    {name:'西安',  q:'Xian'},
-    {name:'延安',  q:'Yan\'an'},
-    {name:'北京',  q:'Beijing'},
-    {name:'上海',  q:'Shanghai'},
-    {name:'杭州',  q:'Hangzhou'},
-    {name:'广州',  q:'Guangzhou'},
-    {name:'深圳',  q:'Shenzhen'},
-    {name:'成都',  q:'Chengdu'},
-    {name:'重庆',  q:'Chongqing'},
-    {name:'南京',  q:'Nanjing'},
-    {name:'苏州',  q:'Suzhou'},
-    {name:'武汉',  q:'Wuhan'},
-    {name:'长沙',  q:'Changsha'},
-    {name:'大连',  q:'Dalian'},
-    {name:'青岛',  q:'Qingdao'},
-    {name:'昆明',  q:'Kunming'},
-    {name:'天津',  q:'Tianjin'},
-    {name:'厦门',  q:'Xiamen'},
-    {name:'济南',  q:'Jinan'},
   ];
-  const descZh = {
-    'Sunny':'晴','Clear':'晴','Partly cloudy':'多云','Overcast':'阴','Cloudy':'阴',
-    'Patchy rain nearby':'有小雨','Patchy light rain':'小雨','Light rain':'小雨','Rain':'雨',
-    'Heavy rain':'大雨','Thundery outbreaks':'雷雨','Thunderstorm':'雷雨',
-    'Patchy snow nearby':'有小雪','Light snow':'小雪','Snow':'雪','Heavy snow':'大雪',
-    'Fog':'雾','Mist':'薄雾','Patchy fog':'有雾','Windy':'大风','Blowing snow':'吹雪',
-    'Freezing fog':'冻雾','Light drizzle':'毛毛雨','Drizzle':'毛毛雨','Showers':'阵雨',
-    'Rainy':'雨','Snowy':'雪','Storm':'风暴','Thundershowers':'雷阵雨',
-  };
-  function descToZh(en){
-    if(!en) return '';
-    const k = Object.keys(descZh).find(x => new RegExp(x.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'i').test(en));
-    if(k) return descZh[k];
-    if(/rain/i.test(en)) return '雨';
-    if(/snow/i.test(en)) return '雪';
-    if(/fog|mist/i.test(en)) return '雾';
-    if(/cloud|overcast/i.test(en)) return '阴';
-    if(/sunny|clear/i.test(en)) return '晴';
-    return en;
-  }
-  function weatherCodeIcon(code, desc){
-    if(code === 0) return '☀️';
-    if([113].includes(code)) return '☀️';
-    if([116,119,122].includes(code)) return '⛅';
-    if([176,179,182,185].includes(code)) return '🌦️';
-    if([189,192,195,198,200,227,230,232,235].includes(code)) return '🌧️';
-    if([127,130,133,136,141,144,147,150,153,156,159,162,165,168,171,214,217,220,223].includes(code)) return '❄️';
-    if([203,206,209,239,242,245].includes(code)) return '🌧️';
-    if([248,260,263].includes(code)) return '🌫️';
-    if([266,281,284,287].includes(code)) return '☀️';
-    return '';
-  }
-  const res = await Promise.all(cities.slice(0,8).map(async c=>{
-    try{
-      const url = `https://wttr.in/${encodeURIComponent(c.q)}?format=j1&lang=zh`;
-      const r = await fetch(url, {cache:'no-store'});
-      if(!r.ok) return '';
-      const j = await r.json();
-      const w = j.current_condition && j.current_condition[0];
-      if(!w) return '';
-      const t = w.temp_C || w.temp_F;
-      const code = parseInt(w.weatherCode) || 0;
-      const descEn = (w.weatherDesc && w.weatherDesc[0] && w.weatherDesc[0].value) || '';
-      const desc = descToZh(descEn);
-      const icon = weatherCodeIcon(code, descEn) || '🌤️';
-      return `${c.name} ${t}° ${icon}`;
-    }catch{ return ''; }
-  }));
-  const txt = res.filter(Boolean).join('   ·  ');
-  span.textContent = txt || '天气服务暂不可用';
-}
+  postsGrid.innerHTML=articles.map(a=>`
+    <a class="card" href="${a.url}">
+      <div class="thumb">
+        <img class="thumb-img" src="${a.cover}" alt="" loading="lazy" onerror="this.remove()">
+        <span class="thumb-tag">${a.category}</span>
+      </div>
+      <div class="body">
+        <div class="title">${a.title}</div>
+        <div class="summary">${a.summary}</div>
+        <div class="meta"><span><i class="fa-regular fa-calendar"></i> ${a.date}</span><span><i class="fa-regular fa-eye"></i> 1000+</span></div>
+      </div>
+    </a>
+  `).join('');
 
-/* ── 运行时间 ──────────────────────────── */
-(function uptime(){
-  const start = new Date('2024-09-17T22:00:00+08:00').getTime();
-  function tick(){
-    const d = new Date().getTime() - start;
-    const days = Math.floor(d / (1000*60*60*24));
-    document.getElementById('days').textContent = days.toLocaleString();
-  }
-  tick();
-  setInterval(tick, 60000);
-})();
-
-/* ── 公告 ─────────────────────────────── */
-(function(){
-  const modal = document.getElementById('modal');
-  if(!localStorage.getItem('dontAnnounce')){ modal.classList.add('show'); }
-  document.getElementById('close').onclick = () => {
-    if(document.getElementById('never').checked) localStorage.setItem('dontAnnounce','1');
-    modal.classList.remove('show');
-  };
-  modal.addEventListener('click', e => { if(e.target === modal) modal.classList.remove('show'); });
-})();
-
-/* ── 微信 ─────────────────────────────── */
-document.getElementById('wechat').onclick = e => {
-  e.preventDefault();
-  alert('微信号: expectopatronus00');
-};
-
-(function themeSwitch(){
-  const saved = localStorage.getItem('theme');
-  if(saved === 'light'){
-    document.documentElement.dataset.theme = 'light';
-    const i = document.querySelector('#theme-toggle i');
-    if(i) i.className = 'fa-solid fa-sun';
-  }
-  document.getElementById('theme-toggle')?.addEventListener('click', ()=>{
-    const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
-    document.documentElement.dataset.theme = next;
-    localStorage.setItem('theme', next);
-    const i = document.querySelector('#theme-toggle i');
-    if(i) i.className = next === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+  // Reveal on scroll
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting) e.target.style.opacity='1', e.target.style.transform='translateY(0)';
+    });
+  },{threshold:.1});
+  document.querySelectorAll('.card,.posts-grid .card,.features .card.large').forEach(el=>{
+    el.style.opacity='0';el.style.transform='translateY(16px)';el.style.transition='opacity .6s, transform .6s';
+    obs.observe(el);
   });
-})();
-
-hitokoto(); weather();
-setInterval(hitokoto, 120000);
 </script>
 </body>
 </html>

@@ -91,7 +91,7 @@
 <div id="back"><i class="fa-solid fa-arrow-up"></i></div>
 
 <script>
-const articles = [
+window.articles = [
   { id:"7641962519699017001", title:"Gemini3.5Flash 携手Composer2.5 踢馆赛", url:"../post/dy-7641962519699017001/dy-7641962519699017001.html", summary:"Gemini3.5Flash 携手Composer2.5 这是一期踢馆赛，两个新出的模型，前来挑战全球十六强，谁将上位，谁将出局？", category:"抖音搬运", date:"2026-06-14", read:8, views:0, tags:["抖音","搬运","gemini","AI挑战赛","赛博斗蛐蛐","Cursor"], hot:true, feat:true },
   { id:"34", title:"5分钟掌握 PXE 批量装机：从搭建到自动化部署全流程", url:"https://mp.weixin.qq.com/s/nEuLct9v9YhxG2Wq1kNasw", summary:"PXE 是由 Intel 开发的网络引导技术，客户端通过网络从远程服务器下载引导镜像并加载安装文件或整个操作系统。", category:"IT运维", date:"2025-06-02", read:10, views:3000, tags:["PXE","批量装机","网络引导","IT运维"], hot:true, feat:true },
   { id:"33", title:"Jenkins 从放弃到入门：部署、配置与应用", url:"https://mp.weixin.qq.com/s/3VnJUFYKeJpi1heK2MxIhg", summary:"环境准备、插件安装、安全配置，一步步带你搭建和管理 Jenkins 服务器，实现 CI/CD。", category:"DevOps", date:"2025-06-01", read:15, views:3200, tags:["Jenkins","CI/CD","持续集成","DevOps"], hot:true, feat:true },
@@ -106,151 +106,11 @@ const articles = [
   { id:"24", title:"Kubernetes 实战：3 分钟跑通一个 Deployment", url:"https://mp.weixin.qq.com/s/placeholder-24", summary:"从 kubectl apply 到 Service 再到 Ingress，最短路径跑通 K8s。", category:"DevOps", date:"2025-04-10", read:12, views:2650, tags:["Kubernetes","K8s","容器"] },
   { id:"23", title:"从 0 到 1 搭建个人博客（GitHub Pages + Jekyll）", url:"https://mp.weixin.qq.com/s/placeholder-23", summary:"仓库结构、_config.yml、GitHub Actions 自动构建，把博客从本地推到公网。", category:"技术", date:"2025-03-28", read:10, views:2340, tags:["GitHub Pages","Jekyll","博客"] }
 ];
-
-/* ── 渲染 ─────────────────────────────────── */
-function escapeHtml(s){ return String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c])); }
-function fmtDate(s){ return s ? s.slice(0,10).replace(/-/g,"/") : ""; }
-
-function render(list){
-  const grid = document.getElementById("grid");
-  if(!list.length){
-    grid.innerHTML = `<p style="grid-column:1/-1;text-align:center;color:#8a93bf;padding:40px 0;">没有符合条件的文章</p>`;
-    return;
-  }
-  grid.innerHTML = list.map(a=>`
-    <a class="card" href="${escapeHtml(a.url)}" target="_blank" rel="noopener">
-      <div class="meta">
-        <span class="cat">${escapeHtml(a.category)}</span>
-        ${a.hot ? '<span class="hot"><i class="fa-solid fa-fire"></i> HOT</span>' : ''}
-        ${a.feat ? '<span class="cat" style="background:linear-gradient(135deg,rgba(255,59,212,.2),rgba(139,92,246,.2));border-color:rgba(255,59,212,.38);color:#ffb6ec"><i class="fa-solid fa-sparkles"></i> 精选</span>' : ''}
-      </div>
-      <div class="title">${escapeHtml(a.title)}</div>
-      <div class="sum">${escapeHtml(a.summary)}</div>
-      <div class="tags">${(a.tags||[]).map(t=>`<span>#${escapeHtml(t)}</span>`).join("")}</div>
-      <div class="tail">
-        <span><i class="fa-regular fa-clock"></i> ${fmtDate(a.date)} · ${a.read}分钟</span>
-        <span class="more">阅读全文 <i class="fa-solid fa-chevron-right"></i></span>
-      </div>
-    </a>
-  `).join("");
-  // 入场动画
-  const cards = grid.querySelectorAll(".card");
-  cards.forEach((c,i)=>{
-    c.style.opacity="0"; c.style.transform="translateY(16px)"; c.style.transition="opacity .4s ease, transform .4s ease";
-    setTimeout(()=>{ c.style.opacity=""; c.style.transform=""; }, 30 + i*40);
-  });
-}
-
-function renderPopular(){
-  const top = [...articles].sort((a,b)=> (b.views||0) - (a.views||0)).slice(0,6);
-  document.getElementById("popular").innerHTML = top.map((a,i)=>`
-    <li>
-      <span class="rank">${i+1}</span>
-      <div class="info">
-        <a href="${escapeHtml(a.url)}" target="_blank">${escapeHtml(a.title)}</a>
-        <small><i class="fa-regular fa-eye"></i> ${(a.views||0).toLocaleString()} · ${fmtDate(a.date)}</small>
-      </div>
-    </li>
-  `).join("");
-}
-
-function renderTags(){
-  const map = {};
-  articles.forEach(a=>(a.tags||[]).forEach(t=>map[t]=(map[t]||0)+1));
-  const tags = Object.entries(map).sort((a,b)=>b[1]-a[1]).slice(0,20);
-  document.getElementById("tags").innerHTML = tags.map(([t,n])=>`
-    <a href="#" data-tag="${escapeHtml(t)}">#${escapeHtml(t)}<small style="opacity:.55">${n}</small></a>
-  `).join("");
-}
-
-function renderStats(){
-  document.getElementById("stat-art").textContent = articles.length;
-  const all = new Set(); articles.forEach(a=>(a.tags||[]).forEach(t=>all.add(t)));
-  document.getElementById("stat-tag").textContent = all.size;
-  const c = {}; articles.forEach(a=>c[a.category]=(c[a.category]||0)+1);
-  const topCat = Object.entries(c).sort((a,b)=>b[1]-a[1])[0]?.[0] || "-";
-  document.getElementById("stat-cat").textContent = topCat;
-}
-
-/* ── 过滤 & 搜索 ────────────────────────────── */
-let currentCat = "", currentTag = "", currentQ = "";
-
-function apply(){
-  let list = articles;
-  if(currentCat) list = list.filter(a=>a.category===currentCat);
-  if(currentTag) list = list.filter(a=>(a.tags||[]).includes(currentTag));
-  if(currentQ){
-    const q = currentQ.toLowerCase();
-    list = list.filter(a=>
-      a.title.toLowerCase().includes(q) ||
-      a.summary.toLowerCase().includes(q) ||
-      (a.tags||[]).some(t=>t.toLowerCase().includes(q)) ||
-      a.category.toLowerCase().includes(q)
-    );
-  }
-  render(list);
-}
-
-document.querySelectorAll(".filters button").forEach(b=>{
-  b.addEventListener("click", ()=>{
-    document.querySelectorAll(".filters button").forEach(x=>x.classList.remove("active"));
-    b.classList.add("active");
-    currentCat = b.dataset.cat || "";
-    apply();
-  });
-});
-
-document.getElementById("q").addEventListener("input", e=>{
-  currentQ = e.target.value.trim();
-  apply();
-});
-
-document.getElementById("tags").addEventListener("click", e=>{
-  const a = e.target.closest("a[data-tag]");
-  if(!a) return;
-  e.preventDefault();
-  currentTag = a.dataset.tag;
-  apply();
-});
-
-/* ── 返回顶部 ────────────────────────────────── */
-const back = document.getElementById("back");
-window.addEventListener("scroll", ()=>{
-  const p = Math.min(1, window.scrollY / Math.max(1, document.body.scrollHeight - innerHeight));
-  document.getElementById("progress").style.width = (p*100).toFixed(1) + "%";
-  back.classList.toggle("show", window.scrollY > 260);
-});
-back.addEventListener("click", ()=> window.scrollTo({top:0, behavior:"smooth"}));
-
-/* ── 主题 ──────────────────────────────────── */
-(function themeSwitch(){
-  const saved = localStorage.getItem("theme");
-  if(saved === "light"){
-    document.documentElement.dataset.theme = "light";
-    const i = document.querySelector("#theme-toggle i");
-    if(i) i.className = "fa-solid fa-sun";
-  }
-  document.getElementById("theme-toggle")?.addEventListener("click", ()=>{
-    const next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
-    document.documentElement.dataset.theme = next;
-    localStorage.setItem("theme", next);
-    const i = document.querySelector("#theme-toggle i");
-    if(i) i.className = next === "light" ? "fa-solid fa-sun" : "fa-solid fa-moon";
-  });
-})();
-
+</script>
+<script src="script.js" defer></script>
+<script>
 document.getElementById("wechat")?.addEventListener("click", e=>{
   e.preventDefault(); alert("微信号: expectopatronus00");
-});
-
-/* ── init ─────────────────────────────────── */
-window.addEventListener("load", ()=>{
-  renderStats();
-  renderTags();
-  renderPopular();
-  apply();
-  document.getElementById("loader").classList.add("hidden");
-  setTimeout(()=>document.getElementById("loader").style.display="none", 600);
 });
 </script>
 </body>

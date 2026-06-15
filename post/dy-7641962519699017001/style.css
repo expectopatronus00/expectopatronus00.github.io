@@ -660,24 +660,3 @@ pre:hover .copy-btn{opacity:1}
 }
 #back.show{opacity:1;transform:none;pointer-events:auto}
 #back:hover{transform:translateY(-2px);box-shadow:0 0 0 1px rgba(0,229,255,.3) inset,0 18px 34px -12px rgba(0,229,255,.7)}
-
-.dy-meta{display:grid;grid-template-columns:320px 1fr;gap:22px;padding:20px;background:linear-gradient(140deg,rgba(254,44,84,.08),rgba(0,229,255,.06));border:1px solid rgba(254,44,84,.25);border-radius:16px;margin:18px 0 24px}
-.dy-cover img{width:100%;border-radius:12px;display:block;box-shadow:0 8px 24px -12px rgba(254,44,84,.4)}
-.dy-info{display:flex;flex-direction:column;justify-content:center;gap:10px}
-.dy-info div{color:#cfd6ff;font-size:.95rem;display:flex;align-items:center;gap:10px}
-.dy-info i{color:#00e5ff;width:18px;text-align:center}
-.dy-info a{color:#3b82ff;text-decoration:none;border-bottom:1px dashed rgba(59,130,255,.5)}
-.dy-info a:hover{color:#00e5ff}
-.dy-video{margin:18px 0 24px;border-radius:16px;overflow:hidden;border:1px solid var(--line)}
-.dy-video video{width:100%;display:block;background:#000;max-height:70vh}
-.article-tags{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 18px}
-.article-tags span{padding:6px 14px;border-radius:999px;background:rgba(0,229,255,.08);color:#cfd6ff;border:1px solid rgba(0,229,255,.25);font-size:.82rem}
-.article-note{color:#8a93bf;font-size:.85rem;margin-top:18px;font-style:italic}
-[data-theme="light"] .dy-meta{background:linear-gradient(140deg,rgba(254,44,84,.08),rgba(59,130,255,.06));border-color:rgba(254,44,84,.3)}
-[data-theme="light"] .dy-cover img{box-shadow:0 8px 24px -12px rgba(254,44,84,.3)}
-[data-theme="light"] .dy-info div{color:#2a3770}
-[data-theme="light"] .dy-info i{color:#3b82ff}
-[data-theme="light"] .dy-video video{background:#000}
-[data-theme="light"] .article-tags span{background:rgba(59,130,255,.08);color:#2a3770;border-color:rgba(59,130,255,.25)}
-[data-theme="light"] .article-note{color:#4a5580}
-@media(max-width:768px){.dy-meta{grid-template-columns:1fr;padding:16px}.dy-cover img{max-height:220px;object-fit:cover}}
