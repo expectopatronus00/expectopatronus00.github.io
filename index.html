@@ -260,6 +260,30 @@
     .features,.posts{padding:0 16px}
     .brand span{display:none}
   }
+  .stats-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1100px;margin:40px auto 0}
+  .stats-item{padding:22px;border-radius:16px;background:var(--bg-2);border:1px solid var(--line);text-align:center}
+  .stats-item b{font-size:1.6rem;font-weight:800;background:var(--grad-1);-webkit-background-clip:text;background-clip:text;color:transparent;display:block;margin-bottom:6px}
+  .stats-item span{font-size:.8rem;color:var(--mute);letter-spacing:.04em;text-transform:uppercase}
+  .rank-section{max-width:1200px;margin:80px auto 60px;padding:0 24px}
+  .rank-section .sec-h{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:28px}
+  .rank-section .sec-h h2{font-size:1.5rem;font-weight:800;background:var(--grad-1);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .rank-section .sec-h .pill{padding:4px 14px;border-radius:999px;font-size:.72rem;background:rgba(0,229,255,.12);color:var(--cyan);border:1px solid rgba(0,229,255,.3)}
+  .rank-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  .rank-card{position:relative;padding:18px 70px 18px 18px;background:var(--bg-2);border:1px solid var(--line);border-radius:16px;display:flex;gap:14px;align-items:center;transition:all .3s;color:var(--ink)}
+  .rank-card:hover{border-color:var(--line-2);transform:translateY(-3px);box-shadow:var(--shadow-glow);color:var(--ink)}
+  .rank-medal{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;flex-shrink:0}
+  .rank-card:nth-child(1) .rank-medal{background:var(--grad-1);color:#fff}
+  .rank-card:nth-child(2) .rank-medal{background:linear-gradient(135deg,#c9d3e3,#8ea4c2);color:#fff}
+  .rank-card:nth-child(3) .rank-medal{background:linear-gradient(135deg,#d4a373,#8b5a2b);color:#fff}
+  .rank-card:nth-child(n+4) .rank-medal{background:var(--bg-1);border:1px solid var(--line);color:var(--ink)}
+  .rank-card h4{font-size:.95rem;font-weight:700;color:var(--ink);line-height:1.4;margin-bottom:6px}
+  .rank-card .meta-line{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .rank-card .meta-line .cat{font-size:.7rem;padding:2px 10px;border-radius:999px;background:rgba(0,229,255,.1);color:var(--cyan);border:1px solid rgba(0,229,255,.25)}
+  .rank-card .meta-line .d,.rank-card .meta-line .r{font-size:.78rem;color:var(--mute);font-style:italic}
+  .rank-card .go{position:absolute;right:22px;top:50%;transform:translateY(-50%);font-size:.8rem;color:var(--mute);display:flex;gap:6px;align-items:center;transition:all .25s}
+  .rank-card:hover .go{color:var(--cyan);transform:translateY(-50%) translateX(3px)}
+  @media(max-width:768px){.rank-grid{grid-template-columns:1fr}.stats-strip{grid-template-columns:1fr 1fr}}
+  @media(max-width:480px){.stats-strip{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -288,6 +312,12 @@
     <a href="./home/home.html" class="btn btn-primary"><i class="fa-solid fa-sparkles"></i> 浏览文章</a>
     <a href="./home/home.html" class="btn btn-ghost"><i class="fa-brands fa-github"></i> GitHub Pages</a>
   </div>
+</section>
+
+<section class="stats-strip" aria-label="站点统计">
+  <div class="stats-item"><b>24 篇</b><span>技术文章总数</span></div>
+  <div class="stats-item"><b>3 天</b><span>平均更新频率</span></div>
+  <div class="stats-item"><b>1.2k+</b><span>全站访问量</span></div>
 </section>
 
 <section class="partners">
@@ -341,6 +371,111 @@
       <h3>真·无水印播放</h3>
       <p>直接用抖音官方 aweme/v1/play 接口返回 mp4 源，无需解析第三方服务。</p>
     </div>
+  </div>
+</section>
+
+<section class="rank-section">
+  <div class="sec-h">
+    <h2>🏆 HOT RANKING · 热门文章排行榜</h2>
+    <span class="pill">过去 30 天最受欢迎</span>
+  </div>
+  <div class="rank-grid">
+    <a class="rank-card" href="./post/wx-b300-hardware/wx-b300-hardware.html">
+      <div class="rank-medal">1</div>
+      <div>
+        <h4>实测 HGX B300：一篇看懂关键硬件数据</h4>
+        <div class="meta-line">
+          <span class="cat">技术</span>
+          <span class="d">2026-06-16</span>
+          <span class="r"><i class="fa-regular fa-clock"></i> 8 min</span>
+        </div>
+      </div>
+      <span class="go"><i class="fa-solid fa-arrow-up-right-from-square"></i> 阅读</span>
+    </a>
+    <a class="rank-card" href="./post/dy-7641962519699017001/dy-7641962519699017001.html">
+      <div class="rank-medal">2</div>
+      <div>
+        <h4>Gemini3.5Flash × Composer2.5 踢馆赛</h4>
+        <div class="meta-line">
+          <span class="cat">抖音搬运</span>
+          <span class="d">2026-06-14</span>
+          <span class="r"><i class="fa-regular fa-clock"></i> 6 min</span>
+        </div>
+      </div>
+      <span class="go"><i class="fa-solid fa-arrow-up-right-from-square"></i> 阅读</span>
+    </a>
+    <a class="rank-card" href="./post/dy-7646747643204900836/dy-7646747643204900836.html">
+      <div class="rank-medal">3</div>
+      <div>
+        <h4>Vibe Coding 大赏 · Harness starter 开源</h4>
+        <div class="meta-line">
+          <span class="cat">抖音搬运</span>
+          <span class="d">2026-06-16</span>
+          <span class="r"><i class="fa-regular fa-clock"></i> 5 min</span>
+        </div>
+      </div>
+      <span class="go"><i class="fa-solid fa-arrow-up-right-from-square"></i> 阅读</span>
+    </a>
+    <a class="rank-card" href="./post/post2/post2.html">
+      <div class="rank-medal">4</div>
+      <div>
+        <h4>Docker 深入原理解析：镜像存储层架构</h4>
+        <div class="meta-line">
+          <span class="cat">技术</span>
+          <span class="d">2025-12-01</span>
+          <span class="r"><i class="fa-regular fa-clock"></i> 12 min</span>
+        </div>
+      </div>
+      <span class="go"><i class="fa-solid fa-arrow-up-right-from-square"></i> 阅读</span>
+    </a>
+    <a class="rank-card" href="./post/post4/post4.html">
+      <div class="rank-medal">5</div>
+      <div>
+        <h4>Linux 系统排查：从 CPU 到网络的完整手册</h4>
+        <div class="meta-line">
+          <span class="cat">Linux</span>
+          <span class="d">2025-11-15</span>
+          <span class="r"><i class="fa-regular fa-clock"></i> 15 min</span>
+        </div>
+      </div>
+      <span class="go"><i class="fa-solid fa-arrow-up-right-from-square"></i> 阅读</span>
+    </a>
+    <a class="rank-card" href="./post/post7/post7.html">
+      <div class="rank-medal">6</div>
+      <div>
+        <h4>Prometheus + Grafana 监控实战 20 例</h4>
+        <div class="meta-line">
+          <span class="cat">DevOps</span>
+          <span class="d">2025-10-20</span>
+          <span class="r"><i class="fa-regular fa-clock"></i> 14 min</span>
+        </div>
+      </div>
+      <span class="go"><i class="fa-solid fa-arrow-up-right-from-square"></i> 阅读</span>
+    </a>
+    <a class="rank-card" href="./post/post6/post6.html">
+      <div class="rank-medal">7</div>
+      <div>
+        <h4>Redis 分布式锁 5 种实现方案对比</h4>
+        <div class="meta-line">
+          <span class="cat">技术</span>
+          <span class="d">2025-09-08</span>
+          <span class="r"><i class="fa-regular fa-clock"></i> 10 min</span>
+        </div>
+      </div>
+      <span class="go"><i class="fa-solid fa-arrow-up-right-from-square"></i> 阅读</span>
+    </a>
+    <a class="rank-card" href="./post/post8/post8.html">
+      <div class="rank-medal">8</div>
+      <div>
+        <h4>前端开发：从 0 到全栈工程师成长路线</h4>
+        <div class="meta-line">
+          <span class="cat">Web开发</span>
+          <span class="d">2025-07-22</span>
+          <span class="r"><i class="fa-regular fa-clock"></i> 20 min</span>
+        </div>
+      </div>
+      <span class="go"><i class="fa-solid fa-arrow-up-right-from-square"></i> 阅读</span>
+    </a>
   </div>
 </section>
 
