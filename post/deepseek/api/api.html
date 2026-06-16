@@ -1,687 +1,160 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DeepSeek API 中心 - AI服务集成平台</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        /* 全局样式 */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Roboto Mono', monospace;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background: #0a0e17;
-            color: #fff;
-            min-height: 100vh;
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-
-        /* 容器 */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
-        }
-
-        /* 头部 */
-        .header {
-            text-align: center;
-            margin-bottom: 4rem;
-            position: relative;
-        }
-
-        .header h1 {
-            font-size: 4rem;
-            background: linear-gradient(45deg, #00f3ff, #6a00ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(106, 0, 255, 0.5);
-            letter-spacing: 0.1em;
-            transition: transform 0.3s ease;
-        }
-
-        .header h1:hover {
-            transform: scale(1.05);
-        }
-
-        .header p {
-            max-width: 800px;
-            margin: 1.5rem auto;
-            font-size: 1.2rem;
-            color: #ccc;
-        }
-
-        /* 面包屑导航 */
-        .breadcrumb {
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
-            font-size: 1rem;
-        }
-
-        .breadcrumb a {
-            color: #00f3ff;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .breadcrumb a:hover {
-            color: #6a00ff;
-        }
-
-        .breadcrumb span {
-            margin: 0 10px;
-            color: #666;
-        }
-
-        /* 搜索框 */
-        .search-container {
-            margin-bottom: 3rem;
-            display: flex;
-            justify-content: center;
-        }
-
-        .search-box {
-            display: flex;
-            width: 100%;
-            max-width: 600px;
-        }
-
-        .search-input {
-            flex-grow: 1;
-            padding: 1rem 1.5rem;
-            border-radius: 30px 0 0 30px;
-            border: 2px solid #6a00ff;
-            background: rgba(255, 255, 255, 0.05);
-            color: #fff;
-            font-size: 1rem;
-            outline: none;
-        }
-
-        .search-btn {
-            padding: 1rem 1.5rem;
-            background: linear-gradient(45deg, #00f3ff, #6a00ff);
-            color: white;
-            border: none;
-            border-radius: 0 30px 30px 0;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .search-btn:hover {
-            background: linear-gradient(45deg, #6a00ff, #00f3ff);
-        }
-
-        /* 分类标题 */
-        .category {
-            font-size: 2.2rem;
-            margin: 3rem 0 1.5rem;
-            border-bottom: 3px solid #6a00ff;
-            padding-bottom: 0.75rem;
-            color: #00f3ff;
-            text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
-        }
-
-        /* API卡片网格 */
-        .api-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        /* API卡片 */
-        .api-card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            padding: 2rem;
-            text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: 2px solid rgba(106, 0, 255, 0.3);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        .api-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
-        }
-
-        /* API图标 */
-        .api-icon {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            color: #00f3ff;
-            text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
-        }
-
-        /* API标题 */
-        .api-title {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #fff;
-        }
-
-        /* API描述 */
-        .api-desc {
-            font-size: 1rem;
-            color: #ccc;
-            margin-bottom: 1.5rem;
-            flex-grow: 1;
-        }
-
-        /* 标签 */
-        .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-            justify-content: center;
-        }
-
-        .tag {
-            background: rgba(106, 0, 255, 0.2);
-            color: #00f3ff;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            border: 1px solid rgba(0, 243, 255, 0.3);
-        }
-
-        /* 按钮 */
-        .api-btn {
-            display: inline-block;
-            padding: 0.8rem 1.5rem;
-            background: linear-gradient(45deg, #00f3ff, #6a00ff);
-            color: white;
-            text-decoration: none;
-            border-radius: 30px;
-            font-weight: bold;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-            margin-top: auto;
-        }
-
-        .api-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 15px rgba(0, 243, 255, 0.5);
-        }
-
-        /* 过滤器 */
-        .filter-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .filter-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(0, 243, 255, 0.3);
-            color: #ccc;
-            padding: 0.6rem 1.2rem;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .filter-btn:hover, .filter-btn.active {
-            background: rgba(0, 243, 255, 0.2);
-            color: #fff;
-        }
-
-        /* 返回顶部按钮 */
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(45deg, #00f3ff, #6a00ff);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .back-to-top.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .back-to-top:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
-        }
-
-        /* 页脚 */
-        .footer {
-            text-align: center;
-            padding: 2rem;
-            margin-top: 3rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #ccc;
-        }
-
-        .footer a {
-            color: #00f3ff;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        .footer a:hover {
-            color: #6a00ff;
-        }
-
-        /* 响应式设计 */
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2.5rem;
-            }
-
-            .api-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .search-box {
-                flex-direction: column;
-            }
-
-            .search-input {
-                border-radius: 30px;
-                margin-bottom: 1rem;
-            }
-
-            .search-btn {
-                border-radius: 30px;
-            }
-        }
-
-        /* 粒子背景 */
-        #particles-js {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: -1;
-        }
-    </style>
+<html lang="zh-CN" data-theme="dark">
+<script>(function(){try{const t=localStorage.getItem('theme')||'dark';if(t==='light')document.documentElement.dataset.theme='light';}catch(e){}})();</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DeepSeek API 中心 · EXPECTOPATRONUS</title>
+<meta name="description" content="DeepSeek API 集成指南、SDK 文档、价格与速率限制">
+<link rel="shortcut icon" href="../../../home/50.png">
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="../../../home/common.css">
+<style>
+.api-hero{padding:38px 24px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,color-mix(in oklab,var(--bg-2) 92%,transparent),color-mix(in oklab,var(--bg-0) 95%,transparent))}
+.api-hero .inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.api-hero h1{font-size:clamp(1.7rem,4vw,2.6rem);font-weight:800;background:var(--grad-1);-webkit-background-clip:text;background-clip:text;color:transparent}
+.api-hero .sub{color:var(--ink-soft);font-size:.92rem;margin-top:8px}
+.api-hero .badges{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.api-hero .badges b{padding:3px 12px;border-radius:999px;font-size:.72rem;background:var(--grad-soft);color:var(--cyan);border:1px solid rgba(0,229,255,.35)}
+.api-main{max-width:1200px;margin:0 auto;padding:24px 24px 60px;display:flex;flex-direction:column;gap:22px}
+.api-section h2{font-size:1.1rem;font-weight:800;margin:22px 0 12px;color:var(--ink);display:flex;align-items:center;gap:10px}
+.api-section h2 i{color:var(--cyan);width:22px;text-align:center}
+.api-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.api-card{display:flex;align-items:center;gap:12px;padding:14px 18px;border-radius:12px;background:var(--bg-2);border:1px solid var(--line);color:var(--ink);text-decoration:none;transition:all .25s}
+.api-card:hover{border-color:var(--cyan);transform:translateY(-2px);box-shadow:0 10px 30px -15px rgba(0,229,255,.3);color:var(--ink)}
+.api-card .ico{width:36px;height:36px;border-radius:8px;background:var(--grad-soft);display:flex;align-items:center;justify-content:center;color:var(--cyan);flex-shrink:0}
+.api-card b{display:block;font-size:.88rem;font-weight:700;color:var(--ink)}
+.api-card span{font-size:.72rem;color:var(--mute)}
+.api-code{padding:18px 22px;border-radius:14px;background:#05070f;border:1px solid var(--line);color:#9cdcfe;font-family:'Fira Code','JetBrains Mono',monospace;font-size:.88rem;overflow-x:auto;white-space:pre;margin:14px 0;line-height:1.55}
+@media(max-width:700px){.api-hero .inner{flex-direction:column;align-items:flex-start}}
+</style>
 </head>
 
 <body>
-    <!-- 粒子背景 -->
-    <div id="particles-js"></div>
-
-    <div class="container">
-        <!-- 头部 -->
-        <header class="header">
-            <h1>DeepSeek API 中心</h1>
-            <p>一站式AI服务集成平台，汇聚全球领先的人工智能API资源</p>
-        </header>
-
-        <!-- 面包屑导航 -->
-        <div class="breadcrumb">
-            <a href="../../../index.html"><i class="fas fa-home"></i> 首页</a>
-            <span>/</span>
-            <a href="../deepseek.html">DeepSeek专题</a>
-            <span>/</span>
-            <span>API中心</span>
-        </div>
-
-        <!-- 搜索框 -->
-        <div class="search-container">
-            <div class="search-box">
-                <input type="text" class="search-input" id="api-search" placeholder="搜索API服务...">
-                <button class="search-btn" id="search-btn"><i class="fas fa-search"></i></button>
-            </div>
-        </div>
-
-        <!-- 过滤器 -->
-        <div class="filter-container">
-            <button class="filter-btn active" data-filter="all">全部</button>
-            <button class="filter-btn" data-filter="nlp">自然语言处理</button>
-            <button class="filter-btn" data-filter="vision">计算机视觉</button>
-            <button class="filter-btn" data-filter="audio">语音识别</button>
-            <button class="filter-btn" data-filter="multimodal">多模态模型</button>
-            <button class="filter-btn" data-filter="embedding">向量嵌入</button>
-        </div>
-
-        <!-- AI基础模型API -->
-        <h2 class="category">基础模型API</h2>
-        <div class="api-grid">
-            <!-- OpenAI API -->
-            <div class="api-card" data-tags="nlp vision audio multimodal embedding">
-                <i class="fas fa-brain api-icon"></i>
-                <h3 class="api-title">OpenAI API</h3>
-                <p class="api-desc">访问GPT-4、DALL-E 3和Whisper等尖端AI模型，用于文本、图像和语音处理。</p>
-                <div class="tags">
-                    <span class="tag">自然语言处理</span>
-                    <span class="tag">图像生成</span>
-                    <span class="tag">多模态</span>
-                </div>
-                <a href="https://platform.openai.com/" class="api-btn" target="_blank">访问API</a>
-            </div>
-
-            <!-- DeepSeek API -->
-            <div class="api-card" data-tags="nlp embedding">
-                <i class="fas fa-microchip api-icon"></i>
-                <h3 class="api-title">DeepSeek API</h3>
-                <p class="api-desc">DeepSeek自研大模型API，提供强大的文本理解、代码生成和对话能力。</p>
-                <div class="tags">
-                    <span class="tag">自然语言处理</span>
-                    <span class="tag">代码生成</span>
-                    <span class="tag">向量嵌入</span>
-                </div>
-                <a href="https://platform.deepseek.com/" class="api-btn" target="_blank">访问API</a>
-            </div>
-
-            <!-- Anthropic API -->
-            <div class="api-card" data-tags="nlp">
-                <i class="fas fa-robot api-icon"></i>
-                <h3 class="api-title">Anthropic Claude API</h3>
-                <p class="api-desc">Claude系列模型API，提供安全、可控的AI助手能力，支持复杂推理和对话。</p>
-                <div class="tags">
-                    <span class="tag">自然语言处理</span>
-                    <span class="tag">对话系统</span>
-                </div>
-                <a href="https://www.anthropic.com/api" class="api-btn" target="_blank">访问API</a>
-            </div>
-
-            <!-- Cohere API -->
-            <div class="api-card" data-tags="nlp embedding">
-                <i class="fas fa-network-wired api-icon"></i>
-                <h3 class="api-title">Cohere API</h3>
-                <p class="api-desc">专注于文本嵌入和语义搜索的API，为企业提供高质量的文本理解能力。</p>
-                <div class="tags">
-                    <span class="tag">向量嵌入</span>
-                    <span class="tag">语义搜索</span>
-                </div>
-                <a href="https://cohere.ai/" class="api-btn" target="_blank">访问API</a>
-            </div>
-        </div>
-
-        <!-- 计算机视觉API -->
-        <h2 class="category">计算机视觉API</h2>
-        <div class="api-grid">
-            <!-- Stability AI -->
-            <div class="api-card" data-tags="vision">
-                <i class="fas fa-image api-icon"></i>
-                <h3 class="api-title">Stability AI</h3>
-                <p class="api-desc">提供Stable Diffusion系列模型API，用于高质量图像生成、编辑和转换。</p>
-                <div class="tags">
-                    <span class="tag">图像生成</span>
-                    <span class="tag">图像编辑</span>
-                </div>
-                <a href="https://stability.ai/api" class="api-btn" target="_blank">访问API</a>
-            </div>
-
-            <!-- Midjourney API -->
-            <div class="api-card" data-tags="vision">
-                <i class="fas fa-palette api-icon"></i>
-                <h3 class="api-title">Midjourney API</h3>
-                <p class="api-desc">艺术风格图像生成API，通过文本提示创建高度艺术化的视觉内容。</p>
-                <div class="tags">
-                    <span class="tag">图像生成</span>
-                    <span class="tag">艺术创作</span>
-                </div>
-                <a href="https://docs.midjourney.com/docs" class="api-btn" target="_blank">访问API</a>
-            </div>
-
-            <!-- Clarifai API -->
-            <div class="api-card" data-tags="vision">
-                <i class="fas fa-camera api-icon"></i>
-                <h3 class="api-title">Clarifai API</h3>
-                <p class="api-desc">计算机视觉API，提供物体识别、人脸检测和图像标注等功能。</p>
-                <div class="tags">
-                    <span class="tag">物体识别</span>
-                    <span class="tag">人脸检测</span>
-                </div>
-                <a href="https://www.clarifai.com/developers" class="api-btn" target="_blank">访问API</a>
-            </div>
-        </div>
-
-        <!-- 语音API -->
-        <h2 class="category">语音处理API</h2>
-        <div class="api-grid">
-            <!-- ElevenLabs API -->
-            <div class="api-card" data-tags="audio">
-                <i class="fas fa-headphones api-icon"></i>
-                <h3 class="api-title">ElevenLabs API</h3>
-                <p class="api-desc">高质量AI语音合成API，支持多种语言和个性化声音克隆。</p>
-                <div class="tags">
-                    <span class="tag">语音合成</span>
-                    <span class="tag">声音克隆</span>
-                </div>
-                <a href="https://elevenlabs.io/docs/api-reference" class="api-btn" target="_blank">访问API</a>
-            </div>
-
-            <!-- AssemblyAI API -->
-            <div class="api-card" data-tags="audio">
-                <i class="fas fa-microphone api-icon"></i>
-                <h3 class="api-title">AssemblyAI API</h3>
-                <p class="api-desc">语音识别和音频分析API，支持语音转文本、情绪分析和内容摘要。</p>
-                <div class="tags">
-                    <span class="tag">语音识别</span>
-                    <span class="tag">情绪分析</span>
-                </div>
-                <a href="https://www.assemblyai.com/docs" class="api-btn" target="_blank">访问API</a>
-            </div>
-        </div>
-
-        <!-- 多模态API -->
-        <h2 class="category">多模态与特殊领域API</h2>
-        <div class="api-grid">
-            <!-- Replicate API -->
-            <div class="api-card" data-tags="multimodal vision nlp">
-                <i class="fas fa-cube api-icon"></i>
-                <h3 class="api-title">Replicate API</h3>
-                <p class="api-desc">开源模型托管平台API，提供数千个预训练模型的简易访问接口。</p>
-                <div class="tags">
-                    <span class="tag">多模态</span>
-                    <span class="tag">模型托管</span>
-                </div>
-                <a href="https://replicate.com/" class="api-btn" target="_blank">访问API</a>
-            </div>
-
-            <!-- HuggingFace Inference API -->
-            <div class="api-card" data-tags="multimodal nlp vision audio embedding">
-                <i class="fas fa-boxes api-icon"></i>
-                <h3 class="api-title">HuggingFace Inference API</h3>
-                <p class="api-desc">访问数万个开源AI模型的API，涵盖文本、图像、音频等多个领域。</p>
-                <div class="tags">
-                    <span class="tag">多模态</span>
-                    <span class="tag">开源模型</span>
-                </div>
-                <a href="https://huggingface.co/inference-api" class="api-btn" target="_blank">访问API</a>
-            </div>
-
-            <!-- Perplexity API -->
-            <div class="api-card" data-tags="nlp">
-                <i class="fas fa-search api-icon"></i>
-                <h3 class="api-title">Perplexity API</h3>
-                <p class="api-desc">AI搜索和信息检索API，提供精确的问答和实时信息查询能力。</p>
-                <div class="tags">
-                    <span class="tag">信息检索</span>
-                    <span class="tag">问答系统</span>
-                </div>
-                <a href="https://docs.perplexity.ai/" class="api-btn" target="_blank">访问API</a>
-            </div>
-        </div>
-
-        <!-- 返回顶部按钮 -->
-        <div class="back-to-top" id="back-to-top">
-            <i class="fas fa-arrow-up"></i>
-        </div>
-
-        <!-- 页脚 -->
-        <footer class="footer">
-            <p>© 2024 DeepSeek API中心 | <a href="../../../index.html">返回首页</a></p>
-            <p>本站仅提供API导航服务，所有API使用需遵循各自平台的服务条款</p>
-        </footer>
+<canvas id="stars-bg"></canvas>
+<div class="grid-bg"></div>
+<div class="progress" id="progress"></div>
+<nav class="topbar">
+  <div class="inner">
+    <a href="../../../index.html" class="brand">
+      <div class="logo"></div>
+      <span>EXPECTOPATRONUS · BLOG</span>
+    </a>
+    <div class="nav">
+      <a href="../../../index.html"><i class="fa-solid fa-house"></i> 首页</a>
+      <a href="../../../home/home.html"><i class="fa-solid fa-newspaper"></i> 文章</a>
+      <a href="../deepseek.html"><i class="fa-solid fa-robot"></i> DeepSeek</a>
+      <a href="http://expectopatronus.top:5005/" target="_blank"><i class="fa-solid fa-compass"></i> 导航</a>
     </div>
+    <button id="theme-toggle" aria-label="主题切换"><i class="fa-solid fa-moon"></i></button>
+  </div>
+</nav>
 
-    <!-- 引入粒子特效库 -->
-    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<section class="api-hero">
+  <div class="inner">
+    <div>
+      <div class="badges"><b><i class="fa-solid fa-bolt"></i> DeepSeek API 中心</b></div>
+      <h1>DeepSeek API 集成中心</h1>
+      <p class="sub">从接入开始，覆盖 SDK / 价格 / 速率限制 / 最佳实践</p>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <a class="api-card" href="https://platform.deepseek.com/" target="_blank"><div class="ico"><i class="fa-solid fa-key"></i></div><div><b>去平台</b><span>申请 API Key</span></div></a>
+      <a class="api-card" href="https://api-docs.deepseek.com/" target="_blank"><div class="ico"><i class="fa-solid fa-book-open"></i></div><div><b>官方文档</b><span>OpenAI 兼容</span></div></a>
+    </div>
+  </div>
+</section>
 
-    <script>
-        // 初始化粒子背景
-        particlesJS('particles-js', {
-            "particles": {
-                "number": {
-                    "value": 80,
-                    "density": {
-                        "enable": true,
-                        "value_area": 800
-                    }
-                },
-                "color": {
-                    "value": "#00f3ff"
-                },
-                "shape": {
-                    "type": "circle",
-                    "stroke": {
-                        "width": 0,
-                        "color": "#000000"
-                    }
-                },
-                "opacity": {
-                    "value": 0.5,
-                    "random": false,
-                    "anim": {
-                        "enable": false,
-                        "speed": 1
-                    }
-                },
-                "size": {
-                    "value": 3,
-                    "random": true
-                },
-                "line_linked": {
-                    "enable": true,
-                    "distance": 150,
-                    "color": "#00f3ff",
-                    "opacity": 0.4,
-                    "width": 1
-                },
-                "move": {
-                    "enable": true,
-                    "speed": 2,
-                    "direction": "none",
-                    "random": false,
-                    "straight": false,
-                    "out_mode": "out"
-                }
-            },
-            "interactivity": {
-                "detect_on": "canvas",
-                "events": {
-                    "onhover": {
-                        "enable": true,
-                        "mode": "grab"
-                    },
-                    "onclick": {
-                        "enable": true,
-                        "mode": "push"
-                    },
-                    "resize": true
-                }
-            },
-            "retina_detect": true
-        });
+<main class="api-main">
+  <section class="api-section">
+    <h2><i class="fa-brands fa-python"></i> 官方仓库</h2>
+    <div class="api-grid">
+      <a class="api-card" href="https://github.com/deepseek-ai/DeepSeek-V3" target="_blank"><div class="ico"><i class="fa-brands fa-github"></i></div><div><b>DeepSeek-V3</b><span>模型仓库</span></div></a>
+      <a class="api-card" href="https://github.com/deepseek-ai/DeepSeek-R1" target="_blank"><div class="ico"><i class="fa-brands fa-github"></i></div><div><b>DeepSeek-R1</b><span>推理模型仓库</span></div></a>
+      <a class="api-card" href="https://github.com/deepseek-ai/DualPipe" target="_blank"><div class="ico"><i class="fa-solid fa-server"></i></div><div><b>DualPipe</b><span>模型并行框架</span></div></a>
+      <a class="api-card" href="https://github.com/deepseek-ai/deepseek-python" target="_blank"><div class="ico"><i class="fa-brands fa-python"></i></div><div><b>deepseek-python</b><span>Python SDK</span></div></a>
+      <a class="api-card" href="https://github.com/deepseek-ai/deepseek-java" target="_blank"><div class="ico"><i class="fa-brands fa-java"></i></div><div><b>deepseek-java</b><span>Java SDK</span></div></a>
+      <a class="api-card" href="https://github.com/deepseek-ai/deepseek-go" target="_blank"><div class="ico"><i class="fa-brands fa-golang"></i></div><div><b>deepseek-go</b><span>Go SDK</span></div></a>
+      <a class="api-card" href="https://github.com/deepseek-ai/deepseek-js" target="_blank"><div class="ico"><i class="fa-brands fa-js"></i></div><div><b>deepseek-js</b><span>Node.js SDK</span></div></a>
+      <a class="api-card" href="https://github.com/deepseek-ai/DeepEP" target="_blank"><div class="ico"><i class="fa-solid fa-microchip"></i></div><div><b>DeepEP</b><span>MoE 专家并行</span></div></a>
+      <a class="api-card" href="https://github.com/deepseek-ai/FlashMLA" target="_blank"><div class="ico"><i class="fa-solid fa-bolt"></i></div><div><b>FlashMLA</b><span>MLA 加速</span></div></a>
+      <a class="api-card" href="https://github.com/deepseek-ai/BatchScheduler" target="_blank"><div class="ico"><i class="fa-solid fa-calendar"></i></div><div><b>BatchScheduler</b><span>推理批处理</span></div></a>
+    </div>
+  </section>
 
-        // 搜索功能
-        const searchInput = document.getElementById('api-search');
-        const searchBtn = document.getElementById('search-btn');
-        const apiCards = document.querySelectorAll('.api-card');
+  <section class="api-section">
+    <h2><i class="fa-solid fa-comments"></i> 模型说明</h2>
+    <div class="api-grid">
+      <a class="api-card" href="https://api-docs.deepseek.com/guides/model_list" target="_blank"><div class="ico"><i class="fa-solid fa-cubes"></i></div><div><b>模型列表</b><span>v3 / r1</span></div></a>
+      <a class="api-card" href="https://api-docs.deepseek.com/guides/function_call" target="_blank"><div class="ico"><i class="fa-solid fa-code"></i></div><div><b>函数调用</b><span>JSON Schema</span></div></a>
+      <a class="api-card" href="https://api-docs.deepseek.com/guides/json_mode" target="_blank"><div class="ico"><i class="fa-solid fa-brackets-curly"></i></div><div><b>JSON 模式</b><span>稳定输出</span></div></a>
+      <a class="api-card" href="https://api-docs.deepseek.com/guides/prompt_cache" target="_blank"><div class="ico"><i class="fa-solid fa-bolt"></i></div><div><b>Prompt Cache</b><span>省 Token</span></div></a>
+    </div>
+  </section>
 
-        function performSearch() {
-            const searchTerm = searchInput.value.toLowerCase();
+  <section class="api-section">
+    <h2><i class="fa-solid fa-code"></i> 快速开始（OpenAI 兼容）</h2>
+    <pre class="api-code"># Python
+from openai import OpenAI
+client = OpenAI(
+    api_key="sk-...",
+    base_url="https://api.deepseek.com"
+)
+resp = client.chat.completions.create(
+    model="deepseek-chat",
+    messages=[{"role":"user","content":"写一个 Python 快排"}]
+)
+print(resp.choices[0].message.content)
 
-            apiCards.forEach(card => {
-                const title = card.querySelector('.api-title').textContent.toLowerCase();
-                const desc = card.querySelector('.api-desc').textContent.toLowerCase();
-                const tags = card.querySelector('.tags').textContent.toLowerCase();
+# curl
+curl https://api.deepseek.com/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer sk-..." \
+  -d '{"model":"deepseek-chat","messages":[{"role":"user","content":"你好"}]}'</pre>
+  </section>
+</main>
 
-                if (title.includes(searchTerm) || desc.includes(searchTerm) || tags.includes(searchTerm)) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
+<footer class="footer"><div>© 2025 EXPECTOPATRONUS · 本站内容纯学习用途</div><div><a href="https://github.com/expectopatronus00" target="_blank"><i class="fa-brands fa-github"></i></a></div></footer>
+<div id="back"><i class="fa-solid fa-arrow-up"></i></div>
 
-        searchBtn.addEventListener('click', performSearch);
+<script>
+(function(){
+  var saved = localStorage.getItem('theme') || 'dark';
+  if(saved === 'light') document.documentElement.dataset.theme = 'light';
+  var ti = document.querySelector('#theme-toggle i');
+  if(ti) ti.className = saved === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+  var btn = document.getElementById('theme-toggle');
+  if(btn) btn.addEventListener('click', function(){
+    var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+    document.documentElement.dataset.theme = next;
+    localStorage.setItem('theme', next);
+    var ti2 = document.querySelector('#theme-toggle i');
+    if(ti2) ti2.className = next === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+  });
+  var back = document.getElementById('back');
+  window.addEventListener('scroll', function(){
+    var p = Math.min(1, window.scrollY / Math.max(1, document.body.scrollHeight - innerHeight));
+    var prog = document.getElementById('progress');
+    if(prog) prog.style.width = (p*100).toFixed(1)+'%';
+    if(back) back.classList.toggle('show', window.scrollY > 300);
+  });
+  if(back) back.addEventListener('click', function(){ window.scrollTo({top:0,behavior:'smooth'}); });
 
-        searchInput.addEventListener('keyup', (e) => {
-            if (e.key === 'Enter') {
-                performSearch();
-            }
-        });
-
-        // 过滤功能
-        const filterBtns = document.querySelectorAll('.filter-btn');
-
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // 更新活跃按钮状态
-                filterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-
-                const filter = btn.getAttribute('data-filter');
-
-                apiCards.forEach(card => {
-                    if (filter === 'all') {
-                        card.style.display = 'flex';
-                    } else {
-                        const tags = card.getAttribute('data-tags').split(' ');
-                        if (tags.includes(filter)) {
-                            card.style.display = 'flex';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    }
-                });
-            });
-        });
-
-        // 返回顶部按钮
-        const backToTopBtn = document.getElementById('back-to-top');
-
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                backToTopBtn.classList.add('visible');
-            } else {
-                backToTopBtn.classList.remove('visible');
-            }
-        });
-
-        backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-    </script>
+  var canvas = document.getElementById('stars-bg');
+  if(canvas){
+    var ctx = canvas.getContext('2d');
+    var w = canvas.width = innerWidth, h = canvas.height = innerHeight;
+    var stars = [];
+    for(var i=0;i<80;i++) stars.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.5+.2,a:Math.random()*.5+.2});
+    function draw(){
+      ctx.clearRect(0,0,w,h);
+      stars.forEach(function(s){
+        ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+        ctx.fillStyle='rgba(180,210,255,'+s.a+')';ctx.fill();
+      });
+    }
+    draw();
+    onresize = function(){w=canvas.width=innerWidth;h=canvas.height=innerHeight;stars=[];for(var i=0;i<80;i++)stars.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.5+.2,a:Math.random()*.5+.2});draw();};
+  }
+})();
+</script>
 </body>
-
 </html>

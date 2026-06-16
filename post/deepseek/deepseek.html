@@ -1,257 +1,234 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
-
+<html lang="zh-CN" data-theme="dark">
+<script>(function(){try{const t=localStorage.getItem('theme')||'dark';if(t==='light')document.documentElement.dataset.theme='light';}catch(e){}})();</script>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deepseek 智能工具导航</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        /* 全局样式 */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Roboto Mono', monospace; /* 更具科技感的字体 */
-            scroll-behavior: smooth; /* 平滑滚动 */
-        }
-
-        body {
-            background: #0a0e17;
-            color: #fff;
-            min-height: 100vh;
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-
-        /* 容器 */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 3rem 2rem; /* 增加上下内边距 */
-        }
-
-        /* 头部 */
-        .header {
-            text-align: center;
-            margin-bottom: 4rem; /* 增加底部外边距 */
-            position: relative;
-        }
-
-        .header h1 {
-            font-size: 4rem; /* 增大标题字体 */
-            background: linear-gradient(45deg, #00f3ff, #6a00ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(106, 0, 255, 0.5); /* 增强阴影 */
-            letter-spacing: 0.1em; /* 增加字间距 */
-            transition: transform 0.3s ease; /* 添加过渡效果 */
-        }
-
-        .header h1:hover {
-            transform: scale(1.05); /* 鼠标悬停时放大 */
-        }
-
-        /* 搜索框 */
-        .search-box {
-            margin-top: 2rem; /* 增加顶部外边距 */
-        }
-
-        .search-input {
-            padding: 0.75rem 1rem; /* 增大内边距 */
-            border-radius: 25px; /* 更圆润的边框 */
-            border: 2px solid #6a00ff; /* 紫色边框 */
-            background: rgba(255, 255, 255, 0.05); /* 半透明背景 */
-            width: 400px; /* 增大宽度 */
-            font-size: 1.1rem; /* 增大字体 */
-            color: #fff; /* 白色文字 */
-            outline: none; /* 移除焦点边框 */
-            transition: border-color 0.3s ease; /* 添加过渡效果 */
-        }
-
-        .search-input:focus {
-            border-color: #00f3ff; /* 焦点时改变边框颜色 */
-        }
-
-        /* 分类标题 */
-        .category {
-            font-size: 2.5rem; /* 增大字体 */
-            margin: 3rem 0 1.5rem; /* 增大上下外边距 */
-            border-bottom: 3px solid #6a00ff; /* 加粗边框 */
-            padding-bottom: 0.75rem; /* 增大底部内边距 */
-            letter-spacing: 0.05em; /* 增加字间距 */
-            color: #00f3ff; /* 调整颜色 */
-            text-shadow: 0 0 10px rgba(0, 243, 255, 0.5); /* 增加阴影 */
-        }
-
-        /* 网格布局 */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* 增大最小宽度 */
-            gap: 2rem; /* 增大间距 */
-        }
-
-        /* 卡片 */
-        .card {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px; /* 更圆润的边框 */
-            padding: 2rem; /* 增大内边距 */
-            text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: 2px solid rgba(106, 0, 255, 0.3); /* 加粗边框 */
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* 增强阴影 */
-        }
-
-        .card:hover {
-            transform: translateY(-10px); /* 增大悬停移动距离 */
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7); /* 增强悬停阴影 */
-        }
-
-        /* 卡片图标 */
-        .card-icon {
-            font-size: 4rem; /* 增大字体 */
-            margin-bottom: 1.5rem; /* 增大底部外边距 */
-            color: #00f3ff;
-            text-shadow: 0 0 10px rgba(0, 243, 255, 0.5); /* 增加阴影 */
-        }
-
-        /* 卡片标题 */
-        .card-title a {
-            color: inherit;
-            text-decoration: none;
-            position: relative;
-            font-size: 1.5rem; /* 增大字体 */
-            transition: color 0.3s ease; /* 添加颜色过渡效果 */
-        }
-
-        .card-title a:hover {
-            color: #00f3ff; /* 鼠标悬停时改变颜色 */
-        }
-
-        .card-title a::after {
-            content: "";
-            position: absolute;
-            bottom: -5px; /* 调整位置 */
-            left: 0;
-            width: 0;
-            height: 3px; /* 加粗线条 */
-            background: #6a00ff;
-            transition: width 0.3s;
-        }
-
-        .card-title a:hover::after {
-            width: 100%;
-        }
-
-        /* 卡片描述 */
-        .card-desc {
-            margin-top: 1rem; /* 增大顶部外边距 */
-            font-size: 1rem; /* 增大字体 */
-            color: #ccc;
-        }
-
-        /* 文章 */
-        .article {
-            margin-top: 4rem; /* 增大顶部外边距 */
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px; /* 更圆润的边框 */
-            padding: 2rem; /* 增大内边距 */
-            border: 2px solid rgba(106, 0, 255, 0.3); /* 加粗边框 */
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* 增强阴影 */
-        }
-
-        .article p {
-            font-size: 1.1rem; /* 增大字体 */
-        }
-
-        .article a {
-            color: #00f3ff;
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s ease;
-        }
-
-        .article a:hover {
-            color: #6a00ff;
-        }
-
-        /* 媒体查询 */
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 3rem;
-            }
-
-            .search-input {
-                width: 100%;
-            }
-
-            .grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DeepSeek 智能工具导航 · EXPECTOPATRONUS</title>
+<meta name="description" content="DeepSeek 生态精选工具、API、文档、社区导航">
+<link rel="shortcut icon" href="../../home/50.png">
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="../../home/common.css">
+<style>
+.ds-hero{padding:38px 24px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,color-mix(in oklab,var(--bg-2) 92%,transparent),color-mix(in oklab,var(--bg-0) 95%,transparent))}
+.ds-hero .inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.ds-hero h1{font-size:clamp(1.7rem,4vw,2.6rem);font-weight:800;background:var(--grad-1);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ds-hero .sub{color:var(--ink-soft);font-size:.92rem;margin-top:8px}
+.ds-hero .badges{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.ds-hero .badges b{padding:3px 12px;border-radius:999px;font-size:.72rem;background:var(--grad-soft);color:var(--cyan);border:1px solid rgba(0,229,255,.35)}
+.ds-hero .quick-stats{display:flex;gap:10px}
+.ds-hero .quick-stats > div{padding:12px 16px;border-radius:10px;background:var(--bg-0);border:1px solid var(--line);text-align:center}
+.ds-hero .quick-stats b{display:block;font-size:1.3rem;font-weight:800;background:var(--grad-1);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ds-hero .quick-stats span{font-size:.68rem;color:var(--mute)}
+.ds-search{max-width:1200px;margin:18px auto;padding:0 24px}
+.ds-search input{width:100%;max-width:560px;padding:12px 18px;border-radius:999px;background:var(--bg-1);border:1px solid var(--line);color:var(--ink);outline:none;font-size:.9rem}
+.ds-search input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.15)}
+.ds-main{max-width:1200px;margin:0 auto;padding:24px 24px 60px;display:flex;flex-direction:column;gap:22px}
+.ds-cat h2{font-size:1.1rem;font-weight:800;margin:22px 0 12px;color:var(--ink);display:flex;align-items:center;gap:10px}
+.ds-cat h2 i{color:var(--cyan);width:22px;text-align:center}
+.ds-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.ds-link{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:12px;background:var(--bg-2);border:1px solid var(--line);color:var(--ink);text-decoration:none;transition:all .25s}
+.ds-link:hover{border-color:var(--cyan);transform:translateY(-2px);box-shadow:0 10px 30px -15px rgba(0,229,255,.3);color:var(--ink)}
+.ds-link .ds-ico{width:34px;height:34px;border-radius:8px;background:var(--grad-soft);display:flex;align-items:center;justify-content:center;color:var(--cyan);font-size:1rem;flex-shrink:0}
+.ds-link .ds-t b{display:block;font-size:.88rem;font-weight:700;color:var(--ink);line-height:1.3}
+.ds-link .ds-t span{font-size:.72rem;color:var(--mute)}
+.ds-link .ds-ext{margin-left:auto;color:var(--mute);font-size:.78rem}
+.ds-bookmarks{background:var(--bg-2);border:1px solid var(--line);border-radius:16px;padding:18px 22px}
+.ds-bookmarks h3{font-size:.95rem;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.ds-bookmarks h3 i{color:var(--cyan)}
+.ds-bookmarks .bm-list{display:flex;flex-wrap:wrap;gap:10px}
+.ds-bookmarks a{padding:7px 14px;border-radius:999px;font-size:.78rem;background:var(--bg-1);border:1px solid var(--line);color:var(--ink-soft);text-decoration:none;transition:all .25s}
+.ds-bookmarks a:hover{color:var(--cyan);border-color:var(--cyan)}
+@media(max-width:700px){.ds-hero .inner{flex-direction:column;align-items:flex-start}}
+</style>
 </head>
 
 <body>
-    <div class="container">
-        <header class="header">
-            <h1>Deepseek Nav</h1>
-        </header>
-
-        <h2 class="category">开发工具</h2>
-        <div class="grid">
-            <div class="card">
-                <i class="fab fa-github card-icon"></i>
-                <h3 class="card-title"><a href="https://coder.deepseek.com" target="_blank">Deepseek Coder</a></h3>
-                <p class="card-desc">智能代码生成工具，支持全栈开发</p>
-            </div>
-            <div class="card">
-                <i class="fab fa-codepen card-icon"></i>
-                <h3 class="card-title"><a href="https://lab.deepseek.com" target="_blank">AI Lab</a></h3>
-                <p class="card-desc">在线AI实验平台，快速验证算法</p>
-            </div>
-            <div class="card">
-                <i class="fas fa-code card-icon"></i>
-                <h3 class="card-title"><a href="./api/api.html" target="_blank">API 中心</a></h3>
-                <p class="card-desc">一体化API管理平台</p>
-            </div>
-        </div>
-
-        <h2 class="category">文档资源</h2>
-        <div class="grid">
-            <div class="card">
-                <i class="fab fa-figma card-icon"></i>
-                <h3 class="card-title"><a href="./doc/doc.html" target="_blank">院校教程归档</a></h3>
-                <p class="card-desc">院校教程</p>
-            </div>
-            <div class="card">
-                <i class="fas fa-palette card-icon"></i>
-                <h3 class="card-title"><a href="https://brand.deepseek.com" target="_blank">品牌指南</a></h3>
-                <p class="card-desc">品牌视觉规范与设计指南</p>
-            </div>
-        </div>
-
-        <h2 class="category">AI 工具</h2>
-        <div class="grid">
-            <div class="card">
-                <i class="fas fa-brain card-icon"></i>
-                <h3 class="card-title"><a href="https://chat.deepseek.com" target="_blank">智能助手</a></h3>
-                <p class="card-desc">新一代对话式AI解决方案</p>
-            </div>
-            <div class="card">
-                <i class="fas fa-robot card-icon"></i>
-                <h3 class="card-title"><a href="https://modelhub.deepseek.com" target="_blank">模型中心</a></h3>
-                <p class="card-desc">预训练模型库与部署平台</p>
-            </div>
-        </div>
-
-        <div class="article">
-            <p>技术文章请点击：<a href="article/deepseek-article.html" target="_blank">点击访问</a></p>
-        </div>
-
+<canvas id="stars-bg"></canvas>
+<div class="grid-bg"></div>
+<div class="progress" id="progress"></div>
+<nav class="topbar">
+  <div class="inner">
+    <a href="../../index.html" class="brand">
+      <div class="logo"></div>
+      <span>EXPECTOPATRONUS · BLOG</span>
+    </a>
+    <div class="nav">
+      <a href="../../index.html"><i class="fa-solid fa-house"></i> 首页</a>
+      <a href="../../home/home.html"><i class="fa-solid fa-newspaper"></i> 文章</a>
+      <a href="../deepseek.html" class="active"><i class="fa-solid fa-robot"></i> DeepSeek</a>
+      <a href="http://expectopatronus.top:5005/" target="_blank"><i class="fa-solid fa-compass"></i> 导航</a>
     </div>
+    <button id="theme-toggle" aria-label="主题切换"><i class="fa-solid fa-moon"></i></button>
+  </div>
+</nav>
+
+<section class="ds-hero">
+  <div class="inner">
+    <div>
+      <h1>DeepSeek 智能工具导航</h1>
+      <div class="sub">DeepSeek 生态精选工具 · API · 文档 · 社区一站式聚合</div>
+      <div class="badges">
+        <b>⚡ 极致推理</b>
+        <b>🤖 V3 / R1 / GPT-OSS</b>
+        <b>🔗 开源 API</b>
+      </div>
+    </div>
+    <div class="quick-stats">
+      <div><b>7</b><span>精选链接</span></div>
+      <div><b>3</b><span>分类</span></div>
+      <div><b>∞</b><span>创造力</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="ds-search">
+  <input id="ds-search-input" placeholder="🔎 搜索 DeepSeek 工具/API/文档..." />
+</section>
+
+<main class="ds-main">
+
+  <section class="ds-cat">
+    <h2><i class="fa-solid fa-hammer"></i> 开发工具</h2>
+    <div class="ds-grid">
+      <a class="ds-link" href="https://coder.deepseek.com" target="_blank">
+        <div class="ds-ico"><i class="fa-brands fa-github"></i></div>
+        <div class="ds-t"><b>Deepseek Coder</b><span>智能代码生成工具 · 全栈开发</span></div>
+        <div class="ds-ext"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+      </a>
+      <a class="ds-link" href="https://lab.deepseek.com" target="_blank">
+        <div class="ds-ico"><i class="fa-brands fa-codepen"></i></div>
+        <div class="ds-t"><b>AI Lab</b><span>在线 AI 实验平台</span></div>
+        <div class="ds-ext"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+      </a>
+      <a class="ds-link" href="./api/api.html" target="_blank">
+        <div class="ds-ico"><i class="fa-solid fa-code"></i></div>
+        <div class="ds-t"><b>API 中心</b><span>一体化 API 管理平台</span></div>
+        <div class="ds-ext"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="ds-cat">
+    <h2><i class="fa-solid fa-book-open"></i> 文档资源</h2>
+    <div class="ds-grid">
+      <a class="ds-link" href="./doc/doc.html" target="_blank">
+        <div class="ds-ico"><i class="fa-brands fa-figma"></i></div>
+        <div class="ds-t"><b>院校教程归档</b><span>院校教程</span></div>
+        <div class="ds-ext"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+      </a>
+      <a class="ds-link" href="https://brand.deepseek.com" target="_blank">
+        <div class="ds-ico"><i class="fa-solid fa-palette"></i></div>
+        <div class="ds-t"><b>品牌指南</b><span>品牌视觉规范与设计指南</span></div>
+        <div class="ds-ext"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="ds-cat">
+    <h2><i class="fa-solid fa-robot"></i> AI 工具</h2>
+    <div class="ds-grid">
+      <a class="ds-link" href="https://chat.deepseek.com" target="_blank">
+        <div class="ds-ico"><i class="fa-solid fa-brain"></i></div>
+        <div class="ds-t"><b>智能助手</b><span>新一代对话式 AI 解决方案</span></div>
+        <div class="ds-ext"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+      </a>
+      <a class="ds-link" href="https://modelhub.deepseek.com" target="_blank">
+        <div class="ds-ico"><i class="fa-solid fa-robot"></i></div>
+        <div class="ds-t"><b>模型中心</b><span>预训练模型库与部署平台</span></div>
+        <div class="ds-ext"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
+      </a>
+    </div>
+  </section>
+
+  <section class="ds-bookmarks">
+    <h3><i class="fa-solid fa-bookmark"></i> 相关阅读</h3>
+    <div class="bm-list">
+      <a href="article/deepseek-article.html" target="_blank"><i class="fa-solid fa-file-lines"></i> 技术文章</a>
+      <a href="../../index.html"><i class="fa-solid fa-house"></i> 首页</a>
+      <a href="../../home/home.html"><i class="fa-solid fa-newspaper"></i> 文章列表</a>
+      <a href="http://expectopatronus.top:5005/" target="_blank"><i class="fa-solid fa-compass"></i> 导航总站</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="inner">
+    <div class="row">
+      <div class="col">
+        <div class="brand"><div class="logo"></div> <span>EXPECTOPATRONUS · BLOG</span></div>
+        <p class="muted">个体知识库与创作自留地</p>
+      </div>
+      <div class="col">
+        <h4>内容</h4>
+        <a href="../../home/home.html">所有文章</a>
+        <a href="../deepseek.html">DeepSeek</a>
+        <a href="http://expectopatronus.top:5005/" target="_blank">导航</a>
+      </div>
+      <div class="col">
+        <h4>联系</h4>
+        <a href="mailto:expectopatronus@example.com">Email</a>
+        <a href="https://github.com/" target="_blank">GitHub</a>
+      </div>
+    </div>
+    <div class="copy">© 2026 EXPECTOPATRONUS. All rights reserved.</div>
+  </div>
+</footer>
+
+<div id="back" title="回到顶部"><i class="fa-solid fa-chevron-up"></i></div>
+
+<script>
+(function(){
+  var saved = localStorage.getItem('theme') || 'dark';
+  if(saved === 'light') document.documentElement.dataset.theme = 'light';
+  var ti = document.querySelector('#theme-toggle i');
+  if(ti) ti.className = saved === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+  var btn = document.getElementById('theme-toggle');
+  if(btn) btn.addEventListener('click', function(){
+    var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+    document.documentElement.dataset.theme = next;
+    localStorage.setItem('theme', next);
+    var ti2 = document.querySelector('#theme-toggle i');
+    if(ti2) ti2.className = next === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+  });
+  var back = document.getElementById('back');
+  window.addEventListener('scroll', function(){
+    var p = Math.min(1, window.scrollY / Math.max(1, document.body.scrollHeight - innerHeight));
+    var prog = document.getElementById('progress');
+    if(prog) prog.style.width = (p*100).toFixed(1)+'%';
+    if(back) back.classList.toggle('show', window.scrollY > 300);
+  });
+  if(back) back.addEventListener('click', function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+
+  var si = document.getElementById('ds-search-input');
+  if(si) si.addEventListener('input', function(){
+    var q = si.value.trim().toLowerCase();
+    var links = document.querySelectorAll('.ds-link');
+    links.forEach(function(a){
+      var t = (a.textContent || '').toLowerCase();
+      if(!q){ a.style.display = ''; return; }
+      a.style.display = t.includes(q) ? '' : 'none';
+    });
+  });
+
+  var canvas = document.getElementById('stars-bg');
+  if(canvas){
+    var ctx = canvas.getContext('2d');
+    var w = canvas.width = innerWidth, h = canvas.height = innerHeight;
+    var stars = [];
+    for(var i=0;i<80;i++) stars.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.5+.2,a:Math.random()*.5+.2});
+    function draw(){
+      ctx.clearRect(0,0,w,h);
+      stars.forEach(function(s){
+        ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+        ctx.fillStyle='rgba(180,210,255,'+s.a+')';ctx.fill();
+      });
+    }
+    draw();
+    onresize = function(){w=canvas.width=innerWidth;h=canvas.height=innerHeight;stars=[];for(var i=0;i<80;i++)stars.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.5+.2,a:Math.random()*.5+.2});draw();};
+  }
+})();
+</script>
 </body>
-
 </html>
-
