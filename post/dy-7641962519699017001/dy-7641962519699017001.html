@@ -4,22 +4,49 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gemini3.5Flash 携手Composer2.5 踢馆赛 · EXPECTOPATRONUS</title>
-<meta name="description" content="Gemini3.5Flash 携手Composer2.5 这是一期踢馆赛，两个新出的模型，前来挑战全球十六强">
+<meta name="description" content="Gemini3.5Flash 携手 Composer2.5 — AI 编程模型踢馆赛，全球十六强挑战赛">
 <meta name="keywords" content="抖音,搬运,gemini,AI挑战赛,赛博斗蛐蛐,Cursor">
-<meta property="og:title" content="Gemini3.5Flash 携手Composer2.5 踢馆赛">
+<meta property="og:title" content="Gemini3.5Flash 携手 Composer2.5 踢馆赛">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://p26-sign.douyinpic.com/tos-cn-i-dy/67354461040f442ebd8434d3b5dfdcb6~tplv-dy-resize-walign-adapt-aq:540:q75.webp?lk3s=138a59ce&x-expires=1782658800&x-signature=dUKEXPSY4MB%2Fb6NgdZSl067ukzw%3D&from=327834062&s=PackSourceEnum_DOUYIN_REFLOW&se=false&sc=cover&biz_tag=aweme_video&l=2026061423361830EB883819F5428D7EB5">
+<meta property="og:description" content="AI 编程模型踢馆赛，两个新模型挑战全球十六强">
 <link rel="shortcut icon" href="../../home/50.png" type="image/png">
 <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<script>(function(){try{const t=localStorage.getItem('theme')||'dark';if(t==='light')document.documentElement.dataset.theme='light';}catch(e){}})();</script>
+<script>(function(){try{var t=localStorage.getItem('theme')||'dark';if(t==='light')document.documentElement.dataset.theme='light';}catch(e){}})();</script>
 <link rel="stylesheet" href="style.css">
-<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.10.0/highlight.min.js"></script>
-<script src="script.js"></script>
+<style>
+.dy-hero{position:relative;height:420px;overflow:hidden;border-radius:20px;border:1px solid var(--line);background-size:cover;background-position:center;margin-bottom:24px}
+.dy-hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.4) 0%,rgba(0,0,0,.75) 60%,rgba(0,0,0,.95) 100%)}
+.dy-hero .bad{position:relative;z-index:2;padding:28px 36px;max-width:800px;color:#fff;position:absolute;left:36px;bottom:28px}
+.dy-hero .cat-tag{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;font-size:.72rem;font-weight:700;background:rgba(0,229,255,.2);color:#00e5ff;border:1px solid rgba(0,229,255,.4);margin-bottom:14px}
+.dy-hero h1{font-size:clamp(1.5rem,3.5vw,2.2rem);font-weight:800;letter-spacing:-.015em;margin-bottom:10px;line-height:1.2;text-shadow:0 2px 14px rgba(0,0,0,.6)}
+.dy-hero .meta-row{display:flex;gap:14px;font-size:.85rem;color:rgba(255,255,255,.8);flex-wrap:wrap}
+.dy-hero .meta-row i{color:#00e5ff}
+.dy-meta-row{display:flex;gap:18px;flex-wrap:wrap;font-size:.9rem;color:var(--mute);margin:0 0 20px}
+.dy-meta-row i{color:var(--cyan);width:16px;text-align:center;margin-right:4px}
+.dy-meta-row .dy-meta-chip{display:inline-flex;align-items:center;gap:4px;padding:4px 12px;border-radius:999px;background:linear-gradient(135deg,rgba(0,229,255,.12),rgba(139,92,246,.12));border:1px solid var(--line);color:var(--ink-soft,var(--ink))}
+.dy-desc{padding:20px 24px;border-left:3px solid var(--cyan);background:linear-gradient(135deg,rgba(0,229,255,.06),rgba(139,92,246,.06));border-radius:14px;margin:18px 0;color:var(--ink);font-style:normal;line-height:1.9;font-size:1rem}
+.dy-cta{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:22px 0;padding:22px;border-radius:18px;background:linear-gradient(140deg,rgba(255,255,255,.04),rgba(255,255,255,.01));border:1px solid var(--line);align-items:center}
+.dy-cta .cover-side img{width:100%;border-radius:14px;border:1px solid var(--line);box-shadow:0 10px 30px -15px rgba(0,229,255,.35)}
+.dy-cta .btn-side{display:flex;flex-direction:column;gap:14px}
+.dy-cta .cta-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 22px;border-radius:12px;background:linear-gradient(135deg,#3b82ff,#8b5cf6);color:#fff;text-decoration:none;font-weight:700;box-shadow:0 10px 24px -12px rgba(59,130,255,.55);transition:transform .25s}
+.dy-cta .cta-btn:hover{transform:translateY(-2px)}
+.dy-cta .cta-note{font-size:.82rem;color:var(--mute);line-height:1.6}
+.dy-cta .cta-note i{color:var(--pink)}
+.dy-tags{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
+.dy-tags a{padding:5px 14px;border-radius:999px;font-size:.75rem;font-weight:600;background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--ink);text-decoration:none;transition:all .2s}
+.dy-tags a:hover{color:var(--cyan);border-color:var(--cyan);transform:translateY(-2px)}
+.dy-related{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:26px 0}
+.dy-related a{padding:16px 20px;border-radius:14px;background:linear-gradient(140deg,rgba(255,255,255,.04),rgba(255,255,255,.01));border:1px solid var(--line);text-decoration:none;color:var(--ink);transition:transform .25s}
+.dy-related a:hover{transform:translateY(-2px);border-color:var(--cyan)}
+.dy-related a h4{font-size:.95rem;font-weight:700;margin-bottom:4px}
+.dy-related a p{font-size:.8rem;color:var(--mute);line-height:1.5}
+@media(max-width:700px){.dy-hero{height:300px}.dy-hero .bad{left:20px;bottom:20px;padding:0}.dy-cta{grid-template-columns:1fr}.dy-related{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
 <div class="progress" id="progress"></div>
-<canvas id="stars-bg"></canvas>
-<div class="backdrop"></div>
+<div id="back"><i class="fa-solid fa-arrow-up"></i></div>
 
 <nav class="topbar">
   <div class="inner">
@@ -42,79 +69,111 @@
   <span class="sep">/</span>
   <a href="../../home/home.html">文章列表</a>
   <span class="sep">/</span>
-  <span>抖音搬运：Gemini3.5Flash 携手Composer2.5 踢馆赛</span>
+  <span>抖音搬运：Gemini3.5Flash 踢馆赛</span>
 </div>
 
 <main class="layout">
   <article class="article-wrap">
     <div class="article-body">
-      <header class="article-header">
-        <h1>Gemini3.5Flash 携手Composer2.5 踢馆赛</h1>
-        <div class="article-meta">
-          <span class="cat"><i class="fa-solid fa-folder"></i> 抖音搬运</span>
-          <span><i class="fa-regular fa-calendar"></i> 2026-06-14</span>
-          <span><i class="fa-regular fa-clock"></i> 8 分钟</span>
-          <span><i class="fa-regular fa-eye"></i> <span id="view-count">0</span></span>
+
+      <div class="dy-hero" style="background-image:url('https://p26-sign.douyinpic.com/tos-cn-i-dy/67354461040f442ebd8434d3b5dfdcb6~tplv-dy-resize-walign-adapt-aq:540:q75.webp?lk3s=138a59ce&x-expires=1782658800&x-signature=dUKEXPSY4MB%2Fb6NgdZSl067ukzw%3D&from=327834062&s=PackSourceEnum_DOUYIN_REFLOW&se=false&sc=cover&biz_tag=aweme_video&l=2026061423361830EB883819F5428D7EB5')">
+        <div class="bad">
+          <div class="cat-tag"><i class="fa-solid fa-video"></i> 抖音搬运</div>
+          <h1>Gemini3.5Flash 携手Composer2.5 踢馆赛</h1>
+          <div class="meta-row">
+            <span><i class="fa-regular fa-user"></i> Token就是词元</span>
+            <span><i class="fa-regular fa-calendar"></i> 2026-06-14</span>
+            <span><i class="fa-regular fa-clock"></i> 8 min</span>
+            <span><i class="fa-solid fa-tag"></i> 视频</span>
+          </div>
         </div>
-      </header>
-      <div class="article-content">
-
-<div class="dy-meta">
-  <div class="dy-cover"><img src="https://p26-sign.douyinpic.com/tos-cn-i-dy/67354461040f442ebd8434d3b5dfdcb6~tplv-dy-resize-walign-adapt-aq:540:q75.webp?lk3s=138a59ce&x-expires=1782658800&x-signature=dUKEXPSY4MB%2Fb6NgdZSl067ukzw%3D&from=327834062&s=PackSourceEnum_DOUYIN_REFLOW&se=false&sc=cover&biz_tag=aweme_video&l=2026061423361830EB883819F5428D7EB5" alt="cover" loading="lazy"></div>
-  <div class="dy-info">
-    <div class="dy-author"><i class="fa-regular fa-user"></i> Token就是词元</div>
-    <div class="dy-duration"><i class="fa-regular fa-clock"></i> 8 分钟</div>
-    <div class="dy-source"><a href="https://www.douyin.com/video/7641962519699017001" target="_blank" rel="noopener"><i class="fa-solid fa-link"></i> 抖音原文</a></div>
-  </div>
-</div>
-
-<h2>视频描述</h2>
-<blockquote>Gemini3.5Flash 携手Composer2.5 这是一期踢馆赛，两个新出的模型，前来挑战全球十六强，谁将上位，谁将出局？我们拭目以待。</blockquote>
-
-<h2>在线观看（无水印直链）</h2>
-<div class="dy-video">
-  <video controls playsinline preload="metadata" poster="https://p26-sign.douyinpic.com/tos-cn-i-dy/67354461040f442ebd8434d3b5dfdcb6~tplv-dy-resize-walign-adapt-aq:540:q75.webp?lk3s=138a59ce&x-expires=1782658800&x-signature=dUKEXPSY4MB%2Fb6NgdZSl067ukzw%3D&from=327834062&s=PackSourceEnum_DOUYIN_REFLOW&se=false&sc=cover&biz_tag=aweme_video&l=2026061423361830EB883819F5428D7EB5">
-    <source src="https://www.douyin.com/aweme/v1/play/?video_id=v0d00fg10000d86r6vnog65u1716gp3g" type="video/mp4">
-    您的浏览器不支持视频播放，<a href="https://www.douyin.com/aweme/v1/play/?video_id=v0d00fg10000d86r6vnog65u1716gp3g">点击下载</a>
-  </video>
-</div>
-
-<h2>作者与标签</h2>
-<div class="article-tags"><span>抖音</span><span>搬运</span><span>gemini</span><span>AI挑战赛</span><span>赛博斗蛐蛐</span><span>Cursor</span></div>
-
-<p class="article-note">⚠️ 本文内容来源于抖音公开视频，视频归原作者 <b>Token就是词元</b> 所有。此处仅作技术分享，如有侵权请联系删除。</p>
-
       </div>
+
+      <blockquote class="dy-desc">Gemini3.5Flash 携手Composer2.5 这是一期踢馆赛，两个新出的模型，前来挑战全球十六强，谁将上位，谁将出局？我们拭目以待。</blockquote>
+
+      <div class="dy-cta">
+        <div class="cover-side">
+          <img loading="lazy" alt="cover" src="https://p26-sign.douyinpic.com/tos-cn-i-dy/67354461040f442ebd8434d3b5dfdcb6~tplv-dy-resize-walign-adapt-aq:540:q75.webp?lk3s=138a59ce&x-expires=1782658800&x-signature=dUKEXPSY4MB%2Fb6NgdZSl067ukzw%3D&from=327834062&s=PackSourceEnum_DOUYIN_REFLOW&se=false&sc=cover&biz_tag=aweme_video&l=2026061423361830EB883819F5428D7EB5">
+        </div>
+        <div class="btn-side">
+          <a class="cta-btn" id="cta-link" href="https://www.douyin.com/video/7641962519699017001" target="_blank" rel="noopener">
+            <i class="fa-brands fa-tiktok"></i> 去抖音原站观看 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+          <div class="cta-note"><i class="fa-solid fa-triangle-exclamation"></i> 本站仅做学习归档，视频归原作者所有。抖音防盗链限制，在线播放链接可能随时失效，建议跳转原站观看。</div>
+        </div>
+      </div>
+
+      <div class="dy-tags">
+        <a href="https://www.douyin.com/search/%E6%8A%96%E9%9F%B3" target="_blank">#抖音</a>
+        <a href="https://www.douyin.com/search/%E6%90%AC%E8%BF%90" target="_blank">#搬运</a>
+        <a href="https://www.douyin.com/search/gemini" target="_blank">#gemini</a>
+        <a href="https://www.douyin.com/search/AI%E6%8C%91%E6%88%98%E8%B5%9B" target="_blank">#AI挑战赛</a>
+        <a href="https://www.douyin.com/search/%E8%B5%9B%E5%8D%9A%E6%96%97%E8%9A%96%E8%9A%9A" target="_blank">#赛博斗蛐蛐</a>
+        <a href="https://www.douyin.com/search/Cursor" target="_blank">#Cursor</a>
+      </div>
+
+      <div class="dy-related">
+        <a href="../dy-7646747643204900836/dy-7646747643204900836.html">
+          <h4><i class="fa-solid fa-image"></i> Vibe Coding大赏｜Harness starter开源</h4>
+          <p>图文笔记 · 6 页 · 2026-06-16</p>
+        </a>
+        <a href="../../home/home.html">
+          <h4><i class="fa-solid fa-newspaper"></i> 更多文章</h4>
+          <p>回到文章列表浏览所有分类</p>
+        </a>
+      </div>
+
     </div>
   </article>
-  <aside class="side">
-    <div class="toc-panel" id="toc-panel"><h3><i class="fa-solid fa-list-ul"></i> 目录</h3><ul id="toc-list"></ul></div>
-  </aside>
 </main>
 
-<div class="article-rating">
-  <span><i class="fa-regular fa-star"></i> 评分</span>
-  <div class="stars" data-rated="0">
-    <i class="fa-regular fa-star" data-v="1"></i><i class="fa-regular fa-star" data-v="2"></i><i class="fa-regular fa-star" data-v="3"></i><i class="fa-regular fa-star" data-v="4"></i><i class="fa-regular fa-star" data-v="5"></i>
+<footer class="footer">
+  <div>© 2025 EXPECTOPATRONUS · 本站内容纯学习用途，非商用</div>
+  <div class="social">
+    <a href="https://github.com/expectopatronus00" target="_blank"><i class="fa-brands fa-github"></i></a>
+    <a href="mailto:18821772508@163.com"><i class="fa-solid fa-envelope"></i></a>
   </div>
-  <span class="rating-avg"><span id="rating-avg">0</span> / 5</span>
-</div>
+</footer>
 
-<div class="comments">
-  <h3><i class="fa-regular fa-comment-dots"></i> 留言评论</h3>
-  <form id="comment-form">
-    <input type="text" id="comment-name" placeholder="昵称" required maxlength="20">
-    <textarea id="comment-text" placeholder="说点什么…" required maxlength="280"></textarea>
-    <button type="submit" class="primary"><i class="fa-regular fa-paper-plane"></i> 发表</button>
-  </form>
-  <ul id="comment-list"></ul>
-</div>
+<script>
+(function(){
+  var saved = localStorage.getItem('theme') || 'dark';
+  if(saved === 'light') document.documentElement.dataset.theme = 'light';
+  var i = document.querySelector('#theme-toggle i');
+  if(i) i.className = saved === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+  var btn = document.getElementById('theme-toggle');
+  if(btn) btn.addEventListener('click', function(){
+    var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+    document.documentElement.dataset.theme = next;
+    localStorage.setItem('theme', next);
+    var ii = document.querySelector('#theme-toggle i');
+    if(ii) ii.className = next === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+  });
 
-<div class="related">
-  <h3><i class="fa-solid fa-link"></i> 相关推荐</h3>
-  <a href="../../post/post1/post1.html" class="r-card"><h4>Linux 清除 history 记录的方式</h4><span>📄 技术 · 2024-02-23</span></a>
-</div>
+  var back = document.getElementById('back');
+  window.addEventListener('scroll', function(){
+    var p = Math.min(1, window.scrollY / Math.max(1, document.body.scrollHeight - innerHeight));
+    var prog = document.getElementById('progress');
+    if(prog) prog.style.width = (p*100).toFixed(1)+'%';
+    if(back) back.classList.toggle('show', window.scrollY > 300);
+  });
+  if(back) back.addEventListener('click', function(){ window.scrollTo({top:0,behavior:'smooth'}); });
 
-<script src="script.js"></script>
+  var cta = document.getElementById('cta-link');
+  if(cta){
+    cta.addEventListener('click', function(e){
+      e.preventDefault();
+      var url = this.href;
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(window.location.href).then(function(){
+          window.open(url, '_blank', 'noopener');
+        });
+      } else {
+        window.open(url, '_blank', 'noopener');
+      }
+    });
+  }
+})();
+</script>
 </body>
 </html>

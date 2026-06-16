@@ -1,40 +1,56 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vibe Coding大赏｜Harness starter正式开源！ · EXPECTOPATRONUS</title>
-<meta name="description" content="其实 Harness 这个概念已经火了一阵子了。很多人觉得它是驯服 AI 的高级玩法，但对我来说，它本质上就是把以前第一次对 ChatGPT 说的那句不要乱改我的代码做了个 Pro Max 版。">
-<meta name="keywords" content="抖音,Harness,Skill,claude,Ai,vibecoding大赏,Vibe Coding,AI编程">
+<meta name="description" content="Harness 这个概念火了一阵子了 — 图文笔记 6 页">
+<meta name="keywords" content="抖音,搬运,Skill,Harness,claude,Ai,vibecoding大赏,Vibe Coding">
+<meta property="og:title" content="Vibe Coding大赏｜Harness starter正式开源！">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://p3-pc-sign.douyinpic.com/tos-cn-p-0051-ce/o0qwoCqbeBsEjAiN1EMIKUCBJKD7wpfwbUNBi2~tplv-dy-cropcenter:323:430.jpeg?biz_tag=pcweb_cover&from=327834062&lk3s=138a59ce&s=PackSourceEnum_FAVORITE&sc=cover&se=true&sh=323_430&x-expires=2096974800&x-signature=KjDNGh1yY%2Bt8WskJHmHFOH0VH1c%3D">
+<meta property="og:description" content="Harness starter 图文笔记 · 如何给 AI 划定安全区、控制输出边界">
 <link rel="shortcut icon" href="../../home/50.png" type="image/png">
 <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<script>(function(){try{const t=localStorage.getItem('theme')||'dark';if(t==='light')document.documentElement.dataset.theme='light';}catch(e){}})();</script>
+<script>(function(){try{var t=localStorage.getItem('theme')||'dark';if(t==='light')document.documentElement.dataset.theme='light';}catch(e){}})();</script>
 <link rel="stylesheet" href="style.css">
 <style>
-.dy-meta{display:grid;grid-template-columns:220px 1fr;gap:22px;margin:20px 0;padding:22px;border-radius:var(--radius,16px);background:linear-gradient(140deg,rgba(255,255,255,.04),rgba(255,255,255,.015));border:1px solid var(--line);align-items:center}
-.dy-meta .dy-cover img{width:100%;border-radius:14px;border:1px solid var(--line);box-shadow:0 10px 30px -15px rgba(0,229,255,.3)}
-.dy-meta .dy-info{display:flex;flex-direction:column;gap:10px}
-.dy-meta .dy-info div{display:flex;align-items:center;gap:8px;color:var(--mute);font-size:.9rem}
-.dy-meta .dy-info i{color:var(--cyan);width:16px;text-align:center}
-.dy-meta .dy-source a{color:var(--cyan);text-decoration:none;border-bottom:1px dashed rgba(0,229,255,.4);transition:all .2s}
-.dy-meta .dy-source a:hover{color:var(--blue)}
+.dy-hero{position:relative;height:420px;overflow:hidden;border-radius:20px;border:1px solid var(--line);background-size:cover;background-position:center;margin-bottom:24px}
+.dy-hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.4) 0%,rgba(0,0,0,.75) 60%,rgba(0,0,0,.95) 100%)}
+.dy-hero .bad{position:relative;z-index:2;padding:28px 36px;max-width:800px;color:#fff;position:absolute;left:36px;bottom:28px}
+.dy-hero .cat-tag{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;font-size:.72rem;font-weight:700;background:rgba(0,229,255,.2);color:#00e5ff;border:1px solid rgba(0,229,255,.4);margin-bottom:14px}
+.dy-hero h1{font-size:clamp(1.5rem,3.5vw,2.2rem);font-weight:800;letter-spacing:-.015em;margin-bottom:10px;line-height:1.2;text-shadow:0 2px 14px rgba(0,0,0,.6)}
+.dy-hero .meta-row{display:flex;gap:14px;font-size:.85rem;color:rgba(255,255,255,.8);flex-wrap:wrap}
+.dy-hero .meta-row i{color:#00e5ff}
+.dy-desc{padding:20px 24px;border-left:3px solid var(--cyan);background:linear-gradient(135deg,rgba(0,229,255,.06),rgba(139,92,246,.06));border-radius:14px;margin:18px 0;color:var(--ink);font-style:normal;line-height:1.9;font-size:1rem}
 .dy-gallery{display:grid;gap:14px;margin:18px 0}
-.dy-gallery.dy-gallery--6{grid-template-columns:repeat(3,1fr)}
-.dy-gallery.dy-gallery--5,.dy-gallery.dy-gallery--4{grid-template-columns:repeat(2,1fr)}
-.dy-gallery.dy-gallery--3{grid-template-columns:repeat(3,1fr)}
-.dy-gallery.dy-gallery--2{grid-template-columns:repeat(2,1fr)}
-.dy-gallery img{width:100%;border-radius:14px;border:1px solid var(--line);box-shadow:0 10px 30px -15px rgba(139,92,246,.3);transition:transform .3s,box-shadow .3s;cursor:zoom-in}
+.dy-gallery.g6{grid-template-columns:repeat(3,1fr)}
+.dy-gallery.g4,.dy-gallery.g5{grid-template-columns:repeat(2,1fr)}
+.dy-gallery.g3{grid-template-columns:repeat(3,1fr)}
+.dy-gallery img{width:100%;border-radius:14px;border:1px solid var(--line);box-shadow:0 10px 30px -15px rgba(139,92,246,.3);cursor:zoom-in;transition:transform .3s}
 .dy-gallery img:hover{transform:scale(1.02);box-shadow:0 18px 40px -15px rgba(0,229,255,.45)}
-.dy-desc-block{padding:20px;border-radius:14px;background:linear-gradient(140deg,rgba(255,255,255,.03),rgba(255,255,255,.01));border:1px solid var(--line);font-style:normal;margin:18px 0;color:var(--ink);line-height:1.9;font-size:.98rem;white-space:pre-wrap}
-@media(max-width:700px){
-  .dy-meta{grid-template-columns:1fr}
-  .dy-gallery.dy-gallery--6{grid-template-columns:repeat(2,1fr)}
-}
+.dy-cta{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:22px 0;padding:22px;border-radius:18px;background:linear-gradient(140deg,rgba(255,255,255,.04),rgba(255,255,255,.01));border:1px solid var(--line);align-items:center}
+.dy-cta .cover-side img{width:100%;border-radius:14px;border:1px solid var(--line);box-shadow:0 10px 30px -15px rgba(139,92,246,.3)}
+.dy-cta .btn-side{display:flex;flex-direction:column;gap:14px}
+.dy-cta .cta-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 22px;border-radius:12px;background:linear-gradient(135deg,#3b82ff,#8b5cf6);color:#fff;text-decoration:none;font-weight:700;box-shadow:0 10px 24px -12px rgba(139,92,246,.55);transition:transform .25s}
+.dy-cta .cta-btn:hover{transform:translateY(-2px)}
+.dy-cta .cta-note{font-size:.82rem;color:var(--mute);line-height:1.6}
+.dy-cta .cta-note i{color:var(--pink)}
+.dy-tags{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
+.dy-tags a{padding:5px 14px;border-radius:999px;font-size:.75rem;font-weight:600;background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--ink);text-decoration:none;transition:all .2s}
+.dy-tags a:hover{color:var(--cyan);border-color:var(--cyan);transform:translateY(-2px)}
+.dy-related{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:26px 0}
+.dy-related a{padding:16px 20px;border-radius:14px;background:linear-gradient(140deg,rgba(255,255,255,.04),rgba(255,255,255,.01));border:1px solid var(--line);text-decoration:none;color:var(--ink);transition:transform .25s}
+.dy-related a:hover{transform:translateY(-2px);border-color:var(--cyan)}
+.dy-related a h4{font-size:.95rem;font-weight:700;margin-bottom:4px}
+.dy-related a p{font-size:.8rem;color:var(--mute);line-height:1.5}
+@media(max-width:700px){.dy-hero{height:300px}.dy-hero .bad{left:20px;bottom:20px;padding:0}.dy-gallery.g6{grid-template-columns:repeat(2,1fr)}.dy-cta{grid-template-columns:1fr}.dy-related{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-
 <div class="progress" id="progress"></div>
+<div id="back"><i class="fa-solid fa-arrow-up"></i></div>
+
 <nav class="topbar">
   <div class="inner">
     <a href="../../index.html" class="brand">
@@ -56,92 +72,73 @@
   <span class="sep">/</span>
   <a href="../../home/home.html">文章列表</a>
   <span class="sep">/</span>
-  <span>Vibe Coding大赏｜Harness starter正式开源</span>
+  <span>抖音搬运：Vibe Coding大赏 · Harness starter</span>
 </div>
 
 <main class="layout">
   <article class="article-wrap">
     <div class="article-body">
-      <header class="article-header">
-        <h1>Vibe Coding大赏｜Harness starter正式开源！</h1>
-        <div class="article-meta">
-          <span class="cat"><i class="fa-solid fa-folder"></i> 抖音搬运</span>
-          <span><i class="fa-regular fa-calendar"></i> 2026-06-16</span>
-          <span><i class="fa-regular fa-clock"></i> 5 分钟</span>
-          <span><i class="fa-regular fa-eye"></i> <span id="view-count">0</span></span>
-        </div>
-      </header>
 
-      <div class="dy-meta">
-        <div class="dy-cover">
-          <img loading="lazy" src="https://p3-pc-sign.douyinpic.com/tos-cn-p-0051-ce/o0qwoCqbeBsEjAiN1EMIKUCBJKD7wpfwbUNBi2~tplv-dy-cropcenter:323:430.jpeg?biz_tag=pcweb_cover&from=327834062&lk3s=138a59ce&s=PackSourceEnum_FAVORITE&sc=cover&se=true&sh=323_430&x-expires=2096974800&x-signature=KjDNGh1yY%2Bt8WskJHmHFOH0VH1c%3D" alt="封面">
-        </div>
-        <div class="dy-info">
-          <div><i class="fa-regular fa-user"></i> 小鹿宅</div>
-          <div><i class="fa-regular fa-image"></i> 图文笔记 · 6 页</div>
-          <div><i class="fa-solid fa-hashtag"></i> #Skill #Harness #claude #Ai #vibecoding大赏</div>
-          <div class="dy-source">
-            <a href="https://www.douyin.com/note/7646747643204900836" target="_blank" rel="noopener"><i class="fa-solid fa-link"></i> 抖音原文</a>
-            &nbsp;·&nbsp;
-            <a href="https://v.douyin.com/6BvXbeQXiS8/" target="_blank" rel="noopener"><i class="fa-solid fa-share-from-square"></i> 短链</a>
+      <div class="dy-hero" style="background-image:url('https://p3-pc-sign.douyinpic.com/tos-cn-p-0051-ce/o0qwoCqbeBsEjAiN1EMIKUCBJKD7wpfwbUNBi2~tplv-dy-cropcenter:323:430.jpeg?biz_tag=pcweb_cover&from=327834062&lk3s=138a59ce&s=PackSourceEnum_FAVORITE&sc=cover&se=true&sh=323_430&x-expires=2096974800&x-signature=KjDNGh1yY%2Bt8WskJHmHFOH0VH1c%3D')">
+        <div class="bad">
+          <div class="cat-tag"><i class="fa-solid fa-images"></i> 抖音搬运</div>
+          <h1>Vibe Coding大赏｜Harness starter正式开源！</h1>
+          <div class="meta-row">
+            <span><i class="fa-regular fa-user"></i> 小鹿宅</span>
+            <span><i class="fa-regular fa-calendar"></i> 2026-06-16</span>
+            <span><i class="fa-regular fa-clock"></i> 5 min</span>
+            <span><i class="fa-solid fa-layer-group"></i> 图文 · 6 页</span>
           </div>
         </div>
       </div>
 
-      <h2>视频描述</h2>
-      <div class="dy-desc-block">其实 Harness 这个概念已经火了一阵子了。很多人觉得它是"驯服 AI"的高级玩法，但对我来说，它本质上就是把以前第一次对 ChatGPT 说的那句"不要乱改我的代码"做了个 Pro Max 版。
+      <blockquote class="dy-desc">其实 Harness 这个概念已经火了一阵子了。很多人觉得它是"驯服 AI"的高级玩法，但对我来说，它本质上就是把以前第一次对 ChatGPT 说的那句"不要乱改我的代码"做了个 Pro Max 版。说实话，大家都心照不宣：只要模型够强，Harness 到最后可能也不需要了。所以与其花时间设计一套又一套架构，不如直接用别人验证过、真正好用的 starter 开箱即用。这篇图文笔记拆解 Harness starter 的核心思路 — 如何给 AI 划定安全区、如何控制它的输出边界、以及如何把"不要乱改代码"这句话真正落到工程级别的约束上。适合经常被 AI 误伤的朋友收藏。</blockquote>
 
-说实话，大家都心照不宣：只要模型够强，Harness 到最后可能也不需要了。所以与其花时间设计一套又一套架构，不如直接用别人验证过、真正好用的 starter 开箱即用。
-
-这篇图文笔记拆解 Harness starter 的核心思路 — 如何给 AI 划定安全区、如何控制它的输出边界、以及如何把"不要乱改代码"这句话真正落到工程级别的约束上。适合经常被 AI 误伤的朋友收藏。</div>
-
-      <h2>图文笔记（6 页）</h2>
-      <div class="dy-gallery dy-gallery--6">
-        <img loading="lazy" alt="page 1" src="https://p3-pc-sign.douyinpic.com/tos-cn-i-0813/okbgLLt2AQRArvDq9waCAqVZHEQ7IAFeAAAHfD~tplv-dy-aweme-images:q75.webp?biz_tag=aweme_images&from=327834062&lk3s=138a59ce&s=PackSourceEnum_AWEME_DETAIL&sc=image&se=false&x-expires=1784206800&x-signature=lxqKCgMu%2Fb7KmqS6HzEj34EPkds%3D">
-        <img loading="lazy" alt="page 2" src="https://p3-pc-sign.douyinpic.com/tos-cn-i-0813c001/oAIAeqqA2CrAmg9LvVQAAFEARtDDLHAbQfc2HD~tplv-dy-aweme-images:q75.webp?biz_tag=aweme_images&from=327834062&lk3s=138a59ce&s=PackSourceEnum_AWEME_DETAIL&sc=image&se=false&x-expires=1784206800&x-signature=AyHbn9OwHssdKAZLU3hN7%2BmwPxc%3D">
-        <img loading="lazy" alt="page 3" src="https://p3-pc-sign.douyinpic.com/tos-cn-i-0813/oUUQAPPIgrAtBnUeWWWtBdQAeMeH8YAW7AEjAG~tplv-dy-aweme-images:q75.webp?biz_tag=aweme_images&from=327834062&lk3s=138a59ce&s=PackSourceEnum_AWEME_DETAIL&sc=image&se=false&x-expires=1784206800&x-signature=qEBUykuoBahdrqhINMwXav3yc5U">
-        <img loading="lazy" alt="page 4" src="https://p3-pc-sign.douyinpic.com/tos-cn-i-0813/oUUQAPPIgrAtBnUeWWWtBdQAeMeH8YAW7AEjAG~tplv-dy-aweme-images:q75.webp?biz_tag=aweme_images&from=327834062&lk3s=138a59ce&s=PackSourceEnum_AWEME_DETAIL&sc=image&se=false&x-expires=1784206800&x-signature=qEBUykuoBahdrqhINMwXav3yc5U">
-        <img loading="lazy" alt="page 5" src="https://p3-pc-sign.douyinpic.com/tos-cn-i-0813/oUUQAPPIgrAtBnUeWWWtBdQAeMeH8YAW7AEjAG~tplv-dy-aweme-images:q75.webp?biz_tag=aweme_images&from=327834062&lk3s=138a59ce&s=PackSourceEnum_AWEME_DETAIL&sc=image&se=false&x-expires=1784206800&x-signature=qEBUykuoBahdrqhINMwXav3yc5U">
-        <img loading="lazy" alt="page 6" src="https://p3-pc-sign.douyinpic.com/tos-cn-i-0813/oUUQAPPIgrAtBnUeWWWtBdQAeMeH8YAW7AEjAG~tplv-dy-aweme-images:q75.webp?biz_tag=aweme_images&from=327834062&lk3s=138a59ce&s=PackSourceEnum_AWEME_DETAIL&sc=image&se=false&x-expires=1784206800&x-signature=qEBUykuoBahdrqhINMwXav3yc5U">
-      </div>
-      <p style="color:var(--mute);font-size:.85rem;margin-top:8px">⚠️ 图片有效期约 30 天（抖音 CDN 签名），过期后请以抖音原图为准。</p>
-
-      <h2>作者与标签</h2>
-      <div class="share-tags">
-        <span class="label"># 标签：</span>
-        <a href="https://www.douyin.com/search/%23Skill" target="_blank" rel="noopener">Skill</a>
-        <a href="https://www.douyin.com/search/%23Harness" target="_blank" rel="noopener">Harness</a>
-        <a href="https://www.douyin.com/search/%23claude" target="_blank" rel="noopener">claude</a>
-        <a href="https://www.douyin.com/search/%23Ai" target="_blank" rel="noopener">Ai</a>
-        <a href="https://www.douyin.com/search/%23vibecoding%E5%A4%A7%E8%B5%8F" target="_blank" rel="noopener">vibecoding大赏</a>
+      <div class="dy-gallery g6">
+        <img loading="lazy" alt="Harness page 1" src="https://p3-pc-sign.douyinpic.com/tos-cn-i-0813/okbgLLt2AQRArvDq9waCAqVZHEQ7IAFeAAAHfD~tplv-dy-aweme-images:q75.webp?biz_tag=aweme_images&from=327834062&lk3s=138a59ce&s=PackSourceEnum_AWEME_DETAIL&sc=image&se=false&x-expires=1784206800&x-signature=lxqKCgMu%2Fb7KmqS6HzEj34EPkds%3D">
+        <img loading="lazy" alt="Harness page 2" src="https://p3-pc-sign.douyinpic.com/tos-cn-i-0813c001/oAIAeqqA2CrAmg9LvVQAAFEARtDDLHAbQfc2HD~tplv-dy-aweme-images:q75.webp?biz_tag=aweme_images&from=327834062&lk3s=138a59ce&s=PackSourceEnum_AWEME_DETAIL&sc=image&se=false&x-expires=1784206800&x-signature=AyHbn9OwHssdKAZLU3hN7%2BmwPxc%3D">
+        <img loading="lazy" alt="Harness page 3" src="https://p3-pc-sign.douyinpic.com/tos-cn-i-0813/oUUQAPPIgrAtBnUeWWWtBdQAeMeH8YAW7AEjAG~tplv-dy-aweme-images:q75.webp?biz_tag=aweme_images&from=327834062&lk3s=138a59ce&s=PackSourceEnum_AWEME_DETAIL&sc=image&se=false&x-expires=1784206800&x-signature=qEBUykuoBahdrqhINMwXav3yc5U">
+        <img loading="lazy" alt="Harness page 4" src="https://p3-pc-sign.douyinpic.com/tos-cn-i-0813/oUUQAPPIgrAtBnUeWWWtBdQAeMeH8YAW7AEjAG~tplv-dy-aweme-images:q75.webp?biz_tag=aweme_images&from=327834062&lk3s=138a59ce&s=PackSourceEnum_AWEME_DETAIL&sc=image&se=false&x-expires=1784206800&x-signature=qEBUykuoBahdrqhINMwXav3yc5U">
+        <img loading="lazy" alt="Harness page 5" src="https://p3-pc-sign.douyinpic.com/tos-cn-i-0813/oUUQAPPIgrAtBnUeWWWtBdQAeMeH8YAW7AEjAG~tplv-dy-aweme-images:q75.webp?biz_tag=aweme_images&from=327834062&lk3s=138a59ce&s=PackSourceEnum_AWEME_DETAIL&sc=image&se=false&x-expires=1784206800&x-signature=qEBUykuoBahdrqhINMwXav3yc5U">
+        <img loading="lazy" alt="Harness page 6" src="https://p3-pc-sign.douyinpic.com/tos-cn-i-0813/oUUQAPPIgrAtBnUeWWWtBdQAeMeH8YAW7AEjAG~tplv-dy-aweme-images:q75.webp?biz_tag=aweme_images&from=327834062&lk3s=138a59ce&s=PackSourceEnum_AWEME_DETAIL&sc=image&se=false&x-expires=1784206800&x-signature=qEBUykuoBahdrqhINMwXav3yc5U">
       </div>
 
-      <p class="article-note" style="color:var(--mute);font-size:.85rem;padding:14px;border-radius:12px;background:linear-gradient(140deg,rgba(255,255,255,.03),rgba(255,255,255,.01));border:1px dashed var(--line);">
-        ⚠️ 内容来自抖音公开笔记，归原作者「小鹿宅」所有。仅做学习归档，非商用。如需原视频/完整图文，请移步抖音原页。
-      </p>
-
-      <div class="share-btns">
-        <span class="label">分享：</span>
-        <a href="#" title="复制链接" id="share-link"><i class="fa-solid fa-link"></i></a>
-        <a href="https://www.douyin.com/note/7646747643204900836" target="_blank" rel="noopener" title="抖音原文"><i class="fa-brands fa-tiktok"></i></a>
-        <a href="#" id="share-back"><i class="fa-solid fa-arrow-left-long"></i></a>
-      </div>
-
-      <div class="related">
-        <h3>相关文章</h3>
-        <div class="related-grid">
-          <a class="related-item" href="../dy-7641962519699017001/dy-7641962519699017001.html">
-            <div class="info"><h4>Gemini3.5Flash 携手 Composer2.5 踢馆赛</h4><p>两个新模型挑战全球十六强 AI 编程模型…</p></div>
+      <div class="dy-cta">
+        <div class="cover-side">
+          <img loading="lazy" alt="cover" src="https://p3-pc-sign.douyinpic.com/tos-cn-p-0051-ce/o0qwoCqbeBsEjAiN1EMIKUCBJKD7wpfwbUNBi2~tplv-dy-cropcenter:323:430.jpeg?biz_tag=pcweb_cover&from=327834062&lk3s=138a59ce&s=PackSourceEnum_FAVORITE&sc=cover&se=true&sh=323_430&x-expires=2096974800&x-signature=KjDNGh1yY%2Bt8WskJHmHFOH0VH1c%3D">
+        </div>
+        <div class="btn-side">
+          <a class="cta-btn" id="cta-link" href="https://www.douyin.com/note/7646747643204900836" target="_blank" rel="noopener">
+            <i class="fa-brands fa-tiktok"></i> 去抖音原站看完整图文 <i class="fa-solid fa-arrow-up-right-from-square"></i>
           </a>
-          <a class="related-item" href="../../home/home.html">
-            <div class="info"><h4>更多文章 →</h4><p>回到文章列表浏览所有分类</p></div>
-          </a>
+          <div class="cta-note"><i class="fa-solid fa-triangle-exclamation"></i> 本站仅做学习归档，内容归原作者所有。图片有效期约 30 天（抖音 CDN 签名），过期后请以抖音原图为准。</div>
         </div>
       </div>
+
+      <div class="dy-tags">
+        <a href="https://www.douyin.com/search/Skill" target="_blank">#Skill</a>
+        <a href="https://www.douyin.com/search/Harness" target="_blank">#Harness</a>
+        <a href="https://www.douyin.com/search/claude" target="_blank">#claude</a>
+        <a href="https://www.douyin.com/search/Ai" target="_blank">#Ai</a>
+        <a href="https://www.douyin.com/search/vibecoding%E5%A4%A7%E8%B5%8F" target="_blank">#vibecoding大赏</a>
+        <a href="https://www.douyin.com/search/%E6%8A%96%E9%9F%B3" target="_blank">#抖音</a>
+        <a href="https://www.douyin.com/search/%E6%90%AC%E8%BF%90" target="_blank">#搬运</a>
+      </div>
+
+      <div class="dy-related">
+        <a href="../../home/home.html">
+          <h4><i class="fa-solid fa-newspaper"></i> 更多文章</h4>
+          <p>回到文章列表浏览所有分类</p>
+        </a>
+        <a href="../dy-7641962519699017001/dy-7641962519699017001.html">
+          <h4><i class="fa-solid fa-video"></i> Gemini3.5Flash 携手 Composer2.5</h4>
+          <p>AI 编程模型踢馆赛 · 视频</p>
+        </a>
+      </div>
+
     </div>
   </article>
 </main>
-</div>
 
 <footer class="footer">
   <div>© 2025 EXPECTOPATRONUS · 本站内容纯学习用途，非商用</div>
@@ -150,8 +147,6 @@
     <a href="mailto:18821772508@163.com"><i class="fa-solid fa-envelope"></i></a>
   </div>
 </footer>
-
-<div id="back"><i class="fa-solid fa-arrow-up"></i></div>
 
 <script>
 (function(){
@@ -183,15 +178,20 @@
     });
   });
 
-  var sl = document.getElementById('share-link');
-  if(sl) sl.addEventListener('click', function(e){
-    e.preventDefault();
-    navigator.clipboard && navigator.clipboard.writeText(window.location.href).then(function(){
-      alert('链接已复制');
+  var cta = document.getElementById('cta-link');
+  if(cta){
+    cta.addEventListener('click', function(e){
+      e.preventDefault();
+      var url = this.href;
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(window.location.href).then(function(){
+          window.open(url, '_blank', 'noopener');
+        });
+      } else {
+        window.open(url, '_blank', 'noopener');
+      }
     });
-  });
-  var sb = document.getElementById('share-back');
-  if(sb) sb.addEventListener('click', function(e){ e.preventDefault(); history.back(); });
+  }
 })();
 </script>
 </body>
