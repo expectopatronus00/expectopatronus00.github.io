@@ -1,0 +1,8 @@
+node_modules
+*.min.js
+*.pdf
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.ico
