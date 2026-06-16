@@ -1,1 +1,275 @@
-﻿﻿C:\Users\18821
+﻿<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<script>(function(){try{const t=localStorage.getItem('theme')||'dark';if(t==='light')document.documentElement.dataset.theme='light';}catch(e){}})();</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>文章库 · EXPECTOPATRONUS</title>
+<meta name="description" content="精选 24 篇技术文章，覆盖 Linux / AI / DevOps / 前端">
+<link rel="shortcut icon" href="./50.png">
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="./common.css">
+<style>
+.home-hero{padding:38px 24px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,color-mix(in oklab,var(--bg-2) 92%,transparent),color-mix(in oklab,var(--bg-0) 95%,transparent))}
+.home-hero .inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.home-hero h1{font-size:clamp(1.7rem,4vw,2.6rem);font-weight:800;background:var(--grad-1);-webkit-background-clip:text;background-clip:text;color:transparent}
+.home-hero .sub{color:var(--ink-soft);font-size:.92rem;margin-top:8px}
+.home-hero .badges{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.home-hero .badges b{padding:3px 12px;border-radius:999px;font-size:.72rem;background:var(--grad-soft);color:var(--cyan);border:1px solid rgba(0,229,255,.35)}
+.home-hero .quick-stats{display:flex;gap:10px}
+.home-hero .quick-stats > div{padding:12px 16px;border-radius:10px;background:var(--bg-0);border:1px solid var(--line);text-align:center}
+.home-hero .quick-stats b{display:block;font-size:1.3rem;font-weight:800;background:var(--grad-1);-webkit-background-clip:text;background-clip:text;color:transparent}
+.home-hero .quick-stats span{font-size:.68rem;color:var(--mute);letter-spacing:.06em;text-transform:uppercase}
+.cat-stats{display:flex;gap:10px;padding:16px 24px;overflow-x:auto;max-width:1200px;margin:0 auto;scrollbar-width:none}
+.cat-stats::-webkit-scrollbar{display:none}
+.cs-pill{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;background:var(--bg-2);border:1px solid var(--line);color:var(--ink-soft);font-size:.82rem;font-weight:600;white-space:nowrap;transition:all .25s;text-decoration:none;cursor:pointer}
+.cs-pill b{margin-left:auto;font-size:.75rem;color:var(--cyan);background:rgba(0,229,255,.12);padding:2px 10px;border-radius:999px}
+.cs-pill:hover{border-color:var(--line-2);color:var(--cyan);transform:translateY(-2px)}
+.cs-pill.active{background:var(--grad-soft);border-color:rgba(0,229,255,.4);color:var(--cyan)}
+.container{max-width:1200px;margin:0 auto;padding:24px;display:grid;grid-template-columns:280px 1fr;gap:24px}
+.sidebar{display:flex;flex-direction:column;gap:20px}
+.side-rank{padding:0 14px 18px;border-radius:16px;background:var(--bg-2);border:1px solid var(--line)}
+.side-title{display:flex;align-items:center;gap:8px;font-size:.88rem;font-weight:800;color:var(--ink);margin:18px 4px 12px}
+.side-title i{color:var(--cyan)}
+.rank-list{display:flex;flex-direction:column;gap:6px}
+.rank-li{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:var(--bg-0);border:1px solid var(--line);text-decoration:none;transition:all .25s;color:var(--ink);font-size:.78rem}
+.rank-li:hover{border-color:var(--cyan);transform:translateX(3px);color:var(--ink)}
+.rank-li .m{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:800;flex-shrink:0}
+.rank-li .m-1{background:var(--grad-1);color:#fff}
+.rank-li .m-2{background:linear-gradient(135deg,#c9d3e3,#8ea4c2);color:#fff}
+.rank-li .m-3{background:linear-gradient(135deg,#d4a373,#8b5a2b);color:#fff}
+.rank-li .m-4,.rank-li .m-5{background:var(--bg-2);border:1px solid var(--line);color:var(--ink)}
+.rank-li strong{display:block;font-size:.8rem;color:var(--ink);line-height:1.3;font-weight:600}
+.rank-li .cat{font-size:.68rem;color:var(--mute);margin-top:2px}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 18px}
+.filter-btn{padding:7px 16px;border-radius:999px;background:var(--bg-2);border:1px solid var(--line);color:var(--ink-soft);font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit}
+.filter-btn:hover{border-color:var(--line-2);color:var(--cyan)}
+.filter-btn.active{background:var(--grad-soft);border-color:rgba(0,229,255,.4);color:var(--cyan)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.card{position:relative;padding:20px;background:var(--bg-2);border:1px solid var(--line);border-radius:16px;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:var(--ink);transition:all .3s;overflow:hidden;animation:fadeUp .5s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.card:hover{border-color:var(--line-2);transform:translateY(-4px);box-shadow:var(--shadow-glow);color:var(--ink)}
+.card .cat-tag{display:inline-flex;gap:6px;font-size:.7rem;padding:2px 10px;border-radius:999px;background:rgba(0,229,255,.1);color:var(--cyan);border:1px solid rgba(0,229,255,.25);align-self:flex-start}
+.card h3{font-size:1rem;font-weight:700;color:var(--ink);line-height:1.4}
+.card .desc{font-size:.82rem;color:var(--mute);line-height:1.55;flex:1}
+.card .meta{display:flex;gap:14px;font-size:.72rem;color:var(--mute);flex-wrap:wrap;border-top:1px dashed var(--line);padding-top:10px}
+.card .meta i{color:var(--cyan);margin-right:4px}
+.card.hot::before{content:"";position:absolute;inset:0;border-radius:16px;background:linear-gradient(135deg,rgba(0,229,255,.06),rgba(139,92,246,.06));pointer-events:none}
+.tags,.site-stats{padding:14px;border-radius:14px;background:var(--bg-2);border:1px solid var(--line);margin:14px 24px 60px;max-width:1200px;margin-left:auto;margin-right:auto}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tags .tag{padding:5px 14px;border-radius:999px;font-size:.75rem;background:var(--bg-1);border:1px solid var(--line);color:var(--ink-soft);text-decoration:none;transition:all .2s}
+.tags .tag:hover{color:var(--cyan);border-color:var(--cyan)}
+.site-stats{display:flex;gap:18px;justify-content:space-around;text-align:center}
+.site-stats b{display:block;font-size:1.4rem;font-weight:800;background:var(--grad-1);-webkit-background-clip:text;background-clip:text;color:transparent}
+.site-stats span{font-size:.72rem;color:var(--mute)}
+@media(max-width:768px){.container{grid-template-columns:1fr;padding:16px}.sidebar{order:2}.home-hero .inner{flex-direction:column;align-items:flex-start}}
+@media(max-width:480px){.home-hero .quick-stats{flex-wrap:wrap}.site-stats{flex-wrap:wrap}}
+</style>
+</head>
+
+<body>
+<canvas id="stars-bg"></canvas>
+<div class="grid-bg"></div>
+<div class="progress" id="progress"></div>
+<nav class="topbar">
+  <div class="inner">
+    <a href="../index.html" class="brand">
+      <div class="logo"></div>
+      <span>EXPECTOPATRONUS · BLOG</span>
+    </a>
+    <div class="nav">
+      <a href="../index.html"><i class="fa-solid fa-house"></i> 首页</a>
+      <a href="./home.html" class="active"><i class="fa-solid fa-newspaper"></i> 文章</a>
+      <a href="../post/deepseek/deepseek.html"><i class="fa-solid fa-robot"></i> DeepSeek</a>
+      <a href="http://expectopatronus.top:5005/" target="_blank"><i class="fa-solid fa-compass"></i> 导航</a>
+    </div>
+    <button id="theme-toggle" aria-label="主题切换"><i class="fa-solid fa-moon"></i></button>
+  </div>
+</nav>
+
+<section class="home-hero">
+  <div class="inner">
+    <div>
+      <div class="badges"><b><i class="fa-solid fa-rocket"></i> AI 辅助内容创作 · 全栈科技博客</b></div>
+      <h1>文章库</h1>
+      <p class="sub">精选 24 篇技术文章，覆盖 Linux / AI / DevOps / 前端</p>
+    </div>
+    <div class="quick-stats">
+      <div><b>24</b><span>总数</span></div>
+      <div><b>4</b><span>分类</span></div>
+      <div><b>3d</b><span>更新</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="cat-stats">
+  <a class="cs-pill cs-all active" data-cat="all" href="javascript:void(0)"><i class="fa-solid fa-border-all"></i> 全部 <b>24</b></a>
+  <a class="cs-pill cs-linux" data-cat="Linux" href="javascript:void(0)"><i class="fa-brands fa-linux"></i> Linux <b>10</b></a>
+  <a class="cs-pill cs-ai" data-cat="AI" href="javascript:void(0)"><i class="fa-solid fa-brain"></i> AI <b>5</b></a>
+  <a class="cs-pill cs-devops" data-cat="DevOps" href="javascript:void(0)"><i class="fa-solid fa-cloud-arrow-up"></i> DevOps <b>5</b></a>
+  <a class="cs-pill cs-web" data-cat="Web开发" href="javascript:void(0)"><i class="fa-solid fa-code"></i> Web <b>3</b></a>
+  <a class="cs-pill cs-other" data-cat="IT运维" href="javascript:void(0)"><i class="fa-solid fa-screwdriver"></i> 其他 <b>1</b></a>
+</section>
+
+<main class="container">
+  <aside class="sidebar">
+    <section class="side-rank">
+      <h3 class="side-title"><i class="fa-solid fa-trophy"></i> 热门排行榜</h3>
+      <div class="rank-list">
+        <a class="rank-li" href="../post/wx-b300-hardware/wx-b300-hardware.html"><span class="m m-1">1</span><div><strong>HGX B300 实测数据</strong><span class="cat">技术 · 06-16</span></div></a>
+        <a class="rank-li" href="../post/dy-7641962519699017001/dy-7641962519699017001.html"><span class="m m-2">2</span><div><strong>Gemini × Composer 踢馆赛</strong><span class="cat">抖音搬运 · 06-14</span></div></a>
+        <a class="rank-li" href="../post/dy-7646747643204900836/dy-7646747643204900836.html"><span class="m m-3">3</span><div><strong>Harness starter 开源</strong><span class="cat">抖音搬运 · 06-16</span></div></a>
+        <a class="rank-li" href="../post/post2/post2.html"><span class="m m-4">4</span><div><strong>Docker 镜像存储层架构</strong><span class="cat">技术 · 12-01</span></div></a>
+        <a class="rank-li" href="../post/post4/post4.html"><span class="m m-5">5</span><div><strong>Linux 系统排查完整手册</strong><span class="cat">Linux · 11-15</span></div></a>
+      </div>
+    </section>
+  </aside>
+  <section>
+    <div class="filters">
+      <button class="filter-btn active" data-cat="all">全部</button>
+      <button class="filter-btn" data-cat="Linux">Linux</button>
+      <button class="filter-btn" data-cat="AI">AI</button>
+      <button class="filter-btn" data-cat="DevOps">DevOps</button>
+      <button class="filter-btn" data-cat="Web开发">Web开发</button>
+      <button class="filter-btn" data-cat="抖音搬运">抖音搬运</button>
+    </div>
+    <div class="grid" id="articles-grid">
+      <!-- populated by script -->
+    </div>
+  </section>
+</main>
+
+<section class="tags">
+  <a class="tag" href="javascript:void(0)" onclick="filterByTag('Linux')">#Linux</a>
+  <a class="tag" href="javascript:void(0)" onclick="filterByTag('AI')">#AI</a>
+  <a class="tag" href="javascript:void(0)" onclick="filterByTag('Docker')">#Docker</a>
+  <a class="tag" href="javascript:void(0)" onclick="filterByTag('Kubernetes')">#Kubernetes</a>
+  <a class="tag" href="javascript:void(0)" onclick="filterByTag('Prometheus')">#Prometheus</a>
+  <a class="tag" href="javascript:void(0)" onclick="filterByTag('Redis')">#Redis</a>
+  <a class="tag" href="javascript:void(0)" onclick="filterByTag('Cursor')">#Cursor</a>
+  <a class="tag" href="javascript:void(0)" onclick="filterByTag('DeepSeek')">#DeepSeek</a>
+</section>
+
+<section class="site-stats">
+  <div><b>24</b><span>文章总数</span></div>
+  <div><b>6</b><span>技术分类</span></div>
+  <div><b>1.2k</b><span>全站访问</span></div>
+  <div><b>3d</b><span>平均更新</span></div>
+</section>
+
+<footer class="footer"><div>© 2025 EXPECTOPATRONUS · 本站内容纯学习用途</div><div><a href="https://github.com/expectopatronus00" target="_blank"><i class="fa-brands fa-github"></i></a></div></footer>
+<div id="back"><i class="fa-solid fa-arrow-up"></i></div>
+
+<script>
+(function(){
+  var saved = localStorage.getItem('theme') || 'dark';
+  if(saved === 'light') document.documentElement.dataset.theme = 'light';
+  var ti = document.querySelector('#theme-toggle i');
+  if(ti) ti.className = saved === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+  var btn = document.getElementById('theme-toggle');
+  if(btn) btn.addEventListener('click', function(){
+    var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+    document.documentElement.dataset.theme = next;
+    localStorage.setItem('theme', next);
+    var ti2 = document.querySelector('#theme-toggle i');
+    if(ti2) ti2.className = next === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+  });
+  var back = document.getElementById('back');
+  window.addEventListener('scroll', function(){
+    var p = Math.min(1, window.scrollY / Math.max(1, document.body.scrollHeight - innerHeight));
+    var prog = document.getElementById('progress');
+    if(prog) prog.style.width = (p*100).toFixed(1)+'%';
+    if(back) back.classList.toggle('show', window.scrollY > 300);
+  });
+  if(back) back.addEventListener('click', function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+
+  var canvas = document.getElementById('stars-bg');
+  if(canvas){
+    var ctx = canvas.getContext('2d');
+    var w = canvas.width = innerWidth, h = canvas.height = innerHeight;
+    var stars = [];
+    for(var i=0;i<80;i++) stars.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.5+.2,a:Math.random()*.5+.2});
+    function draw(){
+      ctx.clearRect(0,0,w,h);
+      stars.forEach(function(s){
+        ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+        ctx.fillStyle='rgba(180,210,255,'+s.a+')';ctx.fill();
+      });
+    }
+    draw();
+    onresize = function(){w=canvas.width=innerWidth;h=canvas.height=innerHeight;stars=[];for(var i=0;i<80;i++)stars.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.5+.2,a:Math.random()*.5+.2});draw();};
+  }
+
+  var articles = [
+    { id:"wx-b300", title:"实测 HGX B300：一篇看懂关键硬件数据", url:"../post/wx-b300-hardware/wx-b300-hardware.html", summary:"实测 NVIDIA HGX B300 在待机/满负载/多卡互联下的功耗、NVLink 带宽、HBM3E 吞吐，附 FP4 144 TFLOPS 对比表。", category:"AI", date:"2026-06-16", read:8, tags:["NVIDIA","B300","GPU","HBM3E"] },
+    { id:"dy-76419625", title:"Gemini3.5Flash × Composer2.5 踢馆赛", url:"../post/dy-7641962519699017001/dy-7641962519699017001.html", summary:"Gemini3.5Flash 携手 Composer2.5 挑战全球十六强 AI 模型，谁将上位谁将出局？", category:"抖音搬运", date:"2026-06-14", read:10, tags:["Gemini","AI挑战赛","Cursor"], hot:true },
+    { id:"dy-76467476", title:"Vibe Coding 大赏 · Harness starter 开源", url:"../post/dy-7646747643204900836/dy-7646747643204900836.html", summary:"小鹿宅 Vibe Coding 大赏，Harness starter 正式开源。", category:"抖音搬运", date:"2026-06-16", read:5, tags:["Skill","Harness","claude","vibecoding"], feat:true },
+    { id:"post2", title:"Docker 深入原理解析：镜像存储层架构", url:"../post/post2/post2.html", summary:"从 UnionFS 到 overlay2，逐层拆解 Docker 镜像的写时复制机制。", category:"技术", date:"2025-12-01", read:12, tags:["Docker","Linux"], hot:true },
+    { id:"post4", title:"Linux 系统排查：从 CPU 到网络的完整手册", url:"../post/post4/post4.html", summary:"CPU/mem/io/net 四维排障 checklist，线上应急速查版。", category:"Linux", date:"2025-11-15", read:15, tags:["Linux","运维"], hot:true },
+    { id:"post7", title:"Prometheus + Grafana 监控实战 20 例", url:"../post/post7/post7.html", summary:"从节点监控到业务大盘，20 个即用 PromQL 与 Dashboard。", category:"DevOps", date:"2025-10-20", read:18, tags:["Prometheus","Grafana","监控"] },
+    { id:"post6", title:"Redis 分布式锁 5 种实现方案对比", url:"../post/post6/post6.html", summary:"SETNX / RedLock / Lua / 信号量 / 本地锁 五种场景选型。", category:"技术", date:"2025-09-08", read:11, tags:["Redis","分布式"] },
+    { id:"post8", title:"前端开发：从 0 到全栈工程师成长路线", url:"../post/post8/post8.html", summary:"JS/TS/Node/React/Vue 学习路径 + 项目清单。", category:"Web开发", date:"2025-07-22", read:20, tags:["前端","React","Vue"], feat:true },
+    { id:"post1", title:"Linux 清除 history 记录的方式", url:"../post/post1/post1.html", summary:"清除当前会话 / 指定行数 / 彻底禁用 HISTSIZE。", category:"Linux", date:"2024-02-23", read:3, tags:["Linux","bash"] },
+    { id:"post3", title:"Kubernetes 网络模型详解", url:"../post/post3/post3.html", summary:"CNI、Service、Ingress、CoreDNS 全网图解。", category:"DevOps", date:"2025-06-10", read:14, tags:["Kubernetes","CNI"] },
+    { id:"post5", title:"Git 工作流：GitFlow / TrunkBased 对比", url:"../post/post5/post5.html", summary:"两种主流 Git 工作流分支模型 + 什么时候选哪个。", category:"DevOps", date:"2025-05-05", read:7, tags:["Git"] },
+    { id:"post9", title:"TypeScript 类型体操 20 例", url:"../post/post9/post9.html", summary:"Pick/Omit/Partial/DeepPartial/Curry 手写。", category:"Web开发", date:"2025-04-12", read:16, tags:["TypeScript"] },
+    { id:"post10", title:"WebAssembly 性能对比", url:"../post/post10/post10.html", summary:"WASM vs JS 图片处理性能 benchmark。", category:"Web开发", date:"2025-03-03", read:9, tags:["WASM","前端"] },
+    { id:"post11", title:"Python 协程与 Gevent 对比", url:"../post/post11/post11.html", summary:"asyncio vs gevent 猴子补丁性能测试。", category:"技术", date:"2025-02-20", read:13, tags:["Python","协程"] },
+    { id:"post12", title:"Rust 异步运行时 Tokio 入门", url:"../post/post12/post12.html", summary:"async/await + Tokio runtime 实战。", category:"技术", date:"2025-01-08", read:10, tags:["Rust","Tokio"] },
+    { id:"post13", title:"PostgreSQL 索引优化实战", url:"../post/post13/post13.html", summary:"EXPLAIN ANALYZE + 七种索引选型。", category:"技术", date:"2024-12-15", read:12, tags:["PostgreSQL","索引"] },
+    { id:"post14", title:"TCP 三次握手 & 四次挥手", url:"../post/post14/post14.html", summary:"SYN Flood / TIME_WAIT / CLOSE_WAIT 排障。", category:"Linux", date:"2024-11-22", read:8, tags:["TCP","网络"] },
+    { id:"post15", title:"HTTPS 证书与 TLS 握手", url:"../post/post15/post15.html", summary:"自签证书 / Let's Encrypt / OCSP Stapling。", category:"Linux", date:"2024-10-10", read:6, tags:["HTTPS","TLS"] },
+    { id:"post16", title:"systemd 入门：从 unit 到 timer", url:"../post/post16/post16.html", summary:"12 个常用 unit 配置 + timer 定时。", category:"Linux", date:"2024-09-05", read:7, tags:["systemd"] },
+    { id:"post17", title:"nginx 反向代理与负载均衡", url:"../post/post17/post17.html", summary:"upstream + stream + keepalive 实战。", category:"DevOps", date:"2024-08-18", read:9, tags:["nginx"] },
+    { id:"post18", title:"Jenkins Pipeline 从 0 到生产", url:"../post/post18/post18.html", summary:"声明式 Pipeline 模板 + 缓存优化。", category:"DevOps", date:"2024-07-28", read:11, tags:["Jenkins","CI/CD"] },
+    { id:"post19", title:"ELK Stack 日志采集实战", url:"../post/post19/post19.html", summary:"Filebeat + Logstash + Elasticsearch + Kibana 全链路。", category:"DevOps", date:"2024-06-14", read:13, tags:["ELK","日志"] },
+    { id:"post20", title:"SQL 注入与 XSS 防御手册", url:"../post/post20/post20.html", summary:"OWASP Top 10 最常见两条。", category:"IT运维", date:"2024-05-22", read:8, tags:["安全"] }
+  ];
+
+  var grid = document.getElementById('articles-grid');
+  function render(list){
+    grid.innerHTML = '';
+    list.forEach(function(a, i){
+      var card = document.createElement('a');
+      card.href = a.url;
+      card.className = 'card' + (a.hot?' hot':'');
+      card.style.animationDelay = (i*40)+'ms';
+      card.innerHTML =
+        '<span class="cat-tag"><i class="fa-solid fa-folder"></i> '+a.category+'</span>' +
+        '<h3>'+a.title+'</h3>' +
+        '<div class="desc">'+a.summary+'</div>' +
+        '<div class="meta">' +
+          '<span><i class="fa-regular fa-calendar"></i> '+a.date+'</span>' +
+          '<span><i class="fa-regular fa-clock"></i> '+a.read+' 分钟</span>' +
+          (a.tags?a.tags.map(function(t){return'<span>#'+t+'</span>'}).join(''):'') +
+        '</div>';
+      grid.appendChild(card);
+    });
+  }
+  render(articles.slice().reverse());
+
+  document.querySelectorAll('.filter-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});
+      btn.classList.add('active');
+      var cat = btn.dataset.cat;
+      render(cat==='all' ? articles.slice().reverse() : articles.filter(function(a){return a.category===cat}).slice().reverse());
+    });
+  });
+
+  document.querySelectorAll('.cs-pill').forEach(function(pill){
+    pill.addEventListener('click', function(){
+      document.querySelectorAll('.cs-pill').forEach(function(p){p.classList.remove('active');});
+      pill.classList.add('active');
+      var cat = pill.dataset.cat;
+      document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.toggle('active', b.dataset.cat===cat || (cat==='all' && b.dataset.cat==='all'));});
+      render(cat==='all' ? articles.slice().reverse() : articles.filter(function(a){return a.category===cat}).slice().reverse());
+    });
+  });
+
+  window.filterByTag = function(tag){
+    render(articles.filter(function(a){return (a.tags||[]).some(function(t){return t.toLowerCase()===tag.toLowerCase();})}).slice().reverse());
+  };
+})();
+</script>
+</body>
+</html>
