@@ -1,20 +1,120 @@
 # Skill: 抖音搬运文章生成 (douyin-post-skill)
 
-> 版本: 1.0
+> 版本: 2.0
 > 适用项目: expectopatronus00.github.io (纯静态 GitHub Pages 博客)
-> 依赖: Font Awesome 6.5.2 CDN, 浏览器环境
+> 依赖: Font Awesome 6.5.2 CDN, Node.js (>=18)
 
 ---
 
 ## 一、Skill 用途
 
-**给我一个抖音链接，输出一篇结构完整、可部署的博客文章。**
+**给我 N 条抖音视频的信息，输出 N 篇结构完整、可部署的博客文章，并自动更新文章库和首页。**
 
-本 Skill 用于将一条抖音视频（作者口述+画面+字幕）转化为一篇图文并茂的深度文章，自动融入 EXPECTOPATRONUS 博客的整体视觉体系，并在首页和文章库同步更新。
+本 Skill 用于将抖音视频转化为图文并茂的深度文章，自动融入 EXPECTOPATRONUS 博客的整体视觉体系。核心能力：
+
+- **批量生成**: 一次输入多条视频，一次生成多篇文章
+- **自动更新**: 自动更新 home.html（articles 数组+统计数字）和 index.html（latest-grid 卡片+文章总数）
+- **零手工操作**: 一条命令搞定生成+更新
 
 ---
 
-## 二、用户输入格式
+## 二、批量模式（推荐）
+
+### 2.1 使用流程
+
+```
+用户输入多条视频信息
+        ↓
+  整理为 videos.json (格式见下方)
+        ↓
+node skills/douyin-post-skill/generate.js videos.json
+        ↓
+自动生成文章 + 更新 home.html + 更新 index.html
+        ↓
+git add -A && git commit && git push
+```
+
+### 2.2 videos.json 格式
+
+每条视频一个对象，完整字段如下（可参考 `batch-template.json`）：
+
+```json
+[
+  {
+    "id": "dy-7651234567890123456",
+    "title": "文章主标题",
+    "eyebrow": "分类标签 · 如 AI 编程",
+    "author": "抖音作者名",
+    "date": "2026-06-17",
+    "cover": "https://images.unsplash.com/xxx",
+    "tags": ["标签1", "标签2", "标签3"],
+    "summary": "一句话摘要，80~120字，用于文章库和首页卡片显示",
+    "meta_desc": "SEO meta description，150字内",
+    "meta_keywords": "SEO 关键词，逗号分隔，10~15个",
+    "duration": "约 5 分钟阅读",
+    "content_html": [
+      "<div class=\"section-marker\">01 · 章节标题</div>",
+      "<h2>章节标题</h2>",
+      "<p>段落内容...关键术语用<span class=\"hl\">高亮</span></p>",
+      "<div class=\"timeline\"><div class=\"tl-item\"><div class=\"tl-time\">时间</div><div class=\"tl-text\">描述</div></div></div>",
+      "<div class=\"pull-quote\"><p>引用内容</p></div>",
+      "<div class=\"info-box\">信息提示框</div>"
+    ],
+    "cta": {
+      "title": "去抖音看原视频",
+      "desc": "点击跳转抖音原视频页",
+      "url": "https://www.douyin.com/video/7651234567890123456"
+    },
+    "platforms": [
+      { "name": "抖音", "icon": "fa-brands fa-tiktok", "url": "...", "desc": "视频原页" },
+      { "name": "GitHub", "icon": "fa-brands fa-github", "url": "...", "desc": "相关代码" }
+    ],
+    "footer_meta": "本站内容纯学习用途，非商用。视频封面版权归抖音原视频作者所有。"
+  }
+]
+```
+
+**必需字段**: `id`, `title`, `author`, `date`, `cover`, `tags`, `summary`, `content_html`, `cta.url`
+**可选字段**: `eyebrow`（默认用 title）, `meta_desc`（默认用 summary）, `meta_keywords`（默认用 tags）, `duration`（默认"约 5 分钟阅读"）, `footer_meta`（有默认值）, `platforms`（可选）
+
+### 2.3 执行命令
+
+```bash
+cd /workspace
+node skills/douyin-post-skill/generate.js path/to/videos.json
+```
+
+脚本会自动：
+
+1. 读取 template.html，为每条视频生成独立的文章 HTML，写入 `post/dy-{ID}/dy-{ID}.html`
+2. 更新 `home/home.html`:
+   - "共 N 篇" → N + 新增数量
+   - 在 `var articles = [` 数组最前面插入新文章对象
+3. 更新 `index.html`:
+   - 第一个 `class="num"`（articles 数字）+ 新增数量
+   - 在 `<div class="latest-grid">` 最前面插入新文章卡片
+
+### 2.4 content_html 可用组件
+
+| 组件 | 写法 |
+|---|---|
+| 章节编号+标题 | `<div class="section-marker">01 · 标题</div><h2>章节标题</h2>` |
+| 关键词高亮 | `<span class="hl">术语</span>` |
+| 时间线 | `<div class="timeline"><div class="tl-item"><div class="tl-time">时间</div><div class="tl-text">描述</div></div></div>` |
+| 引用块 | `<div class="pull-quote"><p>引用文字</p></div>` |
+| 信息框 | `<div class="info-box">提示内容</div>` |
+| 青色信息框 | `<div class="info-box info-box-jade">内容</div>` |
+
+### 2.5 内容要求
+
+- **原创重述**: 不要复制视频逐字稿，用自己的话重述
+- **每篇 5~8 个章节**: 每章至少 2 段正文或 1 个特殊组件
+- **关键词高亮**: 重要术语用 `<span class="hl">`
+- **敏感内容**: 不输出涉政、医疗、投资建议等内容
+
+---
+
+## 三、单篇模式 · 用户输入格式
 
 用户会给出类似这样的消息片段：
 
@@ -40,7 +140,7 @@ https://v.douyin.com/xxxxxxx/
 
 ---
 
-## 三、操作流程（Agent 必须严格按此顺序执行）
+## 四、单篇模式 · 操作流程（Agent 必须严格按此顺序执行）
 
 ### 阶段 1: 信息采集（浏览器工具）
 
@@ -252,7 +352,7 @@ git push origin HEAD:main --force
 
 ---
 
-## 四、样式参考
+## 五、样式参考
 
 所有视觉参数定义于 `../../home/design-tokens.css` 中，**不要在文章页面重复定义 CSS 变量**，以保持全站一致。
 
@@ -289,7 +389,7 @@ git push origin HEAD:main --force
 
 ---
 
-## 五、已有文章参考（Agent 可用来校准风格）
+## 六、已有文章参考（Agent 可用来校准风格）
 
 | 路径 | 主题 | 风格 |
 |---|---|---|
@@ -300,7 +400,7 @@ git push origin HEAD:main --force
 
 ---
 
-## 六、常见问题
+## 七、常见问题
 
 **Q: 抖音封面图加载失败怎么办？**
 A: 抖音的图片链接带 `x-expires` 和 `x-signature`，有过期时间。如果发现 403，直接用抖音打开视频，重新提取封面；或者用 `https://images.unsplash.com/...` 同主题的免费图片替代。
@@ -316,7 +416,7 @@ A: 一律用用户消息里的日期（或当天日期），格式 `YYYY-MM-DD`�
 
 ---
 
-## 七、自检清单（每次调用前过一遍）
+## 八、自检清单（每次调用前过一遍）
 
 - [ ] 提取了 VIDEO_ID、AUTHOR、TITLE、封面 URL
 - [ ] 文章内容是原创重述，不是逐字复制
