@@ -1,0 +1,5 @@
+{
+  "name": "ai-nav-skill",
+  "description": "管理 AI 导航网站数据。当用户提供一个链接时，自动分析页面内容、确定分类、写入 nav/data.json。",
+  "trigger_keywords": ["添加导航", "导航管理", "添加链接", "新增网站", "nav", "导航站"]
+}
