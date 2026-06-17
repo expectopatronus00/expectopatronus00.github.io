@@ -1,227 +1,305 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>实测 HGX B300：一篇看懂关键硬件数据 · EXPECTOPATRONUS</title>
-<meta name="description" content="围绕 HGX B300 的硬件配置展开，实际测试与数据采集，对其硬件组成、运行状态及软件监控指标进行简要分析。">
-<meta name="keywords" content="NVIDIA,B300,HGX,AI,GPU,NVLink,HBM3E,NCCL,H200">
-<link rel="shortcut icon" href="../../home/50.png" type="image/png">
-<link id="fa-cdn" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<script>(function(){var l=document.getElementById('fa-cdn');var chk=function(){var ok=false;try{var s=getComputedStyle(document.querySelector('.fa-solid')||document.body);ok=!s.fontFamily||s.fontFamily.indexOf('Font Awesome')!==-1;}catch(e){ok=false;}if(!ok&&window._fa_retried===undefined){window._fa_retried=true;var n=document.createElement('link');n.rel='stylesheet';n.href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css';document.head.appendChild(n);}};l.onload=chk;l.onerror=function(){chk();};})();</script>
-<script>(function(){try{const t=localStorage.getItem('theme')||'dark';if(t==='light')document.documentElement.dataset.theme='light';}catch(e){}})();</script>
-<link rel="stylesheet" href="style.css">
-<style>
-.article-hero{position:relative;height:420px;overflow:hidden;border-radius:20px;border:1px solid var(--line);background-size:cover;background-position:center;background-color:#06081a;margin-bottom:24px}
-.article-hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.45) 0%,rgba(0,0,0,.8) 55%,rgba(0,0,0,.97) 100%)}
-.article-hero::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 30% 20%, rgba(0,229,255,.25), transparent 60%), radial-gradient(ellipse at 80% 40%, rgba(139,92,246,.25), transparent 60%);pointer-events:none}
-.article-hero .bad{position:relative;z-index:2;padding:28px 36px;max-width:860px;color:#fff;position:absolute;left:36px;bottom:28px}
-.article-hero .cat-tag{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;font-size:.72rem;font-weight:700;background:rgba(0,229,255,.2);color:#00e5ff;border:1px solid rgba(0,229,255,.4);margin-bottom:14px}
-.article-hero h1{font-size:clamp(1.5rem,3.5vw,2.2rem);font-weight:800;letter-spacing:-.015em;margin-bottom:10px;line-height:1.2;text-shadow:0 2px 14px rgba(0,0,0,.6)}
-.article-hero .meta-row{display:flex;gap:14px;font-size:.85rem;color:rgba(255,255,255,.85);flex-wrap:wrap}
-.article-hero .meta-row i{color:#00e5ff}
-.article-body{max-width:860px;margin:0 auto;padding:0 20px 60px}
-.article-body h2{font-size:1.25rem;font-weight:700;margin:32px 0 14px;padding-left:12px;border-left:3px solid var(--cyan);background:linear-gradient(135deg,rgba(0,229,255,.06),rgba(139,92,246,.06));padding:.6em 16px;border-radius:0 10px 10px 0}
-.article-body h3{font-size:1.05rem;font-weight:700;margin:22px 0 10px;color:var(--ink)}
-.article-body p{color:var(--ink-soft);line-height:1.85;margin:10px 0;font-size:.95rem}
-.article-body ul,.article-body ol{padding-left:24px;margin:10px 0;color:var(--ink-soft);font-size:.95rem}
-.article-body li{margin:5px 0;line-height:1.7}
-.article-body strong{color:var(--ink)}
-.article-body em{color:var(--cyan);font-style:italic}
-.article-body blockquote{padding:18px 22px;border-left:3px solid var(--cyan);background:linear-gradient(135deg,rgba(0,229,255,.06),rgba(139,92,246,.06));border-radius:0 14px 14px 0;margin:18px 0;color:var(--ink);font-style:normal;line-height:1.85}
-.data-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.9rem;background:var(--bg-2);border-radius:14px;overflow:hidden;border:1px solid var(--line)}
-.data-table th,.data-table td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line);color:var(--ink)}
-.data-table th{background:rgba(0,229,255,.08);color:var(--cyan);font-weight:700;font-size:.82rem;letter-spacing:.04em;text-transform:uppercase}
-.data-table tr:last-child td{border-bottom:none}
-.data-table td:first-child{color:var(--ink-soft);font-weight:500}
-.highlight-box{padding:18px 22px;border-radius:14px;background:linear-gradient(140deg,rgba(255,255,255,.04),rgba(255,255,255,.01));border:1px solid var(--line);margin:18px 0}
-.highlight-box b{color:var(--cyan)}
-.tags-row{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
-.tags-row a{padding:5px 14px;border-radius:999px;font-size:.75rem;font-weight:600;background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--ink-soft);text-decoration:none;transition:all .2s}
-.tags-row a:hover{color:var(--cyan);border-color:var(--cyan);transform:translateY(-2px)}
-.source-note{padding:14px;border-radius:12px;background:linear-gradient(140deg,rgba(255,255,255,.03),rgba(255,255,255,.01));border:1px dashed var(--line);font-size:.82rem;color:var(--mute);margin-top:12px}
-.source-note i{color:var(--pink)}
-.related{margin-top:36px}
-.related h3{font-size:.95rem;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:10px}
-.related h3::before{content:"";width:4px;height:14px;border-radius:3px;background:var(--grad-1)}
-.related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
-.related-item{display:block;padding:14px;border-radius:14px;background:var(--bg-2);border:1px solid var(--line);text-decoration:none;color:var(--ink);transition:all .25s}
-.related-item:hover{border-color:var(--line-2);transform:translateY(-3px);box-shadow:0 10px 30px -15px rgba(59,130,255,.4)}
-.related-item h4{font-size:.92rem;font-weight:700;margin-bottom:6px}
-.related-item p{font-size:.8rem;color:var(--mute)}
-@media(max-width:700px){.article-hero{height:300px}.article-hero .bad{left:20px;bottom:20px;padding:0}}
-</style>
-</head>
-<body>
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>实测 HGX B300 · 看懂关键硬件数据 · expectopatronus</title>
+    <meta
+      name="description"
+      content="围绕 HGX B300 的硬件配置展开，实际测试与数据采集，对其硬件组成、运行状态及软件监控指标进行简要分析。"
+    />
+    <meta name="keywords" content="NVIDIA,B300,HGX,AI,GPU,NVLink,HBM3E,NCCL,H200" />
+    <link rel="shortcut icon" href="../../home/50.png" type="image/png" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <link
+      id="fa"
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      onerror="
+        (function () {
+          if (window._fa_retried) return;
+          window._fa_retried = true;
+          var n = document.createElement('link');
+          n.rel = 'stylesheet';
+          n.href = 'https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css';
+          document.head.appendChild(n);
+        })()
+      "
+    />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="http://expectopatronus.top:5005/" target="_blank"
+            >导航站 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.7em; margin-left: 2px"></i
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><i class="fa-solid fa-moon"></i></button>
+      </div>
+    </nav>
 
-<div class="progress" id="progress"></div>
-<nav class="topbar">
-  <div class="inner">
-    <a href="../../index.html" class="brand">
-      <div class="logo"></div>
-      <span>EXPECTOPATRONUS · BLOG</span>
-    </a>
-    <div class="nav">
-      <a href="../../index.html"><i class="fa-solid fa-house"></i> 首页</a>
-      <a href="../../home/home.html" class="active"><i class="fa-solid fa-newspaper"></i> 文章</a>
-      <a href="../deepseek/deepseek.html"><i class="fa-solid fa-robot"></i> DeepSeek</a>
-      <a href="http://expectopatronus.top:5005/" target="_blank"><i class="fa-solid fa-compass"></i> 导航</a>
-    </div>
-    <button id="theme-toggle" aria-label="主题切换"><i class="fa-solid fa-moon"></i></button>
-  </div>
-</nav>
-
-<main>
-  <div class="article-hero" style="background-image:url('https://mmbiz.qpic.cn/mmbiz_jpg/zmoaKiaibHAnmyA8UUlCnibiclkvryLKtRuKTlibBkMjSNq6OvBaGak3JOF2hsCyZdJhBb7ic8FPTho0cQciap2ic4h41eibwvZAXRyb8h9Ma5IEUS6c/0?wx_fmt=jpeg')">
-    <div class="bad">
-      <div class="cat-tag"><i class="fa-solid fa-microchip"></i> 技术</div>
-      <h1>实测 HGX B300：一篇看懂关键硬件数据</h1>
+    <section class="page-head">
+      <div class="eyebrow">Hardware · NVIDIA HGX B300</div>
+      <h1>实测 HGX B300：<em>一篇看懂关键硬件数据</em></h1>
+      <p>围绕 HGX B300 的硬件配置展开，通过实际测试与数据采集，对其硬件组成、运行状态及软件监控指标进行简要分析。</p>
       <div class="meta-row">
-        <span><i class="fa-regular fa-user"></i> 微信公众号</span>
+        <span><i class="fa-regular fa-user"></i> 微信公众号整理</span>
         <span><i class="fa-regular fa-calendar"></i> 2026-06-16</span>
-        <span><i class="fa-regular fa-clock"></i> 8 分钟</span>
-        <span><i class="fa-solid fa-microchip"></i> NVIDIA · HGX B300</span>
+        <span><i class="fa-solid fa-microchip"></i> GPU · NCCL · HBM3E</span>
       </div>
-    </div>
-  </div>
+    </section>
 
-  <div class="article-body">
-    <blockquote style="margin-top:0">本文围绕 <b>HGX B300</b> 的硬件配置展开，通过实际测试与数据采集，对其硬件组成、运行状态及软件监控指标进行简要分析。</blockquote>
-
-    <h2>B300 测试数据分享</h2>
-
-    <h3>NCCL 测试</h3>
-    <ul>
-      <li><b>all-reduce</b> 峰值带宽约 <b>837 GB/s</b>（理论峰值 900 GB/s 的 93%）</li>
-      <li><b>broadcast</b> 速度约 <b>682 GB/s</b>（理论峰值 900 GB/s 的 76%）</li>
-      <li>除 all-to-all 外，所有测试最小延迟（2MB 消息）均在 <b>42–52 μs</b>；all-to-all 最小延迟 <b>68 μs</b></li>
-      <li>对于某些基准，数据包到 16MB 前延迟基本不变；另一些到 4MB 延迟开始增加</li>
-    </ul>
-
-    <h3>NVBandwidth</h3>
-    <ul>
-      <li><b>D2D 单向</b>：约 782 / 717 GB/s（读 / 写）</li>
-      <li><b>D2D 双向</b>：约 <b>1.35 / 1.41 TB/s</b>（读 / 写）</li>
-      <li><b>H2D</b> 每 GPU memcpy 约 38 GB/s（理论峰值 64 GB/s 的 59%）</li>
-      <li><b>D2H</b> 每 GPU memcpy 约 53 GB/s（理论峰值 64 GB/s 的 83%）</li>
-      <li>H2D / D2H 延迟 <b>1.4 μs</b>；D2D 延迟 <b>1.6 μs</b></li>
-    </ul>
-
-    <h3>DCGM</h3>
-    <ul>
-      <li>288 GB 总内存中只有 <b>284 GB (98.6%)</b> 实际可分配（预留、驱动开销、ECC 等）</li>
-      <li>单张 GPU 可获得约 <b>405 TFLOPs</b> 的 FP32+FP16 混合精度矩阵乘法</li>
-      <li>Level 3 测试中每块 GPU 功耗从未超过约 <b>950 W</b>（额定 1100 W 的 86%）</li>
-      <li>D2H 单向延迟 3.9–4.9 μs，H2D 单向延迟 4.0–5.4 μs；双向延迟 4.8–6.7 μs</li>
-    </ul>
-
-    <h3>常规数据</h3>
-    <ul>
-      <li>B300 在 17℃ 时待机功率约 <b>130 W</b></li>
-      <li>gpu_burn 可以让 B300s 持续功耗达到 <b>1100 W</b></li>
-    </ul>
-
-    <h2>B300 规格</h2>
-    <p>英伟达官方数据手册存在不少矛盾，以下综合多来源信息：</p>
-    <table class="data-table">
-      <thead><tr><th>项目</th><th>值</th></tr></thead>
-      <tbody>
-        <tr><td><b>内存</b></td><td>总 288 GB，总访问速度 8 TB/s，由 8 × 36GB 的 12 层 <b>HBM3E</b> 堆栈组成</td></tr>
-        <tr><td><b>TDP</b></td><td>风冷 / 水冷版本显卡正常运行约 1100W，部分到 1200W；GB300 中的 GPU 达到 1400W</td></tr>
-        <tr><td><b>NVLink</b></td><td>第五代 NVLink，每个 GPU 双向 1.8 TB/s；每 GPU 配 18 × 100 GB/s NVLink 端口</td></tr>
-        <tr><td><b>横向扩展</b></td><td>每 GPU 通过 ConnectX-8 实现 800 GB/s 全双工，GPU→网卡走 PCIe 6.0 x16</td></tr>
-        <tr><td><b>FP4 推理</b></td><td>高达 144 PFLOPS</td></tr>
-        <tr><td><b>FP8 训练</b></td><td>72 PFLOPS</td></tr>
-        <tr><td><b>驱动</b></td><td>NVIDIA 驱动 580.95.05 以上</td></tr>
-        <tr><td><b>CUDA</b></td><td>13.0 明确支持 B300 系列</td></tr>
-        <tr><td><b>DCGM</b></td><td>4.4.0 起支持 B300 实例</td></tr>
-      </tbody>
-    </table>
-
-    <h2>测试结论</h2>
-
-    <div class="highlight-box">
-      <b>1. 待机功耗对比 H100</b><br>
-      80GB H100 PCIe 空闲功耗 50 / 350W（最大的 14%）。B300 待机功耗占其峰值 TDP（1100W）的 11.8%，H100 占其峰值 700W 的 10%。B300 待机 130W，H100 待机 70W —— 最大功耗仅 1.57 倍，但待机功耗差达到 <b>1.86 倍</b>。电源预算固定时，H100→B300 空闲功耗会更高。
+    <div
+      class="hero-image on-scroll"
+      style="max-width: var(--container); margin: var(--sp-7) auto 0; padding: 0 var(--sp-6)"
+    >
+      <img
+        loading="lazy"
+        alt="HGX B300"
+        src="https://mmbiz.qpic.cn/mmbiz_jpg/zmoaKiaibHAnmyA8UUlCnibiclkvryLKtRuKTlibBkMjSNq6OvBaGak3JOF2hsCyZdJhBb7ic8FPTho0cQciap2ic4h41eibwvZAXRyb8h9Ma5IEUS6c/0?wx_fmt=jpeg"
+      />
     </div>
 
-    <div class="highlight-box">
-      <b>2. 持续负载下的实际 GPU 功耗</b><br>
-      DCGM L3/L4 测试最高功耗 950W（理论 1100W 的 86%）。H100 SXM 实际推理负载很少让 GPU 超过峰值功耗的 50–60%。
-    </div>
+    <article class="article-body">
+      <div class="section-marker on-scroll">01 · 测试数据概览</div>
+      <h2 class="on-scroll">B300 实测数据分享</h2>
 
-    <div class="highlight-box">
-      <b>3. H2D 与 D2H 写入带宽不对称</b><br>
-      D2H (53 GB/s)：GPU→主机写，用专用 GPU DMA 单元发 PCIe 读请求，接近理论峰值的 85%（64 GB/s）。<br>
-      H2D (38 GB/s)：CPU→GPU 写，CPU 自行发起写入，缓存一致性 + NUMA 效应 + CPU 内存带宽瓶颈，多个 GPU 同时写入时先堵 CPU 内存，再堵 PCIe。
-    </div>
+      <h3 class="on-scroll">NCCL 测试</h3>
+      <ul class="on-scroll">
+        <li><strong>all-reduce</strong> 峰值带宽约 <strong>837 GB/s</strong>（理论峰值 900 GB/s 的 93%）</li>
+        <li><strong>broadcast</strong> 速度约 <strong>682 GB/s</strong>（理论峰值 900 GB/s 的 76%）</li>
+        <li>
+          除 all-to-all 外，所有测试最小延迟（2MB 消息）均在 <strong>42–52 μs</strong>；all-to-all 最小延迟
+          <strong>68 μs</strong>
+        </li>
+        <li>对于某些基准，数据包到 16MB 前延迟基本不变；另一些到 4MB 延迟开始增加</li>
+      </ul>
 
-    <div class="highlight-box">
-      <b>4. 与 H100 租赁价格比较</b><br>
-      B300 性能会好得多，但经济效益取决于租赁价格和总功耗差异。目前 Nebius 价格：B300 <b>$7.85/GPU/小时</b>，H100 <b>$3.85/GPU/小时</b>。
-    </div>
+      <h3 class="on-scroll">NVBandwidth</h3>
+      <ul class="on-scroll">
+        <li><strong>D2D 单向</strong>：约 782 / 717 GB/s（读 / 写）</li>
+        <li><strong>D2D 双向</strong>：约 <strong>1.35 / 1.41 TB/s</strong>（读 / 写）</li>
+        <li><strong>H2D</strong> 每 GPU memcpy 约 38 GB/s（理论峰值 64 GB/s 的 59%）</li>
+        <li><strong>D2H</strong> 每 GPU memcpy 约 53 GB/s（理论峰值 64 GB/s 的 83%）</li>
+        <li>H2D / D2H 延迟 <strong>1.4 μs</strong>；D2D 延迟 <strong>1.6 μs</strong></li>
+      </ul>
 
-    <div class="source-note">
-      <i class="fa-solid fa-circle-info"></i> 来源：<a href="https://mp.weixin.qq.com/s/msWSB5Gpt0LRiDZEJSIARA" target="_blank" rel="noopener">微信公众号原文</a> · 所有信息为非专有非机密，理论上 HGX B300 服务器均可复现。本文仅做学习归档。
-    </div>
+      <h3 class="on-scroll">DCGM</h3>
+      <ul class="on-scroll">
+        <li>288 GB 总内存中只有 <strong>284 GB (98.6%)</strong> 实际可分配（预留、驱动开销、ECC 等）</li>
+        <li>单张 GPU 可获得约 <strong>405 TFLOPs</strong> 的 FP32+FP16 混合精度矩阵乘法</li>
+        <li>Level 3 测试中每块 GPU 功耗从未超过约 <strong>950 W</strong>（额定 1100 W 的 86%）</li>
+        <li>D2H 单向延迟 3.9–4.9 μs，H2D 单向延迟 4.0–5.4 μs；双向延迟 4.8–6.7 μs</li>
+      </ul>
 
-    <div class="tags-row">
-      <a href="../../home/home.html">#NVIDIA</a>
-      <a href="../../home/home.html">#B300</a>
-      <a href="../../home/home.html">#HGX</a>
-      <a href="../../home/home.html">#AI</a>
-      <a href="../../home/home.html">#GPU</a>
-      <a href="../../home/home.html">#NVLink</a>
-      <a href="../../home/home.html">#HBM3E</a>
-      <a href="../../home/home.html">#NCCL</a>
-      <a href="../../home/home.html">#H200</a>
-    </div>
+      <h3 class="on-scroll">常规数据</h3>
+      <ul class="on-scroll">
+        <li>B300 在 17℃ 时待机功率约 <strong>130 W</strong></li>
+        <li>gpu_burn 可以让 B300s 持续功耗达到 <strong>1100 W</strong></li>
+      </ul>
 
-    <div class="related">
-      <h3>相关文章</h3>
-      <div class="related-grid">
-        <a class="related-item" href="../../home/home.html"><div class="info"><h4>更多文章 →</h4><p>回到文章列表</p></div></a>
-        <a class="related-item" href="../dy-7641962519699017001/dy-7641962519699017001.html"><div class="info"><h4>Gemini3.5Flash × Composer2.5 踢馆赛</h4><p>全球十六强 AI 编程模型挑战赛</p></div></a>
-        <a class="related-item" href="../dy-7646747643204900836/dy-7646747643204900836.html"><div class="info"><h4>Vibe Coding 大赏 · Harness</h4><p>图文笔记拆解 Harness starter</p></div></a>
+      <div class="section-marker on-scroll">02 · 规格参数</div>
+      <h2 class="on-scroll">B300 规格</h2>
+      <p class="on-scroll">英伟达官方数据手册存在不少矛盾，以下综合多来源信息整理：</p>
+
+      <table class="api-table on-scroll">
+        <thead>
+          <tr>
+            <th>项目</th>
+            <th>值</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>内存</strong></td>
+            <td>总 288 GB，总访问速度 8 TB/s，由 8 × 36GB 的 12 层 <strong>HBM3E</strong> 堆栈组成</td>
+          </tr>
+          <tr>
+            <td><strong>TDP</strong></td>
+            <td>风冷 / 水冷版本显卡正常运行约 1100W，部分到 1200W；GB300 中的 GPU 达到 1400W</td>
+          </tr>
+          <tr>
+            <td><strong>NVLink</strong></td>
+            <td>第五代 NVLink，每个 GPU 双向 1.8 TB/s；每 GPU 配 18 × 100 GB/s NVLink 端口</td>
+          </tr>
+          <tr>
+            <td><strong>横向扩展</strong></td>
+            <td>每 GPU 通过 ConnectX-8 实现 800 GB/s 全双工，GPU→网卡走 PCIe 6.0 x16</td>
+          </tr>
+          <tr>
+            <td><strong>FP4 推理</strong></td>
+            <td>高达 144 PFLOPs</td>
+          </tr>
+          <tr>
+            <td><strong>FP8 训练</strong></td>
+            <td>72 PFLOPS</td>
+          </tr>
+          <tr>
+            <td><strong>驱动</strong></td>
+            <td>NVIDIA 驱动 580.95.05 以上</td>
+          </tr>
+          <tr>
+            <td><strong>CUDA</strong></td>
+            <td>13.0 明确支持 B300 系列</td>
+          </tr>
+          <tr>
+            <td><strong>DCGM</strong></td>
+            <td>4.4.0 起支持 B300 实例</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="pull-quote on-scroll">
+        <p>真正的差距不在 <em>峰值算力</em>，而在 <em>功耗边界</em> 与 <em>实际带宽利用</em>。</p>
       </div>
-    </div>
-  </div>
-</main>
 
-<footer class="footer">
-  <div>© 2025 EXPECTOPATRONUS · 本站内容纯学习用途，非商用</div>
-  <div>
-    <a href="https://github.com/expectopatronus00" target="_blank"><i class="fa-brands fa-github"></i></a>
-    <a href="mailto:18821772508@163.com"><i class="fa-solid fa-envelope"></i></a>
-  </div>
-</footer>
+      <div class="section-marker on-scroll">03 · 测试结论</div>
+      <h2 class="on-scroll">四条关键发现</h2>
 
-<div id="back"><i class="fa-solid fa-arrow-up"></i></div>
+      <div class="info-box on-scroll">
+        <strong>1. 待机功耗对比 H100</strong><br />
+        80GB H100 PCIe 空闲功耗 50 / 350W（最大的 14%）。B300 待机功耗占其峰值 TDP（1100W）的 11.8%，H100 占其峰值 700W
+        的 10%。B300 待机 130W，H100 待机 70W——最大功耗仅 1.57 倍，但待机功耗差达到
+        <strong>1.86 倍</strong>。电源预算固定时，H100→B300 空闲功耗会更高。
+      </div>
 
-<script>
-(function(){
-  var saved = localStorage.getItem('theme') || 'dark';
-  if(saved === 'light') document.documentElement.dataset.theme = 'light';
-  var i = document.querySelector('#theme-toggle i');
-  if(i) i.className = saved === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-  var btn = document.getElementById('theme-toggle');
-  if(btn) btn.addEventListener('click', function(){
-    var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
-    document.documentElement.dataset.theme = next;
-    localStorage.setItem('theme', next);
-    var ii = document.querySelector('#theme-toggle i');
-    if(ii) ii.className = next === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-  });
+      <div class="info-box on-scroll">
+        <strong>2. 持续负载下的实际 GPU 功耗</strong><br />
+        DCGM L3 / L4 测试最高功耗 950W（理论 1100W 的 86%）。H100 SXM 实际推理负载很少让 GPU 超过峰值功耗的 50–60%。
+      </div>
 
-  var back = document.getElementById('back');
-  window.addEventListener('scroll', function(){
-    var p = Math.min(1, window.scrollY / Math.max(1, document.body.scrollHeight - innerHeight));
-    var prog = document.getElementById('progress');
-    if(prog) prog.style.width = (p*100).toFixed(1)+'%';
-    if(back) back.classList.toggle('show', window.scrollY > 300);
-  });
-  if(back) back.addEventListener('click', function(){ window.scrollTo({top:0,behavior:'smooth'}); });
-})();
-</script>
-</body>
+      <div class="info-box on-scroll">
+        <strong>3. H2D 与 D2H 写入带宽不对称</strong><br />
+        <strong>D2H (53 GB/s)</strong>：GPU→主机写，用专用 GPU DMA 单元发 PCIe 读请求，接近理论峰值的 85%（64
+        GB/s）。<br />
+        <strong>H2D (38 GB/s)</strong>：CPU→GPU 写，CPU 自行发起写入，缓存一致性 + NUMA 效应 + CPU 内存带宽瓶颈，多个
+        GPU 同时写入时先堵 CPU 内存，再堵 PCIe。
+      </div>
+
+      <div class="info-box on-scroll">
+        <strong>4. 与 H100 租赁价格比较</strong><br />
+        B300 性能会好得多，但经济效益取决于租赁价格和总功耗差异。目前 Nebius 价格：B300
+        <strong>$7.85/GPU/小时</strong>，H100 <strong>$3.85/GPU/小时</strong>。
+      </div>
+
+      <div class="section-divider on-scroll"><span>references</span></div>
+
+      <div class="info-box jade on-scroll">
+        <i class="fa-solid fa-circle-info"></i> 来源：<a
+          href="https://mp.weixin.qq.com/s/msWSB5Gpt0LRiDZEJSIARA"
+          target="_blank"
+          rel="noopener"
+          style="color: var(--accent-rust)"
+          >微信公众号原文</a
+        >
+        · 所有信息为非专有非机密，理论上 HGX B300 服务器均可复现。本文仅做学习归档。
+      </div>
+
+      <div class="tags-row on-scroll">
+        <a href="../../home/home.html">NVIDIA</a>
+        <a href="../../home/home.html">B300</a>
+        <a href="../../home/home.html">HGX</a>
+        <a href="../../home/home.html">AI</a>
+        <a href="../../home/home.html">GPU</a>
+        <a href="../../home/home.html">NVLink</a>
+        <a href="../../home/home.html">HBM3E</a>
+        <a href="../../home/home.html">NCCL</a>
+        <a href="../../home/home.html">H200</a>
+      </div>
+
+      <div class="section-marker on-scroll">04 · 相关文章</div>
+      <h2 class="on-scroll">延伸阅读</h2>
+
+      <div class="platform-list on-scroll">
+        <a href="../../home/home.html"><i class="fa-solid fa-newspaper"></i> 更多文章 → 回到文章列表</a>
+        <a href="../dy-7641962519699017001/dy-7641962519699017001.html"
+          ><i class="fa-solid fa-video"></i> Gemini3.5Flash × Composer2.5 踢馆赛</a
+        >
+        <a href="../dy-7646747643204900836/dy-7646747643204900836.html"
+          ><i class="fa-solid fa-images"></i> Vibe Coding 大赏 · Harness starter</a
+        >
+      </div>
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><i class="fa-brands fa-github"></i
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><i class="fa-solid fa-arrow-up"></i></button>
+
+    <script>
+      (function () {
+        // 主题切换
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var ti = document.querySelector('#theme-toggle i');
+        if (ti) ti.className = saved === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var ii = document.querySelector('#theme-toggle i');
+            if (ii) ii.className = next === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+          });
+
+        // 返回顶部
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+
+        // IntersectionObserver reveal
+        if ('IntersectionObserver' in window) {
+          var io = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (e) {
+                if (e.isIntersecting) {
+                  e.target.classList.add('is-in');
+                  io.unobserve(e.target);
+                }
+              });
+            },
+            { threshold: 0.08, rootMargin: '0px 0px -40px 0px' },
+          );
+          document.querySelectorAll('.on-scroll').forEach(function (el) {
+            io.observe(el);
+          });
+        } else {
+          document.querySelectorAll('.on-scroll').forEach(function (el) {
+            el.classList.add('is-in');
+          });
+        }
+      })();
+    </script>
+  </body>
 </html>

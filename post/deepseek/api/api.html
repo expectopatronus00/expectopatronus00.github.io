@@ -1,161 +1,428 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN" data-theme="dark">
-<script>(function(){try{const t=localStorage.getItem('theme')||'dark';if(t==='light')document.documentElement.dataset.theme='light';}catch(e){}})();</script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>DeepSeek API 中心 · EXPECTOPATRONUS</title>
-<meta name="description" content="DeepSeek API 集成指南、SDK 文档、价格与速率限制">
-<link rel="shortcut icon" href="../../../home/50.png">
-<link id="fa-cdn" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<script>(function(){var l=document.getElementById('fa-cdn');var chk=function(){var ok=false;try{var s=getComputedStyle(document.querySelector('.fa-solid')||document.body);ok=!s.fontFamily||s.fontFamily.indexOf('Font Awesome')!==-1;}catch(e){ok=false;}if(!ok&&window._fa_retried===undefined){window._fa_retried=true;var n=document.createElement('link');n.rel='stylesheet';n.href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css';document.head.appendChild(n);}};l.onload=chk;l.onerror=function(){chk();};})();</script>
-<link rel="stylesheet" href="../../../home/common.css">
-<style>
-.api-hero{padding:38px 24px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,color-mix(in oklab,var(--bg-2) 92%,transparent),color-mix(in oklab,var(--bg-0) 95%,transparent))}
-.api-hero .inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
-.api-hero h1{font-size:clamp(1.7rem,4vw,2.6rem);font-weight:800;background:var(--grad-1);-webkit-background-clip:text;background-clip:text;color:transparent}
-.api-hero .sub{color:var(--ink-soft);font-size:.92rem;margin-top:8px}
-.api-hero .badges{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
-.api-hero .badges b{padding:3px 12px;border-radius:999px;font-size:.72rem;background:var(--grad-soft);color:var(--cyan);border:1px solid rgba(0,229,255,.35)}
-.api-main{max-width:1200px;margin:0 auto;padding:24px 24px 60px;display:flex;flex-direction:column;gap:22px}
-.api-section h2{font-size:1.1rem;font-weight:800;margin:22px 0 12px;color:var(--ink);display:flex;align-items:center;gap:10px}
-.api-section h2 i{color:var(--cyan);width:22px;text-align:center}
-.api-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
-.api-card{display:flex;align-items:center;gap:12px;padding:14px 18px;border-radius:12px;background:var(--bg-2);border:1px solid var(--line);color:var(--ink);text-decoration:none;transition:all .25s}
-.api-card:hover{border-color:var(--cyan);transform:translateY(-2px);box-shadow:0 10px 30px -15px rgba(0,229,255,.3);color:var(--ink)}
-.api-card .ico{width:36px;height:36px;border-radius:8px;background:var(--grad-soft);display:flex;align-items:center;justify-content:center;color:var(--cyan);flex-shrink:0}
-.api-card b{display:block;font-size:.88rem;font-weight:700;color:var(--ink)}
-.api-card span{font-size:.72rem;color:var(--mute)}
-.api-code{padding:18px 22px;border-radius:14px;background:#05070f;border:1px solid var(--line);color:#9cdcfe;font-family:'Fira Code','JetBrains Mono',monospace;font-size:.88rem;overflow-x:auto;white-space:pre;margin:14px 0;line-height:1.55}
-@media(max-width:700px){.api-hero .inner{flex-direction:column;align-items:flex-start}}
-</style>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>DeepSeek API 接入速查 · EXPECTOPATRONUS</title>
+    <meta name="description" content="DeepSeek API 模型列表、接口协议、调用示例与常见问题速查。" />
+    <link rel="shortcut icon" href="../../../home/50.png" />
+    <link rel="stylesheet" href="../../../home/design-tokens.css" />
+    <style>
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3rem);
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.75;
+      }
 
-<body>
-<canvas id="stars-bg"></canvas>
-<div class="grid-bg"></div>
-<div class="progress" id="progress"></div>
-<nav class="topbar">
-  <div class="inner">
-    <a href="../../../index.html" class="brand">
-      <div class="logo"></div>
-      <span>EXPECTOPATRONUS · BLOG</span>
-    </a>
-    <div class="nav">
-      <a href="../../../index.html"><i class="fa-solid fa-house"></i> 首页</a>
-      <a href="../../../home/home.html"><i class="fa-solid fa-newspaper"></i> 文章</a>
-      <a href="../deepseek.html"><i class="fa-solid fa-robot"></i> DeepSeek</a>
-      <a href="http://expectopatronus.top:5005/" target="_blank"><i class="fa-solid fa-compass"></i> 导航</a>
-    </div>
-    <button id="theme-toggle" aria-label="主题切换"><i class="fa-solid fa-moon"></i></button>
-  </div>
-</nav>
+      .api-content {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
 
-<section class="api-hero">
-  <div class="inner">
-    <div>
-      <div class="badges"><b><i class="fa-solid fa-bolt"></i> DeepSeek API 中心</b></div>
-      <h1>DeepSeek API 集成中心</h1>
-      <p class="sub">从接入开始，覆盖 SDK / 价格 / 速率限制 / 最佳实践</p>
-    </div>
-    <div style="display:flex;gap:12px;flex-wrap:wrap">
-      <a class="api-card" href="https://platform.deepseek.com/" target="_blank"><div class="ico"><i class="fa-solid fa-key"></i></div><div><b>去平台</b><span>申请 API Key</span></div></a>
-      <a class="api-card" href="https://api-docs.deepseek.com/" target="_blank"><div class="ico"><i class="fa-solid fa-book-open"></i></div><div><b>官方文档</b><span>OpenAI 兼容</span></div></a>
-    </div>
-  </div>
-</section>
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+      .api-content h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.6rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .api-content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
 
-<main class="api-main">
-  <section class="api-section">
-    <h2><i class="fa-brands fa-python"></i> 官方仓库</h2>
-    <div class="api-grid">
-      <a class="api-card" href="https://github.com/deepseek-ai/DeepSeek-V3" target="_blank"><div class="ico"><i class="fa-brands fa-github"></i></div><div><b>DeepSeek-V3</b><span>模型仓库</span></div></a>
-      <a class="api-card" href="https://github.com/deepseek-ai/DeepSeek-R1" target="_blank"><div class="ico"><i class="fa-brands fa-github"></i></div><div><b>DeepSeek-R1</b><span>推理模型仓库</span></div></a>
-      <a class="api-card" href="https://github.com/deepseek-ai/DualPipe" target="_blank"><div class="ico"><i class="fa-solid fa-server"></i></div><div><b>DualPipe</b><span>模型并行框架</span></div></a>
-      <a class="api-card" href="https://github.com/deepseek-ai/deepseek-python" target="_blank"><div class="ico"><i class="fa-brands fa-python"></i></div><div><b>deepseek-python</b><span>Python SDK</span></div></a>
-      <a class="api-card" href="https://github.com/deepseek-ai/deepseek-java" target="_blank"><div class="ico"><i class="fa-brands fa-java"></i></div><div><b>deepseek-java</b><span>Java SDK</span></div></a>
-      <a class="api-card" href="https://github.com/deepseek-ai/deepseek-go" target="_blank"><div class="ico"><i class="fa-brands fa-golang"></i></div><div><b>deepseek-go</b><span>Go SDK</span></div></a>
-      <a class="api-card" href="https://github.com/deepseek-ai/deepseek-js" target="_blank"><div class="ico"><i class="fa-brands fa-js"></i></div><div><b>deepseek-js</b><span>Node.js SDK</span></div></a>
-      <a class="api-card" href="https://github.com/deepseek-ai/DeepEP" target="_blank"><div class="ico"><i class="fa-solid fa-microchip"></i></div><div><b>DeepEP</b><span>MoE 专家并行</span></div></a>
-      <a class="api-card" href="https://github.com/deepseek-ai/FlashMLA" target="_blank"><div class="ico"><i class="fa-solid fa-bolt"></i></div><div><b>FlashMLA</b><span>MLA 加速</span></div></a>
-      <a class="api-card" href="https://github.com/deepseek-ai/BatchScheduler" target="_blank"><div class="ico"><i class="fa-solid fa-calendar"></i></div><div><b>BatchScheduler</b><span>推理批处理</span></div></a>
-    </div>
-  </section>
+      /* model table */
+      .api-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--bg-card);
+        border-radius: var(--r-lg);
+        overflow: hidden;
+        border: 1px solid var(--line);
+        margin-bottom: var(--sp-7);
+      }
+      .api-table th {
+        text-align: left;
+        padding: 14px 18px;
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        font-weight: 500;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        background: var(--bg-soft);
+        border-bottom: 1px solid var(--line);
+      }
+      .api-table td {
+        padding: 14px 18px;
+        border-bottom: 1px solid var(--line);
+        font-size: 0.92rem;
+        color: var(--text);
+        font-family: var(--font-serif);
+      }
+      .api-table tr:last-child td {
+        border-bottom: 0;
+      }
+      .api-table code {
+        font-family: var(--font-mono);
+        font-size: 0.82rem;
+        padding: 2px 8px;
+        background: var(--bg-soft);
+        border-radius: 6px;
+        color: var(--accent-jade);
+      }
 
-  <section class="api-section">
-    <h2><i class="fa-solid fa-comments"></i> 模型说明</h2>
-    <div class="api-grid">
-      <a class="api-card" href="https://api-docs.deepseek.com/guides/model_list" target="_blank"><div class="ico"><i class="fa-solid fa-cubes"></i></div><div><b>模型列表</b><span>v3 / r1</span></div></a>
-      <a class="api-card" href="https://api-docs.deepseek.com/guides/function_call" target="_blank"><div class="ico"><i class="fa-solid fa-code"></i></div><div><b>函数调用</b><span>JSON Schema</span></div></a>
-      <a class="api-card" href="https://api-docs.deepseek.com/guides/json_mode" target="_blank"><div class="ico"><i class="fa-solid fa-brackets-curly"></i></div><div><b>JSON 模式</b><span>稳定输出</span></div></a>
-      <a class="api-card" href="https://api-docs.deepseek.com/guides/prompt_cache" target="_blank"><div class="ico"><i class="fa-solid fa-bolt"></i></div><div><b>Prompt Cache</b><span>省 Token</span></div></a>
-    </div>
-  </section>
+      /* code block */
+      .code-block {
+        background: #0a0a15;
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        padding: var(--sp-6);
+        margin-bottom: var(--sp-7);
+        font-family: var(--font-mono);
+        font-size: 0.86rem;
+        line-height: 1.7;
+        color: var(--text-soft);
+        overflow-x: auto;
+        white-space: pre;
+      }
+      .code-block .kw {
+        color: var(--accent-rust);
+      }
+      .code-block .str {
+        color: #98c379;
+      }
+      .code-block .num {
+        color: #d19a66;
+      }
+      .code-block .cmt {
+        color: #5c6370;
+        font-style: italic;
+      }
 
-  <section class="api-section">
-    <h2><i class="fa-solid fa-code"></i> 快速开始（OpenAI 兼容）</h2>
-    <pre class="api-code"># Python
-from openai import OpenAI
+      /* info box */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-7);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+
+      /* Q&A */
+      .faq-item {
+        border-top: 1px solid var(--line);
+        padding: var(--sp-5) 0;
+      }
+      .faq-item:first-child {
+        border-top: 0;
+      }
+      .faq-item .q {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin-bottom: 6px;
+      }
+      .faq-item .a {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.75;
+        font-size: 0.95rem;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../../index.html" class="brand"> <span class="logo">E</span><span>expectopatronus</span> </a>
+        <div class="nav-links">
+          <a href="../../../index.html">首页</a>
+          <a href="../../../home/home.html">文章</a>
+          <a href="../deepseek.html" class="is-active">DeepSeek</a>
+          <a href="http://expectopatronus.top:5005/" target="_blank" rel="noopener">导航站</a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="切换主题"><i class="fa-solid fa-moon"></i></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">api · quick reference</div>
+      <h1>DeepSeek API <em>接入</em>速查</h1>
+      <p>
+        本文是 DeepSeek 开放平台 API 的一页速查：模型列表、接口协议、curl / Python 调用示例与常见问题。所有示例以
+        DeepSeek 官方 API 文档为准，本页仅做整理。
+      </p>
+    </section>
+
+    <div class="api-content">
+      <div class="section-marker">01 · Models</div>
+      <h2>可用模型</h2>
+      <p>DeepSeek 开放平台当前对外暴露的主要模型及用途如下。在 API 调用中以 model 参数的字符串形式传入。</p>
+
+      <table class="api-table">
+        <thead>
+          <tr>
+            <th>模型名</th>
+            <th>能力</th>
+            <th>常见用途</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>deepseek-chat</code></td>
+            <td>通用对话</td>
+            <td>日常问答、总结、翻译、代码助手</td>
+          </tr>
+          <tr>
+            <td><code>deepseek-reasoner</code></td>
+            <td>推理 / R1</td>
+            <td>数学题、逻辑推理、代码调试</td>
+          </tr>
+          <tr>
+            <td><code>deepseek-vision</code></td>
+            <td>视觉理解</td>
+            <td>图像内容识别、图表解读、OCR</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="section-marker">02 · Endpoints</div>
+      <h2>接口与协议</h2>
+      <p>
+        DeepSeek API 遵循 OpenAI 兼容协议。你可以直接用
+        <code
+          style="
+            font-family: var(--font-mono);
+            font-size: 0.88rem;
+            color: var(--accent-jade);
+            background: var(--bg-soft);
+            padding: 2px 8px;
+            border-radius: 6px;
+          "
+          >openai</code
+        >
+        SDK 切换 base_url 接入；也可以直接用 curl / 任何 HTTP 客户端访问。
+      </p>
+
+      <div class="info-box">
+        <strong>Base URL：</strong>
+        <code style="font-family: var(--font-mono); font-size: 0.88rem">https://api.deepseek.com</code><br />
+        <strong>认证方式：</strong> HTTP Header
+        <code style="font-family: var(--font-mono); font-size: 0.88rem">Authorization: Bearer sk-xxxx</code><br />
+        获取 Key：<a
+          href="https://platform.deepseek.com/"
+          target="_blank"
+          rel="noopener"
+          style="color: var(--accent-rust)"
+          >DeepSeek 开放平台控制台</a
+        >
+      </div>
+
+      <div class="section-marker">03 · cURL</div>
+      <h2>cURL 示例 · Chat Completion</h2>
+      <pre class="code-block"><span class="kw">curl</span> https://api.deepseek.com/chat/completions \
+  -H <span class="str">"Content-Type: application/json"</span> \
+  -H <span class="str">"Authorization: Bearer sk-xxxx"</span> \
+  -d <span class="str">'{
+    "model": "deepseek-chat",
+    "messages": [
+      {"role": "system", "content": "你是一个有用的助手。"},
+      {"role": "user", "content": "你好，请简单自我介绍。"}
+    ],
+    "temperature": 0.7
+  }'</span>
+</pre>
+
+      <div class="section-marker">04 · Python</div>
+      <h2>Python · 使用 openai SDK</h2>
+      <pre class="code-block"><span class="kw">from</span> openai <span class="kw">import</span> OpenAI
+
 client = OpenAI(
-    api_key="sk-...",
-    base_url="https://api.deepseek.com"
+    api_key=<span class="str">"sk-xxxx"</span>,
+    base_url=<span class="str">"https://api.deepseek.com"</span>
 )
+
 resp = client.chat.completions.create(
-    model="deepseek-chat",
-    messages=[{"role":"user","content":"写一个 Python 快排"}]
+    model=<span class="str">"deepseek-chat"</span>,
+    messages=[
+        {<span class="str">"role"</span>: <span class="str">"system"</span>, <span class="str">"content"</span>: <span class="str">"你是一个有用的助手。"</span>},
+        {<span class="str">"role"</span>: <span class="str">"user"</span>, <span class="str">"content"</span>: <span class="str">"用 3 行介绍你自己。"</span>},
+    ],
+    temperature=<span class="num">0.7</span>,
 )
-print(resp.choices[0].message.content)
 
-# curl
-curl https://api.deepseek.com/chat/completions \
-  -H "Content-Type: application/json" \
-  -H "Authorization: Bearer sk-..." \
-  -d '{"model":"deepseek-chat","messages":[{"role":"user","content":"你好"}]}'</pre>
-  </section>
-</main>
+<span class="kw">print</span>(resp.choices[<span class="num">0</span>].message.content)
+</pre>
 
-<footer class="footer"><div>© 2025 EXPECTOPATRONUS · 本站内容纯学习用途</div><div><a href="https://github.com/expectopatronus00" target="_blank"><i class="fa-brands fa-github"></i></a></div></footer>
-<div id="back"><i class="fa-solid fa-arrow-up"></i></div>
+      <div class="section-marker">05 · Streaming</div>
+      <h2>流式输出（推荐）</h2>
+      <pre class="code-block"><span class="kw">from</span> openai <span class="kw">import</span> OpenAI
 
-<script>
-(function(){
-  var saved = localStorage.getItem('theme') || 'dark';
-  if(saved === 'light') document.documentElement.dataset.theme = 'light';
-  var ti = document.querySelector('#theme-toggle i');
-  if(ti) ti.className = saved === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-  var btn = document.getElementById('theme-toggle');
-  if(btn) btn.addEventListener('click', function(){
-    var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
-    document.documentElement.dataset.theme = next;
-    localStorage.setItem('theme', next);
-    var ti2 = document.querySelector('#theme-toggle i');
-    if(ti2) ti2.className = next === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-  });
-  var back = document.getElementById('back');
-  window.addEventListener('scroll', function(){
-    var p = Math.min(1, window.scrollY / Math.max(1, document.body.scrollHeight - innerHeight));
-    var prog = document.getElementById('progress');
-    if(prog) prog.style.width = (p*100).toFixed(1)+'%';
-    if(back) back.classList.toggle('show', window.scrollY > 300);
-  });
-  if(back) back.addEventListener('click', function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+client = OpenAI(api_key=<span class="str">"sk-xxxx"</span>, base_url=<span class="str">"https://api.deepseek.com"</span>)
 
-  var canvas = document.getElementById('stars-bg');
-  if(canvas){
-    var ctx = canvas.getContext('2d');
-    var w = canvas.width = innerWidth, h = canvas.height = innerHeight;
-    var stars = [];
-    for(var i=0;i<80;i++) stars.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.5+.2,a:Math.random()*.5+.2});
-    function draw(){
-      ctx.clearRect(0,0,w,h);
-      stars.forEach(function(s){
-        ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-        ctx.fillStyle='rgba(180,210,255,'+s.a+')';ctx.fill();
-      });
-    }
-    draw();
-    onresize = function(){w=canvas.width=innerWidth;h=canvas.height=innerHeight;stars=[];for(var i=0;i<80;i++)stars.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.5+.2,a:Math.random()*.5+.2});draw();};
-  }
-})();
-</script>
-</body>
+stream = client.chat.completions.create(
+    model=<span class="str">"deepseek-reasoner"</span>,
+    messages=[{<span class="str">"role"</span>: <span class="str">"user"</span>, <span class="str">"content"</span>: <span class="str">"计算 12345 × 6789 的结果"</span>}],
+    stream=<span class="kw">True</span>,
+)
+
+<span class="kw">for</span> chunk <span class="kw">in</span> stream:
+    <span class="kw">if</span> chunk.choices[<span class="num">0</span>].delta.content:
+        <span class="kw">print</span>(chunk.choices[<span class="num">0</span>].delta.content, end=<span class="str">""</span>)
+</pre>
+
+      <div class="section-marker">06 · FAQ</div>
+      <h2>常见问题</h2>
+
+      <div class="faq-item">
+        <div class="q">Q1. 接入提示 401 / invalid api key？</div>
+        <div class="a">检查 API Key 是否正确复制；确认控制台中该 Key 状态为启用；部分环境需要为 HTTPS 配置代理。</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="q">Q2. context length 超限如何处理？</div>
+        <div class="a">
+          deepseek-chat 提供 128K 上下文。若依然超限，建议截断历史消息、或使用 vector store + RAG 方式处理长文本。
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="q">Q3. 国内服务器直连不稳定？</div>
+        <div class="a">
+          可以通过代理或中转服务转发；也可部署开源 DeepSeek 模型到本地 GPU 或使用 OpenClaw 做本地推理代理。
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="q">Q4. 如何降低成本？</div>
+        <div class="a">
+          合理控制 max_tokens、使用合适的 temperature 以避免冗长输出；复杂逻辑优先用 reasoning
+          模型而非在普通对话中反复尝试。
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="q">Q5. 官方文档与 Playground？</div>
+        <div class="a">
+          <a href="https://api-docs.deepseek.com/" target="_blank" rel="noopener" style="color: var(--accent-rust)"
+            >api-docs.deepseek.com</a
+          >
+          为最新文档；平台侧提供在线 API Playground 与用量统计。
+        </div>
+      </div>
+
+      <p style="margin-top: var(--sp-8); font-size: 0.88rem; color: var(--text-dim)">
+        最后更新：2026-06-17 · 内容以官方文档为准
+      </p>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2026 · 个人笔记 · GitHub Pages · 所有外链归原作者所有</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><i class="fa-brands fa-github"></i
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><i class="fa-solid fa-arrow-up"></i></button>
+
+    <link id="fa" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <script>
+      (function () {
+        try {
+          var link = document.getElementById('fa');
+          link.onerror = function () {
+            var n = document.createElement('link');
+            n.rel = 'stylesheet';
+            n.href = 'https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css';
+            document.head.appendChild(n);
+          };
+        } catch (e) {}
+      })();
+    </script>
+
+    <script>
+      (function () {
+        var saved = localStorage.getItem('theme') || 'dark';
+        document.documentElement.dataset.theme = saved;
+        var ti = document.querySelector('#theme-toggle i');
+        if (ti) ti.className = saved === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+        var toggle = document.getElementById('theme-toggle');
+        if (toggle)
+          toggle.addEventListener('click', function () {
+            var cur = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = cur;
+            localStorage.setItem('theme', cur);
+            if (ti) ti.className = cur === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+          });
+        var back = document.getElementById('back-to-top');
+        if (back) {
+          window.addEventListener('scroll', function () {
+            back.classList.toggle('visible', window.scrollY > 500);
+          });
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        }
+      })();
+    </script>
+  </body>
 </html>

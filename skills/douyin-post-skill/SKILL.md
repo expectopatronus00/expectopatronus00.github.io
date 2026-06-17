@@ -27,12 +27,12 @@ https://v.douyin.com/xxxxxxx/
 
 **必须从输入中提取的关键信息：**
 
-| 字段 | 说明 | 示例 |
-|------|------|------|
-| `VIDEO_URL` | 抖音短链，或已展开的 `douyin.com/video/` 链接 | `https://v.douyin.com/iLabcdef/` |
-| `AUTHOR` | 作者昵称（"【】" 内的内容） | `AI风向标` |
-| `TITLE` | 视频标题 / 作品标题 | `顶级AI模型遭封禁，Anthropic硬刚美国监管！` |
-| `DATE_TODAY` | 今日日期，作为发布日期 | `2026-06-16` |
+| 字段         | 说明                                          | 示例                                        |
+| ------------ | --------------------------------------------- | ------------------------------------------- |
+| `VIDEO_URL`  | 抖音短链，或已展开的 `douyin.com/video/` 链接 | `https://v.douyin.com/iLabcdef/`            |
+| `AUTHOR`     | 作者昵称（"【】" 内的内容）                   | `AI风向标`                                  |
+| `TITLE`      | 视频标题 / 作品标题                           | `顶级AI模型遭封禁，Anthropic硬刚美国监管！` |
+| `DATE_TODAY` | 今日日期，作为发布日期                        | `2026-06-16`                                |
 
 **如果链接需要展开，用浏览器访问短链，从地址栏获取最终的 `https://www.douyin.com/video/{VIDEO_ID}` 形式。**
 
@@ -74,24 +74,25 @@ https://v.douyin.com/xxxxxxx/
 
 #### 2.2 多平台卡片推荐库（根据文章主题挑选 8 个左右）
 
-| 领域 | 平台/链接 | 图标 class |
-|------|-----------|-----------|
-| 通用 | 抖音原视频 | `fa-brands fa-tiktok` |
-| AI / 大模型 | Anthropic | `fa-solid fa-robot` |
-| AI / 大模型 | DeepSeek | `fa-solid fa-brain` |
-| AI / 大模型 | Google DeepMind | `fa-brands fa-google` |
-| AI / 开源 | GitHub | `fa-brands fa-github` |
-| AI / 开源 | HuggingFace | `fa-solid fa-face-smile` |
-| AI / 论文 | arXiv | `fa-solid fa-book` |
-| 科技公司 | AWS / 亚马逊 | `fa-brands fa-aws` |
-| 科技公司 | 英伟达 | `fa-solid fa-microchip` |
-| 政府监管 | 美国商务部 | `fa-solid fa-building-columns` |
-| 讨论 | X / Twitter | `fa-brands fa-x-twitter` |
-| 中文 | 知乎 | `fa-brands fa-zhihu` |
-| 中文 | B 站 | `fa-brands fa-bilibili` |
-| 财经 | 相关上市公司官网 | `fa-solid fa-chart-line` |
+| 领域        | 平台/链接        | 图标 class                     |
+| ----------- | ---------------- | ------------------------------ |
+| 通用        | 抖音原视频       | `fa-brands fa-tiktok`          |
+| AI / 大模型 | Anthropic        | `fa-solid fa-robot`            |
+| AI / 大模型 | DeepSeek         | `fa-solid fa-brain`            |
+| AI / 大模型 | Google DeepMind  | `fa-brands fa-google`          |
+| AI / 开源   | GitHub           | `fa-brands fa-github`          |
+| AI / 开源   | HuggingFace      | `fa-solid fa-face-smile`       |
+| AI / 论文   | arXiv            | `fa-solid fa-book`             |
+| 科技公司    | AWS / 亚马逊     | `fa-brands fa-aws`             |
+| 科技公司    | 英伟达           | `fa-solid fa-microchip`        |
+| 政府监管    | 美国商务部       | `fa-solid fa-building-columns` |
+| 讨论        | X / Twitter      | `fa-brands fa-x-twitter`       |
+| 中文        | 知乎             | `fa-brands fa-zhihu`           |
+| 中文        | B 站             | `fa-brands fa-bilibili`        |
+| 财经        | 相关上市公司官网 | `fa-solid fa-chart-line`       |
 
 **卡片格式：**
+
 ```html
 <a class="plat-card" href="URL" target="_blank" rel="noopener">
   <i class="图标class"></i>
@@ -133,38 +134,40 @@ https://v.douyin.com/xxxxxxx/
 
 **需要替换的占位符：**
 
-| 占位符 | 说明 |
-|--------|------|
-| `{{TITLE}}` | 文章大标题 |
-| `{{META_DESC}}` | `<meta description>` 用的 150 字简介 |
-| `{{META_KEYWORDS}}` | 逗号分隔关键词（10~15 个） |
-| `{{OG_TITLE}}` | og:title，通常和 TITLE 一致 |
-| `{{OG_DESC}}` | og:description，通常和 META_DESC 一致 |
-| `{{AUTHOR}}` | 作者名（如 "AI风向标"） |
-| `{{DATE_TODAY}}` | 日期（如 "2026-06-16"） |
-| `{{DURATION}}` | 阅读时长（如 "3 分 26 秒"，按文章长度估算） |
-| `{{CATEGORY}}` | 固定写 "抖音搬运 · 内容主题"（内容主题如：AI监管 / 开源项目 / 技术趋势） |
-| `{{COVER_URL}}` | 抖音封面图完整 URL |
-| `{{SUMMARY_HTML}}` | 简介 block 中的文字内容（纯 HTML，不需要 `<p>` 包） |
-| `{{CONTENT_HTML}}` | 正文主要内容（所有 h2 / 时间线 / 引用 的完整 HTML） |
-| `{{VIDEO_ID}}` | 抖音视频 ID 数字 |
-| `{{PLATFORMS_HTML}}` | 多平台卡片完整 HTML |
-| `{{TAGS_HTML}}` | 标签 `<a>` 列表，每个标签单独一行 |
-| `{{RELATED_HTML}}` | 相关文章 2 个 `<a>` |
-| `{{OFFICIAL_SITE_NAME}}` | CTA 第二个按钮显示的名字（如 "Anthropic 官方站"） |
-| `{{OFFICIAL_SITE_URL}}` | CTA 第二个按钮的 URL（如 "https://www.anthropic.com"） |
-| `{{BREADCRUMB}}` | 面包屑最后一段文字，通常和大标题一致或简写（如 "抖音搬运：顶级AI模型遭封禁"） |
+| 占位符                   | 说明                                                                          |
+| ------------------------ | ----------------------------------------------------------------------------- |
+| `{{TITLE}}`              | 文章大标题                                                                    |
+| `{{META_DESC}}`          | `<meta description>` 用的 150 字简介                                          |
+| `{{META_KEYWORDS}}`      | 逗号分隔关键词（10~15 个）                                                    |
+| `{{OG_TITLE}}`           | og:title，通常和 TITLE 一致                                                   |
+| `{{OG_DESC}}`            | og:description，通常和 META_DESC 一致                                         |
+| `{{AUTHOR}}`             | 作者名（如 "AI风向标"）                                                       |
+| `{{DATE_TODAY}}`         | 日期（如 "2026-06-16"）                                                       |
+| `{{DURATION}}`           | 阅读时长（如 "3 分 26 秒"，按文章长度估算）                                   |
+| `{{CATEGORY}}`           | 固定写 "抖音搬运 · 内容主题"（内容主题如：AI监管 / 开源项目 / 技术趋势）      |
+| `{{COVER_URL}}`          | 抖音封面图完整 URL                                                            |
+| `{{SUMMARY_HTML}}`       | 简介 block 中的文字内容（纯 HTML，不需要 `<p>` 包）                           |
+| `{{CONTENT_HTML}}`       | 正文主要内容（所有 h2 / 时间线 / 引用 的完整 HTML）                           |
+| `{{VIDEO_ID}}`           | 抖音视频 ID 数字                                                              |
+| `{{PLATFORMS_HTML}}`     | 多平台卡片完整 HTML                                                           |
+| `{{TAGS_HTML}}`          | 标签 `<a>` 列表，每个标签单独一行                                             |
+| `{{RELATED_HTML}}`       | 相关文章 2 个 `<a>`                                                           |
+| `{{OFFICIAL_SITE_NAME}}` | CTA 第二个按钮显示的名字（如 "Anthropic 官方站"）                             |
+| `{{OFFICIAL_SITE_URL}}`  | CTA 第二个按钮的 URL（如 "https://www.anthropic.com"）                        |
+| `{{BREADCRUMB}}`         | 面包屑最后一段文字，通常和大标题一致或简写（如 "抖音搬运：顶级AI模型遭封禁"） |
 
 ### 阶段 4: 更新文章库 (home.html)
 
 在 `/workspace/home/home.html` 中做 3 处修改：
 
 **修改 A: 更新统计数字（3 个数字）**
+
 - `精选 N 篇内容` → N+1
 - `<b>N</b><span>总数</span>` → N+1
 - `<b>N</b><span>文章总数</span>` → N+1
 
 **修改 B: 更新 cat-stats 分类统计区**
+
 - 在 `cat-stats` 区的各个卡片中，`抖音搬运` 这一栏的数字 +1
 
 **修改 C: 追加 articles 数组项**
@@ -181,6 +184,7 @@ https://v.douyin.com/xxxxxxx/
 在 `/workspace/index.html` 中做 2 处修改：
 
 **修改 A: 更新统计数字（2 处）**
+
 - `stats-item` 区的 `内容总数` +1
 - `平均更新频率` 如果有变化也更新（保持 1~3 天即可）
 
@@ -242,6 +246,7 @@ git push origin HEAD:main --force
 - `--line` 分割线 / `--accent-grad` 渐变
 
 响应式断点：
+
 - `max-width: 820px` — 平板/大屏手机
 - `max-width: 480px` — 手机
 
@@ -249,11 +254,11 @@ git push origin HEAD:main --force
 
 ## 五、已有文章参考（Agent 可用来校准风格）
 
-| 路径 | 主题 | 风格 |
-|------|------|------|
+| 路径                                                                 | 主题                     | 风格       |
+| -------------------------------------------------------------------- | ------------------------ | ---------- |
 | `/workspace/post/dy-7641962519699017001/dy-7641962519699017001.html` | Gemini × Composer 踢馆赛 | 事件对比型 |
-| `/workspace/post/dy-7646747643204900836/dy-7646747643204900836.html` | Harness starter 开源 | 工具介绍型 |
-| `/workspace/post/dy-7651945427952078131/dy-7651945427952078131.html` | Anthropic 封禁事件 | 深度分析型 |
+| `/workspace/post/dy-7646747643204900836/dy-7646747643204900836.html` | Harness starter 开源     | 工具介绍型 |
+| `/workspace/post/dy-7651945427952078131/dy-7651945427952078131.html` | Anthropic 封禁事件       | 深度分析型 |
 
 ---
 

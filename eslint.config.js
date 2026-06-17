@@ -2,7 +2,7 @@ import htmlPlugin from 'eslint-plugin-html';
 
 export default [
   {
-    ignores: ['node_modules/**', '*.min.js', '**/*.pdf', '**/*.png', '**/*.jpg'],
+    ignores: ['node_modules/**', '*.min.js', '**/*.pdf', '**/*.png', '**/*.jpg', 'eslint.config.js'],
   },
   {
     files: ['**/*.html'],
@@ -80,14 +80,14 @@ export default [
       'no-undef': 'warn',
       'no-console': 'off',
       'no-debugger': 'warn',
-      'eqeqeq': ['warn', 'always'],
-      'curly': ['warn', 'multi-or-nest'],
+      eqeqeq: ['warn', 'always'],
+      curly: ['warn', 'multi-or-nest'],
       'no-var': 'warn',
       'prefer-const': 'warn',
       'no-multiple-empty-lines': ['warn', { max: 2 }],
       'no-trailing-spaces': 'warn',
-      'semi': ['warn', 'always'],
-      'quotes': ['off'],
+      semi: ['warn', 'always'],
+      quotes: ['off'],
     },
   },
 ];

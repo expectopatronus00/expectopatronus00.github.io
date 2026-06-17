@@ -1,643 +1,1053 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN" data-theme="dark">
-<head>
-<script>(function(){try{const t=localStorage.getItem('theme')||'dark';if(t==='light')document.documentElement.dataset.theme='light';}catch(e){}})();</script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EXPECTOPATRONUS · Ship Faster With AI</title>
-<meta name="description" content="AI 辅助内容创作 · 科技博客 · 抖音搬运 · 深度好文">
-<link rel="shortcut icon" href="./home/50.png" type="image/png">
-<link id="fa-cdn" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<script>(function(){var l=document.getElementById('fa-cdn');var chk=function(){var ok=false;try{var s=getComputedStyle(document.querySelector('.fa-solid')||document.body);ok=!s.fontFamily||s.fontFamily.indexOf('Font Awesome')!==-1;}catch(e){ok=false;}if(!ok&&window._fa_retried===undefined){window._fa_retried=true;var n=document.createElement('link');n.rel='stylesheet';n.href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css';document.head.appendChild(n);}};l.onload=chk;l.onerror=function(){chk();};})();</script>
-<style>
-  :root{
-    --bg-0:#03040a;
-    --bg-1:#06081a;
-    --bg-2:#0b0f26;
-    --ink:#e5eaff;
-    --ink-soft:#a7adc7;
-    --mute:#5b648c;
-    --line:rgba(120,150,255,.14);
-    --line-2:rgba(120,150,255,.28);
-    --cyan:#00e5ff;
-    --blue:#3b82ff;
-    --violet:#8b5cf6;
-    --pink:#ff4284;
-    --grad-1:linear-gradient(135deg,#00e5ff 0%,#3b82ff 50%,#8b5cf6 100%);
-    --grad-soft:linear-gradient(135deg,rgba(0,229,255,.10),rgba(139,92,246,.10));
-    --shadow-glow:0 0 60px -10px rgba(59,130,255,.35);
-    --radius-lg:18px;
-    --radius-md:12px;
-  }
-  [data-theme="light"]{
-    --bg-0:#f6f8ff;
-    --bg-1:#ffffff;
-    --bg-2:#eef1f8;
-    --ink:#0b1230;
-    --ink-soft:#2a3770;
-    --mute:#5a6590;
-    --line:rgba(20,40,120,.14);
-    --line-2:rgba(20,40,120,.28);
-    --cyan:#0078f2;
-    --blue:#3b82ff;
-    --violet:#6d28d9;
-    --pink:#e11d48;
-    --grad-1:linear-gradient(135deg,#0078f2 0%,#3b82ff 50%,#6d28d9 100%);
-    --grad-soft:linear-gradient(135deg,rgba(0,120,242,.08),rgba(109,40,217,.08));
-    --shadow-glow:0 20px 60px -20px rgba(59,130,255,.35);
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{height:100%}
-  body{
-    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC","Microsoft YaHei",Segoe UI,Helvetica,Arial,sans-serif;
-    background:var(--bg-0);color:var(--ink);
-    overflow-x:hidden;
-    -webkit-font-smoothing:antialiased;
-  }
-  a{color:inherit;text-decoration:none}
-  .stars{
-    position:fixed;inset:0;pointer-events:none;z-index:0;
-    background:radial-gradient(ellipse at top, rgba(59,130,255,.12), transparent 60%),
-                radial-gradient(ellipse at 80% 0, rgba(139,92,246,.08), transparent 55%),
-                radial-gradient(ellipse at bottom, rgba(0,229,255,.06), transparent 60%);
-  }
-  .grid-bg{
-    position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.35;
-    background-image:
-      linear-gradient(var(--line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line) 1px, transparent 1px);
-    background-size:44px 44px;
-    mask-image:radial-gradient(ellipse at center, black 30%, transparent 80%);
-    -webkit-mask-image:radial-gradient(ellipse at center, black 30%, transparent 80%);
-  }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>EXPECTOPATRONUS · 关于 AI、硬件与技术思考的笔记</title>
+    <meta name="description" content="关于 AI 工具、GPU 硬件、部署实战的个人笔记与资源整理。" />
+    <link rel="shortcut icon" href="home/50.png" />
+    <link rel="stylesheet" href="home/design-tokens.css" />
+    <style>
+      /* ── Hero ───────────────────────────────── */
+      .hero {
+        position: relative;
+        padding: var(--sp-12) var(--sp-6) var(--sp-10);
+        overflow: hidden;
+        border-bottom: 1px solid var(--line);
+      }
+      .hero-inner {
+        max-width: var(--container);
+        margin: 0 auto;
+        position: relative;
+        z-index: 10;
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: var(--sp-10);
+        align-items: center;
+      }
+      .hero-meta {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: var(--sp-8);
+        font-family: var(--font-mono);
+        font-size: var(--fs-xs);
+        color: var(--text-dim);
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+      .hero-meta .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--accent-rust);
+        box-shadow: 0 0 0 4px rgba(184, 88, 29, 0.18);
+      }
+      .hero-meta .issue {
+        color: var(--accent-rust);
+        font-weight: 500;
+      }
 
-  /* ── Nav ── */
-  .nav{
-    position:sticky;top:0;z-index:50;
-    backdrop-filter:blur(20px) saturate(160%);
-    background:color-mix(in oklab, var(--bg-0) 82%, transparent);
-    border-bottom:1px solid var(--line);
-  }
-  .nav-inner{
-    max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;
-    padding:14px 24px;
-  }
-  .brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:1rem;letter-spacing:.04em}
-  .brand .logo{
-    width:32px;height:32px;border-radius:9px;
-    background:var(--grad-1);display:grid;place-items:center;color:#fff;font-weight:800;
-    box-shadow:0 6px 20px -6px rgba(59,130,255,.6);
-  }
-  .brand .logo::after{content:"E";font-size:.95rem}
-  .brand span{background:var(--grad-1);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .nav-links{display:flex;gap:4px;font-size:.9rem;flex-wrap:wrap}
-  .nav-links a{
-    padding:8px 14px;border-radius:10px;color:var(--ink-soft);
-    transition:all .25s;display:flex;gap:8px;align-items:center;
-  }
-  .nav-links a:hover{color:var(--ink);background:rgba(255,255,255,.04)}
-  .nav-links a.active{background:rgba(59,130,255,.12);color:var(--cyan)}
+      .hero-title {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2.8rem, 6.5vw, 5.5rem);
+        line-height: 1.02;
+        letter-spacing: -0.035em;
+        margin-bottom: var(--sp-7);
+        color: var(--text);
+      }
+      .hero-title em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .hero-title .line-2 {
+        display: block;
+        font-style: italic;
+        color: var(--text-soft);
+        font-weight: 400;
+        font-size: 0.65em;
+        margin-top: var(--sp-4);
+      }
+      .hero-subtitle {
+        max-width: 540px;
+        font-family: var(--font-serif);
+        font-size: clamp(1rem, 1.4vw, 1.2rem);
+        line-height: 1.85;
+        color: var(--text-soft);
+        margin-bottom: var(--sp-8);
+      }
+      .hero-subtitle::first-letter {
+        font-family: var(--font-display);
+        font-size: 2.2em;
+        float: left;
+        line-height: 1;
+        margin-right: 6px;
+        color: var(--accent-rust);
+        font-style: italic;
+      }
 
-  #theme-toggle{
-    width:38px;height:38px;border-radius:50%;display:grid;place-items:center;cursor:pointer;
-    border:1px solid var(--line-2);background:rgba(255,255,255,.03);color:var(--ink-soft);
-    transition:all .25s cubic-bezier(.2,.7,.2,1);
-  }
-  #theme-toggle:hover{transform:scale(1.08) rotate(-15deg);color:var(--cyan);border-color:var(--cyan);box-shadow:0 0 24px rgba(0,229,255,.3)}
+      /* Hero stats */
+      .hero-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0;
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        overflow: hidden;
+        background: var(--bg-card);
+        max-width: 540px;
+      }
+      .hero-stats .stat {
+        padding: var(--sp-6) var(--sp-5);
+        border-right: 1px solid var(--line);
+        text-align: center;
+      }
+      .hero-stats .stat:last-child {
+        border-right: 0;
+      }
+      .hero-stats .num {
+        font-family: var(--font-display);
+        font-size: 2.4rem;
+        font-weight: 500;
+        line-height: 1;
+        color: var(--text);
+        letter-spacing: -0.02em;
+      }
+      .hero-stats .label {
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--text-dim);
+        margin-top: var(--sp-3);
+      }
 
-  /* ── Hero ── */
-  .hero{
-    position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:80px 24px 60px;text-align:center;
-  }
-  .hero-badge{
-    display:inline-flex;align-items:center;gap:10px;padding:8px 18px;border-radius:999px;
-    border:1px solid var(--line-2);background:rgba(255,255,255,.03);color:var(--ink-soft);font-size:.82rem;margin-bottom:24px;
-  }
-  .hero-badge .dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
-  .hero h1{
-    font-size:clamp(2.2rem,5.5vw,4.2rem);line-height:1.12;font-weight:800;margin-bottom:20px;letter-spacing:-.02em;
-  }
-  .hero h1 em{
-    font-style:normal;background:var(--grad-1);-webkit-background-clip:text;background-clip:text;color:transparent;
-  }
-  .hero p{
-    max-width:720px;margin:0 auto;font-size:1.05rem;color:var(--ink-soft);line-height:1.7;
-  }
-  .hero-ctas{
-    display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:36px;
-  }
-  .btn{
-    display:inline-flex;align-items:center;gap:10px;padding:13px 24px;border-radius:12px;font-size:.95rem;font-weight:600;
-    border:1px solid transparent;cursor:pointer;transition:all .25s;
-  }
-  .btn-primary{
-    background:var(--grad-1);color:#fff;box-shadow:0 16px 40px -20px rgba(59,130,255,.55);
-  }
-  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 24px 60px -24px rgba(59,130,255,.7)}
-  .btn-ghost{
-    background:rgba(255,255,255,.03);color:var(--ink);border-color:var(--line-2);
-  }
-  .btn-ghost:hover{background:rgba(255,255,255,.07);border-color:var(--cyan);color:var(--cyan)}
+      /* Hero right column — magazine panel */
+      .hero-panel {
+        position: relative;
+        padding: var(--sp-8) var(--sp-7);
+        border: 1px solid var(--line);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        overflow: hidden;
+      }
+      .hero-panel::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--accent-rust), transparent);
+      }
+      .hero-panel .panel-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: var(--sp-6);
+        padding-bottom: var(--sp-5);
+        border-bottom: 1px dashed var(--line);
+      }
+      .hero-panel .panel-head .tag {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent-rust);
+      }
+      .hero-panel .panel-head .date {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        color: var(--text-dim);
+      }
+      .panel-list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--sp-4);
+      }
+      .panel-list .p-item {
+        display: grid;
+        grid-template-columns: 36px 1fr auto;
+        gap: var(--sp-4);
+        align-items: start;
+        padding-bottom: var(--sp-4);
+        border-bottom: 1px solid var(--line-soft);
+      }
+      .panel-list .p-item:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+      }
+      .panel-list .p-item .num {
+        font-family: var(--font-display);
+        font-size: 1.4rem;
+        font-style: italic;
+        color: var(--accent-rust);
+        line-height: 1;
+        padding-top: 2px;
+      }
+      .panel-list .p-item h4 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.05rem;
+        line-height: 1.35;
+        color: var(--text);
+        margin: 0 0 4px 0;
+      }
+      .panel-list .p-item p {
+        font-family: var(--font-serif);
+        font-size: 0.88rem;
+        line-height: 1.6;
+        color: var(--text-soft);
+        margin: 0;
+      }
+      .panel-list .p-item .mini-tag {
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        color: var(--accent-jade);
+        white-space: nowrap;
+        padding-top: 4px;
+      }
 
-  /* ── Partners / Marquee ── */
-  .partners{position:relative;z-index:2;margin:40px 0 60px;overflow:hidden}
-  .partners-track{
-    display:flex;gap:48px;align-items:center;justify-content:center;flex-wrap:wrap;
-    font-size:.95rem;color:var(--mute);font-weight:600;letter-spacing:.08em;text-transform:uppercase;
-    padding:24px 40px;
-  }
-  .partners-track span i{margin-right:8px;color:var(--cyan)}
+      @media (max-width: 900px) {
+        .hero-inner {
+          grid-template-columns: 1fr;
+          gap: var(--sp-8);
+        }
+        .hero-stats {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      @media (max-width: 560px) {
+        .hero-stats {
+          grid-template-columns: 1fr 1fr;
+        }
+        .hero-stats .stat:nth-child(2) {
+          border-right: 0;
+        }
+        .hero-stats .stat:nth-child(-n + 2) {
+          border-bottom: 1px solid var(--line);
+        }
+        .panel-list .p-item {
+          grid-template-columns: 30px 1fr;
+        }
+        .panel-list .p-item .mini-tag {
+          grid-column: 2;
+        }
+      }
 
-  /* ── Features ── */
-  .features{
-    position:relative;z-index:2;max-width:1200px;margin:40px auto 80px;padding:0 24px;
-  }
-  .section-head{text-align:center;margin-bottom:40px}
-  .section-head h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;margin-bottom:10px;letter-spacing:-.01em}
-  .section-head h2 span{background:var(--grad-1);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .section-head p{color:var(--ink-soft)}
+      /* ── Section layout helpers ────────── */
+      .section-wrap {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6);
+      }
+      .section-head {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        margin-bottom: var(--sp-8);
+        padding-bottom: var(--sp-5);
+        border-bottom: 1px solid var(--line);
+      }
+      .section-head h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(1.6rem, 2.4vw, 2rem);
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0;
+      }
+      .section-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--accent-rust);
+      }
 
-  .grid{
-    display:grid;gap:20px;
-    grid-template-columns:repeat(3,1fr);
-  }
-  .card{
-    position:relative;padding:28px;background:var(--bg-2);
-    border:1px solid var(--line);border-radius:var(--radius-lg);
-    transition:all .3s cubic-bezier(.2,.7,.2,1);
-    overflow:hidden;
-  }
-  .card::before{
-    content:"";position:absolute;inset:0;pointer-events:none;
-    background:var(--grad-soft);opacity:0;transition:opacity .3s;
-  }
-  .card:hover{border-color:var(--line-2);transform:translateY(-4px);box-shadow:var(--shadow-glow)}
-  .card:hover::before{opacity:1}
-  .card .icon{
-    width:44px;height:44px;border-radius:12px;display:grid;place-items:center;margin-bottom:18px;
-    background:var(--grad-1);color:#fff;font-size:1.1rem;font-weight:800;
-    box-shadow:0 8px 24px -12px rgba(59,130,255,.6);
-  }
-  .card h3{font-size:1.05rem;font-weight:700;margin-bottom:8px}
-  .card p{font-size:.9rem;color:var(--ink-soft);line-height:1.7}
-  .card .link{
-    margin-top:18px;display:inline-flex;gap:8px;color:var(--cyan);font-size:.85rem;font-weight:600;
-  }
-  .card .link i{transition:transform .25s}
-  .card:hover .link i{transform:translateX(4px)}
+      /* ── Featured editorial grid ──────── */
+      .editorial-grid {
+        display: grid;
+        grid-template-columns: 1.3fr 1fr;
+        gap: var(--sp-6);
+      }
+      .card-main {
+        display: block;
+        position: relative;
+        border: 1px solid var(--line);
+        border-radius: var(--r-xl);
+        overflow: hidden;
+        background: var(--bg-card);
+        transition:
+          transform var(--dur-mid) var(--ease-out),
+          border-color var(--dur-fast),
+          box-shadow var(--dur-mid);
+      }
+      .card-main:hover {
+        transform: translateY(-4px);
+        border-color: var(--accent-rust);
+        box-shadow: var(--shadow-glow-rust);
+      }
+      .card-main .media {
+        aspect-ratio: 16/10;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+      }
+      .card-main .media::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, transparent 35%, rgba(11, 13, 22, 0.85) 100%);
+      }
+      .card-main .media .cat-badge {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        z-index: 2;
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+        padding: 5px 12px;
+        border-radius: 999px;
+        background: rgba(11, 13, 22, 0.82);
+        color: var(--accent-rust);
+        backdrop-filter: blur(6px);
+      }
+      .card-main .body {
+        padding: var(--sp-6) var(--sp-7) var(--sp-7);
+      }
+      .card-main .tag-row {
+        display: flex;
+        gap: 8px;
+        margin-bottom: var(--sp-4);
+        flex-wrap: wrap;
+      }
+      .card-main .tag-row .t {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        padding: 3px 10px;
+        border-radius: 999px;
+        background: var(--bg-soft);
+        color: var(--text-soft);
+        border: 1px solid var(--line);
+      }
+      .card-main h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(1.5rem, 2.2vw, 1.95rem);
+        line-height: 1.2;
+        letter-spacing: -0.015em;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+      .card-main p {
+        color: var(--text-soft);
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        line-height: 1.75;
+        margin: 0;
+      }
+      .card-main .read-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.82rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.04em;
+      }
+      .card-main .read-link::after {
+        content: '→';
+        transition: transform var(--dur-fast);
+      }
+      .card-main:hover .read-link::after {
+        transform: translateX(5px);
+      }
 
-  .card.large{
-    grid-column:span 2;display:flex;gap:28px;align-items:center;padding:36px;
-    background:var(--grad-soft);
-  }
-  .card.large .visual{
-    flex-shrink:0;width:220px;height:160px;border-radius:14px;overflow:hidden;position:relative;
-    background:linear-gradient(135deg,#0f1b3a,#1b2a5a);border:1px solid var(--line);
-  }
-  .card.large .visual video,.card.large .visual img{width:100%;height:100%;object-fit:cover;display:block}
+      /* Side stack */
+      .side-stack {
+        display: flex;
+        flex-direction: column;
+        gap: var(--sp-5);
+      }
+      .card-side {
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        gap: var(--sp-5);
+        padding: var(--sp-5);
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        background: var(--bg-card);
+        transition: all var(--dur-fast);
+      }
+      .card-side:hover {
+        border-color: var(--accent-jade);
+        transform: translateX(-3px);
+        box-shadow: var(--shadow-glow-jade);
+      }
+      .card-side .mini-media {
+        aspect-ratio: 1/1;
+        border-radius: var(--r-md);
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .card-side .mini-media::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, transparent 50%, rgba(11, 13, 22, 0.4) 100%);
+      }
+      .card-side .mini-body .t {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        color: var(--accent-jade);
+        margin-bottom: var(--sp-3);
+      }
+      .card-side .mini-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.25rem;
+        line-height: 1.25;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-2);
+      }
+      .card-side .mini-body p {
+        font-family: var(--font-serif);
+        font-size: 0.95rem;
+        color: var(--text-soft);
+        line-height: 1.65;
+        margin: 0;
+      }
 
-  /* ── Hot Posts ── */
-  .posts{position:relative;z-index:2;max-width:1200px;margin:0 auto 100px;padding:0 24px}
-  .posts h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;margin-bottom:28px;letter-spacing:-.01em}
-  .posts h2 span{background:var(--grad-1);-webkit-background-clip:text;background-clip:text;color:transparent}
+      @media (max-width: 900px) {
+        .editorial-grid {
+          grid-template-columns: 1fr;
+        }
+        .card-side {
+          grid-template-columns: 110px 1fr;
+        }
+      }
 
-  .posts-grid{display:grid;gap:20px;grid-template-columns:repeat(3,1fr)}
+      /* ── Category grid ───────────────── */
+      .categories {
+        background: var(--bg-soft);
+        border-top: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+      }
+      .cat-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: var(--sp-5);
+      }
+      .cat-card {
+        display: block;
+        padding: var(--sp-6);
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        background: var(--bg-card);
+        transition: all var(--dur-fast);
+        position: relative;
+        overflow: hidden;
+      }
+      .cat-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 3px;
+        height: 100%;
+        background: var(--accent-rust);
+        transform: scaleY(0);
+        transform-origin: top;
+        transition: transform var(--dur-mid) var(--ease-out);
+      }
+      .cat-card:hover {
+        border-color: var(--accent-rust);
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-glow-rust);
+      }
+      .cat-card:hover::before {
+        transform: scaleY(1);
+      }
+      .cat-card .num {
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+      }
+      .cat-card h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        margin: var(--sp-3) 0 var(--sp-2);
+        letter-spacing: -0.015em;
+        color: var(--text);
+      }
+      .cat-card p {
+        font-family: var(--font-serif);
+        font-size: 0.95rem;
+        color: var(--text-soft);
+        line-height: 1.7;
+        margin: 0;
+      }
+      .cat-card .arrow {
+        margin-top: var(--sp-5);
+        color: var(--accent-rust);
+        font-family: var(--font-mono);
+        font-size: 0.82rem;
+      }
 
-  .posts-grid .card{padding:0;overflow:hidden}
-  .posts-grid .card .thumb{
-    aspect-ratio:16/9;position:relative;overflow:hidden;
-    background:var(--grad-1);
-  }
-  .posts-grid .card .thumb-img{width:100%;height:100%;object-fit:cover;display:block}
-  .posts-grid .card .thumb-tag{
-    position:absolute;top:12px;left:12px;padding:5px 12px;border-radius:8px;font-size:.72rem;font-weight:700;
-    background:rgba(0,0,0,.55);color:#fff;backdrop-filter:blur(10px);
-  }
-  .posts-grid .card .body{padding:22px 24px 26px}
-  .posts-grid .card .title{font-size:1rem;font-weight:700;line-height:1.5;margin-bottom:10px}
-  .posts-grid .card .summary{font-size:.86rem;color:var(--ink-soft);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-  .posts-grid .card .meta{margin-top:14px;display:flex;gap:16px;font-size:.78rem;color:var(--mute)}
+      @media (max-width: 900px) {
+        .cat-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 500px) {
+        .cat-grid {
+          grid-template-columns: 1fr;
+        }
+      }
 
-  /* ── Footer ── */
-  .footer{
-    position:relative;z-index:2;margin-top:40px;
-    border-top:1px solid var(--line);background:rgba(0,0,0,.2);
-    backdrop-filter:blur(12px);
-  }
-  [data-theme="light"] .footer{background:rgba(255,255,255,.5)}
-  .footer-inner{
-    max-width:1200px;margin:0 auto;padding:40px 24px;display:grid;
-    grid-template-columns:2fr 1fr 1fr 1fr;gap:36px;
-  }
-  .footer .brand{margin-bottom:14px}
-  .footer p{color:var(--ink-soft);font-size:.88rem;line-height:1.7;max-width:340px}
-  .footer h4{font-size:.9rem;font-weight:700;margin-bottom:14px;color:var(--ink)}
-  .footer ul{list-style:none;display:flex;flex-direction:column;gap:10px}
-  .footer ul a{color:var(--ink-soft);font-size:.88rem;transition:color .2s}
-  .footer ul a:hover{color:var(--cyan)}
-  .bottom-bar{
-    max-width:1200px;margin:0 auto;padding:18px 24px;display:flex;justify-content:space-between;align-items:center;
-    border-top:1px solid var(--line);font-size:.78rem;color:var(--mute);
-  }
-  .socials{display:flex;gap:14px}
-  .socials a{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;border:1px solid var(--line);color:var(--ink-soft);transition:all .25s}
-  .socials a:hover{color:var(--cyan);border-color:var(--cyan);transform:translateY(-2px)}
+      /* ── Manifesto / quote ────────────── */
+      .manifesto {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: var(--sp-12) var(--sp-6) var(--sp-10);
+        text-align: center;
+      }
+      .manifesto .mark {
+        display: inline-block;
+        font-family: var(--font-display);
+        font-size: 4.5rem;
+        line-height: 1;
+        color: var(--accent-rust);
+        opacity: 0.5;
+        margin-bottom: var(--sp-4);
+        font-style: italic;
+      }
+      .manifesto blockquote {
+        font-family: var(--font-display);
+        font-size: clamp(1.4rem, 2.4vw, 2rem);
+        line-height: 1.35;
+        color: var(--text);
+        font-weight: 500;
+        font-style: italic;
+        margin: 0 0 var(--sp-6);
+        letter-spacing: -0.01em;
+      }
+      .manifesto blockquote em {
+        color: var(--accent-rust);
+        font-style: italic;
+      }
+      .manifesto cite {
+        font-style: normal;
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+      }
 
-  /* ── Responsive ── */
-  @media (max-width:1024px){
-    .grid{grid-template-columns:repeat(2,1fr)}
-    .card.large{grid-column:span 2;flex-direction:column;text-align:center}
-    .card.large .visual{width:100%}
-    .posts-grid{grid-template-columns:repeat(2,1fr)}
-    .footer-inner{grid-template-columns:repeat(2,1fr)}
-  }
-  @media (max-width:680px){
-    .grid,.posts-grid,.footer-inner{grid-template-columns:1fr}
-    .nav-links a{padding:6px 10px;font-size:.85rem}
-    .hero{padding:60px 20px 40px}
-    .hero h1{font-size:2.2rem}
-    .hero-ctas .btn{flex:1;min-width:140px;justify-content:center}
-    .card.large{padding:26px}
-    .features,.posts{padding:0 16px}
-    .brand span{display:none}
-  }
-  .stats-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:1100px;margin:40px auto 0}
-  .stats-item{padding:22px;border-radius:16px;background:var(--bg-2);border:1px solid var(--line);text-align:center}
-  .stats-item b{font-size:1.6rem;font-weight:800;background:var(--grad-1);-webkit-background-clip:text;background-clip:text;color:transparent;display:block;margin-bottom:6px}
-  .stats-item span{font-size:.8rem;color:var(--mute);letter-spacing:.04em;text-transform:uppercase}
-  .rank-section{max-width:1200px;margin:80px auto 60px;padding:0 24px}
-  .rank-section .sec-h{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:28px}
-  .rank-section .sec-h h2{font-size:1.5rem;font-weight:800;background:var(--grad-1);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .rank-section .sec-h .pill{padding:4px 14px;border-radius:999px;font-size:.72rem;background:rgba(0,229,255,.12);color:var(--cyan);border:1px solid rgba(0,229,255,.3)}
-  .rank-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
-  .rank-card{position:relative;padding:18px 70px 18px 18px;background:var(--bg-2);border:1px solid var(--line);border-radius:16px;display:flex;gap:14px;align-items:center;transition:all .3s;color:var(--ink)}
-  .rank-card:hover{border-color:var(--line-2);transform:translateY(-3px);box-shadow:var(--shadow-glow);color:var(--ink)}
-  .rank-medal{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;flex-shrink:0}
-  .rank-card:nth-child(1) .rank-medal{background:var(--grad-1);color:#fff}
-  .rank-card:nth-child(2) .rank-medal{background:linear-gradient(135deg,#c9d3e3,#8ea4c2);color:#fff}
-  .rank-card:nth-child(3) .rank-medal{background:linear-gradient(135deg,#d4a373,#8b5a2b);color:#fff}
-  .rank-card:nth-child(n+4) .rank-medal{background:var(--bg-1);border:1px solid var(--line);color:var(--ink)}
-  .rank-card h4{font-size:.95rem;font-weight:700;color:var(--ink);line-height:1.4;margin-bottom:6px}
-  .rank-card .meta-line{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-  .rank-card .meta-line .cat{font-size:.7rem;padding:2px 10px;border-radius:999px;background:rgba(0,229,255,.1);color:var(--cyan);border:1px solid rgba(0,229,255,.25)}
-  .rank-card .meta-line .d,.rank-card .meta-line .r{font-size:.78rem;color:var(--mute);font-style:italic}
-  .rank-card .go{position:absolute;right:22px;top:50%;transform:translateY(-50%);font-size:.8rem;color:var(--mute);display:flex;gap:6px;align-items:center;transition:all .25s}
-  .rank-card:hover .go{color:var(--cyan);transform:translateY(-50%) translateX(3px)}
-  @media(max-width:768px){.rank-grid{grid-template-columns:1fr}.stats-strip{grid-template-columns:1fr 1fr}}
-  @media(max-width:480px){.stats-strip{grid-template-columns:1fr}}
-</style>
-</head>
-<body>
+      /* ── Latest article grid ─────────── */
+      .latest-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--sp-5);
+      }
+      .article-card {
+        display: block;
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        overflow: hidden;
+        background: var(--bg-card);
+        transition: all var(--dur-fast);
+      }
+      .article-card:hover {
+        transform: translateY(-4px);
+        border-color: var(--accent-rust);
+        box-shadow: var(--shadow-md);
+      }
+      .article-card .thumb {
+        aspect-ratio: 16/10;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+      }
+      .article-card .thumb .cat-badge {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        padding: 4px 10px;
+        border-radius: 6px;
+        background: rgba(11, 13, 22, 0.82);
+        color: var(--accent-rust);
+        backdrop-filter: blur(6px);
+      }
+      .article-card .art-body {
+        padding: var(--sp-5) var(--sp-5) var(--sp-6);
+      }
+      .article-card .date {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        color: var(--text-dim);
+        letter-spacing: 0.08em;
+      }
+      .article-card h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.25rem;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: var(--sp-2) 0 var(--sp-3);
+      }
+      .article-card p {
+        font-family: var(--font-serif);
+        font-size: 0.95rem;
+        color: var(--text-soft);
+        line-height: 1.65;
+        margin: 0;
+      }
 
-<div class="stars"></div>
-<div class="grid-bg"></div>
-
-<nav class="nav">
-  <div class="nav-inner">
-    <a href="./index.html" class="brand"><div class="logo"></div><span>EXPECTOPATRONUS</span></a>
-    <div class="nav-links">
-      <a href="./index.html" class="active"><i class="fa-solid fa-house"></i> 首页</a>
-      <a href="./home/home.html"><i class="fa-solid fa-newspaper"></i> 文章</a>
-      <a href="./post/deepseek/deepseek.html"><i class="fa-solid fa-robot"></i> DeepSeek</a>
-      <a href="http://expectopatronus.top:5005/" target="_blank"><i class="fa-solid fa-compass"></i> 导航</a>
-    </div>
-    <button id="theme-toggle" aria-label="主题切换"><i class="fa-solid fa-moon"></i></button>
-  </div>
-</nav>
-
-<section class="hero">
-  <div class="hero-badge"><span class="dot"></span>AI 驱动 · 内容创作 · 自动发布</div>
-  <h1>Ship Faster With <em>AI Agents</em></h1>
-  <p>给我一个抖音链接，一个视频，一句话。剩下的事交给我。<br>解析 · 生成 · 排版 · 推送，<b>全自动</b>。</p>
-  <div class="hero-ctas">
-    <a href="./home/home.html" class="btn btn-primary"><i class="fa-solid fa-sparkles"></i> 浏览文章</a>
-    <a href="./home/home.html" class="btn btn-ghost"><i class="fa-brands fa-github"></i> GitHub Pages</a>
-  </div>
-</section>
-
-<section class="stats-strip" aria-label="站点统计">
-  <div class="stats-item"><b>13 篇</b><span>内容总数</span></div>
-  <div class="stats-item"><b>1 天</b><span>平均更新频率</span></div>
-  <div class="stats-item"><b>1.2k+</b><span>全站访问量</span></div>
-</section>
-
-<section class="partners">
-  <div class="partners-track">
-    <span><i class="fa-solid fa-microchip"></i> DOUYIN</span>
-    <span><i class="fa-solid fa-brain"></i> DEEPSEEK</span>
-    <span><i class="fa-solid fa-bolt"></i> GEMINI</span>
-    <span><i class="fa-solid fa-wand-magic-sparkles"></i> TRAE</span>
-    <span><i class="fa-solid fa-rocket"></i> GITHUB PAGES</span>
-  </div>
-</section>
-
-<section class="features">
-  <div class="section-head">
-    <h2>一个链接，<span>全链路自动化</span></h2>
-    <p>从抖音公开视频生成一篇结构完整的深度文章</p>
-  </div>
-  <div class="grid">
-    <div class="card large">
-      <div class="visual">
-        <img src="https://p26-sign.douyinpic.com/tos-cn-i-dy/67354461040f442ebd8434d3b5dfdcb6~tplv-dy-resize-walign-adapt-aq:540:q75.webp?lk3s=138a59ce&x-expires=1782658800&x-signature=dUKEXPSY4MB%2Fb6NgdZSl067ukzw%3D&from=327834062&s=PackSourceEnum_DOUYIN_REFLOW&se=false&sc=cover&biz_tag=aweme_video&l=2026061423361830EB883819F5428D7EB5" alt="cover">
+      @media (max-width: 900px) {
+        .latest-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 600px) {
+        .latest-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ── Top Navigation ── -->
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="index.html" class="brand">
+          <span class="logo">E</span>
+          <span>expectopatronus</span>
+        </a>
+        <div class="nav-links">
+          <a href="index.html" class="is-active">首页</a>
+          <a href="home/home.html">文章</a>
+          <a href="post/deepseek/deepseek.html">DeepSeek</a>
+          <a href="http://expectopatronus.top:5005/" target="_blank" rel="noopener">导航站</a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="切换主题">
+          <i class="fa-solid fa-moon"></i>
+        </button>
       </div>
-      <div>
-        <h3 style="font-size:1.25rem;margin-bottom:10px">抖音 → 文章，<span style="background:var(--grad-1);-webkit-background-clip:text;background-clip:text;color:transparent">一秒生成</span></h3>
-        <p style="color:var(--ink-soft);line-height:1.75">识别 v.douyin.com 短链，提取作者 / 封面 / 无水印直链，自动排版成可访问、可播放、可分享的博客文章。</p>
-        <a href="./home/home.html" class="link" style="margin-top:18px;display:inline-flex;gap:8px;color:var(--cyan);font-weight:600">看第一篇搬运 <i class="fa-solid fa-arrow-right"></i></a>
-      </div>
-    </div>
-    <div class="card">
-      <div class="icon"><i class="fa-solid fa-globe"></i></div>
-      <h3>响应式布局</h3>
-      <p>笔记本 · 平板 · 手机三端自适应，断点 1024 / 680 像素，无横向滚动条。</p>
-    </div>
-    <div class="card">
-      <div class="icon"><i class="fa-solid fa-moon"></i></div>
-      <h3>主题随心切</h3>
-      <p>深色 / 浅色一键切换，偏好存在 localStorage，刷新不丢失。</p>
-    </div>
-    <div class="card">
-      <div class="icon"><i class="fa-solid fa-code"></i></div>
-      <h3>代码高亮</h3>
-      <p>集成 highlight.js，霓虹深色配色，100+ 语法高亮。</p>
-    </div>
-    <div class="card">
-      <div class="icon"><i class="fa-solid fa-cloud"></i></div>
-      <h3>免服务器部署</h3>
-      <p>GitHub Pages 托管，绑定自定义域名，HTTPS 自动签发。</p>
-    </div>
-    <div class="card">
-      <div class="icon"><i class="fa-solid fa-wind"></i></div>
-      <h3>真·无水印播放</h3>
-      <p>直接用抖音官方 aweme/v1/play 接口返回 mp4 源，无需解析第三方服务。</p>
-    </div>
-  </div>
-</section>
+    </nav>
 
-<section class="rank-section">
-  <div class="sec-h">
-    <h2>🏆 HOT RANKING · 热门文章排行榜</h2>
-    <span class="pill">过去 30 天最受欢迎</span>
-  </div>
-  <div class="rank-grid">
-    <a class="rank-card" href="./post/wx-openclaw/wx-openclaw.html">
-      <div class="rank-medal">1</div>
-      <div>
-        <h4>国内服务器部署 OpenClaw 踩坑实录</h4>
-        <div class="meta-line">
-          <span class="cat">运维</span>
-          <span class="d">2026-06-17</span>
-          <span class="r"><i class="fa-regular fa-clock"></i> 10 min</span>
+    <!-- ── Hero ── -->
+    <header class="hero">
+      <div class="hero-inner reveal">
+        <div>
+          <div class="hero-meta">
+            <span class="dot"></span>
+            <span class="issue">vol. 06 · summer issue</span>
+            <span>—</span>
+            <span>2026</span>
+          </div>
+          <h1 class="hero-title">
+            记录关于 <em>AI</em>、<br />
+            硬件与部署的
+            <span class="line-2">思考与实验。</span>
+          </h1>
+          <p class="hero-subtitle">
+            一个个人知识库，收集在使用大语言模型、压测
+            GPU、配置服务器时踩过的坑、写过的笔记，以及偶尔的杂谈。不追逐热点，只写下自己真的用过、验证过、值得保存的东西。
+          </p>
+
+          <div class="hero-stats">
+            <div class="stat">
+              <div class="num">13</div>
+              <div class="label">articles</div>
+            </div>
+            <div class="stat">
+              <div class="num">5</div>
+              <div class="label">topics</div>
+            </div>
+            <div class="stat">
+              <div class="num">∞</div>
+              <div class="label">experiments</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: magazine panel -->
+        <aside class="hero-panel">
+          <div class="panel-head">
+            <span class="tag">on this issue</span>
+            <span class="date">june · 2026</span>
+          </div>
+          <div class="panel-list">
+            <div class="p-item">
+              <div class="num">01</div>
+              <div>
+                <h4>国内服务器部署 OpenClaw</h4>
+                <p>Docker 搬运法解决外网拉取失败的实战流程。</p>
+              </div>
+              <div class="mini-tag">OPS</div>
+            </div>
+            <div class="p-item">
+              <div class="num">02</div>
+              <div>
+                <h4>GPU 满载的真与假</h4>
+                <p>从 nvidia-smi 到 HBM3E — 学会辨别压测的有效负载。</p>
+              </div>
+              <div class="mini-tag">HW</div>
+            </div>
+            <div class="p-item">
+              <div class="num">03</div>
+              <div>
+                <h4>DeepSeek 工具链导航</h4>
+                <p>从模型入口到提示词、院校教程的一站式索引。</p>
+              </div>
+              <div class="mini-tag">AI</div>
+            </div>
+            <div class="p-item">
+              <div class="num">04</div>
+              <div>
+                <h4>价值选股提示词模板</h4>
+                <p>一套结构化的五维度分析框架，交给 LLM 做初筛。</p>
+              </div>
+              <div class="mini-tag">NOTES</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </header>
+
+    <!-- ── Featured / Editors' picks ── -->
+    <section class="section-wrap on-scroll">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">featured</div>
+          <h2>主编精选</h2>
+        </div>
+        <span class="text-mono text-dim" style="font-size: 0.78rem; letter-spacing: 0.12em">editors' picks</span>
+      </div>
+
+      <div class="editorial-grid">
+        <a class="card-main" href="post/wx-openclaw/wx-openclaw.html">
+          <div
+            class="media"
+            style="background-image: url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1400&q=80')"
+          >
+            <span class="cat-badge">运维 / OPS</span>
+          </div>
+          <div class="body">
+            <div class="tag-row">
+              <span class="t">Docker</span>
+              <span class="t">国内服务器</span>
+              <span class="t">实战笔记</span>
+            </div>
+            <h2>在国内服务器上部署 OpenClaw 的踩坑实录</h2>
+            <p>
+              glibc 版本过低、Docker 镜像拉取超时、代理配置走不通……最后竟然用了最朴素的搬运法。一篇写给同样处境的你。
+            </p>
+            <span class="read-link">阅读全文</span>
+          </div>
+        </a>
+
+        <div class="side-stack">
+          <a class="card-side" href="post/wx-gpu-burn/wx-gpu-burn.html">
+            <div
+              class="mini-media"
+              style="background-image: url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&q=80')"
+            ></div>
+            <div class="mini-body">
+              <span class="t">GPU / hardware</span>
+              <h3>GPU 满载不等于真的在干活</h3>
+              <p>利用率 100% 背后有多少水分？关于压测、假满载与烤机的一次小调查。</p>
+            </div>
+          </a>
+
+          <a class="card-side" href="post/deepseek/deepseek.html">
+            <div
+              class="mini-media"
+              style="background-image: url('https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&q=80')"
+            ></div>
+            <div class="mini-body">
+              <span class="t">DeepSeek / tools</span>
+              <h3>DeepSeek 工具链导航</h3>
+              <p>从零开始用 DeepSeek — 模型入口、提示词、插件、院校教程与 API 的集合。</p>
+            </div>
+          </a>
+
+          <a class="card-side" href="post/dy-7651525917084372224/dy-7651525917084372224.html">
+            <div
+              class="mini-media"
+              style="background-image: url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600&q=80')"
+            ></div>
+            <div class="mini-body">
+              <span class="t">value investing</span>
+              <h3>给 LLM 的选股提示词</h3>
+              <p>五维度结构化模板，让大模型做一份靠谱的初筛报告。</p>
+            </div>
+          </a>
         </div>
       </div>
-      <span class="go"><i class="fa-solid fa-arrow-up-right-from-square"></i> 阅读</span>
-    </a>
-    <a class="rank-card" href="./post/wx-gpu-burn/wx-gpu-burn.html">
-      <div class="rank-medal">2</div>
-      <div>
-        <h4>GPU单卡压测"满载"及合理满载</h4>
-        <div class="meta-line">
-          <span class="cat">GPU</span>
-          <span class="d">2026-06-17</span>
-          <span class="r"><i class="fa-regular fa-clock"></i> 8 min</span>
-        </div>
-      </div>
-      <span class="go"><i class="fa-solid fa-arrow-up-right-from-square"></i> 阅读</span>
-    </a>
-    <a class="rank-card" href="./post/wx-b300-hardware/wx-b300-hardware.html">
-      <div class="rank-medal">3</div>
-      <div>
-        <h4>实测 HGX B300：一篇看懂关键硬件数据</h4>
-        <div class="meta-line">
-          <span class="cat">技术</span>
-          <span class="d">2026-06-16</span>
-          <span class="r"><i class="fa-regular fa-clock"></i> 8 min</span>
-        </div>
-      </div>
-      <span class="go"><i class="fa-solid fa-arrow-up-right-from-square"></i> 阅读</span>
-    </a>
-    <a class="rank-card" href="./post/dy-7651945427952078131/dy-7651945427952078131.html">
-      <div class="rank-medal">4</div>
-      <div>
-        <h4>顶级 AI 模型遭封禁 · Anthropic 硬刚美国监管</h4>
-        <div class="meta-line">
-          <span class="cat">抖音搬运</span>
-          <span class="d">2026-06-16</span>
-          <span class="r"><i class="fa-regular fa-clock"></i> 7 min</span>
-        </div>
-      </div>
-      <span class="go"><i class="fa-solid fa-arrow-up-right-from-square"></i> 阅读</span>
-    </a>
-    <a class="rank-card" href="./post/dy-7641962519699017001/dy-7641962519699017001.html">
-      <div class="rank-medal">5</div>
-      <div>
-        <h4>Gemini3.5Flash × Composer2.5 踢馆赛</h4>
-        <div class="meta-line">
-          <span class="cat">抖音搬运</span>
-          <span class="d">2026-06-14</span>
-          <span class="r"><i class="fa-regular fa-clock"></i> 6 min</span>
-        </div>
-      </div>
-      <span class="go"><i class="fa-solid fa-arrow-up-right-from-square"></i> 阅读</span>
-    </a>
-    <a class="rank-card" href="./post/dy-7646747643204900836/dy-7646747643204900836.html">
-      <div class="rank-medal">6</div>
-      <div>
-        <h4>Vibe Coding 大赏 · Harness starter 开源</h4>
-        <div class="meta-line">
-          <span class="cat">抖音搬运</span>
-          <span class="d">2026-06-16</span>
-          <span class="r"><i class="fa-regular fa-clock"></i> 5 min</span>
-        </div>
-      </div>
-      <span class="go"><i class="fa-solid fa-arrow-up-right-from-square"></i> 阅读</span>
-    </a>
-    <a class="rank-card" href="./post/deepseek/deepseek.html">
-      <div class="rank-medal">7</div>
-      <div>
-        <h4>DeepSeek 智能工具导航</h4>
-        <div class="meta-line">
-          <span class="cat">AI</span>
-          <span class="d">2026-06-10</span>
-          <span class="r"><i class="fa-regular fa-clock"></i> 6 min</span>
-        </div>
-      </div>
-      <span class="go"><i class="fa-solid fa-arrow-up-right-from-square"></i> 阅读</span>
-    </a>
-    <a class="rank-card" href="./post/deepseek/doc/doc.html">
-      <div class="rank-medal">8</div>
-      <div>
-        <h4>DeepSeek 院校教程文档归档</h4>
-        <div class="meta-line">
-          <span class="cat">AI</span>
-          <span class="d">2026-03-15</span>
-          <span class="r"><i class="fa-regular fa-clock"></i> 12 min</span>
-        </div>
-      </div>
-      <span class="go"><i class="fa-solid fa-arrow-up-right-from-square"></i> 阅读</span>
-    </a>
-    <a class="rank-card" href="./post/deepseek/api/api.html">
-      <div class="rank-medal">9</div>
-      <div>
-        <h4>DeepSeek API 集成中心</h4>
-        <div class="meta-line">
-          <span class="cat">AI</span>
-          <span class="d">2026-04-20</span>
-          <span class="r"><i class="fa-regular fa-clock"></i> 4 min</span>
-        </div>
-      </div>
-      <span class="go"><i class="fa-solid fa-arrow-up-right-from-square"></i> 阅读</span>
-    </a>
-    <a class="rank-card" href="./post/post1/post1.html">
-      <div class="rank-medal">9</div>
-      <div>
-        <h4>Linux 清除 history 记录的方式</h4>
-        <div class="meta-line">
-          <span class="cat">Linux</span>
-          <span class="d">2024-02-23</span>
-          <span class="r"><i class="fa-regular fa-clock"></i> 3 min</span>
-        </div>
-      </div>
-      <span class="go"><i class="fa-solid fa-arrow-up-right-from-square"></i> 阅读</span>
-    </a>
-  </div>
-</section>
+    </section>
 
-<section class="posts">
-  <div class="section-head" style="margin-bottom:28px">
-    <h2>最新 <span>抖音搬运</span></h2>
-    <p>从公开视频生成，点击进入可直接播放</p>
-  </div>
-  <div class="posts-grid" id="posts-grid"></div>
-  <div style="text-align:center;margin-top:28px">
-    <a href="./home/home.html" class="btn btn-ghost"><i class="fa-solid fa-angles-right"></i> 查看全部文章</a>
-  </div>
-</section>
+    <!-- ── Categories ── -->
+    <section class="categories on-scroll">
+      <div class="section-wrap">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">browse by topic</div>
+            <h2>按主题浏览</h2>
+          </div>
+          <span class="text-mono text-dim" style="font-size: 0.78rem; letter-spacing: 0.12em">four tracks</span>
+        </div>
 
-<footer class="footer">
-  <div class="footer-inner">
-    <div>
-      <a href="./index.html" class="brand"><div class="logo"></div><span>EXPECTOPATRONUS</span></a>
-      <p>一个由 AI 驱动的个人科技博客 · 抖音搬运 · DeepSeek 精选 · 工具链 · 自动化。</p>
-      <div class="socials" style="margin-top:18px">
-        <a href="https://github.com/expectopatronus00" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
-        <a href="http://expectopatronus.top:5005/" target="_blank" title="导航"><i class="fa-solid fa-compass"></i></a>
-        <a href="mailto:expectopatronus00@users.noreply.github.com" title="Email"><i class="fa-regular fa-envelope"></i></a>
+        <div class="cat-grid">
+          <a class="cat-card" href="home/home.html?cat=AI">
+            <div class="num">01</div>
+            <h3>AI 工具</h3>
+            <p>大语言模型、辅助工具与提示词技巧的实战笔记。</p>
+            <div class="arrow">进入 →</div>
+          </a>
+          <a class="cat-card" href="home/home.html?cat=GPU">
+            <div class="num">02</div>
+            <h3>GPU 硬件</h3>
+            <p>NVIDIA 显卡实测、功耗/带宽与深度学习的硬件细节。</p>
+            <div class="arrow">进入 →</div>
+          </a>
+          <a class="cat-card" href="home/home.html?cat=运维">
+            <div class="num">03</div>
+            <h3>运维与部署</h3>
+            <p>服务器、Docker、网络与国内环境下的踩坑经验。</p>
+            <div class="arrow">进入 →</div>
+          </a>
+          <a class="cat-card" href="home/home.html">
+            <div class="num">04</div>
+            <h3>杂项笔记</h3>
+            <p>抖音搬运观察、临时实验与一些尚未归类的片段。</p>
+            <div class="arrow">进入 →</div>
+          </a>
+        </div>
       </div>
-    </div>
-    <div>
-      <h4>内容</h4>
-      <ul>
-        <li><a href="./home/home.html">文章列表</a></li>
-        <li><a href="./post/deepseek/deepseek.html">DeepSeek</a></li>
-        <li><a href="./index.html#posts">最新搬运</a></li>
-      </ul>
-    </div>
-    <div>
-      <h4>技术</h4>
-      <ul>
-        <li><a href="https://trae.ai" target="_blank">TRAE IDE</a></li>
-        <li><a href="https://pages.github.com" target="_blank">GitHub Pages</a></li>
-        <li><a href="https://developer.mozilla.org" target="_blank">MDN</a></li>
-      </ul>
-    </div>
-    <div>
-      <h4>站点</h4>
-      <ul>
-        <li><a href="./index.html">首页</a></li>
-        <li><a href="http://expectopatronus.top:5005/" target="_blank">导航站</a></li>
-        <li><a href="./home/home.html">RSS</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="bottom-bar">
-    <span>© 2026 EXPECTOPATRONUS · 由 AI Agents 驱动的个人博客</span>
-    <span>Made with <i class="fa-solid fa-heart" style="color:#ff4284"></i> on Trae</span>
-  </div>
-</footer>
+    </section>
 
-<script>
-  // ── Theme ──
-  (function(){
-    const t=document.getElementById('theme-toggle'),i=t.querySelector('i');
-    function apply(){
-      const d=document.documentElement.dataset.theme||'dark';
-      i.className=d==='light'?'fa-regular fa-sun':'fa-solid fa-moon';
-    }
-    apply();
-    t.onclick=()=>{
-      const next=document.documentElement.dataset.theme==='light'?'dark':'light';
-      document.documentElement.dataset.theme=next;
-      try{localStorage.setItem('theme',next);}catch(e){}
-      apply();
-    };
-  })();
+    <!-- ── Manifesto ── -->
+    <section class="manifesto on-scroll">
+      <div class="mark">"</div>
+      <blockquote>
+        写下来，比记忆可靠；<br />
+        验证过，比抄来靠谱；<br />
+        <em>整理好，比收藏有用。</em>
+      </blockquote>
+      <cite>— the writing principle of this notebook</cite>
+    </section>
 
-  // ── Hot posts ──
-  const postsGrid=document.getElementById('posts-grid');
-  const articles=[
-    {
-      id:"wx-openclaw",
-      title:"国内服务器部署 OpenClaw 踩坑实录",
-      url:"./post/wx-openclaw/wx-openclaw.html",
-      summary:"CentOS 7 + Docker 部署 OpenClaw 的完整实战记录：glibc 版本过低、镜像拉取超时、镜像搬运法、配置权限、Web UI 访问。",
-      category:"运维",
-      date:"2026-06-17",
-      cover:"https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=800&q=80"
-    },
-    {
-      id:"wx-gpu-burn",
-      title:"GPU单卡压测\"满载\"及合理满载",
-      url:"./post/wx-gpu-burn/wx-gpu-burn.html",
-      summary:"GPU利用率100%不等于真正满载。深入解析三大资源模块、假满载陷阱与合理压测方案。",
-      category:"GPU",
-      date:"2026-06-17",
-      cover:"https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80"
-    },
-    {
-      id:"wx-b300",
-      title:"实测 HGX B300：一篇看懂关键硬件数据",
-      url:"./post/wx-b300-hardware/wx-b300-hardware.html",
-      summary:"实测 NVIDIA HGX B300 在待机/满负载/多卡互联下的功耗、NVLink 带宽、HBM3E 吞吐。",
-      category:"技术",
-      date:"2026-06-16",
-      cover:"https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80"
-    },
-    {
-      id:"7651945427952078131",
-      title:"顶级AI模型遭封禁 · Anthropic 硬刚美国监管",
-      url:"./post/dy-7651945427952078131/dy-7651945427952078131.html",
-      summary:"Fable5 发布 3 天即遭美国商务部整体封禁，背后举报者竟是投资几百亿的大股东亚马逊？",
-      category:"抖音搬运",
-      date:"2026-06-16",
-      cover:"https://p3-pc-sign.douyinpic.com/tos-cn-p-0051-ce/o0qwoCqbeBsEjAiN1EMIKUCBJKD7wpfwbUNBi2~tplv-dy-cropcenter:323:430.jpeg?biz_tag=pcweb_cover&from=327834062&lk3s=138a59ce&s=PackSourceEnum_FAVORITE&sc=cover&se=true&sh=323_430&x-expires=2096974800&x-signature=KjDNGh1yY%2Bt8WskJHmHFOH0VH1c%3D"
-    }
-  ];
-  postsGrid.innerHTML=articles.map(a=>`
-    <a class="card" href="${a.url}">
-      <div class="thumb">
-        <img class="thumb-img" src="${a.cover}" alt="" loading="lazy" onerror="this.remove()">
-        <span class="thumb-tag">${a.category}</span>
+    <!-- ── Latest ── -->
+    <section class="section-wrap on-scroll">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">recent</div>
+          <h2>最近更新</h2>
+        </div>
+        <a
+          href="home/home.html"
+          class="text-mono"
+          style="font-size: 0.8rem; color: var(--accent-rust); letter-spacing: 0.12em"
+          >view all →</a
+        >
       </div>
-      <div class="body">
-        <div class="title">${a.title}</div>
-        <div class="summary">${a.summary}</div>
-        <div class="meta"><span><i class="fa-regular fa-calendar"></i> ${a.date}</span><span><i class="fa-regular fa-eye"></i> 1000+</span></div>
-      </div>
-    </a>
-  `).join('');
 
-  // Reveal on scroll
-  const obs=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting) e.target.style.opacity='1', e.target.style.transform='translateY(0)';
-    });
-  },{threshold:.1});
-  document.querySelectorAll('.card,.posts-grid .card,.features .card.large').forEach(el=>{
-    el.style.opacity='0';el.style.transform='translateY(16px)';el.style.transition='opacity .6s, transform .6s';
-    obs.observe(el);
-  });
-</script>
-</body>
+      <div class="latest-grid">
+        <a class="article-card" href="post/wx-openclaw/wx-openclaw.html">
+          <div
+            class="thumb"
+            style="background-image: url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=900&q=80')"
+          >
+            <span class="cat-badge">运维</span>
+          </div>
+          <div class="art-body">
+            <div class="date">2026 · 06 · 17</div>
+            <h3>国内服务器部署 OpenClaw 踩坑实录</h3>
+            <p>glibc 过低、Docker 镜像拉取超时……最终解决方案朴素得出乎意料。</p>
+          </div>
+        </a>
+
+        <a class="article-card" href="post/wx-gpu-burn/wx-gpu-burn.html">
+          <div
+            class="thumb"
+            style="background-image: url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=900&q=80')"
+          >
+            <span class="cat-badge">GPU</span>
+          </div>
+          <div class="art-body">
+            <div class="date">2026 · 06 · 17</div>
+            <h3>GPU 单卡压测「满载」及合理满载</h3>
+            <p>当 nvidia-smi 显示 100% 时，显卡真的在全力工作吗？一次实验笔记。</p>
+          </div>
+        </a>
+
+        <a class="article-card" href="post/wx-b300-hardware/wx-b300-hardware.html">
+          <div
+            class="thumb"
+            style="background-image: url('https://images.unsplash.com/photo-1629904853893-c2c8981a1dc5?w=900&q=80')"
+          >
+            <span class="cat-badge">GPU</span>
+          </div>
+          <div class="art-body">
+            <div class="date">2026 · 06 · 16</div>
+            <h3>实测 HGX B300 · 看懂关键硬件数据</h3>
+            <p>待机 / 满载 / 多卡互联下的功耗、NVLink 带宽与 HBM3E 吞吐对比。</p>
+          </div>
+        </a>
+
+        <a class="article-card" href="post/deepseek/deepseek.html">
+          <div
+            class="thumb"
+            style="background-image: url('https://images.unsplash.com/photo-1677442136019-21780ecad995?w=900&q=80')"
+          >
+            <span class="cat-badge">AI</span>
+          </div>
+          <div class="art-body">
+            <div class="date">2026 · 06 · 10</div>
+            <h3>DeepSeek 生态导航</h3>
+            <p>从官方入口、模型介绍到提示词、API、院校教程的一站式索引。</p>
+          </div>
+        </a>
+
+        <a class="article-card" href="post/deepseek/doc/doc.html">
+          <div
+            class="thumb"
+            style="background-image: url('https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?w=900&q=80')"
+          >
+            <span class="cat-badge">AI</span>
+          </div>
+          <div class="art-body">
+            <div class="date">2026 · 06 · 17</div>
+            <h3>AI 工具院校教程合集</h3>
+            <p>清华、浙大、华中科大等高校的公开教程，整理为便于跳转的在线索引。</p>
+          </div>
+        </a>
+
+        <a class="article-card" href="home/home.html">
+          <div
+            class="thumb"
+            style="background-image: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=900&q=80')"
+          >
+            <span class="cat-badge">全部</span>
+          </div>
+          <div class="art-body">
+            <div class="date">archive</div>
+            <h3>查看所有文章 →</h3>
+            <p>完整的文章列表，按日期或主题筛选，或按标签浏览。</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ── Footer ── -->
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2026 · personal notes · github pages · for learning records only</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub">
+            <i class="fa-brands fa-github"></i>
+          </a>
+          <a href="mailto:18821772508@163.com" aria-label="Email">
+            <i class="fa-solid fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Back to top -->
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部">
+      <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- Font Awesome (with fallback) -->
+    <link id="fa" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <script>
+      (function () {
+        try {
+          var link = document.getElementById('fa');
+          link.onerror = function () {
+            var n = document.createElement('link');
+            n.rel = 'stylesheet';
+            n.href = 'https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css';
+            document.head.appendChild(n);
+          };
+        } catch (e) {}
+      })();
+    </script>
+
+    <script>
+      (function () {
+        // Theme toggle
+        var saved = localStorage.getItem('theme') || 'dark';
+        document.documentElement.dataset.theme = saved;
+        var ti = document.querySelector('#theme-toggle i');
+        if (ti) ti.className = saved === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+        var toggle = document.getElementById('theme-toggle');
+        if (toggle) {
+          toggle.addEventListener('click', function () {
+            var cur = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = cur;
+            localStorage.setItem('theme', cur);
+            if (ti) ti.className = cur === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+          });
+        }
+
+        // Back to top
+        var back = document.getElementById('back-to-top');
+        if (back) {
+          window.addEventListener('scroll', function () {
+            back.classList.toggle('visible', window.scrollY > 500);
+          });
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        }
+
+        // IntersectionObserver reveal
+        if ('IntersectionObserver' in window) {
+          var io = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (en) {
+                if (en.isIntersecting) {
+                  en.target.classList.add('is-in');
+                  io.unobserve(en.target);
+                }
+              });
+            },
+            { threshold: 0.08, rootMargin: '0px 0px -40px 0px' },
+          );
+          document.querySelectorAll('.on-scroll').forEach(function (el) {
+            io.observe(el);
+          });
+        } else {
+          document.querySelectorAll('.on-scroll').forEach(function (el) {
+            el.classList.add('is-in');
+          });
+        }
+      })();
+    </script>
+  </body>
 </html>

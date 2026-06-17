@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>最顶级的选股提示词 · 让龙虾成为价值猎手 · EXPECTOPATRONUS</title>
+    <meta
+      name="description"
+      content="一套结构化的价值投资选股提示词框架：从基本面、财务指标、估值水平、行业地位到风险因素的五维度分析方案。"
+    />
+    <link rel="shortcut icon" href="../../home/50.png" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .article-body {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.6rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+      .api-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--bg-card);
+        border-radius: var(--r-lg);
+        overflow: hidden;
+        border: 1px solid var(--line);
+        margin-bottom: var(--sp-7);
+      }
+      .api-table th {
+        text-align: left;
+        padding: 14px 18px;
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        font-weight: 500;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        background: var(--bg-soft);
+        border-bottom: 1px solid var(--line);
+      }
+      .api-table td {
+        padding: 14px 18px;
+        border-bottom: 1px solid var(--line);
+        font-size: 0.92rem;
+        color: var(--text);
+        font-family: var(--font-serif);
+      }
+      .api-table tr:last-child td {
+        border-bottom: 0;
+      }
+      .code-block {
+        background: #0a0a15;
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        padding: var(--sp-5) var(--sp-6);
+        margin-bottom: var(--sp-7);
+        font-family: var(--font-mono);
+        font-size: 0.86rem;
+        line-height: 1.75;
+        color: var(--text-soft);
+        overflow-x: auto;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+      .code-block .kw {
+        color: var(--accent-rust);
+      }
+      .code-block .cmt {
+        color: #5c6370;
+        font-style: italic;
+      }
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: var(--sp-4) 0 var(--sp-6);
+      }
+      .tags-row a {
+        padding: 6px 12px;
+        background: var(--bg-soft);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+      .dim-card {
+        padding: var(--sp-5) var(--sp-6);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        margin-bottom: var(--sp-5);
+      }
+      .dim-card .num {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.1em;
+      }
+      .dim-card h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.3rem;
+        color: var(--text);
+        margin: 6px 0 var(--sp-3);
+      }
+      .dim-card .items {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+      }
+      .dim-card .items p {
+        margin: 0 0 var(--sp-2);
+      }
+      @media (max-width: 800px) {
+        .platform-list {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html">文章</a>
+          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="http://expectopatronus.top:5005/" target="_blank" rel="noopener">导航站</a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="切换主题"><i class="fa-solid fa-moon"></i></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">investment · prompt engineering</div>
+      <h1>最顶级的选股提示词 · 让龙虾成为<em>价值</em>猎手</h1>
+      <p>
+        一套结构化的选股提示词框架。你可以把它交给 DeepSeek、Claude、或 OpenClaw 这类能访问股票数据的 AI
+        助手，让它从五个维度帮你做初筛——而不是凭感觉和热门股。
+      </p>
+    </section>
+
+    <div class="article-body">
+      <div class="section-marker">01 · Disclaimer</div>
+      <h2>在开始之前</h2>
+      <div class="info-box">
+        <strong>本页仅做技术演示，不构成任何投资建议。</strong> AI
+        的能力边界是"基于公开数据的结构化分析"，不能替代专业投研。所有决策应自行验证、结合基本面。市场有风险，投资需谨慎。
+      </div>
+
+      <div class="section-marker">02 · The Framework</div>
+      <h2>五维度选股框架</h2>
+      <p>一个完整的选股分析，至少应当覆盖以下五个维度。你可以把它理解为"给 AI 的 checklist"——缺一个就是不完整。</p>
+
+      <div class="dim-card">
+        <div class="num">维度一</div>
+        <h3>基本面 · Business Quality</h3>
+        <div class="items">
+          <p>
+            公司主营业务是什么？过去三年的营收 / 利润 / ROE / ROIC
+            增速如何？毛利率与净利率在行业中处在什么水平？管理层是否稳定？
+          </p>
+        </div>
+      </div>
+
+      <div class="dim-card">
+        <div class="num">维度二</div>
+        <h3>财务指标 · Financial Health</h3>
+        <div class="items">
+          <p>
+            资产负债率、现金流状况、应收账款、商誉比例。需要特别关注：是否有大存大贷？利润是否转换为真金白银的经营现金流？
+          </p>
+        </div>
+      </div>
+
+      <div class="dim-card">
+        <div class="num">维度三</div>
+        <h3>估值水平 · Valuation</h3>
+        <div class="items">
+          <p>PE、PB、PS、EV/EBITDA 与历史分位、行业分位的比较。避免"好公司但贵到不值得买"。</p>
+        </div>
+      </div>
+
+      <div class="dim-card">
+        <div class="num">维度四</div>
+        <h3>行业地位 · Industry Position</h3>
+        <div class="items">
+          <p>所在行业的增速与景气度；公司市占率 / 龙头地位；进入壁垒（技术、品牌、牌照、规模）。</p>
+        </div>
+      </div>
+
+      <div class="dim-card">
+        <div class="num">维度五</div>
+        <h3>风险因素 · Risks</h3>
+        <div class="items">
+          <p>
+            政策风险（监管 /
+            行业政策）、竞争风险、原材料成本、关键客户集中度、以及最被忽视的——管理层诚信与过往财报质量。
+          </p>
+        </div>
+      </div>
+
+      <div class="section-marker">03 · The Prompt</div>
+      <h2>可以直接复制给 AI 的提示词模板</h2>
+
+      <p>
+        把下面整段 prompt 交给大模型，将 <code class="kw">{股票代码}</code> 替换为你要分析的标的，将
+        <code class="kw">{时间范围}</code> 替换为你关心的周期（如"最近三年"、"最近五年"）。
+      </p>
+
+      <pre class="code-block">你是一位严谨的价值投资分析师。
+请针对股票代码 <span class="kw">[股票代码]</span> 做一次完整的初筛分析。
+<span class="cmt">——严格遵循以下结构输出，不要发散，不要情绪化描述——</span>
+
+<span class="kw">一、基本面</span>
+1. 公司是做什么的？近三年营收 / 净利润 / ROE / ROIC 的数据与趋势
+2. 毛利率 / 净利率 / 现金流与行业对比
+3. 管理层稳定性与股东结构简述
+
+<span class="kw">二、财务指标</span>
+1. 资产负债率、现金流是否健康
+2. 是否存在"大存大贷"、商誉过高、应收账款异常
+3. 扣非净利润与归母净利润的差异分析
+
+<span class="kw">三、估值水平</span>
+1. 当前 PE / PB / PS / EV/EBITDA，以及历史分位（过去 3/5/10 年）
+2. 与行业主要公司的横向对比
+3. 你对该估值的判断：低估 / 合理 / 偏高
+
+<span class="kw">四、行业地位</span>
+1. 行业增速与景气度
+2. 公司在行业中的位置与竞争优势
+3. 关键进入壁垒
+
+<span class="kw">五、风险因素</span>
+1. 监管 / 政策风险
+2. 竞争 / 技术迭代风险
+3. 客户 / 供应商集中度风险
+4. 其他需要特别关注的风险（财报质量、关联交易等）
+
+<span class="kw">六、综合结论</span>
+1. 一句话评估：是否进入你关注的"可能值得买入"清单
+2. 需要进一步人工验证的 3 个关键点
+3. 列出下一次阅读需要优先检查的财报指标
+
+<span class="cmt">——重要约束——
+- 所有数字标注数据来源与时间
+- 不确定的数据明确标注"待验证"
+- 不要使用"强烈推荐"、"买入"等绝对化措辞
+- 用"值得进一步研究 / 观察 / 暂不关注"作为结论等级</span></pre>
+
+      <div class="section-marker">04 · Evaluation</div>
+      <h2>如何看待 AI 的分析结果？</h2>
+      <p>
+        AI
+        输出的分析结果应该被视为一份"<strong>结构化草稿</strong>"——它帮你整理了公开信息、补齐了数据格式、指出了你可能遗漏的维度。但它不应该成为你决策的替代品。
+      </p>
+
+      <div class="info-box info-box-jade">
+        <strong>我们的建议：</strong>把 AI
+        的输出当作"一份别人整理好的研报笔记"，你需要自己去逐条验证——特别是财务指标、估值分位、风险因素这三块，AI 的
+        hallucination（幻觉）往往出现在这些依赖最新数据的部分。
+      </div>
+
+      <h3 style="margin-top: var(--sp-7)">三条行动建议：</h3>
+
+      <div class="info-box">
+        <strong>1 · 交叉验证：</strong> AI 给出的每一个数字都回到交易所披露的财报、或者可靠的金融终端再核对一次。<br /><br />
+        <strong>2 · 对照同行：</strong> 不要孤立看一只股票，挑 3~5 家同行业公司放在同一张表里对比，差异才是信息。<br /><br />
+        <strong>3 · 关注"人"的因素：</strong> 管理层历史、股权质押、关联交易等维度，AI
+        往往看不到。这恰恰是价值投资里最关键的部分。
+      </div>
+
+      <div class="section-marker">05 · Resources</div>
+      <h2>可以接入的数据来源</h2>
+
+      <table class="api-table">
+        <thead>
+          <tr>
+            <th>来源</th>
+            <th>用途</th>
+            <th>适合谁</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>上交所 / 深交所披露</td>
+            <td>最原始、最权威的财报与公告</td>
+            <td>所有人</td>
+          </tr>
+          <tr>
+            <td>巨潮资讯 / 东方财富</td>
+            <td>A股数据整理、财务数据查询</td>
+            <td>A股投资者</td>
+          </tr>
+          <tr>
+            <td>a-stock-data Skill</td>
+            <td>AI 直接调用的行情 / 研报 / 龙虎榜接口</td>
+            <td>OpenClaw / 编程代理</td>
+          </tr>
+          <tr>
+            <td>理杏仁 / 果仁</td>
+            <td>高质量的结构化财务数据（付费）</td>
+            <td>深度研究者</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top: var(--sp-8)">相关阅读</h3>
+      <div class="platform-list">
+        <a href="dy-7646747643204900836.html"
+          ><i class="fa-solid fa-chart-line"></i> a-stock-data · 最强 A 股数据 Skill</a
+        >
+        <a href="wx-openclaw.html"><i class="fa-solid fa-robot"></i> 国内服务器部署 OpenClaw</a>
+        <a href="../deepseek/deepseek.html"><i class="fa-solid fa-compass"></i> DeepSeek 生态导航</a>
+      </div>
+
+      <div class="tags-row">
+        <a href="../../home/home.html?tag=价值投资">价值投资</a>
+        <a href="../../home/home.html?tag=选股">选股</a>
+        <a href="../../home/home.html?tag=提示词">提示词</a>
+        <a href="../../home/home.html?tag=OpenClaw">OpenClaw</a>
+        <a href="../../home/home.html?tag=A股">A股</a>
+        <a href="../../home/home.html?tag=框架">框架</a>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2026 · 个人笔记 · GitHub Pages · 本页内容非投资建议</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><i class="fa-brands fa-github"></i
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><i class="fa-solid fa-arrow-up"></i></button>
+
+    <link id="fa" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <script>
+      (function () {
+        try {
+          var l = document.getElementById('fa');
+          l.onerror = function () {
+            var n = document.createElement('link');
+            n.rel = 'stylesheet';
+            n.href = 'https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css';
+            document.head.appendChild(n);
+          };
+        } catch (e) {}
+      })();
+    </script>
+
+    <script>
+      (function () {
+        var s = localStorage.getItem('theme') || 'dark';
+        document.documentElement.dataset.theme = s;
+        var ti = document.querySelector('#theme-toggle i');
+        if (ti) ti.className = s === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+        var tb = document.getElementById('theme-toggle');
+        if (tb)
+          tb.addEventListener('click', function () {
+            var cur = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = cur;
+            localStorage.setItem('theme', cur);
+            if (ti) ti.className = cur === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+          });
+        var b = document.getElementById('back-to-top');
+        if (b) {
+          window.addEventListener('scroll', function () {
+            b.classList.toggle('visible', window.scrollY > 500);
+          });
+          b.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

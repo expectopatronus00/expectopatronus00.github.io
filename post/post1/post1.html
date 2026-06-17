@@ -1,94 +1,134 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Linux 清除 history 记录的方式 · EXPECTOPATRONUS</title>
-<meta name="description" content="详细介绍 Linux 系统中清除 history 记录的多种方法">
-<meta name="keywords" content="Linux,history,清除历史记录,bash,命令行">
-<meta property="og:title" content="Linux 清除 history 记录的方式">
-<meta property="og:type" content="article">
-<meta property="og:image" content="images/1.png">
-<link rel="shortcut icon" href="../../home/50.png" type="image/png">
-<link id="fa-cdn" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<script>(function(){var l=document.getElementById('fa-cdn');var chk=function(){var ok=false;try{var s=getComputedStyle(document.querySelector('.fa-solid')||document.body);ok=!s.fontFamily||s.fontFamily.indexOf('Font Awesome')!==-1;}catch(e){ok=false;}if(!ok&&window._fa_retried===undefined){window._fa_retried=true;var n=document.createElement('link');n.rel='stylesheet';n.href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css';document.head.appendChild(n);}};l.onload=chk;l.onerror=function(){chk();};})();</script>
-<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.10.0/styles/atom-one-dark.min.css">
-<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.10.0/highlight.min.js"></script>
-<script>(function(){try{const t=localStorage.getItem('theme')||'dark';if(t==='light')document.documentElement.dataset.theme='light';}catch(e){}})();</script>
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Linux 清除 history 记录的方式 · EXPECTOPATRONUS</title>
+    <meta name="description" content="详细介绍 Linux 系统中清除 history 记录的多种方法" />
+    <meta name="keywords" content="Linux,history,清除历史记录,bash,命令行" />
+    <meta property="og:title" content="Linux 清除 history 记录的方式" />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="images/1.png" />
+    <link rel="shortcut icon" href="../../home/50.png" type="image/png" />
+    <link
+      id="fa-cdn"
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <script>
+      (function () {
+        var l = document.getElementById('fa-cdn');
+        var chk = function () {
+          var ok = false;
+          try {
+            var s = getComputedStyle(document.querySelector('.fa-solid') || document.body);
+            ok = !s.fontFamily || s.fontFamily.indexOf('Font Awesome') !== -1;
+          } catch (e) {
+            ok = false;
+          }
+          if (!ok && window._fa_retried === undefined) {
+            window._fa_retried = true;
+            var n = document.createElement('link');
+            n.rel = 'stylesheet';
+            n.href = 'https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css';
+            document.head.appendChild(n);
+          }
+        };
+        l.onload = chk;
+        l.onerror = function () {
+          chk();
+        };
+      })();
+    </script>
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.10.0/styles/atom-one-dark.min.css" />
+    <script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.10.0/highlight.min.js"></script>
+    <script>
+      (function () {
+        try {
+          const t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="progress" id="progress"></div>
+    <canvas id="stars-bg"></canvas>
+    <div class="backdrop"></div>
 
-<div class="progress" id="progress"></div>
-<canvas id="stars-bg"></canvas>
-<div class="backdrop"></div>
+    <nav class="topbar">
+      <div class="inner">
+        <a href="../../index.html" class="brand">
+          <div class="logo"></div>
+          <span>EXPECTOPATRONUS · BLOG</span>
+        </a>
+        <div class="nav">
+          <a href="../../index.html"><i class="fa-solid fa-house"></i> 首页</a>
+          <a href="../../home/home.html" class="active"><i class="fa-solid fa-newspaper"></i> 文章</a>
+          <a href="../deepseek/deepseek.html"><i class="fa-solid fa-robot"></i> DeepSeek</a>
+          <a href="http://expectopatronus.top:5005/" target="_blank"><i class="fa-solid fa-compass"></i> 导航</a>
+        </div>
+        <button id="theme-toggle" aria-label="主题切换"><i class="fa-solid fa-moon"></i></button>
+      </div>
+    </nav>
 
-<nav class="topbar">
-  <div class="inner">
-    <a href="../../index.html" class="brand">
-      <div class="logo"></div>
-      <span>EXPECTOPATRONUS · BLOG</span>
-    </a>
-    <div class="nav">
-      <a href="../../index.html"><i class="fa-solid fa-house"></i> 首页</a>
-      <a href="../../home/home.html" class="active"><i class="fa-solid fa-newspaper"></i> 文章</a>
-      <a href="../deepseek/deepseek.html"><i class="fa-solid fa-robot"></i> DeepSeek</a>
-      <a href="http://expectopatronus.top:5005/" target="_blank"><i class="fa-solid fa-compass"></i> 导航</a>
+    <div class="breadcrumb">
+      <a href="../../index.html"><i class="fa-solid fa-house"></i></a>
+      <span class="sep">/</span>
+      <a href="../../home/home.html">文章列表</a>
+      <span class="sep">/</span>
+      <span>Linux 清除 history 记录</span>
     </div>
-    <button id="theme-toggle" aria-label="主题切换"><i class="fa-solid fa-moon"></i></button>
-  </div>
-</nav>
 
-<div class="breadcrumb">
-  <a href="../../index.html"><i class="fa-solid fa-house"></i></a>
-  <span class="sep">/</span>
-  <a href="../../home/home.html">文章列表</a>
-  <span class="sep">/</span>
-  <span>Linux 清除 history 记录</span>
-</div>
+    <main class="layout">
+      <article class="article-wrap">
+        <div class="article-body">
+          <header class="article-header">
+            <h1>Linux 清除 history 记录的方式</h1>
+            <div class="article-meta">
+              <span class="cat"><i class="fa-solid fa-folder"></i> Linux</span>
+              <span><i class="fa-regular fa-calendar"></i> 2024-02-23</span>
+              <span><i class="fa-regular fa-clock"></i> 3 分钟</span>
+              <span><i class="fa-regular fa-eye"></i> <span id="view-count">0</span></span>
+            </div>
+            <div class="article-rating">
+              <span>文章评分</span>
+              <div class="stars" id="stars">
+                <i class="fa-regular fa-star" data-v="1"></i>
+                <i class="fa-regular fa-star" data-v="2"></i>
+                <i class="fa-regular fa-star" data-v="3"></i>
+                <i class="fa-regular fa-star" data-v="4"></i>
+                <i class="fa-regular fa-star" data-v="5"></i>
+              </div>
+              <span id="rating-count">(0 人评分)</span>
+            </div>
+          </header>
 
-<main class="layout">
-  <article class="article-wrap">
-    <div class="article-body">
-      <header class="article-header">
-        <h1>Linux 清除 history 记录的方式</h1>
-        <div class="article-meta">
-          <span class="cat"><i class="fa-solid fa-folder"></i> Linux</span>
-          <span><i class="fa-regular fa-calendar"></i> 2024-02-23</span>
-          <span><i class="fa-regular fa-clock"></i> 3 分钟</span>
-          <span><i class="fa-regular fa-eye"></i> <span id="view-count">0</span></span>
-        </div>
-        <div class="article-rating">
-          <span>文章评分</span>
-          <div class="stars" id="stars">
-            <i class="fa-regular fa-star" data-v="1"></i>
-            <i class="fa-regular fa-star" data-v="2"></i>
-            <i class="fa-regular fa-star" data-v="3"></i>
-            <i class="fa-regular fa-star" data-v="4"></i>
-            <i class="fa-regular fa-star" data-v="5"></i>
-          </div>
-          <span id="rating-count">(0 人评分)</span>
-        </div>
-      </header>
-
-      <h2 id="sec-1">1. 清除当前用户会话的历史记录</h2>
-      <p>如果你只想清除当前终端会话中产生的历史命令，可以使用下面两条命令组合：</p>
-<pre><code class="language-bash">history -c
+          <h2 id="sec-1">1. 清除当前用户会话的历史记录</h2>
+          <p>如果你只想清除当前终端会话中产生的历史命令，可以使用下面两条命令组合：</p>
+          <pre><code class="language-bash">history -c
 export HISTSIZE=0</code></pre>
-      <p><code>history -c</code> 会清空当前 shell 的历史缓存；<code>export HISTSIZE=0</code> 则阻止新的历史写入（临时）。</p>
+          <p>
+            <code>history -c</code> 会清空当前 shell 的历史缓存；<code>export HISTSIZE=0</code>
+            则阻止新的历史写入（临时）。
+          </p>
 
-      <h2 id="sec-2">2. 删除指定行数的历史命令记录</h2>
-      <p><code>history -d &lt;行号&gt;</code> 可以删除某一行。如果你想"只保留最上面 N 条"，可以用重定向覆盖：</p>
-<pre><code class="language-bash">history -d &lt;行号&gt;
+          <h2 id="sec-2">2. 删除指定行数的历史命令记录</h2>
+          <p><code>history -d &lt;行号&gt;</code> 可以删除某一行。如果你想"只保留最上面 N 条"，可以用重定向覆盖：</p>
+          <pre><code class="language-bash">history -d &lt;行号&gt;
 # 例如：只保存最上面 3 条历史记录，其余全部删除
 history | head -n 3 &gt; ~/.bash_history  # 保存最上面 3 条记录
 history -c    # 清除记录
 history -r    # 重新加载 history 记录</code></pre>
-      <img src="images/1.png" alt="history 操作示意图" loading="lazy">
+          <img src="images/1.png" alt="history 操作示意图" loading="lazy" />
 
-      <h2 id="sec-3">3. Bash 历史记录文件和 Bash 会话历史</h2>
-      <p>Bash 会同时在两个地方保存历史：内存中的会话历史（<code>history</code> 命令看到的）和磁盘上的 <code>~/.bash_history</code> 文件。两者需要同时处理：</p>
-<pre><code class="language-bash">rm ~/.bash_history    # 删除 bash 历史记录文件
+          <h2 id="sec-3">3. Bash 历史记录文件和 Bash 会话历史</h2>
+          <p>
+            Bash 会同时在两个地方保存历史：内存中的会话历史（<code>history</code> 命令看到的）和磁盘上的
+            <code>~/.bash_history</code> 文件。两者需要同时处理：
+          </p>
+          <pre><code class="language-bash">rm ~/.bash_history    # 删除 bash 历史记录文件
 history -c            # 删除当前会话中历史记录
 
 # 查看完整 bash_history 内容示例：
@@ -104,102 +144,113 @@ docker ps
 docker ps -a
 free -m
 ls</code></pre>
-      <img src="images/2.png" alt="bash_history 文件截图" loading="lazy">
+          <img src="images/2.png" alt="bash_history 文件截图" loading="lazy" />
 
-      <h2 id="sec-4">4. 手动删除历史记录文件</h2>
-      <p>如果想彻底清除所有历史，直接删文件：</p>
-<pre><code class="language-bash">rm /home/用户名/.bash_history    # 删除其他用户的历史记录
+          <h2 id="sec-4">4. 手动删除历史记录文件</h2>
+          <p>如果想彻底清除所有历史，直接删文件：</p>
+          <pre><code class="language-bash">rm /home/用户名/.bash_history    # 删除其他用户的历史记录
 rm ~/.bash_history                 # 删除当前用户的历史记录
 history -c                         # 同时清空内存
 history -r                         # 可选：立即生效（重新加载后会变成空）</code></pre>
-      <p>如果你用的不是 bash（而是 zsh / fish 等），对应的历史文件分别是 <code>~/.zsh_history</code>、<code>~/.local/share/fish/fish_history</code>。</p>
+          <p>
+            如果你用的不是 bash（而是 zsh / fish 等），对应的历史文件分别是
+            <code>~/.zsh_history</code>、<code>~/.local/share/fish/fish_history</code>。
+          </p>
 
-      <div class="share-tags">
-        <span class="label">标签</span>
-        <a href="../../home/home.html?tag=Linux">Linux</a>
-        <a href="../../home/home.html?tag=命令行">命令行</a>
-        <a href="../../home/home.html?tag=安全">安全</a>
-        <a href="../../home/home.html?tag=系统管理">系统管理</a>
-      </div>
+          <div class="share-tags">
+            <span class="label">标签</span>
+            <a href="../../home/home.html?tag=Linux">Linux</a>
+            <a href="../../home/home.html?tag=命令行">命令行</a>
+            <a href="../../home/home.html?tag=安全">安全</a>
+            <a href="../../home/home.html?tag=系统管理">系统管理</a>
+          </div>
 
-      <div class="share-btns">
-        <span class="label">分享</span>
-        <a href="javascript:void(0)" id="share-weibo" title="分享到微博"><i class="fa-brands fa-weibo share-weibo"></i></a>
-        <a href="javascript:void(0)" id="share-wechat" title="微信"><i class="fa-brands fa-weixin share-weixin"></i></a>
-        <a href="javascript:void(0)" id="share-link" title="复制链接"><i class="fa-solid fa-link share-link"></i></a>
-      </div>
+          <div class="share-btns">
+            <span class="label">分享</span>
+            <a href="javascript:void(0)" id="share-weibo" title="分享到微博"
+              ><i class="fa-brands fa-weibo share-weibo"></i
+            ></a>
+            <a href="javascript:void(0)" id="share-wechat" title="微信"
+              ><i class="fa-brands fa-weixin share-weixin"></i
+            ></a>
+            <a href="javascript:void(0)" id="share-link" title="复制链接"
+              ><i class="fa-solid fa-link share-link"></i
+            ></a>
+          </div>
 
-      <section class="related">
-        <h3>相关文章</h3>
-        <div class="related-grid">
-          <a class="related-item" href="../../home/home.html">
-            <img src="images/1.png" alt="" loading="lazy">
-            <div class="info">
-              <h4>Linux 常用命令大全</h4>
-              <p>文件操作、系统管理、网络配置高频命令汇总。</p>
+          <section class="related">
+            <h3>相关文章</h3>
+            <div class="related-grid">
+              <a class="related-item" href="../../home/home.html">
+                <img src="images/1.png" alt="" loading="lazy" />
+                <div class="info">
+                  <h4>Linux 常用命令大全</h4>
+                  <p>文件操作、系统管理、网络配置高频命令汇总。</p>
+                </div>
+              </a>
+              <a class="related-item" href="../../home/home.html">
+                <img src="images/2.png" alt="" loading="lazy" />
+                <div class="info">
+                  <h4>如何保护 Linux 服务器安全</h4>
+                  <p>防火墙、账户管理、日志监控安全加固实践。</p>
+                </div>
+              </a>
+              <a class="related-item" href="../../home/home.html">
+                <img src="images/1.png" alt="" loading="lazy" />
+                <div class="info">
+                  <h4>Bash 脚本编程入门</h4>
+                  <p>从零掌握自动化运维必备的 Bash 脚本能力。</p>
+                </div>
+              </a>
             </div>
-          </a>
-          <a class="related-item" href="../../home/home.html">
-            <img src="images/2.png" alt="" loading="lazy">
-            <div class="info">
-              <h4>如何保护 Linux 服务器安全</h4>
-              <p>防火墙、账户管理、日志监控安全加固实践。</p>
-            </div>
-          </a>
-          <a class="related-item" href="../../home/home.html">
-            <img src="images/1.png" alt="" loading="lazy">
-            <div class="info">
-              <h4>Bash 脚本编程入门</h4>
-              <p>从零掌握自动化运维必备的 Bash 脚本能力。</p>
-            </div>
-          </a>
+          </section>
+
+          <section class="comments">
+            <h3>评论</h3>
+            <form class="comment-form" id="comment-form">
+              <div class="field-row">
+                <div class="field">
+                  <label>昵称</label>
+                  <input type="text" id="comment-name" placeholder="你的昵称" autocomplete="off" />
+                </div>
+                <div class="field">
+                  <label>邮箱 (不公开)</label>
+                  <input type="email" id="comment-email" placeholder="your@email.com" autocomplete="off" />
+                </div>
+              </div>
+              <div class="field" style="margin-top: 10px">
+                <label>评论内容</label>
+                <textarea id="comment-content" placeholder="欢迎留言友善讨论…"></textarea>
+              </div>
+              <button type="submit" class="submit"><i class="fa-solid fa-paper-plane"></i> 发表评论</button>
+              <div class="no-comments" id="no-comments">暂无评论，来做第一个吧 ✨</div>
+            </form>
+          </section>
         </div>
-      </section>
+      </article>
 
-      <section class="comments">
-        <h3>评论</h3>
-        <form class="comment-form" id="comment-form">
-          <div class="field-row">
-            <div class="field">
-              <label>昵称</label>
-              <input type="text" id="comment-name" placeholder="你的昵称" autocomplete="off">
-            </div>
-            <div class="field">
-              <label>邮箱 (不公开)</label>
-              <input type="email" id="comment-email" placeholder="your@email.com" autocomplete="off">
-            </div>
-          </div>
-          <div class="field" style="margin-top:10px">
-            <label>评论内容</label>
-            <textarea id="comment-content" placeholder="欢迎留言友善讨论…"></textarea>
-          </div>
-          <button type="submit" class="submit"><i class="fa-solid fa-paper-plane"></i> 发表评论</button>
-          <div class="no-comments" id="no-comments">暂无评论，来做第一个吧 ✨</div>
-        </form>
-      </section>
-    </div>
-  </article>
+      <aside class="side">
+        <div class="toc-panel" id="toc-panel">
+          <h3><i class="fa-solid fa-list-ul"></i> 目录</h3>
+          <ul id="toc-list"></ul>
+        </div>
+      </aside>
+    </main>
 
-  <aside class="side">
-    <div class="toc-panel" id="toc-panel">
-      <h3><i class="fa-solid fa-list-ul"></i> 目录</h3>
-      <ul id="toc-list"></ul>
-    </div>
-  </aside>
-</main>
+    <footer class="footer">
+      <div>© 2025 EXPECTOPATRONUS · 本站内容纯学习用途，非商用</div>
+      <div class="social">
+        <a href="https://github.com/expectopatronus00" target="_blank" title="GitHub"
+          ><i class="fa-brands fa-github"></i
+        ></a>
+        <a href="#" id="wechat-footer" title="微信"><i class="fa-brands fa-weixin"></i></a>
+        <a href="tencent://message/?uin=1018938913" title="QQ"><i class="fa-brands fa-qq"></i></a>
+        <a href="https://weibo.com/u/6888368987" target="_blank" title="微博"><i class="fa-brands fa-weibo"></i></a>
+      </div>
+    </footer>
 
-<footer class="footer">
-  <div>© 2025 EXPECTOPATRONUS · 本站内容纯学习用途，非商用</div>
-  <div class="social">
-    <a href="https://github.com/expectopatronus00" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
-    <a href="#" id="wechat-footer" title="微信"><i class="fa-brands fa-weixin"></i></a>
-    <a href="tencent://message/?uin=1018938913" title="QQ"><i class="fa-brands fa-qq"></i></a>
-    <a href="https://weibo.com/u/6888368987" target="_blank" title="微博"><i class="fa-brands fa-weibo"></i></a>
-  </div>
-</footer>
+    <button id="back" aria-label="返回顶部"><i class="fa-solid fa-arrow-up"></i></button>
 
-<button id="back" aria-label="返回顶部"><i class="fa-solid fa-arrow-up"></i></button>
-
-<script src="script.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>

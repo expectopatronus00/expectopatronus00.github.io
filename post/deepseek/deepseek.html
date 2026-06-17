@@ -1,235 +1,432 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN" data-theme="dark">
-<script>(function(){try{const t=localStorage.getItem('theme')||'dark';if(t==='light')document.documentElement.dataset.theme='light';}catch(e){}})();</script>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>DeepSeek 智能工具导航 · EXPECTOPATRONUS</title>
-<meta name="description" content="DeepSeek 生态精选工具、API、文档、社区导航">
-<link rel="shortcut icon" href="../../home/50.png">
-<link id="fa-cdn" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<script>(function(){var l=document.getElementById('fa-cdn');var chk=function(){var ok=false;try{var s=getComputedStyle(document.querySelector('.fa-solid')||document.body);ok=!s.fontFamily||s.fontFamily.indexOf('Font Awesome')!==-1;}catch(e){ok=false;}if(!ok&&window._fa_retried===undefined){window._fa_retried=true;var n=document.createElement('link');n.rel='stylesheet';n.href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css';document.head.appendChild(n);}};l.onload=chk;l.onerror=function(){chk();};})();</script>
-<link rel="stylesheet" href="../../home/common.css">
-<style>
-.ds-hero{padding:38px 24px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,color-mix(in oklab,var(--bg-2) 92%,transparent),color-mix(in oklab,var(--bg-0) 95%,transparent))}
-.ds-hero .inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
-.ds-hero h1{font-size:clamp(1.7rem,4vw,2.6rem);font-weight:800;background:var(--grad-1);-webkit-background-clip:text;background-clip:text;color:transparent}
-.ds-hero .sub{color:var(--ink-soft);font-size:.92rem;margin-top:8px}
-.ds-hero .badges{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
-.ds-hero .badges b{padding:3px 12px;border-radius:999px;font-size:.72rem;background:var(--grad-soft);color:var(--cyan);border:1px solid rgba(0,229,255,.35)}
-.ds-hero .quick-stats{display:flex;gap:10px}
-.ds-hero .quick-stats > div{padding:12px 16px;border-radius:10px;background:var(--bg-0);border:1px solid var(--line);text-align:center}
-.ds-hero .quick-stats b{display:block;font-size:1.3rem;font-weight:800;background:var(--grad-1);-webkit-background-clip:text;background-clip:text;color:transparent}
-.ds-hero .quick-stats span{font-size:.68rem;color:var(--mute)}
-.ds-search{max-width:1200px;margin:18px auto;padding:0 24px}
-.ds-search input{width:100%;max-width:560px;padding:12px 18px;border-radius:999px;background:var(--bg-1);border:1px solid var(--line);color:var(--ink);outline:none;font-size:.9rem}
-.ds-search input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.15)}
-.ds-main{max-width:1200px;margin:0 auto;padding:24px 24px 60px;display:flex;flex-direction:column;gap:22px}
-.ds-cat h2{font-size:1.1rem;font-weight:800;margin:22px 0 12px;color:var(--ink);display:flex;align-items:center;gap:10px}
-.ds-cat h2 i{color:var(--cyan);width:22px;text-align:center}
-.ds-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
-.ds-link{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:12px;background:var(--bg-2);border:1px solid var(--line);color:var(--ink);text-decoration:none;transition:all .25s}
-.ds-link:hover{border-color:var(--cyan);transform:translateY(-2px);box-shadow:0 10px 30px -15px rgba(0,229,255,.3);color:var(--ink)}
-.ds-link .ds-ico{width:34px;height:34px;border-radius:8px;background:var(--grad-soft);display:flex;align-items:center;justify-content:center;color:var(--cyan);font-size:1rem;flex-shrink:0}
-.ds-link .ds-t b{display:block;font-size:.88rem;font-weight:700;color:var(--ink);line-height:1.3}
-.ds-link .ds-t span{font-size:.72rem;color:var(--mute)}
-.ds-link .ds-ext{margin-left:auto;color:var(--mute);font-size:.78rem}
-.ds-bookmarks{background:var(--bg-2);border:1px solid var(--line);border-radius:16px;padding:18px 22px}
-.ds-bookmarks h3{font-size:.95rem;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:10px}
-.ds-bookmarks h3 i{color:var(--cyan)}
-.ds-bookmarks .bm-list{display:flex;flex-wrap:wrap;gap:10px}
-.ds-bookmarks a{padding:7px 14px;border-radius:999px;font-size:.78rem;background:var(--bg-1);border:1px solid var(--line);color:var(--ink-soft);text-decoration:none;transition:all .25s}
-.ds-bookmarks a:hover{color:var(--cyan);border-color:var(--cyan)}
-@media(max-width:700px){.ds-hero .inner{flex-direction:column;align-items:flex-start}}
-</style>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>DeepSeek 生态导航 · EXPECTOPATRONUS</title>
+    <meta
+      name="description"
+      content="DeepSeek 大模型生态的一站式导航：官方入口、模型介绍、API 接入、院校教程、提示词资源。"
+    />
+    <link rel="shortcut icon" href="../../home/50.png" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-7);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+        line-height: 1.05;
+        letter-spacing: -0.025em;
+        color: var(--text);
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1.05rem;
+        color: var(--text-soft);
+        max-width: 620px;
+        line-height: 1.7;
+      }
 
-<body>
-<canvas id="stars-bg"></canvas>
-<div class="grid-bg"></div>
-<div class="progress" id="progress"></div>
-<nav class="topbar">
-  <div class="inner">
-    <a href="../../index.html" class="brand">
-      <div class="logo"></div>
-      <span>EXPECTOPATRONUS · BLOG</span>
-    </a>
-    <div class="nav">
-      <a href="../../index.html"><i class="fa-solid fa-house"></i> 首页</a>
-      <a href="../../home/home.html"><i class="fa-solid fa-newspaper"></i> 文章</a>
-      <a href="../deepseek.html" class="active"><i class="fa-solid fa-robot"></i> DeepSeek</a>
-      <a href="http://expectopatronus.top:5005/" target="_blank"><i class="fa-solid fa-compass"></i> 导航</a>
-    </div>
-    <button id="theme-toggle" aria-label="主题切换"><i class="fa-solid fa-moon"></i></button>
-  </div>
-</nav>
+      /* Main grid */
+      .nav-grid {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: var(--sp-6);
+      }
+      .block {
+        grid-column: span 6;
+      }
+      .block.wide {
+        grid-column: span 12;
+      }
 
-<section class="ds-hero">
-  <div class="inner">
-    <div>
-      <h1>DeepSeek 智能工具导航</h1>
-      <div class="sub">DeepSeek 生态精选工具 · API · 文档 · 社区一站式聚合</div>
-      <div class="badges">
-        <b>⚡ 极致推理</b>
-        <b>🤖 V3 / R1 / GPT-OSS</b>
-        <b>🔗 开源 API</b>
+      .block h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.4rem;
+        letter-spacing: -0.01em;
+        margin: 0 0 var(--sp-2);
+        color: var(--text);
+      }
+      .block .block-sub {
+        font-size: 0.88rem;
+        color: var(--text-dim);
+        font-family: var(--font-mono);
+        margin-bottom: var(--sp-5);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        border-bottom: 1px dashed var(--line);
+        padding-bottom: var(--sp-3);
+      }
+
+      /* Link cards */
+      .link-card {
+        display: block;
+        padding: var(--sp-5) var(--sp-6);
+        margin-bottom: var(--sp-3);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+        transition: all var(--dur-fast);
+        text-decoration: none;
+        color: inherit;
+        position: relative;
+      }
+      .link-card:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+        box-shadow: 0 10px 30px -10px rgba(201, 119, 47, 0.25);
+      }
+      .link-card .lc-title {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.12rem;
+        color: var(--text);
+        margin-bottom: 4px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .link-card .lc-title .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--accent-rust);
+      }
+      .link-card .lc-desc {
+        font-size: 0.88rem;
+        color: var(--text-soft);
+        line-height: 1.6;
+        font-family: var(--font-serif);
+      }
+      .link-card .lc-meta {
+        margin-top: var(--sp-3);
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        color: var(--text-dim);
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+      .link-card .lc-meta .goto {
+        color: var(--accent-rust);
+      }
+
+      /* Resource block (side-by-side) */
+      .resource-row {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--sp-3);
+      }
+      .resource-card {
+        display: block;
+        padding: var(--sp-5);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+        text-decoration: none;
+        color: inherit;
+        transition: all var(--dur-fast);
+      }
+      .resource-card:hover {
+        border-color: var(--accent-jade);
+        transform: translateY(-2px);
+      }
+      .resource-card .rc-title {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.1rem;
+        color: var(--text);
+        margin-bottom: 6px;
+      }
+      .resource-card .rc-meta {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-jade);
+        margin-bottom: var(--sp-3);
+      }
+      .resource-card .rc-desc {
+        font-size: 0.85rem;
+        color: var(--text-soft);
+        line-height: 1.6;
+        font-family: var(--font-serif);
+      }
+
+      @media (max-width: 800px) {
+        .nav-grid {
+          grid-template-columns: repeat(6, 1fr);
+        }
+        .block {
+          grid-column: span 6;
+        }
+        .resource-row {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"> <span class="logo">E</span><span>expectopatronus</span> </a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html">文章</a>
+          <a href="deepseek.html" class="is-active">DeepSeek</a>
+          <a href="http://expectopatronus.top:5005/" target="_blank" rel="noopener">导航站</a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="切换主题"><i class="fa-solid fa-moon"></i></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">deepseek · navigation</div>
+      <h1>DeepSeek <em>生态</em>导航</h1>
+      <p>
+        从官方入口、模型介绍、API 接入，到院校公开教程与提示词资源——将自己用过且值得收藏的链接整理成一页。欢迎跳转。
+      </p>
+    </section>
+
+    <div class="nav-grid">
+      <!-- 官方入口 -->
+      <div class="block">
+        <h2>官方入口</h2>
+        <div class="block-sub">Official</div>
+        <a class="link-card" href="https://www.deepseek.com/" target="_blank" rel="noopener">
+          <div class="lc-title"><span class="dot"></span>官网 · deepseek.com</div>
+          <div class="lc-desc">DeepSeek 公司官网，提供产品介绍与最新动态。</div>
+          <div class="lc-meta"><span>官网</span><span>·</span><span class="goto">前往 →</span></div>
+        </a>
+        <a class="link-card" href="https://chat.deepseek.com/" target="_blank" rel="noopener">
+          <div class="lc-title"><span class="dot"></span>DeepSeek Chat · 聊天入口</div>
+          <div class="lc-desc">可直接对话使用 R1 / V3 等最新模型。</div>
+          <div class="lc-meta"><span>chat</span><span>·</span><span class="goto">前往 →</span></div>
+        </a>
+        <a class="link-card" href="https://platform.deepseek.com/" target="_blank" rel="noopener">
+          <div class="lc-title"><span class="dot"></span>开放平台 · 控制台</div>
+          <div class="lc-desc">申请 API Key、查看用量与计费。</div>
+          <div class="lc-meta"><span>platform</span><span>·</span><span class="goto">前往 →</span></div>
+        </a>
+      </div>
+
+      <!-- API / 文档 -->
+      <div class="block">
+        <h2>API · 开发文档</h2>
+        <div class="block-sub">Developer</div>
+        <a class="link-card" href="api/api.html">
+          <div class="lc-title"><span class="dot"></span>本博客：API 速查</div>
+          <div class="lc-desc">模型列表、接口协议、调用示例与常见问题。</div>
+          <div class="lc-meta"><span>站内</span><span>·</span><span class="goto">阅读 →</span></div>
+        </a>
+        <a class="link-card" href="https://api-docs.deepseek.com/" target="_blank" rel="noopener">
+          <div class="lc-title"><span class="dot"></span>官方 API 文档</div>
+          <div class="lc-desc">Chat Completion、Reasoner、Embeddings、Vision 等完整接口。</div>
+          <div class="lc-meta"><span>api-docs</span><span>·</span><span class="goto">前往 →</span></div>
+        </a>
+        <a class="link-card" href="https://platform.deepseek.com/docs" target="_blank" rel="noopener">
+          <div class="lc-title"><span class="dot"></span>SDK 与 Playground</div>
+          <div class="lc-desc">支持 OpenAI 兼容模式，可直接用 openai SDK 切换。</div>
+          <div class="lc-meta"><span>docs</span><span>·</span><span class="goto">前往 →</span></div>
+        </a>
+      </div>
+
+      <!-- 模型 -->
+      <div class="block">
+        <h2>模型速览</h2>
+        <div class="block-sub">Models</div>
+        <a class="link-card" href="https://www.deepseek.com/newsroom" target="_blank" rel="noopener">
+          <div class="lc-title"><span class="dot"></span>DeepSeek-R1 · 推理模型</div>
+          <div class="lc-desc">对标 OpenAI o1 的思维链模型，适合数学、编程与复杂推理。</div>
+          <div class="lc-meta"><span>reasoning</span><span>·</span><span class="goto">查看公告 →</span></div>
+        </a>
+        <a class="link-card" href="https://github.com/deepseek-ai" target="_blank" rel="noopener">
+          <div class="lc-title"><span class="dot"></span>开源模型 · GitHub</div>
+          <div class="lc-desc">DeepSeek-V3、DeepSeek-R1-Zero、MoE 等开源权重与代码。</div>
+          <div class="lc-meta"><span>github.com/deepseek-ai</span><span>·</span><span class="goto">前往 →</span></div>
+        </a>
+        <a class="link-card" href="https://www.modelscope.cn/organization/deepseek-ai" target="_blank" rel="noopener">
+          <div class="lc-title"><span class="dot"></span>ModelScope · 国内镜像</div>
+          <div class="lc-desc">在国内快速下载 DeepSeek 系列模型权重。</div>
+          <div class="lc-meta"><span>modelscope</span><span>·</span><span class="goto">前往 →</span></div>
+        </a>
+      </div>
+
+      <!-- 院校教程 -->
+      <div class="block">
+        <h2>院校教程</h2>
+        <div class="block-sub">Academic</div>
+        <a class="link-card" href="doc/doc.html">
+          <div class="lc-title"><span class="dot"></span>本博客：AI 工具院校教程合集</div>
+          <div class="lc-desc">清华、浙大、华中科大、杭电、西南交大等高校公开在线教程与资料索引。</div>
+          <div class="lc-meta"><span>站内</span><span>·</span><span class="goto">阅读 →</span></div>
+        </a>
+        <a class="link-card" href="https://www.sigs.tsinghua.edu.cn/" target="_blank" rel="noopener">
+          <div class="lc-title"><span class="dot"></span>清华 SIGH · DeepSeek 合作课程</div>
+          <div class="lc-desc">清华大学深圳国际研究生院发布的面向 AI 的工程教育资料。</div>
+          <div class="lc-meta"><span>清华</span><span>·</span><span class="goto">前往 →</span></div>
+        </a>
+        <a class="link-card" href="https://www.zju.edu.cn/" target="_blank" rel="noopener">
+          <div class="lc-title"><span class="dot"></span>浙江大学 · AI 实践课程</div>
+          <div class="lc-desc">计算机学院与人工智能研究院在大模型课程中的公开资料。</div>
+          <div class="lc-meta"><span>浙大</span><span>·</span><span class="goto">前往 →</span></div>
+        </a>
+      </div>
+
+      <!-- Claude / Anthropic -->
+      <div class="block">
+        <h2>Claude · Anthropic 相关</h2>
+        <div class="block-sub">Alternative</div>
+        <a class="link-card" href="https://www.anthropic.com/" target="_blank" rel="noopener">
+          <div class="lc-title"><span class="dot"></span>Anthropic 官网</div>
+          <div class="lc-desc">Claude 系列模型厂商主页。</div>
+          <div class="lc-meta"><span>anthropic</span><span>·</span><span class="goto">前往 →</span></div>
+        </a>
+        <a class="link-card" href="https://docs.anthropic.com/" target="_blank" rel="noopener">
+          <div class="lc-title"><span class="dot"></span>Claude Docs · 开发文档</div>
+          <div class="lc-desc">Messages API、prompt caching、tool use 等完整内容。</div>
+          <div class="lc-meta"><span>docs</span><span>·</span><span class="goto">前往 →</span></div>
+        </a>
+        <a class="link-card" href="https://x.com/AnthropicAI" target="_blank" rel="noopener">
+          <div class="lc-title"><span class="dot"></span>Anthropic X / Twitter</div>
+          <div class="lc-desc">新模型与政策动态的第一时间来源。</div>
+          <div class="lc-meta"><span>X</span><span>·</span><span class="goto">前往 →</span></div>
+        </a>
+      </div>
+
+      <!-- AI 编程工具 -->
+      <div class="block">
+        <h2>AI 编程工具</h2>
+        <div class="block-sub">Tools</div>
+        <a class="link-card" href="https://www.cursor.com/" target="_blank" rel="noopener">
+          <div class="lc-title"><span class="dot"></span>Cursor · AI 原生 IDE</div>
+          <div class="lc-desc">基于 VSCode 的 AI 编辑器，支持 DeepSeek、Anthropic 等模型。</div>
+          <div class="lc-meta"><span>cursor</span><span>·</span><span class="goto">前往 →</span></div>
+        </a>
+        <a class="link-card" href="https://www.wingman-ai.com/" target="_blank" rel="noopener">
+          <div class="lc-title"><span class="dot"></span>Wingman · 通义灵码</div>
+          <div class="lc-desc">阿里通义千问推出的 IDE 插件，代码补全 / 解释 / 生成。</div>
+          <div class="lc-meta"><span>aliyun</span><span>·</span><span class="goto">前往 →</span></div>
+        </a>
+        <a class="link-card" href="https://codegraph.ai/" target="_blank" rel="noopener">
+          <div class="lc-title"><span class="dot"></span>CodeGraph · 本地代码索引</div>
+          <div class="lc-desc">为 AI 编程代理提供架构关系、依赖图谱与变更影响分析。</div>
+          <div class="lc-meta"><span>codegraph</span><span>·</span><span class="goto">前往 →</span></div>
+        </a>
+      </div>
+
+      <!-- 提示词工程 / 教程 -->
+      <div class="block wide">
+        <h2>提示词工程与 AI 教学资源</h2>
+        <div class="block-sub">Prompt / Pedagogy</div>
+        <div class="resource-row">
+          <a
+            class="resource-card"
+            href="https://docs.anthropic.com/en/docs/learn/prompt-engineering"
+            target="_blank"
+            rel="noopener"
+          >
+            <div class="rc-meta">Anthropic · Prompt Engineering</div>
+            <div class="rc-title">官方提示词工程指南</div>
+            <div class="rc-desc">提供结构化、思维链、少样本、工具调用等一系列实用模板。</div>
+          </a>
+          <a class="resource-card" href="https://www.promptingguide.ai/zh" target="_blank" rel="noopener">
+            <div class="rc-meta">promptingguide.ai</div>
+            <div class="rc-title">提示词工程中文教程</div>
+            <div class="rc-desc">从基础 prompt 到 RAG、Agent，系统化学习提示词工程。</div>
+          </a>
+          <a class="resource-card" href="https://learn.deeplearning.ai/" target="_blank" rel="noopener">
+            <div class="rc-meta">DeepLearning.AI · Andrew Ng</div>
+            <div class="rc-title">吴恩达合作课程</div>
+            <div class="rc-desc">面向工程师的系列短课：Agent、RAG、微调、MLOps。</div>
+          </a>
+          <a class="resource-card" href="https://course.fast.ai/" target="_blank" rel="noopener">
+            <div class="rc-meta">fast.ai</div>
+            <div class="rc-title">Practical Deep Learning</div>
+            <div class="rc-desc">面向程序员的实战派深度学习课程。</div>
+          </a>
+        </div>
       </div>
     </div>
-    <div class="quick-stats">
-      <div><b>7</b><span>精选链接</span></div>
-      <div><b>3</b><span>分类</span></div>
-      <div><b>∞</b><span>创造力</span></div>
-    </div>
-  </div>
-</section>
 
-<section class="ds-search">
-  <input id="ds-search-input" placeholder="🔎 搜索 DeepSeek 工具/API/文档..." />
-</section>
-
-<main class="ds-main">
-
-  <section class="ds-cat">
-    <h2><i class="fa-solid fa-hammer"></i> 开发工具</h2>
-    <div class="ds-grid">
-      <a class="ds-link" href="https://coder.deepseek.com" target="_blank">
-        <div class="ds-ico"><i class="fa-brands fa-github"></i></div>
-        <div class="ds-t"><b>Deepseek Coder</b><span>智能代码生成工具 · 全栈开发</span></div>
-        <div class="ds-ext"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
-      </a>
-      <a class="ds-link" href="https://lab.deepseek.com" target="_blank">
-        <div class="ds-ico"><i class="fa-brands fa-codepen"></i></div>
-        <div class="ds-t"><b>AI Lab</b><span>在线 AI 实验平台</span></div>
-        <div class="ds-ext"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
-      </a>
-      <a class="ds-link" href="./api/api.html" target="_blank">
-        <div class="ds-ico"><i class="fa-solid fa-code"></i></div>
-        <div class="ds-t"><b>API 中心</b><span>一体化 API 管理平台</span></div>
-        <div class="ds-ext"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
-      </a>
-    </div>
-  </section>
-
-  <section class="ds-cat">
-    <h2><i class="fa-solid fa-book-open"></i> 文档资源</h2>
-    <div class="ds-grid">
-      <a class="ds-link" href="./doc/doc.html" target="_blank">
-        <div class="ds-ico"><i class="fa-brands fa-figma"></i></div>
-        <div class="ds-t"><b>院校教程归档</b><span>院校教程</span></div>
-        <div class="ds-ext"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
-      </a>
-      <a class="ds-link" href="https://brand.deepseek.com" target="_blank">
-        <div class="ds-ico"><i class="fa-solid fa-palette"></i></div>
-        <div class="ds-t"><b>品牌指南</b><span>品牌视觉规范与设计指南</span></div>
-        <div class="ds-ext"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
-      </a>
-    </div>
-  </section>
-
-  <section class="ds-cat">
-    <h2><i class="fa-solid fa-robot"></i> AI 工具</h2>
-    <div class="ds-grid">
-      <a class="ds-link" href="https://chat.deepseek.com" target="_blank">
-        <div class="ds-ico"><i class="fa-solid fa-brain"></i></div>
-        <div class="ds-t"><b>智能助手</b><span>新一代对话式 AI 解决方案</span></div>
-        <div class="ds-ext"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
-      </a>
-      <a class="ds-link" href="https://modelhub.deepseek.com" target="_blank">
-        <div class="ds-ico"><i class="fa-solid fa-robot"></i></div>
-        <div class="ds-t"><b>模型中心</b><span>预训练模型库与部署平台</span></div>
-        <div class="ds-ext"><i class="fa-solid fa-arrow-up-right-from-square"></i></div>
-      </a>
-    </div>
-  </section>
-
-  <section class="ds-bookmarks">
-    <h3><i class="fa-solid fa-bookmark"></i> 相关阅读</h3>
-    <div class="bm-list">
-      <a href="article/deepseek-article.html" target="_blank"><i class="fa-solid fa-file-lines"></i> 技术文章</a>
-      <a href="../../index.html"><i class="fa-solid fa-house"></i> 首页</a>
-      <a href="../../home/home.html"><i class="fa-solid fa-newspaper"></i> 文章列表</a>
-      <a href="http://expectopatronus.top:5005/" target="_blank"><i class="fa-solid fa-compass"></i> 导航总站</a>
-    </div>
-  </section>
-
-</main>
-
-<footer class="footer">
-  <div class="inner">
-    <div class="row">
-      <div class="col">
-        <div class="brand"><div class="logo"></div> <span>EXPECTOPATRONUS · BLOG</span></div>
-        <p class="muted">个体知识库与创作自留地</p>
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2026 · 本页仅用于个人学习整理 · 所有外链归原作者所有</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><i class="fa-brands fa-github"></i
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+        </div>
       </div>
-      <div class="col">
-        <h4>内容</h4>
-        <a href="../../home/home.html">所有文章</a>
-        <a href="../deepseek.html">DeepSeek</a>
-        <a href="http://expectopatronus.top:5005/" target="_blank">导航</a>
-      </div>
-      <div class="col">
-        <h4>联系</h4>
-        <a href="mailto:expectopatronus@example.com">Email</a>
-        <a href="https://github.com/" target="_blank">GitHub</a>
-      </div>
-    </div>
-    <div class="copy">© 2026 EXPECTOPATRONUS. All rights reserved.</div>
-  </div>
-</footer>
+    </footer>
 
-<div id="back" title="回到顶部"><i class="fa-solid fa-chevron-up"></i></div>
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><i class="fa-solid fa-arrow-up"></i></button>
 
-<script>
-(function(){
-  var saved = localStorage.getItem('theme') || 'dark';
-  if(saved === 'light') document.documentElement.dataset.theme = 'light';
-  var ti = document.querySelector('#theme-toggle i');
-  if(ti) ti.className = saved === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-  var btn = document.getElementById('theme-toggle');
-  if(btn) btn.addEventListener('click', function(){
-    var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
-    document.documentElement.dataset.theme = next;
-    localStorage.setItem('theme', next);
-    var ti2 = document.querySelector('#theme-toggle i');
-    if(ti2) ti2.className = next === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-  });
-  var back = document.getElementById('back');
-  window.addEventListener('scroll', function(){
-    var p = Math.min(1, window.scrollY / Math.max(1, document.body.scrollHeight - innerHeight));
-    var prog = document.getElementById('progress');
-    if(prog) prog.style.width = (p*100).toFixed(1)+'%';
-    if(back) back.classList.toggle('show', window.scrollY > 300);
-  });
-  if(back) back.addEventListener('click', function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+    <link id="fa" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <script>
+      (function () {
+        try {
+          var link = document.getElementById('fa');
+          link.onerror = function () {
+            var n = document.createElement('link');
+            n.rel = 'stylesheet';
+            n.href = 'https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css';
+            document.head.appendChild(n);
+          };
+        } catch (e) {}
+      })();
+    </script>
 
-  var si = document.getElementById('ds-search-input');
-  if(si) si.addEventListener('input', function(){
-    var q = si.value.trim().toLowerCase();
-    var links = document.querySelectorAll('.ds-link');
-    links.forEach(function(a){
-      var t = (a.textContent || '').toLowerCase();
-      if(!q){ a.style.display = ''; return; }
-      a.style.display = t.includes(q) ? '' : 'none';
-    });
-  });
-
-  var canvas = document.getElementById('stars-bg');
-  if(canvas){
-    var ctx = canvas.getContext('2d');
-    var w = canvas.width = innerWidth, h = canvas.height = innerHeight;
-    var stars = [];
-    for(var i=0;i<80;i++) stars.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.5+.2,a:Math.random()*.5+.2});
-    function draw(){
-      ctx.clearRect(0,0,w,h);
-      stars.forEach(function(s){
-        ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-        ctx.fillStyle='rgba(180,210,255,'+s.a+')';ctx.fill();
-      });
-    }
-    draw();
-    onresize = function(){w=canvas.width=innerWidth;h=canvas.height=innerHeight;stars=[];for(var i=0;i<80;i++)stars.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.5+.2,a:Math.random()*.5+.2});draw();};
-  }
-})();
-</script>
-</body>
+    <script>
+      (function () {
+        var saved = localStorage.getItem('theme') || 'dark';
+        document.documentElement.dataset.theme = saved;
+        var ti = document.querySelector('#theme-toggle i');
+        if (ti) ti.className = saved === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+        var toggle = document.getElementById('theme-toggle');
+        if (toggle)
+          toggle.addEventListener('click', function () {
+            var cur = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = cur;
+            localStorage.setItem('theme', cur);
+            if (ti) ti.className = cur === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+          });
+        var back = document.getElementById('back-to-top');
+        if (back) {
+          window.addEventListener('scroll', function () {
+            back.classList.toggle('visible', window.scrollY > 500);
+          });
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        }
+      })();
+    </script>
+  </body>
 </html>

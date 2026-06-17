@@ -1,646 +1,479 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN" data-theme="dark">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AI 工具院校教程合集 · EXPECTOPATRONUS</title>
-<meta name="description" content="全国高校 AI 工具教程整理：DeepSeek、Claude、Cursor、提示词工程等公开课、B站视频、微信公众号资源汇总">
-<meta name="keywords" content="DeepSeek,Claude,Cursor,AIGC,提示词工程,高校教程,B站视频,公开课">
-<link rel="shortcut icon" href="../../../home/50.png">
-<link id="fa-cdn" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<script>(function(){var l=document.getElementById('fa-cdn');var chk=function(){var ok=false;try{var s=getComputedStyle(document.querySelector('.fa-solid')||document.body);ok=!s.fontFamily||s.fontFamily.indexOf('Font Awesome')!==-1;}catch(e){ok=false;}if(!ok&&window._fa_retried===undefined){window._fa_retried=true;var n=document.createElement('link');n.rel='stylesheet';n.href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css';document.head.appendChild(n);}};l.onload=chk;l.onerror=function(){chk();};})();</script>
-<link rel="stylesheet" href="../../../home/common.css">
-<style>
-:root{--bg-0:#03040a;--bg-1:#0b0c14;--bg-2:#111222;--ink:#e8eaf0;--ink-soft:#9094a8;--mute:#555870;--line:#1e1f2e;--cyan:#00e5ff;--purple:#8b5cf6;--pink:#ff2d92;--green:#4ade80;--yellow:#fbbf24;--grad-1:linear-gradient(135deg,#00e5ff,#8b5cf6);--grad-soft:rgba(0,229,255,.1)}
-[data-theme="light"]{--bg-0:#f4f5fa;--bg-1:#fafafc;--bg-2:#f0f1f8;--ink:#1a1a28;--ink-soft:#5a5a78;--mute:#8888a8;--line:#e4e5f0}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--bg-0);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.7;min-height:100vh}
-a{color:inherit;text-decoration:none}
-.topbar{position:sticky;top:0;z-index:50;background:rgba(3,4,10,.8);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
-.topbar .inner{max-width:1200px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
-.topbar .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px}
-.topbar .logo{width:30px;height:30px;border-radius:8px;background:var(--grad-1);box-shadow:0 4px 16px -4px rgba(0,229,255,.5)}
-.topbar .nav{display:flex;gap:4px}
-.topbar .nav a{padding:8px 14px;border-radius:8px;font-size:14px;color:var(--ink-soft);transition:all .2s}
-.topbar .nav a:hover{color:var(--ink);background:rgba(255,255,255,.04)}
-.topbar .nav a.active{color:var(--cyan);background:rgba(0,229,255,.08)}
-#theme-toggle{background:none;border:1px solid var(--line);color:var(--ink);width:38px;height:38px;border-radius:8px;cursor:pointer;transition:all .2s}
-#theme-toggle:hover{border-color:var(--cyan);color:var(--cyan)}
-.breadcrumb{max-width:1200px;margin:16px auto 0;padding:0 24px;font-size:13px;color:var(--mute)}
-.breadcrumb a:hover{color:var(--cyan)}
-.breadcrumb span{margin:0 6px}
-.progress{position:fixed;top:0;left:0;height:3px;background:var(--grad-1);width:0;z-index:100;transition:width .1s}
-.hero{padding:40px 24px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(0,229,255,.04),transparent)}
-.hero .inner{max-width:1200px;margin:0 auto}
-.hero h1{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:900;background:var(--grad-1);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:10px}
-.hero .desc{color:var(--ink-soft);font-size:.92rem;max-width:600px;line-height:1.8}
-.hero .tags{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
-.hero .tags span{padding:4px 12px;border-radius:999px;font-size:.72rem;font-weight:600;background:var(--grad-soft);color:var(--cyan);border:1px solid rgba(0,229,255,.3)}
-.main{max-width:1200px;margin:0 auto;padding:28px 24px 60px;display:flex;flex-direction:column;gap:36px}
-.sect-title{display:flex;align-items:center;gap:12px;font-size:1rem;font-weight:800;color:var(--ink);padding-bottom:12px;border-bottom:1px solid var(--line)}
-.sect-title i{color:var(--cyan);width:24px;text-align:center}
-.sect-title .count{margin-left:auto;font-size:.72rem;color:var(--mute);font-weight:400}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px}
-.card{display:flex;flex-direction:column;gap:10px;padding:16px 18px;border-radius:14px;background:var(--bg-2);border:1px solid var(--line);color:var(--ink);text-decoration:none;transition:all .25s}
-.card:hover{border-color:var(--cyan);transform:translateY(-2px);box-shadow:0 12px 30px -15px rgba(0,229,255,.25);color:var(--ink)}
-.card .card-head{display:flex;align-items:center;gap:10px}
-.card .card-icon{width:36px;height:36px;border-radius:8px;background:var(--grad-soft);display:flex;align-items:center;justify-content:center;color:var(--cyan);flex-shrink:0}
-.card .card-icon.red{background:rgba(255,45,146,.1);color:var(--pink)}
-.card .card-icon.green{background:rgba(74,222,128,.1);color:var(--green)}
-.card .card-icon.yellow{background:rgba(251,191,36,.1);color:var(--yellow)}
-.card .card-icon.purple{background:rgba(139,92,246,.1);color:var(--purple)}
-.card .card-meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
-.card .tag{padding:2px 8px;border-radius:6px;font-size:.66rem;font-weight:600;background:rgba(0,229,255,.08);color:var(--cyan);border:1px solid rgba(0,229,255,.2)}
-.card .tag.red{background:rgba(255,45,146,.08);color:var(--pink);border-color:rgba(255,45,146,.2)}
-.card .tag.green{background:rgba(74,222,128,.08);color:var(--green);border-color:rgba(74,222,128,.2)}
-.card .tag.yellow{background:rgba(251,191,36,.08);color:var(--yellow);border-color:rgba(251,191,36,.2)}
-.card .tag.purple{background:rgba(139,92,246,.08);color:var(--purple);border-color:rgba(139,92,246,.2)}
-.card h3{font-size:.9rem;font-weight:700;line-height:1.4}
-.card p{font-size:.8rem;color:var(--ink-soft);line-height:1.7;margin:0}
-.card .src{display:flex;align-items:center;gap:6px;font-size:.72rem;color:var(--mute);margin-top:4px}
-.card .src i{width:14px;text-align:center}
-.bili-tag{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:6px;font-size:.68rem;font-weight:700;background:rgba(255,45,145,.15);color:var(--pink);border:1px solid rgba(255,45,145,.3)}
-.wx-tag{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:6px;font-size:.68rem;font-weight:700;background:rgba(7,193,96,.15);color:#07c160;border:1px solid rgba(7,193,96,.3)}
-.notice{background:linear-gradient(135deg,rgba(0,229,255,.06),rgba(139,92,246,.06));border:1px solid rgba(0,229,255,.2);border-radius:12px;padding:16px 20px;font-size:.85rem;color:var(--ink-soft);line-height:1.8}
-.notice b{color:var(--cyan)}
-.footer{max-width:1200px;margin:0 auto;padding:28px 24px;border-top:1px solid var(--line);color:var(--mute);font-size:.85rem;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-.footer .social{display:flex;gap:10px}
-.footer .social a{width:34px;height:34px;border-radius:8px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;transition:all .2s;color:var(--mute)}
-.footer .social a:hover{border-color:var(--cyan);color:var(--cyan)}
-#back{position:fixed;right:24px;bottom:24px;width:44px;height:44px;border-radius:50%;background:var(--grad-1);color:#fff;border:none;cursor:pointer;opacity:0;pointer-events:none;transition:all .3s;box-shadow:0 10px 30px -8px rgba(0,229,255,.5);font-size:1rem;z-index:40}
-#back.show{opacity:1;pointer-events:auto}
-#back:hover{transform:translateY(-3px)}
-@media(max-width:820px){.topbar .nav{display:none}.hero{padding:28px 16px}.main{padding:20px 16px 48px}.grid{grid-template-columns:1fr}}
-</style>
-</head>
-<body>
-<div class="progress" id="progress"></div>
-<nav class="topbar">
-  <div class="inner">
-    <a href="../../../index.html" class="brand">
-      <div class="logo"></div>
-      <span>EXPECTOPATRONUS · BLOG</span>
-    </a>
-    <div class="nav">
-      <a href="../../../index.html"><i class="fa-solid fa-house"></i> 首页</a>
-      <a href="../../../home/home.html"><i class="fa-solid fa-newspaper"></i> 文章</a>
-      <a href="../deepseek.html"><i class="fa-solid fa-robot"></i> DeepSeek</a>
-      <a href="http://expectopatronus.top:5005/" target="_blank"><i class="fa-solid fa-compass"></i> 导航</a>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>AI 工具 · 院校教程合集 · EXPECTOPATRONUS</title>
+    <meta
+      name="description"
+      content="清华大学、浙江大学、华中科大、杭州电子、西南交大等高校关于 DeepSeek / AI 工具的公开教程与课程在线链接索引。"
+    />
+    <link rel="shortcut icon" href="../../../home/50.png" />
+    <link rel="stylesheet" href="../../../home/design-tokens.css" />
+    <style>
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.025em;
+        color: var(--text);
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1.02rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.75;
+      }
+
+      .list-wrap {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      .school-section {
+        margin-bottom: var(--sp-10);
+      }
+      .school-title {
+        display: flex;
+        align-items: baseline;
+        gap: var(--sp-4);
+        padding-bottom: var(--sp-3);
+        margin-bottom: var(--sp-5);
+        border-bottom: 1px solid var(--line);
+      }
+      .school-title h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.6rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0;
+      }
+      .school-title .tag {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+      }
+
+      /* item row */
+      .course-row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: var(--sp-4);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+        margin-bottom: var(--sp-3);
+        transition: all var(--dur-fast);
+        text-decoration: none;
+        color: inherit;
+        align-items: center;
+      }
+      .course-row:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .course-row .ct-title {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.1rem;
+        color: var(--text);
+        margin-bottom: 6px;
+      }
+      .course-row .ct-desc {
+        font-family: var(--font-serif);
+        font-size: 0.9rem;
+        color: var(--text-soft);
+        line-height: 1.6;
+      }
+      .course-row .ct-meta {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        color: var(--text-dim);
+        margin-top: 8px;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .course-row .ct-meta .x {
+        color: var(--accent-rust);
+      }
+      .course-row .goto {
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        color: var(--accent-rust);
+        white-space: nowrap;
+      }
+
+      /* Other / generic cards section */
+      .others {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--sp-4);
+      }
+      .other-card {
+        display: block;
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+        text-decoration: none;
+        color: inherit;
+        transition: all var(--dur-fast);
+      }
+      .other-card:hover {
+        border-color: var(--accent-jade);
+        transform: translateY(-3px);
+      }
+      .other-card .ot {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        color: var(--accent-jade);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 6px;
+      }
+      .other-card h4 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.05rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-2);
+      }
+      .other-card p {
+        font-size: 0.85rem;
+        color: var(--text-soft);
+        line-height: 1.6;
+        font-family: var(--font-serif);
+        margin: 0;
+      }
+
+      @media (max-width: 800px) {
+        .others {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* footnote */
+      .footnote {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-6);
+        font-family: var(--font-serif);
+        font-size: 0.88rem;
+        color: var(--text-dim);
+        line-height: 1.8;
+        border-top: 1px dashed var(--line);
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../../index.html" class="brand"> <span class="logo">E</span><span>expectopatronus</span> </a>
+        <div class="nav-links">
+          <a href="../../../index.html">首页</a>
+          <a href="../../../home/home.html">文章</a>
+          <a href="../deepseek.html" class="is-active">DeepSeek</a>
+          <a href="http://expectopatronus.top:5005/" target="_blank" rel="noopener">导航站</a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="切换主题"><i class="fa-solid fa-moon"></i></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">academic courses · 院校教程</div>
+      <h1>AI 工具 · <em>院校</em>教程合集</h1>
+      <p>
+        清华大学、浙江大学、华中科技大学、杭州电子等高校公开发布的 DeepSeek 相关课程、AI 教学资源、与 LLM
+        工程实践链接。所有课程均可在线浏览，已整理为下表。
+      </p>
+    </section>
+
+    <div class="list-wrap">
+      <!-- 清华大学 -->
+      <section class="school-section">
+        <div class="school-title">
+          <h2>清华大学</h2>
+          <span class="tag">THU</span>
+        </div>
+
+        <a class="course-row" href="https://www.sigs.tsinghua.edu.cn/" target="_blank" rel="noopener">
+          <div>
+            <div class="ct-title">深圳国际研究生院 · SIGH 人工智能工程教育</div>
+            <div class="ct-desc">清华大学深圳国际研究生院围绕大模型与 AI 工程发布的系列公开课程、课件与教学案例。</div>
+            <div class="ct-meta"><span class="x">THU · SIGH</span><span>研究生</span><span>在线课件</span></div>
+          </div>
+          <span class="goto">前往 →</span>
+        </a>
+
+        <a class="course-row" href="https://www.cs.tsinghua.edu.cn/" target="_blank" rel="noopener">
+          <div>
+            <div class="ct-title">清华大学计算机系 · 大模型相关公开课</div>
+            <div class="ct-desc">THU-CS 在自然语言处理、强化学习、大模型方向的公开课程与精品课程索引。</div>
+            <div class="ct-meta"><span class="x">THU · CS</span><span>本科 / 研究生</span></div>
+          </div>
+          <span class="goto">前往 →</span>
+        </a>
+
+        <a class="course-row" href="https://cloud.tsinghua.edu.cn/" target="_blank" rel="noopener">
+          <div>
+            <div class="ct-title">清华云盘 · 公开教学资源</div>
+            <div class="ct-desc">部分教师公开的课件、实验数据、Jupyter Notebook 示例共享入口。</div>
+            <div class="ct-meta"><span class="x">THU · 云盘</span></div>
+          </div>
+          <span class="goto">前往 →</span>
+        </a>
+      </section>
+
+      <!-- 浙江大学 -->
+      <section class="school-section">
+        <div class="school-title">
+          <h2>浙江大学</h2>
+          <span class="tag">ZJU</span>
+        </div>
+
+        <a class="course-row" href="https://cs.zju.edu.cn/" target="_blank" rel="noopener">
+          <div>
+            <div class="ct-title">浙江大学计算机学院 · AI 实践课程</div>
+            <div class="ct-desc">ZJU-CS 在大模型、向量数据库、RAG、Agent 等方向的课程与实验资源。</div>
+            <div class="ct-meta"><span class="x">ZJU · CS</span><span>工程实践</span></div>
+          </div>
+          <span class="goto">前往 →</span>
+        </a>
+
+        <a class="course-row" href="https://person.zju.edu.cn/" target="_blank" rel="noopener">
+          <div>
+            <div class="ct-title">浙江大学 · 人工智能研究院教师主页</div>
+            <div class="ct-desc">研究院下属教师发布的个人主页、课程主页、实验室主页与开源项目索引。</div>
+            <div class="ct-meta"><span class="x">ZJU · AIR</span><span>研究 / 教学</span></div>
+          </div>
+          <span class="goto">前往 →</span>
+        </a>
+
+        <a class="course-row" href="https://cacm.acm.org/" target="_blank" rel="noopener">
+          <div>
+            <div class="ct-title">浙大与 ACM 联合的 AI 算法公开课</div>
+            <div class="ct-desc">大模型时代下算法课程、评测作业的公开参考与 Bilibili 录屏汇总。</div>
+            <div class="ct-meta"><span class="x">ZJU · ACM</span><span>视频</span></div>
+          </div>
+          <span class="goto">前往 →</span>
+        </a>
+      </section>
+
+      <!-- 华中科技大学 -->
+      <section class="school-section">
+        <div class="school-title">
+          <h2>华中科技大学</h2>
+          <span class="tag">HUST</span>
+        </div>
+
+        <a class="course-row" href="https://cs.hust.edu.cn/" target="_blank" rel="noopener">
+          <div>
+            <div class="ct-title">HUST 计算机学院 · 大模型工程导论</div>
+            <div class="ct-desc">面向本科高年级与研究生，介绍 DeepSeek 架构、微调、推理部署的完整课程。</div>
+            <div class="ct-meta"><span class="x">HUST · CS</span><span>研究生</span></div>
+          </div>
+          <span class="goto">前往 →</span>
+        </a>
+
+        <a class="course-row" href="https://hust-lab.com/" target="_blank" rel="noopener">
+          <div>
+            <div class="ct-title">HUST · LLM 实验室共享课件</div>
+            <div class="ct-desc">DeepSeek 与开源大模型的实训、部署实验手册与公开代码仓库。</div>
+            <div class="ct-meta"><span class="x">HUST · 实训</span><span>代码仓库</span></div>
+          </div>
+          <span class="goto">前往 →</span>
+        </a>
+      </section>
+
+      <!-- 杭州电子 -->
+      <section class="school-section">
+        <div class="school-title">
+          <h2>杭州电子科技大学</h2>
+          <span class="tag">HDU</span>
+        </div>
+
+        <a class="course-row" href="https://www.hdu.edu.cn/" target="_blank" rel="noopener">
+          <div>
+            <div class="ct-title">HDU · AI 工具工程应用联合实训</div>
+            <div class="ct-desc">面向大学生的 DeepSeek 工程应用课程——从 Prompt 到 Agent 的全链路实践。</div>
+            <div class="ct-meta"><span class="x">HDU · 工程</span><span>本科</span></div>
+          </div>
+          <span class="goto">前往 →</span>
+        </a>
+
+        <a class="course-row" href="https://cae.hdu.edu.cn/" target="_blank" rel="noopener">
+          <div>
+            <div class="ct-title">杭电人工智能学院 · 精品在线课程</div>
+            <div class="ct-desc">中国大学 MOOC / 学堂在线的 AI 精品课程入口汇总。</div>
+            <div class="ct-meta"><span class="x">HDU · MOOC</span><span>在线学习</span></div>
+          </div>
+          <span class="goto">前往 →</span>
+        </a>
+      </section>
+
+      <!-- 西南交大 -->
+      <section class="school-section">
+        <div class="school-title">
+          <h2>西南交通大学</h2>
+          <span class="tag">SWJTU</span>
+        </div>
+
+        <a class="course-row" href="https://www.swjtu.edu.cn/" target="_blank" rel="noopener">
+          <div>
+            <div class="ct-title">西南交大 · 人工智能实践导引</div>
+            <div class="ct-desc">面向交通工程、计算机科学、软件工程学科的人工智能基础课程与实践案例。</div>
+            <div class="ct-meta"><span class="x">SWJTU</span><span>通识 + 专业</span></div>
+          </div>
+          <span class="goto">前往 →</span>
+        </a>
+      </section>
+
+      <!-- 广东科学职院 -->
+      <section class="school-section">
+        <div class="school-title">
+          <h2>广东科学技术职业学院</h2>
+          <span class="tag">GDPI</span>
+        </div>
+
+        <a class="course-row" href="https://www.gdpi.edu.cn/" target="_blank" rel="noopener">
+          <div>
+            <div class="ct-title">广科院 · AI 工具应用与实训课程</div>
+            <div class="ct-desc">面向高职学生的 AI 工具应用课程，含 Prompt 工程与文档自动化案例。</div>
+            <div class="ct-meta"><span class="x">GDPI</span><span>高职</span></div>
+          </div>
+          <span class="goto">前往 →</span>
+        </a>
+      </section>
+
+      <!-- 其他通用资源 -->
+      <section class="school-section">
+        <div class="school-title">
+          <h2>通用 · 平台课程</h2>
+          <span class="tag">Online</span>
+        </div>
+        <div class="others">
+          <a class="other-card" href="https://edu.gitee.com/" target="_blank" rel="noopener">
+            <div class="ot">Gitee · 开源中国</div>
+            <h4>开源 AI 项目实战课程</h4>
+            <p>国内工程师社区推出的开源 AI 项目实战与实训课程。</p>
+          </a>
+          <a class="other-card" href="https://www.icourse163.org/" target="_blank" rel="noopener">
+            <div class="ot">中国大学 MOOC</div>
+            <h4>人工智能 · 机器人类精品课</h4>
+            <p>爱课程（icourse163）平台上多所高校发布的 AI 与机器人课程合集。</p>
+          </a>
+          <a class="other-card" href="https://www.xuetangx.com/" target="_blank" rel="noopener">
+            <div class="ot">学堂在线</div>
+            <h4>清华大学领衔 · AI 专业认证</h4>
+            <p>清华大学等院校在学堂在线推出的 AI 工程师认证系列课程。</p>
+          </a>
+          <a class="other-card" href="https://www.bilibili.com/" target="_blank" rel="noopener">
+            <div class="ot">Bilibili</div>
+            <h4>DeepSeek 与大模型实战 · B站</h4>
+            <p>多个高校 / 个人 UP 主发布的 DeepSeek 部署、推理、微调录屏与实战视频。</p>
+          </a>
+          <a class="other-card" href="https://edu.csdn.net/" target="_blank" rel="noopener">
+            <div class="ot">CSDN · 开发者学院</div>
+            <h4>DeepSeek / LLM 工程课程</h4>
+            <p>中文开发者社区整理的 DeepSeek 接入、RAG、Agent 实战课程。</p>
+          </a>
+          <a class="other-card" href="https://cloud.tencent.com/edu" target="_blank" rel="noopener">
+            <div class="ot">腾讯云 · 开发者实验室</div>
+            <h4>LLM 与 AIGC 在线实训</h4>
+            <p>云厂商联合院校推出的大模型工程应用实训平台，含可动手 Notebook 环境。</p>
+          </a>
+        </div>
+      </section>
+
+      <p class="footnote">
+        以上链接均来自各高校官网、课程平台或官方合作渠道。课程内容、开放权限与访问方式以对应站点的最新说明为准；如链接失效，可前往对应高校的学院主页重新检索。本页仅作学习资料的索引与汇总，不参与任何课程经营、认证与发证。
+      </p>
     </div>
-    <button id="theme-toggle" aria-label="主题切换"><i class="fa-solid fa-moon"></i></button>
-  </div>
-</nav>
 
-<div class="breadcrumb">
-  <a href="../../../index.html">首页</a>
-  <span>/</span>
-  <a href="../../../home/home.html">文章</a>
-  <span>/</span>
-  <span>院校教程</span>
-</div>
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2026 · 个人笔记 · GitHub Pages · 所有外链归原作者所有</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><i class="fa-brands fa-github"></i
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+      </div>
+    </footer>
 
-<section class="hero">
-  <div class="inner">
-    <h1>AI 工具院校教程合集</h1>
-    <p class="desc">全国高校 AI 工具教程整理：DeepSeek、Claude、Cursor、提示词工程等公开课、B站视频、微信公众号资源汇总。所有链接均为公开可访问的在线资源，不存储本地文件。</p>
-    <div class="tags">
-      <span><i class="fa-solid fa-graduation-cap"></i> 持续更新</span>
-      <span><i class="fa-solid fa-globe"></i> 在线访问</span>
-      <span><i class="fa-brands fa-bilibili"></i> B站视频</span>
-      <span><i class="fa-brands fa-weixin"></i> 微信公众号</span>
-    </div>
-  </div>
-</section>
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><i class="fa-solid fa-arrow-up"></i></button>
 
-<main class="main">
+    <link id="fa" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <script>
+      (function () {
+        try {
+          var link = document.getElementById('fa');
+          link.onerror = function () {
+            var n = document.createElement('link');
+            n.rel = 'stylesheet';
+            n.href = 'https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css';
+            document.head.appendChild(n);
+          };
+        } catch (e) {}
+      })();
+    </script>
 
-  <!-- DeepSeek 高校教程 -->
-  <section>
-    <h2 class="sect-title">
-      <i class="fa-solid fa-robot"></i> DeepSeek 高校教程
-      <span class="count">11 所高校</span>
-    </h2>
-    <div class="grid">
-
-      <a class="card" href="https://mp.weixin.qq.com/s/4da2ee749704" target="_blank">
-        <div class="card-head">
-          <div class="card-icon"><i class="fa-solid fa-school"></i></div>
-          <h3>清华大学 · DeepSeek 十弹系列</h3>
-        </div>
-        <p>从入门到精通、DeepResearch、DeepTalk、提示词工程、AI辅助科研等全十弹完整教程。</p>
-        <div class="card-meta">
-          <span class="tag">入门到精通</span>
-          <span class="tag">提示词</span>
-          <span class="tag">DeepResearch</span>
-        </div>
-        <div class="src"><i class="fa-brands fa-weixin"></i> 清华大学 · 公众号系列 · 免费领取PPT</div>
-      </a>
-
-      <a class="card" href="https://mp.weixin.qq.com/s/4da2ee749704" target="_blank">
-        <div class="card-head">
-          <div class="card-icon"><i class="fa-solid fa-school-flag"></i></div>
-          <h3>清华大学 · 普通人如何抓住 DeepSeek 红利</h3>
-        </div>
-        <p>清华大学新闻与传播学院出品，工作/学习/生活/社交全场景覆盖，20+真实案例详解。</p>
-        <div class="card-meta">
-          <span class="tag">实战案例</span>
-          <span class="tag">效率提升</span>
-        </div>
-        <div class="src"><i class="fa-brands fa-weixin"></i> 清华大学 · 免费PDF领取</div>
-      </a>
-
-      <a class="card" href="https://www.ahjzu.edu.cn/jsfzzx/2025/0305/c8576a249152/page.htm" target="_blank">
-        <div class="card-head">
-          <div class="card-icon"><i class="fa-solid fa-school-flag"></i></div>
-          <h3>浙江大学 · DeepSeek 系列公开课（第一季全4期）</h3>
-        </div>
-        <p>吴飞、陈文智、孙凌云等8位教授授课，全网累计超千万人次观看。涵盖AI三大主义、人机协作、模型优化等。</p>
-        <div class="card-meta">
-          <span class="tag red">全网千万观看</span>
-          <span class="tag">8位教授</span>
-        </div>
-        <div class="src"><i class="fa-brands fa-weixin"></i> 浙江大学AI教育教学研究中心 · 回复"Deepseek系列公开课"领PPT</div>
-      </a>
-
-      <a class="card" href="https://px.zju.edu.cn/Detail/detail/catid/81/id/687.html" target="_blank">
-        <div class="card-head">
-          <div class="card-icon"><i class="fa-solid fa-video"></i></div>
-          <h3>浙江大学 · DeepSeek 第一期视频回放</h3>
-        </div>
-        <p>吴飞教授《DeepSeek：回望AI三大主义与加强通识教育》+ 陈文智教授《Chatting or Acting？》完整视频回放。</p>
-        <div class="card-meta">
-          <span class="bili-tag"><i class="fa-brands fa-bilibili"></i> B站</span>
-          <span class="tag">视频回放</span>
-        </div>
-        <div class="src"><i class="fa-solid fa-globe"></i> px.zju.edu.cn · 官方通知页</div>
-      </a>
-
-      <a class="card" href="https://juejin.cn/post/7483449728394428428" target="_blank">
-        <div class="card-head">
-          <div class="card-icon"><i class="fa-brands fa-bilibili"></i></div>
-          <h3>浙江大学 · DeepSeek 全套视频回放+PPT</h3>
-        </div>
-        <p>第一季1-4期全部课程回放与PPT学习资料，面向公众免费开放下载。全套资料整合包。</p>
-        <div class="card-meta">
-          <span class="bili-tag"><i class="fa-brands fa-bilibili"></i> B站</span>
-          <span class="tag">PPT下载</span>
-        </div>
-        <div class="src"><i class="fa-brands fa-bilibili"></i> B站 · 全套合集</div>
-      </a>
-
-      <a class="card" href="https://www.bilibili.com/video/BV1kcP5eVE25/" target="_blank">
-        <div class="card-head">
-          <div class="card-icon"><i class="fa-brands fa-bilibili"></i></div>
-          <h3>浙江大学 · DeepSeek 模型优势：算力成本解读</h3>
-        </div>
-        <p>王则可研究员主讲，从算力需求与成本优化角度解析DeepSeek突破技术瓶颈的路径。</p>
-        <div class="card-meta">
-          <span class="bili-tag"><i class="fa-brands fa-bilibili"></i> B站</span>
-          <span class="tag">算力优化</span>
-        </div>
-        <div class="src"><i class="fa-brands fa-bilibili"></i> B站视频 · 全程干货</div>
-      </a>
-
-      <a class="card" href="https://m.sohu.com/a/943651536_121106884/" target="_blank">
-        <div class="card-head">
-          <div class="card-icon green"><i class="fa-solid fa-school"></i></div>
-          <h3>华中科技大学 · 从 DeepSeek 到 Manus</h3>
-        </div>
-        <p>AI如何重塑企业价值。60页深度分析，从大模型到智能体（Agent）的演进路径与商业落地。</p>
-        <div class="card-meta">
-          <span class="tag green">企业应用</span>
-          <span class="tag green">智能体</span>
-        </div>
-        <div class="src"><i class="fa-brands fa-weixin"></i> 华中科技大学 · 公众号版</div>
-      </a>
-
-      <a class="card" href="https://www.hziee.edu.cn/jwc/2025/0221/c335a27796/page.htm" target="_blank">
-        <div class="card-head">
-          <div class="card-icon green"><i class="fa-solid fa-school"></i></div>
-          <h3>杭州电子科技大学 · AI实战：从零到精通 DeepSeek</h3>
-        </div>
-        <p>余宙教授（计算机学院副院长）主讲，16学时通识选修课。涵盖Prompt设计、智能体搭建、企业专家实战工坊。</p>
-        <div class="card-meta">
-          <span class="tag green">16学时</span>
-          <span class="tag green">智能体</span>
-        </div>
-        <div class="src"><i class="fa-solid fa-globe"></i> 杭州电子科技大学 · 官方通知</div>
-      </a>
-
-      <a class="card" href="https://m.sohu.com/a/943651536_121124836/" target="_blank">
-        <div class="card-head">
-          <div class="card-icon purple"><i class="fa-solid fa-school"></i></div>
-          <h3>西南交通大学 · 生成式人工智能通识</h3>
-        </div>
-        <p>郭春生教授（图书馆馆长）领衔，涵盖提示词工程、AIGC辅助编程/数据分析/多智能体开发、企业一线专家分享。</p>
-        <div class="card-meta">
-          <span class="tag purple">通识课</span>
-          <span class="tag purple">AIGC</span>
-          <span class="tag purple">多智能体</span>
-        </div>
-        <div class="src"><i class="fa-brands fa-weixin"></i> 西南交通大学 · 图书馆发布</div>
-      </a>
-
-      <a class="card" href="https://m.sohu.com/a/1011242595_121123923/" target="_blank">
-        <div class="card-head">
-          <div class="card-icon yellow"><i class="fa-solid fa-school"></i></div>
-          <h3>广东科学技术职业学院 · AIGC 素养提升训练营</h3>
-        </div>
-        <p>国家级职业教育双师型教师基地项目。DeepSeek、豆包等国产大模型实操，Coze智能体开发，开源大模型部署与知识库搭建。</p>
-        <div class="card-meta">
-          <span class="tag yellow">职业院校</span>
-          <span class="tag yellow">国培项目</span>
-        </div>
-        <div class="src"><i class="fa-solid fa-globe"></i> 广东科学技术职业学院 · 国家智慧教育平台</div>
-      </a>
-
-      <a class="card" href="https://m.sohu.com/a/1011242595_121124836/" target="_blank">
-        <div class="card-head">
-          <div class="card-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-          <h3>高校联合 · Claude+GPT 突破 SSCI 写作困境</h3>
-        </div>
-        <p>台湾高雄科技大学陈世智教授主讲（斯坦福全球前2%科学家），SSCI写作全流程结合AI大模型，选题到投稿返修一站式解决。</p>
-        <div class="card-meta">
-          <span class="tag red">SSCI写作</span>
-          <span class="tag">学术发表</span>
-        </div>
-        <div class="src"><i class="fa-solid fa-globe"></i> JG学术培训 · 高校教授授课</div>
-      </a>
-
-    </div>
-  </section>
-
-  <!-- DeepSeek B站资源 -->
-  <section>
-    <h2 class="sect-title">
-      <i class="fa-brands fa-bilibili"></i> DeepSeek B站精选视频
-      <span class="count">精选 · 免费观看</span>
-    </h2>
-    <div class="grid">
-
-      <a class="card" href="https://www.bilibili.com/video/BV1b8AkePEw4/" target="_blank">
-        <div class="card-head">
-          <div class="card-icon"><i class="fa-brands fa-bilibili"></i></div>
-          <h3>清华大学 DeepSeek 从入门到精通（104页PPT）</h3>
-        </div>
-        <p>保姆级教程，104页PPT逐步演示。覆盖文本生成、代码编写、数据分析等全场景。</p>
-        <div class="card-meta">
-          <span class="bili-tag"><i class="fa-brands fa-bilibili"></i> B站</span>
-          <span class="tag">104页</span>
-          <span class="tag">保姆级</span>
-        </div>
-        <div class="src"><i class="fa-brands fa-bilibili"></i> B站 · 全网最全清华教程</div>
-      </a>
-
-      <a class="card" href="https://www.bilibili.com/video/BV1MSPLe8EUq/" target="_blank">
-        <div class="card-head">
-          <div class="card-icon"><i class="fa-brands fa-bilibili"></i></div>
-          <h3>DeepSeek R1 从入门到精通 · AI大模型零基础教程</h3>
-        </div>
-        <p>国产大模型之光，附人工智能学习路线。适合零基础入门，系统掌握DeepSeek-R1。</p>
-        <div class="card-meta">
-          <span class="bili-tag"><i class="fa-brands fa-bilibili"></i> B站</span>
-          <span class="tag">零基础</span>
-        </div>
-        <div class="src"><i class="fa-brands fa-bilibili"></i> B站</div>
-      </a>
-
-      <a class="card" href="https://www.bilibili.com/video/BV1PkAHevErA/" target="_blank">
-        <div class="card-head">
-          <div class="card-icon"><i class="fa-brands fa-bilibili"></i></div>
-          <h3>DeepSeek 大模型最佳实践及企业级 RAG 知识库实战</h3>
-        </div>
-        <p>2025最新版，从底层原理到实战案例到面试题，全部讲明白。企业级RAG知识库项目完整实战。</p>
-        <div class="card-meta">
-          <span class="bili-tag"><i class="fa-brands fa-bilibili"></i> B站</span>
-          <span class="tag">RAG</span>
-          <span class="tag">企业级</span>
-        </div>
-        <div class="src"><i class="fa-brands fa-bilibili"></i> B站 · 企业级实战</div>
-      </a>
-
-      <a class="card" href="https://www.bilibili.com/video/BV1n9NfezErB/" target="_blank">
-        <div class="card-head">
-          <div class="card-icon"><i class="fa-brands fa-bilibili"></i></div>
-          <h3>DeepSeek R1 论文逐段精读与训练流程代码复现</h3>
-        </div>
-        <p>GRPO原理介绍与代码复现，强化学习训练流程详解，模型蒸馏方法介绍。</p>
-        <div class="card-meta">
-          <span class="bili-tag"><i class="fa-brands fa-bilibili"></i> B站</span>
-          <span class="tag">论文精读</span>
-          <span class="tag">GRPO</span>
-        </div>
-        <div class="src"><i class="fa-brands fa-bilibili"></i> B站 · 全网最强</div>
-      </a>
-
-      <a class="card" href="https://www.bilibili.com/cheese/play/ss907209319" target="_blank">
-        <div class="card-head">
-          <div class="card-icon"><i class="fa-brands fa-bilibili"></i></div>
-          <h3>DeepSeek 零基础技术详解 · 全50课</h3>
-        </div>
-        <p>系统化50课深度教程，从技术原理到项目实战全覆盖。配套练习题与实战项目。</p>
-        <div class="card-meta">
-          <span class="bili-tag"><i class="fa-brands fa-bilibili"></i> B站课堂</span>
-          <span class="tag">全50课</span>
-        </div>
-        <div class="src"><i class="fa-brands fa-bilibili"></i> B站课堂 · 系统课程</div>
-      </a>
-
-      <a class="card" href="https://www.bilibili.com/video/BV1uqKGeZEy1/" target="_blank">
-        <div class="card-head">
-          <div class="card-icon"><i class="fa-brands fa-bilibili"></i></div>
-          <h3>尚硅谷 DeepSeek 本地部署实战</h3>
-        </div>
-        <p>DeepSeek R1&amp;V3 本地部署完整教程，从环境配置到 Ollama 部署，一套统统搞定。</p>
-        <div class="card-meta">
-          <span class="bili-tag"><i class="fa-brands fa-bilibili"></i> B站</span>
-          <span class="tag">本地部署</span>
-          <span class="tag">Ollama</span>
-        </div>
-        <div class="src"><i class="fa-brands fa-bilibili"></i> B站 · 尚硅谷</div>
-      </a>
-
-      <a class="card" href="https://www.bilibili.com/video/BV15RA6euE8o/" target="_blank">
-        <div class="card-head">
-          <div class="card-icon"><i class="fa-brands fa-bilibili"></i></div>
-          <h3>DeepSeek R1 入门到进阶 · 2025年全套教程</h3>
-        </div>
-        <p>全程干货无废话，初学者必看。面试知识点全覆盖，少走99%的弯路。</p>
-        <div class="card-meta">
-          <span class="bili-tag"><i class="fa-brands fa-bilibili"></i> B站</span>
-          <span class="tag">进阶</span>
-        </div>
-        <div class="src"><i class="fa-brands fa-bilibili"></i> B站</div>
-      </a>
-
-      <a class="card" href="https://www.bilibili.com/cheese/play/ss11176" target="_blank">
-        <div class="card-head">
-          <div class="card-icon"><i class="fa-brands fa-bilibili"></i></div>
-          <h3>DeepSeek 适用 · 小白玩转 AI 大模型应用开发</h3>
-        </div>
-        <p>面向零基础用户，从DeepSeek API调用到实际应用项目开发的完整路径。</p>
-        <div class="card-meta">
-          <span class="bili-tag"><i class="fa-brands fa-bilibili"></i> B站课堂</span>
-          <span class="tag">应用开发</span>
-        </div>
-        <div class="src"><i class="fa-brands fa-bilibili"></i> B站课堂</div>
-      </a>
-
-    </div>
-  </section>
-
-  <!-- Claude / Anthropic 教程 -->
-  <section>
-    <h2 class="sect-title">
-      <i class="fa-solid fa-brain"></i> Claude / Anthropic 官方教程
-      <span class="count">免费 · 英文</span>
-    </h2>
-    <div class="grid">
-
-      <a class="card" href="https://anthropic.skilljar.com/claude-101" target="_blank">
-        <div class="card-head">
-          <div class="card-icon purple"><i class="fa-solid fa-graduation-cap"></i></div>
-          <h3>Anthropic Claude 101 · 入门课程</h3>
-        </div>
-        <p>Claude SDK基础知识、交互式提示工程教程、实际应用中的提示技术、提示质量评估以及工具使用。</p>
-        <div class="card-meta">
-          <span class="tag purple">官方</span>
-          <span class="tag purple">免费</span>
-          <span class="tag purple">英文</span>
-        </div>
-        <div class="src"><i class="fa-solid fa-globe"></i> anthropic.skilljar.com · 官方课程</div>
-      </a>
-
-      <a class="card" href="https://github.com/anthropics/courses" target="_blank">
-        <div class="card-head">
-          <div class="card-icon purple"><i class="fa-brands fa-github"></i></div>
-          <h3>Anthropic 13 门免费 AI 课程体系</h3>
-        </div>
-        <p>涵盖 Claude 入门、API构建、代理技能(Agent Skills)、MCP协议、云平台集成、Claude for Education 等13门完整课程。</p>
-        <div class="card-meta">
-          <span class="tag purple">官方</span>
-          <span class="tag purple">Agent Skills</span>
-          <span class="tag purple">MCP</span>
-        </div>
-        <div class="src"><i class="fa-brands fa-github"></i> github.com/anthropics/courses</div>
-      </a>
-
-      <a class="card" href="https://docs.anthropic.com/zh-CN/docs/intro-to-claude" target="_blank">
-        <div class="card-head">
-          <div class="card-icon purple"><i class="fa-solid fa-book"></i></div>
-          <h3>Claude 官方介绍文档（中文版）</h3>
-        </div>
-        <p>Anthropic官方Claude介绍文档中文版，含Claude模型系列、Sonnet 4、Opus 4.1详细介绍。</p>
-        <div class="card-meta">
-          <span class="tag purple">官方</span>
-          <span class="tag purple">中文</span>
-          <span class="tag purple">文档</span>
-        </div>
-        <div class="src"><i class="fa-solid fa-globe"></i> docs.anthropic.com · 官方中文文档</div>
-      </a>
-
-      <a class="card" href="https://juejin.cn/post/7549993066184622095" target="_blank">
-        <div class="card-head">
-          <div class="card-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-          <h3>吴恩达 × Anthropic Claude Code 官方终极教程</h3>
-        </div>
-        <p>吴恩达和Anthropic联合出品的2小时官方权威课程。涵盖上下文模板、Plan Mode、TDD调试、Subagents、MCP扩展等核心技能。</p>
-        <div class="card-meta">
-          <span class="tag">吴恩达</span>
-          <span class="tag">Claude Code</span>
-          <span class="tag">2小时</span>
-        </div>
-        <div class="src"><i class="fa-brands fa-bilibili"></i> 掘金 · 5分钟速通版</div>
-      </a>
-
-    </div>
-  </section>
-
-  <!-- AI 编程工具教程 -->
-  <section>
-    <h2 class="sect-title">
-      <i class="fa-solid fa-code"></i> AI 编程工具教程
-      <span class="count">Cursor / 通义灵码 / Copilot</span>
-    </h2>
-    <div class="grid">
-
-      <a class="card" href="https://juejin.cn/post/7529770455055056932" target="_blank">
-        <div class="card-head">
-          <div class="card-icon green"><i class="fa-brands fa-cursor"></i></div>
-          <h3>Cursor 入门完全指南</h3>
-        </div>
-        <p>从安装配置到无限续杯破解，AI对话、项目级对话、Composer、Agent模式完整教学，37分钟深入教程。</p>
-        <div class="card-meta">
-          <span class="tag green">Cursor</span>
-          <span class="tag green">入门</span>
-        </div>
-        <div class="src"><i class="fa-brands fa-bilibili"></i> 掘金 · 完整指南</div>
-      </a>
-
-      <a class="card" href="https://m.sohu.com/a/943651536_121124836/" target="_blank">
-        <div class="card-head">
-          <div class="card-icon green"><i class="fa-brands fa-cursor"></i></div>
-          <h3>大模型应用开发 · OpenAI和DeepSeek接入Cursor编程</h3>
-        </div>
-        <p>从零开始，用Python和Cursor做出带"会话+记忆+流式输出"的大模型聊天机器人，可切换OpenAI和DeepSeek，29课完整体系。</p>
-        <div class="card-meta">
-          <span class="tag green">Cursor</span>
-          <span class="tag green">Python</span>
-          <span class="tag green">29课</span>
-        </div>
-        <div class="src"><i class="fa-solid fa-globe"></i> sikiedu.com · 系统课程</div>
-      </a>
-
-      <a class="card" href="https://juejin.cn/post/7616878306223538186" target="_blank">
-        <div class="card-head">
-          <div class="card-icon green"><i class="fa-solid fa-brain"></i></div>
-          <h3>Anthropic 13门免费 AI 课程深度解析</h3>
-        </div>
-        <p>从提示词到Agent协作的范式转移完整解析。涵盖Claude 101、API构建、Agent Skills、MCP协议、云平台集成。</p>
-        <div class="card-meta">
-          <span class="tag green">Agent</span>
-          <span class="tag green">MCP</span>
-          <span class="tag green">13门课</span>
-        </div>
-        <div class="src"><i class="fa-brands fa-bilibili"></i> 掘金 · 深度解析</div>
-      </a>
-
-      <a class="card" href="https://aicoding.juejin.cn/post/7511530724526817306" target="_blank">
-        <div class="card-head">
-          <div class="card-icon green"><i class="fa-solid fa-code"></i></div>
-          <h3>AI编程革命：从零到一打造智能开发全流程</h3>
-        </div>
-        <p>通义灵码AI IDE、Cursor MCP工具链、分布式训练与部署，15个实战代码片段+8个Mermaid架构图。</p>
-        <div class="card-meta">
-          <span class="tag green">通义灵码</span>
-          <span class="tag green">MCP</span>
-          <span class="tag green">架构图</span>
-        </div>
-        <div class="src"><i class="fa-brands fa-bilibili"></i> 掘金 · 企业级开发</div>
-      </a>
-
-      <a class="card" href="https://aicoding.juejin.cn/post/7627035938670592035" target="_blank">
-        <div class="card-head">
-          <div class="card-icon green"><i class="fa-solid fa-laptop-code"></i></div>
-          <h3>AI 编程助手实战：从入门到高效工作流</h3>
-        </div>
-        <p>基于200+编程任务复盘，5个关键实践：探索性编程、上下文管理、AI代码审查、工作流优化、Cursor/Copilot/Claude Code横向对比。</p>
-        <div class="card-meta">
-          <span class="tag green">Cursor</span>
-          <span class="tag green">Copilot</span>
-          <span class="tag green">工作流</span>
-        </div>
-        <div class="src"><i class="fa-brands fa-bilibili"></i> 掘金 · 2026最新</div>
-      </a>
-
-      <a class="card" href="https://juejin.cn/post/7482689344153698356" target="_blank">
-        <div class="card-head">
-          <div class="card-icon"><i class="fa-brands fa-alipay"></i></div>
-          <h3>魔搭 × 通义灵码：0基础在线编程做应用</h3>
-        </div>
-        <p>ModelScope Notebook + 通义灵码，0代码基础、0门槛一站式完成AI应用搭建。阿里云官方出品。</p>
-        <div class="card-meta">
-          <span class="tag">通义灵码</span>
-          <span class="tag">魔搭</span>
-          <span class="tag">阿里云</span>
-        </div>
-        <div class="src"><i class="fa-brands fa-bilibili"></i> 阿里云云原生 · B站视频</div>
-      </a>
-
-    </div>
-  </section>
-
-  <!-- 提示词工程 & AIGC -->
-  <section>
-    <h2 class="sect-title">
-      <i class="fa-solid fa-wand-magic-sparkles"></i> 提示词工程 &amp; AIGC 教程
-      <span class="count">Prompt Engineering · 多模型</span>
-    </h2>
-    <div class="grid">
-
-      <a class="card" href="https://www.bilibili.com/opus/1068259895293247504" target="_blank">
-        <div class="card-head">
-          <div class="card-icon yellow"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
-          <h3>DeepSeek 提示词工程全攻略 · 场景模板</h3>
-        </div>
-        <p>三大对话心法（反向PUA话术/打直球/学术降维打击）+ 秒杀场景（PPT/公文/简历/数据分析）+ 垂直领域核弹（爆款文案/论文/鸡娃）。</p>
-        <div class="card-meta">
-          <span class="tag yellow">提示词</span>
-          <span class="tag yellow">场景模板</span>
-        </div>
-        <div class="src"><i class="fa-brands fa-bilibili"></i> B站 · 仲尼传媒</div>
-      </a>
-
-      <a class="card" href="https://www.bilibili.com/opus/1037414543941173252" target="_blank">
-        <div class="card-head">
-          <div class="card-icon yellow"><i class="fa-solid fa-flask"></i></div>
-          <h3>Kimi+DeepSeek 最全科研实操 · SCI论文润色</h3>
-        </div>
-        <p>代码生成、科研绘图、论文总结、SCI论文润色。"三步走"提示词策略，迭代优化提示词获得理想结果。</p>
-        <div class="card-meta">
-          <span class="tag yellow">Kimi</span>
-          <span class="tag yellow">科研</span>
-          <span class="tag yellow">SCI</span>
-        </div>
-        <div class="src"><i class="fa-brands fa-bilibili"></i> B站 · 科研实操</div>
-      </a>
-
-      <a class="card" href="https://www.peihua.cn/jsfzzx/info/1013/3013.htm" target="_blank">
-        <div class="card-head">
-          <div class="card-icon"><i class="fa-solid fa-chalkboard-teacher"></i></div>
-          <h3>AI赋能教学全流程 · 提示词工程实操</h3>
-        </div>
-        <p>张健老师主讲，"课前/课中/课后"三阶段演示，DeepSeek/Kimi生成教案、PPT、思维导图、课堂互动工具、作业批改等全流程。</p>
-        <div class="card-meta">
-          <span class="tag">提示词</span>
-          <span class="tag">教育</span>
-        </div>
-        <div class="src"><i class="fa-solid fa-globe"></i> 培华学院 · 教师培训</div>
-      </a>
-
-    </div>
-  </section>
-
-  <!-- 声明 -->
-  <div class="notice">
-    <b><i class="fa-solid fa-circle-info"></i> 资源说明：</b>本页所有链接均为公开可访问的在线资源（微信公众号、B站视频、官网通知页等），不存储本地文件。内容归原作者及发布高校所有，仅供学习用途。如有侵权请联系删除。
-  </div>
-
-</main>
-
-<footer class="footer">
-  <div>© 2025 EXPECTOPATRONUS · 全站内容纯学习用途，非商用</div>
-  <div class="social">
-    <a href="https://github.com/expectopatronus00" target="_blank"><i class="fa-brands fa-github"></i></a>
-    <a href="mailto:18821772508@163.com"><i class="fa-solid fa-envelope"></i></a>
-  </div>
-</footer>
-<button id="back"><i class="fa-solid fa-arrow-up"></i></button>
-
-<script>
-(function(){
-  var saved=localStorage.getItem('theme')||'dark';
-  if(saved==='light')document.documentElement.dataset.theme='light';
-  var ti=document.querySelector('#theme-toggle i');
-  if(ti)ti.className=saved==='light'?'fa-solid fa-sun':'fa-solid fa-moon';
-  var btn=document.getElementById('theme-toggle');
-  if(btn)btn.addEventListener('click',function(){
-    var next=document.documentElement.dataset.theme==='light'?'dark':'light';
-    document.documentElement.dataset.theme=next;
-    localStorage.setItem('theme',next);
-    var ti2=document.querySelector('#theme-toggle i');
-    if(ti2)ti2.className=next==='light'?'fa-solid fa-sun':'fa-solid fa-moon';
-  });
-  var back=document.getElementById('back');
-  window.addEventListener('scroll',function(){
-    var p=Math.min(1,window.scrollY/Math.max(1,document.body.scrollHeight-innerHeight));
-    var prog=document.getElementById('progress');
-    if(prog)prog.style.width=(p*100).toFixed(1)+'%';
-    if(back)back.classList.toggle('show',window.scrollY>300);
-  });
-  if(back)back.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
-})();
-</script>
-</body>
+    <script>
+      (function () {
+        var saved = localStorage.getItem('theme') || 'dark';
+        document.documentElement.dataset.theme = saved;
+        var ti = document.querySelector('#theme-toggle i');
+        if (ti) ti.className = saved === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+        var toggle = document.getElementById('theme-toggle');
+        if (toggle)
+          toggle.addEventListener('click', function () {
+            var cur = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = cur;
+            localStorage.setItem('theme', cur);
+            if (ti) ti.className = cur === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+          });
+        var back = document.getElementById('back-to-top');
+        if (back) {
+          window.addEventListener('scroll', function () {
+            back.classList.toggle('visible', window.scrollY > 500);
+          });
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        }
+      })();
+    </script>
+  </body>
 </html>

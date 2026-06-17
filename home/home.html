@@ -1,262 +1,534 @@
-﻿<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN" data-theme="dark">
-<script>(function(){try{const t=localStorage.getItem('theme')||'dark';if(t==='light')document.documentElement.dataset.theme='light';}catch(e){}})();</script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>文章库 · EXPECTOPATRONUS</title>
-<meta name="description" content="精选 24 篇技术文章，覆盖 Linux / AI / DevOps / 前端">
-<link rel="shortcut icon" href="./50.png">
-<link id="fa-cdn" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<script>(function(){var l=document.getElementById('fa-cdn');var chk=function(){var ok=false;try{var s=getComputedStyle(document.querySelector('.fa-solid')||document.body);ok=!s.fontFamily||s.fontFamily.indexOf('Font Awesome')!==-1;}catch(e){ok=false;}if(!ok&&window._fa_retried===undefined){window._fa_retried=true;var n=document.createElement('link');n.rel='stylesheet';n.href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css';document.head.appendChild(n);}};l.onload=chk;l.onerror=function(){chk();};})();</script>
-<link rel="stylesheet" href="./common.css">
-<style>
-.home-hero{padding:38px 24px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,color-mix(in oklab,var(--bg-2) 92%,transparent),color-mix(in oklab,var(--bg-0) 95%,transparent))}
-.home-hero .inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
-.home-hero h1{font-size:clamp(1.7rem,4vw,2.6rem);font-weight:800;background:var(--grad-1);-webkit-background-clip:text;background-clip:text;color:transparent}
-.home-hero .sub{color:var(--ink-soft);font-size:.92rem;margin-top:8px}
-.home-hero .badges{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
-.home-hero .badges b{padding:3px 12px;border-radius:999px;font-size:.72rem;background:var(--grad-soft);color:var(--cyan);border:1px solid rgba(0,229,255,.35)}
-/* quick-stats removed */
-.cat-stats{display:flex;gap:10px;padding:16px 24px;overflow-x:auto;max-width:1200px;margin:0 auto;scrollbar-width:none}
-.cat-stats::-webkit-scrollbar{display:none}
-.cs-pill{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;background:var(--bg-2);border:1px solid var(--line);color:var(--ink-soft);font-size:.82rem;font-weight:600;white-space:nowrap;transition:all .25s;text-decoration:none;cursor:pointer}
-.cs-pill b{margin-left:auto;font-size:.75rem;color:var(--cyan);background:rgba(0,229,255,.12);padding:2px 10px;border-radius:999px}
-.cs-pill:hover{border-color:var(--line-2);color:var(--cyan);transform:translateY(-2px)}
-.cs-pill.active{background:var(--grad-soft);border-color:rgba(0,229,255,.4);color:var(--cyan)}
-.container{max-width:1200px;margin:0 auto;padding:24px;display:grid;grid-template-columns:280px 1fr;gap:24px}
-.sidebar{display:flex;flex-direction:column;gap:20px}
-.side-rank{padding:0 14px 18px;border-radius:16px;background:var(--bg-2);border:1px solid var(--line)}
-.side-title{display:flex;align-items:center;gap:8px;font-size:.88rem;font-weight:800;color:var(--ink);margin:18px 4px 12px}
-.side-title i{color:var(--cyan)}
-.rank-list{display:flex;flex-direction:column;gap:6px}
-.rank-li{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:var(--bg-0);border:1px solid var(--line);text-decoration:none;transition:all .25s;color:var(--ink);font-size:.78rem}
-.rank-li:hover{border-color:var(--cyan);transform:translateX(3px);color:var(--ink)}
-.rank-li .m{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:800;flex-shrink:0}
-.rank-li .m-1{background:var(--grad-1);color:#fff}
-.rank-li .m-2{background:linear-gradient(135deg,#c9d3e3,#8ea4c2);color:#fff}
-.rank-li .m-3{background:linear-gradient(135deg,#d4a373,#8b5a2b);color:#fff}
-.rank-li .m-4,.rank-li .m-5{background:var(--bg-2);border:1px solid var(--line);color:var(--ink)}
-.rank-li strong{display:block;font-size:.8rem;color:var(--ink);line-height:1.3;font-weight:600}
-.rank-li .cat{font-size:.68rem;color:var(--mute);margin-top:2px}
-.filters{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 18px}
-.filter-btn{padding:7px 16px;border-radius:999px;background:var(--bg-2);border:1px solid var(--line);color:var(--ink-soft);font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit}
-.filter-btn:hover{border-color:var(--line-2);color:var(--cyan)}
-.filter-btn.active{background:var(--grad-soft);border-color:rgba(0,229,255,.4);color:var(--cyan)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
-.card{position:relative;padding:20px;background:var(--bg-2);border:1px solid var(--line);border-radius:16px;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:var(--ink);transition:all .3s;overflow:hidden;animation:fadeUp .5s ease both}
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-.card:hover{border-color:var(--line-2);transform:translateY(-4px);box-shadow:var(--shadow-glow);color:var(--ink)}
-.card .cat-tag{display:inline-flex;gap:6px;font-size:.7rem;padding:2px 10px;border-radius:999px;background:rgba(0,229,255,.1);color:var(--cyan);border:1px solid rgba(0,229,255,.25);align-self:flex-start}
-.card h3{font-size:1rem;font-weight:700;color:var(--ink);line-height:1.4}
-.card .desc{font-size:.82rem;color:var(--mute);line-height:1.55;flex:1}
-.card .meta{display:flex;gap:14px;font-size:.72rem;color:var(--mute);flex-wrap:wrap;border-top:1px dashed var(--line);padding-top:10px}
-.card .meta i{color:var(--cyan);margin-right:4px}
-.card.hot::before{content:"";position:absolute;inset:0;border-radius:16px;background:linear-gradient(135deg,rgba(0,229,255,.06),rgba(139,92,246,.06));pointer-events:none}
-.tags,.site-stats{padding:14px;border-radius:14px;background:var(--bg-2);border:1px solid var(--line);margin:14px 24px 60px;max-width:1200px;margin-left:auto;margin-right:auto}
-.tags{display:flex;flex-wrap:wrap;gap:8px}
-.tags .tag{padding:5px 14px;border-radius:999px;font-size:.75rem;background:var(--bg-1);border:1px solid var(--line);color:var(--ink-soft);text-decoration:none;transition:all .2s}
-.tags .tag:hover{color:var(--cyan);border-color:var(--cyan)}
-.site-stats{display:flex;gap:18px;justify-content:space-around;text-align:center}
-.site-stats b{display:block;font-size:1.4rem;font-weight:800;background:var(--grad-1);-webkit-background-clip:text;background-clip:text;color:transparent}
-.site-stats span{font-size:.72rem;color:var(--mute)}
-@media(max-width:768px){.container{grid-template-columns:1fr;padding:16px}.sidebar{order:2}.home-hero .inner{flex-direction:column;align-items:flex-start}}
-@media(max-width:480px){.site-stats{flex-wrap:wrap}}
-</style>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>文章索引 · EXPECTOPATRONUS</title>
+    <meta name="description" content="个人博客的全部文章索引，按主题、日期或标签浏览。" />
+    <link rel="shortcut icon" href="50.png" />
+    <link rel="stylesheet" href="design-tokens.css" />
+    <style>
+      /* Archive page styles */
+      .page-intro {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-7);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-intro h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2.4rem, 5.5vw, 4rem);
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+        color: var(--text);
+        margin-bottom: var(--sp-5);
+      }
+      .page-intro h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-intro p {
+        font-family: var(--font-serif);
+        font-size: 1.05rem;
+        color: var(--text-soft);
+        max-width: 600px;
+        line-height: 1.7;
+      }
 
-<body>
-<canvas id="stars-bg"></canvas>
-<div class="grid-bg"></div>
-<div class="progress" id="progress"></div>
-<nav class="topbar">
-  <div class="inner">
-    <a href="../index.html" class="brand">
-      <div class="logo"></div>
-      <span>EXPECTOPATRONUS · BLOG</span>
-    </a>
-    <div class="nav">
-      <a href="../index.html"><i class="fa-solid fa-house"></i> 首页</a>
-      <a href="./home.html" class="active"><i class="fa-solid fa-newspaper"></i> 文章</a>
-      <a href="../post/deepseek/deepseek.html"><i class="fa-solid fa-robot"></i> DeepSeek</a>
-      <a href="http://expectopatronus.top:5005/" target="_blank"><i class="fa-solid fa-compass"></i> 导航</a>
-    </div>
-    <button id="theme-toggle" aria-label="主题切换"><i class="fa-solid fa-moon"></i></button>
-  </div>
-</nav>
+      .filter-bar {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-6) var(--sp-6) var(--sp-5);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--sp-3);
+        border-bottom: 1px solid var(--line);
+      }
+      .filter-bar .bar-label {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        color: var(--text-dim);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-right: var(--sp-3);
+      }
+      .filter-btn {
+        font-family: var(--font-sans);
+        font-size: 0.82rem;
+        padding: 7px 14px;
+        border-radius: 999px;
+        background: transparent;
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        cursor: pointer;
+        transition: all var(--dur-fast);
+      }
+      .filter-btn:hover {
+        color: var(--text);
+        border-color: var(--accent-rust);
+      }
+      .filter-btn.is-active {
+        background: var(--accent-rust);
+        color: var(--ink-950);
+        border-color: var(--accent-rust);
+        font-weight: 600;
+      }
 
-<section class="home-hero">
-  <div class="inner">
-    <div>
-      <div class="badges"><b><i class="fa-solid fa-rocket"></i> AI 辅助内容创作 · 全栈科技博客</b></div>
-      <h1>文章库</h1>
-      <p class="sub">精选 13 篇内容，覆盖 AI / 抖音搬运 / Linux / GPU / 运维</p>
-    </div>
-  </div>
-</section>
+      /* Tag pills */
+      .cat-pills {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-5) var(--sp-6);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .cat-pills a {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        padding: 5px 12px;
+        border-radius: 6px;
+        background: var(--bg-soft);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all var(--dur-fast);
+      }
+      .cat-pills a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+      .cat-pills a.is-active {
+        background: var(--accent-rust);
+        color: var(--ink-950);
+        border-color: var(--accent-rust);
+      }
 
-<section class="cat-stats">
-  <a class="cs-pill cs-all active" data-cat="all" href="javascript:void(0)"><i class="fa-solid fa-border-all"></i> 全部 <b>13</b></a>
-  <a class="cs-pill cs-ai" data-cat="AI" href="javascript:void(0)"><i class="fa-solid fa-brain"></i> AI <b>4</b></a>
-  <a class="cs-pill cs-dy" data-cat="抖音搬运" href="javascript:void(0)"><i class="fa-solid fa-video"></i> 抖音搬运 <b>3</b></a>
-  <a class="cs-pill cs-gpu" data-cat="GPU" href="javascript:void(0)"><i class="fa-solid fa-microchip"></i> GPU <b>2</b></a>
-  <a class="cs-pill cs-ops" data-cat="运维" href="javascript:void(0)"><i class="fa-solid fa-server"></i> 运维 <b>1</b></a>
-  <a class="cs-pill cs-linux" data-cat="Linux" href="javascript:void(0)"><i class="fa-brands fa-linux"></i> Linux <b>1</b></a>
-</section>
+      /* Article list */
+      .article-list {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-6) var(--sp-6) var(--sp-10);
+      }
+      .article-row {
+        display: grid;
+        grid-template-columns: 80px 1fr auto;
+        gap: var(--sp-6);
+        padding: var(--sp-6) 0;
+        border-bottom: 1px solid var(--line);
+        text-decoration: none;
+        color: inherit;
+        transition: padding var(--dur-fast);
+        align-items: start;
+      }
+      .article-row:hover {
+        padding-left: var(--sp-3);
+      }
+      .article-row .art-date {
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        color: var(--text-dim);
+        letter-spacing: 0.05em;
+        padding-top: 6px;
+      }
+      .article-row .art-body {
+        min-width: 0;
+      }
+      .article-row .art-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.5rem;
+        line-height: 1.2;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-2);
+        transition: color var(--dur-fast);
+      }
+      .article-row:hover .art-body h3 {
+        color: var(--accent-rust);
+      }
+      .article-row .art-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-bottom: var(--sp-3);
+      }
+      .article-row .art-meta .tag {
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        padding: 3px 10px;
+        border-radius: 4px;
+        background: var(--bg-soft);
+        color: var(--text-dim);
+        border: 1px solid var(--line);
+      }
+      .article-row .art-meta .tag.cat {
+        background: transparent;
+        color: var(--accent-rust);
+        border-color: rgba(201, 119, 47, 0.35);
+      }
+      .article-row p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.65;
+        margin: 0;
+      }
+      .article-row .arrow {
+        font-family: var(--font-mono);
+        color: var(--text-dim);
+        font-size: 0.85rem;
+        padding-top: 10px;
+        transition:
+          transform var(--dur-fast),
+          color var(--dur-fast);
+      }
+      .article-row:hover .arrow {
+        color: var(--accent-rust);
+        transform: translateX(6px);
+      }
 
-<main class="container">
-  <aside class="sidebar">
-    <section class="side-rank">
-      <h3 class="side-title"><i class="fa-solid fa-trophy"></i> 热门排行榜</h3>
-      <div class="rank-list">
-        <a class="rank-li" href="../post/wx-openclaw/wx-openclaw.html"><span class="m m-1">1</span><div><strong>OpenClaw 国内部署踩坑</strong><span class="cat">运维 · 06-17</span></div></a>
-        <a class="rank-li" href="../post/wx-gpu-burn/wx-gpu-burn.html"><span class="m m-2">2</span><div><strong>GPU 单卡压测满载</strong><span class="cat">GPU · 06-17</span></div></a>
-        <a class="rank-li" href="../post/wx-b300-hardware/wx-b300-hardware.html"><span class="m m-3">3</span><div><strong>HGX B300 实测数据</strong><span class="cat">AI · 06-16</span></div></a>
-        <a class="rank-li" href="../post/dy-7646747643204900836/dy-7646747643204900836.html"><span class="m m-4">4</span><div><strong>Harness starter 开源</strong><span class="cat">抖音搬运 · 06-16</span></div></a>
-        <a class="rank-li" href="../post/dy-7651945427952078131/dy-7651945427952078131.html"><span class="m m-5">5</span><div><strong>Anthropic 硬刚美国监管</strong><span class="cat">抖音搬运 · 06-16</span></div></a>
+      @media (max-width: 700px) {
+        .article-row {
+          grid-template-columns: 70px 1fr;
+        }
+        .article-row .arrow {
+          display: none;
+        }
+        .article-row .art-body h3 {
+          font-size: 1.2rem;
+        }
+      }
+
+      /* Empty state */
+      .empty {
+        text-align: center;
+        padding: var(--sp-10) var(--sp-6);
+        color: var(--text-dim);
+        font-family: var(--font-display);
+        font-size: 1.4rem;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../index.html" class="brand">
+          <span class="logo">E</span>
+          <span>expectopatronus</span>
+        </a>
+        <div class="nav-links">
+          <a href="../index.html">首页</a>
+          <a href="home.html" class="is-active">文章</a>
+          <a href="../post/deepseek/deepseek.html">DeepSeek</a>
+          <a href="http://expectopatronus.top:5005/" target="_blank" rel="noopener">导航站</a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="切换主题"><i class="fa-solid fa-moon"></i></button>
       </div>
+    </nav>
+
+    <section class="page-intro">
+      <h1>全部<em>笔记</em>与<em>文章</em></h1>
+      <p>按日期倒序排列——最新的在最上方。使用筛选器按主题浏览，或点击标签查看相关内容。共 13 篇。</p>
     </section>
-  </aside>
-  <section>
-    <div class="filters">
-      <button class="filter-btn active" data-cat="all">全部</button>
-      <button class="filter-btn" data-cat="AI">AI</button>
-      <button class="filter-btn" data-cat="抖音搬运">抖音搬运</button>
+
+    <div class="filter-bar">
+      <span class="bar-label">主题</span>
+      <button class="filter-btn is-active" data-cat="all">全部</button>
+      <button class="filter-btn" data-cat="AI">AI 工具</button>
       <button class="filter-btn" data-cat="GPU">GPU</button>
       <button class="filter-btn" data-cat="运维">运维</button>
+      <button class="filter-btn" data-cat="抖音搬运">抖音搬运</button>
       <button class="filter-btn" data-cat="Linux">Linux</button>
     </div>
-    <div class="grid" id="articles-grid">
-      <!-- populated by script -->
+
+    <div class="cat-pills" id="tag-pills">
+      <a href="#" data-tag="all" class="is-active">全标签</a>
+      <a href="#" data-tag="OpenClaw">OpenClaw</a>
+      <a href="#" data-tag="部署">部署</a>
+      <a href="#" data-tag="Docker">Docker</a>
+      <a href="#" data-tag="CentOS">CentOS</a>
+      <a href="#" data-tag="DeepSeek">DeepSeek</a>
+      <a href="#" data-tag="GPU">GPU</a>
+      <a href="#" data-tag="压测">压测</a>
+      <a href="#" data-tag="Anthropic">Anthropic</a>
+      <a href="#" data-tag="提示词">提示词</a>
     </div>
-  </section>
-</main>
 
-<section class="tags">
-  <a class="tag" href="javascript:void(0)" onclick="filterByTag('Linux')">#Linux</a>
-  <a class="tag" href="javascript:void(0)" onclick="filterByTag('AI')">#AI</a>
-  <a class="tag" href="javascript:void(0)" onclick="filterByTag('DeepSeek')">#DeepSeek</a>
-  <a class="tag" href="javascript:void(0)" onclick="filterByTag('NVIDIA')">#NVIDIA</a>
-  <a class="tag" href="javascript:void(0)" onclick="filterByTag('Gemini')">#Gemini</a>
-  <a class="tag" href="javascript:void(0)" onclick="filterByTag('Skill')">#Skill</a>
-  <a class="tag" href="javascript:void(0)" onclick="filterByTag('Harness')">#Harness</a>
-  <a class="tag" href="javascript:void(0)" onclick="filterByTag('GPU')">#GPU</a>
-  <a class="tag" href="javascript:void(0)" onclick="filterByTag('烤机')">#烤机</a>
-</section>
+    <div class="article-list" id="article-list">
+      <!-- Rendered by JS below -->
+    </div>
 
-<section class="site-stats">
-  <div><b>13</b><span>文章总数</span></div>
-  <div><b>5</b><span>内容分类</span></div>
-  <div><b>1.2k</b><span>全站访问</span></div>
-  <div><b>1d</b><span>平均更新</span></div>
-</section>
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2026 · 个人笔记 · GitHub Pages</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><i class="fa-brands fa-github"></i
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+      </div>
+    </footer>
 
-<footer class="footer"><div>© 2025 EXPECTOPATRONUS · 本站内容纯学习用途</div><div><a href="https://github.com/expectopatronus00" target="_blank"><i class="fa-brands fa-github"></i></a></div></footer>
-<div id="back"><i class="fa-solid fa-arrow-up"></i></div>
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><i class="fa-solid fa-arrow-up"></i></button>
 
-<script>
-(function(){
-  var saved = localStorage.getItem('theme') || 'dark';
-  if(saved === 'light') document.documentElement.dataset.theme = 'light';
-  var ti = document.querySelector('#theme-toggle i');
-  if(ti) ti.className = saved === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-  var btn = document.getElementById('theme-toggle');
-  if(btn) btn.addEventListener('click', function(){
-    var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
-    document.documentElement.dataset.theme = next;
-    localStorage.setItem('theme', next);
-    var ti2 = document.querySelector('#theme-toggle i');
-    if(ti2) ti2.className = next === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-  });
-  var back = document.getElementById('back');
-  window.addEventListener('scroll', function(){
-    var p = Math.min(1, window.scrollY / Math.max(1, document.body.scrollHeight - innerHeight));
-    var prog = document.getElementById('progress');
-    if(prog) prog.style.width = (p*100).toFixed(1)+'%';
-    if(back) back.classList.toggle('show', window.scrollY > 300);
-  });
-  if(back) back.addEventListener('click', function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+    <link id="fa" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <script>
+      (function () {
+        try {
+          var link = document.getElementById('fa');
+          link.onerror = function () {
+            var n = document.createElement('link');
+            n.rel = 'stylesheet';
+            n.href = 'https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css';
+            document.head.appendChild(n);
+          };
+        } catch (e) {}
+      })();
+    </script>
 
-  var canvas = document.getElementById('stars-bg');
-  if(canvas){
-    var ctx = canvas.getContext('2d');
-    var w = canvas.width = innerWidth, h = canvas.height = innerHeight;
-    var stars = [];
-    for(var i=0;i<80;i++) stars.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.5+.2,a:Math.random()*.5+.2});
-    function draw(){
-      ctx.clearRect(0,0,w,h);
-      stars.forEach(function(s){
-        ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
-        ctx.fillStyle='rgba(180,210,255,'+s.a+')';ctx.fill();
-      });
-    }
-    draw();
-    onresize = function(){w=canvas.width=innerWidth;h=canvas.height=innerHeight;stars=[];for(var i=0;i<80;i++)stars.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.5+.2,a:Math.random()*.5+.2});draw();};
-  }
+    <script>
+      (function () {
+        // Theme
+        var saved = localStorage.getItem('theme') || 'dark';
+        document.documentElement.dataset.theme = saved;
+        var ti = document.querySelector('#theme-toggle i');
+        if (ti) ti.className = saved === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+        var toggle = document.getElementById('theme-toggle');
+        if (toggle)
+          toggle.addEventListener('click', function () {
+            var cur = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = cur;
+            localStorage.setItem('theme', cur);
+            if (ti) ti.className = cur === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+          });
 
-  var articles = [
-    { id:"wx-openclaw", title:"国内服务器部署 OpenClaw 踩坑实录", url:"../post/wx-openclaw/wx-openclaw.html", summary:"在国内 CentOS 7 服务器上部署 OpenClaw（小龙虾）AI 助手的完整实战：glibc 版本过低、Docker 镜像拉取超时、镜像搬运法、配置权限、Web UI 访问等踩坑实录。", category:"运维", date:"2026-06-17", read:10, tags:["OpenClaw","部署","CentOS","Docker","国内服务器","镜像搬运"], hot:true },
-    { id:"wx-gpu-burn", title:"GPU单卡压测\"满载\"及合理满载", url:"../post/wx-gpu-burn/wx-gpu-burn.html", summary:"GPU利用率100%不等于真正满载。深入解析GPU三大资源模块、常见假满载陷阱（FurMark/轻循环/单测带宽），以及合理的单卡压测方案。", category:"GPU", date:"2026-06-17", read:8, tags:["GPU","压测","满载","nvidia-smi","烤机"], hot:true },
-    { id:"wx-b300", title:"实测 HGX B300：一篇看懂关键硬件数据", url:"../post/wx-b300-hardware/wx-b300-hardware.html", summary:"实测 NVIDIA HGX B300 在待机/满负载/多卡互联下的功耗、NVLink 带宽、HBM3E 吞吐，附 FP4 144 TFLOPS 对比表。", category:"AI", date:"2026-06-16", read:8, tags:["NVIDIA","B300","GPU","HBM3E"] },
-    { id:"dy-76419625", title:"Gemini3.5Flash × Composer2.5 踢馆赛", url:"../post/dy-7641962519699017001/dy-7641962519699017001.html", summary:"Gemini3.5Flash 携手 Composer2.5 挑战全球十六强 AI 模型，谁将上位谁将出局？", category:"抖音搬运", date:"2026-06-14", read:10, tags:["Gemini","AI挑战赛","Cursor"], hot:true },
-    { id:"dy-76467476", title:"Vibe Coding 大赏 · Harness starter 开源", url:"../post/dy-7646747643204900836/dy-7646747643204900836.html", summary:"小鹿宅 Vibe Coding 大赏，Harness starter 正式开源。驯服 AI，工程级约束。", category:"抖音搬运", date:"2026-06-16", read:5, tags:["Skill","Harness","claude","vibecoding"], feat:true },
-    { id:"dy-76519454", title:"顶级AI模型遭封禁 · Anthropic 硬刚美国监管", url:"../post/dy-7651945427952078131/dy-7651945427952078131.html", summary:"Fable5 发布 3 天即被美国商务部整体封禁，背后举报者竟是投资几百亿的大股东亚马逊？AI 监管专题。", category:"抖音搬运", date:"2026-06-16", read:7, tags:["Anthropic","Fable5","AI监管","Claude"], feat:true },
-    { id:"ds-nav", title:"DeepSeek 智能工具导航", url:"../post/deepseek/deepseek.html", summary:"DeepSeek 生态精选工具、API、文档、社区一站式聚合。", category:"AI", date:"2026-06-10", read:6, tags:["DeepSeek","导航"] },
-    { id:"ds-doc", title:"DeepSeek 院校教程文档归档", url:"../post/deepseek/doc/doc.html", summary:"全国高校 AI 工具教程合集：清华大学、浙江大学、华中科技大学等11所高校 DeepSeek 教程，以及 Claude、Cursor、提示词工程等在线资源汇总（全部为公开链接）。", category:"AI", date:"2026-06-17", read:12, tags:["DeepSeek","清华大学","浙江大学","Claude","Cursor","提示词工程"] },
-    { id:"ds-api", title:"DeepSeek API 集成中心", url:"../post/deepseek/api/api.html", summary:"从接入开始，覆盖 SDK、价格、速率限制与最佳实践。", category:"AI", date:"2026-04-20", read:4, tags:["DeepSeek","API"] },
-    { id:"post1", title:"Linux 清除 history 记录的方式", url:"../post/post1/post1.html", summary:"清除当前会话 / 指定行数 / 彻底禁用 HISTSIZE。", category:"Linux", date:"2024-02-23", read:3, tags:["Linux","bash"] }
-  ];
+        // Back to top
+        var back = document.getElementById('back-to-top');
+        if (back) {
+          window.addEventListener('scroll', function () {
+            back.classList.toggle('visible', window.scrollY > 500);
+          });
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        }
 
-  // 按发布日期降序排序（最新在最上面）
-  function byDateDesc(a, b){
-    return (b.date || '').localeCompare(a.date || '');
-  }
-  function sortedDesc(list){ return list.slice().sort(byDateDesc); }
+        // Articles data
+        var articles = [
+          {
+            id: 'wx-openclaw',
+            title: '国内服务器部署 OpenClaw 踩坑实录',
+            url: '../post/wx-openclaw/wx-openclaw.html',
+            summary: 'glibc 版本过低、Docker 镜像拉取超时、代理配置不通……最终用最朴素的镜像搬运法解决问题。',
+            category: '运维',
+            date: '2026-06-17',
+            tags: ['OpenClaw', '部署', 'Docker', 'CentOS', '国内服务器'],
+          },
+          {
+            id: 'wx-gpu-burn',
+            title: 'GPU 单卡压测「满载」及合理满载',
+            url: '../post/wx-gpu-burn/wx-gpu-burn.html',
+            summary: '当 nvidia-smi 显示 100% 时，显卡真的在全力工作吗？关于假满载、三大资源与压测方案。',
+            category: 'GPU',
+            date: '2026-06-17',
+            tags: ['GPU', '压测', '满载', 'nvidia-smi', '烤机'],
+          },
+          {
+            id: 'wx-b300-hardware',
+            title: '实测 HGX B300 · 一篇看懂关键硬件数据',
+            url: '../post/wx-b300-hardware/wx-b300-hardware.html',
+            summary: '待机 / 满载 / 多卡互联下的功耗、NVLink 带宽与 HBM3E 吞吐对比。',
+            category: 'GPU',
+            date: '2026-06-16',
+            tags: ['GPU', 'B300', '硬件', '实测'],
+          },
+          {
+            id: 'dy-7651998760762871090',
+            title: 'CodeGraph · 让 AI 编程代理效率翻倍的本地代码索引',
+            url: '../post/dy-7651998760762871090/dy-7651998760762871090.html',
+            summary: '代码上下文的索引神器——架构关系、依赖图谱、符号检索与变更影响分析。',
+            category: '抖音搬运',
+            date: '2026-06-16',
+            tags: ['CodeGraph', 'AI', '代码索引', '代理'],
+          },
+          {
+            id: 'dy-7646747643204900836',
+            title: 'a-stock-data · 最强 A 股数据 Skill',
+            url: '../post/dy-7646747643204900836/dy-7646747643204900836.html',
+            summary: '实时行情、研报、龙虎榜、资金流向——AI 时代的数据接口。',
+            category: '抖音搬运',
+            date: '2026-06-16',
+            tags: ['A股', '数据', '实时行情', '研报'],
+          },
+          {
+            id: 'dy-7641962519699017001',
+            title: 'Gemini 3.5 Flash × Composer 2.5 踢馆赛',
+            url: '../post/dy-7641962519699017001/dy-7641962519699017001.html',
+            summary: '新一代多模态与结构化生成的实测对比。',
+            category: '抖音搬运',
+            date: '2026-06-14',
+            tags: ['Gemini', 'Composer', '多模态'],
+          },
+          {
+            id: 'dy-7651945427952078131',
+            title: '顶级 AI 模型遭封禁 · Anthropic 硬刚美国监管',
+            url: '../post/dy-7651945427952078131/dy-7651945427952078131.html',
+            summary: 'Claude 系列的政策、模型与可用性的近况观察。',
+            category: '抖音搬运',
+            date: '2026-06-16',
+            tags: ['Anthropic', 'Claude', 'AI', '监管'],
+          },
+          {
+            id: 'dy-7651525917084372224',
+            title: '最顶级的选股提示词 · 让龙虾成为价值猎手',
+            url: '../post/dy-7651525917084372224/dy-7651525917084372224.html',
+            summary: '从基本面、财务指标到估值水平——一套结构化的选股提示词框架。',
+            category: '抖音搬运',
+            date: '2026-06-16',
+            tags: ['提示词', '价值投资', '选股', 'OpenClaw'],
+          },
+          {
+            id: 'deepseek-doc',
+            title: 'AI 工具院校教程合集',
+            url: '../post/deepseek/doc/doc.html',
+            summary: '清华、浙大、华中科大等高校发布的公开在线教程与资料索引。',
+            category: 'AI',
+            date: '2026-06-17',
+            tags: ['DeepSeek', '院校教程', 'AI', '课程'],
+          },
+          {
+            id: 'deepseek-api',
+            title: 'DeepSeek API 与接入速查',
+            url: '../post/deepseek/api/api.html',
+            summary: '模型列表、接口协议、调用示例与常见问题。',
+            category: 'AI',
+            date: '2026-06-10',
+            tags: ['DeepSeek', 'API', '接口'],
+          },
+          {
+            id: 'deepseek-main',
+            title: 'DeepSeek 生态导航',
+            url: '../post/deepseek/deepseek.html',
+            summary: '官方入口、模型介绍、提示词、院校教程、API 的一站式索引。',
+            category: 'AI',
+            date: '2026-06-10',
+            tags: ['DeepSeek', '导航', '教程', '提示词'],
+          },
+          {
+            id: 'skill-test',
+            title: '站内 skill 测试页',
+            url: '../post/_skill-test/_skill-test.html',
+            summary: '用于验证页面结构与样式的实验笔记。',
+            category: 'AI',
+            date: '2026-05-20',
+            tags: ['实验', '测试'],
+          },
+          {
+            id: 'post1',
+            title: 'Linux / Bash 实用技巧速查',
+            url: '../post/post1/post1.html',
+            summary: '日常运维中高频使用的命令与脚本。',
+            category: 'Linux',
+            date: '2024-02-23',
+            tags: ['Linux', 'Bash', '运维', '命令行'],
+          },
+        ];
 
-  var grid = document.getElementById('articles-grid');
-  function render(list){
-    grid.innerHTML = '';
-    list.forEach(function(a, i){
-      var card = document.createElement('a');
-      card.href = a.url;
-      card.className = 'card' + (a.hot?' hot':'');
-      card.style.animationDelay = (i*40)+'ms';
-      card.innerHTML =
-        '<span class="cat-tag"><i class="fa-solid fa-folder"></i> '+a.category+'</span>' +
-        '<h3>'+a.title+'</h3>' +
-        '<div class="desc">'+a.summary+'</div>' +
-        '<div class="meta">' +
-          '<span><i class="fa-regular fa-calendar"></i> '+a.date+'</span>' +
-          '<span><i class="fa-regular fa-clock"></i> '+a.read+' 分钟</span>' +
-          (a.tags?a.tags.map(function(t){return'<span>#'+t+'</span>'}).join(''):'') +
-        '</div>';
-      grid.appendChild(card);
-    });
-  }
-  render(sortedDesc(articles));
+        // Sort by date desc
+        articles.sort(function (a, b) {
+          return b.date.localeCompare(a.date);
+        });
 
-  document.querySelectorAll('.filter-btn').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});
-      btn.classList.add('active');
-      var cat = btn.dataset.cat;
-      render(cat==='all' ? sortedDesc(articles) : sortedDesc(articles.filter(function(a){return a.category===cat})));
-    });
-  });
+        // State
+        var state = { cat: 'all', tag: 'all' };
 
-  document.querySelectorAll('.cs-pill').forEach(function(pill){
-    pill.addEventListener('click', function(){
-      document.querySelectorAll('.cs-pill').forEach(function(p){p.classList.remove('active');});
-      pill.classList.add('active');
-      var cat = pill.dataset.cat;
-      document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.toggle('active', b.dataset.cat===cat || (cat==='all' && b.dataset.cat==='all'));});
-      render(cat==='all' ? sortedDesc(articles) : sortedDesc(articles.filter(function(a){return a.category===cat})));
-    });
-  });
+        // Apply URL params
+        var params = new URLSearchParams(window.location.search);
+        if (params.get('cat')) state.cat = params.get('cat');
+        if (params.get('tag')) state.tag = params.get('tag');
 
-  window.filterByTag = function(tag){
-    render(sortedDesc(articles.filter(function(a){return (a.tags||[]).some(function(t){return t.toLowerCase()===tag.toLowerCase();})})));
-  };
-})();
-</script>
-</body>
+        // UI: set active filter btn
+        document.querySelectorAll('.filter-btn').forEach(function (btn) {
+          btn.classList.toggle('is-active', btn.dataset.cat === state.cat);
+          btn.addEventListener('click', function () {
+            state.cat = btn.dataset.cat;
+            state.tag = 'all';
+            document.querySelectorAll('.filter-btn').forEach(function (b) {
+              b.classList.toggle('is-active', b === btn);
+            });
+            document.querySelectorAll('#tag-pills a').forEach(function (a) {
+              a.classList.toggle('is-active', a.dataset.tag === 'all');
+            });
+            render();
+          });
+        });
+        document.querySelectorAll('#tag-pills a').forEach(function (a) {
+          a.classList.toggle('is-active', a.dataset.tag === state.tag);
+          a.addEventListener('click', function (e) {
+            e.preventDefault();
+            state.tag = a.dataset.tag;
+            document.querySelectorAll('#tag-pills a').forEach(function (x) {
+              x.classList.toggle('is-active', x === a);
+            });
+            render();
+          });
+        });
+
+        // Render
+        function render() {
+          var list = document.getElementById('article-list');
+          var filtered = articles.filter(function (a) {
+            var ok = state.cat === 'all' || a.category === state.cat;
+            if (ok && state.tag !== 'all') ok = (a.tags || []).indexOf(state.tag) >= 0;
+            return ok;
+          });
+          if (filtered.length === 0) {
+            list.innerHTML = '<div class="empty">该筛选下暂无内容</div>';
+            return;
+          }
+          list.innerHTML = filtered
+            .map(function (a) {
+              var tags = (a.tags || [])
+                .map(function (t) {
+                  return '<span class="tag">' + t + '</span>';
+                })
+                .join('');
+              return (
+                '<a class="article-row" href="' +
+                a.url +
+                '">' +
+                '<div class="art-date">' +
+                a.date.replace(/-/g, ' · ') +
+                '</div>' +
+                '<div class="art-body">' +
+                '<div class="art-meta"><span class="tag cat">' +
+                a.category +
+                '</span>' +
+                tags +
+                '</div>' +
+                '<h3>' +
+                a.title +
+                '</h3>' +
+                '<p>' +
+                a.summary +
+                '</p>' +
+                '</div>' +
+                '<div class="arrow">→</div>' +
+                '</a>'
+              );
+            })
+            .join('');
+        }
+        render();
+      })();
+    </script>
+  </body>
 </html>

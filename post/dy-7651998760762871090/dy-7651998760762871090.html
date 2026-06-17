@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>CodeGraph · 让 AI 编程代理效率翻倍的本地代码索引 · EXPECTOPATRONUS</title>
+    <meta
+      name="description"
+      content="CodeGraph 是一个面向 AI 编程代理的本地代码索引工具：通过架构关系、依赖图谱、符号检索和变更影响分析，让大模型更精准地理解你的代码库。"
+    />
+    <link rel="shortcut icon" href="../../home/50.png" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .article-body {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.6rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+      .api-table {
+        width: 100%;
+        border-collapse: collapse;
+        background: var(--bg-card);
+        border-radius: var(--r-lg);
+        overflow: hidden;
+        border: 1px solid var(--line);
+        margin-bottom: var(--sp-7);
+      }
+      .api-table th {
+        text-align: left;
+        padding: 14px 18px;
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        font-weight: 500;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        background: var(--bg-soft);
+        border-bottom: 1px solid var(--line);
+      }
+      .api-table td {
+        padding: 14px 18px;
+        border-bottom: 1px solid var(--line);
+        font-size: 0.92rem;
+        color: var(--text);
+        font-family: var(--font-serif);
+      }
+      .api-table tr:last-child td {
+        border-bottom: 0;
+      }
+      .api-table code {
+        font-family: var(--font-mono);
+        font-size: 0.82rem;
+        padding: 2px 8px;
+        background: var(--bg-soft);
+        border-radius: 6px;
+        color: var(--accent-jade);
+      }
+      .code-block {
+        background: #0a0a15;
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        padding: var(--sp-5) var(--sp-6);
+        margin-bottom: var(--sp-7);
+        font-family: var(--font-mono);
+        font-size: 0.86rem;
+        line-height: 1.75;
+        color: var(--text-soft);
+        overflow-x: auto;
+        white-space: pre;
+      }
+      .code-block .kw {
+        color: var(--accent-rust);
+      }
+      .code-block .cmt {
+        color: #5c6370;
+        font-style: italic;
+      }
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: var(--sp-4) 0 var(--sp-6);
+      }
+      .tags-row a {
+        padding: 6px 12px;
+        background: var(--bg-soft);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        font-family: var(--font-mono);
+        font-size: 0.78rem;
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+      @media (max-width: 800px) {
+        .platform-list {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html">文章</a>
+          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="http://expectopatronus.top:5005/" target="_blank" rel="noopener">导航站</a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="切换主题"><i class="fa-solid fa-moon"></i></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">code · ai agent</div>
+      <h1>CodeGraph · 让 AI 编程代理效率翻倍的<em>本地</em>代码索引</h1>
+      <p>
+        面对一个上万文件的代码库，大模型在没有上下文时给出的答案往往泛泛而谈。CodeGraph 为 AI
+        编程代理提供结构化、可搜索、带关系图谱的代码索引——让代理在生成代码、修复 bug、写测试前，先真正"读"懂你的工程。
+      </p>
+    </section>
+
+    <div class="article-body">
+      <div class="section-marker">01 · Motivation</div>
+      <h2>为什么需要代码索引？</h2>
+      <p>
+        当你把代码丢给 AI
+        编程助手时，它面临两个核心问题：<strong>窗口限制</strong>与<strong>上下文稀疏</strong>。代码库里 99%
+        的文件对你当前任务都是无关的——但大模型并不知道哪些是关键入口。一个粗糙的 rag-over-files
+        往往把错误的模块塞进上下文，导致生成代码不可用。
+      </p>
+      <p>
+        CodeGraph 的思路是：<strong>先把代码理解为结构 + 关系图</strong>，再让 AI
+        根据查询去检索这个图，而不是盲目扫描所有文件。
+      </p>
+
+      <div class="info-box">
+        <strong>核心观察：</strong> 如果一个工程师读代码需要 3
+        小时——从入口函数开始，追踪调用链，检查依赖，跳转到配置文件——那么 AI 编程代理也需要同样的能力，只是以毫秒为单位。
+      </div>
+
+      <div class="section-marker">02 · What It Does</div>
+      <h2>四个核心能力</h2>
+
+      <table class="api-table">
+        <thead>
+          <tr>
+            <th>能力</th>
+            <th>做什么</th>
+            <th>典型场景</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>架构关系 · Architecture</td>
+            <td>识别模块边界、包/目录分层、数据流</td>
+            <td>"这个项目是怎么组织的？"</td>
+          </tr>
+          <tr>
+            <td>依赖图谱 · Dependency</td>
+            <td>构建 import / call graph、模块依赖拓扑</td>
+            <td>"改这个文件会影响谁？"</td>
+          </tr>
+          <tr>
+            <td>符号检索 · Symbol</td>
+            <td>函数/类/变量的定义、引用、类型签名</td>
+            <td>"查找某个函数所有调用位置"</td>
+          </tr>
+          <tr>
+            <td>变更影响 · Impact</td>
+            <td>根据 git diff 自动计算受影响范围与测试</td>
+            <td>"本次 PR 需要跑哪些单测？"</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="section-marker">03 · Architecture</div>
+      <h2>工作原理（简化版）</h2>
+      <p>CodeGraph 把一个工程的"理解"拆成三步：</p>
+
+      <p>
+        <strong>① 静态解析：</strong>针对不同语言（TS/Python/Rust/Go/Java…）使用轻量级 AST
+        解析器与语言服务器协议（LSP）索引，提取文件中的符号、类型签名、import 依赖。
+      </p>
+
+      <p>
+        <strong>② 图构建：</strong>将函数/类/模块抽象为节点，调用 / 导入 /
+        继承关系抽象为边；同时计算节点的"中心性"与"分层等级"，识别入口 / 核心 / 边缘模块。
+      </p>
+
+      <p>
+        <strong>③ 语义搜索：</strong
+        >把代码摘要与描述向量化，结合图结构做混合检索——让一次自然语言查询同时命中符号与语义相关的代码段。
+      </p>
+
+      <pre class="code-block"><span class="cmt"># 最简单的使用：在项目根目录执行</span>
+<span class="kw">codegraph</span> index .
+<span class="kw">codegraph</span> query "登录流程中哪些函数负责写数据库？"</pre>
+
+      <div class="section-marker">04 · Integration</div>
+      <h2>与 AI 编程代理协同</h2>
+      <p>CodeGraph 的输出可以直接 feed 给 Claude、Cursor、OpenClaw 等工具作为 RAG 上下文。典型接入方式有三种：</p>
+
+      <div class="info-box">
+        <strong>1 · CLI 管道：</strong>把 `codegraph query --json "..."` 的 JSON 结果通过 shell/函数调用喂给 Agent；<br /><br />
+        <strong>2 · IDE 插件：</strong>在 VSCode / Cursor 中安装 CodeGraph 插件，它会在"Ask
+        AI"时自动把相关代码段作为上下文注入；<br /><br />
+        <strong>3 · 本地 HTTP 服务：</strong>`codegraph serve` 起一个 REST 服务，你的 AI 代理可以按 LSP
+        风格查询符号与依赖。
+      </div>
+
+      <div class="section-marker">05 · Why It Matters</div>
+      <h2>它解决了什么真正的问题？</h2>
+      <p>
+        在日常工程中，AI
+        编程助手失败的原因往往不是模型能力不够，而是它拿到的上下文"不全、不准、也不聚焦"。常见三类错误：
+      </p>
+
+      <div class="info-box info-box-jade">
+        <strong>过度猜测：</strong> AI 只看到冰山一角的文件，便推断整个系统的数据模型，生成的代码与实际约定不一致。
+      </div>
+      <div class="info-box info-box-jade">
+        <strong>遗漏副作用：</strong> 修改函数签名时，AI 没有更新所有调用点——因为它根本没见过被调用方的文件。
+      </div>
+      <div class="info-box info-box-jade">
+        <strong>无法定位：</strong> 面对一个 bug 描述，AI 不知道应该先看哪些模块的代码，只能让你手动找。
+      </div>
+
+      <p>
+        CodeGraph 的索引是一种"让 AI 站在工程师肩膀上"的做法：把代码库里最关键的关系信息预先计算好，再按需提供给 AI
+        作为压缩后的上下文。
+      </p>
+
+      <div class="section-marker">06 · Alternatives</div>
+      <h2>同类工具对比</h2>
+
+      <table class="api-table">
+        <thead>
+          <tr>
+            <th>工具</th>
+            <th>定位</th>
+            <th>典型工作流</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>CodeGraph</code></td>
+            <td>本地代码索引 + 图检索</td>
+            <td>配合任意 Agent / IDE</td>
+          </tr>
+          <tr>
+            <td><code>Sourcegraph Cody</code></td>
+            <td>云/本地混合，IDE 深度集成</td>
+            <td>Cody: 聊天 + 多文件编辑</td>
+          </tr>
+          <tr>
+            <td><code>OpenClaw / Harness</code></td>
+            <td>AI Agent 框架</td>
+            <td>任务执行 + 多技能组合</td>
+          </tr>
+          <tr>
+            <td><code>tree-sitter + grep</code></td>
+            <td>DIY 管线</td>
+            <td>脚本化定制检索</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="section-marker">07 · Resources</div>
+      <h2>相关资源与链接</h2>
+      <div class="platform-list">
+        <a href="https://codegraph.ai/" target="_blank" rel="noopener"
+          ><i class="fa-solid fa-globe"></i> CodeGraph 官方网站</a
+        >
+        <a href="https://github.com/" target="_blank" rel="noopener"
+          ><i class="fa-brands fa-github"></i> GitHub · 开源仓库</a
+        >
+        <a href="https://docs.sourcegraph.com/" target="_blank" rel="noopener"
+          ><i class="fa-solid fa-book"></i> Sourcegraph / Cody 文档</a
+        >
+        <a href="https://microsoft.github.io/language-server-protocol/" target="_blank" rel="noopener"
+          ><i class="fa-solid fa-diagram-project"></i> Language Server Protocol</a
+        >
+        <a href="https://tree-sitter.github.io/" target="_blank" rel="noopener"
+          ><i class="fa-solid fa-code"></i> Tree-sitter · 语法解析</a
+        >
+        <a href="https://www.cursor.com/" target="_blank" rel="noopener"
+          ><i class="fa-solid fa-keyboard"></i> Cursor · AI IDE</a
+        >
+      </div>
+
+      <h3 style="margin-top: var(--sp-8)">相关阅读</h3>
+      <div class="platform-list">
+        <a href="wx-openclaw.html"><i class="fa-solid fa-compass"></i> 国内服务器部署 OpenClaw</a>
+        <a href="../deepseek/deepseek.html"><i class="fa-solid fa-robot"></i> DeepSeek 生态导航</a>
+      </div>
+
+      <div class="tags-row">
+        <a href="../../home/home.html?tag=CodeGraph">CodeGraph</a>
+        <a href="../../home/home.html?tag=AI">AI</a>
+        <a href="../../home/home.html?tag=编程代理">编程代理</a>
+        <a href="../../home/home.html?tag=代码索引">代码索引</a>
+        <a href="../../home/home.html?tag=LSP">LSP</a>
+        <a href="../../home/home.html?tag=RAG">RAG</a>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2026 · 个人笔记 · GitHub Pages</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><i class="fa-brands fa-github"></i
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><i class="fa-solid fa-arrow-up"></i></button>
+
+    <link id="fa" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <script>
+      (function () {
+        try {
+          var l = document.getElementById('fa');
+          l.onerror = function () {
+            var n = document.createElement('link');
+            n.rel = 'stylesheet';
+            n.href = 'https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css';
+            document.head.appendChild(n);
+          };
+        } catch (e) {}
+      })();
+    </script>
+
+    <script>
+      (function () {
+        var s = localStorage.getItem('theme') || 'dark';
+        document.documentElement.dataset.theme = s;
+        var ti = document.querySelector('#theme-toggle i');
+        if (ti) ti.className = s === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+        var tb = document.getElementById('theme-toggle');
+        if (tb)
+          tb.addEventListener('click', function () {
+            var cur = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = cur;
+            localStorage.setItem('theme', cur);
+            if (ti) ti.className = cur === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+          });
+        var b = document.getElementById('back-to-top');
+        if (b) {
+          window.addEventListener('scroll', function () {
+            b.classList.toggle('visible', window.scrollY > 500);
+          });
+          b.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

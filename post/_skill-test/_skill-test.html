@@ -1,259 +1,793 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN" data-theme="dark">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>测试文章 · EXPECTOPATRONUS</title>
-<meta name="description" content="测试模板渲染是否正常。">
-<meta name="keywords" content="抖音,搬运,测试">
-<meta property="og:title" content="测试文章">
-<meta property="og:type" content="article">
-<meta property="og:description" content="测试模板渲染是否正常。">
-<link rel="shortcut icon" href="../../home/50.png" type="image/png">
-<link id="fa-cdn" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<script>(function(){var l=document.getElementById('fa-cdn');var chk=function(){var ok=false;try{var s=getComputedStyle(document.querySelector('.fa-solid')||document.body);ok=!s.fontFamily||s.fontFamily.indexOf('Font Awesome')!==-1;}catch(e){ok=false;}if(!ok&&window._fa_retried===undefined){window._fa_retried=true;var n=document.createElement('link');n.rel='stylesheet';n.href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css';document.head.appendChild(n);}};l.onload=chk;l.onerror=function(){chk();};})();</script>
-<script>(function(){try{var t=localStorage.getItem('theme')||'dark';if(t==='light')document.documentElement.dataset.theme='light';}catch(e){}})();</script>
-<style>
-*{box-sizing:border-box;margin:0;padding:0;}
-:root{--bg-0:#0a0a12;--bg-1:#12121c;--ink:#e8e8f0;--mute:#8a8aa0;--line:#2a2a3a;--cyan:#00e5ff;--pink:#ff2d92;--accent-grad:linear-gradient(135deg,#00e5ff,#8b5cf6);}
-[data-theme="light"]{--bg-0:#f7f7fa;--bg-1:#ffffff;--ink:#1a1a24;--mute:#5a5a70;--line:#e4e4ec;}
-html,body{background:var(--bg-0);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.7;font-size:16px;}
-a{color:inherit;text-decoration:none;}
-.topbar{position:sticky;top:0;z-index:50;background:rgba(10,10,18,.75);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);}
-.topbar .inner{max-width:1200px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
-.topbar .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;}
-.topbar .logo{width:30px;height:30px;border-radius:8px;background:var(--accent-grad);box-shadow:0 4px 16px -4px rgba(0,229,255,.5);}
-.topbar .nav{display:flex;gap:4px;}
-.topbar .nav a{padding:8px 14px;border-radius:8px;font-size:14px;color:var(--mute);transition:all .2s;}
-.topbar .nav a:hover{color:var(--ink);background:rgba(255,255,255,.04);}
-.topbar .nav a.active{color:var(--cyan);background:rgba(0,229,255,.08);}
-#theme-toggle{background:none;border:1px solid var(--line);color:var(--ink);width:38px;height:38px;border-radius:8px;cursor:pointer;transition:all .2s;}
-#theme-toggle:hover{border-color:var(--cyan);color:var(--cyan);}
-.breadcrumb{max-width:1200px;margin:18px auto 0;padding:0 24px;font-size:13px;color:var(--mute);}
-.breadcrumb a:hover{color:var(--cyan);}
-.breadcrumb .sep{margin:0 8px;}
-.layout{max-width:900px;margin:0 auto;padding:24px;}
-.article-body{background:var(--bg-1);border-radius:20px;border:1px solid var(--line);padding:0;overflow:hidden;}
-.dy-hero{position:relative;height:420px;overflow:hidden;background-size:cover;background-position:center;}
-.dy-hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35) 0%,rgba(0,0,0,.7) 60%,rgba(0,0,0,.95) 100%);}
-.dy-hero .bad{position:relative;z-index:2;padding:28px 36px;max-width:800px;color:#fff;position:absolute;left:36px;bottom:28px;}
-.dy-hero .cat-tag{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;font-size:.72rem;font-weight:700;background:rgba(0,229,255,.2);color:#00e5ff;border:1px solid rgba(0,229,255,.4);margin-bottom:14px;}
-.dy-hero h1{font-size:clamp(1.5rem,3.5vw,2.2rem);font-weight:800;letter-spacing:-.015em;margin-bottom:10px;line-height:1.2;text-shadow:0 2px 14px rgba(0,0,0,.6);}
-.dy-hero .meta-row{display:flex;gap:14px;font-size:.85rem;color:rgba(255,255,255,.85);flex-wrap:wrap;}
-.dy-hero .meta-row i{color:#00e5ff;}
-.dy-desc{padding:22px 28px;border-left:3px solid var(--cyan);background:linear-gradient(135deg,rgba(0,229,255,.06),rgba(139,92,246,.06));border-radius:14px;margin:22px 28px;color:var(--ink);font-style:normal;line-height:1.9;font-size:1rem;}
-.dy-content{padding:8px 28px 28px;}
-.dy-content h2{font-size:1.4rem;margin:26px 0 14px;padding-left:14px;border-left:4px solid var(--cyan);letter-spacing:-.01em;}
-.dy-content h3{font-size:1.1rem;margin:22px 0 10px;color:var(--cyan);}
-.dy-content p{margin-bottom:14px;color:var(--ink);font-size:1rem;line-height:1.9;}
-.dy-content strong{color:var(--ink);font-weight:700;}
-.dy-content .hl{background:linear-gradient(120deg,transparent 0%,rgba(0,229,255,.18) 50%,transparent 100%);padding:0 4px;border-radius:4px;color:var(--cyan);font-weight:600;}
-.dy-timeline{margin:24px 0;padding:20px 24px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.02);}
-.dy-timeline .tl-item{display:grid;grid-template-columns:90px 1fr;gap:16px;padding:12px 0;border-bottom:1px dashed var(--line);}
-.dy-timeline .tl-item:last-child{border-bottom:none;}
-.dy-timeline .tl-time{color:var(--cyan);font-weight:700;font-size:.9rem;}
-.dy-timeline .tl-text{color:var(--ink);line-height:1.8;font-size:.95rem;}
-.dy-quote{margin:28px 0;padding:22px 26px;border-radius:14px;background:linear-gradient(135deg,rgba(139,92,246,.1),rgba(255,45,146,.08));border:1px solid rgba(139,92,246,.3);position:relative;}
-.dy-quote::before{content:"\201C";position:absolute;top:-10px;left:16px;font-size:4rem;color:var(--pink);font-family:Georgia,serif;line-height:1;opacity:.4;}
-.dy-quote p{font-style:italic;color:var(--ink);line-height:1.9;padding-left:10px;}
-.dy-cta{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:28px;padding:22px;border-radius:18px;background:linear-gradient(140deg,rgba(255,255,255,.04),rgba(255,255,255,.01));border:1px solid var(--line);align-items:center;}
-.dy-cta .cover-side img{width:100%;border-radius:14px;border:1px solid var(--line);box-shadow:0 10px 30px -15px rgba(139,92,246,.3);}
-.dy-cta .btn-side{display:flex;flex-direction:column;gap:14px;}
-.dy-cta .cta-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 22px;border-radius:12px;background:linear-gradient(135deg,#3b82ff,#8b5cf6);color:#fff;text-decoration:none;font-weight:700;box-shadow:0 10px 24px -12px rgba(139,92,246,.55);transition:transform .25s;font-size:.95rem;}
-.dy-cta .cta-btn:hover{transform:translateY(-2px);}
-.dy-cta .cta-btn.alt{background:linear-gradient(135deg,#222,#333);box-shadow:0 6px 20px -8px rgba(0,0,0,.4);}
-.dy-cta .cta-note{font-size:.82rem;color:var(--mute);line-height:1.6;}
-.dy-cta .cta-note i{color:var(--pink);}
-.dy-platforms{margin:8px 28px 28px;padding:22px;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.02);}
-.dy-platforms h3{display:flex;align-items:center;gap:10px;margin:0 0 16px;font-size:1.1rem;}
-.dy-platforms h3 i{color:var(--cyan);}
-.plat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;}
-.plat-card{display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 10px;border-radius:12px;background:var(--bg-1);border:1px solid var(--line);transition:all .25s;text-decoration:none;color:var(--ink);}
-.plat-card:hover{border-color:var(--cyan);transform:translateY(-3px);box-shadow:0 10px 24px -12px rgba(0,229,255,.35);}
-.plat-card i{font-size:1.6rem;color:var(--cyan);}
-.plat-card .pn{font-weight:600;font-size:.9rem;color:var(--ink);}
-.plat-card .pd{font-size:.72rem;color:var(--mute);}
-.dy-tags{display:flex;flex-wrap:wrap;gap:8px;margin:18px 28px 10px;}
-.dy-tags a{padding:6px 14px;border-radius:999px;font-size:.78rem;font-weight:600;background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--ink);text-decoration:none;transition:all .2s;}
-.dy-tags a:hover{color:var(--cyan);border-color:var(--cyan);transform:translateY(-2px);}
-.dy-related{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:24px 28px 28px;}
-.dy-related a{padding:16px 20px;border-radius:14px;background:linear-gradient(140deg,rgba(255,255,255,.04),rgba(255,255,255,.01));border:1px solid var(--line);text-decoration:none;color:var(--ink);transition:transform .25s;}
-.dy-related a:hover{transform:translateY(-2px);border-color:var(--cyan);}
-.dy-related a h4{font-size:.95rem;font-weight:700;margin-bottom:4px;}
-.dy-related a p{font-size:.8rem;color:var(--mute);line-height:1.5;}
-#back{position:fixed;right:24px;bottom:24px;width:44px;height:44px;border-radius:50%;background:var(--accent-grad);color:#fff;border:none;cursor:pointer;opacity:0;pointer-events:none;transition:all .3s;box-shadow:0 10px 30px -8px rgba(0,229,255,.5);font-size:1rem;z-index:40;}
-#back.show{opacity:1;pointer-events:auto;}
-#back:hover{transform:translateY(-3px);}
-.progress{position:fixed;top:0;left:0;height:3px;background:var(--accent-grad);width:0;z-index:100;transition:width .1s;}
-.footer{max-width:1200px;margin:36px auto 0;padding:24px;border-top:1px solid var(--line);color:var(--mute);font-size:.85rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
-.footer .social{display:flex;gap:12px;}
-.footer .social a{width:34px;height:34px;border-radius:8px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;transition:all .2s;color:var(--mute);}
-.footer .social a:hover{border-color:var(--cyan);color:var(--cyan);}
-@media(max-width:820px){.topbar .nav{display:none;}.dy-hero{height:320px;}.dy-hero .bad{left:20px;bottom:20px;padding-right:20px;}.dy-content{padding:8px 20px 24px;}.dy-desc,.dy-platforms,.dy-cta,.dy-tags,.dy-related{margin-left:20px;margin-right:20px;}.dy-cta{grid-template-columns:1fr;}.dy-related{grid-template-columns:1fr;}.dy-timeline .tl-item{grid-template-columns:70px 1fr;gap:12px;}}
-@media(max-width:480px){.plat-grid{grid-template-columns:repeat(2,1fr);}.dy-content h2{font-size:1.2rem;}}
-</style>
-</head>
-<body>
-<div class="progress" id="progress"></div>
-<button id="back" aria-label="返回顶部"><i class="fa-solid fa-arrow-up"></i></button>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>测试文章 · EXPECTOPATRONUS</title>
+    <meta name="description" content="测试模板渲染是否正常。" />
+    <meta name="keywords" content="抖音,搬运,测试" />
+    <meta property="og:title" content="测试文章" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="测试模板渲染是否正常。" />
+    <link rel="shortcut icon" href="../../home/50.png" type="image/png" />
+    <link
+      id="fa-cdn"
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <script>
+      (function () {
+        var l = document.getElementById('fa-cdn');
+        var chk = function () {
+          var ok = false;
+          try {
+            var s = getComputedStyle(document.querySelector('.fa-solid') || document.body);
+            ok = !s.fontFamily || s.fontFamily.indexOf('Font Awesome') !== -1;
+          } catch (e) {
+            ok = false;
+          }
+          if (!ok && window._fa_retried === undefined) {
+            window._fa_retried = true;
+            var n = document.createElement('link');
+            n.rel = 'stylesheet';
+            n.href = 'https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css';
+            document.head.appendChild(n);
+          }
+        };
+        l.onload = chk;
+        l.onerror = function () {
+          chk();
+        };
+      })();
+    </script>
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --bg-0: #0a0a12;
+        --bg-1: #12121c;
+        --ink: #e8e8f0;
+        --mute: #8a8aa0;
+        --line: #2a2a3a;
+        --cyan: #00e5ff;
+        --pink: #ff2d92;
+        --accent-grad: linear-gradient(135deg, #00e5ff, #8b5cf6);
+      }
+      [data-theme='light'] {
+        --bg-0: #f7f7fa;
+        --bg-1: #ffffff;
+        --ink: #1a1a24;
+        --mute: #5a5a70;
+        --line: #e4e4ec;
+      }
+      html,
+      body {
+        background: var(--bg-0);
+        color: var(--ink);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        line-height: 1.7;
+        font-size: 16px;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: rgba(10, 10, 18, 0.75);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--line);
+      }
+      .topbar .inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 14px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+      .topbar .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-weight: 700;
+        font-size: 15px;
+      }
+      .topbar .logo {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        background: var(--accent-grad);
+        box-shadow: 0 4px 16px -4px rgba(0, 229, 255, 0.5);
+      }
+      .topbar .nav {
+        display: flex;
+        gap: 4px;
+      }
+      .topbar .nav a {
+        padding: 8px 14px;
+        border-radius: 8px;
+        font-size: 14px;
+        color: var(--mute);
+        transition: all 0.2s;
+      }
+      .topbar .nav a:hover {
+        color: var(--ink);
+        background: rgba(255, 255, 255, 0.04);
+      }
+      .topbar .nav a.active {
+        color: var(--cyan);
+        background: rgba(0, 229, 255, 0.08);
+      }
+      #theme-toggle {
+        background: none;
+        border: 1px solid var(--line);
+        color: var(--ink);
+        width: 38px;
+        height: 38px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      #theme-toggle:hover {
+        border-color: var(--cyan);
+        color: var(--cyan);
+      }
+      .breadcrumb {
+        max-width: 1200px;
+        margin: 18px auto 0;
+        padding: 0 24px;
+        font-size: 13px;
+        color: var(--mute);
+      }
+      .breadcrumb a:hover {
+        color: var(--cyan);
+      }
+      .breadcrumb .sep {
+        margin: 0 8px;
+      }
+      .layout {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 24px;
+      }
+      .article-body {
+        background: var(--bg-1);
+        border-radius: 20px;
+        border: 1px solid var(--line);
+        padding: 0;
+        overflow: hidden;
+      }
+      .dy-hero {
+        position: relative;
+        height: 420px;
+        overflow: hidden;
+        background-size: cover;
+        background-position: center;
+      }
+      .dy-hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.7) 60%, rgba(0, 0, 0, 0.95) 100%);
+      }
+      .dy-hero .bad {
+        position: relative;
+        z-index: 2;
+        padding: 28px 36px;
+        max-width: 800px;
+        color: #fff;
+        position: absolute;
+        left: 36px;
+        bottom: 28px;
+      }
+      .dy-hero .cat-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 12px;
+        border-radius: 999px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        background: rgba(0, 229, 255, 0.2);
+        color: #00e5ff;
+        border: 1px solid rgba(0, 229, 255, 0.4);
+        margin-bottom: 14px;
+      }
+      .dy-hero h1 {
+        font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+        font-weight: 800;
+        letter-spacing: -0.015em;
+        margin-bottom: 10px;
+        line-height: 1.2;
+        text-shadow: 0 2px 14px rgba(0, 0, 0, 0.6);
+      }
+      .dy-hero .meta-row {
+        display: flex;
+        gap: 14px;
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.85);
+        flex-wrap: wrap;
+      }
+      .dy-hero .meta-row i {
+        color: #00e5ff;
+      }
+      .dy-desc {
+        padding: 22px 28px;
+        border-left: 3px solid var(--cyan);
+        background: linear-gradient(135deg, rgba(0, 229, 255, 0.06), rgba(139, 92, 246, 0.06));
+        border-radius: 14px;
+        margin: 22px 28px;
+        color: var(--ink);
+        font-style: normal;
+        line-height: 1.9;
+        font-size: 1rem;
+      }
+      .dy-content {
+        padding: 8px 28px 28px;
+      }
+      .dy-content h2 {
+        font-size: 1.4rem;
+        margin: 26px 0 14px;
+        padding-left: 14px;
+        border-left: 4px solid var(--cyan);
+        letter-spacing: -0.01em;
+      }
+      .dy-content h3 {
+        font-size: 1.1rem;
+        margin: 22px 0 10px;
+        color: var(--cyan);
+      }
+      .dy-content p {
+        margin-bottom: 14px;
+        color: var(--ink);
+        font-size: 1rem;
+        line-height: 1.9;
+      }
+      .dy-content strong {
+        color: var(--ink);
+        font-weight: 700;
+      }
+      .dy-content .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(0, 229, 255, 0.18) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--cyan);
+        font-weight: 600;
+      }
+      .dy-timeline {
+        margin: 24px 0;
+        padding: 20px 24px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.02);
+      }
+      .dy-timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: 16px;
+        padding: 12px 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .dy-timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .dy-timeline .tl-time {
+        color: var(--cyan);
+        font-weight: 700;
+        font-size: 0.9rem;
+      }
+      .dy-timeline .tl-text {
+        color: var(--ink);
+        line-height: 1.8;
+        font-size: 0.95rem;
+      }
+      .dy-quote {
+        margin: 28px 0;
+        padding: 22px 26px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(255, 45, 146, 0.08));
+        border: 1px solid rgba(139, 92, 246, 0.3);
+        position: relative;
+      }
+      .dy-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -10px;
+        left: 16px;
+        font-size: 4rem;
+        color: var(--pink);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.4;
+      }
+      .dy-quote p {
+        font-style: italic;
+        color: var(--ink);
+        line-height: 1.9;
+        padding-left: 10px;
+      }
+      .dy-cta {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+        margin: 28px;
+        padding: 22px;
+        border-radius: 18px;
+        background: linear-gradient(140deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .dy-cta .cover-side img {
+        width: 100%;
+        border-radius: 14px;
+        border: 1px solid var(--line);
+        box-shadow: 0 10px 30px -15px rgba(139, 92, 246, 0.3);
+      }
+      .dy-cta .btn-side {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .dy-cta .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 14px 22px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #3b82ff, #8b5cf6);
+        color: #fff;
+        text-decoration: none;
+        font-weight: 700;
+        box-shadow: 0 10px 24px -12px rgba(139, 92, 246, 0.55);
+        transition: transform 0.25s;
+        font-size: 0.95rem;
+      }
+      .dy-cta .cta-btn:hover {
+        transform: translateY(-2px);
+      }
+      .dy-cta .cta-btn.alt {
+        background: linear-gradient(135deg, #222, #333);
+        box-shadow: 0 6px 20px -8px rgba(0, 0, 0, 0.4);
+      }
+      .dy-cta .cta-note {
+        font-size: 0.82rem;
+        color: var(--mute);
+        line-height: 1.6;
+      }
+      .dy-cta .cta-note i {
+        color: var(--pink);
+      }
+      .dy-platforms {
+        margin: 8px 28px 28px;
+        padding: 22px;
+        border-radius: 18px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.02);
+      }
+      .dy-platforms h3 {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0 0 16px;
+        font-size: 1.1rem;
+      }
+      .dy-platforms h3 i {
+        color: var(--cyan);
+      }
+      .plat-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 12px;
+      }
+      .plat-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        padding: 16px 10px;
+        border-radius: 12px;
+        background: var(--bg-1);
+        border: 1px solid var(--line);
+        transition: all 0.25s;
+        text-decoration: none;
+        color: var(--ink);
+      }
+      .plat-card:hover {
+        border-color: var(--cyan);
+        transform: translateY(-3px);
+        box-shadow: 0 10px 24px -12px rgba(0, 229, 255, 0.35);
+      }
+      .plat-card i {
+        font-size: 1.6rem;
+        color: var(--cyan);
+      }
+      .plat-card .pn {
+        font-weight: 600;
+        font-size: 0.9rem;
+        color: var(--ink);
+      }
+      .plat-card .pd {
+        font-size: 0.72rem;
+        color: var(--mute);
+      }
+      .dy-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 18px 28px 10px;
+      }
+      .dy-tags a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-weight: 600;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--line);
+        color: var(--ink);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .dy-tags a:hover {
+        color: var(--cyan);
+        border-color: var(--cyan);
+        transform: translateY(-2px);
+      }
+      .dy-related {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        margin: 24px 28px 28px;
+      }
+      .dy-related a {
+        padding: 16px 20px;
+        border-radius: 14px;
+        background: linear-gradient(140deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+        border: 1px solid var(--line);
+        text-decoration: none;
+        color: var(--ink);
+        transition: transform 0.25s;
+      }
+      .dy-related a:hover {
+        transform: translateY(-2px);
+        border-color: var(--cyan);
+      }
+      .dy-related a h4 {
+        font-size: 0.95rem;
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+      .dy-related a p {
+        font-size: 0.8rem;
+        color: var(--mute);
+        line-height: 1.5;
+      }
+      #back {
+        position: fixed;
+        right: 24px;
+        bottom: 24px;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: var(--accent-grad);
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.3s;
+        box-shadow: 0 10px 30px -8px rgba(0, 229, 255, 0.5);
+        font-size: 1rem;
+        z-index: 40;
+      }
+      #back.show {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      #back:hover {
+        transform: translateY(-3px);
+      }
+      .progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        background: var(--accent-grad);
+        width: 0;
+        z-index: 100;
+        transition: width 0.1s;
+      }
+      .footer {
+        max-width: 1200px;
+        margin: 36px auto 0;
+        padding: 24px;
+        border-top: 1px solid var(--line);
+        color: var(--mute);
+        font-size: 0.85rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .footer .social {
+        display: flex;
+        gap: 12px;
+      }
+      .footer .social a {
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+        border: 1px solid var(--line);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s;
+        color: var(--mute);
+      }
+      .footer .social a:hover {
+        border-color: var(--cyan);
+        color: var(--cyan);
+      }
+      @media (max-width: 820px) {
+        .topbar .nav {
+          display: none;
+        }
+        .dy-hero {
+          height: 320px;
+        }
+        .dy-hero .bad {
+          left: 20px;
+          bottom: 20px;
+          padding-right: 20px;
+        }
+        .dy-content {
+          padding: 8px 20px 24px;
+        }
+        .dy-desc,
+        .dy-platforms,
+        .dy-cta,
+        .dy-tags,
+        .dy-related {
+          margin-left: 20px;
+          margin-right: 20px;
+        }
+        .dy-cta {
+          grid-template-columns: 1fr;
+        }
+        .dy-related {
+          grid-template-columns: 1fr;
+        }
+        .dy-timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: 12px;
+        }
+      }
+      @media (max-width: 480px) {
+        .plat-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .dy-content h2 {
+          font-size: 1.2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress" id="progress"></div>
+    <button id="back" aria-label="返回顶部"><i class="fa-solid fa-arrow-up"></i></button>
 
-<nav class="topbar">
-  <div class="inner">
-    <a href="../../index.html" class="brand">
-      <div class="logo"></div>
-      <span>EXPECTOPATRONUS · BLOG</span>
-    </a>
-    <div class="nav">
-      <a href="../../index.html"><i class="fa-solid fa-house"></i> 首页</a>
-      <a href="../../home/home.html" class="active"><i class="fa-solid fa-newspaper"></i> 文章</a>
-      <a href="../deepseek/deepseek.html"><i class="fa-solid fa-robot"></i> DeepSeek</a>
-      <a href="http://expectopatronus.top:5005/" target="_blank"><i class="fa-solid fa-compass"></i> 导航</a>
+    <nav class="topbar">
+      <div class="inner">
+        <a href="../../index.html" class="brand">
+          <div class="logo"></div>
+          <span>EXPECTOPATRONUS · BLOG</span>
+        </a>
+        <div class="nav">
+          <a href="../../index.html"><i class="fa-solid fa-house"></i> 首页</a>
+          <a href="../../home/home.html" class="active"><i class="fa-solid fa-newspaper"></i> 文章</a>
+          <a href="../deepseek/deepseek.html"><i class="fa-solid fa-robot"></i> DeepSeek</a>
+          <a href="http://expectopatronus.top:5005/" target="_blank"><i class="fa-solid fa-compass"></i> 导航</a>
+        </div>
+        <button id="theme-toggle" aria-label="主题切换"><i class="fa-solid fa-moon"></i></button>
+      </div>
+    </nav>
+
+    <div class="breadcrumb">
+      <a href="../../index.html"><i class="fa-solid fa-house"></i></a>
+      <span class="sep">/</span>
+      <a href="../../home/home.html">文章列表</a>
+      <span class="sep">/</span>
+      <span>Skill 验证 · 抖音搬运测试</span>
     </div>
-    <button id="theme-toggle" aria-label="主题切换"><i class="fa-solid fa-moon"></i></button>
-  </div>
-</nav>
 
-<div class="breadcrumb">
-  <a href="../../index.html"><i class="fa-solid fa-house"></i></a>
-  <span class="sep">/</span>
-  <a href="../../home/home.html">文章列表</a>
-  <span class="sep">/</span>
-  <span>Skill 验证 · 抖音搬运测试</span>
-</div>
+    <main class="layout">
+      <article class="article-wrap">
+        <div class="article-body">
+          <div
+            class="dy-hero"
+            style="background-image: url('https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&q=80')"
+          >
+            <div class="bad">
+              <div class="cat-tag"><i class="fa-solid fa-video"></i> 抖音搬运 · Skill 测试</div>
+              <h1>Skill 模板验证：一篇测试文章</h1>
+              <div class="meta-row">
+                <span><i class="fa-regular fa-user"></i> AI 测试员</span>
+                <span><i class="fa-regular fa-calendar"></i> 2026-06-16</span>
+                <span><i class="fa-regular fa-clock"></i> 1 分 30 秒</span>
+                <span><i class="fa-solid fa-layer-group"></i> 测试 · 结构验证</span>
+              </div>
+            </div>
+          </div>
 
-<main class="layout">
-  <article class="article-wrap">
-    <div class="article-body">
+          <blockquote class="dy-desc">
+            这是一篇由 <span class="hl">douyin-post-skill</span> 模板生成的测试文章。目的是验证：封面图加载、CSS
+            样式正确、时间线/引用/多平台卡片等组件正常渲染、主题切换可用、滚动条进度正常。
+          </blockquote>
 
-      <div class="dy-hero" style="background-image:url('https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&q=80');">
-        <div class="bad">
-          <div class="cat-tag"><i class="fa-solid fa-video"></i> 抖音搬运 · Skill 测试</div>
-          <h1>Skill 模板验证：一篇测试文章</h1>
-          <div class="meta-row">
-            <span><i class="fa-regular fa-user"></i> AI 测试员</span>
-            <span><i class="fa-regular fa-calendar"></i> 2026-06-16</span>
-            <span><i class="fa-regular fa-clock"></i> 1 分 30 秒</span>
-            <span><i class="fa-solid fa-layer-group"></i> 测试 · 结构验证</span>
+          <div class="dy-content">
+            <h2>一、验证文字内容与小标题</h2>
+            <p>
+              本节验证基本的段落、<span class="hl">高亮文字</span>、以及
+              <strong>加粗文字</strong> 能否正常显示。排版的行高、边距、段距需与设计稿一致。
+            </p>
+
+            <h3>三级标题验证</h3>
+            <p>三级标题颜色应为主青色（cyan），字体比正文略大，上方应有 22px 留白。</p>
+
+            <h2>二、时间线组件验证</h2>
+            <p>时间线用于展示事件型内容，有两列栅格布局：左侧时间、右侧描述。</p>
+
+            <div class="dy-timeline">
+              <div class="tl-item">
+                <div class="tl-time">Day 1</div>
+                <div class="tl-text">提取模板结构，分离 CSS / JS 到独立区域。</div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-time">Day 2</div>
+                <div class="tl-text">定义 <span class="hl">占位符规范</span>，编写 SKILL.md 调用指南。</div>
+              </div>
+              <div class="tl-item">
+                <div class="tl-time">Day 3</div>
+                <div class="tl-text">生成示例文章、验证浏览器渲染、推送 GitHub Pages。</div>
+              </div>
+            </div>
+
+            <h2>三、引用 block 验证</h2>
+
+            <div class="dy-quote">
+              <p>一个可复用的 Skill，本质上就是把"怎么做"从人的脑子里移到了文档里，让 AI 也能按同样的流程稳定产出。</p>
+            </div>
+
+            <h2>四、正文段落与滚动</h2>
+            <p>请滚动页面，观察顶部进度条是否随滚动位置线性变化，右下的"返回顶部"按钮是否在滚动超过 300px 后渐显。</p>
+            <p>点击右上角月亮/太阳图标，可切换深色/浅色主题；主题选择会存在 localStorage，刷新不丢。</p>
+          </div>
+
+          <div class="dy-cta">
+            <div class="cover-side">
+              <img
+                loading="lazy"
+                alt="测试封面"
+                src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&q=80"
+              />
+            </div>
+            <div class="btn-side">
+              <a class="cta-btn" href="https://www.douyin.com/video/0000000000000000000" target="_blank" rel="noopener">
+                <i class="fa-brands fa-tiktok"></i> 抖音原视频（示例）
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </a>
+              <a class="cta-btn alt" href="https://github.com/expectopatronus00" target="_blank" rel="noopener">
+                <i class="fa-brands fa-github"></i> 项目 GitHub <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              </a>
+              <div class="cta-note">
+                <i class="fa-solid fa-triangle-exclamation"></i> 本站仅做学习归档，测试用图片来自 Unsplash（免费）。
+              </div>
+            </div>
+          </div>
+
+          <div class="dy-platforms">
+            <h3><i class="fa-solid fa-globe"></i> 相关平台 · 延伸阅读</h3>
+            <div class="plat-grid">
+              <a class="plat-card" href="https://www.douyin.com" target="_blank" rel="noopener"
+                ><i class="fa-brands fa-tiktok"></i><span class="pn">抖音</span><span class="pd">短视频平台</span></a
+              >
+              <a class="plat-card" href="https://github.com" target="_blank" rel="noopener"
+                ><i class="fa-brands fa-github"></i><span class="pn">GitHub</span><span class="pd">代码托管</span></a
+              >
+              <a class="plat-card" href="https://pages.github.com" target="_blank" rel="noopener"
+                ><i class="fa-solid fa-paper-plane"></i><span class="pn">GitHub Pages</span
+                ><span class="pd">静态站托管</span></a
+              >
+              <a class="plat-card" href="https://fontawesome.com" target="_blank" rel="noopener"
+                ><i class="fa-solid fa-icons"></i><span class="pn">Font Awesome</span><span class="pd">图标库</span></a
+              >
+              <a class="plat-card" href="https://unsplash.com" target="_blank" rel="noopener"
+                ><i class="fa-solid fa-camera-retro"></i><span class="pn">Unsplash</span
+                ><span class="pd">免费高清图</span></a
+              >
+              <a class="plat-card" href="https://developer.mozilla.org" target="_blank" rel="noopener"
+                ><i class="fa-brands fa-mdn"></i><span class="pn">MDN</span><span class="pd">前端文档</span></a
+              >
+            </div>
+          </div>
+
+          <div class="dy-tags">
+            <a href="https://www.douyin.com/search/%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2" target="_blank">#技术博客</a>
+            <a href="https://www.douyin.com/search/%E6%8A%96%E9%9F%B3%E6%90%AC%E8%BF%90" target="_blank">#抖音搬运</a>
+            <a href="https://www.douyin.com/search/GitHubPages" target="_blank">#GitHub Pages</a>
+            <a href="https://www.douyin.com/search/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91" target="_blank">#前端开发</a>
+            <a href="https://www.douyin.com/search/Skill" target="_blank">#Skill</a>
+          </div>
+
+          <div class="dy-related">
+            <a href="../../home/home.html">
+              <h4><i class="fa-solid fa-newspaper"></i> 更多文章</h4>
+              <p>回到文章库浏览所有分类</p>
+            </a>
+            <a href="../dy-7651945427952078131/dy-7651945427952078131.html">
+              <h4><i class="fa-solid fa-robot"></i> Anthropic 封禁事件</h4>
+              <p>上一篇用本 Skill 生成的真实文章</p>
+            </a>
           </div>
         </div>
+      </article>
+    </main>
+
+    <footer class="footer">
+      <div>© 2025 EXPECTOPATRONUS · 本站内容纯学习用途，非商用</div>
+      <div class="social">
+        <a href="https://github.com/expectopatronus00" target="_blank"><i class="fa-brands fa-github"></i></a>
+        <a href="mailto:18821772508@163.com"><i class="fa-solid fa-envelope"></i></a>
       </div>
+    </footer>
 
-      <blockquote class="dy-desc">
-        这是一篇由 <span class="hl">douyin-post-skill</span> 模板生成的测试文章。目的是验证：封面图加载、CSS 样式正确、时间线/引用/多平台卡片等组件正常渲染、主题切换可用、滚动条进度正常。
-      </blockquote>
+    <script>
+      (function () {
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var i = document.querySelector('#theme-toggle i');
+        if (i) i.className = saved === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var ii = document.querySelector('#theme-toggle i');
+            if (ii) ii.className = next === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+          });
 
-      <div class="dy-content">
-        <h2>一、验证文字内容与小标题</h2>
-        <p>本节验证基本的段落、<span class="hl">高亮文字</span>、以及 <strong>加粗文字</strong> 能否正常显示。排版的行高、边距、段距需与设计稿一致。</p>
-
-        <h3>三级标题验证</h3>
-        <p>三级标题颜色应为主青色（cyan），字体比正文略大，上方应有 22px 留白。</p>
-
-        <h2>二、时间线组件验证</h2>
-        <p>时间线用于展示事件型内容，有两列栅格布局：左侧时间、右侧描述。</p>
-
-        <div class="dy-timeline">
-          <div class="tl-item"><div class="tl-time">Day 1</div><div class="tl-text">提取模板结构，分离 CSS / JS 到独立区域。</div></div>
-          <div class="tl-item"><div class="tl-time">Day 2</div><div class="tl-text">定义 <span class="hl">占位符规范</span>，编写 SKILL.md 调用指南。</div></div>
-          <div class="tl-item"><div class="tl-time">Day 3</div><div class="tl-text">生成示例文章、验证浏览器渲染、推送 GitHub Pages。</div></div>
-        </div>
-
-        <h2>三、引用 block 验证</h2>
-
-        <div class="dy-quote">
-          <p>一个可复用的 Skill，本质上就是把"怎么做"从人的脑子里移到了文档里，让 AI 也能按同样的流程稳定产出。</p>
-        </div>
-
-        <h2>四、正文段落与滚动</h2>
-        <p>请滚动页面，观察顶部进度条是否随滚动位置线性变化，右下的"返回顶部"按钮是否在滚动超过 300px 后渐显。</p>
-        <p>点击右上角月亮/太阳图标，可切换深色/浅色主题；主题选择会存在 localStorage，刷新不丢。</p>
-      </div>
-
-      <div class="dy-cta">
-        <div class="cover-side">
-          <img loading="lazy" alt="测试封面" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&q=80">
-        </div>
-        <div class="btn-side">
-          <a class="cta-btn" href="https://www.douyin.com/video/0000000000000000000" target="_blank" rel="noopener">
-            <i class="fa-brands fa-tiktok"></i> 抖音原视频（示例） <i class="fa-solid fa-arrow-up-right-from-square"></i>
-          </a>
-          <a class="cta-btn alt" href="https://github.com/expectopatronus00" target="_blank" rel="noopener">
-            <i class="fa-brands fa-github"></i> 项目 GitHub <i class="fa-solid fa-arrow-up-right-from-square"></i>
-          </a>
-          <div class="cta-note"><i class="fa-solid fa-triangle-exclamation"></i> 本站仅做学习归档，测试用图片来自 Unsplash（免费）。</div>
-        </div>
-      </div>
-
-      <div class="dy-platforms">
-        <h3><i class="fa-solid fa-globe"></i> 相关平台 · 延伸阅读</h3>
-        <div class="plat-grid">
-          <a class="plat-card" href="https://www.douyin.com" target="_blank" rel="noopener"><i class="fa-brands fa-tiktok"></i><span class="pn">抖音</span><span class="pd">短视频平台</span></a>
-          <a class="plat-card" href="https://github.com" target="_blank" rel="noopener"><i class="fa-brands fa-github"></i><span class="pn">GitHub</span><span class="pd">代码托管</span></a>
-          <a class="plat-card" href="https://pages.github.com" target="_blank" rel="noopener"><i class="fa-solid fa-paper-plane"></i><span class="pn">GitHub Pages</span><span class="pd">静态站托管</span></a>
-          <a class="plat-card" href="https://fontawesome.com" target="_blank" rel="noopener"><i class="fa-solid fa-icons"></i><span class="pn">Font Awesome</span><span class="pd">图标库</span></a>
-          <a class="plat-card" href="https://unsplash.com" target="_blank" rel="noopener"><i class="fa-solid fa-camera-retro"></i><span class="pn">Unsplash</span><span class="pd">免费高清图</span></a>
-          <a class="plat-card" href="https://developer.mozilla.org" target="_blank" rel="noopener"><i class="fa-brands fa-mdn"></i><span class="pn">MDN</span><span class="pd">前端文档</span></a>
-        </div>
-      </div>
-
-      <div class="dy-tags">
-        <a href="https://www.douyin.com/search/%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2" target="_blank">#技术博客</a>
-        <a href="https://www.douyin.com/search/%E6%8A%96%E9%9F%B3%E6%90%AC%E8%BF%90" target="_blank">#抖音搬运</a>
-        <a href="https://www.douyin.com/search/GitHubPages" target="_blank">#GitHub Pages</a>
-        <a href="https://www.douyin.com/search/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91" target="_blank">#前端开发</a>
-        <a href="https://www.douyin.com/search/Skill" target="_blank">#Skill</a>
-      </div>
-
-      <div class="dy-related">
-        <a href="../../home/home.html">
-          <h4><i class="fa-solid fa-newspaper"></i> 更多文章</h4>
-          <p>回到文章库浏览所有分类</p>
-        </a>
-        <a href="../dy-7651945427952078131/dy-7651945427952078131.html">
-          <h4><i class="fa-solid fa-robot"></i> Anthropic 封禁事件</h4>
-          <p>上一篇用本 Skill 生成的真实文章</p>
-        </a>
-      </div>
-
-    </div>
-  </article>
-</main>
-
-<footer class="footer">
-  <div>© 2025 EXPECTOPATRONUS · 本站内容纯学习用途，非商用</div>
-  <div class="social">
-    <a href="https://github.com/expectopatronus00" target="_blank"><i class="fa-brands fa-github"></i></a>
-    <a href="mailto:18821772508@163.com"><i class="fa-solid fa-envelope"></i></a>
-  </div>
-</footer>
-
-<script>
-(function(){
-  var saved = localStorage.getItem('theme') || 'dark';
-  if(saved === 'light') document.documentElement.dataset.theme = 'light';
-  var i = document.querySelector('#theme-toggle i');
-  if(i) i.className = saved === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-  var btn = document.getElementById('theme-toggle');
-  if(btn) btn.addEventListener('click', function(){
-    var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
-    document.documentElement.dataset.theme = next;
-    localStorage.setItem('theme', next);
-    var ii = document.querySelector('#theme-toggle i');
-    if(ii) ii.className = next === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
-  });
-
-  var back = document.getElementById('back');
-  var prog = document.getElementById('progress');
-  function onScroll(){
-    var h = document.documentElement;
-    var p = Math.min(1, h.scrollTop / Math.max(1, h.scrollHeight - h.clientHeight));
-    if(prog) prog.style.width = (p*100).toFixed(1)+'%';
-    if(back) back.classList.toggle('show', h.scrollTop > 300);
-  }
-  window.addEventListener('scroll', onScroll);
-  if(back) back.addEventListener('click', function(){ window.scrollTo({top:0,behavior:'smooth'}); });
-  onScroll();
-})();
-</script>
-</body>
+        var back = document.getElementById('back');
+        var prog = document.getElementById('progress');
+        function onScroll() {
+          var h = document.documentElement;
+          var p = Math.min(1, h.scrollTop / Math.max(1, h.scrollHeight - h.clientHeight));
+          if (prog) prog.style.width = (p * 100).toFixed(1) + '%';
+          if (back) back.classList.toggle('show', h.scrollTop > 300);
+        }
+        window.addEventListener('scroll', onScroll);
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        onScroll();
+      })();
+    </script>
+  </body>
 </html>
