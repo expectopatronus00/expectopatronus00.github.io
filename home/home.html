@@ -89,16 +89,17 @@
     <div>
       <div class="badges"><b><i class="fa-solid fa-rocket"></i> AI 辅助内容创作 · 全栈科技博客</b></div>
       <h1>文章库</h1>
-      <p class="sub">精选 12 篇内容，覆盖 AI / 抖音搬运 / Linux / GPU</p>
+      <p class="sub">精选 13 篇内容，覆盖 AI / 抖音搬运 / Linux / GPU / 运维</p>
     </div>
   </div>
 </section>
 
 <section class="cat-stats">
-  <a class="cs-pill cs-all active" data-cat="all" href="javascript:void(0)"><i class="fa-solid fa-border-all"></i> 全部 <b>12</b></a>
+  <a class="cs-pill cs-all active" data-cat="all" href="javascript:void(0)"><i class="fa-solid fa-border-all"></i> 全部 <b>13</b></a>
   <a class="cs-pill cs-ai" data-cat="AI" href="javascript:void(0)"><i class="fa-solid fa-brain"></i> AI <b>4</b></a>
   <a class="cs-pill cs-dy" data-cat="抖音搬运" href="javascript:void(0)"><i class="fa-solid fa-video"></i> 抖音搬运 <b>3</b></a>
-  <a class="cs-pill cs-gpu" data-cat="GPU" href="javascript:void(0)"><i class="fa-solid fa-microchip"></i> GPU <b>1</b></a>
+  <a class="cs-pill cs-gpu" data-cat="GPU" href="javascript:void(0)"><i class="fa-solid fa-microchip"></i> GPU <b>2</b></a>
+  <a class="cs-pill cs-ops" data-cat="运维" href="javascript:void(0)"><i class="fa-solid fa-server"></i> 运维 <b>1</b></a>
   <a class="cs-pill cs-linux" data-cat="Linux" href="javascript:void(0)"><i class="fa-brands fa-linux"></i> Linux <b>1</b></a>
 </section>
 
@@ -107,11 +108,11 @@
     <section class="side-rank">
       <h3 class="side-title"><i class="fa-solid fa-trophy"></i> 热门排行榜</h3>
       <div class="rank-list">
-        <a class="rank-li" href="../post/wx-b300-hardware/wx-b300-hardware.html"><span class="m m-1">1</span><div><strong>HGX B300 实测数据</strong><span class="cat">AI · 06-16</span></div></a>
-        <a class="rank-li" href="../post/dy-7651945427952078131/dy-7651945427952078131.html"><span class="m m-2">2</span><div><strong>Anthropic 硬刚美国监管</strong><span class="cat">抖音搬运 · 06-16</span></div></a>
-        <a class="rank-li" href="../post/dy-7641962519699017001/dy-7641962519699017001.html"><span class="m m-3">3</span><div><strong>Gemini × Composer 踢馆赛</strong><span class="cat">抖音搬运 · 06-14</span></div></a>
+        <a class="rank-li" href="../post/wx-openclaw/wx-openclaw.html"><span class="m m-1">1</span><div><strong>OpenClaw 国内部署踩坑</strong><span class="cat">运维 · 06-17</span></div></a>
+        <a class="rank-li" href="../post/wx-gpu-burn/wx-gpu-burn.html"><span class="m m-2">2</span><div><strong>GPU 单卡压测满载</strong><span class="cat">GPU · 06-17</span></div></a>
+        <a class="rank-li" href="../post/wx-b300-hardware/wx-b300-hardware.html"><span class="m m-3">3</span><div><strong>HGX B300 实测数据</strong><span class="cat">AI · 06-16</span></div></a>
         <a class="rank-li" href="../post/dy-7646747643204900836/dy-7646747643204900836.html"><span class="m m-4">4</span><div><strong>Harness starter 开源</strong><span class="cat">抖音搬运 · 06-16</span></div></a>
-        <a class="rank-li" href="../post/deepseek/deepseek.html"><span class="m m-5">5</span><div><strong>DeepSeek 智能工具导航</strong><span class="cat">AI · 06-10</span></div></a>
+        <a class="rank-li" href="../post/dy-7651945427952078131/dy-7651945427952078131.html"><span class="m m-5">5</span><div><strong>Anthropic 硬刚美国监管</strong><span class="cat">抖音搬运 · 06-16</span></div></a>
       </div>
     </section>
   </aside>
@@ -121,6 +122,7 @@
       <button class="filter-btn" data-cat="AI">AI</button>
       <button class="filter-btn" data-cat="抖音搬运">抖音搬运</button>
       <button class="filter-btn" data-cat="GPU">GPU</button>
+      <button class="filter-btn" data-cat="运维">运维</button>
       <button class="filter-btn" data-cat="Linux">Linux</button>
     </div>
     <div class="grid" id="articles-grid">
@@ -142,8 +144,8 @@
 </section>
 
 <section class="site-stats">
-  <div><b>12</b><span>文章总数</span></div>
-  <div><b>4</b><span>内容分类</span></div>
+  <div><b>13</b><span>文章总数</span></div>
+  <div><b>5</b><span>内容分类</span></div>
   <div><b>1.2k</b><span>全站访问</span></div>
   <div><b>1d</b><span>平均更新</span></div>
 </section>
@@ -192,6 +194,7 @@
   }
 
   var articles = [
+    { id:"wx-openclaw", title:"国内服务器部署 OpenClaw 踩坑实录", url:"../post/wx-openclaw/wx-openclaw.html", summary:"在国内 CentOS 7 服务器上部署 OpenClaw（小龙虾）AI 助手的完整实战：glibc 版本过低、Docker 镜像拉取超时、镜像搬运法、配置权限、Web UI 访问等踩坑实录。", category:"运维", date:"2026-06-17", read:10, tags:["OpenClaw","部署","CentOS","Docker","国内服务器","镜像搬运"], hot:true },
     { id:"wx-gpu-burn", title:"GPU单卡压测\"满载\"及合理满载", url:"../post/wx-gpu-burn/wx-gpu-burn.html", summary:"GPU利用率100%不等于真正满载。深入解析GPU三大资源模块、常见假满载陷阱（FurMark/轻循环/单测带宽），以及合理的单卡压测方案。", category:"GPU", date:"2026-06-17", read:8, tags:["GPU","压测","满载","nvidia-smi","烤机"], hot:true },
     { id:"wx-b300", title:"实测 HGX B300：一篇看懂关键硬件数据", url:"../post/wx-b300-hardware/wx-b300-hardware.html", summary:"实测 NVIDIA HGX B300 在待机/满负载/多卡互联下的功耗、NVLink 带宽、HBM3E 吞吐，附 FP4 144 TFLOPS 对比表。", category:"AI", date:"2026-06-16", read:8, tags:["NVIDIA","B300","GPU","HBM3E"] },
     { id:"dy-76419625", title:"Gemini3.5Flash × Composer2.5 踢馆赛", url:"../post/dy-7641962519699017001/dy-7641962519699017001.html", summary:"Gemini3.5Flash 携手 Composer2.5 挑战全球十六强 AI 模型，谁将上位谁将出局？", category:"抖音搬运", date:"2026-06-14", read:10, tags:["Gemini","AI挑战赛","Cursor"], hot:true },

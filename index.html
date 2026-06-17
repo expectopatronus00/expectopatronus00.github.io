@@ -316,7 +316,7 @@
 </section>
 
 <section class="stats-strip" aria-label="站点统计">
-  <div class="stats-item"><b>12 篇</b><span>内容总数</span></div>
+  <div class="stats-item"><b>13 篇</b><span>内容总数</span></div>
   <div class="stats-item"><b>1 天</b><span>平均更新频率</span></div>
   <div class="stats-item"><b>1.2k+</b><span>全站访问量</span></div>
 </section>
@@ -381,8 +381,20 @@
     <span class="pill">过去 30 天最受欢迎</span>
   </div>
   <div class="rank-grid">
-    <a class="rank-card" href="./post/wx-gpu-burn/wx-gpu-burn.html">
+    <a class="rank-card" href="./post/wx-openclaw/wx-openclaw.html">
       <div class="rank-medal">1</div>
+      <div>
+        <h4>国内服务器部署 OpenClaw 踩坑实录</h4>
+        <div class="meta-line">
+          <span class="cat">运维</span>
+          <span class="d">2026-06-17</span>
+          <span class="r"><i class="fa-regular fa-clock"></i> 10 min</span>
+        </div>
+      </div>
+      <span class="go"><i class="fa-solid fa-arrow-up-right-from-square"></i> 阅读</span>
+    </a>
+    <a class="rank-card" href="./post/wx-gpu-burn/wx-gpu-burn.html">
+      <div class="rank-medal">2</div>
       <div>
         <h4>GPU单卡压测"满载"及合理满载</h4>
         <div class="meta-line">
@@ -394,7 +406,7 @@
       <span class="go"><i class="fa-solid fa-arrow-up-right-from-square"></i> 阅读</span>
     </a>
     <a class="rank-card" href="./post/wx-b300-hardware/wx-b300-hardware.html">
-      <div class="rank-medal">2</div>
+      <div class="rank-medal">3</div>
       <div>
         <h4>实测 HGX B300：一篇看懂关键硬件数据</h4>
         <div class="meta-line">
@@ -406,7 +418,7 @@
       <span class="go"><i class="fa-solid fa-arrow-up-right-from-square"></i> 阅读</span>
     </a>
     <a class="rank-card" href="./post/dy-7651945427952078131/dy-7651945427952078131.html">
-      <div class="rank-medal">3</div>
+      <div class="rank-medal">4</div>
       <div>
         <h4>顶级 AI 模型遭封禁 · Anthropic 硬刚美国监管</h4>
         <div class="meta-line">
@@ -418,7 +430,7 @@
       <span class="go"><i class="fa-solid fa-arrow-up-right-from-square"></i> 阅读</span>
     </a>
     <a class="rank-card" href="./post/dy-7641962519699017001/dy-7641962519699017001.html">
-      <div class="rank-medal">4</div>
+      <div class="rank-medal">5</div>
       <div>
         <h4>Gemini3.5Flash × Composer2.5 踢馆赛</h4>
         <div class="meta-line">
@@ -430,7 +442,7 @@
       <span class="go"><i class="fa-solid fa-arrow-up-right-from-square"></i> 阅读</span>
     </a>
     <a class="rank-card" href="./post/dy-7646747643204900836/dy-7646747643204900836.html">
-      <div class="rank-medal">5</div>
+      <div class="rank-medal">6</div>
       <div>
         <h4>Vibe Coding 大赏 · Harness starter 开源</h4>
         <div class="meta-line">
@@ -442,7 +454,7 @@
       <span class="go"><i class="fa-solid fa-arrow-up-right-from-square"></i> 阅读</span>
     </a>
     <a class="rank-card" href="./post/deepseek/deepseek.html">
-      <div class="rank-medal">6</div>
+      <div class="rank-medal">7</div>
       <div>
         <h4>DeepSeek 智能工具导航</h4>
         <div class="meta-line">
@@ -454,7 +466,7 @@
       <span class="go"><i class="fa-solid fa-arrow-up-right-from-square"></i> 阅读</span>
     </a>
     <a class="rank-card" href="./post/deepseek/doc/doc.html">
-      <div class="rank-medal">7</div>
+      <div class="rank-medal">8</div>
       <div>
         <h4>DeepSeek 院校教程文档归档</h4>
         <div class="meta-line">
@@ -466,7 +478,7 @@
       <span class="go"><i class="fa-solid fa-arrow-up-right-from-square"></i> 阅读</span>
     </a>
     <a class="rank-card" href="./post/deepseek/api/api.html">
-      <div class="rank-medal">8</div>
+      <div class="rank-medal">9</div>
       <div>
         <h4>DeepSeek API 集成中心</h4>
         <div class="meta-line">
@@ -565,6 +577,15 @@
   // ── Hot posts ──
   const postsGrid=document.getElementById('posts-grid');
   const articles=[
+    {
+      id:"wx-openclaw",
+      title:"国内服务器部署 OpenClaw 踩坑实录",
+      url:"./post/wx-openclaw/wx-openclaw.html",
+      summary:"CentOS 7 + Docker 部署 OpenClaw 的完整实战记录：glibc 版本过低、镜像拉取超时、镜像搬运法、配置权限、Web UI 访问。",
+      category:"运维",
+      date:"2026-06-17",
+      cover:"https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=800&q=80"
+    },
     {
       id:"wx-gpu-burn",
       title:"GPU单卡压测\"满载\"及合理满载",
