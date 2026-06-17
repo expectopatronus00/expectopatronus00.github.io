@@ -1,0 +1,705 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>《零号档案》File Zero · 人类发现的不是门，而是世界的伤口 · EXPECTOPATRONUS</title>
+    <meta name="description" content="多年前，人类第一次发现了门——但那不是门，而是两个世界交界时，现实裂开的伤口。零号部门曾在暗处处理一切：侦测、封控、收容、闭门，再把真相从公众视野中抹去。多年后，门几乎消失，直到最近，界点反应开始大规模爆发。" />
+    <meta name="keywords" content="零号档案,File Zero,科幻世界,超自然,AI创作,即梦AI,新影像,世界构建,秘密部门,界点反应" />
+    <meta property="og:title" content="《零号档案》File Zero · 人类发现的不是门，而是世界的伤口" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="零号部门曾在暗处处理一切：侦测、封控、收容、闭门，再把真相从公众视野中抹去。多年后，门几乎消失，直到最近，界点反应开始大规模爆发。" />
+    <link rel="shortcut icon" href="../../home/50.png" type="image/png" />
+    <link
+      id="fa-cdn"
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <script>
+      (function () {
+        var l = document.getElementById('fa-cdn');
+        var chk = function () {
+          var ok = false;
+          try {
+            var s = getComputedStyle(document.querySelector('.fa-solid') || document.body);
+            ok = !s.fontFamily || s.fontFamily.indexOf('Font Awesome') !== -1;
+          } catch (e) {
+            ok = false;
+          }
+          if (!ok && window._fa_retried === undefined) {
+            window._fa_retried = true;
+            var n = document.createElement('link');
+            n.rel = 'stylesheet';
+            n.href = 'https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css';
+            document.head.appendChild(n);
+          }
+        };
+        l.onload = chk;
+        l.onerror = function () {
+          chk();
+        };
+      })();
+    </script>
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.7em; margin-left: 2px"></i
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><i class="fa-solid fa-moon"></i></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">Sci-Fi World-Building · File Zero</div>
+      <h1>《零号档案》· <em>人类发现的不是门，而是世界的伤口</em></h1>
+      <p>
+        两个世界交界时，现实裂开的伤口被人称作"门"。一个名为零号部门的秘密组织，曾在暗处处理一切——侦测、封控、收容、闭门，再把真相从公众视野中抹去。多年后，门几乎消失，直到最近，界点反应开始大规模爆发。
+      </p>
+      <div class="meta">
+        <span><i class="fa-regular fa-user"></i> 4.12 A@G.vf</span>
+        <span><i class="fa-regular fa-calendar"></i> 2026-06-17</span>
+        <span><i class="fa-regular fa-clock"></i> 0 分 12 秒</span>
+        <span><i class="fa-solid fa-layer-group"></i> 视频 · 搬运整理</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="零号档案封面" src="https://images.unsplash.com/photo-1518544801976-3e159e50376f?w=1400&q=80" />
+    </div>
+
+    <article class="article-body">
+      <div class="section-marker">01 · 世界观铺垫</div>
+      <h2>"门"的第一次出现</h2>
+
+      <p>
+        多年前，人类第一次发现了"门"——一个能看到另一世界的裂缝。它在地图上没有位置，只在特定时刻、特定的人眼前浮现。第一次遭遇的官方报告被列为绝密，封存在<span class="hl">零号档案</span>中。
+      </p>
+
+      <p>
+        但经过深入研究，科学界逐渐意识到一件令人不安的事：<strong>那不是门，而是伤口</strong>。它不是人类发明的通道，也不是自然形成的洞口——它是两个世界在交界时，现实本身裂开的伤痕。
+      </p>
+
+      <div class="pull-quote">
+        <p>
+          门不是人类打开的。门自己在打开。而它一旦打开，另一边的东西也会看见这边。
+        </p>
+      </div>
+
+      <div class="section-marker">02 · 秘密部门</div>
+      <h2>零号部门的行动范式</h2>
+
+      <p>
+        为了应对这一超自然现象，一个被称为<span class="hl">零号部门</span>（Department Zero）的特殊机构在历史上某个不为人知的时刻建立。它并不对外公开，甚至在多数政府档案中也以各种代号存在。
+      </p>
+
+      <h3>五个核心行动阶段</h3>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">侦测</div>
+          <div class="tl-text">
+            通过遍布全球的观测站与异常报告网络，识别潜在的<strong>界点反应</strong>——空间畸变、能量异常、电磁干扰或无法解释的目击事件。
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">封控</div>
+          <div class="tl-text">
+            在确认的界点周围建立物理与能量双重屏障，限制扩散范围，同时隔离可能的目击者——这是整个流程中最敏感也最容易出错的一环。
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">收容</div>
+          <div class="tl-text">
+            对从门中溢出的对象、能量残片、或被"污染"的区域进行收容与分类。根据威胁等级，从 A 级（高风险）到 Z 级（低风险）逐级处理。
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">闭门</div>
+          <div class="tl-text">
+            真正的核心步骤——将门重新"缝合"。但每一次闭门都会消耗与门能量级对应的资源，代价从设备损耗到人员伤亡不等。
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">抹除</div>
+          <div class="tl-text">
+            最后一步：用舆论引导、新闻替换、记忆管理等手段，将真相从公众视野中抹去。确保公众继续相信世界是"正常"的。
+          </div>
+        </div>
+      </div>
+
+      <p>
+        这套行动范式让人类与"门"共存了很长一段时间。零号部门一代又一代地执行着相同的流程，仿佛能永远维持这层脆弱的平衡。
+      </p>
+
+      <div class="section-marker">03 · 现实崩溃</div>
+      <h2>界点反应的大规模爆发</h2>
+
+      <p>
+        多年后，门几乎从世界上消失了。零号部门的活动逐渐沉寂，它的大部分成员甚至开始相信任务已真正完成——世界是安全的。
+      </p>
+
+      <p>
+        但最近，事情开始不对劲。<span class="hl">界点反应</span>开始在全球多地大规模爆发：
+      </p>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">信号 01</div>
+          <div class="tl-text">
+            某极地观测站突然失联，卫星图像显示，该区域出现了面积惊人的<strong>空间畸变</strong>。
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">信号 02</div>
+          <div class="tl-text">
+            城市级别的<strong>电磁异常</strong>在多个没有地磁活动的地点出现，持续时间从几小时到几天不等。
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">信号 03</div>
+          <div class="tl-text">
+            大量民众报告目击<strong>似门非门</strong>的现象——墙壁、水面、甚至空气本身，会在特定条件下短暂地"透明化"，露出另一边完全陌生的景象。
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">信号 04</div>
+          <div class="tl-text">
+            已被封闭多年的<strong>旧门址</strong>开始重新产生能量反应——它们似乎在"苏醒"。
+          </div>
+        </div>
+      </div>
+
+      <div class="pull-quote">
+        <p>
+          门不是被人重新打开的。门，自己正在重新打开。
+        </p>
+      </div>
+
+      <h3>零号部门的紧急状态</h3>
+
+      <p>
+        面对这一局势，早已沉睡或缩编的零号部门被迫重新启动。但情况与几十年前完全不同——门的数量、强度和扩散速度都远超任何已知记录。老的行动范式可能已经不够用了。
+      </p>
+
+      <p>
+        更令人不安的是：这次的界点反应，似乎呈现出某种<strong>规律性</strong>——像是有人，或者有什么东西，在按一个计划打开它们。
+      </p>
+
+      <div class="section-marker">04 · 创作层面的观察</div>
+      <h2>为什么"门"的设定如此有穿透力</h2>
+
+      <p>
+        作为一个 AI 辅助创作的世界设定，《零号档案》的核心概念非常简洁，但充满想象空间：
+      </p>
+
+      <div class="info-box info-box-jade">
+        <strong><i class="fa-solid fa-circle-info" style="color: var(--accent-jade)"></i> 创作层面的亮点</strong><br />
+        &nbsp;&nbsp;1. <strong>反直觉概念</strong>："门不是门，是伤口"——一个日常词汇被重新定义，立刻产生陌生感。<br />
+        &nbsp;&nbsp;2. <strong>机构叙事</strong>：秘密部门 + 标准流程 = 既有秩序感又有神秘感。<br />
+        &nbsp;&nbsp;3. <strong>时间张力</strong>："过去被压下去的事现在重新发生"——天然带悬念。<br />
+        &nbsp;&nbsp;4. <strong>视觉化的意象</strong>：门、裂缝、边界、透明化——这些都极具画面感。
+      </div>
+
+      <p>
+        从创作工具的角度看，这是一个很适合 AI 继续扩展的设定：因为它有足够清晰的规则（五阶段行动、威胁分级、界点反应类型），同时也留有巨大的空白区域等待填充——每一个被"抹除"的事件、每一个无法被彻底关闭的门、每一个零号部门的成员故事，都可以成为独立的支线。
+      </p>
+
+      <p>
+        如果这个系列继续更新，最有可能的几个扩展方向是：<span class="hl">某扇门背后的具体世界样貌</span>、<span class="hl">零号部门历史上的一次重大失败</span>、或者<span class="hl">门"对面"的智慧体是否在主动回应人类</span>——每一个都足以撑起一个独立的故事线。
+      </p>
+
+      <div class="info-box">
+        <strong><i class="fa-solid fa-triangle-exclamation"></i> 一些值得留意的细节</strong><br />
+        &nbsp;&nbsp;- "界点反应"的具体表现形式是什么？是否有固定规律？<br />
+        &nbsp;&nbsp;- 零号部门在"闭门"阶段消耗的资源究竟来自哪里？是否有隐藏的代价？<br />
+        &nbsp;&nbsp;- 如果门正在被"另一边"主动打开，那么"另一边"究竟是什么？
+      </div>
+
+      <div class="section-marker">05 · 去抖音看原视频</div>
+      <h2>前往抖音原站观看完整视频</h2>
+
+      <div class="cta-box">
+        <div class="cover">
+          <img
+            loading="lazy"
+            alt="视频封面"
+            src="https://images.unsplash.com/photo-1518544801976-3e159e50376f?w=600&q=80"
+          />
+        </div>
+        <div class="content">
+          <h3>去抖音原站看完整视频</h3>
+          <p>
+            点击下方按钮跳转抖音原视频页，查看作者 "4.12 A@G.vf" 的完整视频内容与评论区讨论。
+          </p>
+          <a
+            class="cta-btn"
+            id="cta-link"
+            href="https://www.douyin.com/video/7640259628177181992"
+            target="_blank"
+            rel="noopener"
+          ><i class="fa-brands fa-tiktok"></i> 去抖音原站</a
+          >
+          <a
+            class="cta-btn"
+            style="background: var(--accent-jade)"
+            href="https://www.douyin.com"
+            target="_blank"
+            rel="noopener"
+          ><i class="fa-solid fa-globe"></i> 抖音官方站</a
+          >
+        </div>
+      </div>
+
+      <div class="section-marker">06 · 相关平台</div>
+      <h2>相关平台 · 延伸阅读</h2>
+
+      <div class="platform-list">
+        <a href="https://www.douyin.com" target="_blank" rel="noopener"
+          ><i class="fa-brands fa-tiktok"></i> 抖音 · 原视频发布平台</a
+        >
+        <a href="https://jimeng.com" target="_blank" rel="noopener"
+          ><i class="fa-solid fa-wand-magic-sparkles"></i> 即梦 AI · 内容创作工具</a
+        >
+        <a href="https://github.com" target="_blank" rel="noopener"
+          ><i class="fa-brands fa-github"></i> GitHub · AI 开源社区</a
+        >
+        <a href="https://huggingface.co" target="_blank" rel="noopener"
+          ><i class="fa-solid fa-face-smile"></i> HuggingFace · 模型与数据集</a
+        >
+        <a href="https://www.bilibili.com" target="_blank" rel="noopener"
+          ><i class="fa-brands fa-bilibili"></i> B 站 · 科技与创作视频区</a
+        >
+        <a href="https://www.zhihu.com" target="_blank" rel="noopener"
+          ><i class="fa-brands fa-zhihu"></i> 知乎 · 创作与世界观讨论</a
+        >
+      </div>
+
+      <div class="section-marker">07 · 标签</div>
+      <h2>内容标签</h2>
+
+      <div class="tags-row">
+        <a href="#">#零号档案</a>
+        <a href="#">#FileZero</a>
+        <a href="#">#科幻世界</a>
+        <a href="#">#超自然</a>
+        <a href="#">#AI创作</a>
+        <a href="#">#即梦AI</a>
+        <a href="#">#新影像</a>
+        <a href="#">#世界构建</a>
+        <a href="#">#秘密部门</a>
+        <a href="#">#界点反应</a>
+        <a href="#">#抖音</a>
+        <a href="#">#搬运整理</a>
+      </div>
+
+      <div class="section-marker">08 · 相关文章</div>
+      <h2>延伸阅读</h2>
+
+      <div class="platform-list">
+        <a href="../dy-7649321749746476261/dy-7649321749746476261.html"
+          ><i class="fa-solid fa-briefcase"></i> 别人睡觉在休息，高手睡觉在开发 · AI 工作模式</a
+        >
+        <a href="../dy-7651945427952078131/dy-7651945427952078131.html"
+          ><i class="fa-solid fa-robot"></i> 顶级 AI 模型遭封禁 · Anthropic 硬刚美国监管</a
+        >
+        <a href="../dy-7651998760762871090/dy-7651998760762871090.html"
+          ><i class="fa-solid fa-code"></i> CodeGraph · 让 AI 编程代理效率翻倍的本地代码索引</a
+        >
+        <a href="../../home/home.html"><i class="fa-solid fa-newspaper"></i> 更多文章 · 回到文章列表</a>
+      </div>
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用。视频封面版权归抖音原视频作者所有。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><i class="fa-brands fa-github"></i
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><i class="fa-solid fa-arrow-up"></i></button>
+
+    <script>
+      (function () {
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var i = document.querySelector('#theme-toggle i');
+        if (i) i.className = saved === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var ii = document.querySelector('#theme-toggle i');
+            if (ii) ii.className = next === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
