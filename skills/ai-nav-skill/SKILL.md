@@ -1,6 +1,6 @@
 # AI 导航管理 Skill
 
-管理 `nav/data.json` 中的 AI 网站链接数据。
+管理 `nav/data.json` 中的 AI 网站链接数据，以及导航页面样式。
 
 ## 使用方式
 
@@ -8,11 +8,10 @@
 
 ### 1. 分析页面
 
-使用 `WebFetch` 获取页面内容，提取：
-
-- **网站名称**：`<title>` 标签内容或 `<h1>`
-- **网站描述**：`<meta name="description">` 或首段文字
-- **favicon**：尝试 `https://www.google.com/s2/favicons?domain={域名}&sz=64`
+- 使用 `WebFetch` 获取页面内容，提取：
+  - **网站名称**：`<title>` 标签内容或 `<h1>`
+  - **网站描述**：`<meta name="description">` 或首段文字
+- 如果 `WebFetch` 失败（如微信文章需要验证），**直接询问用户提供文章标题和主题**，手动判断分类
 
 ### 2. 确定分类
 
@@ -46,13 +45,19 @@
 }
 ```
 
-### 4. 确认
+### 4. 样式调整
 
-告知用户：
+当用户要求调整导航站样式时：
 
-- 网站名称、URL、分配到的分类
-- 当前 data.json 中的总站点数
-- 导航页面的新链接预览
+- 直接修改 `nav/index.html` 中的 CSS
+- 修改后 `prettier --write nav/index.html`
+- `git add nav/index.html && git commit && git push`
+
+### 5. 确认与推送
+
+- 告知用户：网站名称、URL、分配到的分类、总站点数
+- **每次修改完成后必须 `git add`、`git commit`、`git push`**
+- 不要等用户提醒，主动推送
 
 ## 批量添加
 
@@ -64,3 +69,4 @@
 - 描述文字控制在 20 字以内
 - badge 仅用于重要标签（热门/免费/新/开源/国内）
 - 更新后 `meta.updated` 字段设为当天日期
+- **微信文章等无法抓取的链接，直接询问用户标题和主题**
