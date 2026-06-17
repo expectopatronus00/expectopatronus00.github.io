@@ -126,35 +126,51 @@ https://v.douyin.com/xxxxxxx/
 └── dy-{VIDEO_ID}.html
 ```
 
-**注意：不创建单独的 style.css 或 script.js — 所有样式内联在 `<style>` 中，脚本内联在 `<script>` 中。** 这样保证文章自包含、零依赖引用问题。
+**注意：文章页面引用 `../../home/design-tokens.css` 共用设计令牌，页面私有样式内联在 `<style>` 中。不创建单独的 style.css 或 script.js。**
 
 #### 3.2 使用 `template.html` 填充内容
 
 模板文件路径：`/workspace/skills/douyin-post-skill/template.html`
 
+**模板结构说明：**
+
+```
+page-head      ← 顶部区域：eyebrow + h1（em标签斜体）+ 导语 + meta元信息
+hero-image     ← 封面大图
+article-body   ← 正文主体，h2/h3/p/blockquote/div 均内嵌其中
+site-footer    ← 底部
+```
+
+**正文内嵌组件（直接写在 CONTENT_HTML 中）：**
+
+| 组件 | HTML | 用途 |
+|---|---|---|
+| 章节编号 | `<div class="section-marker">01 · 标题</div><h2>章节标题</h2>` | 橙色 monospace 小标签 + 二级标题 |
+| 关键词高亮 | `<span class="hl">术语</span>` | 正文内突出术语 |
+| 信息框 | `<div class="info-box">…</div>` 或 `<div class="info-box info-box-jade">` | 左侧橙色/青色边线提示 |
+| 时间线 | `<div class="timeline"><div class="tl-item"><div class="tl-time">时间</div><div class="tl-text">内容</div></div></div>` | 流程/事件列表 |
+| 重点引用 | `<div class="pull-quote"><p>引用文字</p></div>` | 带左侧大引号的引用块 |
+| 平台卡片 | `<div class="platform-list"><a href="…"><i class="图标class"></i> 名称 · 描述</a></div>` | 相关平台链接列表 |
+| 标签行 | `<div class="tags-row"><a href="#">#标签</a></div>` | 底部话题标签 |
+| CTA区 | `<div class="cta-box"><div class="cover"><img …/></div><div class="content"><h3>标题</h3><p>描述</p><a class="cta-btn" id="cta-link" href="…" …>按钮</a></div></div>` | 跳转按钮区，id="cta-link" 会被脚本劫持复制当前页 URL |
+
 **需要替换的占位符：**
 
-| 占位符                   | 说明                                                                          |
-| ------------------------ | ----------------------------------------------------------------------------- |
-| `{{TITLE}}`              | 文章大标题                                                                    |
-| `{{META_DESC}}`          | `<meta description>` 用的 150 字简介                                          |
-| `{{META_KEYWORDS}}`      | 逗号分隔关键词（10~15 个）                                                    |
-| `{{OG_TITLE}}`           | og:title，通常和 TITLE 一致                                                   |
-| `{{OG_DESC}}`            | og:description，通常和 META_DESC 一致                                         |
-| `{{AUTHOR}}`             | 作者名（如 "AI风向标"）                                                       |
-| `{{DATE_TODAY}}`         | 日期（如 "2026-06-16"）                                                       |
-| `{{DURATION}}`           | 阅读时长（如 "3 分 26 秒"，按文章长度估算）                                   |
-| `{{CATEGORY}}`           | 固定写 "抖音搬运 · 内容主题"（内容主题如：AI监管 / 开源项目 / 技术趋势）      |
-| `{{COVER_URL}}`          | 抖音封面图完整 URL                                                            |
-| `{{SUMMARY_HTML}}`       | 简介 block 中的文字内容（纯 HTML，不需要 `<p>` 包）                           |
-| `{{CONTENT_HTML}}`       | 正文主要内容（所有 h2 / 时间线 / 引用 的完整 HTML）                           |
-| `{{VIDEO_ID}}`           | 抖音视频 ID 数字                                                              |
-| `{{PLATFORMS_HTML}}`     | 多平台卡片完整 HTML                                                           |
-| `{{TAGS_HTML}}`          | 标签 `<a>` 列表，每个标签单独一行                                             |
-| `{{RELATED_HTML}}`       | 相关文章 2 个 `<a>`                                                           |
-| `{{OFFICIAL_SITE_NAME}}` | CTA 第二个按钮显示的名字（如 "Anthropic 官方站"）                             |
-| `{{OFFICIAL_SITE_URL}}`  | CTA 第二个按钮的 URL（如 "https://www.anthropic.com"）                        |
-| `{{BREADCRUMB}}`         | 面包屑最后一段文字，通常和大标题一致或简写（如 "抖音搬运：顶级AI模型遭封禁"） |
+| 占位符 | 说明 |
+|---|---|
+| `{{EYEBROW}}` | 顶部斜体标签，如 "AI 工作模式 · Vibe Coding" |
+| `{{TITLE}}` | 文章标题（含斜体 em 标签包裹关键词），如 "别人睡觉在休息，<em>高手睡觉在开发</em>" |
+| `{{META_DESC}}` | meta description，150字以内 |
+| `{{META_KEYWORDS}}` | 逗号分隔关键词，10~15个 |
+| `{{OG_TITLE}}` | og:title，通常和 TITLE 一致 |
+| `{{OG_DESC}}` | og:description，通常和 META_DESC 一致 |
+| `{{AUTHOR}}` | 作者昵称 |
+| `{{DATE_TODAY}}` | 日期 YYYY-MM-DD |
+| `{{DURATION}}` | 视频时长估算，如 "1 分 24 秒" |
+| `{{COVER_URL}}` | 封面图完整 URL |
+| `{{SUMMARY_HTML}}` | 导语段落，纯文本（模板内已有 p 标签包裹） |
+| `{{CONTENT_HTML}}` | 正文所有 HTML（section-marker / h2 / h3 / p / timeline / pull-quote 等） |
+| `{{FOOTER_META}}` | 页脚说明，默认 "本站内容纯学习用途，非商用。视频封面版权归抖音原视频作者所有。" |
 
 ### 阶段 4: 更新文章库 (home.html)
 
@@ -238,27 +254,49 @@ git push origin HEAD:main --force
 
 ## 四、样式参考
 
-所有视觉参数定义于模板 `<style>` 中，**不要修改 CSS 变量的值**，以保持全站一致：
+所有视觉参数定义于 `../../home/design-tokens.css` 中，**不要在文章页面重复定义 CSS 变量**，以保持全站一致。
 
-- `--bg-0` 背景色 / `--bg-1` 卡片背景
-- `--ink` 主文字 / `--mute` 次要文字
-- `--cyan` 强调色（亮青）/ `--pink` 点缀色（粉紫）
-- `--line` 分割线 / `--accent-grad` 渐变
+**共用 design tokens（只读）：**
 
-响应式断点：
+| 变量 | 用途 |
+|---|---|
+| `--bg-card` | 卡片背景 |
+| `--text` | 主文字色 |
+| `--text-soft` | 次要文字色 |
+| `--text-dim` | 暗淡文字色 |
+| `--accent-rust` | 强调色（橙褐色），用于标题/链接/图标 |
+| `--accent-jade` | 次强调色（青绿色），用于 info-box-jade / 备用按钮 |
+| `--line` | 分割线颜色 |
+| `--shadow-md` | 中等阴影 |
+| `--r-lg` | 大圆角 |
+| `--r-xl` | 特大圆角 |
+| `--r-md` | 中等圆角 |
+| `--sp-3` ~ `--sp-10` | 间距阶梯 |
+| `--font-display` / `--font-serif` / `--font-mono` | 字体栈 |
 
-- `max-width: 820px` — 平板/大屏手机
-- `max-width: 480px` — 手机
+**正文内嵌组件对应 class（请勿更改）：**
+
+- `.section-marker` / `.article-body h2` / `.article-body h3`
+- `.hl`（关键词高亮，基于 `--accent-rust`）
+- `.info-box` / `.info-box-jade`
+- `.timeline` / `.tl-item` / `.tl-time` / `.tl-text`
+- `.pull-quote`
+- `.platform-list`
+- `.tags-row`
+- `.cta-box` / `.cta-btn`
+
+响应式断点：`max-width: 820px` / `max-width: 480px`
 
 ---
 
 ## 五、已有文章参考（Agent 可用来校准风格）
 
-| 路径                                                                 | 主题                     | 风格       |
-| -------------------------------------------------------------------- | ------------------------ | ---------- |
+| 路径 | 主题 | 风格 |
+|---|---|---|
+| `/workspace/post/dy-7649321749746476261/dy-7649321749746476261.html` | AI 五大王牌工作模式 | 模式解析型 |
+| `/workspace/post/dy-7651945427952078131/dy-7651945427952078131.html` | Anthropic 封禁事件 | 深度分析型 |
+| `/workspace/post/dy-7646747643204900836/dy-7646747643204900836.html` | Harness starter 开源 | 工具介绍型 |
 | `/workspace/post/dy-7641962519699017001/dy-7641962519699017001.html` | Gemini × Composer 踢馆赛 | 事件对比型 |
-| `/workspace/post/dy-7646747643204900836/dy-7646747643204900836.html` | Harness starter 开源     | 工具介绍型 |
-| `/workspace/post/dy-7651945427952078131/dy-7651945427952078131.html` | Anthropic 封禁事件       | 深度分析型 |
 
 ---
 
