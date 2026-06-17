@@ -203,6 +203,12 @@
     { id:"post1", title:"Linux 清除 history 记录的方式", url:"../post/post1/post1.html", summary:"清除当前会话 / 指定行数 / 彻底禁用 HISTSIZE。", category:"Linux", date:"2024-02-23", read:3, tags:["Linux","bash"] }
   ];
 
+  // 按发布日期降序排序（最新在最上面）
+  function byDateDesc(a, b){
+    return (b.date || '').localeCompare(a.date || '');
+  }
+  function sortedDesc(list){ return list.slice().sort(byDateDesc); }
+
   var grid = document.getElementById('articles-grid');
   function render(list){
     grid.innerHTML = '';
@@ -223,14 +229,14 @@
       grid.appendChild(card);
     });
   }
-  render(articles.slice().reverse());
+  render(sortedDesc(articles));
 
   document.querySelectorAll('.filter-btn').forEach(function(btn){
     btn.addEventListener('click', function(){
       document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});
       btn.classList.add('active');
       var cat = btn.dataset.cat;
-      render(cat==='all' ? articles.slice().reverse() : articles.filter(function(a){return a.category===cat}).slice().reverse());
+      render(cat==='all' ? sortedDesc(articles) : sortedDesc(articles.filter(function(a){return a.category===cat})));
     });
   });
 
@@ -240,12 +246,12 @@
       pill.classList.add('active');
       var cat = pill.dataset.cat;
       document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.toggle('active', b.dataset.cat===cat || (cat==='all' && b.dataset.cat==='all'));});
-      render(cat==='all' ? articles.slice().reverse() : articles.filter(function(a){return a.category===cat}).slice().reverse());
+      render(cat==='all' ? sortedDesc(articles) : sortedDesc(articles.filter(function(a){return a.category===cat})));
     });
   });
 
   window.filterByTag = function(tag){
-    render(articles.filter(function(a){return (a.tags||[]).some(function(t){return t.toLowerCase()===tag.toLowerCase();})}).slice().reverse());
+    render(sortedDesc(articles.filter(function(a){return (a.tags||[]).some(function(t){return t.toLowerCase()===tag.toLowerCase();})})));
   };
 })();
 </script>
