@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN" data-theme="dark">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -48,747 +48,567 @@
         } catch (e) {}
       })();
     </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
     <style>
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-      :root {
-        --bg-0: #0a0a12;
-        --bg-1: #12121c;
-        --ink: #e8e8f0;
-        --mute: #8a8aa0;
-        --line: #2a2a3a;
-        --cyan: #00e5ff;
-        --pink: #ff2d92;
-        --accent-grad: linear-gradient(135deg, #00e5ff, #8b5cf6);
-      }
-      [data-theme='light'] {
-        --bg-0: #f7f7fa;
-        --bg-1: #ffffff;
-        --ink: #1a1a24;
-        --mute: #5a5a70;
-        --line: #e4e4ec;
-      }
-      html,
-      body {
-        background: var(--bg-0);
-        color: var(--ink);
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-        line-height: 1.7;
-        font-size: 16px;
-      }
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-      .topbar {
-        position: sticky;
-        top: 0;
-        z-index: 50;
-        background: rgba(10, 10, 18, 0.75);
-        backdrop-filter: blur(12px);
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
         border-bottom: 1px solid var(--line);
       }
-      .topbar .inner {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 14px 24px;
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
       }
-      .topbar .brand {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-weight: 700;
-        font-size: 15px;
-      }
-      .topbar .logo {
-        width: 30px;
-        height: 30px;
-        border-radius: 8px;
-        background: var(--accent-grad);
-        box-shadow: 0 4px 16px -4px rgba(0, 229, 255, 0.5);
-      }
-      .topbar .nav {
-        display: flex;
-        gap: 4px;
-      }
-      .topbar .nav a {
-        padding: 8px 14px;
-        border-radius: 8px;
-        font-size: 14px;
-        color: var(--mute);
-        transition: all 0.2s;
-      }
-      .topbar .nav a:hover {
-        color: var(--ink);
-        background: rgba(255, 255, 255, 0.04);
-      }
-      .topbar .nav a.active {
-        color: var(--cyan);
-        background: rgba(0, 229, 255, 0.08);
-      }
-      #theme-toggle {
-        background: none;
-        border: 1px solid var(--line);
-        color: var(--ink);
-        width: 38px;
-        height: 38px;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: all 0.2s;
-      }
-      #theme-toggle:hover {
-        border-color: var(--cyan);
-        color: var(--cyan);
-      }
-      .breadcrumb {
-        max-width: 1200px;
-        margin: 18px auto 0;
-        padding: 0 24px;
-        font-size: 13px;
-        color: var(--mute);
-      }
-      .breadcrumb a:hover {
-        color: var(--cyan);
-      }
-      .breadcrumb .sep {
-        margin: 0 8px;
-      }
-      .layout {
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 24px;
-      }
-      .article-body {
-        background: var(--bg-1);
-        border-radius: 20px;
-        border: 1px solid var(--line);
-        padding: 0;
-        overflow: hidden;
-      }
-      .dy-hero {
-        position: relative;
-        height: 420px;
-        overflow: hidden;
-        background-size: cover;
-        background-position: center;
-      }
-      .dy-hero::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.7) 60%, rgba(0, 0, 0, 0.95) 100%);
-      }
-      .dy-hero .bad {
-        position: relative;
-        z-index: 2;
-        padding: 28px 36px;
-        max-width: 800px;
-        color: #fff;
-        position: absolute;
-        left: 36px;
-        bottom: 28px;
-      }
-      .dy-hero .cat-tag {
+      .page-head .meta span {
         display: inline-flex;
         align-items: center;
         gap: 6px;
-        padding: 4px 12px;
-        border-radius: 999px;
-        font-size: 0.72rem;
-        font-weight: 700;
-        background: rgba(0, 229, 255, 0.2);
-        color: #00e5ff;
-        border: 1px solid rgba(0, 229, 255, 0.4);
-        margin-bottom: 14px;
       }
-      .dy-hero h1 {
-        font-size: clamp(1.5rem, 3.5vw, 2.2rem);
-        font-weight: 800;
-        letter-spacing: -0.015em;
-        margin-bottom: 10px;
-        line-height: 1.2;
-        text-shadow: 0 2px 14px rgba(0, 0, 0, 0.6);
+      .page-head .meta i {
+        color: var(--accent-rust);
       }
-      .dy-hero .meta-row {
-        display: flex;
-        gap: 14px;
-        font-size: 0.85rem;
-        color: rgba(255, 255, 255, 0.85);
-        flex-wrap: wrap;
+
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
       }
-      .dy-hero .meta-row i {
-        color: #00e5ff;
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
       }
-      .dy-desc {
-        padding: 22px 28px;
-        border-left: 3px solid var(--cyan);
-        background: linear-gradient(135deg, rgba(0, 229, 255, 0.06), rgba(139, 92, 246, 0.06));
-        border-radius: 14px;
-        margin: 22px 28px;
-        color: var(--ink);
-        font-style: normal;
-        line-height: 1.9;
-        font-size: 1rem;
+
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
       }
-      .dy-content {
-        padding: 8px 28px 28px;
+
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
       }
-      .dy-content h2 {
-        font-size: 1.4rem;
-        margin: 26px 0 14px;
-        padding-left: 14px;
-        border-left: 4px solid var(--cyan);
+
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
         letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
       }
-      .dy-content h3 {
-        font-size: 1.1rem;
-        margin: 22px 0 10px;
-        color: var(--cyan);
+
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
       }
-      .dy-content p {
-        margin-bottom: 14px;
-        color: var(--ink);
+
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
         font-size: 1rem;
-        line-height: 1.9;
+        margin: 0 0 var(--sp-5);
       }
-      .dy-content strong {
-        color: var(--ink);
-        font-weight: 700;
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
       }
-      .dy-content .hl {
-        background: linear-gradient(120deg, transparent 0%, rgba(0, 229, 255, 0.18) 50%, transparent 100%);
+
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
         padding: 0 4px;
         border-radius: 4px;
-        color: var(--cyan);
+        color: var(--accent-rust);
         font-weight: 600;
       }
-      .dy-timeline {
-        margin: 24px 0;
-        padding: 20px 24px;
-        border: 1px solid var(--line);
-        border-radius: 14px;
-        background: rgba(255, 255, 255, 0.02);
+
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
       }
-      .dy-timeline .tl-item {
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
         display: grid;
         grid-template-columns: 90px 1fr;
-        gap: 16px;
-        padding: 12px 0;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
         border-bottom: 1px dashed var(--line);
       }
-      .dy-timeline .tl-item:last-child {
+      .timeline .tl-item:last-child {
         border-bottom: none;
       }
-      .dy-timeline .tl-time {
-        color: var(--cyan);
-        font-weight: 700;
-        font-size: 0.9rem;
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
       }
-      .dy-timeline .tl-text {
-        color: var(--ink);
+      .timeline .tl-text {
+        color: var(--text-soft);
         line-height: 1.8;
         font-size: 0.95rem;
+        font-family: var(--font-serif);
       }
-      .dy-quote {
-        margin: 28px 0;
-        padding: 22px 26px;
-        border-radius: 14px;
-        background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(255, 45, 146, 0.08));
-        border: 1px solid rgba(139, 92, 246, 0.3);
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
         position: relative;
       }
-      .dy-quote::before {
+      .pull-quote::before {
         content: '\201C';
         position: absolute;
-        top: -10px;
-        left: 16px;
-        font-size: 4rem;
-        color: var(--pink);
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
         font-family: Georgia, serif;
         line-height: 1;
-        opacity: 0.4;
+        opacity: 0.5;
       }
-      .dy-quote p {
+      .pull-quote p {
+        font-family: var(--font-serif);
         font-style: italic;
-        color: var(--ink);
+        color: var(--text);
         line-height: 1.9;
-        padding-left: 10px;
+        font-size: 1.05rem;
+        margin: 0;
       }
-      .dy-cta {
+
+      .platform-list {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 18px;
-        margin: 28px;
-        padding: 22px;
-        border-radius: 18px;
-        background: linear-gradient(140deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
-        border: 1px solid var(--line);
-        align-items: center;
-      }
-      .dy-cta .cover-side img {
-        width: 100%;
-        border-radius: 14px;
-        border: 1px solid var(--line);
-        box-shadow: 0 10px 30px -15px rgba(139, 92, 246, 0.3);
-      }
-      .dy-cta .btn-side {
-        display: flex;
-        flex-direction: column;
-        gap: 14px;
-      }
-      .dy-cta .cta-btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         gap: 10px;
-        padding: 14px 22px;
-        border-radius: 12px;
-        background: linear-gradient(135deg, #3b82ff, #8b5cf6);
-        color: #fff;
-        text-decoration: none;
-        font-weight: 700;
-        box-shadow: 0 10px 24px -12px rgba(139, 92, 246, 0.55);
-        transition: transform 0.25s;
-        font-size: 0.95rem;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
       }
-      .dy-cta .cta-btn:hover {
-        transform: translateY(-2px);
-      }
-      .dy-cta .cta-btn.alt {
-        background: linear-gradient(135deg, #222, #333);
-        box-shadow: 0 6px 20px -8px rgba(0, 0, 0, 0.4);
-      }
-      .dy-cta .cta-note {
-        font-size: 0.82rem;
-        color: var(--mute);
-        line-height: 1.6;
-      }
-      .dy-cta .cta-note i {
-        color: var(--pink);
-      }
-      .dy-platforms {
-        margin: 8px 28px 28px;
-        padding: 22px;
-        border-radius: 18px;
-        border: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.02);
-      }
-      .dy-platforms h3 {
+      .platform-list a {
         display: flex;
         align-items: center;
         gap: 10px;
-        margin: 0 0 16px;
-        font-size: 1.1rem;
-      }
-      .dy-platforms h3 i {
-        color: var(--cyan);
-      }
-      .plat-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        gap: 12px;
-      }
-      .plat-card {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 8px;
-        padding: 16px 10px;
-        border-radius: 12px;
-        background: var(--bg-1);
+        padding: 12px 16px;
+        background: var(--bg-card);
         border: 1px solid var(--line);
-        transition: all 0.25s;
+        border-radius: var(--r-md);
         text-decoration: none;
-        color: var(--ink);
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
       }
-      .plat-card:hover {
-        border-color: var(--cyan);
-        transform: translateY(-3px);
-        box-shadow: 0 10px 24px -12px rgba(0, 229, 255, 0.35);
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
       }
-      .plat-card i {
-        font-size: 1.6rem;
-        color: var(--cyan);
+      .platform-list i {
+        color: var(--accent-rust);
       }
-      .plat-card .pn {
-        font-weight: 600;
-        font-size: 0.9rem;
-        color: var(--ink);
-      }
-      .plat-card .pd {
-        font-size: 0.72rem;
-        color: var(--mute);
-      }
-      .dy-tags {
+
+      .tags-row {
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
-        margin: 18px 28px 10px;
+        margin-top: var(--sp-4);
       }
-      .dy-tags a {
+      .tags-row a {
         padding: 6px 14px;
         border-radius: 999px;
         font-size: 0.78rem;
-        font-weight: 600;
-        background: rgba(255, 255, 255, 0.04);
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
         border: 1px solid var(--line);
-        color: var(--ink);
+        color: var(--text-soft);
         text-decoration: none;
         transition: all 0.2s;
       }
-      .dy-tags a:hover {
-        color: var(--cyan);
-        border-color: var(--cyan);
-        transform: translateY(-2px);
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
       }
-      .dy-related {
+
+      .cta-box {
+        margin: var(--sp-6) 0;
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 14px;
-        margin: 24px 28px 28px;
-      }
-      .dy-related a {
-        padding: 16px 20px;
-        border-radius: 14px;
-        background: linear-gradient(140deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
         border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
         text-decoration: none;
-        color: var(--ink);
-        transition: transform 0.25s;
-      }
-      .dy-related a:hover {
-        transform: translateY(-2px);
-        border-color: var(--cyan);
-      }
-      .dy-related a h4 {
-        font-size: 0.95rem;
-        font-weight: 700;
-        margin-bottom: 4px;
-      }
-      .dy-related a p {
-        font-size: 0.8rem;
-        color: var(--mute);
-        line-height: 1.5;
-      }
-      #back {
-        position: fixed;
-        right: 24px;
-        bottom: 24px;
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        background: var(--accent-grad);
-        color: #fff;
-        border: none;
-        cursor: pointer;
-        opacity: 0;
-        pointer-events: none;
-        transition: all 0.3s;
-        box-shadow: 0 10px 30px -8px rgba(0, 229, 255, 0.5);
-        font-size: 1rem;
-        z-index: 40;
-      }
-      #back.show {
-        opacity: 1;
-        pointer-events: auto;
-      }
-      #back:hover {
-        transform: translateY(-3px);
-      }
-      .progress {
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 3px;
-        background: var(--accent-grad);
-        width: 0;
-        z-index: 100;
-        transition: width 0.1s;
-      }
-      .footer {
-        max-width: 1200px;
-        margin: 36px auto 0;
-        padding: 24px;
-        border-top: 1px solid var(--line);
-        color: var(--mute);
+        font-family: var(--font-mono);
         font-size: 0.85rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        gap: 12px;
-      }
-      .footer .social {
-        display: flex;
-        gap: 12px;
-      }
-      .footer .social a {
-        width: 34px;
-        height: 34px;
-        border-radius: 8px;
-        border: 1px solid var(--line);
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        font-weight: 500;
         transition: all 0.2s;
-        color: var(--mute);
+        margin-right: var(--sp-3);
       }
-      .footer .social a:hover {
-        border-color: var(--cyan);
-        color: var(--cyan);
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
       }
+      .cta-btn i {
+        color: var(--text);
+      }
+
       @media (max-width: 820px) {
-        .topbar .nav {
-          display: none;
-        }
-        .dy-hero {
-          height: 320px;
-        }
-        .dy-hero .bad {
-          left: 20px;
-          bottom: 20px;
-          padding-right: 20px;
-        }
-        .dy-content {
-          padding: 8px 20px 24px;
-        }
-        .dy-desc,
-        .dy-platforms,
-        .dy-cta,
-        .dy-tags,
-        .dy-related {
-          margin-left: 20px;
-          margin-right: 20px;
-        }
-        .dy-cta {
+        .cta-box {
           grid-template-columns: 1fr;
         }
-        .dy-related {
-          grid-template-columns: 1fr;
-        }
-        .dy-timeline .tl-item {
+        .timeline .tl-item {
           grid-template-columns: 70px 1fr;
-          gap: 12px;
+          gap: var(--sp-3);
         }
-      }
-      @media (max-width: 480px) {
-        .plat-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
-        .dy-content h2 {
-          font-size: 1.2rem;
+        .page-head {
+          padding-top: var(--sp-8);
         }
       }
     </style>
   </head>
   <body>
-    <div class="progress" id="progress"></div>
-    <button id="back" aria-label="返回顶部"><i class="fa-solid fa-arrow-up"></i></button>
-
-    <nav class="topbar">
-      <div class="inner">
-        <a href="../../index.html" class="brand">
-          <div class="logo"></div>
-          <span>EXPECTOPATRONUS · BLOG</span>
-        </a>
-        <div class="nav">
-          <a href="../../index.html"><i class="fa-solid fa-house"></i> 首页</a>
-          <a href="../../home/home.html" class="active"><i class="fa-solid fa-newspaper"></i> 文章</a>
-          <a href="../deepseek/deepseek.html"><i class="fa-solid fa-robot"></i> DeepSeek</a>
-          <a href="../../nav/index.html" target="_blank"><i class="fa-solid fa-compass"></i> 导航</a>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.7em; margin-left: 2px"></i
+          ></a>
         </div>
-        <button id="theme-toggle" aria-label="主题切换"><i class="fa-solid fa-moon"></i></button>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><i class="fa-solid fa-moon"></i></button>
       </div>
     </nav>
 
-    <div class="breadcrumb">
-      <a href="../../index.html"><i class="fa-solid fa-house"></i></a>
-      <span class="sep">/</span>
-      <a href="../../home/home.html">文章列表</a>
-      <span class="sep">/</span>
-      <span>抖音搬运：高手睡觉在开发</span>
+    <section class="page-head">
+      <div class="eyebrow">AI 工作模式 · Vibe Coding</div>
+      <h1>别人睡觉在休息，<em>高手睡觉在开发</em></h1>
+      <p>
+        普通人用 AI 逐条生成内容，高手用 AI 自动规划、批量处理、循环执行——把时间留给真正的创造力。本文解析让效率提升数倍的 AI 五大王牌工作模式。
+      </p>
+      <div class="meta">
+        <span><i class="fa-regular fa-user"></i> 阿豪 AI科技</span>
+        <span><i class="fa-regular fa-calendar"></i> 2026-06-17</span>
+        <span><i class="fa-regular fa-clock"></i> 1 分 24 秒</span>
+        <span><i class="fa-solid fa-layer-group"></i> 视频 · 搬运整理</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="视频封面" src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1400&q=80" />
     </div>
 
-    <main class="layout">
-      <article class="article-wrap">
-        <div class="article-body">
-          <div class="dy-hero" style="background-image:url('https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1400&q=80');">
-            <div class="bad">
-              <div class="cat-tag"><i class="fa-solid fa-video"></i> 抖音搬运 · AI工具</div>
-              <h1>别人睡觉在休息，高手睡觉在开发</h1>
-              <div class="meta-row">
-                <span><i class="fa-regular fa-user"></i> 阿豪 AI科技</span>
-                <span><i class="fa-regular fa-calendar"></i> 2026-06-17</span>
-                <span><i class="fa-regular fa-clock"></i> 1 分 24 秒</span>
-                <span><i class="fa-solid fa-layer-group"></i> 视频 · 搬运整理</span>
-              </div>
-            </div>
-          </div>
+    <article class="article-body">
+      <div class="section-marker">01 · 核心问题</div>
+      <h2>为什么你的 AI 效率总是不高？</h2>
 
-          <blockquote class="dy-desc">普通人用 AI 逐条生成内容，高手用 AI <span class="hl">自动规划、批量处理、循环执行</span>——把时间留给真正的创造力。本文解析让效率提升数倍的 AI 五大王牌工作模式。</blockquote>
+      <p>
+        很多人用 AI 的方式是这样的：写一句提示词，等 AI 返回，再写下一句，再等——整个过程完全由人驱动，AI 只是一个加速版的搜索引擎。但实际上，当前的 AI 编程工具已经能够<span class="hl">自主规划任务、自主执行、自主修正</span>，关键是你会不会把它放在正确的模式下工作。
+      </p>
+      <p>
+        本文整理自抖音博主「阿豪 AI科技」关于 <span class="hl">Vibe Coding</span> 的分享，核心观点是：高手用 AI，不是让 AI 帮你做一件事，而是让 AI <strong>帮你做一个完整的工作循环</strong>。
+      </p>
 
-          <div class="dy-content">
-            <h2>为什么你的 AI 效率总是不高？</h2>
-            <p>很多人用 AI 的方式是这样的：写一句提示词，等 AI 返回，再写下一句，再等——整个过程完全由人驱动，AI 只是一个加速版的搜索引擎。但实际上，当前的 AI 编程工具已经能够<span class="hl">自主规划任务、自主执行、自主修正</span>，关键是你会不会把它放在正确的模式下工作。</p>
-            <p>本文整理自抖音博主「阿豪 AI科技」关于 <span class="hl">Vibe Coding</span> 的分享，核心观点是：高手用 AI，不是让 AI 帮你做一件事，而是让 AI <strong>帮你做一个完整的工作循环</strong>。</p>
+      <div class="section-marker">02 · 五大工作模式</div>
+      <h2>AI 五大的王牌工作模式</h2>
 
-            <h2>AI 五大王牌工作模式</h2>
+      <h3>一、目标模式：说清楚终点，AI 自己找路</h3>
+      <p>
+        目标模式是最基础也是最强大的模式。你不需要告诉 AI 每一步怎么走，只需要描述清楚最终想要的结果——比如「把这个脚本改成支持多线程的」「给这个 API 加上缓存机制」。
+      </p>
+      <p>
+        AI 会自动分析当前代码结构，规划出实现路径，然后逐步执行。这种模式特别适合那些你知道「要什么」但不确定「怎么做」的场景。
+      </p>
 
-            <h3>一、目标模式：说清楚终点，AI 自己找路</h3>
-            <p>目标模式是最基础也是最强大的模式。你不需要告诉 AI 每一步怎么走，只需要描述清楚最终想要的结果——比如「把这个脚本改成支持多线程的」「给这个 API 加上缓存机制」。</p>
-            <p>AI 会自动分析当前代码结构，规划出实现路径，然后逐步执行。这种模式特别适合那些你知道「要什么」但不确定「怎么做」的场景。</p>
+      <div class="pull-quote">
+        <p>设定最终目标，AI 自动规划流程并执行——你从执行者变成了审核者。</p>
+      </div>
 
-            <div class="dy-quote">
-              <p>设定最终目标，AI 自动规划流程并执行——你从执行者变成了审核者。</p>
-            </div>
+      <h3>二、批量模式：复杂任务交给 AI 拆解</h3>
+      <p>
+        当你有一个涉及多个文件、多步操作的大型任务时，目标模式就有点不够用了。这时候需要的是<span class="hl">批量模式</span>：AI 会自动将任务拆分成多个子任务，按逻辑顺序执行，最后汇总结果。
+      </p>
+      <p>
+        比如「把这个项目从 JavaScript 迁移到 TypeScript」，AI 可以自动遍历所有文件，识别类型定义缺失的地方，逐个修复并保持一致性——这在过去需要人类开发者花费数天的工作。
+      </p>
 
-            <h3>二、批量模式：复杂任务交给 AI 拆解</h3>
-            <p>当你有一个涉及多个文件、多步操作的大型任务时，目标模式就有点不够用了。这时候需要的是<span class="hl">批量模式</span>：AI 会自动将任务拆分成多个子任务，按逻辑顺序执行，最后汇总结果。</p>
-            <p>比如「把这个项目从 JavaScript 迁移到 TypeScript」，AI 可以自动遍历所有文件，识别类型定义缺失的地方，逐个修复并保持一致性——这在过去需要人类开发者花费数天的工作。</p>
+      <h3>三、排错模式：快速定位问题根源</h3>
+      <p>
+        调试是开发者最耗时的工作之一。排错模式让 AI<span class="hl">精准区分问题与症状</span>，快速锁定真正的故障根源，而不是被表面错误信息误导。
+      </p>
+      <p>
+        你可以把完整的报错信息、堆栈跟踪、甚至日志片段扔给 AI，让它帮你分析：「这不是数据库连接的问题，真正的问题是某个环境变量没有正确加载。」
+      </p>
 
-            <h3>三、排错模式：快速定位问题根源</h3>
-            <p>调试是开发者最耗时的工作之一。排错模式让 AI<span class="hl">精准区分问题与症状</span>，快速锁定真正的故障根源，而不是被表面错误信息误导。</p>
-            <p>你可以把完整的报错信息、堆栈跟踪、甚至日志片段扔给 AI，让它帮你分析：「这不是数据库连接的问题，真正的问题是某个环境变量没有正确加载。」</p>
+      <h3>四、循环模式：睡前开启，睡醒完成</h3>
+      <p>
+        这是最有「黑客感」的一个模式。<span class="hl">循环模式</span>让 AI 在一个闭环中持续工作：执行 → 检查结果 → 发现问题 → 修正 → 再执行，直到任务完成或达到预设的迭代上限。
+      </p>
+      <p>
+        设置好循环次数和终止条件，你就可以去睡觉了。第二天醒来，AI 已经把任务跑完了。这种模式特别适合需要多轮迭代优化的场景，比如代码重构、数据清洗、持续集成测试等。
+      </p>
 
-            <h3>四、循环模式：睡前开启，睡醒完成</h3>
-            <p>这是最有「黑客感」的一个模式。<span class="hl">循环模式</span>让 AI 在一个闭环中持续工作：执行 → 检查结果 → 发现问题 → 修正 → 再执行，直到任务完成或达到预设的迭代上限。</p>
-            <p>设置好循环次数和终止条件，你就可以去睡觉了。第二天醒来，AI 已经把任务跑完了。这种模式特别适合需要多轮迭代优化的场景，比如代码重构、数据清洗、持续集成测试等。</p>
+      <div class="pull-quote">
+        <p>睡前开启循环任务，睡醒后工作完成——这才是 AI 时代该有的工作姿势。</p>
+      </div>
 
-            <div class="dy-quote">
-              <p>睡前开启循环任务，睡醒后工作完成——这才是 AI 时代该有的工作姿势。</p>
-            </div>
+      <h3>五、精简模式：自动审计，降低返工成本</h3>
+      <p>
+        写代码容易，维护代码难。精简模式让 AI 自动审计代码质量：识别冗余逻辑、建议更好的命名、检测潜在的安全隐患、提出性能优化建议。
+      </p>
+      <p>
+        它的核心价值不是让你写出更「漂亮」的代码，而是<span class="hl">降低后续的返工成本</span>——很多技术债都是在日常开发中积累的，定期用精简模式跑一遍，相当于给代码做一次体检。
+      </p>
 
-            <h3>五、精简模式：自动审计，降低返工成本</h3>
-            <p>写代码容易，维护代码难。精简模式让 AI 自动审计代码质量：识别冗余逻辑、建议更好的命名、检测潜在的安全隐患、提出性能优化建议。</p>
-            <p>它的核心价值不是让你写出更「漂亮」的代码，而是<span class="hl">降低后续的返工成本</span>——很多技术债都是在日常开发中积累的，定期用精简模式跑一遍，相当于给代码做一次体检。</p>
+      <div class="section-marker">03 · 模式组合</div>
+      <h2>五种模式如何串联使用？</h2>
 
-            <h2>这五种模式如何组合使用？</h2>
-            <p>实际工作中，这五种模式并不是孤立的，而是可以串联使用。比如你可以这样设计一个工作流：</p>
+      <p>实际工作中，这五种模式并不是孤立的，而是可以串联使用：</p>
 
-            <div class="dy-timeline">
-              <div class="tl-item">
-                <div class="tl-time">目标模式</div>
-                <div class="tl-text">用目标模式启动整个任务，AI 自动规划实现路径</div>
-              </div>
-              <div class="tl-item">
-                <div class="tl-time">批量模式</div>
-                <div class="tl-text">切换到批量模式，AI 自动拆解并执行多个子任务</div>
-              </div>
-              <div class="tl-item">
-                <div class="tl-time">排错模式</div>
-                <div class="tl-text">执行中遇到报错，进入排错模式定位问题</div>
-              </div>
-              <div class="tl-item">
-                <div class="tl-time">循环模式</div>
-                <div class="tl-text">关键模块进入循环模式，多轮迭代直到达标</div>
-              </div>
-              <div class="tl-item">
-                <div class="tl-time">精简模式</div>
-                <div class="tl-text">任务完成后，用精简模式做代码审计和质量加固</div>
-              </div>
-            </div>
-
-            <h2>普通人如何开始？</h2>
-            <p>如果你之前只是用 AI 逐条生成代码，现在可以尝试从「目标模式」开始：下次遇到一个复杂任务时，不要急着让 AI 帮你写代码，而是先描述清楚你想要的结果，看看 AI 能不能自动规划出完整的实现路径。</p>
-            <p>当你能熟练使用目标模式之后，再逐步引入其他四种模式，慢慢找到适合自己工作流的组合方式。记住，<span class="hl">AI 不是你的搜索引擎，它是你的工作搭档</span>——区别在于，这个搭档可以 24 小时不休息。</p>
-
-          </div>
-
-          <div class="dy-cta">
-            <div class="cover-side">
-              <img loading="lazy" alt="视频封面" src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&q=80" />
-            </div>
-            <div class="btn-side">
-              <a class="cta-btn" href="https://www.douyin.com/video/7649321749746476261" target="_blank" rel="noopener">
-                <i class="fa-brands fa-tiktok"></i> 去抖音原站看完整视频
-                <i class="fa-solid fa-arrow-up-right-from-square"></i>
-              </a>
-              <a class="cta-btn alt" href="https://github.com" target="_blank" rel="noopener">
-                <i class="fa-brands fa-github"></i> GitHub AI 项目集
-                <i class="fa-solid fa-arrow-up-right-from-square"></i>
-              </a>
-              <div class="cta-note">
-                <i class="fa-solid fa-triangle-exclamation"></i>
-                本站仅做学习归档，内容归原作者"阿豪 AI科技"所有。视频封面版权归抖音原视频作者所有。
-              </div>
-            </div>
-          </div>
-
-          <div class="dy-platforms">
-            <h3><i class="fa-solid fa-globe"></i> 相关平台 · 延伸阅读</h3>
-            <div class="plat-grid">
-              <a class="plat-card" href="https://github.com" target="_blank" rel="noopener">
-                <i class="fa-brands fa-github"></i>
-                <span class="pn">GitHub</span>
-                <span class="pd">AI 代码托管与协作</span>
-              </a>
-              <a class="plat-card" href="https://huggingface.co" target="_blank" rel="noopener">
-                <i class="fa-solid fa-face-smile"></i>
-                <span class="pn">HuggingFace</span>
-                <span class="pd">AI 模型与数据集</span>
-              </a>
-              <a class="plat-card" href="https://claude.ai" target="_blank" rel="noopener">
-                <i class="fa-solid fa-robot"></i>
-                <span class="pn">Claude</span>
-                <span class="pd">Anthropic AI 助手</span>
-              </a>
-              <a class="plat-card" href="https://www.douyin.com" target="_blank" rel="noopener">
-                <i class="fa-brands fa-tiktok"></i>
-                <span class="pn">抖音</span>
-                <span class="pd">原视频发布平台</span>
-              </a>
-              <a class="plat-card" href="https://www.zhihu.com" target="_blank" rel="noopener">
-                <i class="fa-brands fa-zhihu"></i>
-                <span class="pn">知乎</span>
-                <span class="pd">AI 技术深度讨论</span>
-              </a>
-              <a class="plat-card" href="https://bilibili.com" target="_blank" rel="noopener">
-                <i class="fa-brands fa-bilibili"></i>
-                <span class="pn">B 站</span>
-                <span class="pd">科技知识视频区</span>
-              </a>
-            </div>
-          </div>
-
-          <div class="dy-tags">
-            <a href="#">vibecoding</a>
-            <a href="#">AI工作模式</a>
-            <a href="#">开发者工具</a>
-            <a href="#">智能体</a>
-            <a href="#">提示词</a>
-            <a href="#">AI自动化</a>
-            <a href="#">效率提升</a>
-            <a href="#">循环执行</a>
-          </div>
-
-          <div class="dy-related">
-            <a href="../dy-7651945427952078131/dy-7651945427952078131.html">
-              <h4>顶级 AI 模型遭封禁 · Anthropic 硬刚美国监管</h4>
-              <p>Claude 系列的政策、模型与可用性的近况观察。</p>
-            </a>
-            <a href="../dy-7651998760762871090/dy-7651998760762871090.html">
-              <h4>CodeGraph · 让 AI 编程代理效率翻倍的本地代码索引</h4>
-              <p>代码上下文的索引神器——架构关系与依赖图谱。</p>
-            </a>
-          </div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">目标模式</div>
+          <div class="tl-text">用目标模式启动整个任务，AI 自动规划实现路径</div>
         </div>
-      </article>
-    </main>
+        <div class="tl-item">
+          <div class="tl-time">批量模式</div>
+          <div class="tl-text">切换到批量模式，AI 自动拆解并执行多个子任务</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">排错模式</div>
+          <div class="tl-text">执行中遇到报错，进入排错模式定位问题</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">循环模式</div>
+          <div class="tl-text">关键模块进入循环模式，多轮迭代直到达标</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">精简模式</div>
+          <div class="tl-text">任务完成后，用精简模式做代码审计和质量加固</div>
+        </div>
+      </div>
 
-    <footer class="footer">
-      <div>© 2025 EXPECTOPATRONUS · 本站内容纯学习用途，非商用</div>
-      <div class="social">
-        <a href="https://github.com/expectopatronus00" target="_blank"><i class="fa-brands fa-github"></i></a>
-        <a href="mailto:18821772508@163.com"><i class="fa-solid fa-envelope"></i></a>
+      <div class="section-marker">04 · 入门建议</div>
+      <h2>普通人如何开始？</h2>
+
+      <p>
+        如果你之前只是用 AI 逐条生成代码，现在可以尝试从「目标模式」开始：下次遇到一个复杂任务时，不要急着让 AI 帮你写代码，而是先描述清楚你想要的结果，看看 AI 能不能自动规划出完整的实现路径。
+      </p>
+      <p>
+        当你能熟练使用目标模式之后，再逐步引入其他四种模式，慢慢找到适合自己工作流的组合方式。记住，<span class="hl">AI 不是你的搜索引擎，它是你的工作搭档</span>——区别在于，这个搭档可以 24 小时不休息。
+      </p>
+
+      <div class="info-box info-box-jade">
+        <strong><i class="fa-solid fa-circle-info" style="color: var(--accent-jade)"></i> 写在最后</strong><br />
+        效率的差距不在于工具本身，而在于使用工具的方式。高手与普通人的区别，往往在于是否愿意花时间设计「让 AI 替你干活」的工作流，而不是事必躬亲地一步步指挥 AI。
+      </div>
+
+      <div class="section-marker">05 · 去抖音看原视频</div>
+      <h2>前往抖音原站观看完整视频</h2>
+
+      <div class="cta-box">
+        <div class="cover">
+          <img
+            loading="lazy"
+            alt="视频封面"
+            src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&q=80"
+          />
+        </div>
+        <div class="content">
+          <h3>去抖音原站看完整视频</h3>
+          <p>
+            点击下方按钮跳转抖音原视频页，查看作者 "阿豪 AI科技" 的完整视频内容与评论区讨论。
+          </p>
+          <a
+            class="cta-btn"
+            id="cta-link"
+            href="https://www.douyin.com/video/7649321749746476261"
+            target="_blank"
+            rel="noopener"
+          ><i class="fa-brands fa-tiktok"></i> 去抖音原站</a>
+          <a
+            class="cta-btn"
+            style="background: var(--accent-jade)"
+            href="https://github.com"
+            target="_blank"
+            rel="noopener"
+          ><i class="fa-brands fa-github"></i> GitHub AI 项目集</a>
+        </div>
+      </div>
+
+      <div class="section-marker">06 · 相关平台</div>
+      <h2>相关平台 · 延伸阅读</h2>
+
+      <div class="platform-list">
+        <a href="https://github.com" target="_blank" rel="noopener"
+          ><i class="fa-brands fa-github"></i> GitHub · AI 代码托管与协作</a
+        >
+        <a href="https://huggingface.co" target="_blank" rel="noopener"
+          ><i class="fa-solid fa-face-smile"></i> HuggingFace · AI 模型与数据集</a
+        >
+        <a href="https://claude.ai" target="_blank" rel="noopener"
+          ><i class="fa-solid fa-robot"></i> Claude · Anthropic AI 助手</a
+        >
+        <a href="https://www.douyin.com" target="_blank" rel="noopener"
+          ><i class="fa-brands fa-tiktok"></i> 抖音 · 原视频发布平台</a
+        >
+        <a href="https://www.zhihu.com" target="_blank" rel="noopener"
+          ><i class="fa-brands fa-zhihu"></i> 知乎 · AI 技术深度讨论</a
+        >
+        <a href="https://bilibili.com" target="_blank" rel="noopener"
+          ><i class="fa-brands fa-bilibili"></i> B 站 · 科技知识视频区</a
+        >
+      </div>
+
+      <div class="section-marker">07 · 标签</div>
+      <h2>内容标签</h2>
+
+      <div class="tags-row">
+        <a href="#">#vibecoding</a>
+        <a href="#">#AI工作模式</a>
+        <a href="#">#开发者工具</a>
+        <a href="#">#智能体</a>
+        <a href="#">#提示词</a>
+        <a href="#">#AI自动化</a>
+        <a href="#">#效率提升</a>
+        <a href="#">#循环执行</a>
+      </div>
+
+      <div class="section-marker">08 · 相关文章</div>
+      <h2>延伸阅读</h2>
+
+      <div class="platform-list">
+        <a href="../dy-7651945427952078131/dy-7651945427952078131.html"
+          ><i class="fa-solid fa-robot"></i> 顶级 AI 模型遭封禁 · Anthropic 硬刚美国监管</a
+        >
+        <a href="../dy-7651998760762871090/dy-7651998760762871090.html"
+          ><i class="fa-solid fa-code"></i> CodeGraph · 让 AI 编程代理效率翻倍的本地代码索引</a
+        >
+        <a href="../../home/home.html"><i class="fa-solid fa-newspaper"></i> 更多文章 · 回到文章列表</a>
+      </div>
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用。视频封面版权归抖音原视频作者所有。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><i class="fa-brands fa-github"></i
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+        </div>
       </div>
     </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><i class="fa-solid fa-arrow-up"></i></button>
 
     <script>
       (function () {
@@ -805,21 +625,28 @@
             var ii = document.querySelector('#theme-toggle i');
             if (ii) ii.className = next === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
           });
-
-        var back = document.getElementById('back');
-        var prog = document.getElementById('progress');
-        function onScroll() {
-          var h = document.documentElement;
-          var p = Math.min(1, h.scrollTop / Math.max(1, h.scrollHeight - h.clientHeight));
-          if (prog) prog.style.width = (p * 100).toFixed(1) + '%';
-          if (back) back.classList.toggle('show', h.scrollTop > 300);
-        }
-        window.addEventListener('scroll', onScroll);
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
         if (back)
           back.addEventListener('click', function () {
             window.scrollTo({ top: 0, behavior: 'smooth' });
           });
-        onScroll();
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
       })();
     </script>
   </body>
