@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Codex国产平替 · EXPECTOPATRONUS</title>
+    <meta name="description" content="国产AI Agent工具KUN，对标OpenAI Codex，配一个API Key就能用，底层重写Token缓存机制，节省95%的token消耗，支持DeepSeek等国产模型。" />
+    <meta name="keywords" content="Codex,DeepSeek,KUN,AI Agent,AI编程,国产平替,Token节省,开发者工具,智能体" />
+    <meta property="og:title" content="Codex国产平替——国产 AI Agent 对标 Codex" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="配一个API Key就能用，底层节省95%的token消耗，国产AI编程工具KUN对标OpenAI Codex。" />
+    <link rel="shortcut icon" href="../../home/50.png" type="image/png" />
+    <link
+      id="fa-cdn"
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <script>
+      (function () {
+        var l = document.getElementById('fa-cdn');
+        var chk = function () {
+          var ok = false;
+          try {
+            var s = getComputedStyle(document.querySelector('.fa-solid') || document.body);
+            ok = !s.fontFamily || s.fontFamily.indexOf('Font Awesome') !== -1;
+          } catch (e) {
+            ok = false;
+          }
+          if (!ok && window._fa_retried === undefined) {
+            window._fa_retried = true;
+            var n = document.createElement('link');
+            n.rel = 'stylesheet';
+            n.href = 'https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css';
+            document.head.appendChild(n);
+          }
+        };
+        l.onload = chk;
+        l.onerror = function () {
+          chk();
+        };
+      })();
+    </script>
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.7em; margin-left: 2px"></i
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><i class="fa-solid fa-moon"></i></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">AI 编程工具 · 国产平替</div>
+      <h1>Codex国产平替：<em>KUN</em> 节省 95% Token</h1>
+      <p>
+        国产 AI Agent 工具 KUN，对标 OpenAI Codex，配一个 API Key 就能用，底层重写 Token 缓存机制，节省 95% 的 token 消耗，支持 DeepSeek 等国产模型。
+      </p>
+      <div class="meta">
+        <span><i class="fa-regular fa-user"></i> 小墨同学</span>
+        <span><i class="fa-regular fa-calendar"></i> 2026-06-16</span>
+        <span><i class="fa-regular fa-clock"></i> 视频 · 搬运整理</span>
+        <span><i class="fa-solid fa-layer-group"></i> 视频 · 搬运整理</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="视频封面" src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=1400&q=80" />
+    </div>
+
+    <article class="article-body">
+      <div class="section-marker">01 · Codex为什么火</div>
+      <h2>OpenAI Codex 带来的编程变革</h2>
+
+      <p>
+        Codex 是 OpenAI 推出的 AI 编程工具，它能够<span class="hl">理解整个代码库的结构</span>、自动化执行编程任务，而不仅仅是简单的代码补全。开发者可以用自然语言描述需求，Codex 会自动分析代码、规划步骤、执行操作。
+      </p>
+      <p>
+        但在中国市场，Codex 的使用门槛让不少开发者望而却步：需要 OpenAI 账号、支付方式，部分区域还存在访问限制。国内开发者一直在等一个<span class="hl">配置简单、中文友好、不用绑死在 OpenAI</span>的本土方案。
+      </p>
+
+      <div class="pull-quote">
+        <p>国内开发者一直在等一个"能平替 Codex、配置简单、中文友好的本土方案"。</p>
+      </div>
+
+      <div class="section-marker">02 · KUN来了</div>
+      <h2>国产平替方案：KUN AI Agent</h2>
+
+      <p>
+        KUN 是一款国产 AI Agent，对标 Codex 的核心理念：让 AI 真正介入编程工作流。<strong>不是简单的代码补全，而是理解整个项目结构、自主规划执行步骤</strong>。
+      </p>
+
+      <h3>核心卖点：配个 Key 就能用</h3>
+      <p>
+        KUN 最大的亮点是<span class="hl">极低的使用门槛</span>：只需配置一个 API Key，不用折腾复杂的环境配置，打开就能用。对国内用户特别友好，支持 DeepSeek 等国产模型作为后盾，不用绑死在 OpenAI。
+      </p>
+
+      <h3>95% Token 节省的技术原理</h3>
+      <p>
+        KUN 底层重写了 Token 缓存机制。相比传统 AI 编程工具每个操作步骤都重新发送上下文，KUN 能够<span class="hl">智能判断哪些上下文可以复用</span>，只发送增量变化，大幅降低 Token 消耗。
+      </p>
+
+      <div class="info-box">
+        <strong><i class="fa-solid fa-bolt" style="color: var(--accent-rust)"></i> 实际影响</strong><br />
+        同等预算下，使用时长可延长 5-10 倍。对于需要长时间运行的编程任务，这个节省非常可观。
+      </div>
+
+      <div class="section-marker">03 · 四大特色功能</div>
+      <h2>KUN 的差异化功能设计</h2>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">桌面小宠物</div>
+          <div class="tl-text">创新的交互设计，编程过程有可视化反馈，随时了解 AI 在做什么</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">手机连接</div>
+          <div class="tl-text">移动端可随时查看任务进度，不在电脑前也能掌握编程状态</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">专注模式</div>
+          <div class="tl-text">屏蔽干扰，适合深度编程任务，营造沉浸式开发环境</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">模型切换</div>
+          <div class="tl-text">支持多个模型随时切换，灵活适配不同任务类型和场景</div>
+        </div>
+      </div>
+
+      <div class="section-marker">04 · 95% Token 节省</div>
+      <h2>这到底意味着什么？</h2>
+
+      <p>
+        传统 AI 编程工具的工作模式是：<span class="hl">每个操作步骤都重新发送完整上下文</span>。当你让 AI 修改一个函数时，它需要重新理解整个文件、项目结构、相关依赖——这些都会消耗大量 Token。
+      </p>
+      <p>
+        KUN 的 Token 缓存机制则不同：它会智能分析哪些上下文已经传输过、哪些可以复用，只发送真正的增量变化。这意味着同样的预算，KUN 能够支撑更长的编程会话。
+      </p>
+
+      <div class="pull-quote">
+        <p>同等预算下，使用时长可延长 5-10 倍——这是 KUN 底层架构带来的核心优势。</p>
+      </div>
+
+      <div class="section-marker">05 · 使用建议</div>
+      <h2>谁适合用 KUN？</h2>
+
+      <h3>适合人群</h3>
+      <p>
+        <strong>刚接触 AI 编程的开发者</strong>：上手成本低，配好 Key 就能用，不用学习复杂的配置流程。<br />
+        <strong>国内项目的开发者</strong>：DeepSeek 等国产模型响应快、成本低，不用担心跨境 API 的各种问题。
+      </p>
+
+      <div class="info-box info-box-jade">
+        <strong><i class="fa-solid fa-circle-info" style="color: var(--accent-jade)"></i> 理性看待</strong><br />
+        KUN 是效率工具，不是架构师。复杂架构设计仍需人工把关，AI 能帮你快速实现，但设计决策需要人来拍板。
+      </div>
+
+      <div class="section-marker">06 · 去抖音看原视频</div>
+      <h2>前往抖音原站观看完整视频</h2>
+
+      <div class="cta-box">
+        <div class="cover">
+          <img
+            loading="lazy"
+            alt="视频封面"
+            src="https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=600&q=80"
+          />
+        </div>
+        <div class="content">
+          <h3>去抖音原站看完整视频</h3>
+          <p>
+            点击下方按钮跳转抖音原视频页，查看作者 "小墨同学" 的完整视频内容与评论区讨论。
+          </p>
+          <a
+            class="cta-btn"
+            id="cta-link"
+            href="https://www.douyin.com/video/7651654548859145491"
+            target="_blank"
+            rel="noopener"
+          ><i class="fa-brands fa-tiktok"></i> 去抖音原站</a>
+          <a
+            class="cta-btn"
+            style="background: var(--accent-jade)"
+            href="https://deepseek.com"
+            target="_blank"
+            rel="noopener"
+          ><i class="fa-solid fa-brain"></i> DeepSeek 官网</a>
+        </div>
+      </div>
+
+      <div class="section-marker">07 · 相关平台</div>
+      <h2>相关平台 · 延伸阅读</h2>
+
+      <div class="platform-list">
+        <a href="https://openai.com" target="_blank" rel="noopener"
+          ><i class="fa-solid fa-robot"></i> OpenAI · Codex 官方</a
+        >
+        <a href="https://deepseek.com" target="_blank" rel="noopener"
+          ><i class="fa-solid fa-brain"></i> DeepSeek · 国产大模型</a
+        >
+        <a href="https://github.com" target="_blank" rel="noopener"
+          ><i class="fa-brands fa-github"></i> GitHub · AI 代码托管</a
+        >
+        <a href="https://claude.ai" target="_blank" rel="noopener"
+          ><i class="fa-solid fa-comment"></i> Claude · AI 编程助手</a
+        >
+        <a href="https://www.douyin.com" target="_blank" rel="noopener"
+          ><i class="fa-brands fa-tiktok"></i> 抖音 · 原视频发布平台</a
+        >
+        <a href="https://www.zhihu.com" target="_blank" rel="noopener"
+          ><i class="fa-brands fa-zhihu"></i> 知乎 · AI 技术讨论</a
+        >
+      </div>
+
+      <div class="section-marker">08 · 标签</div>
+      <h2>内容标签</h2>
+
+      <div class="tags-row">
+        <a href="#">#Codex</a>
+        <a href="#">#DeepSeek</a>
+        <a href="#">#AI</a>
+        <a href="#">#AI新星计划</a>
+        <a href="#">#AI编程</a>
+        <a href="#">#国产平替</a>
+        <a href="#">#Token优化</a>
+        <a href="#">#开发者工具</a>
+      </div>
+
+      <div class="section-marker">09 · 相关文章</div>
+      <h2>延伸阅读</h2>
+
+      <div class="platform-list">
+        <a href="../dy-7649321749746476261/dy-7649321749746476261.html"
+          ><i class="fa-solid fa-bed"></i> 别人睡觉在休息，高手睡觉在开发</a
+        >
+        <a href="../dy-7651945427952078131/dy-7651945427952078131.html"
+          ><i class="fa-solid fa-ban"></i> 顶级 AI 模型遭封禁 · Anthropic 硬刚美国监管</a
+        >
+        <a href="../../home/home.html"><i class="fa-solid fa-newspaper"></i> 更多文章 · 回到文章列表</a>
+      </div>
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用。视频封面版权归抖音原视频作者所有。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><i class="fa-brands fa-github"></i
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><i class="fa-solid fa-arrow-up"></i></button>
+
+    <script>
+      (function () {
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var i = document.querySelector('#theme-toggle i');
+        if (i) i.className = saved === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var ii = document.querySelector('#theme-toggle i');
+            if (ii) ii.className = next === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
