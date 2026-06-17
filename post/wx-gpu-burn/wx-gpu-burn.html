@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GPU单卡压测"满载"及合理满载 · EXPECTOPATRONUS</title>
+<meta name="description" content="GPU利用率100%不等于真正满载。本文深入解析GPU三大资源模块、常见假满载陷阱，以及合理的单卡压测方案。">
+<meta name="keywords" content="GPU,压测,满载,nvidia-smi,显存带宽,Tensor Core,TDP,烤机,稳定性测试">
+<meta property="og:title" content="GPU单卡压测"满载"及合理满载">
+<meta property="og:type" content="article">
+<meta property="og:description" content="GPU利用率100%不等于真正满载。本文深入解析GPU三大资源模块、常见假满载陷阱，以及合理的单卡压测方案。">
+<link rel="shortcut icon" href="../../home/50.png" type="image/png">
+<link id="fa-cdn" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<script>(function(){var l=document.getElementById('fa-cdn');var chk=function(){var ok=false;try{var s=getComputedStyle(document.querySelector('.fa-solid')||document.body);ok=!s.fontFamily||s.fontFamily.indexOf('Font Awesome')!==-1;}catch(e){ok=false;}if(!ok&&window._fa_retried===undefined){window._fa_retried=true;var n=document.createElement('link');n.rel='stylesheet';n.href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css';document.head.appendChild(n);}};l.onload=chk;l.onerror=function(){chk();};})();</script>
+<script>(function(){try{var t=localStorage.getItem('theme')||'dark';if(t==='light')document.documentElement.dataset.theme='light';}catch(e){}})();</script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg-0:#0a0a12;--bg-1:#12121c;--ink:#e8e8f0;--mute:#8a8aa0;--line:#2a2a3a;--cyan:#00e5ff;--pink:#ff2d92;--accent-grad:linear-gradient(135deg,#00e5ff,#8b5cf6);}
+[data-theme="light"]{--bg-0:#f7f7fa;--bg-1:#ffffff;--ink:#1a1a24;--mute:#5a5a70;--line:#e4e4ec;}
+html,body{background:var(--bg-0);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.7;font-size:16px;}
+a{color:inherit;text-decoration:none;}
+.topbar{position:sticky;top:0;z-index:50;background:rgba(10,10,18,.75);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);}
+.topbar .inner{max-width:1200px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.topbar .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;}
+.topbar .logo{width:30px;height:30px;border-radius:8px;background:var(--accent-grad);box-shadow:0 4px 16px -4px rgba(0,229,255,.5);}
+.topbar .nav{display:flex;gap:4px;}
+.topbar .nav a{padding:8px 14px;border-radius:8px;font-size:14px;color:var(--mute);transition:all .2s;}
+.topbar .nav a:hover{color:var(--ink);background:rgba(255,255,255,.04);}
+.topbar .nav a.active{color:var(--cyan);background:rgba(0,229,255,.08);}
+#theme-toggle{background:none;border:1px solid var(--line);color:var(--ink);width:38px;height:38px;border-radius:8px;cursor:pointer;transition:all .2s;}
+#theme-toggle:hover{border-color:var(--cyan);color:var(--cyan);}
+.breadcrumb{max-width:1200px;margin:18px auto 0;padding:0 24px;font-size:13px;color:var(--mute);}
+.breadcrumb a:hover{color:var(--cyan);}
+.breadcrumb .sep{margin:0 8px;}
+.layout{max-width:900px;margin:0 auto;padding:24px;}
+.article-body{background:var(--bg-1);border-radius:20px;border:1px solid var(--line);padding:0;overflow:hidden;}
+.dy-hero{position:relative;height:420px;overflow:hidden;background-size:cover;background-position:center;}
+.dy-hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35) 0%,rgba(0,0,0,.7) 60%,rgba(0,0,0,.95) 100%);}
+.dy-hero .bad{position:relative;z-index:2;padding:28px 36px;max-width:800px;color:#fff;position:absolute;left:36px;bottom:28px;}
+.dy-hero .cat-tag{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;font-size:.72rem;font-weight:700;background:rgba(0,229,255,.2);color:#00e5ff;border:1px solid rgba(0,229,255,.4);margin-bottom:14px;}
+.dy-hero h1{font-size:clamp(1.5rem,3.5vw,2.2rem);font-weight:800;letter-spacing:-.015em;margin-bottom:10px;line-height:1.2;text-shadow:0 2px 14px rgba(0,0,0,.6);}
+.dy-hero .meta-row{display:flex;gap:14px;font-size:.85rem;color:rgba(255,255,255,.85);flex-wrap:wrap;}
+.dy-hero .meta-row i{color:#00e5ff;}
+.dy-desc{padding:22px 28px;border-left:3px solid var(--cyan);background:linear-gradient(135deg,rgba(0,229,255,.06),rgba(139,92,246,.06));border-radius:14px;margin:22px 28px;color:var(--ink);font-style:normal;line-height:1.9;font-size:1rem;}
+.dy-content{padding:8px 28px 28px;}
+.dy-content h2{font-size:1.4rem;margin:26px 0 14px;padding-left:14px;border-left:4px solid var(--cyan);letter-spacing:-.01em;}
+.dy-content h3{font-size:1.1rem;margin:22px 0 10px;color:var(--cyan);}
+.dy-content p{margin-bottom:14px;color:var(--ink);font-size:1rem;line-height:1.9;}
+.dy-content strong{color:var(--ink);font-weight:700;}
+.dy-content .hl{background:linear-gradient(120deg,transparent 0%,rgba(0,229,255,.18) 50%,transparent 100%);padding:0 4px;border-radius:4px;color:var(--cyan);font-weight:600;}
+.dy-content ul{padding-left:28px;margin:14px 0;}
+.dy-content ul li{margin-bottom:8px;color:var(--ink);line-height:1.8;}
+.dy-content code{background:#1e1e2e;padding:2px 8px;border-radius:4px;color:#a6e3a1;font-size:.9rem;font-family:"SF Mono",monospace;border:1px solid var(--line);}
+.dy-timeline{margin:24px 0;padding:20px 24px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.02);}
+.dy-timeline .tl-item{display:grid;grid-template-columns:90px 1fr;gap:16px;padding:12px 0;border-bottom:1px dashed var(--line);}
+.dy-timeline .tl-item:last-child{border-bottom:none;}
+.dy-timeline .tl-time{color:var(--cyan);font-weight:700;font-size:.9rem;}
+.dy-timeline .tl-text{color:var(--ink);line-height:1.8;font-size:.95rem;}
+.dy-quote{margin:28px 0;padding:22px 26px;border-radius:14px;background:linear-gradient(135deg,rgba(139,92,246,.1),rgba(255,45,146,.08));border:1px solid rgba(139,92,246,.3);position:relative;}
+.dy-quote::before{content:"\201C";position:absolute;top:-10px;left:16px;font-size:4rem;color:var(--pink);font-family:Georgia,serif;line-height:1;opacity:.4;}
+.dy-quote p{font-style:italic;color:var(--ink);line-height:1.9;padding-left:10px;}
+.dy-cta{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:28px;padding:22px;border-radius:18px;background:linear-gradient(140deg,rgba(255,255,255,.04),rgba(255,255,255,.01));border:1px solid var(--line);align-items:center;}
+.dy-cta .cover-side img{width:100%;border-radius:14px;border:1px solid var(--line);box-shadow:0 10px 30px -15px rgba(139,92,246,.3);}
+.dy-cta .btn-side{display:flex;flex-direction:column;gap:14px;}
+.dy-cta .cta-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 22px;border-radius:12px;background:linear-gradient(135deg,#3b82ff,#8b5cf6);color:#fff;text-decoration:none;font-weight:700;box-shadow:0 10px 24px -12px rgba(139,92,246,.55);transition:transform .25s;font-size:.95rem;}
+.dy-cta .cta-btn:hover{transform:translateY(-2px);}
+.dy-cta .cta-btn.alt{background:linear-gradient(135deg,#222,#333);box-shadow:0 6px 20px -8px rgba(0,0,0,.4);}
+.dy-cta .cta-note{font-size:.82rem;color:var(--mute);line-height:1.6;}
+.dy-cta .cta-note i{color:var(--pink);}
+.dy-platforms{margin:8px 28px 28px;padding:22px;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.02);}
+.dy-platforms h3{display:flex;align-items:center;gap:10px;margin:0 0 16px;font-size:1.1rem;}
+.dy-platforms h3 i{color:var(--cyan);}
+.plat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;}
+.plat-card{display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 10px;border-radius:12px;background:var(--bg-1);border:1px solid var(--line);transition:all .25s;text-decoration:none;color:var(--ink);}
+.plat-card:hover{border-color:var(--cyan);transform:translateY(-3px);box-shadow:0 10px 24px -12px rgba(0,229,255,.35);}
+.plat-card i{font-size:1.6rem;color:var(--cyan);}
+.plat-card .pn{font-weight:600;font-size:.9rem;color:var(--ink);}
+.plat-card .pd{font-size:.72rem;color:var(--mute);}
+.dy-tags{display:flex;flex-wrap:wrap;gap:8px;margin:18px 28px 10px;}
+.dy-tags a{padding:6px 14px;border-radius:999px;font-size:.78rem;font-weight:600;background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--ink);text-decoration:none;transition:all .2s;}
+.dy-tags a:hover{color:var(--cyan);border-color:var(--cyan);transform:translateY(-2px);}
+.dy-related{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:24px 28px 28px;}
+.dy-related a{padding:16px 20px;border-radius:14px;background:linear-gradient(140deg,rgba(255,255,255,.04),rgba(255,255,255,.01));border:1px solid var(--line);text-decoration:none;color:var(--ink);transition:transform .25s;}
+.dy-related a:hover{transform:translateY(-2px);border-color:var(--cyan);}
+.dy-related a h4{font-size:.95rem;font-weight:700;margin-bottom:4px;}
+.dy-related a p{font-size:.8rem;color:var(--mute);line-height:1.5;}
+#back{position:fixed;right:24px;bottom:24px;width:44px;height:44px;border-radius:50%;background:var(--accent-grad);color:#fff;border:none;cursor:pointer;opacity:0;pointer-events:none;transition:all .3s;box-shadow:0 10px 30px -8px rgba(0,229,255,.5);font-size:1rem;z-index:40;}
+#back.show{opacity:1;pointer-events:auto;}
+#back:hover{transform:translateY(-3px);}
+.progress{position:fixed;top:0;left:0;height:3px;background:var(--accent-grad);width:0;z-index:100;transition:width .1s;}
+.footer{max-width:1200px;margin:36px auto 0;padding:24px;border-top:1px solid var(--line);color:var(--mute);font-size:.85rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.footer .social{display:flex;gap:12px;}
+.footer .social a{width:34px;height:34px;border-radius:8px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;transition:all .2s;color:var(--mute);}
+.footer .social a:hover{border-color:var(--cyan);color:var(--cyan);}
+@media(max-width:820px){.topbar .nav{display:none;}.dy-hero{height:320px;}.dy-hero .bad{left:20px;bottom:20px;padding-right:20px;}.dy-content{padding:8px 20px 24px;}.dy-desc,.dy-platforms,.dy-cta,.dy-tags,.dy-related{margin-left:20px;margin-right:20px;}.dy-cta{grid-template-columns:1fr;}.dy-related{grid-template-columns:1fr;}.dy-timeline .tl-item{grid-template-columns:70px 1fr;gap:12px;}}
+@media(max-width:480px){.plat-grid{grid-template-columns:repeat(2,1fr);}.dy-content h2{font-size:1.2rem;}}
+</style>
+</head>
+<body>
+<div class="progress" id="progress"></div>
+<button id="back" aria-label="返回顶部"><i class="fa-solid fa-arrow-up"></i></button>
+
+<nav class="topbar">
+  <div class="inner">
+    <a href="../../index.html" class="brand">
+      <div class="logo"></div>
+      <span>EXPECTOPATRONUS · BLOG</span>
+    </a>
+    <div class="nav">
+      <a href="../../index.html"><i class="fa-solid fa-house"></i> 首页</a>
+      <a href="../../home/home.html" class="active"><i class="fa-solid fa-newspaper"></i> 文章</a>
+      <a href="../deepseek/deepseek.html"><i class="fa-solid fa-robot"></i> DeepSeek</a>
+      <a href="http://expectopatronus.top:5005/" target="_blank"><i class="fa-solid fa-compass"></i> 导航</a>
+    </div>
+    <button id="theme-toggle" aria-label="主题切换"><i class="fa-solid fa-moon"></i></button>
+  </div>
+</nav>
+
+<div class="breadcrumb">
+  <a href="../../index.html"><i class="fa-solid fa-house"></i></a>
+  <span class="sep">/</span>
+  <a href="../../home/home.html">文章列表</a>
+  <span class="sep">/</span>
+  <span>GPU单卡压测"满载"及合理满载</span>
+</div>
+
+<main class="layout">
+  <article class="article-wrap">
+    <div class="article-body">
+
+      <div class="dy-hero" style="background-image:url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=1200&q=80');">
+        <div class="bad">
+          <div class="cat-tag"><i class="fa-brands fa-weixin"></i> 微信公众号 · GPU技术</div>
+          <h1>GPU单卡压测"满载"及合理满载</h1>
+          <div class="meta-row">
+            <span><i class="fa-regular fa-user"></i> GPU那些事儿</span>
+            <span><i class="fa-regular fa-calendar"></i> 2026-06-17</span>
+            <span><i class="fa-regular fa-clock"></i> 8 分钟阅读</span>
+            <span><i class="fa-solid fa-layer-group"></i> 技术 · 转载整理</span>
+          </div>
+        </div>
+      </div>
+
+      <blockquote class="dy-desc">
+        GPU利用率冲到100%就是满载吗？为什么有时候利用率100%，性能却不如预期？为什么有的压测跑了十分钟就降频，有的却能稳定跑一天？本文深入解析GPU单卡压测中的"满载"真相，带你避开常见的假满载陷阱。
+      </blockquote>
+
+      <div class="dy-content">
+        <p>在GPU算力测试、AI训练调优、或者给新显卡"体检"时，我们常听到一个词——<strong class="hl">满载</strong>。很多人直观地认为："GPU利用率冲到100%就是满载"。但压测中的"满载"真的有这么简单吗？</p>
+
+        <h2>1. "利用率100%"的误解</h2>
+        <p>任务管理器里那个"GPU利用率"达到100%，<strong>不等于显卡真正满载</strong>。</p>
+        <p>以NVIDIA GPU为例，常见的监控工具（如<code>nvidia-smi</code>、任务管理器）显示的利用率，往往指的是<strong>计算核心（CUDA核心）的活跃时间占比</strong>。比如一个简单的向量加法核函数，可能让CUDA核心忙到100%，但显存带宽、PCIe带宽、Tensor Core等其他资源可能闲置大半。</p>
+        <p>真正的"满载"，应该是指GPU的<strong>多个关键子系统同时达到性能上限</strong>，而不仅仅是核心利用率一个数字。</p>
+
+        <h2>2. GPU卡的"三大资源"与满载定义</h2>
+        <p>GPU可以抽象为三个相互配合但又独立的资源模块：</p>
+        <ul>
+          <li><strong>计算单元</strong>：CUDA Core、Tensor Core、RT Core，负责实际的数学运算</li>
+          <li><strong>显存子系统</strong>：HBM/GDDR显存、显存控制器、缓存，负责数据的读写</li>
+          <li><strong>功耗与散热</strong>：TDP上限、电压调节模块(VRM)、风扇/水冷散热系统</li>
+        </ul>
+        <p>单卡满载，理想情况下意味着：<strong>计算单元以最高频率运行 + 显存以最高带宽读写 + 功耗接近甚至达到TDP上限</strong>，三者同时处于高负荷状态。</p>
+        <p>但实际压测中，不同的负载会侧重压不同资源：</p>
+        <ul>
+          <li>大模型训练 → 主要压计算单元 + 显存带宽</li>
+          <li>显存拷贝测试 → 主要压显存控制器</li>
+          <li>纯计算任务 → 主要压CUDA Core，显存可能空闲</li>
+        </ul>
+
+        <h2>3. 合理满载</h2>
+        <p>"合理"二字，其实是从<strong>压测目的</strong>出发的。</p>
+
+        <h3>从稳定性角度</h3>
+        <p>合理满载 = <strong>在功耗墙/温度墙内，长时间稳定运行，不降频，不出错。</strong></p>
+        <p>不合理的表现：跑几分钟就触发温度保护降频、出现ECC错误、驱动崩溃。</p>
+        <p>合理的表现：频率曲线平坦、温度稳定在规格内、无报错日志。</p>
+
+        <h3>从性能角度</h3>
+        <p>合理满载 = <strong>核心/显存频率达到预期上限 + 电压/功耗未触发异常保护 + 实际吞吐量（TFlops、带宽GB/s）与理论值相符。</strong></p>
+        <p>一个经典的反例：有人超频显存后，跑分反而下降了。为什么？因为显存频率拉太高，触发了隐形的纠错重传（ECC重试），导致有效带宽下降。此时监控看到显存频率100%，但实际有效的读写速率腰斩——<strong>这不是合理的满载</strong>。</p>
+
+        <h3>从功耗角度</h3>
+        <p>合理满载 = <strong>GPU卡整卡功耗达到TDP上限（比如厂商设定的MAX TDP），并且热源分布均匀（核心、显存、VRM温度都在规格内）。</strong></p>
+        <p>此时需要用功耗计测量从电源到GPU卡的12V输入功率，而不是完全相信软件读数（软件读数通常有5~10%误差）。</p>
+
+        <h2>4. 常见的"假满载"陷阱</h2>
+
+        <h3>陷阱1：FurMark甜甜圈</h3>
+        <p>FurMark是著名的功耗测试工具，但它压的主要是<strong>着色器单元 + 一部分显存带宽</strong>，对Tensor Core、RT Core几乎无负载。在某些GPU卡（如RTX 4090）上，FurMark跑出的功耗甚至比大模型训练还低几十瓦。所以FurMark能过测，不代表AI训练一定稳。</p>
+
+        <h3>陷阱2：轻负载循环</h3>
+        <p>比如写一个简单的<code>while</code>循环，反复做向量加法。GPU利用率显示100%，但功耗只有TDP的60%。这种"满载"骗过了利用率监控，但没有压到真正的功率瓶颈。</p>
+
+        <h3>陷阱3：单测显存带宽</h3>
+        <p>用<code>nvidia-smi -dmtp</code>模拟的显存压力，或者<code>cudaMemcpy</code>来回拷贝，会让显存控制器100%负载，但核心几乎空转。此时温度很低，风扇都不转——对稳定性验证意义有限。</p>
+
+        <h2>5. "合理满载"压测方案</h2>
+        <p>如果需要对自己的单GPU卡做一次靠谱的单卡满载验证，可以参考以下组合：</p>
+
+        <div class="dy-timeline">
+          <div class="tl-item">
+            <div class="tl-time">快速验证</div>
+            <div class="tl-text"><code>gpu_burn 200</code>（跑200秒循环），时长5~10分钟。关注指标：频率、功耗、温度、有无报错。</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-time">长时间烤机</div>
+            <div class="tl-text"><code>gpu_burn -d 36000</code>（10小时）或 PyTorch 跑大矩阵乘法循环。关注指标：频率曲线是否平坦、是否降频、功耗是否稳定。</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-time">显存稳定性</div>
+            <div class="tl-text"><code>memtest_gpu</code> / <code>cuda-memtest</code>，时长1~2小时。关注指标：显存ECC错误、带宽衰减。</div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-time">混合负载（推荐）</div>
+            <div class="tl-text">同时运行：1个GEMM大矩阵乘（压计算）+ 1个随机访存kernel（压带宽），时长30分钟。目标：功耗达到TDP 95%以上，三项资源利用率均&gt;80%。</div>
+          </div>
+        </div>
+
+        <p>对于个人用户，最简单可靠的办法：<strong>跑一个流行的大模型训练脚本</strong>（比如LLaMA 7B的pretrain步骤，batch size调大），观察<code>nvidia-smi</code>的功耗和频率曲线。如果10分钟内频率稳定、功耗贴顶、风扇曲线平滑，基本可以认为是合理满载。</p>
+
+        <div class="dy-quote">
+          <p>GPU单卡压测的"满载"不是指GPU利用率为100%，而是指在功率、散热、电压限制内，计算单元、显存、功耗三者同时达到高负荷且稳定运行的状态。</p>
+        </div>
+
+        <h2>6. 写在最后</h2>
+        <p>而"合理的满载"，取决于目的：</p>
+        <ul>
+          <li><strong>测稳定性</strong> → 长时间不降频、不报错</li>
+          <li><strong>测散热/电源</strong> → 功耗逼近TDP，温度合理</li>
+          <li><strong>测极限性能</strong> → 实际吞吐量达标，无隐形降效</li>
+        </ul>
+        <p>下次看到有人晒"烤机图"说"显卡满载了"，不妨多问一句：<strong>"是核心满载、显存满载、还是功耗满载？"</strong> —— 这三个答案，才拼出一个真实的GPU压力全貌。</p>
+      </div>
+
+      <div class="dy-cta">
+        <div class="cover-side">
+          <img loading="lazy" alt="GPU" src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80">
+        </div>
+        <div class="btn-side">
+          <a class="cta-btn" href="https://mp.weixin.qq.com/s/LK_VtoTtN76hCx78P7r-5g" target="_blank" rel="noopener">
+            <i class="fa-brands fa-weixin"></i> 阅读原文 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+          <a class="cta-btn alt" href="https://github.com/wilicc/gpu-burn" target="_blank" rel="noopener">
+            <i class="fa-brands fa-github"></i> gpu-burn 开源项目 <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+          <div class="cta-note"><i class="fa-solid fa-triangle-exclamation"></i> 本站仅做学习归档，内容归原作者"GPU那些事儿"所有。转载请注明出处。</div>
+        </div>
+      </div>
+
+      <div class="dy-platforms">
+        <h3><i class="fa-solid fa-globe"></i> 相关平台 · 延伸阅读</h3>
+        <div class="plat-grid">
+          <a class="plat-card" href="https://mp.weixin.qq.com/s/LK_VtoTtN76hCx78P7r-5g" target="_blank">
+            <i class="fa-brands fa-weixin"></i>
+            <span class="pn">微信公众号</span>
+            <span class="pd">原文出处</span>
+          </a>
+          <a class="plat-card" href="https://github.com/wilicc/gpu-burn" target="_blank">
+            <i class="fa-brands fa-github"></i>
+            <span class="pn">gpu-burn</span>
+            <span class="pd">GPU烤机工具</span>
+          </a>
+          <a class="plat-card" href="https://developer.nvidia.com/nvidia-management-library-nvml" target="_blank">
+            <i class="fa-solid fa-microchip"></i>
+            <span class="pn">NVIDIA NVML</span>
+            <span class="pd">官方监控库</span>
+          </a>
+          <a class="plat-card" href="https://pytorch.org/" target="_blank">
+            <i class="fa-solid fa-fire"></i>
+            <span class="pn">PyTorch</span>
+            <span class="pd">深度学习框架</span>
+          </a>
+          <a class="plat-card" href="https://www.nvidia.com/Download/index.aspx" target="_blank">
+            <i class="fa-solid fa-download"></i>
+            <span class="pn">NVIDIA驱动</span>
+            <span class="pd">官方下载</span>
+          </a>
+          <a class="plat-card" href="https://developer.nvidia.com/cuda-downloads" target="_blank">
+            <i class="fa-solid fa-code"></i>
+            <span class="pn">CUDA Toolkit</span>
+            <span class="pd">开发工具包</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="dy-tags">
+        <a href="javascript:void(0)">#GPU</a>
+        <a href="javascript:void(0)">#压测</a>
+        <a href="javascript:void(0)">#满载</a>
+        <a href="javascript:void(0)">#nvidia-smi</a>
+        <a href="javascript:void(0)">#显存带宽</a>
+        <a href="javascript:void(0)">#TensorCore</a>
+        <a href="javascript:void(0)">#TDP</a>
+        <a href="javascript:void(0)">#烤机</a>
+        <a href="javascript:void(0)">#稳定性测试</a>
+        <a href="javascript:void(0)">#CUDA</a>
+        <a href="javascript:void(0)">#微信公众号</a>
+        <a href="javascript:void(0)">#转载</a>
+      </div>
+
+      <div class="dy-related">
+        <a href="../../home/home.html">
+          <h4><i class="fa-solid fa-newspaper"></i> 更多文章</h4>
+          <p>回到文章列表浏览所有分类</p>
+        </a>
+        <a href="../wx-b300-hardware/wx-b300-hardware.html">
+          <h4><i class="fa-solid fa-microchip"></i> 实测 HGX B300</h4>
+          <p>一篇看懂关键硬件数据与性能对比</p>
+        </a>
+      </div>
+
+    </div>
+  </article>
+</main>
+
+<footer class="footer">
+  <div>© 2025 EXPECTOPATRONUS · 本站内容纯学习用途，非商用</div>
+  <div class="social">
+    <a href="https://github.com/expectopatronus00" target="_blank"><i class="fa-brands fa-github"></i></a>
+    <a href="mailto:18821772508@163.com"><i class="fa-solid fa-envelope"></i></a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var saved = localStorage.getItem('theme') || 'dark';
+  if(saved === 'light') document.documentElement.dataset.theme = 'light';
+  var i = document.querySelector('#theme-toggle i');
+  if(i) i.className = saved === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+  var btn = document.getElementById('theme-toggle');
+  if(btn) btn.addEventListener('click', function(){
+    var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+    document.documentElement.dataset.theme = next;
+    localStorage.setItem('theme', next);
+    var ii = document.querySelector('#theme-toggle i');
+    if(ii) ii.className = next === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+  });
+
+  var back = document.getElementById('back');
+  var prog = document.getElementById('progress');
+  function onScroll(){
+    var h = document.documentElement;
+    var p = Math.min(1, h.scrollTop / Math.max(1, h.scrollHeight - h.clientHeight));
+    if(prog) prog.style.width = (p*100).toFixed(1)+'%';
+    if(back) back.classList.toggle('show', h.scrollTop > 300);
+  }
+  window.addEventListener('scroll', onScroll);
+  if(back) back.addEventListener('click', function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+  onScroll();
+})();
+</script>
+</body>
+</html>
