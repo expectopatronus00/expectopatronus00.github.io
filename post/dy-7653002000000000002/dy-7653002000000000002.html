@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>10 个 skill 让你的 Claude 直接起飞 · EXPECTOPATRONUS</title>
+    <meta name="description" content="10 个让 Claude 真正能干活的 skill：代码解释、代码评审、文档生成、命令行建议、数据库查询、API 调试、测试用例编写、正则调试、数据清洗、学习助手。" />
+    <meta name="keywords" content="Claude, Skill, Agent, Prompt, AI工具, 代码解释, 代码评审" />
+    <meta property="og:title" content="10 个 skill 让你的 Claude 直接起飞" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="10 个让 Claude 真正能干活的 skill：代码解释、代码评审、文档生成、命令行建议、数据库查询、API 调试、测试用例编写、正则调试、数据清洗、学习助手。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">Claude Skill 实战</div>
+      <h1>10 个 skill 让你的 Claude 直接起飞</h1>
+      <p>Claude 好用的关键不是模型本身，而是你给它装了哪些 skill。10 个最实用的 skill——从代码解释、代码评审、文档生成、命令行建议，到数据库查询、API 调试、测试用例自动编写——让你的 Claude 从「能聊天」变成「能干活」。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 粉笔AI晓英</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-06-18</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 8 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 视频 · 搬运整理</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="视频封面" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&q=80" />
+    </div>
+
+    <article class="article-body">
+      <div class="section-marker">01 · 让 Claude 能干活的关键</div><h2>模型只是引擎，skill 是它的工具箱</h2><p>很多人用 Claude 几个月，输出还是停留在「回答问题」和「写几行代码」的水平。但如果你打开一些资深用户的界面，会发现他们的 Claude 能做的事情完全不在一个维度——<span class="hl">自动评审一个 PR、生成一份完整的接口文档、帮你把 SQL 优化到原来的 1/10 耗时</span>。</p><p>差别不在模型本身。Anthropic 的模型对所有人是一样的。差别在于：<span class="hl">你有没有为 Claude 装上合适的 skill</span>。</p><p>skill 是一套预置的「角色 + 工作流 + 输入输出模板」。它把一段复杂的任务流程打包成一个你随时可以调用的按钮。你不再需要每次用三行 Prompt 描述你的角色、期望的产出、步骤；你点开一个 skill，填几行输入，剩下的交给它。</p><div class="pull-quote"><p>没有 skill 的 Claude 是裸机；装上 skill 之后，它才真正变成了你的数字同事。</p></div>
+<div class="section-marker">02 · 10 个最值得装的 skill</div><h2>按我自己的使用频率排序</h2><p>下面这 10 个 skill 是我自己每天都在调用的，按使用频率从高到低排。每一个都给出了它的核心用途和典型输入示例。</p><p><strong>1. Code Reviewer（代码评审）</strong><br>用途：把你的一段代码或一个 PR diff 贴进去，让它从可读性、正确性、性能、安全性四个维度给出结构化点评。典型输入：「这是我新提交的 payment service，帮我做一轮 review，重点关注并发和幂等。」</p><p><strong>2. Code Explainer（代码解释器）</strong><br>用途：把一段别人的代码丢进去，让它用中文逐函数、逐循环解释。特别适合接手老项目、或者读框架源码。典型输入：「下面是一个遗留的订单结算逻辑，帮我梳理它的控制流，并指出潜在的 bug 点。」</p><p><strong>3. Doc Writer（文档生成器）</strong><br>用途：把你的函数签名或接口 spec 贴进去，让它自动生成 README、API 文档、或架构图描述。典型输入：「下面是我项目里 auth 模块的 3 个核心函数，帮我写一份适合新人阅读的 README.md。」</p><p><strong>4. Shell Command Helper（命令行助手）</strong><br>用途：用自然语言描述你想在终端里做什么，它返回一条精确的 shell 命令，并逐段解释。典型输入：「我想把当前目录下所有 .log 文件中包含 error 的行找出来，按时间戳排序，导出成 out.txt。」</p><p><strong>5. SQL Optimizer（SQL 优化器）</strong><br>用途：把你的 SQL + 表结构 + EXPLAIN 结果给它，让它分析瓶颈并给出改写建议。典型输入：「这条 SQL 在 300 万行的表上跑 12 秒，帮我分析并改写。」</p><p><strong>6. API Debugger（API 调试助手）</strong><br>用途：把你的 HTTP 响应 / 错误堆栈贴进去，让它做故障推断。典型输入：「下面是我调用支付接口返回的 500 错误，帮我定位故障在我方还是第三方。」</p><p><strong>7. Test Case Writer（测试用例编写）</strong><br>用途：描述你要测的函数/接口，让它生成完整的单元测试，包含边界 case。典型输入：「给下面这段金额计算函数写 10 个测试用例，覆盖正常路径、边界、异常。」</p><p><strong>8. Regex Builder（正则调试）</strong><br>用途：描述你想匹配的模式，让它生成正则并解释每一部分。典型输入：「帮我写一个能从一段文本中提取所有中国大陆手机号的正则，并解释每一段。」</p><p><strong>9. Data Cleaner（数据清洗）</strong><br>用途：把你的脏数据样例贴进去，让它写一个 Python 脚本把数据规范化。典型输入：「下面是一段用户上传的地址数据，格式很乱，帮我写一个脚本把省/市/区分开。」</p><p><strong>10. Learning Tutor（学习助手）</strong><br>用途：输入一个你想学的概念或技术，让它给出学习路径、关键要点、下一步练习。典型输入：「我想学一下 Vector Database 的原理和选型，请给我一份从 0 到上手的学习计划。」</p>
+<div class="section-marker">03 · 一个 skill 是怎么工作的</div><h2>为什么它比空聊更可靠</h2><p>一个好的 skill 不是一段 Prompt——它是一个<span class="hl">工作流的封装</span>。完整的 skill 通常包含四部分：</p><p><strong>角色设定（Role）</strong>：「你是一名有 10 年经验的后端工程师，擅长……」。这让模型给出的产出风格稳定，不会在高手和新手之间来回跳。</p><p><strong>输入规范（Inputs）</strong>：明确告诉模型它应该期望收到什么样的数据——代码片段、日志、URL、SQL。这能避免模型对输入做不必要的猜测。</p><p><strong>输出模板（Output Template）</strong>：规定输出格式——例如代码评审必须按「可读性 / 正确性 / 性能 / 安全」四节输出，每节有评等 + 理由 + 建议。这让产出可比较、可复用。</p><p><strong>工具调用（Tools）</strong>：一个 skill 可以绑定一组工具——读文件、跑命令、访问 API。这是最核心的区别：<span class="hl">空聊的 Claude 只有嘴，有 skill 的 Claude 有手</span>。</p><div class="info-box"><p>skill 的精髓：让模型在一个有边界的房间里工作，而不是让它在无限广阔的可能性里自由发挥。</p></div>
+<div class="section-marker">04 · 不只是 10 个按钮</div><h2>skill 真正改变的是什么</h2><p>装这 10 个 skill，表面上是让 Claude 多了 10 个按钮。但真正发生的变化，是三件事：</p><p><strong>一致性提高</strong>。你本周让它做的代码评审，和下周让它做的，格式一致、维度一致、质量可比较。这在空聊模式下几乎做不到——每次你给的 Prompt 不同，它给出的评审风格就会变。</p><p><strong>上下文切换成本下降</strong>。你不用在 10 个窗口之间切来切去（终端 → Claude → Postman → 文档 → 浏览器）。重要操作直接在一个入口里完成。</p><p><strong>个人知识可以被沉淀</strong>。你给它写的每一个 skill，本质上是在把你自己的一部分工作方式「编码」下来。一年后你回头看这些 skill，会发现它们比你今天写的任何一条笔记都更有用。</p><div class="pull-quote"><p>Prompt 是一条一条的鱼，skill 是钓鱼的方法。前者让你吃一顿，后者让你一直吃。</p></div>
+<div class="section-marker">05 · 三个常见误区</div><h2>避免把 skill 用成普通 Prompt</h2><p>我看到很多人装了一堆 skill，但效果还是一般。下面是最常见的三个问题：</p><p><strong>误区一：把 skill 当搜索入口用</strong>。打开代码评审 skill，但输入的是「解释什么叫依赖注入」。这其实不需要 skill，直接问就好。skill 的价值是处理需要结构化输出的复杂任务。</p><p><strong>误区二：给的上下文不够。</strong>skill 越「重」，它需要的上下文越多。如果你只是把一段 5 行代码丢给代码评审，它给不出比「代码看起来还行」更有意义的反馈。你至少应该提供：代码在项目中的位置、它的调用关系、你关心的重点是什么。</p><p><strong>误区三：不做迭代。</strong>第一次让它做的评审可能质量一般，但你应该把评审中它错过的问题反馈给它，让它下一次做得更好。好的 skill 是你和它一起迭代出来的。</p>
+<div class="section-marker">06 · 今天就能做的事</div><h2>给你的动手建议</h2><p>最后给一个非常具体的起步路径。别一开始就去网上下载 50 个 skill——那只会让你和它们都消化不良。我建议的起步方式是「3 个起步 + 1 个自写」：</p><p><strong>3 个起步：</strong>从上面 10 个里挑你最经常面对的 3 个。如果你是后端工程师，优先装「SQL Optimizer / API Debugger / Test Case Writer」。如果你是前端，优先装「Code Explainer / Doc Writer / Shell Command Helper」。</p><p><strong>1 个自写：</strong>挑一个你自己每天重复做 3 次以上的小任务，给 Claude 写一个你自己的 skill。哪怕只有 10 行模板，也比永远用别人写的更贴近你的实际。</p><p>做完这两件事，接下来一周你会看到一个效果：<span class="hl">你在 Claude 里打字越来越少，点按钮越来越多</span>。这不是你变懒了——这是你在把重复的脑力劳动，交给一个被你训练过的智能同事。</p>
+    <div class="cta-box">
+      <div class="content">
+        <h3>去抖音看原视频</h3>
+        <p>搜索 '10个skill让Claude起飞' 看原视频</p>
+      <a class="cta-btn" id="cta-link" href="https://www.douyin.com/search/Claude10个skill" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往抖音
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://claude.ai" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v10.5a3.5 3.5 0 1 1-2-3.16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M14 3v8.5M14 3h4.5M14 8.5h4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="pn">Claude.ai</span>
+        <span class="pd">Claude 官方网站，登录后即可使用 skill 系统</span>
+      </a>
+      <a class="plat-card" href="https://docs.anthropic.com" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4 3h16v2H4V3zm0 4h10v2H4V7zm0 4h16v2H4v-2zm0 4h10v2H4v-2zm0 4h16v2H4v-2z"/></svg>
+        <span class="pn">Anthropic Docs</span>
+        <span class="pd">官方文档，了解 Claude 的 skill 系统如何设计</span>
+      </a>
+      <a class="plat-card" href="https://github.com/search?q=claude+skill" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.48v-1.7c-2.78.62-3.37-1.37-3.37-1.37-.45-1.17-1.11-1.48-1.11-1.48-.91-.64.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.1.63-1.36-2.22-.27-4.56-1.14-4.56-5.06 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.3.1-2.7 0 0 .84-.27 2.75 1.05A9.4 9.4 0 0 1 12 6.84c.85 0 1.7.12 2.5.35 1.9-1.32 2.75-1.05 2.75-1.05.55 1.41.2 2.43.1 2.71.64.72 1.03 1.64 1.03 2.76 0 3.93-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9v2.81c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.25C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">开源社区中的 Claude skill 集合与示例</span>
+      </a>
+      <a class="plat-card" href="https://www.douyin.com/search/ClaudeSkill" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.321 5.562a5.124 5.124 0 0 1-3.035-1.012 5.124 5.124 0 0 1-2.041-3.26h-3.264v14.31a3.47 3.47 0 1 1-2.372-3.31v3.29a6.762 6.762 0 1 0 5.636 6.72V8.92a8.39 8.39 0 0 0 5.061 1.71V7.37a5.16 5.16 0 0 1 0-.44z" fill="currentColor"/></svg>
+        <span class="pn">抖音</span>
+        <span class="pd">原视频发布平台，搜索 'Claude skill' 看原视频</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="#">#Claude</a>
+      <a href="#">#Skill</a>
+      <a href="#">#Agent</a>
+      <a href="#">#Prompt</a>
+      <a href="#">#AI工具</a>
+    </div>
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用。视频封面版权归抖音原视频作者所有。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

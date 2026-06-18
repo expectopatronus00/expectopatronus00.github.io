@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VibeCoding大赏：微软把终端也AI化了？ · EXPECTOPATRONUS</title>
+    <meta name="description" content="微软在 Windows Terminal 中集成 AI Copilot，让命令行从纯文本工具变成可以对话、解释、写代码的智能终端。这是 Vibe Coding 时代最被低估的基础设施升级。" />
+    <meta name="keywords" content="Windows Terminal, AI Copilot, Vibe Coding, 微软AI, 命令行, AI终端, Copilot" />
+    <meta property="og:title" content="VibeCoding大赏：微软把终端也AI化了？" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="微软在 Windows Terminal 中集成 AI Copilot，让命令行从纯文本工具变成可以对话、解释、写代码的智能终端。这是 Vibe Coding 时代最被低估的基础设施升级。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">AI 终端 / Windows Terminal</div>
+      <h1>VibeCoding大赏：微软把终端也AI化了？</h1>
+      <p>微软在 Windows Terminal 中集成了 AI Copilot——让命令行不再是纯文本输出，而是可以问 AI「这条命令在做什么」「帮我写一条命令」「解释这个错误」。这是 Vibe Coding 时代最被低估的基础设施升级。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 查库贝拉德里曼</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-06-18</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 7 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 视频 · 搬运整理</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="视频封面" src="https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=1200&q=80" />
+    </div>
+
+    <article class="article-body">
+      <div class="section-marker">01 · 一条容易被忽略的更新</div><h2>微软把终端给 AI 化了</h2><p>如果你最近关注 Windows 更新，你可能注意到一条看似不起眼的新闻：<span class="hl">Windows Terminal 在正式版中加入了 AI Copilot</span>。不是第三方插件，是原生集成。</p><p>这意味着——你打开终端，不再只是面对一个黑底白字的纯命令行。你可以直接在终端里问 AI：</p><p><strong>「这条错误信息是什么意思？」</strong> 不需要复制到浏览器去搜索，Copilot 会给你解释、给你修复命令。</p><p><strong>「帮我写一条命令来完成 X」</strong> 你用自然语言描述需求，它生成 PowerShell / bash 命令，你确认后直接执行。</p><p><strong>「这段输出在告诉我什么？」</strong> 复杂的 `netstat` 或 `docker ps` 输出，它帮你总结成人类语言。</p><p>这件事的意义远不止「终端变好看了」。它在重构一个最基础的人机接口——开发者每天花数小时的命令行——如何与大模型协作。</p>
+<div class="section-marker">02 · 为什么这是大事</div><h2>终端是开发流程的枢纽</h2><p>让我们算一笔时间账。一个典型的后端开发者，每天在终端里做什么？</p><p>构建与部署（`npm run build`、`docker build`）、调试与查错（`tail -f`、`grep`）、Git 操作、环境管理（`conda activate`、`nvm use`）、服务器登录与运维……</p><p>所有这些操作的共同点是：<span class="hl">它们都是文本交互</span>。命令输进去，一串文本返回来。理解这串文本，判断下一步，靠的是人的经验和耐心。</p><div class="pull-quote"><p>过去 40 年，终端的交互模型几乎没变：人写命令，机器返回文本，人理解文本。</p></div><p>现在 AI 插入到了「理解文本」这个环节。你不再需要背数百条命令参数，不需要查 Stack Overflow 翻译错误信息，不需要反复试错。<span class="hl">Copilot 把「理解-决策-再输入」这一整段循环，从人手里接了过去</span>。</p>
+<div class="section-marker">03 · 它到底能做什么</div><h2>从三个真实场景看它的价值</h2><p>如果你觉得「不过是加了个聊天框」，那你低估了它。下面三个场景是很多开发者每天都在面对的：</p><p><strong>场景一：遇到陌生报错</strong><br>你跑一个前端构建，终端抛出一串 30 行的 node-gyp 编译错误。以前：复制前几行去搜、点开第三个结果、跳回终端试一次、发现不对、再搜。<br>现在：<span class="hl">右键那条错误信息 → Ask Copilot</span>。它给你三行解释，加上一条修复命令，你一键回车执行。</p><p><strong>场景二：写复杂的管道命令</strong><br>你要把 Git 历史中最近 200 条 commit 按作者分组、统计每个人的代码量、导出成 CSV。以前：慢慢搭 `git log | awk | sort | uniq`。<br>现在：<span class="hl">用自然语言描述需求</span>，Copilot 给你整条命令，并附上每一部分在做什么的解释。</p><p><strong>场景三：对服务器状态做巡检</strong><br>你登录到一台远程服务器，想看 CPU / 内存 / 磁盘三件套。以前：`htop`、`free -h`、`df -h`、来回切。<br>现在：一个入口让 Copilot 帮你跑这些命令，汇总成一个结构化的状态报告。</p><div class="info-box"><p>它不是在替换命令行——它是把命令行从「需要人来翻译」变成「机器自己翻译」。</p></div>
+<div class="section-marker">04 · Vibe Coding 的一个缩影</div><h2>这不是孤立的变化</h2><p>把终端 AI 化，放在 Vibe Coding 这个大趋势里看，就特别有味道。</p><p>Vibe Coding 的核心主张是——<span class="hl">不要让 AI 只是你的代码补全，让它成为你整个开发流程的上下文参与者</span>。这意味着：</p><p>第一，AI 不应该被关在编辑器里。它需要出现在终端、浏览器、协作工具、部署面板——所有你在工作中会切换到的地方。</p><p>第二，AI 的交互方式不应该是「输入一段 → 输出一段」。它应该是「在你当前的上下文中就地响应」——你在终端遇到错误，它就在终端里解释；你在文档里卡住，它就在文档里给出建议。</p><p>第三，AI 应该降低「知道有什么工具可用」的认知成本。很多开发者不是不会用某个命令，而是「不知道这个命令存在」。Copilot 的价值就在于——它帮你发现、示范、执行、学习，一条龙。</p><div class="pull-quote"><p>真正的 Vibe Coding：不是用 AI 多写 30% 的代码行数，而是让 AI 帮你减少 80% 的认知摩擦。</p></div>
+<div class="section-marker">05 · 代价与边界</div><h2>它不是银弹</h2><p>当然，把 AI 接入终端有明显的风险，最突出的有两个：</p><p><strong>权限问题</strong>——AI 能执行命令，意味着它拥有你的终端权限。一个糟糕的 Copilot 建议，自动执行下去，就能把生产数据搞坏。微软的做法是让 AI「建议命令」但「不自动执行」，需要人明确回车确认。这是一个合理的保守设计。</p><p><strong>幻觉问题</strong>——AI 在解释错误时，也可能给出看起来对但其实错的分析。这不是终端特有的问题，所有 AI 工具都有。但因为命令行的破坏性大，对 AI 错误的容忍度就特别低。</p><p>所以，终端 Copilot 的正确使用姿势不是「让它替你干活」，而是「让它当一个随时在身边的资深同事——它给你建议，你来拍板」。</p>
+<div class="section-marker">06 · 给你动手的建议</div><h2>今天就可以试的三件小事</h2><p>如果你想亲自感受 Vibe Coding 在终端里的体验，可以按下面的顺序来：</p><p><strong>1. 先升级终端</strong>：在 Windows 中打开 Microsoft Store，搜索 Windows Terminal 升级到最新版；在 macOS / Linux 上尝试开启 `GitHub Copilot in the CLI`（`gh copilot` 扩展）。</p><p><strong>2. 下次遇到错误不要急着搜</strong>：先把那行错误丢给终端 Copilot 看，让它做第一次解释。你再判断它说得对不对、有没有遗漏关键信息。</p><p><strong>3. 挑一条你常用的复杂命令，让它解释给你听</strong>：比如你天天用的那条 `git log --oneline --author=... --pretty=format:...`。它解释完，你可能会发现自己以前误解了它的某个参数。</p><p>这样做一周后你会发现一个变化——<span class="hl">你不再害怕在终端里输入命令了</span>。因为你知道无论你写出什么，旁边有一个可以随时问、随时帮你解释的智能同事。</p>
+    <div class="cta-box">
+      <div class="content">
+        <h3>去抖音看原视频</h3>
+        <p>搜索 '微软把终端AI化了' 看原视频</p>
+      <a class="cta-btn" id="cta-link" href="https://www.douyin.com/search/微软终端AI化" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往抖音
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://learn.microsoft.com/windows/terminal/" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.18L19.82 8 12 11.82 4.18 8 12 4.18zM4 9.82l7 3.5v7.86l-7-3.5V9.82zm16 0v7.86l-7 3.5v-7.86l7-3.5z"/></svg>
+        <span class="pn">Windows Terminal</span>
+        <span class="pd">官方文档，了解终端的 AI Copilot 集成方式</span>
+      </a>
+      <a class="plat-card" href="https://docs.github.com/copilot/github-copilot-in-the-cli" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.48v-1.7c-2.78.62-3.37-1.37-3.37-1.37-.45-1.17-1.11-1.48-1.11-1.48-.91-.64.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.1.63-1.36-2.22-.27-4.56-1.14-4.56-5.06 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.3.1-2.7 0 0 .84-.27 2.75 1.05A9.4 9.4 0 0 1 12 6.84c.85 0 1.7.12 2.5.35 1.9-1.32 2.75-1.05 2.75-1.05.55 1.41.2 2.43.1 2.71.64.72 1.03 1.64 1.03 2.76 0 3.93-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9v2.81c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.25C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub Copilot CLI</span>
+        <span class="pd">跨平台的 CLI Copilot，让你的终端同样具备 AI 能力</span>
+      </a>
+      <a class="plat-card" href="https://www.douyin.com/search/微软终端AI" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.321 5.562a5.124 5.124 0 0 1-3.035-1.012 5.124 5.124 0 0 1-2.041-3.26h-3.264v14.31a3.47 3.47 0 1 1-2.372-3.31v3.29a6.762 6.762 0 1 0 5.636 6.72V8.92a8.39 8.39 0 0 0 5.061 1.71V7.37a5.16 5.16 0 0 1 0-.44z" fill="currentColor"/></svg>
+        <span class="pn">抖音</span>
+        <span class="pd">原视频发布平台，搜索 '微软终端AI' 看原视频</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="#">#VibeCoding</a>
+      <a href="#">#WindowsTerminal</a>
+      <a href="#">#AICopilot</a>
+      <a href="#">#微软</a>
+      <a href="#">#命令行</a>
+    </div>
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用。视频封面版权归抖音原视频作者所有。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

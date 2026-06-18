@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>一行代码让网站变成 AI 原生应用 · EXPECTOPATRONUS</title>
+    <meta name="description" content="一行 Web SDK 代码就能让已有网站具备 AI 原生能力——理解页面内容、响应用户意图、自动生成内容。从接入、配置、到自定义技能，手把手讲清。" />
+    <meta name="keywords" content="AI原生应用, Web SDK, AI新星计划, AI化, 前端开发, AI接入, AI原生" />
+    <meta property="og:title" content="一行代码让网站变成 AI 原生应用" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="一行 Web SDK 代码就能让已有网站具备 AI 原生能力——理解页面内容、响应用户意图、自动生成内容。从接入、配置、到自定义技能，手把手讲清。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">AI-Native / Web SDK</div>
+      <h1>一行代码让网站变成 AI 原生应用</h1>
+      <p>「AI 原生」的含义已经发生变化：不再是你在网站上加一个聊天框，而是让 AI 理解你的整个页面、用你的页面数据做出响应。这篇文章告诉你：如何用一行 SDK 接入代码，让已有网站直接具备 AI 原生能力。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Max的AI干货</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-06-18</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 8 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 视频 · 搬运整理</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="视频封面" src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&q=80" />
+    </div>
+
+    <article class="article-body">
+      <div class="section-marker">01 · AI 原生的真正含义</div><h2>加一个聊天框不算 AI 原生</h2><p>过去半年，很多网站都在往页面右下角塞一个聊天机器人。但那不是 AI 原生——那是一个贴在你网站上的「外置键盘」。用户问它一个问题，它去别处找资料来回答；它既不懂你页面上的内容，也不能代表你的页面做任何事情。</p><p>真正的 <span class="hl">AI 原生</span> 意味着三件事：</p><p><strong>AI 理解你的页面</strong>：它能读到你页面里的文本、结构、商品信息、数据图表。</p><p><strong>AI 替你的页面回应用户</strong>：它能在页面上下文中做回答——而不是给出一段与页面无关的通用答案。</p><p><strong>AI 可以操作页面</strong>：它能触发点击、填写表单、跳转路由。</p><div class="pull-quote"><p>AI 原生不是「AI 站在旁边看你的网站」，而是「AI 从你的网站里长出来」。</p></div>
+<div class="section-marker">02 · 一行代码到底做了什么</div><h2>从 <script> 到完整 AI 能力</h2><p>所谓的「一行代码接入」，通常是指在你 HTML 里加入一段类似下面的 SDK 脚本：</p><p><code>&lt;script src="https://cdn.example.com/ai-sdk/latest.js" data-site="你的站点ID" async&gt;&lt;/script&gt;</code></p><p>这一行脚本，在用户浏览器里做了这么几件事：</p><p><strong>1. 页面结构解析</strong>。SDK 读 DOM，抽出标题、段落、链接、图片 alt、meta description 等，拼成一份「当前页面内容摘要」。</p><p><strong>2. 意图识别入口</strong>。在页面右下角注入一个悬浮球和一个可展开的对话窗口——这是你网站和用户之间新增的第三个人机接口（前两个是链接和表单）。</p><p><strong>3. 内容感知响应</strong>。用户问一个问题时，SDK 把「页面摘要 + 用户问题」一起发给大模型，大模型只在页面内容范围内回答。</p><p><strong>4. 操作能力注入</strong>。SDK 会暴露一组 action（「加入购物车」「滚动到评论区」「下载文档」），让 AI 回答后可以触发页面交互。</p>
+<div class="section-marker">03 · 接入的关键细节</div><h2>容易出错的 5 件事</h2><p>接入只有一行代码，但要让它真正好用，需要注意几个很容易被忽略的细节。</p><p><strong>1. 你真的让它理解了正确的页面内容</strong>。很多网站 90% 文字是导航、广告、footer。SDK 默认会扫整个页面，但结果可能被噪音污染。正确做法：<span class="hl">加一个 data-ai-content 属性</span>，把你真正想让 AI 理解的核心内容包起来。</p><p><strong>2. 你是否配置了 action 列表</strong>。SDK 默认通常不具备「操作页面」的能力。你需要显式告诉它：哪些按钮、哪些路由、哪些表单可以被它触发。不配置这一步，AI 就永远只能聊天。</p><p><strong>3. 隐私与合规</strong>。如果你接入了一个第三方 AI SDK，你需要确认：SDK 发给模型的内容范围、用户信息脱敏策略、数据留存策略、是否符合当地法规。这是合规部门最容易卡住你的地方。</p><p><strong>4. 性能影响</strong>。一行脚本通常很小，但大模型响应可能需要 2~5 秒。如果你没有做合理的 loading 动画和超时处理，用户体验反而会比没有 AI 时更差。</p><p><strong>5. 失败兜底</strong>。大模型偶尔会罢工或说错。SDK 必须有 fallback——当 AI 回答失败时，退化为一个普通的站内搜索，而不是让用户盯着一个永远在转圈的加载。</p><div class="info-box"><p>一行代码是起点，不是终点。接入后的配置，决定它是一个真正的 AI 原生能力，还是一个看起来很美的摆设。</p></div>
+<div class="section-marker">04 · 三个真实场景</div><h2>它到底给你的网站带来什么</h2><p>下面三个场景，是接入 AI 原生 SDK 后最常见的质变。每一个都不需要你改业务代码，只需要在 SDK 里配置相应的 prompt。</p><p><strong>场景一：电商详情页 → 智能导购</strong><br>原来：用户翻完产品规格、参数表，还是不知道选哪个。现在：AI 告诉用户「根据你页面上的两款对比，A 的续航更适合通勤，B 的性能更适合直播，预算 5000 元以内推荐选 A。」并且一键把商品加入购物车。</p><p><strong>场景二：文档站 / 技术博客 → 阅读答疑</strong><br>原来：用户读到一半卡住，去评论区问「这部分具体怎么实现？」现在：AI 直接在页面上回答「这部分用到了 X 技术，你需要先了解 Y 概念，下面是完整实现步骤」——并且可以直接生成可运行代码片段。</p><p><strong>场景三：内部后台 / CMS → 自然语言操作</strong><br>原来：运营同事要找「近 7 天新增付费用户中 iOS 的」，得先翻菜单 → 点筛选 → 选条件。现在：直接对 AI 说「导出近 7 天 iOS 付费用户到一个表格」，它执行，她下载。</p>
+<div class="section-marker">05 · 自己动手的最简方案</div><h2>不想等 SDK，你可以自己造一个</h2><p>如果你想在自己的个人项目里感受一下 AI 原生，但不想用任何第三方 SDK，做一个最小版本只需要三件事：</p><p><strong>第一步：让页面内容可被读取</strong>。用一段 JS 在页面加载后抽出主要文本（例如 `document.querySelector('main').innerText`），作为 AI 的上下文。</p><p><strong>第二步：在页面内注入一个对话窗口</strong>。一个 `textarea` + 一个输出区即可。用户输入后，把「页面摘要 + 用户问题」发给大模型 API（OpenAI、Anthropic、或任何你有 key 的）。</p><p><strong>第三步：让响应能操作页面</strong>。约定好 AI 可以用 `<a href="#action=...">` 格式在回答中插入可执行动作，前端拦截点击，执行对应的 JS 逻辑（跳转、提交表单、滚动）。</p><p>这三件事加起来大约 200 行 JavaScript，不依赖任何框架。做完后你会对「AI 原生」有一个非常具体的体感——它不是一个新功能，它是一种新的<span class="hl">交互范式</span>。</p>
+<div class="section-marker">06 · 最后问自己一个问题</div><h2>你的网站真的需要 AI 原生吗</h2><p>最后给一个朴素的判断标准。你可以问自己下面这个问题：</p><p><strong>「我网站的访客，是不是在读了页面之后，仍然有很多需要翻更多页、查更多资料、或者需要人工客服介入才能解决的疑问？」</strong></p><p>如果答案是「是」——例如产品规格太复杂、文档太长、内部系统难以上手——那 AI 原生对你来说不只是好看，它是能真正降低用户使用门槛、提升转化的东西。</p><p>如果答案是「不是」——例如你的网站只有一个按钮、用户操作非常直接——那把 AI 接进去可能只是增加成本和复杂度，没有明显收益。</p><p>但只要你的答案是「是」，那这件事的投入产出比会非常高：<span class="hl">一行代码 + 几小时配置，换来的是你的网站第一次真的「听懂」了用户在说什么</span>。</p><div class="pull-quote"><p>AI 化不是给网站加装饰，而是给网站装一个脑子。区别在于——你是让它真的能思考，还是只让它看起来像在思考。</p></div>
+    <div class="cta-box">
+      <div class="content">
+        <h3>去抖音看原视频</h3>
+        <p>搜索 '一行代码让网站变成AI原生应用' 看原视频</p>
+      <a class="cta-btn" id="cta-link" href="https://www.douyin.com/search/一行代码网站AI原生" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往抖音
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://chatbotkit.com" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 1 0 10 10h-10V2z"/></svg>
+        <span class="pn">ChatBotKit SDK</span>
+        <span class="pd">提供一行代码接入的 AI 原生 SDK 方案</span>
+      </a>
+      <a class="plat-card" href="https://sitegpt.ai" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2L2 7v10l10 5 10-5V7L12 2z"/></svg>
+        <span class="pn">SiteGPT</span>
+        <span class="pd">基于网站内容训练专属 AI 问答助手</span>
+      </a>
+      <a class="plat-card" href="https://www.douyin.com/search/AI原生应用" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.321 5.562a5.124 5.124 0 0 1-3.035-1.012 5.124 5.124 0 0 1-2.041-3.26h-3.264v14.31a3.47 3.47 0 1 1-2.372-3.31v3.29a6.762 6.762 0 1 0 5.636 6.72V8.92a8.39 8.39 0 0 0 5.061 1.71V7.37a5.16 5.16 0 0 1 0-.44z" fill="currentColor"/></svg>
+        <span class="pn">抖音</span>
+        <span class="pd">搜索 'AI 原生应用' 看原视频</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="#">#AI原生应用</a>
+      <a href="#">#WebSDK</a>
+      <a href="#">#AI新星计划</a>
+      <a href="#">#前端</a>
+      <a href="#">#一行代码</a>
+    </div>
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用。视频封面版权归抖音原视频作者所有。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
