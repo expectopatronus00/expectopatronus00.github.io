@@ -1,8 +1,9 @@
 # Skill: 抖音搬运文章生成 (douyin-post-skill)
 
-> 版本: 2.0
+> 版本: 3.0
 > 适用项目: expectopatronus00.github.io (纯静态 GitHub Pages 博客)
-> 依赖: Font Awesome 6.5.2 CDN, Node.js (>=18)
+> 依赖: Node.js (>=18)，图标系统：内联 SVG
+> 本 Skill 与 repo-lint-skill 配合使用，生成文章后务必运行 `node scripts/repo-lint.cjs` 校验
 
 ---
 
@@ -66,8 +67,18 @@ git add -A && git commit && git push
       "url": "https://www.douyin.com/video/7651234567890123456"
     },
     "platforms": [
-      { "name": "抖音", "icon": "fa-brands fa-tiktok", "url": "...", "desc": "视频原页" },
-      { "name": "GitHub", "icon": "fa-brands fa-github", "url": "...", "desc": "相关代码" }
+      {
+        "name": "抖音",
+        "icon": "<svg class=\"icon icon-sm\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 3v10.5a3.5 3.5 0 1 1-2-3.16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\"/><path d=\"M14 3v8.5M14 3h4.5M14 8.5h4.5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>",
+        "url": "https://www.douyin.com/video/...",
+        "desc": "视频原页"
+      },
+      {
+        "name": "GitHub",
+        "icon": "<svg class=\"icon icon-sm\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z\"/></svg>",
+        "url": "https://github.com/...",
+        "desc": "相关代码"
+      }
     ],
     "footer_meta": "本站内容纯学习用途，非商用。视频封面版权归抖音原视频作者所有。"
   }
@@ -76,6 +87,19 @@ git add -A && git commit && git push
 
 **必需字段**: `id`, `title`, `author`, `date`, `cover`, `tags`, `summary`, `content_html`, `cta.url`
 **可选字段**: `eyebrow`（默认用 title）, `meta_desc`（默认用 summary）, `meta_keywords`（默认用 tags）, `duration`（默认"约 5 分钟阅读"）, `footer_meta`（有默认值）, `platforms`（可选）
+
+**常用 SVG 图标库**（`icon` 字段可直接使用下列完整 SVG 字符串）：
+
+| 用途 | SVG |
+|---|---|
+| 抖音（音符） | `<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v10.5a3.5 3.5 0 1 1-2-3.16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M14 3v8.5M14 3h4.5M14 8.5h4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>` |
+| GitHub | `<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>` |
+| 机器人 | `<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="8" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="9" cy="14" r="1.2" fill="currentColor"/><circle cx="15" cy="14" r="1.2" fill="currentColor"/><path d="M12 5v3M9 8V6M15 8V6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>` |
+| 大脑 | `<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5C6.5 5 5 7 5 9.5 5 11.5 6 13 5.5 14.5 5 16 6.5 17.5 9 17.5c.5 0 1 0 1.5-.3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M15 5c2.5 0 4 2 4 4.5 0 2-1 3.5-.5 5 .5 1.5-1.5 3-4 3-.5 0-1 0-1.5-.3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M11.5 5h1M11.5 8.5h1M11.5 12h1M11.5 15.5h1M11.5 17.2h1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>` |
+| 笑脸 | `<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="9" cy="10.5" r="0.8" fill="currentColor"/><circle cx="15" cy="10.5" r="0.8" fill="currentColor"/><path d="M8.5 14.5c1 1.5 2.2 2.5 3.5 2.5s2.5-1 3.5-2.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>` |
+| 微芯片 | `<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="10" y="10" width="4" height="4" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4 9h3M4 12h3M4 15h3M17 9h3M17 12h3M17 15h3M9 4v3M12 4v3M15 4v3M9 17v3M12 17v3M15 17v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>` |
+| 图书馆立柱 | `<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V7c0-1.5 1-2 3-2s3 .5 3 2v14M11 21V7c0-1.5 1-2 3-2s3 .5 3 2v14M3 21h18M4 5l16 0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>` |
+| Chart-line | `<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M5 20V14M10 20V8M15 20V12M20 20V5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>` |
 
 ### 2.3 执行命令
 
@@ -163,8 +187,8 @@ https://v.douyin.com/xxxxxxx/
 [英雄区] 封面 + 分类tag + 大标题 + 作者/日期/时长/分类 4 个元信息
 [简介 block] 150~200 字，讲清"这篇文章讲什么、最有冲击力的一句话是什么"
 [正文] 5~8 个二级章节 (h2)，其中穿插：
-   ├── 时间线卡片 (dy-timeline) - 适合事件型/发展史主题
-   ├── 引用 block (dy-quote) - 适合名人言论/核心观点/争议焦点
+   ├── 时间线卡片 (timeline) - 适合事件型/发展史主题
+   ├── 引用 block (pull-quote) - 适合名人言论/核心观点/争议焦点
    ├── 三级小标题 (h3) - 二级章节内的细分点
 [CTA 区] 封面缩略图 + 「去抖音看完整视频」按钮 + 「官方站」按钮
 [多平台卡片] 6~10 个相关平台（见下方表）
@@ -174,31 +198,33 @@ https://v.douyin.com/xxxxxxx/
 
 #### 2.2 多平台卡片推荐库（根据文章主题挑选 8 个左右）
 
-| 领域        | 平台/链接        | 图标 class                     |
-| ----------- | ---------------- | ------------------------------ |
-| 通用        | 抖音原视频       | `fa-brands fa-tiktok`          |
-| AI / 大模型 | Anthropic        | `fa-solid fa-robot`            |
-| AI / 大模型 | DeepSeek         | `fa-solid fa-brain`            |
-| AI / 大模型 | Google DeepMind  | `fa-brands fa-google`          |
-| AI / 开源   | GitHub           | `fa-brands fa-github`          |
-| AI / 开源   | HuggingFace      | `fa-solid fa-face-smile`       |
-| AI / 论文   | arXiv            | `fa-solid fa-book`             |
-| 科技公司    | AWS / 亚马逊     | `fa-brands fa-aws`             |
-| 科技公司    | 英伟达           | `fa-solid fa-microchip`        |
-| 政府监管    | 美国商务部       | `fa-solid fa-building-columns` |
-| 讨论        | X / Twitter      | `fa-brands fa-x-twitter`       |
-| 中文        | 知乎             | `fa-brands fa-zhihu`           |
-| 中文        | B 站             | `fa-brands fa-bilibili`        |
-| 财经        | 相关上市公司官网 | `fa-solid fa-chart-line`       |
+所有卡片使用内联 SVG 图标，无需外部图标字体。直接将下列 SVG 字符串嵌入 `platform-list` 中 `<a>` 的开头位置即可。
 
-**卡片格式：**
+| 领域        | 平台/链接        | 内联 SVG |
+| ----------- | ---------------- | -------- |
+| 通用        | 抖音原视频       | `<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v10.5a3.5 3.5 0 1 1-2-3.16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M14 3v8.5M14 3h4.5M14 8.5h4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>` |
+| AI / 大模型 | Anthropic        | `<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="8" width="14" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="9" cy="14" r="1.2" fill="currentColor"/><circle cx="15" cy="14" r="1.2" fill="currentColor"/><path d="M12 5v3M9 8V6M15 8V6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>` |
+| AI / 大模型 | DeepSeek         | `<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5C6.5 5 5 7 5 9.5 5 11.5 6 13 5.5 14.5 5 16 6.5 17.5 9 17.5c.5 0 1 0 1.5-.3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M15 5c2.5 0 4 2 4 4.5 0 2-1 3.5-.5 5 .5 1.5-1.5 3-4 3-.5 0-1 0-1.5-.3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M11.5 5h1M11.5 8.5h1M11.5 12h1M11.5 15.5h1M11.5 17.2h1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>` |
+| AI / 开源   | GitHub           | `<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>` |
+| AI / 论文   | arXiv            | `<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V7c0-1.5 1-2 3-2s3 .5 3 2v14M11 21V7c0-1.5 1-2 3-2s3 .5 3 2v14M3 21h18M4 5l16 0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>` |
+| 科技公司    | 英伟达           | `<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="10" y="10" width="4" height="4" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4 9h3M4 12h3M4 15h3M17 9h3M17 12h3M17 15h3M9 4v3M12 4v3M15 4v3M9 17v3M12 17v3M15 17v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>` |
+| 政府监管    | 美国商务部       | `<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 21V7c0-1.5 1-2 3-2s3 .5 3 2v14M11 21V7c0-1.5 1-2 3-2s3 .5 3 2v14M3 21h18M4 5l16 0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>` |
+| 讨论        | X / Twitter      | `<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4l8 11M20 4l-8 11M8 20h8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>` |
+| 财经        | 相关上市公司官网 | `<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20h18M5 20V14M10 20V8M15 20V12M20 20V5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>` |
+
+**卡片格式**（直接作为 `CONTENT_HTML` 的一项写入）：
 
 ```html
-<a class="plat-card" href="URL" target="_blank" rel="noopener">
-  <i class="图标class"></i>
-  <span class="pn">平台名</span>
-  <span class="pd">一句话简介</span>
-</a>
+<div class="platform-list">
+  <a href="https://www.douyin.com/video/..." target="_blank" rel="noopener">
+    <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v10.5a3.5 3.5 0 1 1-2-3.16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M14 3v8.5M14 3h4.5M14 8.5h4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    抖音 · 视频原页
+  </a>
+  <a href="https://github.com/..." target="_blank" rel="noopener">
+    <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+    GitHub · 相关代码
+  </a>
+</div>
 ```
 
 #### 2.3 正文字数与风格要求
@@ -207,8 +233,8 @@ https://v.douyin.com/xxxxxxx/
 - 段落清晰，每段不超过 4 行
 - 每个 h2 章节下至少 2 段正文或 1 个时间线/引用 block
 - 关键术语用 `<span class="hl">...</span>` 高亮
-- 引用的重要事实、争议观点用 `<div class="dy-quote"><p>...</p></div>` 包裹
-- 时间序列内容用 `<div class="dy-timeline"><div class="tl-item">...</div></div>`
+- 引用的重要事实、争议观点用 `<div class="pull-quote"><p>...</p></div>` 包裹
+- 时间序列内容用 `<div class="timeline"><div class="tl-item">...</div></div>`
 
 #### 2.4 内容安全
 
@@ -226,7 +252,7 @@ https://v.douyin.com/xxxxxxx/
 └── dy-{VIDEO_ID}.html
 ```
 
-**注意：文章页面引用 `../../home/design-tokens.css` 共用设计令牌，页面私有样式内联在 `<style>` 中。不创建单独的 style.css 或 script.js。**
+**注意：文章页面引用 `../../home/design-tokens.css` 共用设计令牌，页面私有样式内联在 `<style>` 中。不创建单独的 style.css 或 script.js。favicon 使用 `../../home/logo.svg`。**
 
 #### 3.2 使用 `template.html` 填充内容
 
@@ -250,7 +276,7 @@ site-footer    ← 底部
 | 信息框 | `<div class="info-box">…</div>` 或 `<div class="info-box info-box-jade">` | 左侧橙色/青色边线提示 |
 | 时间线 | `<div class="timeline"><div class="tl-item"><div class="tl-time">时间</div><div class="tl-text">内容</div></div></div>` | 流程/事件列表 |
 | 重点引用 | `<div class="pull-quote"><p>引用文字</p></div>` | 带左侧大引号的引用块 |
-| 平台卡片 | `<div class="platform-list"><a href="…"><i class="图标class"></i> 名称 · 描述</a></div>` | 相关平台链接列表 |
+| 平台卡片 | `<div class="platform-list"><a href="…">SVG图标 · 名称 · 描述</a></div>` | 相关平台链接列表 |
 | 标签行 | `<div class="tags-row"><a href="#">#标签</a></div>` | 底部话题标签 |
 | CTA区 | `<div class="cta-box"><div class="cover"><img …/></div><div class="content"><h3>标题</h3><p>描述</p><a class="cta-btn" id="cta-link" href="…" …>按钮</a></div></div>` | 跳转按钮区，id="cta-link" 会被脚本劫持复制当前页 URL |
 
@@ -274,72 +300,74 @@ site-footer    ← 底部
 
 ### 阶段 4: 更新文章库 (home.html)
 
-在 `/workspace/home/home.html` 中做 3 处修改：
+在 `/workspace/home/home.html` 中做 2 处修改：
 
-**修改 A: 更新统计数字（3 个数字）**
+**修改 A: 更新 "共 N 篇" 数字**
 
-- `精选 N 篇内容` → N+1
-- `<b>N</b><span>总数</span>` → N+1
-- `<b>N</b><span>文章总数</span>` → N+1
+- 找到第 ~252 行左右的 `<p>` 段落，其中包含"共 N 篇"
+- 将 N 数字 +1（例如 "共 22 篇" → "共 23 篇"）
 
-**修改 B: 更新 cat-stats 分类统计区**
+**修改 B: 追加 articles 数组项**
 
-- 在 `cat-stats` 区的各个卡片中，`抖音搬运` 这一栏的数字 +1
-
-**修改 C: 追加 articles 数组项**
-在 `var articles = [...]` 数组的**最前面**（数组第一个元素位置）追加：
+在 `var articles = [...]` 数组的**最前面**（数组第一个元素位置）追加新对象。格式参考已有项：
 
 ```js
-{ id:"dy-{VIDEO_ID}", title:"{{TITLE}}", url:"../post/dy-{VIDEO_ID}/dy-{VIDEO_ID}.html", summary:"{{1句话摘要}}", category:"抖音搬运", date:"{{DATE_TODAY}}", read:{{估算分钟}}, tags:["{{标签1}}","{{标签2}}","..."], feat:true },
+{
+  id: 'dy-{VIDEO_ID}',
+  title: '{{TITLE}}',
+  url: '../post/dy-{VIDEO_ID}/dy-{VIDEO_ID}.html',
+  summary: '{{1句话摘要，20-50字}}',
+  category: '抖音搬运',
+  date: '{{DATE_TODAY}}',
+  tags: ['#标签1', '#标签2', '#标签3'],
+},
 ```
 
 **保留其他元素不要改动。**
 
-### 阶段 5: 更新首页排行榜 (index.html)
+### 阶段 5: 更新首页 (index.html)
 
 在 `/workspace/index.html` 中做 2 处修改：
 
-**修改 A: 更新统计数字（2 处）**
+**修改 A: 更新 hero-stats 数字**
 
-- `stats-item` 区的 `内容总数` +1
-- `平均更新频率` 如果有变化也更新（保持 1~3 天即可）
+- 找到 `<div class="hero-stats">` 区域（~第 692 行）
+- 第一个 `<div class="stat">` 下的 `<div class="num">22</div>` 代表 articles 总数，将此数字 +1
 
-**修改 B: 追加排行榜 rank-card**
-在 `热门文章排行榜` 区块的 **最前面**（第一个 rank-card 位置）追加：
+**修改 B: 追加 latest-grid 卡片**
+
+在 `<div class="latest-grid">`（~第 890 行）的**最前面**追加新的 `article-card`。格式严格参照 index.html 中已有卡片：
 
 ```html
-<a class="rank-card" href="./post/dy-{VIDEO_ID}/dy-{VIDEO_ID}.html">
-  <div class="rank-medal">1</div>
-  <div>
-    <h4>{{TITLE}}</h4>
-    <div class="meta-line">
-      <span class="cat">抖音搬运</span>
-      <span class="d">{{DATE_TODAY}}</span>
-      <span class="r"><i class="fa-regular fa-clock"></i> {{DURATION}}</span>
-    </div>
+<a class="article-card" href="post/dy-{VIDEO_ID}/dy-{VIDEO_ID}.html">
+  <div
+    class="thumb"
+    style="background-image: url('{{COVER_URL}}')"
+  >
+    <span class="cat-badge">抖音搬运</span>
   </div>
-  <span class="go"><i class="fa-solid fa-arrow-up-right-from-square"></i> 阅读</span>
+  <div class="art-body">
+    <div class="date">{{DATE_TODAY 格式：2026 · 06 · 18 10:31}}</div>
+    <h3>{{TITLE}}</h3>
+    <p>{{1句话摘要，20-50字}}</p>
+  </div>
 </a>
 ```
 
-**注意：原有的第 1 条会自动下移为第 2 条，需要把 `rank-medal` 里的数字顺次 +1。**
-
-**修改 C: 追加精选文章 articles 数组**
-在 `<h2>最新 抖音搬运</h2>` 下方的卡片网格中，**最前面**追加新文章卡片。格式参照已有卡片。
+**注意：date 格式为 `YYYY · MM · DD HH:mm`，例如 `2026 · 06 · 17 20:40`。**
 
 ### 阶段 6: 验证
 
 **必须做以下验证才能算完成：**
 
-1. **代码检查**: `cd /workspace && npm run lint` 不应有新文章引入的错误
+1. **代码检查**: `cd /workspace && node scripts/repo-lint.cjs`，输出必须 `✅ 全部通过`，不允许出现任何 `❌` 项
 2. **浏览器验证**: 用浏览器工具打开 `file:///workspace/post/dy-{VIDEO_ID}/dy-{VIDEO_ID}.html`，确认：
    - 封面图正常加载（抖音图片外链通常可访问）
-   - 字体图标（Font Awesome）正常显示
-   - 主题切换按钮（月亮/太阳）可点击
+   - SVG 图标正常显示，主题切换按钮月亮/太阳可交互
    - CTA 按钮点击能正常打开抖音原页
    - 多平台卡片能正常跳转
-3. **文章库验证**: 访问 home.html，检查新文章卡片显示、分类统计数字正确
-4. **首页验证**: 访问 index.html，检查排行榜和最新搬运卡片正常
+3. **文章库验证**: 访问 home.html，检查新文章卡片显示、"共 N 篇" 数字正确
+4. **首页验证**: 访问 index.html，检查 latest-grid 中新加卡片正常，hero-stats 第一个数字正确
 
 ### 阶段 7: Git 推送
 
@@ -347,7 +375,7 @@ site-footer    ← 底部
 cd /workspace
 git add -A
 git commit -m "feat: 新增抖音搬运文章 - {{TITLE}}"
-git push origin HEAD:main --force
+git push origin main
 ```
 
 ---
@@ -408,11 +436,14 @@ A: 抖音的图片链接带 `x-expires` 和 `x-signature`，有过期时间。�
 **Q: 视频有作者水印，需要保留吗？**
 A: 封面自带的水印是作者信息，属于作者内容的一部分，保留即可。正文 CTA 区已声明"内容归原作者所有"。
 
-**Q: articles 数组的 `feat:true` 何时加？**
-A: 所有新文章都加 `feat:true`，表示"最新精选"，老文章的 `feat:true` 如果已有 2 篇以上，把最老的那个去掉。
+**Q: articles 数组的格式需要严格一致吗？**
+A: 是的，严格参照 home.html 中已有项的格式：使用单引号 `'`，key 不加引号（如 `id:` 而非 `"id":`），逗号分隔，缩进 2 空格。
 
 **Q: 日期填什么？**
-A: 一律用用户消息里的日期（或当天日期），格式 `YYYY-MM-DD`。
+A: 一律用用户消息里的日期（或当天日期），格式 `YYYY-MM-DD`。首页卡片的 date 字段使用 `YYYY · MM · DD HH:mm` 格式。
+
+**Q: repo-lint 检查不通过怎么办？**
+A: 根据 `node scripts/repo-lint.cjs` 输出的 `❌` 项逐一修复。常见问题包括：HTML 标签未闭合、SVG 属性缺失 `aria-hidden`、文章路径不存在、home.html articles 数字与实际文章数不一致等。
 
 ---
 
@@ -421,8 +452,8 @@ A: 一律用用户消息里的日期（或当天日期），格式 `YYYY-MM-DD`�
 - [ ] 提取了 VIDEO_ID、AUTHOR、TITLE、封面 URL
 - [ ] 文章内容是原创重述，不是逐字复制
 - [ ] 生成了 dy-{VIDEO_ID}/dy-{VIDEO_ID}.html
-- [ ] 更新了 home.html 的 articles 数组、统计数字、分类统计
-- [ ] 更新了 index.html 的排行榜和精选卡片
-- [ ] npm run lint 无新错误
-- [ ] 浏览器打开验证通过
+- [ ] 更新了 home.html 的 articles 数组和 "共 N 篇" 数字
+- [ ] 更新了 index.html 的 hero-stats 数字和 latest-grid 卡片
+- [ ] 已运行 `node scripts/repo-lint.cjs`，无 ❌ 项
+- [ ] 浏览器打开验证通过（SVG 图标、主题切换均正常）
 - [ ] 已 git push
