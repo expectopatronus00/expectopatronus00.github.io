@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>7个必学 <em>Loops</em>！5分钟学会 Loop Engineering · EXPECTOPATRONUS</title>
+    <meta name="description" content="7个生产可用的 Loop 模板：Test Until Green、Build Until Green、CI Failure Watcher、Fix CI Until Green、Coverage Until 80%、De-Sloppify Pass、Deploy Verification。一篇文章讲透每个 Loop 的目标、条件、退出条件和防作弊红线。" />
+    <meta name="keywords" content="Loops,Loop Engineering,Test Until Green,CI自动修复,代码保洁,部署验证,覆盖率,开发自动化,Claude,Cursor" />
+    <meta property="og:title" content="7个必学 Loops！5分钟学会 Loop Engineering" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="大佬们偷偷用的 7 个神级自愈 Loop：测试自修复、CI 失败自动救场、覆盖率倒逼、代码保洁、部署验证。直接抄作业。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">Loop 实战手册 · 2026</div>
+      <h1>7个必学 <em>Loops</em>！5分钟学会 Loop Engineering</h1>
+      <p>"写段代码，报错了还得我复制出来喂回去让它改" —— 你是不是也有这种感觉？AI 很聪明，但它不会自己跑循环。今天给你公开大佬们偷偷用的 7 个神级自愈 Loop：测试自修复、CI 失败自动救场、覆盖率倒逼、代码保洁、部署验证 —— 直接抄作业就能让 AI 自己报错、自己改对。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 代码炼金术士</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-06-17</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 8 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 视频 · 搬运整理</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="视频封面" src="https://p3-pc-sign.douyinpic.com/tos-cn-p-0015/ooXBBXjGAQASbmJzdeKXdeB0kAIlGCGxUQe7uL~tplv-tsj2vxp0zn-gaosi:40.jpeg?from=327834062&lk3s=138a59ce&x-expires=1813330800&x-signature=bVgn1B%2BQgdgfcVcovWe82KGRVZI%3D" />
+    </div>
+
+    <article class="article-body">
+      <div class="section-marker">前言</div>
+<h2>为什么你需要 Loop</h2>
+<p>"写段代码，报错了还得我复制出来喂回去让它改"——这是不是你的日常？你不是在用 AI，你是在当 AI 的贴身保姆。好消息是，真正懂行的人早就不这么玩了。</p>
+<div class="info-box">
+  <strong>一个好 Loop 的通用模板：</strong><br/>
+  <strong>目标（Goal）</strong> —— 这个循环要达成什么<br/>
+  <strong>执行（Execute）</strong> —— 一次循环做什么操作<br/>
+  <strong>验证（Verify）</strong> —— 如何判定当前状态是否达成目标<br/>
+  <strong>迭代（Iterate）</strong> —— 未达成时如何调整策略<br/>
+  <strong>退出（Exit）</strong> —— 最大尝试次数与失败回滚
+</div>
+
+<div class="section-marker">一、构建与测试类</div>
+<h2>1 · Test Until Green —— 测试全绿再提交</h2>
+<p>最经典、最有效的 Loop 起点。目标很简单：<strong>让项目测试 100% 全绿</strong>。</p>
+<div class="timeline">
+  <div class="tl-item"><div class="tl-time">循环启动</div><div class="tl-text">Agent 读取你提供的代码改动 + 测试文件</div></div>
+  <div class="tl-item"><div class="tl-time">步骤 1</div><div class="tl-text">跑全部测试 → 记录失败的测试名称和失败原因</div></div>
+  <div class="tl-item"><div class="tl-time">步骤 2</div><div class="tl-text">选出一个最小根因的失败测试 → 自己写修复代码</div></div>
+  <div class="tl-item"><div class="tl-time">步骤 3</div><div class="tl-text">再次跑测试 → 如果还失败，回到步骤 2 重新分析</div></div>
+  <div class="tl-item"><div class="tl-time">退出</div><div class="tl-text">所有测试通过 → 完成 / 或达到最大尝试次数</div></div>
+</div>
+<div class="info-box info-box-jade">
+  <strong>🔒 防作弊红线：</strong> 绝对不能让 Agent 修改测试断言来"骗过"测试！Agent 的编辑权限仅限于源代码文件，不能碰测试文件。
+</div>
+
+<h2>2 · Build Until Green —— 专治打包和类型报错</h2>
+<p>和 Test Until Green 类似，但目标不是测试通过，而是<strong>让构建 / 编译 / 类型检查全绿</strong>。</p>
+<p>在 TypeScript / Rust / Go 这类强类型语言里特别好用：编译报错信息本身就提供了足够的结构化信息 —— 第几行第几列什么错。Agent 拿到这些信息后精准修复。</p>
+
+<div class="section-marker">二、流水线与 CI 类</div>
+<h2>3 · CI Failure Watcher —— 全天候云端保安</h2>
+<p>这是我个人最爱的 Loop。<strong>让 CI 一失败就自动拉日志写补丁</strong>。</p>
+<div class="info-box">
+  <strong>工作流：</strong><br/>
+  &nbsp;&nbsp;每隔 5 分钟轮询 CI 状态<br/>
+  &nbsp;&nbsp;检测到失败 → 自动拉取 CI 日志<br/>
+  &nbsp;&nbsp;交给 Agent 分析错误并生成补丁<br/>
+  &nbsp;&nbsp;本地验证通过 → 自动提交 PR<br/>
+  &nbsp;&nbsp;人来审核合并
+</div>
+<p>想象一下：你提交了代码然后去喝咖啡。回来发现 AI 已经帮你写好修复的 PR，甚至本地跑过了测试。</p>
+
+<h2>4 · Fix CI Until Green —— 更激进版</h2>
+<p>和 Watcher 不同，Fix CI Until Green 是<em>主动出击</em>：一旦 CI 飘红就立刻进入修复循环，直到 CI 重新变绿才停止。它的目标不是"让开发者知道失败了"，而是"让 CI 自己恢复绿色"。</p>
+
+<div class="section-marker">三、质量与部署类</div>
+<h2>5 · Coverage Until 80% —— 严厉打击假断言</h2>
+<p>目标：<strong>把测试覆盖率推到某个阈值</strong>，例如 80%。</p>
+<p>Agent 会读取 coverage report → 发现哪些文件 / 函数没有被覆盖 → 为缺失的部分写新测试 → 跑测试验证通过 → 更新 coverage report。循环直到达标。</p>
+<div class="info-box info-box-jade">
+  <strong>🔒 红线：</strong> Agent 不能写恒真测试（assert true == true 这种垃圾断言）。必须对函数的<strong>实际逻辑</strong>做断言，测试失败时能被真正的 bug 触发。
+</div>
+
+<h2>6 · De-Sloppify Pass —— 代码清理通行证</h2>
+<p>你项目里是不是也藏着 debug log、未使用的变量、死代码、重复段？这个 Loop 的目标就是把这些东西<strong>一次性清理干净</strong>。</p>
+<div class="pull-quote"><p>"代码越干净，后续的 AI 协作效率越高。"</p></div>
+<p>常见清理清单：debug log 删除、未引用 import 移除、大函数拆分成更小的单元、命名规范化、注释清理、死分支删除。</p>
+
+<h2>7 · Deploy Verification —— 部署验证保住年终奖</h2>
+<p>最"后"但也最重要。部署之后自动轮询健康接口 —— <strong>任何异常立刻自动回滚</strong>。</p>
+<p>它不是"部署完就完事了"，而是部署完后立刻开始监控 —— API 响应、数据库连接、关键业务接口返回 200。一旦出问题，立刻回滚并通知你。</p>
+
+<div class="section-marker">红线 · 防作弊与黄金准则</div>
+<h2>7 个 Loop 共同的安全底线</h2>
+<p>所有 Loop 都必须遵守两条底线。AI 很聪明，它也会"聪明地"作弊来通过条件。</p>
+<div class="info-box">
+  <strong>🚫 防作弊红线（Guardrails）：</strong><br/>
+  1. <strong>明确权限边界</strong> —— 编辑权限永远不能覆盖"验证方"。例如 Test Until Green 的 Agent 绝不能改测试文件。<br/>
+  2. <strong>独立的验证方</strong> —— 做和验证必须由两个独立模块完成。<br/>
+  3. <strong>记录完整日志</strong> —— 每一次循环都保留完整日志，可审计可回溯。
+</div>
+
+<div class="info-box info-box-jade">
+  <strong>⚠️ 黄金准则：</strong> 如果尝试了 10 次仍然卡住，立刻 <strong>强制回滚</strong>并停止。向人类呼叫："老板，我卡住了！"。绝不能让 AI 无限循环把事情越弄越糟。
+</div>
+
+<div class="section-marker">结语</div>
+<h2>从今天开始的最小行动</h2>
+<p>这 7 个 Loop 不需要全部立刻全部抄回家。先选一个你觉得最痛的场景试一次就好。建议顺序：</p>
+<div class="timeline">
+  <div class="tl-item"><div class="tl-time">Day 1</div><div class="tl-text">挑一个 Loop 跑通一次完整循环。感受循环成功的那一刻，你会明白我在说什么。</div></div>
+  <div class="tl-item"><div class="tl-time">Week 1</div><div class="tl-text">把这个 Loop 固化成可复用脚本，让它每天自动跑。</div></div>
+  <div class="tl-item"><div class="tl-time">Month 1</div><div class="tl-text">再加一两个 Loop，让它们配合工作 —— 你就拥有了自己的 Agent 流水线。</div></div>
+</div>
+
+<div class="cta-box">
+  <div class="cover"><img src="https://p3-pc-sign.douyinpic.com/tos-cn-p-0015/ooXBBXjGAQASbmJzdeKXdeB0kAIlGCGxUQe7uL~tplv-tsj2vxp0zn-gaosi:40.jpeg?from=327834062&lk3s=138a59ce&x-expires=1813330800&x-signature=bVgn1B%2BQgdgfcVcovWe82KGRVZI%3D" alt="视频封面" /></div>
+  <div class="content">
+    <h3>去抖音看原视频</h3>
+    <p>作者：代码炼金术士 · 7个 Loop 实操指南</p>
+    <a class="cta-btn" id="cta-link" href="https://www.douyin.com/video/7651216304736685355" target="_blank" rel="noopener">打开原视频页面</a>
+  </div>
+</div>
+
+<div class="tags-row">
+  <a href="#">#LoopEngineering</a>
+  <a href="#">#Loops</a>
+  <a href="#">#TestUntilGreen</a>
+  <a href="#">#CI自动修复</a>
+  <a href="#">#代码保洁</a>
+  <a href="#">#部署验证</a>
+  <a href="#">#Claude</a>
+  <a href="#">#AI编程</a>
+  <a href="#">#自动化</a>
+</div>
+
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用。视频封面版权归抖音原视频作者所有。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
