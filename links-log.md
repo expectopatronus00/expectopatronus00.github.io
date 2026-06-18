@@ -43,11 +43,16 @@
 
 | 链接 | 说明 |
 |------|------|
-| [home/home.html](file:///workspace/home/home.html) | 前端文章列表页，articles 数组硬编码 24 条 |
-| [home/common.css](file:///workspace/home/common.css) | 公共样式 |
-| [home/design-tokens.css](file:///workspace/home/design-tokens.css) | 设计 tokens |
-| [home/style.css](file:///workspace/home/style.css) | 首页样式 |
+| [home/home.html](file:///workspace/home/home.html) | 前端文章列表页，articles 数组硬编码 24 条文章 |
+| [home/common.css](file:///workspace/home/common.css) | 公共样式（含 nav/、footer/、archive 等组件样式） |
+| [home/design-tokens.css](file:///workspace/home/design-tokens.css) | 设计 tokens（变量定义） |
+| [home/style.css](file:///workspace/home/style.css) | 首页样式（卡片、文章列表等） |
 | [home/script.js](file:///workspace/home/script.js) | 首页脚本 |
+| [home/50.png](file:///workspace/home/50.png) | Logo 图标 |
+| [home/501.png](file:///workspace/home/501.png) | 图片资源 |
+| [home/502.png](file:///workspace/home/502.png) | 图片资源 |
+| [home/weixin.jpg](file:///workspace/home/weixin.jpg) | 微信二维码图片 |
+| [home/weixin1.jpg](file:///workspace/home/weixin1.jpg) | 微信二维码图片（备选） |
 | [nav/data.json](file:///workspace/nav/data.json) | AI 导航站点数据配置（15 个分类） |
 | [nav/index.html](file:///workspace/nav/index.html) | AI 导航前端页面 |
 | [index.html](file:///workspace/index.html) | 站点首页 |
