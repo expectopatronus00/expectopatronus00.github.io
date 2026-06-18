@@ -19,6 +19,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { execFileSync } from 'node:child_process';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -89,9 +90,12 @@ for (let i = 0; i < videos.length; i++) {
     const items = [];
     for (let k = 0; k < v.platforms.length; k++) {
       const p = v.platforms[k];
+      // p.icon 直接是内联 SVG 字符串（如 "<svg class='icon icon-sm' ...>...</svg>"），
+      // 不再是 Font Awesome class 名
+      const iconSvg = p.icon || '';
       items.push(
         '      <a class="plat-card" href="' + p.url + '" target="_blank" rel="noopener">\n' +
-        '        <i class="' + p.icon + '"></i>\n' +
+        '        ' + iconSvg + '\n' +
         '        <span class="pn">' + p.name + '</span>\n' +
         '        <span class="pd">' + (p.desc || '') + '</span>\n' +
         '      </a>'
@@ -120,13 +124,14 @@ for (let i = 0; i < videos.length; i++) {
 
   let ctaHtml = '';
   if (v.cta && v.cta.url) {
+    const ARROW_SVG = '<svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
     ctaHtml =
       '    <div class="cta-box">\n' +
       '      <div class="content">\n' +
       '        <h3>' + (v.cta.title || '去抖音看原视频') + '</h3>\n' +
       '        <p>' + (v.cta.desc || '点击跳转抖音原视频页') + '</p>\n' +
-      '        <a class="cta-btn" id="cta-link" href="' + v.cta.url + '" target="_blank" rel="noopener">\n' +
-      '          <i class="fa-solid fa-arrow-up-right-from-square"></i> 前往抖音\n' +
+      '      <a class="cta-btn" id="cta-link" href="' + v.cta.url + '" target="_blank" rel="noopener">\n' +
+      '          ' + ARROW_SVG + ' 前往抖音\n' +
       '        </a>\n' +
       '      </div>\n' +
       '    </div>';
@@ -274,3 +279,20 @@ console.log('  git add -A');
 console.log('  git commit -m "feat: 新增' + generated.length + '篇抖音搬运文章"');
 console.log('  git push origin HEAD:main');
 console.log();
+
+// ---------- 第 4 步: 自动调用 repo-lint 自检 ----------
+const LINT_PATH = path.join(ROOT, 'scripts', 'repo-lint.cjs');
+console.log('=== 自动运行仓库一致性检查 ===');
+try {
+  const result = execFileSync('node', [LINT_PATH, '--fix'], {
+    encoding: 'utf8',
+    stdio: ['pipe', 'pipe', 'pipe'],
+  });
+  console.log(result);
+  console.log('✅ 检查通过，已自动修复显示数字');
+} catch (err) {
+  if (err.stdout) console.log(err.stdout);
+  if (err.stderr) console.error(err.stderr);
+  console.log('⚠️  检查发现问题，请根据上方输出手工修复');
+  process.exitCode = 1;
+}

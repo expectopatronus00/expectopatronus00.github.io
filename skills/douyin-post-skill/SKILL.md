@@ -1,21 +1,23 @@
 # Skill: 抖音搬运文章生成 (douyin-post-skill)
 
-> 版本: 3.0
+> 版本: 4.0
 > 适用项目: expectopatronus00.github.io (纯静态 GitHub Pages 博客)
 > 依赖: Node.js (>=18)，图标系统：内联 SVG
-> 本 Skill 与 repo-lint-skill 配合使用，生成文章后务必运行 `node scripts/repo-lint.cjs` 校验
+> 本 Skill 与 repo-lint-skill 配合使用，生成文章后脚本自动调用 repo-lint 校验
 
 ---
 
 ## 一、Skill 用途
 
-**给我 N 条抖音视频的信息，输出 N 篇结构完整、可部署的博客文章，并自动更新文章库和首页。**
+**给我 N 条抖音视频信息，输出 N 篇结构完整、可部署的博客文章，并自动更新文章库和首页。**
 
 本 Skill 用于将抖音视频转化为图文并茂的深度文章，自动融入 EXPECTOPATRONUS 博客的整体视觉体系。核心能力：
 
 - **批量生成**: 一次输入多条视频，一次生成多篇文章
-- **自动更新**: 自动更新 home.html（articles 数组+统计数字）和 index.html（latest-grid 卡片+文章总数）
-- **零手工操作**: 一条命令搞定生成+更新
+- **自动更新索引页**: 自动更新 home.html（articles 数组 + 统计数字）和 index.html（latest-grid + hero 数字）
+- **分类 / 标签自动同步**: 新增文章的 `category` 和 `tags` 字段会自动出现在 home.html 的主题按钮和标签云中，**无需任何手工维护**
+- **自动自检**: 生成完成后自动调用 `repo-lint.cjs --fix` 做一致性检查并修复显示数字
+- **零手工操作**: 一条命令搞定生成 + 更新 + 自检
 
 ---
 
@@ -298,65 +300,27 @@ site-footer    ← 底部
 | `{{CONTENT_HTML}}` | 正文所有 HTML（section-marker / h2 / h3 / p / timeline / pull-quote 等） |
 | `{{FOOTER_META}}` | 页脚说明，默认 "本站内容纯学习用途，非商用。视频封面版权归抖音原视频作者所有。" |
 
-### 阶段 4: 更新文章库 (home.html)
+### 阶段 4-5-6: 自动更新（无需手工操作）
 
-在 `/workspace/home/home.html` 中做 2 处修改：
+脚本 `generate.js` 会自动完成以下所有步骤：
 
-**修改 A: 更新 "共 N 篇" 数字**
+**home.html**
+- 解析 `var articles = [...]` 数组，在**最前面**插入新文章对象
+- 解析 "共 N 篇" 文字，N 自动 `+ 新增篇数`
 
-- 找到第 ~252 行左右的 `<p>` 段落，其中包含"共 N 篇"
-- 将 N 数字 +1（例如 "共 22 篇" → "共 23 篇"）
+**index.html**
+- 解析 `<div class="num">N</div>`（articles 数字）自动 `+ 新增篇数`
+- 在 `<div class="latest-grid">` **最前面**追加新卡片
 
-**修改 B: 追加 articles 数组项**
+**分类 & 标签（关键）**
+- 分类按钮 (`#cat-bar`) 和 标签云 (`#tag-pills`) 均由 home.html 在页面加载时**从 articles 数组动态提取和渲染**
+- 也就是说：**只要 articles 数组里的 `category` 和 `tags` 字段正确，主题按钮和标签云就会自动出现新项**
+- 不再需要手工修改分类按钮或标签云 HTML
 
-在 `var articles = [...]` 数组的**最前面**（数组第一个元素位置）追加新对象。格式参考已有项：
-
-```js
-{
-  id: 'dy-{VIDEO_ID}',
-  title: '{{TITLE}}',
-  url: '../post/dy-{VIDEO_ID}/dy-{VIDEO_ID}.html',
-  summary: '{{1句话摘要，20-50字}}',
-  category: '抖音搬运',
-  date: '{{DATE_TODAY}}',
-  tags: ['#标签1', '#标签2', '#标签3'],
-},
-```
-
-**保留其他元素不要改动。**
-
-### 阶段 5: 更新首页 (index.html)
-
-在 `/workspace/index.html` 中做 2 处修改：
-
-**修改 A: 更新 hero-stats 数字**
-
-- 找到 `<div class="hero-stats">` 区域（~第 692 行）
-- 第一个 `<div class="stat">` 下的 `<div class="num">22</div>` 代表 articles 总数，将此数字 +1
-
-**修改 B: 追加 latest-grid 卡片**
-
-在 `<div class="latest-grid">`（~第 890 行）的**最前面**追加新的 `article-card`。格式严格参照 index.html 中已有卡片：
-
-```html
-<a class="article-card" href="post/dy-{VIDEO_ID}/dy-{VIDEO_ID}.html">
-  <div
-    class="thumb"
-    style="background-image: url('{{COVER_URL}}')"
-  >
-    <span class="cat-badge">抖音搬运</span>
-  </div>
-  <div class="art-body">
-    <div class="date">{{DATE_TODAY 格式：2026 · 06 · 18 10:31}}</div>
-    <h3>{{TITLE}}</h3>
-    <p>{{1句话摘要，20-50字}}</p>
-  </div>
-</a>
-```
-
-**注意：date 格式为 `YYYY · MM · DD HH:mm`，例如 `2026 · 06 · 17 20:40`。**
-
-### 阶段 6: 验证
+**自动自检**
+- 脚本运行结束后会自动执行 `node scripts/repo-lint.cjs --fix`
+- 如果存在文章数与显示数字不一致的问题，脚本自动修正并输出 `✅`
+- 如存在死链 / 重复 / 孤链 等结构性问题，脚本会输出 `⚠️` 并提示手动修复
 
 **必须做以下验证才能算完成：**
 
