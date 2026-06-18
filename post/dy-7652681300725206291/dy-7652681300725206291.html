@@ -1,0 +1,636 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>一场毕业典礼，彻底点燃美国反AI情绪 · EXPECTOPATRONUS</title>
+    <meta name="description" content="精英在台上描绘技术宏图，年轻人在台下攥着失业通知。AI市值狂飙的背后，是无数普通人被夺走的饭碗、飙升的电费、无处安放的未来。" />
+    <meta name="keywords" content="AI,就业,AI抢饭碗,毕业季,算力扩张,美国反AI,大学,失业,电费,算力" />
+    <meta property="og:title" content="一场毕业典礼，彻底点燃美国反AI情绪" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="精英在台上描绘技术宏图，年轻人在台下攥着失业通知。AI市值狂飙的背后，是无数普通人被夺走的饭碗、飙升的电费、无处安放的未来。" />
+    <link rel="shortcut icon" href="../../home/50.png" type="image/png" />
+    <link
+      id="fa-cdn"
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <script>
+      (function () {
+        var l = document.getElementById('fa-cdn');
+        var chk = function () {
+          var ok = false;
+          try {
+            var s = getComputedStyle(document.querySelector('.fa-solid') || document.body);
+            ok = !s.fontFamily || s.fontFamily.indexOf('Font Awesome') !== -1;
+          } catch (e) {
+            ok = false;
+          }
+          if (!ok && window._fa_retried === undefined) {
+            window._fa_retried = true;
+            var n = document.createElement('link');
+            n.rel = 'stylesheet';
+            n.href = 'https://cdn.jsdelivr.net/npm/font-awesome-free@6.5.2/css/all.min.css';
+            document.head.appendChild(n);
+          }
+        };
+        l.onload = chk;
+        l.onerror = function () {
+          chk();
+        };
+      })();
+    </script>
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.7em; margin-left: 2px"></i
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><i class="fa-solid fa-moon"></i></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">毕业季 · AI 就业观察</div>
+      <h1>一场毕业典礼，<em>彻底点燃美国反AI情绪</em></h1>
+      <p>
+        精英在台上描绘技术宏图，年轻人在台下攥着失业通知。AI市值狂飙的背后，是无数普通人被夺走的饭碗、飙升的电费、无处安放的未来。这不是抗拒进步，是拒绝一个只让资本收割、让底层买单的"美好时代"。
+      </p>
+      <div class="meta">
+        <span><i class="fa-regular fa-user"></i> 涛哥 AiTalk</span>
+        <span><i class="fa-regular fa-calendar"></i> 2026-06-18</span>
+        <span><i class="fa-regular fa-clock"></i> 3 分 28 秒</span>
+        <span><i class="fa-solid fa-layer-group"></i> 视频 · 搬运整理</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img
+        loading="lazy"
+        alt="美国毕业典礼反AI抗议"
+        src="https://images.unsplash.com/photo-1523580494863-6f303a555913?auto=format&fit=crop&w=1200&q=80"
+      />
+    </div>
+
+    <article class="article-body">
+      <div class="section-marker">01 · 现场观察</div>
+      <h2>为什么这届毕业生不买账</h2>
+
+      <p>
+        2026 年夏天，美国大学校园里发生了一件耐人寻味的事。毕业典礼的典礼台上，校方请来硅谷高管、投资人与<strong>AI 公司创始人</strong>，他们兴致勃勃地向学生们展示 AI 技术即将带来的"美好未来"：自动化生产、无人工厂、智能客服、无人配送……
+      </p>
+
+      <p>
+        台下的毕业生们却面无表情。不少人手里攥着<span class="hl">拒绝函</span>——在过去的半年里，他们面试过的公司里，大量原本面向应届生的岗位，已经被 AI 系统替代或直接撤销。
+      </p>
+
+      <p>
+        这不是一两所学校的特例。从常青藤到公立大学，学生的职业焦虑正在以<strong>前所未有的速度</strong>蔓延。
+      </p>
+
+      <div class="section-marker">02 · 数据说话</div>
+      <h2>AI 替代的四个高峰领域</h2>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">设计 · 文案</div>
+          <div class="tl-text">
+            <strong>入门级美术、文案、平面设计</strong>岗位被图文生成模型直接替代。新人几乎无立锥之地。
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">客服 · 翻译</div>
+          <div class="tl-text">
+            客服中心、小型翻译公司<strong>大规模裁员</strong>，剩余人力仅负责"AI 审核"这道工序。
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">编程 · 研发</div>
+          <div class="tl-text">
+            初级开发者岗位大幅缩减，企业用 AI 编码助手替代 2-3 名初级工程师的工作。
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">金融 · 数据</div>
+          <div class="tl-text">
+            数据分析、初级财务核算岗位被模型化，大量金融专业毕业生面临<strong>转型压力</strong>。
+          </div>
+        </div>
+      </div>
+
+      <div class="section-marker">03 · 不是反抗，是自保</div>
+      <h2>底层的真实情绪</h2>
+
+      <p>
+        舆论场上有一种声音：年轻人不喜欢 AI，是因为他们<strong>反技术、没远见</strong>。这个判断并不公平。真正被 AI 影响的，不是那些在台上描绘未来的高管，而是无法承担技术成本、缺乏议价能力的普通劳动者。
+      </p>
+
+      <p>
+        他们真正反对的，不是技术本身，而是一种<strong>不公平的分配模式</strong>——公司用 AI 砍掉工资单上的数字，把省下的利润装进股东口袋，却让被替代的劳动者自己承担再培训、再就业、再适应的所有成本。
+      </p>
+
+      <div class="pull-quote">
+        <p>
+          这不是抗拒进步，是拒绝一个只让资本收割、让底层买单的"美好时代"。AI 创造的效率红利，如果不参与再分配，就成了资本单边掠夺的工具。
+        </p>
+      </div>
+
+      <div class="section-marker">04 · 另一个隐性成本</div>
+      <h2>每家每户都在涨的那张账单</h2>
+
+      <p>
+        AI 大模型训练和推理消耗惊人的电力。根据公开数据，仅一家头部云服务商的 AI 集群，每天消耗的电量就相当于一个中等城市。而这个成本，实际上已经悄悄转嫁到了普通用户头上。
+      </p>
+
+      <p>
+        过去 18 个月，美国居民平均电费上涨超过<strong>15%</strong>，其中部分增量直接来自<strong>数据中心负荷膨胀</strong>。企业通过各种补贴和优惠获得低廉电价，而普通家庭则默默承担涨价的后果。
+      </p>
+
+      <div class="info-box">
+        <strong>一个值得思考的问题：</strong>如果 AI 创造的价值大部分流入少数资本方，而它消耗的资源却由全民承担，这种商业模式是否可持续？
+      </div>
+
+      <div class="section-marker">05 · 未来的两种方向</div>
+      <h2>拒绝与拥抱之间的距离</h2>
+
+      <p>
+        事实上，绝大多数年轻人并不反对技术。他们只是<strong>反对自己被取代的方式</strong>。如果 AI 真能让生产效率跃升，那么这种提升应该被转化为更短的工作时长、更稳定的社会保障、更公平的教育机会，而不是仅仅被包装成"让资本更轻松赚钱"的工具。
+      </p>
+
+      <p>
+        以下是一些值得关注的讨论维度，也是政策制定者和技术公司应当共同思考的议题：
+      </p>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time"><i class="fa-solid fa-handshake-angle"></i></div>
+          <div class="tl-text">
+            <strong>再分配机制</strong>：AI 企业是否应该缴纳专门的"自动化税收"，用于劳动者再培训？
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time"><i class="fa-solid fa-gavel"></i></div>
+          <div class="tl-text">
+            <strong>岗位保障</strong>：关键岗位被替代时，是否需要提前公示与过渡计划，而非"今天通知、明天走人"？
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time"><i class="fa-solid fa-bolt-lightning"></i></div>
+          <div class="tl-text">
+            <strong>能源成本透明化</strong>：AI 数据中心消耗的电力是否应该披露来源与环境影响？
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time"><i class="fa-solid fa-graduation-cap"></i></div>
+          <div class="tl-text">
+            <strong>教育改革</strong>：大学课程是否应该增加更多"与人协作"、"与 AI 协作"的训练，而非单一技能灌输？
+          </div>
+        </div>
+      </div>
+
+      <div class="section-marker">06 · 写在最后</div>
+      <h2>技术不会自己变好，但人可以</h2>
+
+      <p>
+        毕业典礼不会是 AI 与人类和解的终点。真正的和解，不在于让年轻人"接受被替代"，而在于让他们<strong>有机会参与和分享技术进步的成果</strong>。从失业救济、到再培训、到能源公平，每一个环节都需要被认真对待。
+      </p>
+
+      <p>
+        值得关注的一点是：这场讨论正在从美国走向全球。欧洲、日本、乃至东亚各经济体都在制定各自版本的 AI 产业与劳动政策。作为劳动者与使用者，我们需要的不是一个完美的世界，而是一个<strong>不抛弃底层的世界</strong>。
+      </p>
+
+      <div class="cta-box">
+        <div class="cover">
+          <img
+            loading="lazy"
+            alt="AI与就业讨论"
+            src="https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=800&q=80"
+          />
+        </div>
+        <div class="content">
+          <h3>去抖音看原视频</h3>
+          <p>点击下方链接，查看涛哥 AiTalk 的完整视频内容，了解这场毕业典礼前后更多细节与网友讨论。</p>
+          <a
+            id="cta-link"
+            class="cta-btn"
+            href="https://www.douyin.com/video/7652681300725206291"
+            target="_blank"
+            rel="noopener"
+            ><i class="fa-brands fa-tiktok"></i> 观看原视频</a
+          >
+          <a
+            class="cta-btn"
+            style="background: var(--accent-jade)"
+            href="../../home/home.html"
+            target="_blank"
+            ><i class="fa-solid fa-newspaper"></i> 更多文章</a
+          >
+        </div>
+      </div>
+
+      <h3>相关平台与资源</h3>
+      <div class="platform-list">
+        <a href="https://www.douyin.com" target="_blank" rel="noopener"
+          ><i class="fa-brands fa-tiktok"></i>抖音 · 原文视频平台</a
+        >
+        <a href="https://github.com/topics/ai-ethics" target="_blank" rel="noopener"
+          ><i class="fa-brands fa-github"></i>AI Ethics · 开源社区讨论</a
+        >
+        <a href="https://en.wikipedia.org/wiki/AI_ethics" target="_blank" rel="noopener"
+          ><i class="fa-brands fa-wikipedia-w"></i>AI Ethics · 维基百科词条</a
+        >
+        <a href="https://www.techrxiv.org" target="_blank" rel="noopener"
+          ><i class="fa-solid fa-flask-vial"></i>TechRxiv · 技术研究预印本</a
+        >
+      </div>
+
+      <h3>话题标签</h3>
+      <div class="tags-row">
+        <a href="../../home/home.html?tag=AI">#AI</a>
+        <a href="../../home/home.html?tag=就业">#就业</a>
+        <a href="../../home/home.html?tag=AI抢饭碗">#AI抢饭碗</a>
+        <a href="../../home/home.html?tag=毕业季">#毕业季</a>
+        <a href="../../home/home.html?tag=算力扩张">#算力扩张</a>
+        <a href="../../home/home.html?tag=美国">#美国反AI</a>
+      </div>
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2026 · 本站内容纯学习用途，非商用。视频封面版权归抖音原视频作者所有。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><i class="fa-brands fa-github"></i
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><i class="fa-solid fa-arrow-up"></i></button>
+
+    <script>
+      (function () {
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var i = document.querySelector('#theme-toggle i');
+        if (i) i.className = saved === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var ii = document.querySelector('#theme-toggle i');
+            if (ii) ii.className = next === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
