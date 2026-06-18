@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>讲透 Loop Engineering，AI 工程的下一层 · EXPECTOPATRONUS</title>
-    <meta name="description" content="从 Prompt Engineering 到 Agent 再到 Loop Engineering，AI 工程正在经历第三次范式跃迁。本文从工程视角讲清楚 Loop Engineering 的定义、方法论与边界。" />
-    <meta name="keywords" content="Loop Engineering, AI工程, Agent工程, Prompt工程, Harness, 循环工程" />
-    <meta property="og:title" content="讲透 Loop Engineering，AI 工程的下一层" />
+    <title>Prompt 已死，Loop 已来！还在逐句调 Prompt 的你该醒醒了 · EXPECTOPATRONUS</title>
+    <meta name="description" content="Prompt Engineering 正在过时，Loop Engineering 通过让大模型围绕目标自主循环迭代，形成目标-执行-评估-调整的自动化闭环，开启人机协作的新模式。" />
+    <meta name="keywords" content="Prompt, Loop, Loop Engineering, Agent, AI, 大模型, 人工智能" />
+    <meta property="og:title" content="Prompt 已死，Loop 已来！还在逐句调 Prompt 的你该醒醒了" />
     <meta property="og:type" content="article" />
-    <meta property="og:description" content="从 Prompt Engineering 到 Agent 再到 Loop Engineering，AI 工程正在经历第三次范式跃迁。本文从工程视角讲清楚 Loop Engineering 的定义、方法论与边界。" />
+    <meta property="og:description" content="Prompt Engineering 正在过时，Loop Engineering 通过让大模型围绕目标自主循环迭代，形成目标-执行-评估-调整的自动化闭环，开启人机协作的新模式。" />
     <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
     <script>
       (function () {
@@ -375,33 +375,32 @@
 
     <section class="page-head">
       <div class="eyebrow">Loop Engineering</div>
-      <h1>讲透 Loop Engineering，AI 工程的下一层</h1>
-      <p>AI 圈正在集体换口号。Loop Engineering 这个新词被越来越多人挂在嘴边。但它到底是又一次概念炒作，还是 AI 工程真的进入了一个新阶段？</p>
+      <h1>Prompt 已死，Loop 已来！还在逐句调 Prompt 的你该醒醒了</h1>
+      <p>还在一句句调 Prompt、改了又改？HeyGen 内部已经换了打法——Loop。一句话丢过去，Agent 自己把整条链跑完。变的不是模型，是协作方式。</p>
       <div class="meta">
         <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 抖音作者</span>
         <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-06-18</span>
-        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 8 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 7 分钟阅读</span>
         <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 视频 · 搬运整理</span>
       </div>
     </section>
 
     <div class="hero-image">
-      <img loading="lazy" alt="视频封面" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&q=80" />
+      <img loading="lazy" alt="视频封面" src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&q=80" />
     </div>
 
     <article class="article-body">
-      <div class="section-marker">01 · 一个新词的出现</div><h2>Loop Engineering 是炒作还是进化</h2><p>最近 AI 圈又在集体换口号了。一个叫 <span class="hl">Loop Engineering</span> 的新词，正在被越来越多人挂在嘴边。很多人连它到底指什么都还没弄明白，就已经开始说「我的项目就是 Loop Engineering」。</p><p>但问题是：这到底是又一次概念炒作，还是 AI 工程真的进入了一个新阶段？这篇文章尝试给出一个朴素的、可操作的答案。</p>
-<div class="section-marker">02 · 从 Prompt 到 Agent 到 Loop</div><h2>三代工程范式的本质差异</h2><p>如果把过去三年 AI 工程的演进压缩成一条线，你会看到三个清晰的节点。它们不是替代关系，而是层层叠加的关系。</p><div class="timeline"><div class="tl-item"><div class="tl-time">2023 · Prompt</div><div class="tl-text"><strong>Prompt Engineering</strong>。人写一条指令，模型给一个答案。核心是「把指令写对」。适用场景：单步查询、内容生成。工程复杂度低。</div></div><div class="tl-item"><div class="tl-time">2024 · Agent</div><div class="tl-text"><strong>Agent Engineering</strong>。人给一个目标，模型自己拆步骤、调用工具、做决策。核心是「把流程写对」。适用场景：多步任务、工具调用。工程复杂度中等。</div></div><div class="tl-item"><div class="tl-time">2025+ · Loop</div><div class="tl-text"><span class="hl">Loop Engineering</span>。人给目标 + 评估标准 + 护栏，模型在循环中自我迭代、自我修正。核心是「把反馈环设计对」。适用场景：需要反复迭代、无人值守的任务。</div></div></div><p>如果你只把 Loop Engineering 理解成「更高级的 Prompt Engineering」，你会错过它真正的价值。Loop 的核心不是指令优化，而是<strong>把改进的主体从人变成系统本身</strong>。</p>
-<div class="section-marker">03 · 一个 Loop 的解剖</div><h2>它由哪些部件组成</h2><p>一个可以被称为 Loop Engineering 的系统，至少需要以下五个部件。缺任何一个，都只是「循环执行」而不是 Loop Engineering。</p><p><strong>1. 目标函数</strong>：用机器可理解的语言定义成功的样子。如果目标不能被自动化检测，那就不存在 Loop——因为系统无法判断自己做得好不好。</p><p><strong>2. 动作空间</strong>：定义 Agent 可以做什么（改代码、跑命令、读文件）和不可以做什么（不能删数据库、不能联网部署）。这是 Harness 的核心。</p><p><strong>3. 评估器</strong>：对每一轮产出打一个客观分。可以是测试通过率，可以是 lint 检查数量，可以是格式校验。关键是：<span class="hl">必须自动运行、必须可复现</span>。</p><p><strong>4. 反馈回路</strong>：把评估器的输出送回给 Agent，让它据此调整下一轮的策略。这是 Loop 与「单次 Agent」最本质的区别。</p><p><strong>5. 停止条件</strong>：定义何时退出循环——可以是达成目标、可以是连续失败 N 次、可以是 token 预算耗尽。没有停止条件的 Loop 就是烧钱。</p><div class="info-box"><p>一句话判断：如果你去掉人工干预后，系统仍然能自主收敛——那它就是一个 Loop。否则它只是一个被人反复调用的 Agent。</p></div>
-<div class="section-marker">04 · 它解决了什么问题</div><h2>为什么今天需要它</h2><p>Loop Engineering 的出现，不是谁发明了一个新名词，而是工程实践中遇到了两个无法用 Prompt 解决的硬问题。</p><p><strong>问题一：人的注意力成为瓶颈</strong>。当模型的执行速度超过人的阅读和反馈速度时，人就成了最慢的一环。Loop 通过让模型自己判断「做得好不好」，把人从每一轮评审中解放出来。</p><p><strong>问题二：一致性难以保证</strong>。同一个人在不同时间对同一产出的评价可能不同。不同的人对同一产出的评价差异更大。Loop 通过把评估标准编码进系统，<span class="hl">让评价标准稳定下来</span>，进而让改进有可追踪的轨迹。</p><div class="pull-quote"><p>Loop Engineering 不是让 AI 替代人，而是让人从「反复催 AI」变成「设计 AI 的改进规则」。</p></div>
-<div class="section-marker">05 · 它不是什么</div><h2>避免被概念炒作裹挟</h2><p>现在很多东西被贴上 Loop Engineering 的标签，但它们其实不是。为了避免被炒作裹挟，我列三个「它不是什么」作为过滤标准。</p><p><strong>它不是把指令写得更长</strong>。很多人以为「写一个 3000 字的系统提示词」就是 Loop Engineering。不是。提示词再长也仍然是单步指令——它缺少「评估 — 反馈 — 再执行」的闭环。</p><p><strong>它不是写一个定期任务</strong>。Cron job 不是 Loop。定期执行是时间的循环，不是改进的循环。Loop 的核心是「根据上一轮的结果决定下一轮做什么」。</p><p><strong>它不是一套框架</strong>。没有哪个 npm 包叫「loop-engineering」。它是一种方法论——一组关于如何设计系统的原则。套用别人的框架，不等于你在做 Loop Engineering。</p>
-<div class="section-marker">06 · 给初学者的三步建议</div><h2>从哪里开始上手</h2><p>如果你第一次听到 Loop Engineering，不知道从哪开始，下面是一个按顺序的三步建议。</p><p><strong>第一步：写一个可以自动运行的质量检查</strong>。不一定要用 AI。可以是项目的测试套件，可以是 `npm run lint`。关键是：它能在没人操作时自己跑，并给出一个可判断的输出（通过 / 失败、错误数量）。</p><p><strong>第二步：把你的 Agent 指令从「请实现 X」改成「请让以下检查全部通过」</strong>。把目标从描述实现步骤，转为描述验收标准。你会发现模型开始做出你意想不到但又正确的选择。</p><p><strong>第三步：让 Agent 在失败后自己重试</strong>。不只是让它跑一次、出了错你粘回去——而是让它自己能读到失败信息，自己判断怎么改，自己再跑一次。这一步之后，<span class="hl">你的 Agent 就开始具备 Loop 的雏形</span>。</p>
-<div class="section-marker">07 · 写在最后</div><h2>AI 工程的下一层是什么</h2><p>回到最初的问题：Loop Engineering 是概念炒作吗？我的答案是——它的命名可能会被炒作，但它描述的是一个真实存在的工程趋势。</p><p>这个趋势可以用一句话概括：<span class="hl">工程师的产出物正在从「代码」变成「让代码被自动改进的系统」</span>。这个转变不是你要不要加入的问题，而是当你的同行开始这样工作后，他们的产出速度和质量会系统性地超过你。</p><p>理解 Loop Engineering 的最好方式，不是读更多文章，而是把你手边的一个小任务，完整地走一次「目标设定 → 自动评估 → 自动重试」的流程。一次之后，你就会明白它和 Prompt Engineering 的区别——不是程度上的，而是方向上的。</p><div class="pull-quote"><p>AI 工程的下一层，不是更聪明的模型，而是更聪明的协作方式。</p></div>
+      <div class="section-marker">01 · 从指令到目标</div><h2>Prompt 正在失去它的光环</h2><p>过去两年，<span class="hl">Prompt Engineering</span> 是 AI 浪潮里最耀眼的词汇之一。把提示词写得精致一些，大模型就能给出更准确的回答。但随着 Agent 能力的提升，这种「人写一句、机器做一步」的线性交互，正被一种全新的模式取代。</p><p>我们开始意识到：真正的瓶颈不再是如何把一句话写得更巧妙，而是如何让<span class="hl">大模型自主地围绕目标持续工作</span>。如果把 Prompt 比作「给机器递工具」，那么 Loop Engineering 就是「让机器自己在循环里找到最优路径」。</p>
+<div class="section-marker">02 · Loop 是什么</div><h2>一句话理解 Loop Engineering</h2><p>Loop Engineering 的核心，不是写一句完美的 Prompt，而是为 AI 设定一个<span class="hl">清晰的目标</span>，让它在「执行 — 评估 — 调整 — 再执行」的循环里自主进化。</p><div class="pull-quote"><p>Prompt 是一次对话的艺术，Loop 是一段旅程的设计。</p></div><p>它不再依赖人类反复修改指令，而是让 Agent 在循环中不断逼近目标——就像一个优秀的实习生从失败中学习一样，大模型也在循环中自我进化。</p><div class="info-box"><p>理解 Loop Engineering 的三个要素：明确的目标函数、可度量的评估标准、以及能自我调整的执行机制。</p></div>
+<div class="section-marker">03 · 一场范式的迁移</div><h2>从「人驱动」到「目标驱动」</h2><p>我们正在经历一次深刻的范式迁移。Prompt Engineering 让人人都能和大模型对话，Agent 让模型能做更多事，而 <span class="hl">Loop Engineering</span> 则让它在无人值守时仍然持续进步。</p><p>在这个新范式下，工程师的工作从「优化提示词」转向「设计反馈环」。人不再是每一步的指挥者，而是<span class="hl">目标的设定者和循环的架构师</span>。</p>
+<div class="section-marker">04 · Loop 的结构</div><h2>一个典型的 Loop 长什么样</h2><p>一个健康的 Loop 至少包含四个环节：<strong>1. 目标设定</strong> — 用可度量的语言定义什么叫做好；<strong>2. 执行动作</strong> — Agent 根据当前状态选择下一步；<strong>3. 结果评估</strong> — 对产出做客观评分，识别差距；<strong>4. 策略调整</strong> — 基于评估结果反思并优化下一步策略。</p><div class="pull-quote"><p>一个能自动循环的系统，胜过一千个完美的 Prompt。</p></div><p>这四个环节反复运转，就形成了从「笨拙尝试」到「精准产出」的上升螺旋。</p>
+<div class="section-marker">05 · 给工程师的新技能树</div><h2>你需要重新学什么</h2><p>如果你是一名正在向 AI 转型的工程师，Prompt 的技巧仍然有用，但它已不再是你安身立命的根本。<span class="hl">Loop Engineering</span> 要求你掌握三类新能力：</p><p>第一，设计清晰的<span class="hl">目标函数</span>和评估指标。第二，构建可观测的<span class="hl">循环状态</span>。第三，编写稳健的<span class="hl">失败处理与重启机制</span>。</p><div class="info-box"><p>一句话建议：比起研究 Prompt 模板，多花时间理解「大模型在循环里如何自我纠正」。</p></div><p>这不是要你放弃 Prompt，而是把它降格为 Loop 内部最底层的执行单元。真正值钱的，是那个让循环跑起来的<span class="hl">架构设计</span>。</p>
+<div class="section-marker">06 · 属于你的 Loop 时刻</div><h2>开始你的第一个 Loop</h2><p>读完这篇文章，你不需要立刻重构整个系统。你可以从最小的一次尝试开始：挑一个你经常反复写 Prompt 的任务，把它从「单次对话」改造成「三到五次循环」，让大模型自己评估输出并做一次修正。</p><p>你会发现：<span class="hl">让模型自己反思一次，比你改十次 Prompt 更有效</span>。当你第一次看到 Agent 在循环里主动修正自己的错误时，你就会真正明白为什么说未来属于 Loop Engineering。</p>
     <div class="cta-box">
       <div class="content">
         <h3>去抖音看原视频</h3>
-        <p>搜索 'Loop Engineering AI工程' 看原视频</p>
-      <a class="cta-btn" id="cta-link" href="https://www.douyin.com/search/LoopEngineering" target="_blank" rel="noopener">
+        <p>搜索 'Prompt已死Loop已来' 看原视频</p>
+      <a class="cta-btn" id="cta-link" href="https://www.douyin.com/search/Prompt已死Loop已来" target="_blank" rel="noopener">
           <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往抖音
         </a>
       </div>
@@ -409,15 +408,10 @@
     <div class="platforms">
       <h2>相关平台</h2>
       <div class="platform-list">
-      <a class="plat-card" href="https://github.com/search?q=loop+engineering" target="_blank" rel="noopener">
+      <a class="plat-card" href="https://github.com/search?q=loop+engineering+ai" target="_blank" rel="noopener">
         <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.48V10.73c-2.78.62-3.37-1.37-3.37-1.37-.45-1.17-1.11-1.48-1.11-1.48-.91-.64.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.1.63-1.36-2.22-.27-4.56-1.14-4.56-5.06 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.3.1-2.7 0 0 .84-.27 2.75 1.05A9.4 9.4 0 0 1 12 6.84c.85 0 1.7.12 2.5.35 1.9-1.32 2.75-1.05 2.75-1.05.55 1.41.2 2.43.1 2.71.64.72 1.03 1.64 1.03 2.76 0 3.93-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9v2.81c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.25C22 6.58 17.52 2 12 2z"/></svg>
         <span class="pn">GitHub</span>
-        <span class="pd">开源的 Loop Engineering 项目与实现</span>
-      </a>
-      <a class="plat-card" href="https://www.zhihu.com/search?type=content&q=Loop+Engineering" target="_blank" rel="noopener">
-        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M5.721 0C2.251 0 0 2.25 0 5.719V18.28C0 21.751 2.252 24 5.721 24h12.56C21.751 24 24 21.75 24 18.281V5.72C24 2.249 21.75 0 18.281 0H5.721z"/></svg>
-        <span class="pn">知乎</span>
-        <span class="pd">中文社区对 Loop Engineering 的讨论</span>
+        <span class="pd">开源的 Loop Engineering 项目与 Agent 工具链</span>
       </a>
       <a class="plat-card" href="https://www.douyin.com/search/LoopEngineering" target="_blank" rel="noopener">
         <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.321 5.562a5.124 5.124 0 0 1-3.035-1.012 5.124 5.124 0 0 1-2.041-3.26h-3.264v14.31a3.47 3.47 0 1 1-2.372-3.31v3.29a6.762 6.762 0 1 0 5.636 6.72V8.92a8.39 8.39 0 0 0 5.061 1.71V7.37a5.16 5.16 0 0 1 0-.44z" fill="currentColor"/></svg>
@@ -427,11 +421,11 @@
       </div>
     </div>
     <div class="tags-row">
+      <a href="#">#Prompt</a>
       <a href="#">#Loop</a>
       <a href="#">#LoopEngineering</a>
       <a href="#">#Agent</a>
-      <a href="#">#AI工程</a>
-      <a href="#">#Harness</a>
+      <a href="#">#AI自动化</a>
     </div>
     </article>
 
