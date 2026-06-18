@@ -252,27 +252,13 @@
       <p>按日期倒序排列——最新的在最上方。使用筛选器按主题浏览，或点击标签查看相关内容。共 25 篇。</p>
     </section>
 
-    <div class="filter-bar">
+    <div class="filter-bar" id="cat-bar">
       <span class="bar-label">主题</span>
-      <button class="filter-btn is-active" data-cat="all">全部</button>
-      <button class="filter-btn" data-cat="AI">AI 工具</button>
-      <button class="filter-btn" data-cat="GPU">GPU</button>
-      <button class="filter-btn" data-cat="运维">运维</button>
-      <button class="filter-btn" data-cat="抖音搬运">抖音搬运</button>
-      <button class="filter-btn" data-cat="Linux">Linux</button>
+      <!-- 分类按钮由 JS 动态渲染 -->
     </div>
 
     <div class="cat-pills" id="tag-pills">
-      <a href="#" data-tag="all" class="is-active">全标签</a>
-      <a href="#" data-tag="OpenClaw">OpenClaw</a>
-      <a href="#" data-tag="部署">部署</a>
-      <a href="#" data-tag="Docker">Docker</a>
-      <a href="#" data-tag="CentOS">CentOS</a>
-      <a href="#" data-tag="DeepSeek">DeepSeek</a>
-      <a href="#" data-tag="GPU">GPU</a>
-      <a href="#" data-tag="压测">压测</a>
-      <a href="#" data-tag="Anthropic">Anthropic</a>
-      <a href="#" data-tag="提示词">提示词</a>
+      <!-- 标签云由 JS 动态渲染 -->
     </div>
 
     <div class="article-list" id="article-list">
@@ -577,6 +563,37 @@
         var params = new URLSearchParams(window.location.search);
         if (params.get('cat')) state.cat = params.get('cat');
         if (params.get('tag')) state.tag = params.get('tag');
+
+        // 从 articles 中提取所有分类（去重，保持原顺序）
+        var categories = [];
+        articles.forEach(function (a) {
+          if (categories.indexOf(a.category) === -1) categories.push(a.category);
+        });
+
+        // 从 articles 中提取所有标签（去重）
+        var tagSet = {};
+        articles.forEach(function (a) {
+          (a.tags || []).forEach(function (t) { tagSet[t] = true; });
+        });
+        var tags = Object.keys(tagSet);
+
+        // 动态渲染分类按钮
+        var catBar = document.getElementById('cat-bar');
+        var catButtons = ['<button class="filter-btn" data-cat="all">全部</button>'].concat(
+          categories.map(function (c) {
+            return '<button class="filter-btn" data-cat="' + c + '">' + c + '</button>';
+          })
+        );
+        catBar.insertAdjacentHTML('beforeend', catButtons.join(''));
+
+        // 动态渲染标签云
+        var tagPills = document.getElementById('tag-pills');
+        var tagLinks = ['<a href="#" data-tag="all">全标签</a>'].concat(
+          tags.map(function (t) {
+            return '<a href="#" data-tag="' + t + '">' + t + '</a>';
+          })
+        );
+        tagPills.innerHTML = tagLinks.join('');
 
         // UI: set active filter btn
         document.querySelectorAll('.filter-btn').forEach(function (btn) {
