@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hermes Agent 凭什么那么强？附完整文档 · EXPECTOPATRONUS</title>
+    <meta name="description" content="Hermes Agent 深度解析：目标驱动、工具调用、循环自纠错的三件套设计，从架构、MCP 协议、到完整部署文档，一篇讲透。" />
+    <meta name="keywords" content="Hermes Agent, AI Agent, Agent Framework, MCP, Loop Engineering, 目标驱动" />
+    <meta property="og:title" content="Hermes Agent 凭什么那么强？附完整文档" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="Hermes Agent 深度解析：目标驱动、工具调用、循环自纠错的三件套设计，从架构、MCP 协议、到完整部署文档，一篇讲透。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">Hermes Agent / AI Agent 框架</div>
+      <h1>Hermes Agent 凭什么那么强？附完整文档</h1>
+      <p>Hermes Agent 不是又一个玩具 Agent，它把「目标驱动 + 工具调用 + 循环自纠错」三件套做成了可嵌入任意项目的标准化组件。附完整部署文档，从 0 到上线完整讲清楚。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 九天Hector</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-06-19</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 9 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 视频 · 搬运整理</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="视频封面" src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=1200&q=80" />
+    </div>
+
+    <article class="article-body">
+      <div class="section-marker">01 · 不是又一个玩具</div><h2>Hermes Agent 到底解决了什么问题</h2><p>过去一年出现过太多「能聊天的 Agent」——看起来都差不多，你下载下来、装上、聊几句、然后就再也不用了。<span class="hl">Hermes Agent</span> 出现之后，我第一次认真地把它嵌入到了一个真实的项目流程里，并且在两周后确认了一件事：它不是又一个聊天机器人的壳，它真正解决的是一个<span class="hl">工程问题</span>。</p><p>那个工程问题可以用一句话概括：<span class="hl">如何让大模型在无人值守时，稳定、可重复、可审计地完成一整段工作流</span>。</p><p>这听起来不性感。但如果你真正在用 Agent 干活而不是演示，你会发现——这才是你每天花 80% 时间在战斗的问题。模型回答错了，你手动纠；模型调用工具失败，你手动重跑；模型在某一步卡壳，你停下来 debug 它的 Prompt。</p><div class="pull-quote"><p>一个 Agent 能不能用，看的不是它 demo 时有多聪明，而是它<strong>失败时</strong>有多优雅。</p></div>
+<div class="section-marker">02 · 三件套设计</div><h2>目标 · 工具 · 循环</h2><p>Hermes Agent 的核心设计可以拆成三件事，每一件都不新奇，但组合起来后产生的效果远大于简单相加。</p><p><strong>第一件：目标驱动（Goal-Oriented）</strong><br>你不给它「步骤清单」，你给它一个「成功条件」。<span class="hl">差异看似微小，但工程上是天壤之别</span>——目标驱动意味着 Agent 可以自行规划路径、自行绕过障碍、自行判断是否完成。</p><p><strong>第二件：工具调用（Tool-Calling）</strong><br>通过 MCP 协议接入真实工具——读文件、跑命令、调用 API、操作数据库。这不是「发一条 HTTP 请求」那么简单；它需要在调用前做参数校验、调用后做结果归一化、失败时做自动重试，并且把所有日志结构化记录下来。</p><p><strong>第三件：循环自纠错（Self-Correcting Loop）</strong><br>当 Agent 执行一步后拿到的结果不满足目标条件时，它不是停下来向你报告「出错了」——而是进入自纠错循环：分析失败原因 → 修改动作 → 再跑一次。最多循环 N 次（默认为 5），超过上限再向人类请求介入。</p><div class="info-box"><p>这三件的顺序不是随意排的：目标驱动决定方向，工具调用决定能力范围，循环决定鲁棒性。</p></div>
+<div class="section-marker">03 · MCP 协议</div><h2>为什么它能接入一切</h2><p>Hermes Agent 之所以工程可用性高，一个关键原因是它深度集成了 <span class="hl">MCP（Model Context Protocol）</span>。MCP 做的事很朴素——它定义了一套大模型与外部工具之间标准通讯的协议。但这个标准带来的影响是巨大的：</p><p>第一，<span class="hl">它让「写一个工具」从「写一段 Prompt」变成了「写一份配置文件」</span>。只要实现了 MCP，任何工具就天然可以被任何支持 MCP 的 Agent 调用。</p><p>第二，它支持本地工具与远程工具统一管理。你本地的 `grep`、项目里的 Git、远程的数据库，在 Agent 看来都是同格式的工具调用。你不需要为不同的工具写不同的连接器。</p><p>第三，它让日志和审计变得简单。所有工具调用——输入是什么、模型决策是什么、真实返回结果是什么、耗时多少、是否成功——都是结构化的 JSON，你可以直接接进 ELK、Prometheus、或任何监控系统。</p>
+<div class="section-marker">04 · 真实部署流程</div><h2>从 0 到上线，你要走几步</h2><p>官方给出的完整部署文档非常清楚，我在这里做一个极简版，方便你在阅读时对照自己的项目。</p><p><strong>Step 1 · 环境与依赖</strong><br>确认你的运行环境有 Node.js >= 20 或 Python >= 3.11，并有一个可用的大模型 API key（OpenAI / Anthropic / DeepSeek / 国内大模型均可，Hermes 抽象了这一层）。</p><p><strong>Step 2 · 安装核心包</strong><br>一条命令安装 `hermes-agent` 及其 CLI：`npm install -g @hermes/agent` 或对应的 Python 包。</p><p><strong>Step 3 · 编写你的第一个目标描述</strong><br>这是你唯一需要「手写」的部分——一段描述「成功是什么样子」的 YAML 文件。例如：「让整个项目通过 `npm run lint` + `npm test`，输出一份 lint 报告 + 测试报告」。</p><p><strong>Step 4 · 启动 agent 并观察第一次循环</strong><br>`hermes run goal.yaml`。首次运行通常会在第 2 或第 3 轮循环开始出现自修复——这是它开始工作的标志。</p><p><strong>Step 5 · 接入你自己的工具</strong><br>用 MCP 协议写一个你自己项目的工具（例如：调用你内部的构建 API），把它注册到 Hermes 的 config 中。此后 Agent 就可以在循环里像调用 ls 一样调用它。</p><p><strong>Step 6 · 把 Hermes 接进 CI / 定时任务</strong><br>让它不是「你手动启动一次」，而是「按触发条件自动运行」。这是从「玩具」走向「生产工具」最关键的一步。</p>
+<div class="section-marker">05 · 我自己踩过的 4 个坑</div><h2>希望你别再踩一遍</h2><p>下面四个坑是我自己在两周内反复踩过的，每一个都让 Hermes Agent 在我本地运行了几个小时却没有产出正确结果。</p><p><strong>坑一：目标描述写得太模糊</strong><br>「让项目更好」不是目标；「让 `npm run lint` 退出码为 0」才是目标。越具体越好——Agent 就是拿着这句话去判断「自己有没有做完」的。</p><p><strong>坑二：只给工具不给约束</strong><br>你允许 Agent 跑任何 shell 命令，就等于把 root 密码给了它。正确做法是：写一份 `allowed_commands` 列表，把它的动作范围限定在你能接受的操作里。</p><p><strong>坑三：循环上限设得太高</strong><br>一开始我把 `max_iterations` 设成 20，结果一个 Agent 在死循环里烧了我整整 $40 的 token。推荐默认值：5；对复杂问题最多开到 10。</p><p><strong>坑四：把失败日志丢了</strong><br>Agent 失败时最有价值的东西不是你人工去 debug 它，而是它<strong>自己留下的失败日志</strong>。把 `--log=full` 打开，你会发现 Agent 在第 3 轮循环失败时说的那句话，比任何 Prompt 教程都更能帮你理解它到底缺了什么。</p><div class="pull-quote"><p>一个会「写详细失败日志」的 Agent，胜过一百个只会成功的 demo。</p></div>
+<div class="section-marker">06 · 三个你现在就能用的场景</div><h2>不要等完美，先从最小循环开始</h2><p>下面三个场景是我最推荐用来「第一次」用 Hermes 的——小到能在一天内跑完，但大到足以让你感受到它的工程价值。</p><p><strong>场景一：CI 失败自动诊断</strong><br>把 Hermes 接进 CI 的失败 webhook。每当一次 CI 挂掉，它自动拉日志、定位根因、生成一份修复建议。你不需要自己盯着几百行报错看。</p><p><strong>场景二：代码评审前的「预评审」</strong><br>在你提交 PR 前，让 Hermes 对改动做一次自动评审——它主要负责：检查是否遗漏注释、是否遗漏测试、是否违反项目已有规范。等它先扫完一轮，人类再进场，效率翻倍。</p><p><strong>场景三：部署前的自检清单</strong><br>你每次发版前都会做的那 8~10 项手动检查（配置文件是否齐全、环境变量是否有值、数据库可连通、健康接口是否 200），把这个清单写成 Hermes 的目标描述，让它在你喝一杯咖啡的时间里自动全部跑一遍。</p><p>挑一个你最常面对的场景，<span class="hl">先做最小可用版本，不要一次把所有功能都塞进配置</span>。这样你才能在一两个小时内看到效果，进而判断它是否值得投入更多。</p>
+<div class="section-marker">07 · 写在最后</div><h2>为什么它不是又一阵热潮</h2><p>最后我想回答一个很朴素的问题：为什么 Hermes Agent 不是又一个「AI 概念炒作」？我给的答案是一个工程上的判断——</p><p><span class="hl">它解决的是真实工程问题，而不是演示问题。</span>它不追求生成一段华丽的对话，不追求画一张漂亮的架构图给人看；它追求的是「你关掉终端之后，它能不能持续地、可审计地把事情做完」。这种追求决定了它的设计取舍——宁可让第一次上手难一点，也要让后续运行稳一点。</p><p>我建议你做的不是「读完本文就把所有项目都换掉」，而是「挑一个让你最烦的重复性场景，用 Hermes 先换掉那一件事」。一件事成了，再自然地扩展到下一件。</p><p>这也是 Loop Engineering 的核心思路——<span class="hl">先让一个循环跑起来，再让它自己变聪明</span>。</p>
+    <div class="cta-box">
+      <div class="content">
+        <h3>去抖音看原视频</h3>
+        <p>搜索 'Hermes Agent 九天Hector' 看原视频</p>
+      <a class="cta-btn" id="cta-link" href="https://www.douyin.com/search/HermesAgent" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往抖音
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/search?q=hermes+agent" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.48v-1.7c-2.78.62-3.37-1.37-3.37-1.37-.45-1.17-1.11-1.48-1.11-1.48-.91-.64.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.1.63-1.36-2.22-.27-4.56-1.14-4.56-5.06 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.3.1-2.7 0 0 .84-.27 2.75 1.05A9.4 9.4 0 0 1 12 6.84c.85 0 1.7.12 2.5.35 1.9-1.32 2.75-1.05 2.75-1.05.55 1.41.2 2.43.1 2.71.64.72 1.03 1.64 1.03 2.76 0 3.93-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9v2.81c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.25C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">开源社区中的 Hermes Agent 项目与完整部署文档</span>
+      </a>
+      <a class="plat-card" href="https://docs.anthropic.com/en/docs/build-with-claude/model-context-protocol" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v10.5a3.5 3.5 0 1 1-2-3.16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M14 3v8.5M14 3h4.5M14 8.5h4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="pn">Anthropic / MCP</span>
+        <span class="pd">MCP 协议官方文档，理解工具接入标准</span>
+      </a>
+      <a class="plat-card" href="https://www.douyin.com/search/HermesAgent" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.321 5.562a5.124 5.124 0 0 1-3.035-1.012 5.124 5.124 0 0 1-2.041-3.26h-3.264v14.31a3.47 3.47 0 1 1-2.372-3.31v3.29a6.762 6.762 0 1 0 5.636 6.72V8.92a8.39 8.39 0 0 0 5.061 1.71V7.37a5.16 5.16 0 0 1 0-.44z" fill="currentColor"/></svg>
+        <span class="pn">抖音</span>
+        <span class="pd">原视频发布平台，搜索 'Hermes Agent' 看原视频</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="#">#HermesAgent</a>
+      <a href="#">#Agent</a>
+      <a href="#">#AI框架</a>
+      <a href="#">#MCP</a>
+      <a href="#">#Loop</a>
+    </div>
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用。视频封面版权归抖音原视频作者所有。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
