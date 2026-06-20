@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@TITLE@ · EXPECTOPATRONUS</title>
+    <meta name="description" content="@SUMMARY@" />
+    <meta name="keywords" content="AI,大模型,技术,深度分析,vllm,DeepSeek" />
+    <meta property="og:title" content="@TITLE@" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="@SUMMARY@" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try { var t = localStorage.getItem('theme') || 'dark'; if (t === 'light') document.documentElement.dataset.theme = 'light'; } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+
+      body {
+        font-family: var(--font-serif);
+        background: var(--bg-0);
+        color: var(--text);
+        line-height: 1.8;
+        margin: 0;
+        font-size: 1.05rem;
+      }
+
+      nav.site-nav {
+        position: sticky; top: 0; z-index: 100;
+        display: flex; align-items: center; justify-content: space-between;
+        padding: var(--sp-4) var(--sp-6);
+        background: rgba(10, 12, 15, 0.85);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--line);
+        font-family: var(--font-mono);
+      }
+      nav.site-nav .brand { display: flex; align-items: center; gap: var(--sp-2); color: var(--text); font-weight: 600; text-decoration: none; }
+      nav.site-nav .brand .logo {
+        display: inline-flex; align-items: center; justify-content: center;
+        width: 28px; height: 28px; border-radius: 8px;
+        background: var(--accent-rust); color: #fff; font-weight: 700; font-family: var(--font-display);
+      }
+      nav.site-nav .nav-links { display: flex; gap: var(--sp-5); align-items: center; }
+      nav.site-nav .nav-links a { color: var(--text-soft); text-decoration: none; font-size: 0.92rem; }
+      nav.site-nav .nav-links a:hover { color: var(--accent-rust); }
+      nav.site-nav .nav-links a.is-active { color: var(--accent-rust); }
+      .theme-btn {
+        background: transparent; border: 1px solid var(--line); color: var(--text-soft);
+        padding: 6px 10px; border-radius: 8px; cursor: pointer; font-size: 0.85rem;
+        transition: all 0.2s;
+      }
+      .theme-btn:hover { border-color: var(--accent-rust); color: var(--accent-rust); }
+
+      section.page-head {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      section.page-head .eyebrow {
+        font-family: var(--font-mono); font-size: 0.8rem;
+        color: var(--accent-rust); letter-spacing: 0.12em;
+        text-transform: uppercase; margin-bottom: var(--sp-4);
+      }
+      section.page-head h1 {
+        font-family: var(--font-display); font-weight: 500;
+        font-size: clamp(1.8rem, 4vw, 2.8rem); line-height: 1.15;
+        letter-spacing: -0.01em; margin: 0 0 var(--sp-4);
+      }
+      section.page-head > p { color: var(--text-soft); font-size: 1.1rem; max-width: 680px; }
+      section.page-head .meta {
+        display: flex; flex-wrap: wrap; gap: var(--sp-4);
+        margin-top: var(--sp-5); font-family: var(--font-mono); font-size: 0.85rem;
+        color: var(--text-dim);
+      }
+      section.page-head .meta span { display: inline-flex; align-items: center; gap: 6px; }
+      section.page-head .meta svg { color: var(--accent-rust); }
+
+      .hero-image {
+        max-width: 960px; margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%; border-radius: 16px; display: block;
+        border: 1px solid var(--line);
+      }
+
+      article.article-body {
+        max-width: 760px;
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+      article.article-body h2 {
+        font-family: var(--font-display); font-weight: 500;
+        font-size: 1.55rem; margin: var(--sp-8) 0 var(--sp-4);
+        color: var(--text);
+      }
+      article.article-body h3 {
+        font-family: var(--font-display); font-weight: 500;
+        font-size: 1.15rem; margin: var(--sp-6) 0 var(--sp-3);
+        color: var(--text);
+      }
+      article.article-body p {
+        font-family: var(--font-serif); color: var(--text-soft);
+        line-height: 1.9; margin: 0 0 var(--sp-4);
+      }
+
+      .section-marker {
+        font-family: var(--font-mono); font-size: 0.78rem;
+        color: var(--accent-rust); letter-spacing: 0.08em;
+        margin-top: var(--sp-8); margin-bottom: var(--sp-2);
+      }
+
+      .info-box {
+        border-left: 3px solid var(--accent-rust);
+        padding: var(--sp-3) var(--sp-4);
+        margin: var(--sp-4) 0;
+        background: rgba(200, 120, 80, 0.08);
+        border-radius: 0 8px 8px 0;
+        color: var(--text-soft);
+      }
+      .info-box.info-box-jade {
+        border-left-color: #4a9b8a;
+        background: rgba(74, 155, 138, 0.08);
+      }
+      .info-box p { margin: 0; }
+
+      footer.site-footer {
+        border-top: 1px solid var(--line);
+        padding: var(--sp-6);
+        margin-top: var(--sp-8);
+        color: var(--text-dim);
+        font-size: 0.85rem;
+        font-family: var(--font-mono);
+      }
+      footer.site-footer .footer-content {
+        max-width: 960px; margin: 0 auto;
+        display: flex; justify-content: space-between; gap: var(--sp-4); flex-wrap: wrap;
+      }
+      footer.site-footer .footer-brand { color: var(--text); font-weight: 500; font-family: var(--font-display); }
+
+      .floating-top {
+        position: fixed; bottom: 24px; right: 24px; z-index: 50;
+        background: #1a1f2a; color: var(--text);
+        border: 1px solid var(--line); border-radius: 50%;
+        width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+        cursor: pointer; opacity: 0; transition: opacity 0.3s;
+      }
+      .floating-top.visible { opacity: 1; }
+      .floating-top:hover { border-color: var(--accent-rust); }
+
+      @media (max-width: 768px) {
+        nav.site-nav .nav-links { gap: var(--sp-3); font-size: 0.85rem; }
+        article.article-body { padding: var(--sp-6) var(--sp-4); }
+        article.article-body h2 { font-size: 1.35rem; }
+      }
+
+      [data-theme="light"] nav.site-nav { background: rgba(248, 248, 245, 0.9); }
+      [data-theme="light"] .floating-top { background: #fff; }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner" style="display:flex;align-items:center;justify-content:space-between;gap:var(--sp-5);">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../post/deepseek/deepseek.html">DeepSeek</a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换">
+          <svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">微信搬运 · @SLUG@</div>
+      <h1>@TITLE@</h1>
+      <p>@SUMMARY@</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg> @AUTHOR@</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> @DATE@</span>
+      </div>
+      <div class="hero-image"><img loading="lazy" src="@COVER@" alt="@TITLE@"/></div>
+    </section>
+
+    <article class="article-body">
+@CONTENT@
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用。原文版权归微信原作者所有。</div>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () { if (back) back.classList.toggle('visible', window.scrollY > 300); });
+        if (back) back.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+      })();
+    </script>
+  </body>
+</html>
