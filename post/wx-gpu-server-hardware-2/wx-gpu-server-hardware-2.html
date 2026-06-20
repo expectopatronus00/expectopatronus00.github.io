@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GPU服务器硬件构成详解（二）：互连、供电、散热与工作流 · expectopatronus</title>
+    <meta
+      name="description"
+      content="一台8卡H100 GPU服务器里，不止有GPU。从PCIe交换机到NVLink桥接器，从CRPS冗余电源到液冷散热，从BMC到DPU——每一个部件都在决定这台机器能跑什么、跑得怎么样。本文系统梳理GPU服务器的互连组件、供电散热、结构管理以及AI训练/推理的实际工作流。"
+    />
+    <meta name="keywords" content="GPU服务器,GPU硬件,H100,PCIe,NVLink,InfiniBand,DPU,液冷,BMC,AI训练,大模型推理,数据中心" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <link
+      id="fa"
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      onerror="
+        (function () {
+          if (window._fa_retried) return;
+          window._fa_retried = true;
+          var n = document.createElement('link');
+          n.rel = 'stylesheet';
+          n.href = 'https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css';
+          document.head.appendChild(n);
+        })()
+      "
+    />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="../../nav/index.html" target="_blank">导航站</a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><i class="fa-solid fa-moon"></i></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">GPU服务器 · 硬件构成 · 数据中心</div>
+      <h1>GPU服务器硬件构成详解（二）：<em>互连、供电、散热与工作流</em></h1>
+      <p>
+        <strong>一台8卡H100服务器里，GPU只是"主角"——真正决定它能不能稳定跑千亿模型的，是围绕GPU的那一堆"配角"。</strong> 从PCIe交换机到NVLink桥接器，从400G InfiniBand网卡到液冷冷板，从CRPS冗余电源到BMC管理芯片。每一个部件都有它明确的职责，任何一个环节的短板都会让整套系统的算力打折。本文系统梳理GPU服务器的互连组件、供电散热、结构管理，以及AI训练与推理的实际硬件工作流。
+      </p>
+      <div class="meta-row">
+        <span><i class="fa-brands fa-weixin"></i> 原文作者 · GPU那些事儿（微信公众号）</span>
+        <span><i class="fa-regular fa-calendar"></i> 2026-06-20</span>
+        <span><i class="fa-solid fa-microchip"></i> GPU服务器 · 硬件构成</span>
+      </div>
+    </section>
+
+    <article class="article-body">
+      <div class="section-marker on-scroll">00 · 写在正文前</div>
+      <h2 class="on-scroll">先对GPU服务器的硬件构成有一个整体认知</h2>
+      <p class="on-scroll">
+        在进入细节之前，有必要先建立一个整体框架。GPU服务器的硬件可以大致划分为六个部分，前两部分（核心计算单元、存储与内存层次）在系列第一篇中已有详细讲解，本文聚焦于后面四个部分：
+      </p>
+
+      <div class="info-box on-scroll">
+        <strong>GPU服务器硬件构成整体 · 六大板块</strong><br/>
+        1. <strong>核心计算单元</strong>：GPU加速卡（算力心脏）+ CPU（指挥中枢）<br/>
+        2. <strong>存储与内存层次</strong>：系统内存 DRAM + GPU显存 VRAM + NVMe SSD<br/>
+        3. <strong>互连与通信组件</strong>：PCIe交换机 + NIC/IB卡 + DPU + NVLink桥接器<br/>
+        4. <strong>供电与散热</strong>：冗余电源模块 CRPS + 风冷/液冷散热系统<br/>
+        5. <strong>结构与管理</strong>：主板与背板 + BMC + 机架式机箱<br/>
+        6. <strong>辅助配件</strong>：Riser卡、光模块、供电线、上架导轨<br/>
+      </div>
+
+      <p class="on-scroll">
+        强调一下：<strong>这些部件之间不是"堆在一起"，而是"协同工作"。</strong> 理解它们之间的数据流与依赖关系，是判断一台GPU服务器配置是否合理、成本是否可控、瓶颈在哪里的前提。
+      </p>
+
+      <div class="pull-quote on-scroll"><p>GPU服务器不是"CPU+几张GPU卡"——它是一套经过深度协同设计的专用计算设备。</p></div>
+
+      <div class="section-marker on-scroll">01 · 互连与通信</div>
+      <h2 class="on-scroll">3.1 · PCIe交换机与桥接芯片 —— 数据高速公路</h2>
+      <p class="on-scroll">
+        GPU扩展底板（部分文献中也称为GPU背板），<strong>主要解决CPU PCIe通道数不够的问题</strong>。一颗高端服务器CPU的PCIe 5.0通道数通常在112条左右，分给8张GPU显然不够——更不用说还要留给网卡、SSD和DPU。
+      </p>
+
+      <div class="info-box on-scroll">
+        <strong>它是怎么工作的：</strong><br/>
+        CPU的PCIe通道 → 进入PCIe Switch芯片 → Switch将输入的一组通道"非阻塞交换"到多个输出端口 → 每个GPU获得一条独立的PCIe x16通道。<br/>
+        <strong>类比：</strong> 就像一个高速立交桥——从市区出来的一条主干道，通过立交桥后变成通往8个卫星城市的8条独立高速。<br/>
+        <strong>关键规格：</strong> PCIe 5.0 x16单向带宽约32GB/s，双向约64GB/s。对于8张GPU的服务器，PCIe Switch支持的总交换能力必须足够支撑8张GPU同时与CPU通信、以及GPU之间的P2P通信。
+      </div>
+
+      <h3 class="on-scroll">两种不同的扩展方式</h3>
+      <div class="info-box on-scroll">
+        · <strong>PCIe接口GPU</strong>：通过GPU扩展底板（含PCIe Switch芯片）来扩展<br/>
+        · <strong>SXM接口GPU</strong>：通过GPU UBB基板（含NVSwitch芯片）来实现<br/>
+        两者<strong>都不在主板上直接实现</strong>——它们通过专用的扩展板/基板来承载，这也是GPU服务器与普通PC服务器最直观的区别之一。
+      </div>
+
+      <h3 class="on-scroll">NVSwitch：GPU之间的"快速通道"</h3>
+      <p class="on-scroll">
+        NVIDIA的NVSwitch芯片可实现跨GPU的全互联（NVLink域）。以DGX H100为例，内部使用4个NVSwitch，<strong>提供每卡900GB/s的双向带宽</strong>——这比PCIe 5.0 x16快了一个数量级。<strong>AI训练中all-reduce、all-gather这类集体通信操作，主要就是跑在NVLink上。</strong>
+      </p>
+
+      <div class="pull-quote on-scroll"><p>PCIe Switch管"GPU与CPU之间"，NVSwitch管"GPU与GPU之间"。两者缺一不可。</p></div>
+
+      <h2 class="on-scroll">3.2 · 网络接口卡（NIC/IB卡）—— 集群互联</h2>
+      <p class="on-scroll">
+        单机再强也有上限。<strong>大模型训练需要几百甚至几千张GPU协同工作</strong>，这意味着服务器与服务器之间需要极高带宽、极低延迟的互联。
+      </p>
+
+      <h3 class="on-scroll">主流技术路线</h3>
+      <div class="info-box on-scroll">
+        · <strong>InfiniBand（IB）</strong>：专为高性能计算设计，支持RDMA（远程直接内存访问），延迟可低至100ns级别。NVIDIA ConnectX-7 IB卡单端口400Gbps。<br/>
+        · <strong>RoCE（RDMA over Converged Ethernet）</strong>：在以太网上实现RDMA能力，部署灵活性更高，兼容数据中心现有基础设施。<br/>
+        · <strong>典型配置</strong>：每台8卡GPU服务器配4张400G IB卡，通过胖树（Fat-Tree）拓扑与IB交换机互联，形成一个高带宽、低阻塞的集群网络。
+      </div>
+
+      <h3 class="on-scroll">它在AI训练中的角色</h3>
+      <p class="on-scroll">
+        分布式训练（数据并行、张量并行、流水线并行）中，每一轮迭代都需要在GPU之间同步梯度或激活值。<strong>这部分通信开销常常占到总训练时间的30%-50%。</strong> IB卡的带宽和延迟，直接决定了"多卡是否真的能获得接近线性的加速比"。
+      </p>
+
+      <h3 class="on-scroll">它在推理中的角色</h3>
+      <p class="on-scroll">
+        推理场景下，IB卡/网卡负责接收外部请求、分发到不同GPU、以及收集回传结果。对于支持张量并行的大模型推理（即一张卡存不下整个模型，需要多张卡协同完成一次token生成），<strong>卡间通信同样依赖IB或NVLink。</strong>
+      </p>
+
+      <div class="pull-quote on-scroll"><p>单机看GPU，集群看网络。你能把训练集群做到多大，很大程度上看你愿意花多少钱在IB网卡和交换机上。</p></div>
+
+      <h2 class="on-scroll">3.3 · DPU（数据处理单元）—— 基础设施卸载引擎</h2>
+      <p class="on-scroll">
+        DPU（Data Processing Unit）是NVIDIA CEO黄仁勋口中继CPU和GPU之后的<strong>"第三大计算支柱"</strong>。它的核心使命非常明确：<strong>把CPU从网络、存储和安全等基础设施任务中解放出来</strong>，让CPU和GPU可以全力服务AI计算。
+      </p>
+
+      <h3 class="on-scroll">DPU能做什么</h3>
+      <ul class="on-scroll">
+        <li><strong>网络卸载</strong>：TCP/IP协议栈、OVS虚拟交换机、防火墙规则——原本由CPU内核处理的包处理，直接交给DPU硬件加速</li>
+        <li><strong>存储卸载</strong>：NVMe over Fabrics、加密、压缩——远程存储访问可以不经过CPU内核</li>
+        <li><strong>安全卸载</strong>：IPsec、TLS、微分段——在网卡层面完成加解密和策略执行</li>
+        <li><strong>可编程</strong>：通过DOCA（NVIDIA）或类似开发框架，用户可以在DPU上跑自定义逻辑</li>
+      </ul>
+
+      <h3 class="on-scroll">关键规格</h3>
+      <div class="info-box on-scroll">
+        · NVIDIA BlueField-3：<strong>400Gb/s</strong>网络吞吐，支持InfiniBand和以太网双协议<br/>
+        · NVIDIA BlueField-4：<strong>800Gb/s</strong>吞吐，算力达前代6倍（已发布）<br/>
+        · 国产DPU厂商也在推进中，核心挑战在于软件生态和协议栈完备度
+      </div>
+
+      <h3 class="on-scroll">一个直观的例子</h3>
+      <p class="on-scroll">
+        假设一台8卡H100服务器正在训练一个大模型，同时它还要对外提供推理服务。<strong>没有DPU时</strong>：CPU要处理网络包、存储读写、加密解密——CPU占用率可能飙升到60%+，原本可以用来预处理数据的算力被消耗掉。<strong>有DPU时</strong>：这些基础设施任务卸载到DPU，CPU只需要处理核心业务逻辑，GPU可以长时间维持高利用率。
+      </p>
+
+      <div class="pull-quote on-scroll"><p>DPU不是"锦上添花"——在大规模集群中，它是让"昂贵的GPU不为廉价的基础设施任务分心"的关键部件。</p></div>
+
+      <h2 class="on-scroll">3.4 · NVLink桥接器（或板载NVLink接口）</h2>
+      <p class="on-scroll">
+        NVLink桥接器的职责非常聚焦：<strong>在单机内部或相邻GPU之间建立直连高带宽通道，绕过PCIe瓶颈。</strong>
+      </p>
+
+      <h3 class="on-scroll">什么时候需要它</h3>
+      <div class="info-box on-scroll">
+        · <strong>多GPU显存共享</strong>：让一张GPU能直接读写另一张GPU的显存（P2P访问），不需要经过CPU中转<br/>
+        · <strong>all-reduce等集体通信</strong>：分布式训练中梯度同步的核心操作，走NVLink比走PCIe快数倍<br/>
+        · <strong>显存池化</strong>：在NVLink NVL（NVLink-NVLink）模式下，多块GPU的显存可以被当作一片统一的大显存来使用
+      </div>
+
+      <h3 class="on-scroll">两种实现形态</h3>
+      <div class="info-box on-scroll">
+        · <strong>高端工作站</strong>：使用硬桥接片（hard bridge），简单粗暴地把相邻GPU的NVLink口连起来<br/>
+        · <strong>服务器</strong>：在主板/基板上集成NVLink接口，SXM封装GPU通过基板PCB走线直接连接NVSwitch<br/>
+        <strong>后者性能更高、散热更好、可靠性更强——这也是SXM模块GPU比PCIe版GPU更贵的原因之一。</strong>
+      </div>
+
+      <h3 class="on-scroll">一个关键事实</h3>
+      <p class="on-scroll">
+        NVIDIA HGX B200基板上，<strong>8个GPU模块的中间是两颗NVLink交换芯片</strong>——你在爆炸图里看到那两个方方正正的大芯片就是它们。<strong>没有NVSwitch，NVLink就是"点到点"；有了NVSwitch，NVLink才变成"全互联"。</strong>
+      </p>
+
+      <div class="section-marker on-scroll">02 · 供电与散热</div>
+      <h2 class="on-scroll">4.1 · 冗余电源模块（CRPS）—— 动力来源</h2>
+      <p class="on-scroll">
+        电源这件事在AI时代被前所未有地放大了——<strong>一张H100 SXM卡的TDP约700W，一张B200高达1000W。</strong> 8张卡就是6-8kW，再加上CPU、内存、NIC、DPU、风扇，整机功耗直奔10-15kW。
+      </p>
+
+      <h3 class="on-scroll">电源怎么做</h3>
+      <div class="info-box on-scroll">
+        · <strong>CRPS（Common Redundant Power Supply）</strong>：通用冗余电源规范，各厂商通用，支持热插拔<br/>
+        · <strong>N+1 或 N+N 冗余</strong>：N个模块正常工作，多1个或N个做备份——任何一个电源故障，其余模块自动接管，服务器不中断<br/>
+        · <strong>80PLUS 钛金级</strong>：钛金级认证在50%负载下转换效率>96%，对于10kW的服务器，这意味着<strong>少浪费约400W电能</strong><br/>
+        · <strong>典型配置</strong>：8卡H100服务器配4~6个3-4kW CRPS模块
+      </div>
+
+      <h3 class="on-scroll">供电线也有讲究</h3>
+      <p class="on-scroll">
+        GPU专用的 <strong>12VHPWR 供电线</strong>每个接口能提供600W。对于PCIe接口的GPU卡，需要用12VHPWR线直接供电。而SXM规格的GPU不走传统供电线——它<strong>通过基板上的高密度连接器直接供电</strong>，这也是SXM模块能做更高功率、更紧凑布局的原因。
+      </p>
+
+      <h3 class="on-scroll">一个数字</h3>
+      <div class="info-box on-scroll">
+        一张B200的TDP 1000W × 8张 = 8000W = 相当于3个家庭同时开空调。<br/>
+        <strong>这还只是GPU部分</strong>，还没算CPU、内存、网卡、风扇、存储。<br/>
+        <strong>AI计算的"电费账单"从来不是小事。</strong>
+      </div>
+
+      <div class="pull-quote on-scroll"><p>当你看到一台8卡B200服务器时，你看到的不只是算力——它同时也是一个每小时10-15度电的"电老虎"。</p></div>
+
+      <h2 class="on-scroll">4.2 · 散热系统 —— 热管理核心</h2>
+      <p class="on-scroll">
+        散热的逻辑很简单：<strong>GPU把电能转换成热量，你必须在它烧坏之前把热量排出去。</strong> 但做起来不简单——700W/卡的H100和1000W/卡的B200，传统风冷已经接近极限。
+      </p>
+
+      <h3 class="on-scroll">风冷方案</h3>
+      <div class="info-box on-scroll">
+        · <strong>高风压风扇 + 导风罩 + 独立GPU风道</strong>：典型配置是5个大功率风扇模块（如台达AFB系列），配合导风罩将气流强制吹过GPU散热片<br/>
+        · <strong>进风温度</strong>：需维持低于35°C，否则GPU会触发热节流（thermal throttling）<br/>
+        · <strong>限制</strong>：对于700W/卡以上的GPU，风冷勉强可用，但风扇噪音、PUE（电能使用效率）都会上升
+      </div>
+
+      <h3 class="on-scroll">液冷方案</h3>
+      <div class="info-box on-scroll">
+        · <strong>冷板式液冷（Direct Liquid Cooling / DLC）</strong>：冷却液（通常是去离子水或专用冷却液）通过冷板直接接触GPU、CPU、VRM等高发热部件，带走热量<br/>
+        · <strong>浸没式液冷</strong>：将整个服务器或GPU模块浸没在绝缘冷却液中，实现最高散热密度<br/>
+        · <strong>CDU（冷却液分配单元）</strong>：液冷系统的"心脏"——泵送冷却液、调节温度、过滤杂质、监控泄漏<br/>
+        · <strong>PUE</strong>：液冷数据中心的PUE通常能做到1.1以下（风冷数据中心约1.3-1.5），<strong>长期运行节省的电费是实实在在的</strong>
+      </div>
+
+      <h3 class="on-scroll">散热是个"全链路"问题</h3>
+      <p class="on-scroll">
+        GPU散热不只是"GPU上的风扇够不够大"——它是一个从GPU芯片到散热片到气流到机房制冷的完整链路。<strong>任何一个环节不足，整台机器的性能都会因为热节流而下降。</strong>
+      </p>
+
+      <div class="info-box on-scroll">
+        一个真实的散热链路（以8卡液冷H100服务器为例）：<br/>
+        GPU芯片发热 → 冷板导热 → 冷却液 → CDU热交换 → 机房冷水机组 → 冷却塔散到大气<br/>
+        <strong>GPU工程师设计的不只是"算力"，他们同时在设计"热量如何从芯片流出去"。</strong>
+      </div>
+
+      <div class="section-marker on-scroll">03 · 结构与管理</div>
+      <h2 class="on-scroll">5.1 · 主板与背板 —— 骨架与总线</h2>
+      <p class="on-scroll">
+        GPU服务器的主板和普通PC服务器的主板不是一个东西。<strong>很多GPU服务器甚至没有"一张主板"的概念</strong>——它们由多块板卡（GPU基板、CPU机头、中背板）拼接而成。
+      </p>
+
+      <h3 class="on-scroll">以HGX H200服务器为例</h3>
+      <p class="on-scroll">
+        打开机箱后，你会看到前部有一块<strong>中背板（Midplane）</strong>：
+      </p>
+      <div class="info-box on-scroll">
+        · <strong>上半部分</strong>：对接GPU计算节点（GPU模组）——8张GPU卡+NVSwitch+PCIe Switch都在这里<br/>
+        · <strong>下半部分</strong>：对接CPU计算节点（机头）——CPU、内存、部分存储、BMC在这里<br/>
+        · <strong>背板本身</strong>：提供物理安装孔位、PCIe/SXM插座、电源连接器、BMC管理接口<br/>
+        · <strong>电源分配</strong>：背板同时是一张"配电板"，将CRPS电源模块的输出分配到每张GPU和每个风扇模块
+      </div>
+
+      <h3 class="on-scroll">两种主板形态</h3>
+      <div class="info-box on-scroll">
+        · <strong>定制化主板/基板</strong>：如NVIDIA SXM基板——按NVIDIA的参考设计做，板上有GPU插座、NVSwitch、PCIe Switch、高速信号走线<br/>
+        · <strong>标准E-ATX板卡 + 转接卡</strong>：中低端服务器可能使用标准规格主板 + Riser卡（PCIe转接卡）来改变插卡方向，让GPU能在4U机箱内水平安装
+      </div>
+
+      <h2 class="on-scroll">5.2 · 基板管理控制器（BMC）—— 远程运维大脑</h2>
+      <p class="on-scroll">
+        <strong>BMC是一个"不参与计算但绝对不能坏"的芯片。</strong> 它在服务器通电（但不开机）时就开始运行，全程监控硬件状态。
+      </p>
+
+      <h3 class="on-scroll">它能做什么</h3>
+      <div class="info-box on-scroll">
+        · <strong>IPMI协议</strong>：远程开关机、重启、进入BIOS<br/>
+        · <strong>风扇转速调节</strong>：根据温度传感器数据动态调整风扇转速<br/>
+        · <strong>温度/电压/功耗监控</strong>：对GPU、CPU、VRM、内存、电源进行实时采样<br/>
+        · <strong>日志收集</strong>：记录硬件异常事件（温度过高、电压异常、风扇故障）<br/>
+        · <strong>固件升级</strong>：远程升级BIOS、BMC自身固件<br/>
+        · <strong>自动保护</strong>：当GPU过热时可自动触发风扇加速、降低GPU功耗、甚至保护性关机
+      </div>
+
+      <h3 class="on-scroll">主流方案</h3>
+      <p class="on-scroll">
+        常见的BMC芯片是<strong>ASPEED AST2600</strong>。ASPEED在服务器BMC市场占据极高份额，几乎所有主流x86服务器厂商都在使用它。
+      </p>
+
+      <h2 class="on-scroll">5.3 · 机箱（机架式机箱）—— 承载结构</h2>
+      <p class="on-scroll">
+        机箱不只是个"盒子"。<strong>它定义了服务器的物理规格、散热风道、电磁屏蔽、抗震能力和可维护性。</strong>
+      </p>
+
+      <h3 class="on-scroll">机箱规格速记</h3>
+      <div class="info-box on-scroll">
+        · <strong>4U 机箱</strong>：通常可容纳8张全高双宽GPU（PCIe形态），是主流推理/中小训练节点的标准形态<br/>
+        · <strong>8U 及以上</strong>：用于SXM GPU模组 + 液冷方案，需要更大空间容纳冷板、CDU接口、NVSwitch基板<br/>
+        · <strong>10U+</strong>：高端液冷训练节点，整台服务器的高度接近半人高<br/>
+        · <strong>标准机柜</strong>：42U高，意味着一个标准柜大约能装10台4U服务器，或4-5台8U服务器
+      </div>
+
+      <h3 class="on-scroll">机箱的"看不见的功能"</h3>
+      <ul class="on-scroll">
+        <li><strong>EMC屏蔽</strong>：防止GPU高速信号对外辐射干扰，也防止外部干扰进入机箱</li>
+        <li><strong>前后风道隔离</strong>：将进风/出风严格分开，避免热风回流</li>
+        <li><strong>电源位与硬盘位隔离</strong>：避免电源的热量加热存储区域</li>
+        <li><strong>防共振硬盘托架</strong>：减少风扇和硬盘共振导致的早期故障</li>
+      </ul>
+
+      <div class="pull-quote on-scroll"><p>机箱是GPU服务器的"骨架"——骨架不行，再强的肌肉也会散架。</p></div>
+
+      <div class="section-marker on-scroll">04 · 辅助配件</div>
+      <h2 class="on-scroll">6 · 那些"不起眼但少了就跑不起来"的配件</h2>
+      <p class="on-scroll">
+        一台GPU服务器真正上线，除了上面讲到的主要部件，还需要一堆辅助配件。它们不贵，但缺任何一个都可能让整套系统没法运行。
+      </p>
+
+      <div class="timeline on-scroll">
+        <div class="tl-item">
+          <div class="tl-time">PCIe 转接卡（Riser Card）</div>
+          <div class="tl-text">改变插卡方向，让GPU能在4U机箱内水平安装。通常有x16插槽的Riser配合主板上的PCIe槽位使用。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">光模块（QSFP28 / QSFP-DD / OSFP）</div>
+          <div class="tl-text">用于连接IB交换机和相邻服务器。一个QSFP-DD光模块支持400Gbps，价格从几百到几千美元不等。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">无源铜缆 / 有源光缆（AOC）</div>
+          <div class="tl-text">短距离（机柜内、相邻机柜）用无源铜缆更便宜；长距离跨机架用有源光缆。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">12VHPWR 供电线</div>
+          <div class="tl-text">GPU专用供电线，每线支持600W。8卡服务器需要8根以上。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">上架导轨</div>
+          <div class="tl-text">一台8卡GPU服务器重达60-100kg，需要专用导轨支持在数据中心机柜中抽出维护。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">快接头、冷却液</div>
+          <div class="tl-text">液冷方案特有的配件——CDU与冷板之间通过快接头连接，冷却液需要定期检测电导率和杂质。</div>
+        </div>
+      </div>
+
+      <div class="section-marker on-scroll">05 · 协同工作流</div>
+      <h2 class="on-scroll">7 · 写在最后：这些部件是怎么"一起干活"的</h2>
+      <p class="on-scroll">
+        了解了每个部件之后，真正有价值的问题是：<strong>当这台服务器在跑一个大模型训练或推理任务时，数据在各部件间是怎么流动的？</strong> 以下是两个最典型的工作流。
+      </p>
+
+      <h2 class="on-scroll">7.1 · AI训练任务 —— 协同工作流</h2>
+      <p class="on-scroll">
+        执行一次AI训练迭代（一次 forward + backward + optimizer step）的完整硬件链路：
+      </p>
+
+      <div class="timeline on-scroll">
+        <div class="tl-item">
+          <div class="tl-time">① 数据加载（CPU + 系统内存 + NVMe）</div>
+          <div class="tl-text">CPU从NVMe SSD或远程存储读取训练数据，在系统内存中做预处理（tokenize、shuffle、batching）。这一步如果慢，GPU会因为"等数据"而空载。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">② 数据送入GPU（CPU → PCIe Switch → GPU显存）</div>
+          <div class="tl-text">预处理好的batch通过PCIe Switch被送入GPU显存。<strong>对于大batch，PCIe带宽在这里第一次成为瓶颈候选人。</strong></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">③ 前向传播（GPU计算核心 + GPU显存）</div>
+          <div class="tl-text">GPU执行模型前向计算，生成logits和中间激活值。激活值需要暂存在显存中供反向传播使用——<strong>显存容量决定了你能跑多大batch、多大模型。</strong></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">④ 反向传播（GPU计算核心 + GPU显存）</div>
+          <div class="tl-text">GPU根据loss计算梯度，显存中写入参数梯度。这一步的计算量通常是前向传播的1.5-2倍。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">⑤ 梯度同步（NVLink/NVSwitch + IB卡 + IB交换机）</div>
+          <div class="tl-text">多卡/多机训练时，各GPU的梯度需要通过all-reduce操作同步。<strong>GPU之间走NVLink，服务器之间走InfiniBand。</strong> 这一步<strong>极容易成为性能瓶颈</strong>——很多"号称1024卡"的训练集群，实际单卡利用率只有50%左右，就是卡在这里。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">⑥ 参数更新（GPU计算核心 + GPU显存）</div>
+          <div class="tl-text">优化器（Adam、SGD、AdamW等）使用同步后的梯度更新模型参数。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">⑦ 监控与调节（BMC + 散热系统）</div>
+          <div class="tl-text">BMC全程监控GPU温度、电压、功耗，实时调节风扇转速或液冷CDU温度。GPU过热则自动触发功耗限制。</div>
+        </div>
+      </div>
+
+      <h2 class="on-scroll">7.2 · 大模型推理服务 —— 协同工作流</h2>
+      <p class="on-scroll">
+        当用户向大模型发送一条消息（"请帮我写一份……"），GPU服务器内部发生了什么：
+      </p>
+
+      <div class="timeline on-scroll">
+        <div class="tl-item">
+          <div class="tl-time">① 请求接入与预处理（CPU + 系统内存 + NIC/IB卡）</div>
+          <div class="tl-text">用户请求通过InfiniBand/RoCE网卡进入服务器。CPU解析请求并加载tokenizer，将文本转换为token ID序列，暂存在系统内存中，并准备组装成batch（如果支持动态批处理）。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">② KV Cache 载入（CPU → PCIe Switch → GPU显存）</div>
+          <div class="tl-text">对于有历史对话的场景，CPU通过PCIe Switch将KV Cache送入GPU显存（如果缓存溢出，则从系统内存预加载）。<strong>KV Cache的大小和管理方式直接影响推理延迟和并发能力。</strong></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">③ 模型推理（GPU计算核心 + GPU显存 + NVLink）</div>
+          <div class="tl-text">GPU执行自回归生成：每一步生成一个token，同时更新KV Cache。对于多GPU张量并行，每一步生成都需要GPU之间通过NVLink通信。<strong>对于70B以上模型，仅推理就需要8张卡协同。</strong></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">④ 结果回传（GPU显存 → PCIe Switch → CPU → NIC/IB卡）</div>
+          <div class="tl-text">生成的token序列被回传到CPU，再组装成回复文本，通过网卡返回给用户。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">⑤ 并发管理（DPU + CPU + BMC）</div>
+          <div class="tl-text">DPU负责网络层面的负载均衡和安全卸载，CPU管理并发请求的batch策略，BMC监控GPU是否过热或功耗是否超标。整套系统在"高并发、低延迟、高可用"三者之间做权衡。</div>
+        </div>
+      </div>
+
+      <div class="pull-quote on-scroll"><p>理解了数据流，你就理解了GPU服务器。一切硬件设计最终都服务于"让数据在正确的时间出现在正确的位置"。</p></div>
+
+      <div class="section-marker on-scroll">06 · 总结与展望</div>
+      <h2 class="on-scroll">写在最后：GPU服务器正在朝三个方向演进</h2>
+      <p class="on-scroll">
+        理解这些硬件组件的分工与瓶颈，是选型GPU服务器、优化训练成本、定位性能故障的基础。从当前技术演进看，GPU服务器正在朝三个明确的方向发展：
+      </p>
+
+      <div class="info-box on-scroll">
+        <strong>方向一 · 更高功率密度 → 液冷成为标配</strong><br/>
+        随着AI芯片功耗突破1000W（B200已达1000W/卡，下一代Blackwell Ultra预计更高），风冷已经接近物理极限。<strong>冷板式液冷 → 浸没式液冷将成为高端训练服务器的默认配置。</strong><br/>
+        <br/>
+        <strong>方向二 · 更高带宽互联 → 全光互联与共封装光学（CPO）</strong><br/>
+        PCIe 6.0、7.0和下一代NVLink正在路上，同时业界也在探索将光模块直接与GPU芯片共封装（CPO）——进一步缩短信号路径、降低功耗、提高带宽密度。<br/>
+        <br/>
+        <strong>方向三 · 更高集成度 → 从"板卡堆叠"到"系统级芯片"</strong><br/>
+        NVIDIA MGX架构、AMD MI300系列、以及国产厂商的加速方案，都在推进一个方向：<strong>把GPU、CPU、内存、互连更紧密地集成到一个统一的计算模块中</strong>，减少外部走线、减少能耗浪费、减少占地面积。
+      </div>
+
+      <h3 class="on-scroll">对从业者的建议</h3>
+      <ul class="on-scroll">
+        <li><strong>做选型</strong>：不要只看"有几张卡、每张卡多少算力"，要看PCIe/NVLink配置、IB卡数量和速度、电源冗余规格、散热方案</li>
+        <li><strong>做优化</strong>：训练瓶颈大概率不是GPU不够，而是"数据喂不到GPU"——检查存储读取速度、PCIe/NVLink带宽、IB卡配置</li>
+        <li><strong>做成本估算</strong>：GPU采购成本只占TCO的40-60%，剩下的是电力、散热、机房空间、网络设备、维护——别忘了算这些</li>
+        <li><strong>做国产替代评估</strong>：国产GPU芯片在FP16/BF16训练精度上已追近国际水平，但整机解决方案（特别是高端IB卡、NVSwitch级别的互连）仍有追赶空间，评估时需关注"整机方案"而非"单卡规格"</li>
+      </ul>
+
+      <p class="on-scroll">
+        本文是《GPU服务器系列》的第二篇，聚焦于互连组件、供电散热、结构管理以及AI工作流。第一篇涵盖核心计算单元（GPU/CPU）和存储内存层次（DRAM/VRAM/NVMe），两篇结合起来，可对GPU服务器形成完整的硬件认知。
+      </p>
+
+      <div class="pull-quote on-scroll"><p>AI时代的算力竞争，不只是"谁的GPU更强"——更是"谁能把GPU的每一条数据通道、每一度电、每一瓦散热都用到极致"。</p></div>
+    </article>
+
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-text">© 2026 expectopatronus · 本站内容基于全网公开资料整理，仅供学习参考</div>
+        <div class="footer-text">原文作者：GPU那些事儿 · 整理：expectopatronus</div>
+      </div>
+    </footer>
+
+    <script src="../../home/script.js"></script>
+  </body>
+</html>
