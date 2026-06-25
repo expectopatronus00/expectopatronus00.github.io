@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crow5 可视化记忆：告别沟通失忆，让每一次协作都有据可查 · EXPECTOPATRONUS</title>
+    <meta name="description" content="Crow5 可视化记忆功能详解：把你与 AI 的每一次协作都变成可检索、可回溯的结构记忆，彻底告别「刚才说过什么」的沟通失忆。" />
+    <meta name="keywords" content="Crow5, VibeCoding, 可视化记忆, AI编程, 协作工具, AI IDE, 开发效率" />
+    <meta property="og:title" content="Crow5 可视化记忆：告别沟通失忆，让每一次协作都有据可查" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="Crow5 可视化记忆功能详解：把你与 AI 的每一次协作都变成可检索、可回溯的结构记忆，彻底告别「刚才说过什么」的沟通失忆。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">抖音 · AI 编程工具</div>
+      <h1>Crow5 可视化记忆：告别沟通失忆，让每一次协作都有据可查</h1>
+      <p>Crow5 最新推出的可视化记忆功能，让 AI 工具不再是「用完就忘」的黑盒。每一次与模型的对话、每一条代码修改、每一次错误修复，都会被结构化为一条可视化的记忆卡片，随时回溯。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 莱因哈特</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-06-21</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 5 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 视频 · 搬运整理</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="视频封面" src="" />
+    </div>
+
+    <article class="article-body">
+      <div class="section-marker">01 · 先讲一个大多数人都碰到过的场景</div>
+<h2>你在跟 AI 协作时有没有过「沟通失忆」</h2>
+<p>大概是这样一种感觉：昨天晚上你和 AI 一起改了一段复杂的逻辑，它给了你好几个版本的代码。今天早上回过头来看，这段代码已经躺在仓库里了，但你完全记不清：<strong>当时为什么这样写、之前踩过什么坑、哪一步是最终方案</strong>。</p>
+<p>更糟糕的是，当你想继续推进这个功能时，你发现你不得不重新把整个上下文告诉 AI——因为它也「忘了」。</p>
+<p>这就是 AI 编程工具最大的痛点之一：<strong>沟通失忆</strong>。你和 AI 的每一次对话，都像是在沙滩上写字，浪一来就没了。</p>
+<div class="pull-quote"><p>AI 编程最大的痛点不是它不够聪明，而是它不够「记性」。</p></div>
+<div class="section-marker">02 · 它到底是什么</div>
+<h2>可视化记忆：把每一次协作变成一张卡片</h2>
+<p>Crow5 的可视化记忆，本质上是一个<strong>结构化的协作日志</strong>。但它不是简单的聊天记录，而是把每一次有意义的交互抽象成一张「记忆卡片」。</p>
+<p>每张卡片包含：</p>
+<p><strong>1. 意图</strong>。你当时想做什么。</p>
+<p><strong>2. 过程</strong>。AI 做了什么步骤、调用了什么工具、生成了什么中间结果。</p>
+<p><strong>3. 结果</strong>。最终产出了什么代码、修改了什么文件。</p>
+<p><strong>4. 上下文</strong>。当时的环境状态——分支、依赖版本、相关文件。</p>
+<p>这些卡片按时间顺序排列，形成一个完整的协作历史。你可以随时回溯、搜索、引用。</p>
+<div class="info-box"><p>关键区别：聊天记录是「你说了什么」，记忆卡片是「你做了什么」。前者是文本，后者是结构。</p></div>
+<div class="section-marker">03 · 它是怎么工作的</div>
+<h2>三步：捕获 → 结构化 → 可视化</h2>
+<p>整个流程分为三个阶段：</p>
+<p><strong>第一步：捕获</strong>。Crow5 在后台监听你和 AI 的每一次交互——不只是对话，还包括工具调用、文件修改、命令执行。所有这些行为都会被记录下来。</p>
+<p><strong>第二步：结构化</strong>。AI 会分析这些原始记录，识别其中的「意图单元」。比如，你连续发了三条消息让 AI 修同一个 bug，这三条会被合并成一个「修复 bug X」的记忆卡片。</p>
+<p><strong>第三步：可视化</strong>。结构化后的记忆会被渲染成一张卡片，显示在 Crow5 的记忆面板中。你可以按时间、按文件、按意图类型来浏览和搜索。</p>
+<p>整个过程是自动的，你不需要手动记录任何东西。</p>
+<div class="section-marker">04 · 实际用起来是什么感觉</div>
+<h2>三个真实使用场景</h2>
+<p><strong>场景一：回溯一个复杂功能的开发过程</strong></p>
+<p>你正在开发一个支付模块，涉及多个文件的修改。两周后，产品经理问你「当时为什么用这个第三方库」。你打开 Crow5 的记忆面板，搜索「支付」，立刻看到所有相关卡片——包括当时 AI 给出的方案对比、你做的决策、最终选用的理由。</p>
+<p><strong>场景二：复用之前的解决方案</strong></p>
+<p>你遇到一个和之前类似的 bug。你不需要重新描述问题，只需要在记忆面板中找到之前那张「修复 bug X」的卡片，告诉 AI「用同样的方式修复这个」。AI 会自动读取卡片中的上下文，复用之前的方案。</p>
+<p><strong>场景三：团队协作交接</strong></p>
+<p>你休假前，把记忆面板导出给同事。同事不需要你写交接文档，只需要看记忆卡片，就知道你之前做了什么、为什么这样做、哪些地方还有问题待解决。</p>
+<div class="pull-quote"><p>记忆卡片不只是帮你回忆，它还能帮你复用、交接、复盘。</p></div>
+<div class="section-marker">05 · 它和普通聊天记录的区别</div>
+<h2>三个关键差异</h2>
+<p><strong>差异一：结构化 vs 线性</strong></p>
+<p>聊天记录是线性的——一条接一条，没有层次。记忆卡片是结构化的——每个意图是一个单元，内部包含过程、结果、上下文。</p>
+<p><strong>差异二：可检索 vs 只能翻页</strong></p>
+<p>聊天记录只能按时间翻页查找。记忆卡片可以按意图、文件、类型搜索，还能跨卡片关联。</p>
+<p><strong>差异三：可复用 vs 只能看</strong></p>
+<p>聊天记录只能看，不能直接用。记忆卡片可以被 AI 直接读取，作为新任务的上下文。</p>
+<div class="info-box"><p>一句话总结：聊天记录是历史，记忆卡片是资产。</p></div>
+<div class="section-marker">06 · 还不够完美的地方</div>
+<h2>两个当前短板</h2>
+<p><strong>短板一：意图识别还不够精准</strong></p>
+<p>有时候 AI 会把两个不同的意图合并成一张卡片，或者把一个意图拆成两张。这需要手动调整。</p>
+<p><strong>短板二：跨会话关联还在开发中</strong></p>
+<p>目前记忆卡片主要在单次会话内有效。跨会话的关联（比如「这张卡片是之前那张的延续」）还在开发中。</p>
+<p>但这两个短板都不影响核心功能的使用，只是体验上的优化空间。</p>
+<div class="section-marker">07 · 和 VibeCoding 的关系</div>
+<h2>体验 vs 留存：两个互补的基础设施</h2>
+<p>VibeCoding 强调的是<strong>体验</strong>——让编程变得像说话一样自然流畅。Crow5 的可视化记忆强调的是<strong>留存</strong>——让每一次协作都有据可查。</p>
+<p>两者是互补的：</p>
+<p>没有 VibeCoding，编程体验会很痛苦。没有可视化记忆，协作过程会很混乱。</p>
+<p>Crow5 把两者结合起来，既保证了流畅的编程体验，又保证了完整的协作记录。这才是 AI 编程工具应该有的样子。</p>
+<div class="pull-quote"><p>VibeCoding 让你写得爽，可视化记忆让你记得住。两者缺一不可。</p></div>
+<div class="section-marker">08 · 使用建议</div>
+<h2>先聚焦两个核心场景</h2>
+<p>如果你刚开始用 Crow5 的可视化记忆，建议先聚焦两个场景：</p>
+<p><strong>场景一：复杂功能的开发</strong></p>
+<p>任何涉及多个文件、多轮修改的功能，都值得用记忆卡片记录下来。这样你随时可以回溯。</p>
+<p><strong>场景二：Bug 修复</strong></p>
+<p>每个 bug 的修复过程，都应该有一张卡片。这样下次遇到类似问题，你可以直接复用。</p>
+<p>其他场景（比如简单代码生成、文档查询）可以暂时不用，避免记忆面板过于臃肿。</p>
+<div class="section-marker">09 · 写在最后</div>
+<h2>对 AI 协作长期方向的观察</h2>
+<p>Crow5 的可视化记忆，让我看到 AI 编程工具的一个长期方向：<strong>从「对话工具」变成「协作伙伴」</strong>。</p>
+<p>对话工具的特点是：你问它答，用完就忘。协作伙伴的特点是：它记住你做过什么，理解你的上下文，帮你积累经验。</p>
+<p>可视化记忆是后者的基础设施。没有它，AI 永远只是一个对话工具。有了它，AI 才有可能真正成为你的协作伙伴。</p>
+<p>这个方向，值得所有 AI 编程工具跟进。</p>
+<div class="pull-quote"><p>AI 编程的下一站，不是更聪明的模型，而是更有记性的系统。</p></div>
+    <div class="cta-box">
+      <div class="content">
+        <h3>去抖音看原视频</h3>
+        <p>视频来自抖音 @莱因哈特</p>
+      <a class="cta-btn" id="cta-link" href="https://www.douyin.com/video/fdpDisviqWg" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往抖音
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://www.douyin.com/video/fdpDisviqWg" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v10.5a3.5 3.5 0 1 1-2-3.16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M14 3v8.5M14 3h4.5M14 8.5h4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="pn">抖音</span>
+        <span class="pd">视频原页</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="#">#Crow5</a>
+      <a href="#">#VibeCoding</a>
+      <a href="#">#AI编程</a>
+      <a href="#">#可视化记忆</a>
+      <a href="#">#协作工具</a>
+      <a href="#">#开发效率</a>
+    </div>
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用。视频封面版权归抖音原视频作者所有。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
