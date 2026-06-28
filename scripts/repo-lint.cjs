@@ -28,10 +28,10 @@ function rel(p) {
   return path.relative(ROOT, p).replace(/\\/g, '/');
 }
 
-/* 从 home.html 的 articles 数组提取对象数组（简化解析） */
-function parseArticles(homeHtml) {
-  // 定位 `var articles = [` / `const articles = [` / `let articles = [`
-  const m = homeHtml.match(/(?:var|let|const)\s+articles\s*=\s*\[([\s\S]*?)\n\s*\](?=\s*[;,])/);
+/* 从 home/articles.js 的 window.articles 数组提取对象数组（简化解析） */
+function parseArticles(articlesJsContent) {
+  // 定位 `window.articles = [`
+  const m = articlesJsContent.match(/window\.articles\s*=\s*\[([\s\S]*?)\n\s*\](?=\s*[;,])/);
   if (!m) return [];
   const chunk = m[1];
   // 按 `,` 拆出每个对象（考虑花括号配对）
@@ -97,15 +97,17 @@ function checkPostCount() {
   const postFiles = walk(path.join(ROOT, 'post'), '.html');
   const postCount = postFiles.length;
 
+  const articlesJsPath = path.join(ROOT, 'home/articles.js');
+  const articlesJsContent = fs.readFileSync(articlesJsPath, 'utf8');
+  const articles = parseArticles(articlesJsContent);
+
   const homePath = path.join(ROOT, 'home/home.html');
   const homeHtml = fs.readFileSync(homePath, 'utf8');
-  const articles = parseArticles(homeHtml);
-
   const displayMatch = homeHtml.match(/共\s*(\d+)\s*篇/);
   const displayNum = displayMatch ? parseInt(displayMatch[1]) : null;
 
   printRow('post/ 物理 html 文件数', postCount, true);
-  printRow('home.html articles 数组条目数', articles.length, true);
+  printRow('articles.js articles 条目数', articles.length, true);
   printRow('home.html "共 N 篇" 显示', displayNum !== null ? displayNum : '未找到', true);
 
   let problems = [];

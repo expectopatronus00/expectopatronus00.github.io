@@ -3,6 +3,7 @@
 // 用法: node scripts/wx-post-quick.cjs <url>
 const { execSync } = require('child_process');
 const fs = require('fs');
+const os = require('os');
 const path = require('path');
 
 const URL = process.argv[2];
@@ -14,13 +15,14 @@ if (!URL) {
 const ROOT = path.resolve(__dirname, '..');
 const HOME_PATH = path.join(ROOT, 'home', 'home.html');
 const INDEX_PATH = path.join(ROOT, 'index.html');
+const ARTICLES_JS_PATH = path.join(ROOT, 'home', 'articles.js');
 
 // ============== 抓取 ==============
 console.log('📡 抓取:', URL);
 const UA = 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1';
 let html = '';
 try {
-  const tmp = '/tmp/wx-' + process.pid + '.html';
+  const tmp = path.join(os.tmpdir(), 'wx-' + process.pid + '.html');
   execSync(`curl -sSL --max-time 30 -A "${UA}" -H "Accept-Language: zh-CN,zh;q=0.9" -o "${tmp}" "${URL}"`, {
     stdio: ['ignore', 'pipe', 'pipe'],
     maxBuffer: 16 * 1024 * 1024,
@@ -231,11 +233,11 @@ const outPath = path.join(outDir, slug + '.html');
 fs.writeFileSync(outPath, articleHtml, 'utf-8');
 console.log('✅ 生成文章:', outPath);
 
-// ============== 更新 home.html ==============
-let homeHtml = fs.readFileSync(HOME_PATH, 'utf-8');
-const articlesAnchorIdx = homeHtml.indexOf('var articles = [');
+// ============== 更新 home/articles.js ==============
+let articlesJs = fs.readFileSync(ARTICLES_JS_PATH, 'utf-8');
+const articlesAnchorIdx = articlesJs.indexOf('window.articles = [');
 if (articlesAnchorIdx >= 0) {
-  const afterBracket = homeHtml.indexOf('\n', articlesAnchorIdx + 'var articles = ['.length);
+  const afterBracket = articlesJs.indexOf('\n', articlesAnchorIdx + 'window.articles = ['.length);
   const newEntry =
     '          {\n' +
     '            id: \'' + slug + '\',\n' +
@@ -246,45 +248,27 @@ if (articlesAnchorIdx >= 0) {
     '            date: \'' + date + '\',\n' +
     '            tags: [\'AI\',\'大模型\',\'技术\'],\n' +
     '          },\n';
-  homeHtml = homeHtml.slice(0, afterBracket + 1) + newEntry + homeHtml.slice(afterBracket + 1);
-  // 计数更新
-  homeHtml = homeHtml.replace(/共 (\d+) 篇/, (m, n) => '共 ' + (parseInt(n) + 1) + ' 篇');
-  fs.writeFileSync(HOME_PATH, homeHtml, 'utf-8');
-  console.log('✅ 更新 home.html');
+  articlesJs = articlesJs.slice(0, afterBracket + 1) + newEntry + articlesJs.slice(afterBracket + 1);
+  fs.writeFileSync(ARTICLES_JS_PATH, articlesJs, 'utf-8');
+  console.log('✅ 更新 home/articles.js');
 } else {
-  console.error('❌ home.html 未找到 var articles = [');
+  console.error('❌ articles.js 未找到 window.articles = [');
 }
 
-// ============== 更新 index.html ==============
+// ============== 更新 home.html (统计数字) ==============
+let homeHtml = fs.readFileSync(HOME_PATH, 'utf-8');
+homeHtml = homeHtml.replace(/共 (\d+) 篇/, (m, n) => '共 ' + (parseInt(n) + 1) + ' 篇');
+fs.writeFileSync(HOME_PATH, homeHtml, 'utf-8');
+console.log('✅ 更新 home.html (共 N 篇)');
+
+// ============== 更新 index.html (hero 数字) ==============
 let indexHtml = fs.readFileSync(INDEX_PATH, 'utf-8');
 // hero 数字
 indexHtml = indexHtml.replace(/(<div class="num">)(\d+)(<\/div>)/, function(m, pre, n, post) {
   return pre + (parseInt(n) + 1) + post;
 });
-// latest-grid 首卡
-const gridIdx = indexHtml.indexOf('class="latest-grid"');
-if (gridIdx >= 0) {
-  const afterOpening = indexHtml.indexOf('>', gridIdx);
-  const card =
-    '\n        <a class="article-card" href="post/' + slug + '/' + slug + '.html">\n' +
-    '          <div\n' +
-    '            class="thumb"\n' +
-    '            style="background-image: url(\'' + cover + '\')"\n' +
-    '          >\n' +
-    '            <span class="cat-badge">微信搬运</span>\n' +
-    '          </div>\n' +
-    '          <div class="art-body">\n' +
-    '            <div class="date">' + date + '</div>\n' +
-    '            <h3>' + escapeHtml(title) + '</h3>\n' +
-    '            <p>' + escapeHtml(summary) + '</p>\n' +
-    '          </div>\n' +
-    '        </a>\n';
-  indexHtml = indexHtml.slice(0, afterOpening + 1) + card + indexHtml.slice(afterOpening + 1);
-  fs.writeFileSync(INDEX_PATH, indexHtml, 'utf-8');
-  console.log('✅ 更新 index.html');
-} else {
-  console.error('❌ index.html 未找到 latest-grid');
-}
+fs.writeFileSync(INDEX_PATH, indexHtml, 'utf-8');
+console.log('✅ 更新 index.html (hero 数字；latest-grid 由前端 JS 动态渲染)');
 
 function escapeJs(s) {
   return String(s || '').replace(/\\/g, '\\\\').replace(/'/g, '\\\'').replace(/\n/g, '\\n');

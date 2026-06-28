@@ -12,8 +12,9 @@
  *
  * 输出:
  *   - post/dy-{ID}/dy-{ID}.html     (N个文章页)
- *   - 自动更新 home.html            (articles数组+统计数字)
- *   - 自动更新 index.html           (latest-grid卡片+统计数字)
+ *   - 自动更新 home/articles.js     (window.articles 数组)
+ *   - 自动更新 home.html            (统计数字)
+ *   - 自动更新 index.html           (hero 统计数字；latest-grid 由前端 JS 渲染)
  */
 
 import fs from 'node:fs';
@@ -27,6 +28,7 @@ const ROOT = path.resolve(__dirname, '../..');
 const TEMPLATE_PATH = path.join(__dirname, 'template.html');
 const HOME_PATH = path.join(ROOT, 'home', 'home.html');
 const INDEX_PATH = path.join(ROOT, 'index.html');
+const ARTICLES_JS_PATH = path.join(ROOT, 'home', 'articles.js');
 
 // ---------- 工具 ----------
 function read(file) {
@@ -67,6 +69,7 @@ try {
 }
 let homeHtml = read(HOME_PATH);
 let indexHtml = read(INDEX_PATH);
+let articlesJs = read(ARTICLES_JS_PATH);
 
 console.log('=== 开始批量生成 ' + videos.length + ' 篇文章 ===');
 console.log();
@@ -185,11 +188,11 @@ const homeNewCount = homeOldCount + generated.length;
 homeHtml = homeHtml.replace(/共 \d+ 篇/, '共 ' + homeNewCount + ' 篇');
 console.log('  统计: ' + homeOldCount + ' → ' + homeNewCount);
 
-// 更新 B: articles 数组最前面插入
-const articlesAnchor = 'var articles = [';
-const idx = homeHtml.indexOf(articlesAnchor);
+// 更新 B: 在 home/articles.js 的 window.articles 数组最前面插入新条目
+const articlesAnchor = 'window.articles = [';
+const idx = articlesJs.indexOf(articlesAnchor);
 if (idx === -1) {
-  console.error('  警告: 找不到 "var articles = ["，跳过 articles 数组更新');
+  console.error('  警告: 找不到 "window.articles = ["，跳过 articles.js 更新');
 } else {
   const insertPos = idx + articlesAnchor.length;
   const objects = [];
@@ -208,9 +211,10 @@ if (idx === -1) {
       '          },'
     );
   }
-  homeHtml = homeHtml.slice(0, insertPos) + objects.join('') + homeHtml.slice(insertPos);
-  console.log('  articles 数组: 已追加 ' + generated.length + ' 项');
+  articlesJs = articlesJs.slice(0, insertPos) + objects.join('') + articlesJs.slice(insertPos);
+  console.log('  articles.js: 已追加 ' + generated.length + ' 项');
 }
+write(ARTICLES_JS_PATH, articlesJs);
 write(HOME_PATH, homeHtml);
 
 // ---------- 第 3 步: 更新 index.html ----------
@@ -226,38 +230,6 @@ indexHtml = indexHtml.replace(/<div class="num">(\d+)<\/div>/, function (match, 
   return '<div class="num">' + indexNewCount + '</div>';
 });
 console.log('  统计: ' + indexOldCount + ' → ' + indexNewCount);
-
-// 更新 B: latest-grid 最前面插入 article-card
-const gridAnchor = '<div class="latest-grid">';
-const gridIdx = indexHtml.indexOf(gridAnchor);
-if (gridIdx === -1) {
-  console.error('  警告: 找不到 latest-grid，跳过卡片更新');
-} else {
-  const cardPos = gridIdx + gridAnchor.length;
-  const cards = [];
-  for (let x = 0; x < generated.length; x++) {
-    const c = generated[x];
-    const dateParts = c.date.split('-');
-    const dateDisplay = dateParts[0] + ' · ' + dateParts[1] + ' · ' + dateParts[2];
-    cards.push(
-      '\n        <a class="article-card" href="post/' + c.id + '/' + c.id + '.html">\n' +
-      '          <div\n' +
-      '            class="thumb"\n' +
-      '            style="background-image: url(\'' + c.cover + '?w=900&q=80\')"\n' +
-      '          >\n' +
-      '            <span class="cat-badge">抖音搬运</span>\n' +
-      '          </div>\n' +
-      '          <div class="art-body">\n' +
-      '            <div class="date">' + dateDisplay + '</div>\n' +
-      '            <h3>' + c.title + '</h3>\n' +
-      '            <p>' + (c.summary || '') + '</p>\n' +
-      '          </div>\n' +
-      '        </a>\n'
-    );
-  }
-  indexHtml = indexHtml.slice(0, cardPos) + cards.join('') + indexHtml.slice(cardPos);
-  console.log('  latest-grid: 已追加 ' + generated.length + ' 张卡片');
-}
 write(INDEX_PATH, indexHtml);
 
 // ---------- 完成 ----------
@@ -270,8 +242,9 @@ for (let i = 0; i < generated.length; i++) {
 }
 console.log();
 console.log('已更新:');
-console.log('  - home/home.html  (共 ' + homeNewCount + ' 篇, articles 数组已追加)');
-console.log('  - index.html     (articles 数: ' + indexNewCount + ', latest-grid 已追加卡片)');
+console.log('  - home/articles.js  (window.articles 数组已追加 ' + generated.length + ' 项)');
+console.log('  - home/home.html    (共 ' + homeNewCount + ' 篇)');
+console.log('  - index.html        (hero 数: ' + indexNewCount + ', latest-grid 由前端 JS 动态渲染)');
 console.log();
 console.log('建议执行:');
 console.log('  cd /workspace');
