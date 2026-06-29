@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'dy-7650112502977678627',
+            title: '李继刚的开源skills',
+            url: '../post/dy-7650112502977678627/dy-7650112502977678627.html',
+            summary: '李继刚分享的开源 Skills 项目，探讨 Claude Code 的提示词技巧与 AI 工作流实践。',
+            category: '抖音搬运',
+            date: '2026-06-28',
+            tags: ["ClaudeCode","开源AI","提示词技巧","AI工作流","青年创作者成长计划"],
+          },
+          {
             id: 'dy-fdpDisviqWg',
             title: 'Crow5 可视化记忆：告别沟通失忆，让每一次协作都有据可查',
             url: '../post/dy-fdpDisviqWg/dy-fdpDisviqWg.html',
