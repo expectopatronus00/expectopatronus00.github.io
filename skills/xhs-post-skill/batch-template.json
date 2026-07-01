@@ -1,0 +1,37 @@
+[
+  {
+    "id": "xhs-NOTE_ID",
+    "title": "文章主标题（对应 TITLE）",
+    "eyebrow": "EYEBROW · 小标签，如 '健康生活 · 饮食'",
+    "author": "作者昵称",
+    "date": "YYYY-MM-DD",
+    "cover": "封面图URL",
+    "tags": ["标签1", "标签2", "标签3"],
+    "summary": "1句话摘要（80~120字，用于 home/首页卡片）",
+    "meta_desc": "meta description（150字内，纯文字）",
+    "meta_keywords": "关键词1, 关键词2, 关键词3, ...（10~15个逗号分隔）",
+    "category": "健康生活",
+    "content_html": [
+      "<div class=\"section-marker\">01 · 章节标题</div>",
+      "<h2>章节标题</h2>",
+      "<p>段落内容...</p>",
+      "<div class=\"section-marker\">02 · 章节标题</div>",
+      "<h2>章节标题</h2>",
+      "<p>段落内容...</p>"
+    ],
+    "cta": {
+      "title": "去小红书看原笔记",
+      "desc": "1句话描述，点击按钮跳转小红书原笔记页",
+      "url": "https://www.xiaohongshu.com/explore/NOTE_ID"
+    },
+    "platforms": [
+      {
+        "name": "小红书",
+        "icon": "<svg class=\"icon icon-sm\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"4\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"/><path d=\"M8 12h8M12 8v8\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\"/></svg>",
+        "url": "https://www.xiaohongshu.com/explore/NOTE_ID",
+        "desc": "笔记原页"
+      }
+    ],
+    "footer_meta": "本站内容纯学习用途，非商用。图片版权归小红书原作者所有。"
+  }
+]

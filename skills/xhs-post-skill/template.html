@@ -233,6 +233,65 @@
         margin: 0;
       }
 
+      /* 图片卡片（小红书特色） */
+      .image-card {
+        margin: var(--sp-6) 0;
+        text-align: center;
+      }
+      .image-card img {
+        width: 100%;
+        max-width: 560px;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+        margin: 0 auto;
+      }
+      .image-card p {
+        margin-top: var(--sp-3);
+        font-size: 0.88rem;
+        color: var(--text-dim);
+        font-family: var(--font-mono);
+      }
+
+      /* 要点列表（打勾样式，小红书特色） */
+      .check-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 var(--sp-6);
+      }
+      .check-list li {
+        position: relative;
+        padding-left: 32px;
+        margin-bottom: var(--sp-3);
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.98rem;
+      }
+      .check-list li::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 6px;
+        width: 20px;
+        height: 20px;
+        border: 2px solid var(--accent-rust);
+        border-radius: 6px;
+        background: rgba(201, 119, 47, 0.1);
+      }
+      .check-list li::after {
+        content: '';
+        position: absolute;
+        left: 5px;
+        top: 10px;
+        width: 6px;
+        height: 10px;
+        border: solid var(--accent-rust);
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+
       /* 平台/相关链接列表 */
       .platform-list {
         display: grid;
@@ -365,7 +424,7 @@
           <a href="../../index.html">首页</a>
           <a href="../../home/home.html">文章</a>
           <a href="../../home/home.html?cat=健康生活">健康生活</a>
-          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="../../post/deepseek/deepseek.html">DeepSeek</a>
           <a href="../../nav/index.html" target="_blank"
             >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           ></a>
@@ -382,12 +441,12 @@
         <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> {{AUTHOR}}</span>
         <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> {{DATE_TODAY}}</span>
         <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> {{DURATION}}</span>
-        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 视频 · 搬运整理</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 小红书 · 笔记整理</span>
       </div>
     </section>
 
     <div class="hero-image">
-      <img loading="lazy" alt="视频封面" src="{{COVER_URL}}" />
+      <img loading="lazy" alt="笔记封面" src="{{COVER_URL}}" />
     </div>
 
     <article class="article-body">

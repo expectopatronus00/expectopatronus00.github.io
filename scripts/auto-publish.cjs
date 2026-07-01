@@ -12,6 +12,8 @@
  *   - 微信公众号链接 (mp.weixin.qq.com) → 自动抓取原文
  *   - 抖音视频链接 (v.douyin.com / www.douyin.com/video/) → 抓取元数据
  *   - 抖音分享文本 → 从文本提取 URL + 作者 + 标题
+ *   - 小红书笔记链接 (xhslink.com / xiaohongshu.com/explore/) → 抓取元数据
+ *   - 小红书分享文本 → 从文本提取 URL + 标题
  *   - 自动 git commit + push
  */
 
@@ -46,6 +48,8 @@ if (!input) {
   console.error('  node scripts/auto-publish.cjs "https://mp.weixin.qq.com/s/xxx"');
   console.error('  node scripts/auto-publish.cjs "https://v.douyin.com/xxx/"');
   console.error('  node scripts/auto-publish.cjs "7.10 复制打开抖音，看看【作者名的作品】标题 https://v.douyin.com/xxx/"');
+  console.error('  node scripts/auto-publish.cjs "http://xhslink.com/o/xxx"');
+  console.error('  node scripts/auto-publish.cjs "网友说的是真的…吃的干净真的会瘦！！ http://xhslink.com/o/xxx"');
   process.exit(1);
 }
 
@@ -81,6 +85,7 @@ function curlGet(url, options) {
 function detectType(url) {
   if (/mp\.weixin\.qq\.com/.test(url)) return 'wechat';
   if (/v\.douyin\.com|www\.douyin\.com\/video|douyin\.com/.test(url)) return 'douyin';
+  if (/xhslink\.com|xiaohongshu\.com|xhsurl\.com/.test(url)) return 'xiaohongshu';
   return 'unknown';
 }
 
@@ -95,11 +100,135 @@ function parseDouyinShare(text) {
   return result;
 }
 
+// 小红书分享文本解析
+function parseXhsShare(text) {
+  var result = { url: '', author: '', title: '' };
+  result.url = extractUrl(text);
+  var lines = text.split(/[\n\r]+/).filter(function (l) { return l.trim(); });
+  if (lines.length > 0) {
+    var firstLine = lines[0].trim();
+    if (!/^https?:\/\//.test(firstLine) && firstLine.length < 100) {
+      result.title = firstLine;
+    }
+  }
+  return result;
+}
+
 // ---------- 微信处理 ----------
 function handleWechat(url) {
   console.log('📰 微信文章模式');
   console.log();
   execSync('node scripts/wx-post-quick.cjs "' + url + '"', { stdio: 'inherit', cwd: ROOT });
+}
+
+// ---------- 小红书处理 ----------
+function handleXiaohongshu(rawInput) {
+  console.log('📕 小红书笔记模式');
+  console.log();
+
+  var share = parseXhsShare(rawInput);
+  var url = share.url;
+  console.log('🔗 链接:', url);
+  if (share.title) console.log('📝 标题(来自分享文本):', share.title);
+
+  var finalUrl = url;
+  if (/xhslink\.com|xhsurl\.com/.test(url)) {
+    try {
+      var redirectCmd =
+        'curl -sSL --max-time 15 -o ' + DEVNULL + ' -w "%{url_effective}" -A "' + UA_MOBILE + '" "' + url + '"';
+      finalUrl = execSync(redirectCmd, { encoding: 'utf8', cwd: ROOT }).trim();
+      console.log('🔄 展开短链:', finalUrl);
+    } catch (e) {
+      console.log('⚠️ 短链展开失败，使用原始 URL');
+    }
+  }
+
+  var noteId = '';
+  var idMatch = finalUrl.match(/\/explore\/([a-zA-Z0-9]+)/);
+  if (!idMatch) idMatch = finalUrl.match(/\/discovery\/item\/([a-zA-Z0-9]+)/);
+  if (idMatch) noteId = idMatch[1];
+  if (!noteId) {
+    console.error('❌ 无法提取笔记 ID，链接格式不正确');
+    process.exit(1);
+  }
+  console.log('🆔 笔记 ID:', noteId);
+
+  var html = '';
+  try {
+    html = curlGet(finalUrl, { ua: UA_DESKTOP, referer: 'https://www.xiaohongshu.com/' });
+  } catch (e) {
+    console.error('❌ 页面抓取失败:', e.message);
+    process.exit(1);
+  }
+
+  if (!html || html.length < 500) {
+    console.error('❌ 页面内容过短，可能被反爬。HTML 长度:', html ? html.length : 0);
+    process.exit(1);
+  }
+  console.log('✅ 抓取成功，HTML 长度:', html.length);
+
+  var title = extractMeta(html, 'og:title') || share.title || '未知标题';
+  var cover = extractMeta(html, 'og:image') || '';
+  var author = '';
+
+  var nicknameMatch = html.match(/"nickname":"([^"]+)"/);
+  if (nicknameMatch) author = nicknameMatch[1];
+  if (!author) {
+    var authorMatch = html.match(/"user":\{[^}]*"nickname":"([^"]+)"/);
+    if (authorMatch) author = authorMatch[1];
+  }
+
+  console.log('📝 标题:', title);
+  console.log('✍️  作者:', author || '(未知)');
+  console.log('🖼️  封面:', cover ? '已获取' : '(无)');
+
+  var today = new Date().toISOString().slice(0, 10);
+  var note = {
+    id: 'xhs-' + noteId,
+    title: title,
+    eyebrow: '健康生活 · 小红书',
+    author: author || '佚名',
+    date: today,
+    cover: cover,
+    tags: ['健康生活', '小红书', '笔记'],
+    summary: title + ' - 来自小红书笔记' + (author ? '，作者：' + author : ''),
+    meta_desc: title + ' - 来自小红书笔记',
+    meta_keywords: '小红书,笔记,' + (author || ''),
+    duration: '约 5 分钟阅读',
+    category: '健康生活',
+    content_html: [
+      '<div class="section-marker">01 · 笔记简介</div>',
+      '<h2>笔记简介</h2>',
+      '<p>本文来自小红书笔记，作者：' + (author || '佚名') + '。</p>',
+      '<p>笔记标题：' + title + '</p>',
+      '<div class="info-box">本文为自动抓取生成，详细内容待后续补充完善。健康类内容仅供参考，不构成医疗建议。</div>',
+      '<div class="section-marker">02 · 原笔记</div>',
+      '<h2>原笔记</h2>',
+      '<p>点击下方按钮前往小红书查看原笔记。</p>',
+    ],
+    cta: {
+      title: '去小红书看原笔记',
+      desc: '点击跳转小红书原笔记页',
+      url: finalUrl,
+    },
+    footer_meta: '本站内容纯学习用途，非商用。图片版权归小红书原作者所有。',
+  };
+
+  var tmpJson = path.join(os.tmpdir(), 'auto-publish-xhs-' + process.pid + '.json');
+  fs.writeFileSync(tmpJson, JSON.stringify([note], null, 2), 'utf-8');
+  console.log('📄 生成临时配置:', tmpJson);
+
+  console.log();
+  console.log('--- 生成文章 ---');
+  try {
+    execSync('node skills/xhs-post-skill/generate.js "' + tmpJson + '"', { stdio: 'inherit', cwd: ROOT });
+  } finally {
+    try {
+      fs.unlinkSync(tmpJson);
+    } catch (e) {
+      /* ignore */
+    }
+  }
 }
 
 // ---------- 抖音处理 ----------
@@ -228,19 +357,27 @@ var type = detectType(url);
 
 if (type === 'unknown') {
   console.error('❌ 不支持的链接: ' + url);
-  console.error('支持: 微信公众号链接 (mp.weixin.qq.com)、抖音视频链接 (v.douyin.com)');
+  console.error('支持: 微信公众号链接 (mp.weixin.qq.com)、抖音视频链接 (v.douyin.com)、小红书笔记链接 (xhslink.com)');
   process.exit(1);
 }
 
+var typeNames = {
+  wechat: '微信公众号',
+  douyin: '抖音视频',
+  xiaohongshu: '小红书笔记',
+};
+
 console.log('=== 自动发布 ===');
 console.log('🔗 链接:', url);
-console.log('📂 类型:', type === 'wechat' ? '微信公众号' : '抖音视频');
+console.log('📂 类型:', typeNames[type] || type);
 console.log();
 
 if (type === 'wechat') {
   handleWechat(url);
 } else if (type === 'douyin') {
   handleDouyin(input);
+} else if (type === 'xiaohongshu') {
+  handleXiaohongshu(input);
 }
 
 // ---------- 一致性检查 ----------
