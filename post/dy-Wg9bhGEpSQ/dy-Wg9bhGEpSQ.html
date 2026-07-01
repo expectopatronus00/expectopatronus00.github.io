@@ -505,12 +505,15 @@
   <body>
     <nav class="site-nav">
       <a href="../../index.html" class="nav-brand"><span>阿豪</span> AI</a>
-      <div class="nav-links">
+      <div class="nav-links" id="nav-links">
         <a href="../../index.html">首页</a>
         <a href="../../home/home.html">文章</a>
         <a href="../../nav/index.html" target="_blank" rel="noopener">导航站</a>
       </div>
       <div class="nav-right">
+        <button class="menu-toggle" id="menu-toggle" aria-label="菜单">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
         <button class="theme-toggle" id="themeToggle" title="切换主题">
           <i class="fa-solid fa-circle-half-stroke"></i>
         </button>
@@ -693,6 +696,13 @@
           html.dataset.theme = saved;
           localStorage.setItem('theme', saved);
         });
+        var menuBtn = document.getElementById('menu-toggle');
+        var navLinks = document.getElementById('nav-links');
+        if (menuBtn && navLinks) {
+          menuBtn.addEventListener('click', function () {
+            navLinks.classList.toggle('is-open');
+          });
+        }
       })();
     </script>
   </body>

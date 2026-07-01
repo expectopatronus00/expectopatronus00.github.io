@@ -186,12 +186,15 @@
     <nav class="site-nav">
       <div class="nav-inner">
         <a href="../../../index.html" class="brand"> <span class="logo">E</span><span>expectopatronus</span> </a>
-        <div class="nav-links">
+        <div class="nav-links" id="nav-links">
           <a href="../../../index.html">首页</a>
           <a href="../../../home/home.html">文章</a>
           <a href="../deepseek.html" class="is-active">DeepSeek</a>
           <a href="../../nav/index.html" target="_blank" rel="noopener">导航站</a>
         </div>
+        <button class="menu-toggle" id="menu-toggle" aria-label="菜单">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
         <button id="theme-toggle" class="theme-btn" aria-label="切换主题"><i class="fa-solid fa-moon"></i></button>
       </div>
     </nav>
@@ -420,6 +423,13 @@ stream = client.chat.completions.create(
           });
           back.addEventListener('click', function () {
             window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        }
+        var menuBtn = document.getElementById('menu-toggle');
+        var navLinks = document.getElementById('nav-links');
+        if (menuBtn && navLinks) {
+          menuBtn.addEventListener('click', function () {
+            navLinks.classList.toggle('is-open');
           });
         }
       })();

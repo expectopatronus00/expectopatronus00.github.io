@@ -361,7 +361,7 @@
     <nav class="site-nav">
       <div class="nav-inner">
         <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
-        <div class="nav-links">
+        <div class="nav-links" id="nav-links">
           <a href="../../index.html">首页</a>
           <a href="../../home/home.html" class="is-active">文章</a>
           <a href="../deepseek/deepseek.html">DeepSeek</a>
@@ -369,6 +369,9 @@
             >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           ></a>
         </div>
+        <button class="menu-toggle" id="menu-toggle" aria-label="菜单">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
         <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
       </div>
     </nav>
@@ -471,6 +474,13 @@
           back.addEventListener('click', function () {
             window.scrollTo({ top: 0, behavior: 'smooth' });
           });
+        var menuBtn = document.getElementById('menu-toggle');
+        var navLinks = document.getElementById('nav-links');
+        if (menuBtn && navLinks) {
+          menuBtn.addEventListener('click', function () {
+            navLinks.classList.toggle('is-open');
+          });
+        }
         var cta = document.getElementById('cta-link');
         if (cta) {
           cta.addEventListener('click', function (e) {
