@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'dy-7649667076600139062',
+            title: '神话级AI问世：Claude Fable 5 Model 深度解读',
+            url: '../post/dy-7649667076600139062/dy-7649667076600139062.html',
+            summary: '拿幸·AI启示录分享的 Claude Fable 5 Model 解读，被称为「神话级」的AI模型到底强在哪里？一文了解其核心能力与影响。',
+            category: 'AI技术',
+            date: '2026-07-02',
+            tags: ["Claude","Fable5","Anthropic","AI大模型","人工智能","抖音"],
+          },
+          {
             id: 'dy-7655274421766147368',
             title: '语音圈又出王炸：集语音克隆与生成于一体的AI工具',
             url: '../post/dy-7655274421766147368/dy-7655274421766147368.html',
