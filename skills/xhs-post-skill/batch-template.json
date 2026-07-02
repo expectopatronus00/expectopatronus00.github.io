@@ -1,0 +1,32 @@
+[
+  {
+    "id": "xhs-NOTE_ID",
+    "title": "文章主标题（对应 TITLE）",
+    "eyebrow": "EYEBROW · 小标签，如 '健康生活'",
+    "author": "作者昵称",
+    "date": "YYYY-MM-DD",
+    "cover": "封面图URL",
+    "tags": ["标签1", "标签2", "标签3"],
+    "summary": "1句话摘要（80~120字，用于 home/首页卡片）",
+    "meta_desc": "meta description（150字内，纯文字）",
+    "meta_keywords": "关键词1, 关键词2, 关键词3, ...（10~15个逗号分隔）",
+    "category": "健康生活",
+    "content_html": [
+      "<div class=\"section-marker\">01 · 章节标题</div>",
+      "<h2>章节标题</h2>",
+      "<p>段落内容...</p>",
+      "<div class=\"section-marker\">02 · 章节标题</div>",
+      "<h2>章节标题</h2>",
+      "<p>段落内容...</p>"
+    ],
+    "cta": {
+      "title": "去小红书看原笔记",
+      "desc": "1句话描述，点击按钮跳转小红书原笔记页",
+      "url": "https://www.xiaohongshu.com/discovery/item/NOTE_ID"
+    },
+    "platforms": [
+      { "name": "小红书", "icon": "<svg class=\"icon icon-sm\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z\" fill=\"currentColor\"/></svg>", "url": "https://www.xiaohongshu.com/discovery/item/NOTE_ID", "desc": "笔记原页" }
+    ],
+    "footer_meta": "本站内容纯学习用途，非商用。图片版权归小红书原作者所有。"
+  }
+]
