@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GitHub 4.2万Star：一键拥有全网炫酷动画的开源项目 · EXPECTOPATRONUS</title>
+    <meta name="description" content="小莫AI笔记分享的 GitHub 爆款项目，4.2万 Star，一键拥有全网炫酷动画。一文了解这个动画库的核心能力、使用方法与适用场景。" />
+    <meta name="keywords" content="GitHub,开源项目,动画库,CSS动画,前端开发,Motion,Animate.css,抖音,小莫AI笔记" />
+    <meta property="og:title" content="GitHub 4.2万Star：一键拥有全网炫酷动画的开源项目" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="小莫AI笔记分享的 GitHub 爆款项目，4.2万 Star，一键拥有全网炫酷动画。一文了解这个动画库的核心能力、使用方法与适用场景。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 要点列表 */
+      .bullet-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 var(--sp-6);
+      }
+      .bullet-list li {
+        position: relative;
+        padding-left: 28px;
+        margin-bottom: var(--sp-3);
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.75;
+        font-size: 0.98rem;
+      }
+      .bullet-list li::before {
+        content: '';
+        position: absolute;
+        left: 4px;
+        top: 11px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent-rust);
+      }
+      /* 技巧卡片 */
+      .tip-card {
+        margin: var(--sp-4) 0;
+        padding: var(--sp-5);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-left: 3px solid var(--accent-rust);
+      }
+      .tip-card .tip-title {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.05rem;
+        color: var(--text);
+        margin-bottom: var(--sp-2);
+      }
+      .tip-card p {
+        margin: 0;
+        font-size: 0.95rem;
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links" id="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html">文章</a>
+          <a href="../../home/home.html?cat=健康生活">健康生活</a>
+          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button class="menu-toggle" id="menu-toggle" aria-label="菜单">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </button>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">开发工具 · 动画库</div>
+      <h1>GitHub 4.2万 <em>Star</em>：一键拥有全网炫酷动画</h1>
+      <p>抖音博主「小莫AI笔记」分享了一个 GitHub 上 4.2 万 Star 的爆款项目——它能让你一键拥有全网最炫酷的动画效果。这篇文章带你了解这类动画库的核心能力、使用方法和适用场景。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 小莫AI笔记</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-07-05</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 5 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 视频 · 搬运整理</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="视频封面" src="" />
+    </div>
+
+    <article class="article-body">
+      <div class="section-marker">01 · 项目背景</div>
+      <h2>4.2 万 Star 的动画库到底有多火？</h2>
+      <p>抖音博主<strong>小莫AI笔记</strong>分享的这个 GitHub 项目，已经斩获了 <span class="hl">4.2 万 Star</span>，核心卖点只有一句话——<strong>一键拥有全网炫酷动画</strong>。</p>
+      <p>在前端开发中，动画一直是个「锦上添花」但门槛不低的活儿。手写 CSS keyframes 费时费力，用 JS 动画库又怕性能拉胯。这类项目的价值，就是把全网最优秀的动画效果打包好，让你一行代码就能用上。</p>
+
+      <div class="info-box">
+        <strong>核心价值：</strong>不用从零学动画原理，不用手写 keyframes，引入一个库就能拥有「大厂级」的动画效果。这正是这类项目能爆火的根本原因。
+      </div>
+
+      <div class="section-marker">02 · 核心能力</div>
+      <h2>这类动画库能做什么？</h2>
+
+      <ul class="bullet-list">
+        <li><strong>入场 / 出场动画</strong>——元素出现时的淡入、滑入、弹跳等效果，让页面不再「突然闪现」</li>
+        <li><strong>悬停交互</strong>——鼠标 hover 时的缩放、旋转、阴影变化，提升交互质感</li>
+        <li><strong>滚动触发</strong>——随页面滚动触发的动画效果，现代网页的标配</li>
+        <li><strong>列表过渡</strong>——列表增删项时的平滑过渡，告别突兀的跳变</li>
+        <li><strong>数字滚动</strong>——数字从 0 滚动到目标值，数据展示页的经典效果</li>
+        <li><strong>打字机效果</strong>——模拟打字过程的逐字显示，AI 对话界面的常见动画</li>
+        <li><strong>3D 变换</strong>——卡片翻转、立方体旋转等 3D 效果，增加视觉冲击力</li>
+      </ul>
+
+      <div class="section-marker">03 · 热门动画库盘点</div>
+      <h2>GitHub 上那些爆款动画项目</h2>
+      <p>能拿到 4.2 万 Star 的动画项目，通常属于以下几个热门候选：</p>
+
+      <div class="tip-card">
+        <div class="tip-title">🎨 Animate.css（8万+ Star）</div>
+        <p>最经典的 CSS 动画库，提供了数十种预设动画效果（弹跳、淡入、翻转等）。只需引入 CSS 文件，给元素加个 class 名就能用。简单粗暴，适合快速原型和小项目。</p>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">🎭 Motion / Framer Motion（2.5万+ Star）</div>
+        <p>React 生态最流行的动画库，声明式 API 让你用组件的方式写动画。支持手势、拖拽、布局动画，是现代 React 应用的动画首选。</p>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">⚡ GSAP（2万+ Star）</div>
+        <p>业界标杆级 JS 动画库，性能极致、兼容性强。从 Banner 广告到复杂交互动画，GSAP 几乎无所不能。学习曲线稍陡，但能力上限极高。</p>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">🎯 Auto-Animate / AOS / Anime.js</div>
+        <p>各具特色：Auto-Animate 一行代码搞定列表动画；AOS 专注滚动动画；Anime.js 轻量灵活，适合精细控制。根据场景选型即可。</p>
+      </div>
+
+      <div class="section-marker">04 · 为什么能爆火？</div>
+      <h2>动画库踩中了什么痛点？</h2>
+
+      <h3>① 开发效率</h3>
+      <p>手写一个高质量的动画效果，可能需要 <span class="hl">30 分钟到 2 小时</span>。用动画库，可能只需要 <span class="hl">30 秒</span>。对于追求效率的团队来说，这是不可抗拒的提效。</p>
+
+      <h3>② 视觉一致性</h3>
+      <p>团队成员各自手写动画，风格很难统一。用同一个动画库，全站动画效果天然一致，维护成本也低。</p>
+
+      <h3>③ 性能保障</h3>
+      <p>成熟的动画库都经过了大量真机测试，在性能、兼容性、可访问性方面有保障。手写动画很容易踩坑（比如引发重排重绘、移动端卡顿）。</p>
+
+      <h3>④ 上手门槛低</h3>
+      <p>大多数动画库都采用「引入即用」的设计，不需要深入理解动画原理。对非设计出身的开发者来说，这是降低 UI 开发门槛的利器。</p>
+
+      <div class="section-marker">05 · 怎么选？</div>
+      <h2>根据场景选动画库</h2>
+
+      <ul class="bullet-list">
+        <li><strong>快速原型 / Demo</strong>——选 Animate.css，引入即用，零学习成本</li>
+        <li><strong>React 项目</strong>——选 Motion（Framer Motion），声明式 API 最贴合 React 理念</li>
+        <li><strong>复杂交互 / 高性能要求</strong>——选 GSAP，能力最强、性能最优</li>
+        <li><strong>滚动动画为主</strong>——选 AOS，专为滚动触发设计</li>
+        <li><strong>轻量需求</strong>——选 Anime.js 或 Auto-Animate，体积小、够用</li>
+        <li><strong>Vue 项目</strong>——选 Vue 内置的 Transition 组件或 @vueuse/motion</li>
+      </ul>
+
+      <div class="section-marker">06 · 上手建议</div>
+      <h2>三步搞定你的第一个动画</h2>
+
+      <h3>第一步：选库</h3>
+      <p>根据你的项目类型和需求，参考上一节选一个合适的库。不确定就先选 Animate.css——最简单、最不容易出错。</p>
+
+      <h3>第二步：引入</h3>
+      <p>大多数动画库都支持 npm 安装或 CDN 引入。CDN 方式最快：<code>&lt;link rel="stylesheet" href="..."&gt;</code> 一行搞定。</p>
+
+      <h3>第三步：加 class / 写组件</h3>
+      <p>给需要动画的元素加上对应的 class 名（Animate.css 方式），或用组件包裹（Motion 方式）。刷新页面，动画就出来了。</p>
+
+      <div class="info-box info-box-jade">
+        <strong>进阶提示：</strong>动画虽好，不要滥用。一个页面 2-3 种动画效果恰到好处，太多反而显得花哨、影响体验。原则是<strong>动画服务于内容</strong>，而不是炫技。
+      </div>
+
+      <div class="section-marker">07 · 结语</div>
+      <h2>动画库：前端开发的「特效包」</h2>
+      <p>如果说 CSS 是网页的「皮肤」，那动画库就是网页的「特效包」——它让静态页面活起来，让交互有呼吸感。</p>
+      <p>4.2 万 Star 的背后，是无数开发者对<span class="hl">「高效 + 好看」</span>的追求。在这个用户注意力越来越稀缺的时代，一个有质感的动画，可能就是留住用户的关键那一秒。</p>
+      <p>下次做项目时，不妨试试动画库——你会发现，让页面「动起来」其实没那么难。</p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去抖音看原视频</h3>
+        <p>点击跳转抖音，观看小莫AI笔记的完整分享视频</p>
+      <a class="cta-btn" id="cta-link" href="https://www.iesdouyin.com/share/video/7658867632518597951/?region=CN&mid=7658867636943457075&u_code=jmha93a5&did=MS4wLjABAAAAIl6YTQLDrN8FRHs1KZfJa4znpwEqLb7omXWj5i1HUA0&iid=MS4wLjABAAAAbgzRNXTpVBTtjPrh2VnA0oJ_6LKoRnhhJSsV0w2C2PI3PbWyYtPpFKRKg147imTO&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=27YwUOFfk63Xr9jxDAwBHpfIbP_DgzNlZSoCqGt6KWw-&share_version=390400&ts=1783264782&from_aid=1128&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D&utm_source=copy&utm_campaign=client_share&utm_medium=android&app=aweme&ug_share_id=416a01fc07da_1783264822088&activity_info=%7B%22social_author_id%22%3A%221832208631606104%22%2C%22social_share_id%22%3A%2268060800617_1783264822088%22%2C%22social_share_time%22%3A%221783264822%22%2C%22social_share_user_id%22%3A%2268060800617%22%7D&share_extra_params=%7B%22schema_type%22%3A%221%22%7D" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往抖音
+        </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?tag=GitHub">#GitHub</a>
+      <a href="../../home/home.html?tag=开源项目">#开源项目</a>
+      <a href="../../home/home.html?tag=动画库">#动画库</a>
+      <a href="../../home/home.html?tag=前端开发">#前端开发</a>
+      <a href="../../home/home.html?tag=CSS动画">#CSS动画</a>
+      <a href="../../home/home.html?tag=抖音">#抖音</a>
+    </div>
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用。视频封面版权归抖音原视频作者所有。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var menuBtn = document.getElementById('menu-toggle');
+        var navLinks = document.getElementById('nav-links');
+        if (menuBtn && navLinks) {
+          menuBtn.addEventListener('click', function () {
+            navLinks.classList.toggle('is-open');
+          });
+        }
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

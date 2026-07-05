@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>这个 Skill 让 AI 不再「干到一半失忆」：持久上下文解决方案 · EXPECTOPATRONUS</title>
+    <meta name="description" content="小薄荷AI分享的 Skill 技巧，解决 AI 长任务「中途失忆」问题。一文了解什么是 AI Skill、它如何保持上下文连贯、以及如何上手使用。" />
+    <meta name="keywords" content="AI Skill,上下文管理,AI失忆,长任务,Claude,Agent,持久记忆,抖音,小薄荷AI" />
+    <meta property="og:title" content="这个 Skill 让 AI 不再「干到一半失忆」：持久上下文解决方案" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="小薄荷AI分享的 Skill 技巧，解决 AI 长任务「中途失忆」问题。一文了解什么是 AI Skill、它如何保持上下文连贯、以及如何上手使用。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 要点列表 */
+      .bullet-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 var(--sp-6);
+      }
+      .bullet-list li {
+        position: relative;
+        padding-left: 28px;
+        margin-bottom: var(--sp-3);
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.75;
+        font-size: 0.98rem;
+      }
+      .bullet-list li::before {
+        content: '';
+        position: absolute;
+        left: 4px;
+        top: 11px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent-rust);
+      }
+      /* 技巧卡片 */
+      .tip-card {
+        margin: var(--sp-4) 0;
+        padding: var(--sp-5);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-left: 3px solid var(--accent-rust);
+      }
+      .tip-card .tip-title {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.05rem;
+        color: var(--text);
+        margin-bottom: var(--sp-2);
+      }
+      .tip-card p {
+        margin: 0;
+        font-size: 0.95rem;
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">AI · Skill 技巧</div>
+      <h1>这个 Skill 让 AI 不再<em>「干到一半失忆」</em></h1>
+      <p>抖音博主「小薄荷AI」分享了一个 Skill 技巧，解决 AI 长任务中最让人头疼的问题——中途失忆。这篇文章带你了解 AI 为什么会「失忆」、Skill 如何解决它、以及怎么上手使用。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 小薄荷AI</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-07-05</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 5 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 视频 · 搬运整理</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="视频封面" src="" />
+    </div>
+
+    <article class="article-body">
+      <div class="section-marker">01 · AI 的「失忆」问题</div>
+      <h2>为什么 AI 会「干到一半失忆」？</h2>
+      <p>抖音博主<strong>小薄荷AI</strong>分享的这个 Skill 技巧，解决的是 AI 使用中最让人崩溃的问题——<span class="hl">干到一半失忆</span>。</p>
+      <p>你一定遇到过这种情况：让 AI 帮你写一个长篇文档、开发一个完整功能、或者做一系列任务。前半段 AI 表现很好，完全理解你的需求。但到了后半段，它突然「忘了」之前的约定，开始偏离方向、重复输出，甚至完全不知所云。</p>
+
+      <div class="info-box">
+        <strong>根本原因：</strong>大模型有<strong>上下文窗口限制</strong>（Context Window）。当对话或任务内容超过窗口大小，早期信息就会被「挤出」记忆，AI 自然就「忘了」之前说过什么、做过什么。
+      </div>
+
+      <div class="section-marker">02 · 失忆的典型表现</div>
+      <h2>AI 失忆时会出什么问题？</h2>
+
+      <ul class="bullet-list">
+        <li><strong>忘记约定</strong>——之前说好用中文回复，写着写着突然变成英文</li>
+        <li><strong>风格漂移</strong>——开始很专业，后面越来越口语化，甚至前后语气矛盾</li>
+        <li><strong>重复输出</strong>——同一个观点反复说，或者把已经完成的部分重新写一遍</li>
+        <li><strong>丢失上下文</strong>——忘记之前定义的变量名、函数名、角色设定</li>
+        <li><strong>偏离目标</strong>——最初的任务是 A，做着做着变成了 B，最后产出完全不对</li>
+        <li><strong>前后矛盾</strong>——前面说「应该用方案一」，后面又说「建议用方案二」</li>
+      </ul>
+
+      <div class="section-marker">03 · 什么是 Skill</div>
+      <h2>Skill 如何解决「失忆」？</h2>
+      <p>博主分享的解决方案是 <span class="hl">Skill</span>——一种让 AI 保持持久上下文的机制。它的核心思路是：</p>
+
+      <div class="tip-card">
+        <div class="tip-title">📋 把「规则」固化成 Skill</div>
+        <p>把需要 AI 全程遵守的规则、约定、风格指南，写成一个 Skill 文件。AI 在执行任务时会持续读取这个文件，确保不会因为对话变长而「忘记」这些核心约定。</p>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">🧠 持久记忆 vs 临时记忆</div>
+        <p>普通对话中的信息是「临时记忆」——随时可能被挤掉。Skill 中的信息是「持久记忆」——每次调用都会重新加载，不受对话长度影响。相当于给 AI 配了一本「工作手册」，随时翻阅。</p>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">🔄 阶段性检查点</div>
+        <p>一些 Skill 实现还会在任务执行过程中设置「检查点」——定期回顾 Skill 中的规则，对比当前产出是否符合要求，发现偏离及时纠正。这就像给 AI 配了一个「质检员」。</p>
+      </div>
+
+      <div class="section-marker">04 · Skill vs 其他方案</div>
+      <h2>解决 AI 失忆的几种思路</h2>
+      <p>除了 Skill，业界还有其他解决 AI 上下文丢失的方案：</p>
+
+      <ul class="bullet-list">
+        <li><strong>System Prompt</strong>——把关键规则放在系统提示词中，优先级最高。但篇幅有限，不适合复杂规则</li>
+        <li><strong>RAG 检索</strong>——用向量数据库存储历史上下文，按需检索。适合知识问答，但对「风格一致性」帮助有限</li>
+        <li><strong>Memory 模块</strong>——如 MemGPT 等方案，模拟操作系统的内存管理，自动决定哪些信息保留、哪些丢弃。功能强但实现复杂</li>
+        <li><strong>Skill 机制</strong>——把规则和约定独立成文件，持续加载。简单直接，对「长任务一致性」效果最好</li>
+        <li><strong>长上下文模型</strong>——直接用 200K / 1M 上下文的模型（如 Claude 3.5、Gemini 1.5）。治标不治本，超长任务还是会丢</li>
+      </ul>
+
+      <div class="info-box info-box-jade">
+        <strong>实践建议：</strong>没有银弹。最佳实践是<strong>组合使用</strong>——长上下文模型 + Skill 规则 + RAG 检索，三者配合才能最大程度减少「失忆」。
+      </div>
+
+      <div class="section-marker">05 · 怎么用 Skill？</div>
+      <h2>上手 Skill 的三个步骤</h2>
+
+      <h3>第一步：梳理规则</h3>
+      <p>把你希望 AI 全程遵守的规则写下来：输出格式、语言风格、命名约定、禁止事项等。越具体越好，比如「函数名用 camelCase，注释用中文，每行不超过 80 字符」。</p>
+
+      <h3>第二步：写成 Skill 文件</h3>
+      <p>把规则整理成一个结构化的 Skill 文件（通常是 Markdown 或 JSON 格式）。不同的 AI 平台格式略有不同，但核心都是<strong>把规则独立成文件</strong>，而不是散落在对话里。</p>
+
+      <h3>第三步：在任务中引用</h3>
+      <p>执行长任务时，告诉 AI 加载这个 Skill。AI 会在整个任务过程中持续参考它，确保产出始终符合规则——即使对话已经很长。</p>
+
+      <div class="section-marker">06 · 适用场景</div>
+      <h2>什么时候最需要 Skill？</h2>
+
+      <ul class="bullet-list">
+        <li><strong>长文档写作</strong>——写一本书、一份长报告，需要全程保持风格统一</li>
+        <li><strong>代码开发</strong>——开发一个完整功能，需要遵守编码规范、命名约定</li>
+        <li><strong>多步骤 Agent 任务</strong>——Agent 执行 10+ 步骤的复杂流程，每一步都要符合整体规则</li>
+        <li><strong>角色扮演 / 虚拟人设</strong>——让 AI 扮演特定角色，长时间对话不崩人设</li>
+        <li><strong>批量内容生产</strong>——批量生成文章 / 文案，保证格式和风格一致</li>
+        <li><strong>翻译 / 改写</strong>——长文本翻译，确保术语统一、风格连贯</li>
+      </ul>
+
+      <div class="section-marker">07 · 结语</div>
+      <h2>从「会聊」到「会干活」</h2>
+      <p>AI 从「能聊天」到「能干活」，中间隔着的一个关键能力就是<span class="hl">长任务的稳定性</span>。</p>
+      <p>「干到一半失忆」是所有 AI Agent 落地时都会遇到的问题。Skill 这类机制，本质上是给 AI 加了一层<strong>「工作纪律」</strong>——不管任务多长，核心规则始终在线。</p>
+      <p>如果你在用 AI 做长任务时也遇到了「失忆」问题，不妨试试 Skill 思路——把规则固化下来，让 AI 始终「记得」自己该怎么做。</p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去抖音看原视频</h3>
+        <p>点击跳转抖音，观看小薄荷AI的完整分享视频</p>
+      <a class="cta-btn" id="cta-link" href="https://www.iesdouyin.com/share/video/7658162037171817766/?region=CN&mid=7658162025948613417&u_code=jmha93a5&did=MS4wLjABAAAAIl6YTQLDrN8FRHs1KZfJa4znpwEqLb7omXWj5i1HUA0&iid=MS4wLjABAAAAbgzRNXTpVBTtjPrh2VnA0oJ_6LKoRnhhJSsV0w2C2PI3PbWyYtPpFKRKg147imTO&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=lEFe05LPJycHC2MwTwop0.V7vDWAqbFWnOvpg2Q6NP0-&share_version=390400&ts=1783269655&from_aid=1128&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D&utm_source=copy&utm_campaign=client_share&utm_medium=android&app=aweme&ug_share_id=416a01fc07da_1783269700925&activity_info=%7B%22social_author_id%22%3A%22822849322890055%22%2C%22social_share_id%22%3A%2268060800617_1783269700924%22%2C%22social_share_time%22%3A%221783269700%22%2C%22social_share_user_id%22%3A%2268060800617%22%7D&share_extra_params=%7B%22schema_type%22%3A%221%22%7D" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往抖音
+        </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?tag=AI Skill">#AI Skill</a>
+      <a href="../../home/home.html?tag=上下文管理">#上下文管理</a>
+      <a href="../../home/home.html?tag=AI失忆">#AI失忆</a>
+      <a href="../../home/home.html?tag=长任务">#长任务</a>
+      <a href="../../home/home.html?tag=Claude">#Claude</a>
+      <a href="../../home/home.html?tag=抖音">#抖音</a>
+    </div>
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用。视频封面版权归抖音原视频作者所有。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
