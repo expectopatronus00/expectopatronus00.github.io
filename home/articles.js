@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'dy-7648214705970175695',
+            title: 'AI 直接操控浏览器？这些开源项目让 Agent 接管你的网页',
+            url: '../post/dy-7648214705970175695/dy-7648214705970175695.html',
+            summary: '企鹅加德分享的 AI 直接操作浏览器的开源项目，从 Browser Use 到 Skyvern，一文了解 AI Agent 如何自动化你的网页操作。',
+            category: 'AI技术',
+            date: '2026-07-05',
+            tags: ["AI浏览器","浏览器Agent","BrowserUse","开源项目","AI自动化","抖音"],
+          },
+          {
             id: 'dy-7649667076600139062',
             title: '神话级AI问世：Claude Fable 5 Model 深度解读',
             url: '../post/dy-7649667076600139062/dy-7649667076600139062.html',
