@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'dy-7658567098902280369',
+            title: 'Firecrawl 免 API 调用：让网页数据获取轻而易举的开源工具',
+            url: '../post/dy-7658567098902280369/dy-7658567098902280369.html',
+            summary: '二次螈Ai工具箱分享的 Firecrawl 教程，免 API 调用、本地部署，把任意网页变成 LLM 可读的 Markdown，一文了解它的核心能力与上手方法。',
+            category: 'AI技术',
+            date: '2026-07-05',
+            tags: ["Firecrawl","网页爬虫","LLM数据","开源项目","数据获取","抖音"],
+          },
+          {
             id: 'dy-7653958487294102793',
             title: '让AI学会「偷懒」：几天45K+Star的高效AI开发框架深度解析',
             url: '../post/dy-7653958487294102793/dy-7653958487294102793.html',
