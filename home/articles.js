@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'dy-7659718422061649203',
+            title: 'Claude官方下场引爆全网：200万人围观学习的AI热潮',
+            url: '../post/dy-7659718422061649203/dy-7659718422061649203.html',
+            summary: '抖音博主阿博粒分享Claude官方发布引发的现象级传播——不到一天200万人围观学习。一文了解Claude为何引爆全网、核心能力、与ChatGPT的差异及开发者如何利用Claude提升效率。',
+            category: 'AI技术',
+            date: '2026-07-09',
+            tags: ["Claude","Anthropic","AI助手","ChatGPT","编程助手","抖音"],
+          },
+          {
             id: 'dy-7631355926130245561',
             title: 'AI编程的「紧箍咒」来了：Karpathy谈AI写代码的边界',
             url: '../post/dy-7631355926130245561/dy-7631355926130245561.html',
