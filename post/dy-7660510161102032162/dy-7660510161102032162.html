@@ -1,0 +1,619 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>拿下13家AI产品经理offer后，我摸清了AI PM的真相 · EXPECTOPATRONUS</title>
+    <meta name="description" content="抖音博主AI产品铺分享拿下13家AI产品经理offer的经验总结——AI PM到底需要什么能力？面试官真正看重什么？一文了解AI产品经理求职真相与能力模型。" />
+    <meta name="keywords" content="AI产品经理,AI PM,产品经理,offer,求职,面试,AI产品,职业发展,抖音,AI产品铺" />
+    <meta property="og:title" content="拿下13家AI产品经理offer后，我摸清了AI PM的真相" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="抖音博主AI产品铺分享拿下13家AI产品经理offer的经验总结——AI PM到底需要什么能力？面试官真正看重什么？一文了解AI产品经理求职真相与能力模型。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 要点列表 */
+      .bullet-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 var(--sp-6);
+      }
+      .bullet-list li {
+        position: relative;
+        padding-left: 28px;
+        margin-bottom: var(--sp-3);
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.75;
+        font-size: 0.98rem;
+      }
+      .bullet-list li::before {
+        content: '';
+        position: absolute;
+        left: 4px;
+        top: 11px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent-rust);
+      }
+      /* 技巧卡片 */
+      .tip-card {
+        margin: var(--sp-4) 0;
+        padding: var(--sp-5);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-left: 3px solid var(--accent-rust);
+      }
+      .tip-card .tip-title {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.05rem;
+        color: var(--text);
+        margin-bottom: var(--sp-2);
+      }
+      .tip-card p {
+        margin: 0;
+        font-size: 0.95rem;
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">职业 · AI产品经理</div>
+      <h1>拿下13家AI产品经理offer后，我摸清了<em>AI PM</em>的真相</h1>
+      <p>抖音博主「AI产品铺」分享了一个令人羡慕的成绩——<strong>拿下13家AI产品经理offer</strong>。这不是运气，而是对AI PM岗位深度理解的成果。这篇文章带你了解AI产品经理到底需要什么能力、面试官真正看重什么、以及如何在AI时代脱颖而出。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> AI产品铺</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-07-09</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 5 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 视频 · 搬运整理</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="视频封面" src="" />
+    </div>
+
+    <article class="article-body">
+      <div class="section-marker">01 · 13个offer的含金量</div>
+      <h2>13家AI PM offer意味着什么？</h2>
+      <p>抖音博主<strong>AI产品铺</strong>分享了一个令人震惊的成绩——<strong>拿下13家AI产品经理offer</strong>。这不是普通的求职成功，而是对AI PM岗位深度理解的证明。</p>
+      <p>13家offer意味着什么？意味着这位博主在<strong>多次面试中反复验证</strong>了自己的能力模型，摸清了不同公司对AI PM的共同要求——这就是「真相」的价值。</p>
+
+      <div class="info-box">
+        <strong>核心洞察：</strong>能拿下13家offer，说明他抓住了AI PM岗位的<span class="hl">「底层逻辑」</span>——不是靠刷面经，而是靠对岗位本质的理解。这种理解，才是真正的竞争力。
+      </div>
+
+      <div class="section-marker">02 · AI产品经理是什么？</div>
+      <h2>与传统PM有什么不同？</h2>
+
+      <div class="tip-card">
+        <div class="tip-title">📋 传统产品经理</div>
+        <p>核心是<strong>需求分析 + 用户体验 + 项目推进</strong>。关注用户痛点、设计功能、协调资源、推动落地。工具是PRD、原型图、数据看板。</p>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">🤖 AI产品经理</div>
+        <p>在传统PM基础上，新增了<strong>AI能力理解 + 模型评估 + 数据策略 + 技术边界判断</strong>。不仅要懂用户，还要懂模型能做什么、做不到什么、需要什么数据、如何评估效果。</p>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">⚡ 核心差异</div>
+        <p>传统PM的产出是<strong>确定性的功能</strong>（点了按钮就有反馈）；AI PM的产出是<strong>概率性的结果</strong>（模型输出可能对也可能错）。管理不确定性，是AI PM最独特的能力。</p>
+      </div>
+
+      <div class="section-marker">03 · AI PM需要什么能力？</div>
+      <h2>13家面试官都在考什么</h2>
+
+      <ul class="bullet-list">
+        <li><strong>AI技术理解力</strong>——不要求会写代码，但要理解LLM、RAG、Agent、微调等技术的基本原理和适用场景</li>
+        <li><strong>数据敏感度</strong>——懂什么是好数据、如何构建数据集、如何评估数据质量、数据飞轮怎么转</li>
+        <li><strong>模型评估能力</strong>——能设计评估方案，定义「好」的标准，用数据驱动模型迭代</li>
+        <li><strong>场景洞察力</strong>——能识别哪些场景适合AI、哪些不适合，避免「为了AI而AI」</li>
+        <li><strong>产品思维</strong>——用户需求、产品定位、商业模式、竞争分析——传统PM的能力仍然是基础</li>
+        <li><strong>跨团队协作</strong>——和算法工程师、数据科学家、开发、设计、运营多方协作，翻译「技术」和「业务」</li>
+        <li><strong>伦理与合规意识</strong>——AI的偏见、隐私、安全、合规问题，PM必须有边界意识</li>
+      </ul>
+
+      <div class="tip-card">
+        <div class="tip-title">🎯 面试官最看重的</div>
+        <p>根据博主的总结，面试官最看重的不是「你会多少AI术语」，而是<span class="hl">「你能不能把AI能力转化为用户价值」</span>。技术是手段，用户价值才是目的。</p>
+      </div>
+
+      <div class="section-marker">04 · 常见面试问题</div>
+      <h2>AI PM面试都问什么？</h2>
+
+      <div class="tip-card">
+        <div class="tip-title">💡 场景设计题</div>
+        <p>「设计一个AI客服产品」「如何用AI提升电商转化率」——考察你能不能从0到1设计AI产品，包括场景选择、技术方案、评估指标、风险控制。</p>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">📊 模型评估题</div>
+        <p>「如何评估一个推荐系统的效果」「模型准确率和召回率怎么权衡」——考察你对AI模型评估方法论的理解。</p>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">🔧 技术理解题</div>
+        <p>「RAG和微调的区别」「Agent是什么」「LLM的幻觉问题怎么解决」——考察你对AI技术的理解深度，不要求会写代码，但要懂原理。</p>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">📈 数据策略题</div>
+        <p>「冷启动怎么解决」「数据飞轮怎么设计」「如何用用户反馈改进模型」——考察你对数据策略的理解。</p>
+      </div>
+
+      <div class="section-marker">05 · 如何准备AI PM求职？</div>
+      <h2>实用建议</h2>
+
+      <ul class="bullet-list">
+        <li><strong>建立AI技术认知</strong>——不需要写代码，但要理解LLM、RAG、Agent、微调、向量数据库等核心概念</li>
+        <li><strong>研究AI产品案例</strong>——ChatGPT、Claude、Midjourney、Kimi、豆包……分析它们的产品设计、技术方案、商业模式</li>
+        <li><strong>动手做项目</strong>——哪怕是用No-code工具做一个简单的AI应用，也能在面试中展示你的实践能力</li>
+        <li><strong>准备产品案例</strong>——针对不同场景（客服、推荐、搜索、内容生成等）准备产品设计方案</li>
+        <li><strong>关注行业动态</strong>——AI变化快，保持对新技术、新产品、新趋势的敏感度</li>
+        <li><strong>提升数据思维</strong>——学会用数据说话，用数据驱动决策，这是PM的核心能力</li>
+        <li><strong>练习结构化表达</strong>——面试中清晰、有逻辑地表达你的思考过程，比给「正确答案」更重要</li>
+      </ul>
+
+      <div class="info-box info-box-jade">
+        <strong>博主的核心感悟：</strong>AI PM不是「懂AI的产品经理」，而是<strong>「能将AI能力转化为用户价值的产品经理」</strong>。技术是工具，用户价值才是目标。13家offer的真相，就是深刻理解了这一点。
+      </div>
+
+      <div class="section-marker">06 · AI PM的未来</div>
+      <h2>这个岗位会走向何方？</h2>
+
+      <ul class="bullet-list">
+        <li><strong>需求持续增长</strong>——每家公司都在做AI，都需要能落地AI产品的PM，人才缺口巨大</li>
+        <li><strong>能力要求进化</strong>——从「懂AI术语」到「能设计AI产品」再到「能驱动AI商业化」，要求越来越高</li>
+        <li><strong>细分领域出现</strong>——LLM产品PM、多模态产品PM、AI Agent产品PM……垂直细分是趋势</li>
+        <li><strong>跨领域融合</strong>——AI PM需要融合技术、产品、数据、商业、伦理多维能力，复合型人才更稀缺</li>
+        <li><strong>工具化降门槛</strong>——No-code/Low-code AI工具让产品搭建更容易，PM的「动手能力」门槛在降低</li>
+      </ul>
+
+      <div class="section-marker">07 · 结语</div>
+      <h2>AI PM的核心竞争力</h2>
+      <p>13家offer的背后，不是运气，而是<span class="hl">对AI PM岗位本质的深刻理解</span>。</p>
+      <p>AI时代，产品经理的价值不是「会做产品」，而是<strong>「能让AI真正解决用户问题」</strong>。这需要技术理解、产品思维、数据敏感度、场景洞察力的综合能力。</p>
+      <p>如果你也想成为AI产品经理，记住博主摸清的真相：<strong>技术是手段，用户价值是目的，数据是桥梁</strong>。理解这一点，你也能在AI PM的求职路上走得更远。</p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去抖音看原视频</h3>
+        <p>点击跳转抖音，观看AI产品铺的完整经验分享视频</p>
+      <a class="cta-btn" id="cta-link" href="https://www.iesdouyin.com/share/video/7660510161102032162/?region=CN&mid=7660510183736691499&u_code=jmha93a5&did=MS4wLjABAAAAIl6YTQLDrN8FRHs1KZfJa4znpwEqLb7omXWj5i1HUA0&iid=MS4wLjABAAAAAWZSvHPrh71AZkRUEBzUO0amUsLFOvcxOMWfXE6agsz8PAOWflLhEqjWVulFjoHr&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=c9bpE2Qpy8YqmxDLKlRgErm69J8VQR1d0MLC70.9gDI-&share_version=390500&ts=1783611580&from_aid=1128&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D&utm_source=copy&utm_campaign=client_share&utm_medium=android&app=aweme&ug_share_id=416a01fc07da_1783611727853&activity_info=%7B%22social_author_id%22%3A%221980695549316010%22%2C%22social_share_id%22%3A%2268060800617_1783611727852%22%2C%22social_share_time%22%3A%221783611727%22%2C%22social_share_user_id%22%3A%2268060800617%22%7D&share_extra_params=%7B%22schema_type%22%3A%221%22%7D" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往抖音
+        </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?tag=AI产品经理">#AI产品经理</a>
+      <a href="../../home/home.html?tag=产品经理">#产品经理</a>
+      <a href="../../home/home.html?tag=求职面试">#求职面试</a>
+      <a href="../../home/home.html?tag=AI产品">#AI产品</a>
+      <a href="../../home/home.html?tag=职业发展">#职业发展</a>
+      <a href="../../home/home.html?tag=抖音">#抖音</a>
+    </div>
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用。视频封面版权归抖音原视频作者所有。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
