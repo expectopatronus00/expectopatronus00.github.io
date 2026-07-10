@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'xhs-6a5059e2000000001101f32b',
+            title: 'Obsidian必装5大Skill：官方出品的AI技能有多强',
+            url: '../post/xhs-6a5059e2000000001101f32b/xhs-6a5059e2000000001101f32b.html',
+            summary: '小红书博主铁锤人分享Obsidian必装5大Skill——Obsidian官方推出的5个AI技能，让你的笔记软件秒变智能助手。从智能搜索到内容生成，从知识整理到自动总结。',
+            category: '效率工具',
+            date: '2026-07-10',
+            tags: ["Obsidian","Obsidian Skill","知识管理","AI笔记","生产力工具","小红书"],
+          },
+          {
             id: 'dy-7659275292652883240',
             title: '血脂与饮食科普：蛋黄能不能吃？反式脂肪有多大危害？',
             url: '../post/dy-7659275292652883240/dy-7659275292652883240.html',
