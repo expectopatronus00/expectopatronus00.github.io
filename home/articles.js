@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'xhs-6a50a592000000000803d2bd',
+            title: '还在海投？1.9万星AI帮你筛岗位：GitHub热门求职工具',
+            url: '../post/xhs-6a50a592000000000803d2bd/xhs-6a50a592000000000803d2bd.html',
+            summary: '小红书博主Github甄选分享GitHub 1.9万星的AI求职工具——帮你自动筛岗位、匹配简历、跟踪投递进度。告别海投，用AI精准求职。',
+            category: 'AI应用',
+            date: '2026-07-10',
+            tags: ["AI求职","GitHub","求职工具","简历优化","自动化求职","小红书"],
+          },
+          {
             id: 'xhs-6a5059e2000000001101f32b',
             title: 'Obsidian必装5大Skill：官方出品的AI技能有多强',
             url: '../post/xhs-6a5059e2000000001101f32b/xhs-6a5059e2000000001101f32b.html',
