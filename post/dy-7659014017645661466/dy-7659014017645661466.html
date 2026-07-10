@@ -1,0 +1,694 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>一口气学会Hermes AI智能体：Harness Loop系统深度拆解 · EXPECTOPATRONUS</title>
+    <meta name="description" content="抖音博主深度拆解Hermes AI智能体Harness Loop系统——Nous Research开源项目，不到一年GitHub 20万星，还会自己长技能。桌面端+聊天软件双端，记忆、技能、定时任务、子智能体全跑通。" />
+    <meta name="keywords" content="Hermes Agent,Harness Loop,Nous Research,AI智能体,AIAgent,开源项目,记忆系统,技能系统,子智能体,定时任务,抖音" />
+    <meta property="og:title" content="一口气学会Hermes AI智能体：Harness Loop系统深度拆解" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="抖音博主深度拆解Hermes AI智能体Harness Loop系统——Nous Research开源项目，不到一年GitHub 20万星，还会自己长技能。桌面端+聊天软件双端，记忆、技能、定时任务、子智能体全跑通。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 要点列表 */
+      .bullet-list {
+        margin: var(--sp-4) 0 var(--sp-6);
+        padding: 0;
+        list-style: none;
+      }
+      .bullet-list li {
+        position: relative;
+        padding-left: 28px;
+        margin-bottom: var(--sp-3);
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.75;
+        font-size: 0.95rem;
+      }
+      .bullet-list li::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 10px;
+        width: 8px;
+        height: 8px;
+        background: var(--accent-rust);
+        border-radius: 50%;
+      }
+      .bullet-list li strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 小贴士卡片 */
+      .tip-card {
+        margin: var(--sp-5) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .tip-card::before {
+        content: '💡';
+        position: absolute;
+        top: -14px;
+        left: var(--sp-5);
+        font-size: 1.3rem;
+        background: var(--bg-0);
+        padding: 0 8px;
+      }
+      .tip-card .tip-title {
+        font-family: var(--font-display);
+        font-weight: 600;
+        font-size: 1rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-2);
+      }
+      .tip-card p {
+        margin: 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.92rem;
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">AI · Agent架构</div>
+      <h1>一口气学会<em>Hermes AI智能体</em>：Harness Loop系统深度拆解</h1>
+      <p>抖音博主深度拆解<strong>Hermes Agent</strong>——Nous Research的开源AI智能体项目，不到一年GitHub 20万星，还会自己长技能。桌面端+聊天软件双端，记忆、技能、定时任务、子智能体全跑通。这篇文章带你完整理解Harness Loop系统的设计哲学与技术架构。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 佚名</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-07-10</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 5 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 视频 · 搬运整理</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="视频封面" src="" />
+    </div>
+
+    <article class="article-body">
+      <div class="section-marker">01 · Hermes Agent是什么</div>
+<h2>Hermes Agent是什么</h2>
+<p><span class="hl">Hermes Agent</span> 是 Nous Research 推出的开源 AI 智能体项目，上线不到一年，GitHub 星标已经冲破 <strong>20 万</strong>。这个数字是什么概念？在 AI Agent 领域，这是现象级的增长速度。</p>
+<p>它最吸引人的地方在于：<strong>越跑越离不开</strong>。用得越久，它越懂你——不是靠什么黑科技，而是靠一套扎扎实实的记忆系统和技能系统。你可以把它装在桌面上，也可以接入聊天软件，双端同步使用。</p>
+<div class="info-box">
+  <strong>核心定位：</strong>一个能自己长技能的 AI 智能体。记忆是护城河，技能是战斗力，Harness Loop 是心脏。
+</div>
+<div class="tip-card">
+  <div class="tip-title">为什么是 Nous Research？</div>
+  <p>Nous Research 一直专注于开源 AI 模型和智能体研究，Hermes 系列是他们的旗舰产品。这次的 Harness Loop 架构，是对"Agent 应该怎么跑"这个问题的一次系统性回答。</p>
+</div>
+
+<div class="section-marker">02 · Harness Loop循环</div>
+<h2>Harness Loop：智能体的心跳</h2>
+<p>如果说 Hermes Agent 是一个人，那 <span class="hl">Harness Loop</span> 就是它的心跳。每一次循环，就是一次完整的思考与行动。</p>
+<p>整个循环分为 <strong>6 步</strong>，环环相扣，少一步都不行：</p>
+
+<div class="tip-card">
+  <div class="tip-title">第 1 步：消息进来</div>
+  <p>用户输入一条消息，或者系统触发一个事件。这是循环的起点，所有后续动作都从这里开始。消息可以是文字、图片、语音，甚至是一个定时触发的信号。</p>
+</div>
+
+<div class="tip-card">
+  <div class="tip-title">第 2 步：Agent 运行</div>
+  <p>智能体接收到消息后，开始"思考"——调用大模型分析意图、理解上下文、制定行动计划。这一步决定了接下来要做什么。</p>
+</div>
+
+<div class="tip-card">
+  <div class="tip-title">第 3 步：调用工具</div>
+  <p>如果需要行动，Agent 会调用对应的工具——查资料、写文件、发消息、运行代码。工具是 Agent 伸向世界的手，没有工具，Agent 就只是个聊天机器人。</p>
+</div>
+
+<div class="tip-card">
+  <div class="tip-title">第 4 步：循环结束</div>
+  <p>任务完成后，Agent 整理结果，生成回复，返回给用户。一次完整的交互到此结束。但故事还没完……</p>
+</div>
+
+<div class="tip-card">
+  <div class="tip-title">第 5 步：存记忆</div>
+  <p>这是最关键的一步——把这次交互存进记忆系统。聊了什么、做了什么、用户喜欢什么、不喜欢什么，全部记下来。下次再聊，它就"记得"你了。</p>
+</div>
+
+<div class="tip-card">
+  <div class="tip-title">第 6 步：长技能</div>
+  <p>如果在交互中发现了新的模式、新的方法，Agent 会把它提炼成一个新技能，存进技能库。下次遇到类似问题，直接调用，不用再从头学起。</p>
+</div>
+
+<div class="info-box info-box-jade">
+  <strong>一句话总结：</strong>消息进来 → Agent 运行 → 调用工具 → 循环结束 → 存记忆 → 长技能。六步走完，智能体就变强了一点点。
+</div>
+
+<div class="section-marker">03 · 最意外的设计选择</div>
+<h2>最意外的设计选择</h2>
+<p>研究 Hermes 的时候，有一个设计选择让我特别意外——<span class="hl">全程没有 embedding</span>。</p>
+<p>现在做 AI Agent，言必称向量数据库、embedding 检索。但 Hermes 偏不，它走了一条完全不同的路：</p>
+<ul class="bullet-list">
+  <li><strong>技能是纯文本文件</strong>——不是向量，不是结构化数据，就是明明白白的 .txt 文件</li>
+  <li><strong>用户信息也是纯文本</strong>——你的偏好、习惯、历史，全部存在文本里</li>
+  <li><strong>聊天历史存本地数据库</strong>——就是普通的 SQLite，不上云，不搞花里胡哨的</li>
+  <li><strong>检索靠关键词 + 上下文</strong>——不用向量相似度，直接搜，直接读</li>
+</ul>
+
+<div class="tip-card">
+  <div class="tip-title">为什么这个设计很重要？</div>
+  <p>第一，<strong>可解释</strong>——你随时可以打开文件看看，Agent 到底记住了什么，没有黑箱。第二，<strong>可迁移</strong>——换个机器、换个模型，你的记忆和技能照样能用。第三，<strong>成本低</strong>——不用 embedding 模型，不用向量数据库，省了一大笔钱。第四，<strong>不依赖</strong>——不绑死任何一家厂商，真正的开源自由。</p>
+</div>
+
+<div class="section-marker">04 · 四大核心能力</div>
+<h2>四大核心能力</h2>
+<p>Hermes Agent 有四大核心能力，每一个都值得单独说：</p>
+
+<div class="tip-card">
+  <div class="tip-title">记忆系统</div>
+  <p>这是 Hermes 的护城河。短期记忆 + 长期记忆 + 情景记忆，三层结构。你上周说过什么、上次聊到哪里、你喜欢什么风格，它全都记得。而且记忆是你的，存在本地，随时可以带走。</p>
+</div>
+
+<div class="tip-card">
+  <div class="tip-title">技能系统</div>
+  <p>这是 Hermes 的战斗力。技能可以学、可以写、可以分享。用着用着，Agent 自己就长出新技能了。每个技能都是一个纯文本文件，你可以直接编辑，也可以从社区下载别人写好的。</p>
+</div>
+
+<div class="tip-card">
+  <div class="tip-title">定时任务</div>
+  <p>这是 Hermes 的自主性。你可以让它每天早上给你读新闻，每周一整理周报，每月底做复盘。到点自动跑，不用你催。配合记忆系统，它会越做越合你心意。</p>
+</div>
+
+<div class="tip-card">
+  <div class="tip-title">子智能体</div>
+  <p>这是 Hermes 的扩展性。一个 Agent 忙不过来？那就生几个孩子。主 Agent 负责统筹，子 Agent 负责具体任务。写代码的写代码，查资料的查资料，分工合作，效率翻倍。</p>
+</div>
+
+<div class="section-marker">05 · 发现的问题</div>
+<h2>发现的问题</h2>
+<p>说了这么多好话，也得说说问题。实测下来，有两个 bug 比较明显：</p>
+
+<div class="tip-card">
+  <div class="tip-title">问题一：技能学习不主动</div>
+  <p>理论上 Agent 应该自己长技能，但实际用下来，它的"学习主动性"有点欠缺。很多时候你得明确告诉它"把这个写成技能"，它才会写。离真正的"自主进化"还有点距离。</p>
+</div>
+
+<div class="tip-card">
+  <div class="tip-title">问题二：cron 有 bug</div>
+  <p>定时任务功能偶尔会掉链子——有时候到点不触发，有时候重复触发。这个问题在 GitHub issue 里也有人提，官方应该还在修。日常用没问题，但别把太重要的事全交给它。</p>
+</div>
+
+<div class="info-box">
+  <strong>客观评价：</strong>作为一个开源项目，Hermes 已经做得非常好了。有问题很正常，关键是社区活跃，修复速度也快。真正用起来，这两个问题不至于影响核心体验。
+</div>
+
+<div class="section-marker">06 · 架构图随用随查</div>
+<h2>架构图随用随查</h2>
+<p>为了方便你理解，我把 Hermes 的架构整理成了 <strong>5 层</strong>，从上到下一目了然：</p>
+<ul class="bullet-list">
+  <li><strong>输入层</strong>——桌面端 App、聊天软件接入、API 接口、定时触发器，所有消息从这里进来</li>
+  <li><strong>核心循环</strong>——Harness Loop 六步循环，是整个系统的心脏，负责调度和执行</li>
+  <li><strong>记忆层</strong>——聊天历史、用户画像、情景记忆，存在本地数据库和纯文本文件里</li>
+  <li><strong>能力层</strong>——技能库、工具集、子智能体，是 Agent 伸向世界的手</li>
+  <li><strong>进化机制</strong>——技能学习、记忆提炼、自我优化，让 Agent 越用越强</li>
+</ul>
+
+<div class="info-box info-box-jade">
+  <strong>记住这个结构：</strong>输入在上面，循环在中间，记忆和能力在下面，进化是底座。从上到下，从接收消息到自我成长，一气呵成。
+</div>
+
+<div class="section-marker">07 · 启示与思考</div>
+<h2>启示与思考</h2>
+<p>研究完 Hermes，我有 4 个很深的感触，分享给你：</p>
+
+<div class="tip-card">
+  <div class="tip-title">启示一：简单胜过复杂</div>
+  <p>不用 embedding，不用向量数据库，纯文本 + 本地数据库，反而跑得挺好。有时候我们把问题想复杂了，真正好用的方案，往往反常识、反主流。简单不代表低级，简单是经过深思熟虑后的选择。</p>
+</div>
+
+<div class="tip-card">
+  <div class="tip-title">启示二：记忆是护城河</div>
+  <p>模型会越来越便宜，越来越同质化。真正拉开差距的，不是谁的模型更大，而是谁更懂你。记忆是你的，数据是你的，这才是真正的护城河。以后拼的不是模型参数，而是数据沉淀。</p>
+</div>
+
+<div class="tip-card">
+  <div class="tip-title">启示三：自进化是方向</div>
+  <p>现在的 Agent 还是"教什么会什么"，但未来一定是"用着用着就会了"。技能系统只是第一步，真正的自进化还很远。但方向是对的——Agent 应该越用越强，而不是越用越腻。</p>
+</div>
+
+<div class="tip-card">
+  <div class="tip-title">启示四：开源推动创新</div>
+  <p>20 万星不是白来的。开源让所有人都能看、能改、能贡献，速度比闭源快十倍。Hermes 能这么快成长，靠的不是某一家公司，而是整个社区的力量。开源，是 AI 最好的加速器。</p>
+</div>
+
+<div class="section-marker">08 · 结语</div>
+<h2>结语</h2>
+<p>Hermes Agent 让我看到了 AI 智能体的另一种可能——<strong>不追求花哨，不堆砌概念，扎扎实实做好记忆和技能</strong>。</p>
+<p>Harness Loop 这个架构，简单、清晰、可解释，值得每一个做 Agent 的人研究。它可能不是最终答案，但绝对是目前为止最诚实、最接地气的答案之一。</p>
+<div class="info-box">
+  <p style="margin: 0; text-align: center; font-size: 1.1rem; font-weight: 600; color: var(--accent-rust);">
+    You Can Build Anything.<br/>
+    You Can Learn Anything.
+  </p>
+</div>
+<p>希望这篇拆解对你有启发。如果你也在用 Hermes，或者有其他有趣的 Agent 项目，欢迎交流。</p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去抖音看原视频</h3>
+        <p>点击跳转抖音原视频页</p>
+      <a class="cta-btn" id="cta-link" href="https://www.iesdouyin.com/share/video/7659014017645661466/?region=CN&mid=7659014135577037604&u_code=jmha93a5&did=MS4wLjABAAAApGsVQhc7a78WngfBMOYbEGiD-v5YTthFg_663KbDKI-GLDinlKF6LEN4_oEr0AZ_&iid=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=XHVWkr.PoV4hi5_1opR9tNhCVGs5dvXLSEMPb7qrKOY-&share_version=800201&ts=1783690910&from_aid=6383&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D&from=web_code_link" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往抖音
+        </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="#">#Hermes Agent</a>
+      <a href="#">#Harness Loop</a>
+      <a href="#">#AI智能体</a>
+      <a href="#">#开源项目</a>
+      <a href="#">#记忆系统</a>
+      <a href="#">#抖音</a>
+    </div>
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用。视频封面版权归抖音原视频作者所有。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'dy-7659014017645661466',
+            title: '一口气学会Hermes AI智能体：Harness Loop系统深度拆解',
+            url: '../post/dy-7659014017645661466/dy-7659014017645661466.html',
+            summary: '抖音博主深度拆解Hermes AI智能体Harness Loop系统——Nous Research开源项目，不到一年GitHub 20万星，还会自己长技能。桌面端+聊天软件双端，记忆、技能、定时任务、子智能体全跑通。',
+            category: 'AI技术',
+            date: '2026-07-10',
+            tags: ["Hermes Agent","Harness Loop","AI智能体","开源项目","记忆系统","Nous Research"],
+          },
+          {
             id: 'dy-7659338987403857193',
             title: 'AI Agent长期记忆神器：知识图谱让AI不再失忆',
             url: '../post/dy-7659338987403857193/dy-7659338987403857193.html',
