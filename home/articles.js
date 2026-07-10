@@ -3,6 +3,33 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'dy-7660555275438427434',
+            title: 'GitHub爆火的Matt Skills到底有多强？保姆级教程',
+            url: '../post/dy-7660555275438427434/dy-7660555275438427434.html',
+            summary: '抖音博主保姆级讲解GitHub爆火的Matt Skills——这套AI编程技能包到底有多强？如何在Cursor和Claude中使用？一文了解核心能力、使用方法和实战效果。',
+            category: 'AI编程',
+            date: '2026-07-10',
+            tags: ["Matt Skills","Claude Code","Cursor","AI编程","GitHub","开源项目"],
+          },
+          {
+            id: 'dy-7657399738630671666',
+            title: 'mattpocock-skills实战：用秒杀系统Demo跑通AI编程全流程',
+            url: '../post/dy-7657399738630671666/dy-7657399738630671666.html',
+            summary: '抖音博主实战讲解GitHub爆火的mattpocock-skills——用一个完整的秒杀系统Demo跑通AI编程全流程，覆盖需求访谈、PRD生成、原型设计、开发、Review、调试、智能体交接等9个环节。',
+            category: 'AI编程',
+            date: '2026-07-10',
+            tags: ["mattpocock-skills","Claude Code","AI编程","vibecoding","AI工作流","GitHub"],
+          },
+          {
+            id: 'dy-7645689246305212278',
+            title: '告别古法科研，从十个AI Skill开始：科研人的AI工具箱',
+            url: '../post/dy-7645689246305212278/dy-7645689246305212278.html',
+            summary: '抖音博主AI大铁牛分享科研人如何用AI Skill提升科研效率——从文献调研、数据分析到论文写作，十个AI技能覆盖科研全流程，告别低效的古法科研。',
+            category: 'AI应用',
+            date: '2026-07-10',
+            tags: ["AI科研","AI Skill","科研工具","Claude Code","论文写作","抖音"],
+          },
+          {
             id: 'dy-7650419412096355626',
             title: 'AI写的UI巨土？开源工具+设计系统直接根治',
             url: '../post/dy-7650419412096355626/dy-7650419412096355626.html',

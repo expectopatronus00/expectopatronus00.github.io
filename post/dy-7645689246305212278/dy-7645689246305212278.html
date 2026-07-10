@@ -1,0 +1,641 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>告别古法科研，从十个AI Skill开始：科研人的AI工具箱 · EXPECTOPATRONUS</title>
+    <meta name="description" content="抖音博主AI大铁牛分享科研人如何用AI Skill提升科研效率——从文献调研、数据分析到论文写作，十个AI技能覆盖科研全流程，告别低效的"古法科研"。" />
+    <meta name="keywords" content="AI科研,AI Skill,科研工具,文献调研,数据分析,论文写作,Claude Code,AI编程,抖音,AI大铁牛" />
+    <meta property="og:title" content="告别古法科研，从十个AI Skill开始：科研人的AI工具箱" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="抖音博主AI大铁牛分享科研人如何用AI Skill提升科研效率——从文献调研、数据分析到论文写作，十个AI技能覆盖科研全流程，告别低效的"古法科研"。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 要点列表 */
+      .bullet-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 var(--sp-6);
+      }
+      .bullet-list li {
+        position: relative;
+        padding-left: 28px;
+        margin-bottom: var(--sp-3);
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.75;
+        font-size: 0.98rem;
+      }
+      .bullet-list li::before {
+        content: '';
+        position: absolute;
+        left: 4px;
+        top: 11px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent-rust);
+      }
+      /* 技巧卡片 */
+      .tip-card {
+        margin: var(--sp-4) 0;
+        padding: var(--sp-5);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-left: 3px solid var(--accent-rust);
+      }
+      .tip-card .tip-title {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.05rem;
+        color: var(--text);
+        margin-bottom: var(--sp-2);
+      }
+      .tip-card p {
+        margin: 0;
+        font-size: 0.95rem;
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">AI · 科研工具</div>
+      <h1>告别古法科研，从十个<em>AI Skill</em>开始</h1>
+      <p>抖音博主「AI大铁牛」分享了一个令科研人振奋的话题——<strong>告别古法科研，从十个AI Skill开始</strong>。当AI进入科研领域，文献调研、数据分析、论文写作都可以大幅提效。这篇文章带你了解科研人必备的十个AI技能，以及如何用AI重塑科研工作流。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> AI大铁牛</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-07-10</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 8 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v10H4z" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4 19h16M8 5v10M14 9h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 图文 · 搬运整理</span>
+      </div>
+    </section>
+
+    <article class="article-body">
+      <div class="section-marker">01 · 什么是"古法科研"?</div>
+      <h2>低效循环里的科研人</h2>
+      <p>所谓<strong>"古法科研"</strong>，并不是一个学术名词，而是AI大铁牛对传统科研工作方式的戏称——靠人力一条条翻文献、一个个填Excel、一段段手写论文，所有环节都依赖人肉堆时间。这种方式在数据量小、研究问题单一时尚可应付，但今天的科研环境早已不同。</p>
+      <p>古法科研的痛点可以归纳为三类：</p>
+
+      <ul class="bullet-list">
+        <li><strong>手动检索文献</strong>——在数据库里翻几小时，只为找几篇相关论文，再逐篇摘要、做笔记、整理到表格</li>
+        <li><strong>人工整理数据</strong>——清洗、对齐、补缺、去重，大量时间消耗在重复性数据搬运上</li>
+        <li><strong>逐字写论文</strong>——从框架到语言、从引用到格式，全靠人手敲，修改一版要重排一遍</li>
+      </ul>
+
+      <div class="info-box">
+        <strong>核心痛点：</strong>效率低、重复劳动多、容易出错。科研人本应把精力放在<span class="hl">思考与创新</span>上，却被流程性工作挤占了大量时间。
+      </div>
+
+      <p>更麻烦的是，古法科研还带来一些隐性成本：文献遗漏导致重复造轮子、数据格式不统一造成后续返工、论文反复改格式消耗写作热情。<strong>科研的本质是探索未知，而不是与工具较劲</strong>。这也是AI大铁牛提出"告别古法科研"的初衷。</p>
+
+      <div class="section-marker">02 · AI如何改变科研?</div>
+      <h2>从单点工具到全流程覆盖</h2>
+      <p>AI进入科研领域，并不是简单地"换个工具写东西"，而是<strong>对整个科研流程的重塑</strong>。从立项前的文献调研，到实验设计、数据分析、结果可视化，再到论文写作与投稿，每一个环节都可以被AI放大效率。</p>
+      <p>AI在科研中的价值，体现在三个层面：</p>
+
+      <ul class="bullet-list">
+        <li><strong>处理规模</strong>——AI可以在几分钟内读完几百篇文献摘要，人工则需要数天</li>
+        <li><strong>一致性</strong>——数据清洗、引用格式化这类工作，AI能保持统一的规则，避免人为疏漏</li>
+        <li><strong>跨学科迁移</strong>——AI能快速理解陌生领域的术语和逻辑，帮助科研人跨越学科壁垒</li>
+      </ul>
+
+      <div class="info-box info-box-jade">
+        <strong>关键转变：</strong>科研人从"执行者"变成"指挥官"——<span class="hl">把流程性工作交给AI，自己专注于问题定义、判断和创新</span>。
+      </div>
+
+      <p>需要强调的是，AI并不是要取代科研人，而是<strong>把科研人从低价值劳动中解放出来</strong>。文献检索AI做、数据清洗AI做、格式排版AI做，科研人专注的是：这个问题值不值得研究?这个结论是否站得住脚?这个方向还有没有人做过?这些恰恰是AI做不了的。</p>
+
+      <div class="section-marker">03 · 十个科研AI Skill详解</div>
+      <h2>覆盖科研全流程的AI技能</h2>
+      <p>AI大铁牛分享的这十个AI Skill，几乎覆盖了一个科研项目从立项到投稿的完整链路。下面逐个拆解每个Skill的应用场景与价值。</p>
+
+      <div class="tip-card">
+        <div class="tip-title">01 · 文献检索与综述</div>
+        <p>AI可以快速检索、筛选、总结海量文献。输入研究主题，AI能从PubMed、arXiv、Google Scholar等数据库中找出相关论文，提取核心观点、研究方法和结论，并生成结构化综述。过去需要数周的文献调研，<strong>现在几小时就能拿到初稿</strong>。</p>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">02 · 实验设计辅助</div>
+        <p>AI帮助设计实验方案、控制变量、预测样本量。基于已有文献和领域知识，AI可以建议合适的实验组与对照组、指出潜在的混杂因素、估算统计功效。对于新手科研人，这相当于<strong>多了一位经验丰富的导师在旁把关</strong>。</p>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">03 · 数据清洗与预处理</div>
+        <p>AI自动化数据清洗——处理缺失值、识别异常点、统一格式、去重对齐。脏数据是科研的隐形杀手，AI能按预设规则批量处理，<strong>避免人工逐行核对的疲劳与疏漏</strong>，让数据快速进入可分析状态。</p>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">04 · 统计分析</div>
+        <p>AI进行统计建模和假设检验。无论是t检验、方差分析、回归模型还是机器学习方法，AI都能根据数据特征推荐合适的统计方法，输出结果并解释含义。<strong>不再需要为选哪种检验方法翻半天教材</strong>。</p>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">05 · 数据可视化</div>
+        <p>AI生成专业图表——折线图、散点图、热力图、网络图，根据数据类型自动选择合适的可视化方式，并按期刊风格调整配色与标注。<strong>一张图胜过千言万语，AI让科研图表既好看又规范</strong>。</p>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">06 · 论文写作辅助</div>
+        <p>AI辅助论文结构搭建、语言润色、逻辑梳理。从摘要到结论，AI能根据研究内容生成初稿框架，再逐段优化表达，使其更符合学术写作规范。<strong>科研人只需注入核心观点和数据</strong>，文字打磨交给AI。</p>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">07 · 引用管理</div>
+        <p>AI自动格式化引用——支持APA、MLA、Chicago、IEEE等多种格式，一键转换。还能根据DOI或题录自动补全作者、年份、期刊信息，<strong>告别手动逐条录入参考文献的痛苦</strong>。</p>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">08 · 代码生成与调试</div>
+        <p>AI帮写分析代码——Python、R、MATLAB，无论是数据处理脚本还是统计建模代码，AI都能快速生成。遇到报错，AI还能协助定位问题、给出修复方案。<strong>不会写代码的科研人，也能跑通复杂分析</strong>。</p>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">09 · 学术翻译</div>
+        <p>AI进行多语言学术翻译——中英互译，兼顾术语准确性和表达地道。对于需要阅读外文文献或向国际期刊投稿的科研人，<strong>AI翻译能显著降低语言门槛</strong>，让研究边界不再受语言限制。</p>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">10 · 知识管理</div>
+        <p>AI构建个人知识库——把读过的文献、做过的笔记、产生的想法统一管理，支持语义检索和关联推荐。<strong>让科研积累从散落的碎片，变成可复用的知识网络</strong>，下次研究时随时调取。</p>
+      </div>
+
+      <div class="section-marker">04 · 如何构建科研AI工作流?</div>
+      <h2>让AI真正落地到日常</h2>
+      <p>知道有哪些AI Skill是一回事，把它们串成自己的工作流是另一回事。AI大铁牛建议科研人不要贪多，<strong>从最痛的环节入手，逐步把AI嵌入日常工作</strong>。下面是一些实用建议：</p>
+
+      <ul class="bullet-list">
+        <li><strong>工具选择</strong>——优先选成熟、可协作的工具，如Claude Code、ChatGPT、Zotero+AI插件，避免频繁切换</li>
+        <li><strong>流程设计</strong>——把科研拆成"文献→数据→分析→写作"四个阶段，每个阶段匹配对应Skill，形成固定流程</li>
+        <li><strong>人机协作</strong>——AI负责执行和初稿，人负责判断和决策，关键结论必须人工复核</li>
+        <li><strong>提示词沉淀</strong>——把好用的prompt保存下来，形成自己的"科研提示词库"，复用效率倍增</li>
+        <li><strong>数据安全</strong>——敏感数据不要直接喂给公网AI，可用本地模型或私有部署方案</li>
+        <li><strong>持续迭代</strong>——每月复盘一次工作流，淘汰低效环节，引入新的AI能力</li>
+      </ul>
+
+      <div class="tip-card">
+        <div class="tip-title">⚡ 推荐起步路径</div>
+        <p>新手可以从<strong>文献检索Skill + 论文写作Skill</strong>两个入手——前者解决"读什么"，后者解决"怎么写"，是科研中最高频、最痛的两个环节。跑通后再逐步引入数据清洗、统计分析、可视化等Skill，<span class="hl">三个月内就能搭建起一套完整的AI科研工作流</span>。</p>
+      </div>
+
+      <div class="section-marker">05 · AI科研的边界与伦理</div>
+      <h2>工具再强，也替代不了思考</h2>
+      <p>AI再强大，也有它碰不得的红线。科研人拥抱AI的同时，必须清楚边界在哪里。</p>
+
+      <ul class="bullet-list">
+        <li><strong>AI不能替代创新思维</strong>——AI擅长的是组合已有知识，但真正从0到1的突破，仍需科研人的直觉与洞察</li>
+        <li><strong>数据隐私</strong>——未发表的数据、患者隐私信息、商业机密，不能随意输入公网AI，需评估合规风险</li>
+        <li><strong>学术诚信</strong>——AI生成的内容必须如实标注，不能把AI写的段落当原创提交，更不能伪造数据</li>
+        <li><strong>可重复性</strong>——AI辅助的分析过程必须可追溯、可复现，关键代码和参数要留存记录</li>
+        <li><strong>结果核验</strong>——AI可能产生"幻觉"，引用的文献、给出的统计结论都必须人工核对原始来源</li>
+      </ul>
+
+      <div class="info-box">
+        <strong>底线原则：</strong>AI是科研的放大器，不是科研的替代品。<span class="hl">用AI提效，但守住科研的严谨与诚信</span>——这是任何工具都无法逾越的边界。
+      </div>
+
+      <div class="section-marker">06 · 结语</div>
+      <h2>拥抱AI工具，守住科研本质</h2>
+      <p>告别古法科研，并不意味着放弃科研的严肃性——恰恰相反，<strong>是为了把更多时间还给真正重要的思考</strong>。</p>
+      <p>十个AI Skill，覆盖文献、实验、数据、写作、引用、代码、翻译、知识管理全流程。把它们用起来，科研人不再是流水线上的搬砖工，而是站在AI肩膀上的探索者。</p>
+      <p>但请记住：<span class="hl">AI能帮你跑得更快，但往哪个方向跑，依然由你决定</span>。拥抱工具，守住本质——这才是新时代科研人应有的姿态。</p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去抖音看原笔记</h3>
+        <p>点击跳转抖音，阅读AI大铁牛的完整图文笔记「告别古法科研，从十个AI Skill开始」</p>
+      <a class="cta-btn" id="cta-link" href="https://www.iesdouyin.com/share/note/7645689246305212278/?region=CN&mid=7581926793502788415&u_code=jmha93a5&did=MS4wLjABAAAAIl6YTQLDrN8FRHs1KZfJa4znpwEqLb7omXWj5i1HUA0&iid=MS4wLjABAAAAAWZSvHPrh71AZkRUEBzUO0amUsLFOvcxOMWfXE6agsz8PAOWflLhEqjWVulFjoHr&with_sec_did=1&video_share_track_ver=&titleType=title&schema_type=37&share_sign=FcONgSF4jEdYGqqL_rZM.yAjDQ4nazsH8BdnJHa50L0-&share_version=390500&ts=1783686960&from_aid=1128&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D&utm_source=copy&utm_campaign=client_share&utm_medium=android&app=aweme&ug_share_id=416a01fc07da_1783687554367&activity_info=%7B%22social_author_id%22%3A%223305571415763178%22%2C%22social_share_id%22%3A%2268060800617_1783687554366%22%2C%22social_share_time%22%3A%221783687554%22%2C%22social_share_user_id%22%3A%2268060800617%22%7D&share_extra_params=%7B%22schema_type%22%3A%2237%22%7D" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往抖音
+        </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?tag=AI科研">#AI科研</a>
+      <a href="../../home/home.html?tag=AI Skill">#AI Skill</a>
+      <a href="../../home/home.html?tag=科研工具">#科研工具</a>
+      <a href="../../home/home.html?tag=Claude Code">#Claude Code</a>
+      <a href="../../home/home.html?tag=论文写作">#论文写作</a>
+      <a href="../../home/home.html?tag=抖音">#抖音</a>
+    </div>
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用。视频封面版权归抖音原视频作者所有。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
