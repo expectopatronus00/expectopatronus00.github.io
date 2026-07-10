@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>免费AI视频生成工具盘点：做视频一分钱都不用花 · EXPECTOPATRONUS</title>
+    <meta name="description" content="抖音博主啥都董点分享免费AI视频生成工具——装了这个工具，做视频一分钱都不用花。一文了解主流免费AI视频生成工具、核心能力、使用技巧和适用场景。" />
+    <meta name="keywords" content="AI视频生成,免费AI工具,视频制作,AI工具,ComfyUI,Stable Video Diffusion,抖音,啥都董点" />
+    <meta property="og:title" content="免费AI视频生成工具盘点：做视频一分钱都不用花" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="抖音博主啥都董点分享免费AI视频生成工具——装了这个工具，做视频一分钱都不用花。一文了解主流免费AI视频生成工具、核心能力、使用技巧和适用场景。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 要点列表 */
+      .bullet-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 var(--sp-6);
+      }
+      .bullet-list li {
+        position: relative;
+        padding-left: 28px;
+        margin-bottom: var(--sp-3);
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.75;
+        font-size: 0.98rem;
+      }
+      .bullet-list li::before {
+        content: '';
+        position: absolute;
+        left: 4px;
+        top: 11px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent-rust);
+      }
+      /* 技巧卡片 */
+      .tip-card {
+        margin: var(--sp-4) 0;
+        padding: var(--sp-5);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-left: 3px solid var(--accent-rust);
+      }
+      .tip-card .tip-title {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.05rem;
+        color: var(--text);
+        margin-bottom: var(--sp-2);
+      }
+      .tip-card p {
+        margin: 0;
+        font-size: 0.95rem;
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">AI · 视频生成</div>
+      <h1>免费<em>AI视频生成</em>工具盘点：做视频一分钱都不用花</h1>
+      <p>抖音博主「啥都董点」分享了一个令创作者兴奋的消息——<strong>装了这个工具，做视频一分钱都不用花</strong>。当AI视频生成工具越来越强大，免费方案也越来越多。这篇文章带你了解主流的免费AI视频生成工具、核心能力、使用技巧和适用场景。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 啥都董点</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-07-10</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 5 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 视频 · 搬运整理</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="视频封面" src="" />
+    </div>
+
+    <article class="article-body">
+      <div class="section-marker">01 · AI视频生成的现状</div>
+  <h2>做视频真的可以不花钱吗？</h2>
+  <p>抖音博主<strong>啥都董点</strong>分享了一个令创作者兴奋的工具——<strong>装了这个工具，做视频一分钱都不用花</strong>。这不是标题党，AI视频生成领域确实出现了越来越多高质量的免费方案。</p>
+  <p>从Sora的震撼到各种开源模型的涌现，AI视频生成正在从「昂贵的实验」变成<strong>人人可用的工具</strong>。关键在于：你知道用哪个工具、怎么用。</p>
+
+  <div class="info-box">
+    <strong>核心趋势：</strong>AI视频生成正在经历和AI图片生成一样的路径——从闭源付费到开源免费，从专业门槛到大众可用。<span class="hl">免费不等于低质量</span>，很多开源工具已经能产出专业级效果。
+  </div>
+
+  <div class="section-marker">02 · 主流免费AI视频生成工具</div>
+  <h2>哪些工具可以零成本用</h2>
+
+  <div class="tip-card">
+    <div class="tip-title">🎨 ComfyUI — 最强大的免费方案</div>
+    <p>基于节点的AI图像/视频生成工作流工具，支持Stable Video Diffusion、AnimateDiff等多种模型。<strong>完全免费、本地运行、无限生成</strong>。学习曲线陡峭，但一旦掌握，能力无上限。博主推荐的很可能就是这类本地部署方案。</p>
+  </div>
+
+  <div class="tip-card">
+    <div class="tip-title">🎬 Stable Video Diffusion (SVD)</div>
+    <p>Stability AI开源的视频生成模型，可将图片转化为短视频。<strong>开源免费、可本地运行</strong>。需要一定GPU算力，但效果已经相当成熟。</p>
+  </div>
+
+  <div class="tip-card">
+    <div class="tip-title">🖼️ AnimateDiff</div>
+    <p>给静态图片添加动画效果的AI工具，可以让你的AI图片「动起来」。<strong>开源免费</strong>，配合ComfyUI使用效果更佳。适合做动态壁纸、短视频素材。</p>
+  </div>
+
+  <div class="tip-card">
+    <div class="tip-title">🌐 各平台免费额度</div>
+    <p>很多在线AI视频工具提供<strong>免费额度</strong>：Runway、Pika、Haiper等都有每日免费生成次数。虽然单次有限，但多平台组合使用，也能满足日常需求。</p>
+  </div>
+
+  <div class="tip-card">
+    <div class="tip-title">⚡ 模型即工具</div>
+    <p>Hugging Face上每天都有新的开源视频生成模型发布，<strong>大部分可以免费使用</strong>。关注社区动态，及时尝鲜新模型。</p>
+  </div>
+
+  <div class="section-marker">03 · 本地部署 vs 在线工具</div>
+  <h2>两种免费路线的对比</h2>
+
+  <div class="tip-card">
+    <div class="tip-title">💻 本地部署（ComfyUI等）</div>
+    <p><strong>优势：</strong>完全免费、无限制、隐私安全、可自定义<br><strong>劣势：</strong>需要GPU算力、学习门槛高、配置复杂<br><strong>适合：</strong>有显卡的技术用户、需要大量生成的创作者</p>
+  </div>
+
+  <div class="tip-card">
+    <div class="tip-title">☁️ 在线工具（免费额度）</div>
+    <p><strong>优势：</strong>零配置、即开即用、界面友好<br><strong>劣势：</strong>有次数限制、可能含水印、依赖网络<br><strong>适合：</strong>新手尝鲜、偶尔使用的用户</p>
+  </div>
+
+  <div class="info-box info-box-jade">
+    <strong>建议：</strong>新手先从在线工具的免费额度开始体验，了解AI视频生成的基本概念后，再考虑是否本地部署。<span class="hl">不要为了「免费」而强行本地部署</span>——如果你的显卡不够强，体验可能比在线工具更差。
+  </div>
+
+  <div class="section-marker">04 · AI视频生成能做什么</div>
+  <h2>应用场景</h2>
+
+  <ul class="bullet-list">
+    <li><strong>短视频创作</strong>——AI生成视频素材，用于抖音、B站等平台</li>
+    <li><strong>广告素材</strong>——快速生成产品展示视频、创意广告</li>
+    <li><strong>动态壁纸</strong>——把静态图片变成动态壁纸</li>
+    <li><strong>概念演示</strong>——把创意想法快速可视化</li>
+    <li><strong>教育内容</strong>——生成教学动画、科普视频</li>
+    <li><strong>音乐可视化</strong>——为音乐生成配套的视觉画面</li>
+    <li><strong>游戏素材</strong>——生成游戏过场动画、特效素材</li>
+  </ul>
+
+  <div class="section-marker">05 · 使用技巧</div>
+  <h2>如何生成高质量AI视频</h2>
+
+  <ul class="bullet-list">
+    <li><strong>从好的图片开始</strong>——大多数视频生成工具是「图生视频」，输入图片质量决定输出质量</li>
+    <li><strong>控制运动幅度</strong>——运动幅度太大容易变形，太小又不够生动，需要反复调试</li>
+    <li><strong>选对模型</strong>——不同模型擅长不同风格，写实、动漫、3D各有专长</li>
+    <li><strong>善用ControlNet</strong>——用ControlNet控制运动轨迹，让视频更符合预期</li>
+    <li><strong>后期处理</strong>——AI生成的视频通常需要剪辑、加音乐、调色等后期处理</li>
+    <li><strong>多生成多挑选</strong>——AI视频生成有随机性，多生成几次，挑最好的</li>
+    <li><strong>关注社区</strong>——ComfyUI社区每天都有新工作流分享，学习别人的经验</li>
+  </ul>
+
+  <div class="tip-card">
+    <div class="tip-title">💡 核心心态</div>
+    <p>AI视频生成不是「一键出大片」，而是<span class="hl">「快速生成素材 + 人工后期处理」</span>。把AI当成素材生成器，加上你的创意和剪辑，才能做出真正好看的视频。</p>
+  </div>
+
+  <div class="section-marker">06 · 未来展望</div>
+  <h2>免费AI视频工具会走向何方</h2>
+
+  <ul class="bullet-list">
+    <li><strong>模型越来越强</strong>——开源模型的质量在快速逼近甚至超越闭源方案</li>
+    <li><strong>门槛越来越低</strong>——工具会更易用，本地部署会越来越简单</li>
+    <li><strong>时长越来越长</strong>——从几秒到几十秒，未来可能支持分钟级视频</li>
+    <li><strong>控制越来越精准</strong>——从随机生成到精确控制运动、镜头、表情</li>
+    <li><strong>生态越来越完善</strong>——模型、工作流、教程社区全面发展</li>
+  </ul>
+
+  <div class="section-marker">07 · 结语</div>
+  <h2>免费时代已经到来</h2>
+  <p>「做视频一分钱都不用花」——这不是夸张，而是<span class="hl">AI视频生成免费时代的真实写照</span>。</p>
+  <p>ComfyUI、SVD、AnimateDiff等开源工具，加上各平台的免费额度，让任何人都可以零成本开始AI视频创作。关键不是「有没有免费工具」，而是<strong>「你愿不愿意花时间学习」</strong>。</p>
+  <p>工具免费，但创意无价。用好这些免费工具，加上你的创意和努力，下一个爆款视频可能就出自你手。</p>
+    <div class="cta-box">
+      <div class="content">
+        <h3>去抖音看原视频</h3>
+        <p>点击跳转抖音原视频页</p>
+      <a class="cta-btn" id="cta-link" href="https://www.iesdouyin.com/share/video/7660594479799982227/?region=CN&mid=7660594403706145582&u_code=jmha93a5&did=MS4wLjABAAAAIl6YTQLDrN8FRHs1KZfJa4znpwEqLb7omXWj5i1HUA0&iid=MS4wLjABAAAAAWZSvHPrh71AZkRUEBzUO0amUsLFOvcxOMWfXE6agsz8PAOWflLhEqjWVulFjoHr&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=TNnZNfipUXxmzWChax4_KY4cpS1c.FmpowypD4EY618-&share_version=390500&ts=1783686960&from_aid=1128&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D&utm_source=copy&utm_campaign=client_share&utm_medium=android&app=aweme&ug_share_id=416a01fc07da_1783687912751&activity_info=%7B%22social_author_id%22%3A%223228622394759363%22%2C%22social_share_id%22%3A%2268060800617_1783687912751%22%2C%22social_share_time%22%3A%221783687912%22%2C%22social_share_user_id%22%3A%2268060800617%22%7D&share_extra_params=%7B%22schema_type%22%3A%221%22%7D" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往抖音
+        </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?tag=AI视频生成">#AI视频生成</a>
+      <a href="../../home/home.html?tag=免费AI工具">#免费AI工具</a>
+      <a href="../../home/home.html?tag=ComfyUI">#ComfyUI</a>
+      <a href="../../home/home.html?tag=视频制作">#视频制作</a>
+      <a href="../../home/home.html?tag=开源工具">#开源工具</a>
+      <a href="../../home/home.html?tag=抖音">#抖音</a>
+    </div>
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用。视频封面版权归抖音原视频作者所有。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
