@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>软件改AI可调用工具：让普通软件变AI Agent的武器 · EXPECTOPATRONUS</title>
+    <meta name="description" content="如何将普通软件改造为AI可调用的工具，让AI Agent拥有更强的工具调用能力 - 来自抖音视频，作者：成也2077" />
+    <meta name="keywords" content="vibecoding,AI工具调用,软件改造,AI Agent,工具扩展,成也2077,抖音" />
+    <meta name="author" content="成也2077" />
+    <meta property="og:title" content="软件改AI可调用工具：让普通软件变AI Agent的武器" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="如何将普通软件改造为AI可调用的工具，让AI Agent拥有更强的工具调用能力 - 来自抖音视频，作者：成也2077" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 圆点列表 */
+      .bullet-list { margin: 0 0 var(--sp-6); padding: 0; list-style: none; }
+      .bullet-list li { position: relative; padding-left: var(--sp-5); margin-bottom: var(--sp-3); font-family: var(--font-serif); color: var(--text-soft); line-height: 1.8; font-size: 0.98rem; }
+      .bullet-list li::before { content: ''; position: absolute; left: 0; top: 0.7em; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-rust); }
+
+      /* 技巧卡片 */
+      .tip-card { margin: 0 0 var(--sp-6); padding: var(--sp-5) var(--sp-6); border-radius: var(--r-lg); background: var(--bg-card); border: 1px solid var(--line); }
+      .tip-card h4 { font-family: var(--font-display); font-weight: 500; font-size: 1.05rem; color: var(--text); margin: 0 0 var(--sp-3); display: flex; align-items: center; gap: 8px; }
+      .tip-card h4::before { content: '💡'; font-size: 1.1em; }
+      .tip-card p { margin: 0; font-size: 0.95rem; line-height: 1.7; }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">抖音搬运</div>
+      <h1>软件改AI可调用工具：让普通软件变AI Agent的<em>武器</em></h1>
+      <p>当 AI Agent 不再只会"聊天"，而是能直接调用你电脑里的软件、操作你日常使用的工具时，它的能力边界才会被真正打开。本文围绕如何将普通软件改造为 AI 可调用的工具，让 AI Agent 拥有更强的工具调用能力，把"会说话的模型"升级为"会动手的助手"。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 成也2077</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-07-11</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 6 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 视频 · 搬运整理</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="视频封面" src="" />
+    </div>
+
+    <article class="article-body">
+      <div class="section-marker">01 · 什么是AI可调用工具</div>
+      <h2>什么是AI可调用工具</h2>
+      <p>所谓 <span class="hl">AI 可调用工具</span>，指的是那些被包装成统一接口、能够被 AI Agent 在推理过程中主动识别并调用的外部能力单元。它可以是一个函数、一个 API、一个命令行脚本，也可以是一个完整的桌面软件被封装后的"动作"。</p>
+      <p>对 AI 来说，它并不关心工具背后是 Python 脚本还是某个商业化软件，它只关心：<strong>这个工具叫什么、接受什么参数、返回什么结果</strong>。只要这三件事被清楚地描述出来，AI 就能在合适的时机"按下这个按钮"。</p>
+      <div class="info-box">
+        <strong>一句话理解：</strong>AI 可调用工具 = 把"人鼠标点一下"的操作，变成"AI 一句话就能触发"的能力。
+      </div>
+
+      <div class="section-marker">02 · 为什么要让软件变成AI可调用的</div>
+      <h2>为什么要让软件变成AI可调用的</h2>
+      <p>大模型本身是"封闭"的——它的知识停留在训练数据里，它的输出也只能停留在文本框里。如果不去打通外部软件，AI 就永远只是一个"会聊天的百科全书"，无法真正影响现实世界。</p>
+      <ul class="bullet-list">
+        <li><strong>突破模型边界：</strong>让 AI 能执行计算、查询数据库、操作文件，而不是只在文字里"假装"会做。</li>
+        <li><strong>复用既有资产：</strong>企业里现成的 ERP、CRM、设计软件不需要重写，只需"工具化"就能立刻被 AI 调用。</li>
+        <li><strong>降低使用门槛：</strong>普通人不必学复杂的软件操作，用自然语言就能驱动专业工具完成工作。</li>
+        <li><strong>构建 Agent 闭环：</strong>感知 → 决策 → 执行 → 反馈，工具调用是"执行"环节的核心载体。</li>
+      </ul>
+      <div class="pull-quote">
+        <p>软件本身没有变聪明，是 AI 学会了"用"它。改造软件，本质上是给 AI 装上一双能操作现实工具的手。</p>
+      </div>
+
+      <div class="section-marker">03 · 改造的核心思路</div>
+      <h2>改造的核心思路</h2>
+      <p>把一个普通软件改造成 AI 可调用工具，并不是要重写它，而是要在它和 AI 之间架一层"<span class="hl">工具描述 + 调用通道</span>"。核心可以拆成三步。</p>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">Step 1</div>
+          <div class="tl-text"><strong>能力拆解：</strong>把软件里那些"可被复用"的功能点拆出来，例如导出 PDF、批量改名、查询库存、生成报表等。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Step 2</div>
+          <div class="tl-text"><strong>接口封装：</strong>为每个能力写一个可被程序调用的入口（CLI、HTTP API、函数），并定义输入参数与输出格式。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Step 3</div>
+          <div class="tl-text"><strong>语义描述：</strong>用结构化的 schema（如 JSON Schema / Function Calling 格式）告诉模型这个工具"能做什么、怎么用"。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Step 4</div>
+          <div class="tl-text"><strong>接入 Agent：</strong>把工具注册到 Agent 的工具表中，让模型在推理时能自主选择并触发，再把结果喂回给它继续思考。</div>
+        </div>
+      </div>
+      <div class="tip-card">
+        <h4>描述比实现更重要</h4>
+        <p>工具的 name / description / parameters 写得越清晰，模型选错工具的概率就越低。很多"AI 调用失败"的锅，其实不在模型，而在工具描述写得像天书。</p>
+      </div>
+
+      <div class="section-marker">04 · Vibe Coding 与工具调用</div>
+      <h2>Vibe Coding 与工具调用</h2>
+      <p>在 <span class="hl">Vibe Coding</span> 的语境里，开发者不再是逐行写代码，而是用自然语言描述意图，由 AI 自主完成编码、调试、运行。这套范式之所以能跑通，关键就在于 AI 拥有了一批可调用的工具：读写文件、执行命令、调用接口、查文档……</p>
+      <p>把普通软件改造为 AI 可调用工具，正是 Vibe Coding 理念在"应用层"的延伸——让 AI 不只是写代码，还能直接操作你已有的软件生态。这也是为什么"软件改 AI 可调用工具"会被列入 Vibe Coding 大赏：它把"AI 能动手"的范围，从代码编辑器扩展到了整个桌面。</p>
+      <div class="info-box info-box-jade">
+        <strong>Vibe Coding 的三件套：</strong>会写代码的模型 + 一堆可调用的工具 + 一个能持续反馈的执行环境。三者缺一不可。
+      </div>
+
+      <div class="section-marker">05 · 实际改造案例与场景</div>
+      <h2>实际改造案例与场景</h2>
+      <p>博主"成也2077"在视频中分享了几个把软件"工具化"后立刻能落地的典型场景，覆盖办公、设计、数据等多个领域：</p>
+      <ul class="bullet-list">
+        <li><strong>办公软件工具化：</strong>把 Excel / WPS 的"打开文件、筛选数据、导出图表"封装成工具，AI 一句话就能出周报。</li>
+        <li><strong>设计软件工具化：</strong>把 PS / Figma 的批量导出、改尺寸、加水印做成工具，AI 接到需求即可批量产出素材。</li>
+        <li><strong>数据查询工具化：</strong>把内部 BI 系统的取数接口包装成工具，AI 直接拉数据、做分析、写结论。</li>
+        <li><strong>系统运维工具化：</strong>把常用的诊断脚本、日志查询命令封装成工具，AI 当"值班工程师"自动排查告警。</li>
+        <li><strong>浏览器自动化：</strong>把"打开网址、填表、点击、抓取"做成工具，AI 完成跨站点的信息收集与录入。</li>
+      </ul>
+      <div class="tip-card">
+        <h4>从"一个动作"开始</h4>
+        <p>不要一上来就把整个软件全部工具化。先挑那个你最常重复执行、规则最清晰的单个动作，把它做扎实，再逐步扩展成工具集。</p>
+      </div>
+
+      <div class="section-marker">06 · 改造过程中的挑战与对策</div>
+      <h2>改造过程中的挑战与对策</h2>
+      <p>把软件改造成 AI 可调用工具听起来很美好，落地时却会踩到不少坑。以下是几个高频问题及对应思路。</p>
+      <ul class="bullet-list">
+        <li><strong>挑战一：软件没有开放接口。</strong>对策：用 UI 自动化（按键模拟、OCR 识别）或浏览器插件兜底，先把动作"跑通"再说。</li>
+        <li><strong>挑战二：工具描述模糊，模型选错。</strong>对策：description 写清"适用场景"和"不适用场景"，参数用 enum 约束取值，避免歧义。</li>
+        <li><strong>挑战三：调用结果不稳定。</strong>对策：统一返回结构（success / data / error），让模型能识别失败并自动重试或换工具。</li>
+        <li><strong>挑战四：权限与安全风险。</strong>对策：给工具加白名单与最小权限，敏感操作要二次确认，避免 AI 误删文件或越权访问。</li>
+        <li><strong>挑战五：长链路任务容易跑飞。</strong>对策：把长任务拆成多个小工具，由 Agent 编排，并在每一步设置校验点。</li>
+      </ul>
+      <div class="info-box">
+        <strong>安全第一：</strong>凡涉及删除、付款、发送、上传的工具，务必加上"人工确认"环节。AI 会动手是好事，但不能乱动手。
+      </div>
+
+      <div class="section-marker">07 · 原视频</div>
+      <h2>原视频</h2>
+      <p>本文是基于抖音博主"成也2077"的 Vibe Coding 大赏系列视频整理而成，原视频更直观地演示了把软件改造为 AI 可调用工具的思路与案例。点击下方按钮前往抖音观看完整内容。</p>
+      <div class="cta-box">
+        <div class="content">
+          <h3>去抖音看原视频</h3>
+          <p>点击跳转抖音原视频页，观看"成也2077"分享的软件改 AI 可调用工具完整演示。</p>
+          <a class="cta-btn" id="cta-link" href="https://www.iesdouyin.com/share/video/7660823577968594218/?region=CN&mid=7660823496696269610&u_code=jmha93a5&did=MS4wLjABAAAAIl6YTQLDrN8FRHs1KZfJa4znpwEqLb7omXWj5i1HUA0&iid=MS4wLjABAAAAAWZSvHPrh71AZkRUEBzUO0amUsLFOvcxOMWfXE6agsz8PAOWflLhEqjWVulFjoHr&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=eMWLkVO8PHIJqC.4QXhv6zdU4cO4HsMtGLoz.VlXOvk-&share_version=390500&ts=1783783970&from_aid=1128&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D&utm_source=copy&utm_campaign=client_share&utm_medium=android&app=aweme&ug_share_id=416a01fc07da_1783783985349&activity_info=%7B%22social_author_id%22%3A%222386396465074235%22%2C%22social_share_id%22%3A%2268060800617_1783783985348%22%2C%22social_share_time%22%3A%221783783985%22%2C%22social_share_user_id%22%3A%2268060800617%22%7D&share_extra_params=%7B%22schema_type%22%3A%221%22%7D" target="_blank" rel="noopener">
+            <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往抖音
+          </a>
+        </div>
+      </div>
+      <div class="tags-row">
+        <a href="#">#vibecoding</a>
+        <a href="#">#AI工具调用</a>
+        <a href="#">#软件改造</a>
+        <a href="#">#AI Agent</a>
+        <a href="#">#工具扩展</a>
+        <a href="#">#vibecoding大赏</a>
+        <a href="#">#成也2077</a>
+        <a href="#">#抖音</a>
+      </div>
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用。视频封面版权归抖音原视频作者所有。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

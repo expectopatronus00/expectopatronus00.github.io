@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'dy-7660823577968594218',
+            title: '软件改AI可调用工具：让普通软件变AI Agent的武器',
+            url: '../post/dy-7660823577968594218/dy-7660823577968594218.html',
+            summary: '抖音博主成也2077分享如何将普通软件改造为AI可调用的工具——让AI Agent拥有更强的工具调用能力。从改造思路到实际案例，Vibe Coding大赏系列。',
+            category: 'AI编程',
+            date: '2026-07-11',
+            tags: ["vibecoding","AI工具调用","软件改造","AI Agent","工具扩展","vibecoding大赏","成也2077","抖音"],
+          },
+          {
             id: 'dy-7639340735556291880',
             title: '免费用Image2！这个网站藏太深了',
             url: '../post/dy-7639340735556291880/dy-7639340735556291880.html',
