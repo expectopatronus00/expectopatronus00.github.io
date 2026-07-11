@@ -1,0 +1,680 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI数据分析新姿势：多智能体协同运作的港大版方案 · EXPECTOPATRONUS</title>
+    <meta name="description" content="基于多智能体协同的AI数据分析新方法，港大版方案带你解锁数据科学新姿势——博主二次螈Ai工具箱分享" />
+    <meta name="keywords" content="AI数据分析,多智能体,二次螈Ai工具箱,AI工具,港大版,数据科学,agent,抖音" />
+    <meta property="og:title" content="AI数据分析新姿势：多智能体协同运作的港大版方案" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="基于多智能体协同的AI数据分析新方法，港大版方案带你解锁数据科学新姿势——博主二次螈Ai工具箱分享" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 圆点列表 */
+      .bullet-list { margin: 0 0 var(--sp-6); padding: 0; list-style: none; }
+      .bullet-list li { position: relative; padding-left: var(--sp-5); margin-bottom: var(--sp-3); font-family: var(--font-serif); color: var(--text-soft); line-height: 1.8; font-size: 0.98rem; }
+      .bullet-list li::before { content: ''; position: absolute; left: 0; top: 0.7em; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-rust); }
+
+      /* 技巧卡片 */
+      .tip-card { margin: 0 0 var(--sp-6); padding: var(--sp-5) var(--sp-6); border-radius: var(--r-lg); background: var(--bg-card); border: 1px solid var(--line); }
+      .tip-card h4 { font-family: var(--font-display); font-weight: 500; font-size: 1.05rem; color: var(--text); margin: 0 0 var(--sp-3); display: flex; align-items: center; gap: 8px; }
+      .tip-card h4::before { content: '💡'; font-size: 1.1em; }
+      .tip-card p { margin: 0; font-size: 0.95rem; line-height: 1.7; }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 对比表格 */
+      .compare-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0 0 var(--sp-6);
+        font-family: var(--font-serif);
+        font-size: 0.95rem;
+      }
+      .compare-table th,
+      .compare-table td {
+        padding: var(--sp-3) var(--sp-4);
+        text-align: left;
+        border-bottom: 1px solid var(--line);
+      }
+      .compare-table th {
+        font-family: var(--font-display);
+        font-weight: 500;
+        color: var(--text);
+        background: var(--bg-card);
+      }
+      .compare-table td {
+        color: var(--text-soft);
+      }
+      .compare-table tr:last-child td {
+        border-bottom: none;
+      }
+      .compare-table .yes {
+        color: var(--accent-jade);
+        font-weight: 600;
+      }
+      .compare-table .no {
+        color: var(--text-dim);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">抖音搬运</div>
+      <h1>AI数据分析新姿势：<em>多智能体协同运作</em>的港大版方案</h1>
+      <p>传统数据分析面临效率瓶颈与专业门槛的双重挑战。港大版多智能体协同方案通过多个AI Agent分工协作，将复杂的数据分析任务拆解为自动化工作流，让数据洞察变得更高效、更智能、更易用。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 二次螈Ai工具箱</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-07-11</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 6 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 视频 · 搬运整理</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="视频封面" src="" />
+    </div>
+
+    <article class="article-body">
+      <div class="section-marker">01 · 传统数据分析的痛点</div>
+      <h2>传统数据分析的痛点</h2>
+      <p>在数据爆炸的时代，企业和个人都面临着海量数据的处理难题。传统的数据分析方式虽然经典，但在效率和门槛上存在着不容忽视的瓶颈。</p>
+      <ul class="bullet-list">
+        <li><strong>专业门槛高：</strong>需要掌握SQL、Python、统计学等多领域知识，初学者难以快速上手</li>
+        <li><strong>效率低下：</strong>从数据清洗、探索性分析到建模可视化，全流程人工操作耗时长</li>
+        <li><strong>人才缺口大：</strong>数据科学家供不应求，中小企业难以组建专业团队</li>
+        <li><strong>沟通成本高：</strong>业务人员与技术人员之间存在认知鸿沟，需求传递容易失真</li>
+        <li><strong>重复性劳动多：</strong>大量常规分析任务反复进行，浪费人力成本</li>
+      </ul>
+      <div class="info-box">
+        <strong>核心矛盾：</strong>数据量指数级增长与数据分析能力供给不足之间的矛盾，正在成为制约企业数字化转型的关键瓶颈。
+      </div>
+
+      <div class="section-marker">02 · 多智能体协同是什么</div>
+      <h2>多智能体协同是什么</h2>
+      <p><span class="hl">多智能体（Multi-Agent）</span>是人工智能领域的重要方向，它通过多个自主智能体之间的协作与分工，模拟人类团队的工作模式来解决复杂问题。</p>
+      <p>在数据分析场景中，不同的智能体扮演不同的专业角色，各司其职又相互配合，形成一个高效的自动化分析团队。</p>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">Agent 1</div>
+          <div class="tl-text"><strong>数据处理专家</strong> — 负责数据清洗、格式转换、缺失值填充等预处理工作</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Agent 2</div>
+          <div class="tl-text"><strong>探索分析师</strong> — 进行描述性统计、相关性分析、异常检测等探索性工作</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Agent 3</div>
+          <div class="tl-text"><strong>建模工程师</strong> — 选择合适的算法模型，进行训练、调参和评估</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Agent 4</div>
+          <div class="tl-text"><strong>可视化专家</strong> — 将分析结果转化为直观的图表和报告</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Agent 5</div>
+          <div class="tl-text"><strong>项目协调者</strong> — 统筹任务分配、进度跟踪和结果整合</div>
+        </div>
+      </div>
+      <div class="pull-quote">
+        <p>多智能体协同的本质，是用AI团队替代单兵作战，让每个智能体专注于自己擅长的领域，通过协作产生1+1>2的效果。</p>
+      </div>
+
+      <div class="section-marker">03 · AI数据分析新姿势</div>
+      <h2>AI数据分析新姿势</h2>
+      <p>港大版AI数据分析方案，将多智能体协同理念落到实处，打造了一套全新的数据分析工作流。用户只需要提出问题，剩下的交给AI团队自动完成。</p>
+      <h3>全新的工作流程</h3>
+      <p>传统数据分析是"人驱动工具"，而新姿势是"<span class="hl">AI驱动流程</span>"。用户用自然语言描述需求，系统自动拆解任务并分配给相应的智能体。</p>
+      <div class="tip-card">
+        <h4>使用姿势</h4>
+        <p>上传数据 → 用大白话描述分析目标 → 等待AI团队自动协作 → 获取完整的分析报告和可视化图表。全程无需编写代码，就像和数据分析师对话一样简单。</p>
+      </div>
+      <h3>核心能力矩阵</h3>
+      <ul class="bullet-list">
+        <li><strong>自然语言交互：</strong>用日常语言提问，AI理解意图并转化为分析任务</li>
+        <li><strong>自动化工作流：</strong>从数据接入到报告生成，全流程自动执行</li>
+        <li><strong>多维度分析：</strong>同时进行描述性、诊断性、预测性、处方性分析</li>
+        <li><strong>智能追问：</strong>AI主动发现数据中的异常和规律，引导深入探索</li>
+        <li><strong>可解释性：</strong>每个分析结论都有清晰的推导过程和依据</li>
+      </ul>
+
+      <div class="section-marker">04 · 港大版方案的特点</div>
+      <h2>港大版方案的特点</h2>
+      <p>港大版多智能体数据分析方案，融合了学术界的前沿研究与工业界的实践经验，形成了独具特色的技术路线。</p>
+      <div class="info-box info-box-jade">
+        <strong>学术背书：</strong>基于香港大学相关研究团队的技术积累，在多智能体协作机制、任务规划、工具调用等方面有深厚的学术积淀。
+      </div>
+      <h3>差异化优势</h3>
+      <ul class="bullet-list">
+        <li><strong>自主任务规划：</strong>智能体能根据复杂问题自动拆解分析步骤，无需人工预设流程</li>
+        <li><strong>动态角色调整：</strong>根据任务难度和类型，智能体可灵活切换角色和分工</li>
+        <li><strong>工具链生态：</strong>支持调用Python、SQL、Excel等多种工具，形成完整的分析工具体系</li>
+        <li><strong>记忆与迭代：</strong>智能体拥有对话记忆，支持多轮迭代分析，逐步深化洞察</li>
+        <li><strong>安全可控：</strong>数据本地化处理，敏感信息不出域，保障数据安全</li>
+      </ul>
+      <h3>技术架构亮点</h3>
+      <p>方案采用分层架构设计：底层是大语言模型提供推理能力，中间层是多智能体编排框架负责协作调度，上层是面向场景的应用模板，覆盖财务、运营、市场等多个领域。</p>
+
+      <div class="section-marker">05 · 实际应用场景</div>
+      <h2>实际应用场景</h2>
+      <p>多智能体协同的AI数据分析方案，能够广泛应用于各行各业的数据分析场景，大幅降低数据应用的门槛。</p>
+      <h3>企业经营分析</h3>
+      <p>对于中小企业来说，组建专业数据分析团队成本高昂。港大版方案让业务人员也能自主完成专业级的经营分析。</p>
+      <ul class="bullet-list">
+        <li><strong>销售分析：</strong>自动识别销售趋势、地区差异、产品贡献度</li>
+        <li><strong>财务分析：</strong>成本结构分析、利润预测、现金流健康度评估</li>
+        <li><strong>用户分析：</strong>用户画像、留存分析、转化漏斗优化建议</li>
+        <li><strong>运营分析：</strong>活动效果评估、渠道ROI对比、异常指标归因</li>
+      </ul>
+      <h3>个人与学术场景</h3>
+      <p>不仅是企业，个人用户和学术研究也能从中受益。</p>
+      <div class="tip-card">
+        <h4>学生论文神器</h4>
+        <p>写论文需要数据分析？上传数据集，用自然语言描述你的研究假设，AI帮你完成统计分析、显著性检验、图表生成，甚至可以帮你解读分析结果。</p>
+      </div>
+      <ul class="bullet-list">
+        <li><strong>学术研究：</strong>问卷分析、实验数据处理、统计建模</li>
+        <li><strong>投资理财：</strong>个人资产配置分析、投资组合回测</li>
+        <li><strong>自媒体运营：</strong>内容数据分析、粉丝画像、爆款规律挖掘</li>
+      </ul>
+
+      <div class="section-marker">06 · 与传统数据分析工具的对比</div>
+      <h2>与传统数据分析工具的对比</h2>
+      <p>多智能体协同的AI数据分析，与传统工具相比有何不同？下面从多个维度进行对比。</p>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>对比维度</th>
+            <th>传统工具（Excel/SQL/Python）</th>
+            <th>港大版多智能体方案</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>使用门槛</td>
+            <td class="no">高，需掌握编程和统计知识</td>
+            <td class="yes">低，自然语言交互即可</td>
+          </tr>
+          <tr>
+            <td>分析效率</td>
+            <td class="no">人工操作，耗时数小时到数天</td>
+            <td class="yes">自动化执行，几分钟出结果</td>
+          </tr>
+          <tr>
+            <td>专业深度</td>
+            <td class="yes">取决于使用者水平，上限高</td>
+            <td class="yes">内置专家经验，稳定输出高质量分析</td>
+          </tr>
+          <tr>
+            <td>可重复性</td>
+            <td class="no">人工操作易出错，难复现</td>
+            <td class="yes">流程自动化，结果可复现</td>
+          </tr>
+          <tr>
+            <td>灵活性</td>
+            <td class="yes">可编程定制，灵活度极高</td>
+            <td>中等，支持自定义但有边界</td>
+          </tr>
+          <tr>
+            <td>学习成本</td>
+            <td class="no">数月到数年才能精通</td>
+            <td class="yes">几分钟上手，边用边学</td>
+          </tr>
+          <tr>
+            <td>人力成本</td>
+            <td class="no">需专业数据分析师，成本高</td>
+            <td class="yes">一人抵一队，大幅降本增效</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="info-box">
+        <strong>关系定位：</strong>多智能体方案不是要完全替代传统工具，而是作为一种"效率放大器"。它能完成80%的常规分析工作，让数据分析师聚焦于更有价值的战略思考和业务创新。
+      </div>
+
+      <div class="section-marker">07 · 原视频</div>
+      <h2>原视频</h2>
+      <p>本文内容整理自抖音博主「二次螈Ai工具箱」的分享视频，点击下方按钮前往抖音观看原视频，获取更多细节和操作演示。</p>
+      <div class="cta-box">
+        <div class="cover">
+          <img loading="lazy" alt="视频封面" src="" />
+        </div>
+        <div class="content">
+          <h3>去抖音看原视频</h3>
+          <p>AI 💰神港大版AI数据分析新姿势 多智能体协同运...</p>
+          <a class="cta-btn" id="cta-link" href="https://www.iesdouyin.com/share/video/7650011719088160379/?region=CN&mid=7650011626019588918&u_code=jmha93a5&did=MS4wLjABAAAAIl6YTQLDrN8FRHs1KZfJa4znpwEqLb7omXWj5i1HUA0&iid=MS4wLjABAAAAAWZSvHPrh71AZkRUEBzUO0amUsLFOvcxOMWfXE6agsz8PAOWflLhEqjWVulFjoHr&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=JzgqlinGYHwfwAyeqs9CrdCc_LZ0xSiM.Pmf6YT1crg-&share_version=390500&ts=1783784298&from_aid=1128&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D&utm_source=copy&utm_campaign=client_share&utm_medium=android&app=aweme&ug_share_id=416a01fc07da_1783784561586&activity_info=%7B%22social_author_id%22%3A%22101930665547%22%2C%22social_share_id%22%3A%2268060800617_1783784561585%22%2C%22social_share_time%22%3A%221783784561%22%2C%22social_share_user_id%22%3A%2268060800617%22%7D&share_extra_params=%7B%22schema_type%22%3A%221%22%7D" target="_blank" rel="noopener">
+            <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往抖音
+          </a>
+        </div>
+      </div>
+
+      <div class="tags-row">
+        <a href="#">#AI数据分析</a>
+        <a href="#">#多智能体</a>
+        <a href="#">#二次螈Ai工具箱</a>
+        <a href="#">#AI工具</a>
+        <a href="#">#港大版</a>
+        <a href="#">#数据科学</a>
+        <a href="#">#agent</a>
+        <a href="#">#抖音</a>
+      </div>
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用。视频封面版权归抖音原视频作者所有。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
