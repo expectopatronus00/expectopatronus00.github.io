@@ -1,0 +1,784 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WorkBuddy 8个隐藏Skill：90%的人不知道的宝藏功能 · EXPECTOPATRONUS</title>
+    <meta name="description" content="WorkBuddy真正好用的地方藏在SkillHub里！8个名字不起眼但超好用的Skill，从数据可视化到AI写作去味，从突破反爬到安全扫描，掰开了揉碎了讲清楚。" />
+    <meta name="keywords" content="WorkBuddy,SkillHub,AI工具,数据可视化,AI写作,反爬虫,安全扫描,AI助手,程序员,人工智能,抖音" />
+    <meta property="og:title" content="WorkBuddy 8个隐藏Skill：90%的人不知道的宝藏功能" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="WorkBuddy真正好用的地方藏在SkillHub里！8个名字不起眼但超好用的Skill，从数据可视化到AI写作去味，从突破反爬到安全扫描，掰开了揉碎了讲清楚。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 圆点列表 */
+      .bullet-list {
+        margin: 0 0 var(--sp-6);
+        padding: 0;
+        list-style: none;
+      }
+      .bullet-list li {
+        position: relative;
+        padding-left: var(--sp-5);
+        margin-bottom: var(--sp-3);
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.98rem;
+      }
+      .bullet-list li::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0.7em;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--accent-rust);
+      }
+
+      /* 技巧卡片 */
+      .tip-card {
+        margin: 0 0 var(--sp-6);
+        padding: var(--sp-5) var(--sp-6);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+      }
+      .tip-card h4 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.05rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .tip-card h4::before {
+        content: '💡';
+        font-size: 1.1em;
+      }
+      .tip-card p {
+        margin: 0;
+        font-size: 0.95rem;
+        line-height: 1.7;
+      }
+
+      /* Skill 卡片网格 */
+      .skill-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--sp-5);
+        margin: 0 0 var(--sp-8);
+      }
+      .skill-card {
+        padding: var(--sp-6);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        transition: all 0.2s;
+      }
+      .skill-card:hover {
+        border-color: var(--accent-rust);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .skill-card .skill-head {
+        display: flex;
+        align-items: center;
+        gap: var(--sp-3);
+        margin-bottom: var(--sp-3);
+      }
+      .skill-card .skill-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: var(--r-md);
+        background: rgba(201, 119, 47, 0.12);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+      }
+      .skill-card .skill-name {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.1rem;
+        color: var(--text);
+      }
+      .skill-card .skill-desc {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+      }
+      .skill-card .skill-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: var(--sp-3);
+      }
+      .skill-card .skill-tags span {
+        padding: 3px 10px;
+        border-radius: 999px;
+        font-size: 0.72rem;
+        font-family: var(--font-mono);
+        background: rgba(201, 119, 47, 0.1);
+        color: var(--accent-rust);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">抖音搬运</div>
+      <h1>WorkBuddy 8个隐藏 Skill：<em>90% 的人不知道</em>的宝藏功能</h1>
+      <p>WorkBuddy 真正好用的地方藏在 SkillHub 里！8 个名字不起眼但超好用的 Skill，从数据可视化到 AI 写作去味，从突破反爬到安全扫描，掰开了揉碎了讲清楚。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 佚名</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-07-11</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 7 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 视频 · 搬运整理</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="WorkBuddy 隐藏Skill" src="" />
+    </div>
+
+    <article class="article-body">
+      <div class="section-marker">01 · 开篇</div>
+<h2>WorkBuddy 的宝藏藏在 SkillHub 里</h2>
+<p>很多人用 WorkBuddy，只用到了它最基础的聊天功能。但真正懂行的人都知道，WorkBuddy 最有价值的东西藏在 <span class="hl">SkillHub</span> 里面。</p>
+<p>SkillHub 里有很多名字看起来很普通，但实际上超级好用的隐藏技能。这些 Skill 往往因为名字不起眼，被 90% 的人忽略了。今天就来盘点 8 个最值得一试的隐藏 Skill，掰开了揉碎了讲清楚。</p>
+
+<div class="pull-quote">
+  <p>WorkBuddy 真正好用的地方藏在 SkillHub 里！8 个名字不起眼但超好用的 Skill，从数据可视化到 AI 写作去味，从突破反爬到安全扫描。</p>
+</div>
+
+<div class="section-marker">02 · 8个隐藏Skill</div>
+<h2>八大隐藏 Skill 逐一拆解</h2>
+<p>下面这 8 个 Skill，每一个都经过实测验证。不用再去一个个试了，直接收藏这篇文章，按需取用。</p>
+
+<div class="skill-grid">
+  <div class="skill-card">
+    <div class="skill-head">
+      <div class="skill-icon">📊</div>
+      <div class="skill-name">数据可视化 Skill</div>
+    </div>
+    <div class="skill-desc">
+      丢给它一堆数据，自动帮你生成各种图表。折线图、柱状图、饼图、热力图，一句话就能生成。不用再折腾 Excel 或 Python，数据分析直接出图。
+    </div>
+    <div class="skill-tags">
+      <span>数据分析</span>
+      <span>图表生成</span>
+      <span>效率提升</span>
+    </div>
+  </div>
+
+  <div class="skill-card">
+    <div class="skill-head">
+      <div class="skill-icon">✍️</div>
+      <div class="skill-name">AI 写作去味 Skill</div>
+    </div>
+    <div class="skill-desc">
+      AI 写的东西总有一股「AI 味」？这个 Skill 专门用来给 AI 文案「去味」，把生硬的 AI 腔调改成像人写的一样自然。自媒体、运营同学必备。
+    </div>
+    <div class="skill-tags">
+      <span>内容创作</span>
+      <span>文案优化</span>
+      <span>AI写作</span>
+    </div>
+  </div>
+
+  <div class="skill-card">
+    <div class="skill-head">
+      <div class="skill-icon">🕷️</div>
+      <div class="skill-name">突破反爬 Skill</div>
+    </div>
+    <div class="skill-desc">
+      爬虫被拦截？这个 Skill 能帮你绕过各种反爬机制。不管是动态页面、验证码、还是 IP 限制，都有对应的解决方案。技术小白也能上手。
+    </div>
+    <div class="skill-tags">
+      <span>爬虫</span>
+      <span>数据采集</span>
+      <span>反反爬</span>
+    </div>
+  </div>
+
+  <div class="skill-card">
+    <div class="skill-head">
+      <div class="skill-icon">🔒</div>
+      <div class="skill-name">安全扫描 Skill</div>
+    </div>
+    <div class="skill-desc">
+      自动扫描网站或代码的安全漏洞。SQL 注入、XSS、敏感信息泄露，一键检测。个人开发者也能做专业级安全检查。
+    </div>
+    <div class="skill-tags">
+      <span>安全</span>
+      <span>漏洞扫描</span>
+      <span>代码审计</span>
+    </div>
+  </div>
+
+  <div class="skill-card">
+    <div class="skill-head">
+      <div class="skill-icon">📝</div>
+      <div class="skill-name">长文总结 Skill</div>
+    </div>
+    <div class="skill-desc">
+      再长的文章、报告、论文，丢进去几分钟就能给你提炼出核心要点。不是简单的摘要，而是结构化的要点梳理，关键信息一个不落。
+    </div>
+    <div class="skill-tags">
+      <span>信息整理</span>
+      <span>阅读效率</span>
+      <span>知识管理</span>
+    </div>
+  </div>
+
+  <div class="skill-card">
+    <div class="skill-head">
+      <div class="skill-icon">🔍</div>
+      <div class="skill-name">深度搜索 Skill</div>
+    </div>
+    <div class="skill-desc">
+      不只是简单的关键词搜索，而是能帮你做深度调研。从多个维度搜集信息、交叉验证、整理成结构化报告。做研究、写报告的好帮手。
+    </div>
+    <div class="skill-tags">
+      <span>信息检索</span>
+      <span>深度调研</span>
+      <span>研究助手</span>
+    </div>
+  </div>
+
+  <div class="skill-card">
+    <div class="skill-head">
+      <div class="skill-icon">💻</div>
+      <div class="skill-name">代码解释 Skill</div>
+    </div>
+    <div class="skill-desc">
+      看不懂的代码丢进去，给你讲得明明白白。不仅解释逻辑、标注重构、甚至帮你写测试用例。学代码、读开源项目利器。
+    </div>
+    <div class="skill-tags">
+      <span>编程</span>
+      <span>代码理解</span>
+      <span>学习助手</span>
+    </div>
+  </div>
+
+  <div class="skill-card">
+    <div class="skill-head">
+      <div class="skill-icon">⚡</div>
+      <div class="skill-name">自动化工作流 Skill</div>
+    </div>
+    <div class="skill-desc">
+      把重复性工作串起来自动执行。从数据采集、处理、到输出报告，全流程自动化。省下来的时间去做更有价值的事。
+    </div>
+    <div class="skill-tags">
+      <span>自动化</span>
+      <span>效率工具</span>
+      <span>工作流</span>
+    </div>
+  </div>
+</div>
+
+<div class="tip-card">
+  <h4>使用建议</h4>
+  <p>不用一下子把 8 个 Skill 全用上。先选 2-3 个你最常用的场景，用熟练了再加。工具是工具是工具，关键在于用起来才有用。</p>
+</div>
+
+<div class="section-marker">03 · 为什么这些Skill容易被忽略</div>
+<h2>为什么好东西总被错过</h2>
+<p>这些 Skill 之所以成为「隐藏技能」，主要有几个原因：</p>
+<ul class="bullet-list">
+  <li><strong>名字太普通</strong>：听起来不像什么厉害功能，点进去才发现是宝藏</li>
+  <li><strong>入口深</strong>：藏在 SkillHub 里面，不特意翻根本看不到</li>
+  <li><strong>缺乏介绍太简短</strong>：一句话描述看不出威力，用过才知道好</li>
+  <li><strong>需要组合使用</strong>：单个用一般，组合起来威力倍增</li>
+</ul>
+
+<div class="info-box info-box-jade">
+  <strong>小技巧：</strong>定期逛逛 SkillHub，每次随便翻一翻，说不定就能发现新宝贝。AI 工具更新很快，新技能层出不穷。
+</div>
+
+<div class="section-marker">04 · 组合使用思路</div>
+<h2>Skill 组合使用威力倍增</h2>
+<p>单个 Skill 已经很好用，但真正的真正真正真正组合起来用，效果才是真正的威力。举几个常见的组合场景：</p>
+
+<div class="timeline">
+  <div class="tl-item">
+    <div class="tl-time">场景一</div>
+    <div class="tl-text"><strong>数据报告全流程</strong>：突破反爬 → 数据采集 → 数据可视化 → 长文总结，一份完整的数据报告全自动</div>
+  </div>
+  <div class="tl-item">
+    <div class="tl-time">场景二</div>
+    <div class="tl-text"><strong>内容创作</strong>：深度搜索 → AI 去味 → 长文总结，从选题到成稿一条龙</div>
+  </div>
+  <div class="tl-item">
+    <div class="tl-time">场景三</div>
+    <div class="tl-text"><strong>代码审计</strong>：突破反爬 → 安全扫描 → 代码解释，全面的代码安全检查</div>
+  </div>
+  <div class="tl-item">
+    <div class="tl-time">场景四</div>
+    <div class="tl-text"><strong>竞品分析</strong>：深度搜索 → 数据可视化 → 长文总结，竞品分析报告自动生成</div>
+  </div>
+</div>
+
+<div class="pull-quote">
+  <p>Skill 就像乐高积木，单个看平平无奇，组合起来能搭出一整个世界。</p>
+</div>
+
+<div class="section-marker">05 · 写在最后</div>
+<h2>用好工具，提升效率</h2>
+<p>AI 时代，人与人之间的差距，往往不是会不会用工具的差距，而是会不会用工具的差距。同样一个 WorkBuddy，有人用得好的人效率翻倍，用不好的人觉得也就那样。</p>
+<p>这 8 个隐藏 Skill，你用过几个？或者你还有什么私藏的好用 Skill？评论区聊聊。</p>
+
+<div class="info-box">
+  <strong>最后想说：</strong>工具永远是工具，关键在于使用工具的人。找到适合自己的那几个，用熟练，比收藏一百个都有用。
+</div>
+
+      <div class="section-marker">06 · 原视频</div>
+<h2>原视频</h2>
+<p>点击下方按钮前往抖音观看原视频。</p>
+    <div class="cta-box">
+      <div class="content">
+        <h3>去抖音看原视频</h3>
+        <p>点击跳转抖音原视频页</p>
+      <a class="cta-btn" id="cta-link" href="https://www.iesdouyin.com/share/video/7660493457156279567/?region=CN&mid=7660493518489553715&u_code=jmha93a5&did=MS4wLjABAAAApGsVQhc7a78WngfBMOYbEGiD-v5YTthFg_663KbDKI-GLDinlKF6LEN4_oEr0AZ_&iid=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=9QipxMaQjtkA1QKY8tLRnCw8AZ6c.pxxz_x.9FvIMao-&share_version=801001&ts=1783762726&from_aid=6383&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D&from=web_code_link" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往抖音
+        </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="#">#WorkBuddy</a>
+      <a href="#">#SkillHub</a>
+      <a href="#">#AI工具</a>
+      <a href="#">#人工智能</a>
+      <a href="#">#程序员</a>
+      <a href="#">#数据可视化</a>
+      <a href="#">#AI写作</a>
+      <a href="#">#安全扫描</a>
+      <a href="#">#抖音</a>
+    </div>
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用。视频封面版权归抖音原视频作者所有。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
