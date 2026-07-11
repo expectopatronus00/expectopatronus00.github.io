@@ -3,6 +3,24 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'dy-7659073795524676890',
+            title: 'Loop Engineering：把一次成功变成可复用的循环',
+            url: '../post/dy-7659073795524676890/dy-7659073795524676890.html',
+            summary: '博主分享对Loop Engineering的个人理解——把一次成功变可复用。Loop Engineering更像是把"怎么循环、怎么验收、什么时候结束"设计清楚，让AI Agent在无人值守下自迭代。',
+            category: 'AI编程',
+            date: '2026-07-11',
+            tags: ["LoopEngineering","AI编程","Agent","循环工程","AI工具","个人学习记录","抖音"],
+          },
+          {
+            id: 'dy-7649328369801517233',
+            title: '一秒拥有顶级UI设计能力：Vibe Coding专业设计工具',
+            url: '../post/dy-7649328369801517233/dy-7649328369801517233.html',
+            summary: '抖音博主分享Vibe Coding专业设计工具——一秒拥有顶级UI设计能力。在AI编程时代，程序员如何快速补齐UI设计短板，让生成的界面不再"巨土"。',
+            category: 'AI编程',
+            date: '2026-07-11',
+            tags: ["vibecoding","UI设计","程序员","AI编程","软件开发","agent","抖音"],
+          },
+          {
             id: 'dy-7660493457156279567',
             title: 'WorkBuddy 8个隐藏Skill：90%的人不知道的宝藏功能',
             url: '../post/dy-7660493457156279567/dy-7660493457156279567.html',
