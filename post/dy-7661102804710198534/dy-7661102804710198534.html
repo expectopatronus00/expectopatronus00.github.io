@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2800+真实项目：挖掘创业副业灵感的神级网站 · EXPECTOPATRONUS</title>
+    <meta name="description" content="一个收录了2800+真实项目的网站，帮助创业者和副业探索者发现机会、挖掘灵感" />
+    <meta name="keywords" content="创业灵感,副业,2800项目,网站分享,神级网站,创业者,AI工具测评,抖音" />
+    <meta property="og:title" content="2800+真实项目：挖掘创业副业灵感的神级网站" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="一个收录了2800+真实项目的网站，帮助创业者和副业探索者发现机会、挖掘灵感" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 圆点列表 */
+      .bullet-list { margin: 0 0 var(--sp-6); padding: 0; list-style: none; }
+      .bullet-list li { position: relative; padding-left: var(--sp-5); margin-bottom: var(--sp-3); font-family: var(--font-serif); color: var(--text-soft); line-height: 1.8; font-size: 0.98rem; }
+      .bullet-list li::before { content: ''; position: absolute; left: 0; top: 0.7em; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-rust); }
+
+      /* 技巧卡片 */
+      .tip-card { margin: 0 0 var(--sp-6); padding: var(--sp-5) var(--sp-6); border-radius: var(--r-lg); background: var(--bg-card); border: 1px solid var(--line); }
+      .tip-card h4 { font-family: var(--font-display); font-weight: 500; font-size: 1.05rem; color: var(--text); margin: 0 0 var(--sp-3); display: flex; align-items: center; gap: 8px; }
+      .tip-card h4::before { content: '💡'; font-size: 1.1em; }
+      .tip-card p { margin: 0; font-size: 0.95rem; line-height: 1.7; }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">抖音搬运</div>
+      <h1>2800+真实项目：挖掘创业副业灵感的<em>神级网站</em></h1>
+      <p>一个收录了 2800+ 真实项目的网站，帮助创业者和副业探索者从海量真实案例中发现机会、获取灵感，找到属于自己的方向。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 佚名</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-07-11</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 5 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 视频 · 搬运整理</span>
+      </div>
+    </section>
+
+    <article class="article-body">
+
+      <div class="section-marker">01 · 这个网站是什么</div>
+      <h2>这个网站是什么</h2>
+      <p>在互联网创业和副业探索的浪潮中，很多人面临的最大问题不是「不想做」，而是<strong>「不知道做什么」</strong>。这个网站正是为解决这个痛点而生——它收录了超过 <span class="hl">2800+ 个真实项目</span>，涵盖各类创业方向、副业模式和商业案例，堪称一座创业灵感的宝库。</p>
+      <p>不同于那些只罗列概念的网站，它的每一个项目都来自真实世界，有据可查、有迹可循。无论你是想找一个小而美的副业方向，还是在规划一个完整的创业蓝图，这里都能为你提供<strong>参考坐标</strong>。</p>
+
+      <div class="info-box">
+        <strong>核心定位：</strong>一个以「真实项目」为线索的创业灵感库，帮助用户从案例出发，找到适合自己的创业或副业方向。
+      </div>
+
+      <div class="section-marker">02 · 2800+真实项目的价值</div>
+      <h2>2800+真实项目的价值</h2>
+      <p>为什么「真实项目」这么重要？因为创业最大的敌人不是竞争，而是<strong>信息差</strong>。当你能看到别人已经跑通的模式，你的起点就比别人高了一大截。</p>
+      <ul class="bullet-list">
+        <li><span class="hl">验证可行性</span>——真实项目意味着有人已经做过了，证明这条路是走得通的</li>
+        <li><span class="hl">降低试错成本</span>——从别人的经验中学习，避免踩同样的坑</li>
+        <li><span class="hl">发现蓝海机会</span>——2800+ 的项目量级中，藏着大量被忽视的细分领域</li>
+        <li><span class="hl">激发组合创新</span>——不同项目的交叉参考，可能碰撞出全新的商业模式</li>
+        <li><span class="hl">对标竞品分析</span>——找到同类型项目，理解市场格局和差异化方向</li>
+      </ul>
+
+      <div class="pull-quote">
+        <p>2800+ 不是一个数字，而是 2800+ 次有人把想法变成现实的证明。每一次验证，都在告诉你：这件事，真的可以做成。</p>
+      </div>
+
+      <div class="section-marker">03 · 如何挖掘创业灵感</div>
+      <h2>如何挖掘创业灵感</h2>
+      <p>拥有 2800+ 项目的数据库，如果只是随便翻翻，那无疑是暴殄天物。以下是几个高效挖掘创业灵感的方法：</p>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">Step 1</div>
+          <div class="tl-text"><strong>明确自身优势</strong>——先梳理你的技能、资源和兴趣，这是筛选项目的前提条件</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Step 2</div>
+          <div class="tl-text"><strong>按行业/领域筛选</strong>——聚焦你熟悉的或感兴趣的赛道，缩小浏览范围</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Step 3</div>
+          <div class="tl-text"><strong>拆解项目逻辑</strong>——不要只看表面，分析项目的获客方式、盈利模型和核心壁垒</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Step 4</div>
+          <div class="tl-text"><strong>寻找可迁移模式</strong>——将 A 领域的项目模式迁移到 B 领域，往往能产生创新</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Step 5</div>
+          <div class="tl-text"><strong>小步快跑验证</strong>——灵感到手后快速做 MVP 测试，用最小成本验证市场反馈</div>
+        </div>
+      </div>
+
+      <div class="tip-card">
+        <h4>灵感挖掘的黄金法则</h4>
+        <p>不要只看「成功案例」，更要关注那些<strong>中途转型</strong>的项目——转型的原因往往比成功的路径更有参考价值。理解别人为什么放弃，能帮你避开 80% 的坑。</p>
+      </div>
+
+      <div class="section-marker">04 · 如何发现副业机会</div>
+      <h2>如何发现副业机会</h2>
+      <p>对于大多数人来说，创业可能还太远，但副业是当下就可以开始的。这个网站同样适合副业探索者，关键在于如何找到与主业兼容、时间灵活的方向。</p>
+
+      <ul class="bullet-list">
+        <li><strong>低门槛启动</strong>——优先选择不需要大量启动资金和复杂资质的项目，如内容创作、工具开发、咨询服务</li>
+        <li><strong>时间可控</strong>——关注那些可以异步完成、不受固定时段约束的项目模式</li>
+        <li><strong>复利效应</strong>——寻找能积累资产（如作品集、用户群、数据集）的副业，而非一次性交付</li>
+        <li><strong>技能杠杆</strong>——用你已有的专业技能作为切入点，降低学习成本</li>
+        <li><strong>平台红利</strong>——关注新兴平台上的早期机会，如 AI 原生应用、短视频电商、垂直社区</li>
+      </ul>
+
+      <div class="info-box info-box-jade">
+        <strong>副业核心思路：</strong>副业不是「找第二份工作」，而是「用碎片时间建立第二增长曲线」。关键是找到边际成本低、可规模化的方向。
+      </div>
+
+      <div class="section-marker">05 · AI时代的创业副业新趋势</div>
+      <h2>AI时代的创业副业新趋势</h2>
+      <p>2026 年，<span class="hl">AI 已经重塑了创业和副业的底层逻辑</span>。过去需要一个团队才能完成的事情，现在一个人加上 AI 工具就能搞定。这意味着：</p>
+
+      <ul class="bullet-list">
+        <li><strong>一人公司</strong>（Solopreneur）成为可能——AI 承担了设计、编程、文案等角色，极大降低了团队成本</li>
+        <li><strong>AI 原生产品</strong>涌现——围绕大模型能力构建的新产品、新服务层出不穷</li>
+        <li><strong>自动化副业</strong>兴起——利用 AI 工作流实现半自动化运营，让副业更省力</li>
+        <li><strong>知识付费升级</strong>——AI 工具教程、提示词工程、AI 应用测评等内容赛道持续火热</li>
+        <li><strong>垂直细分机会</strong>——通用 AI 能力下放后，谁先深耕垂直场景，谁就能占得先机</li>
+      </ul>
+
+      <div class="pull-quote">
+        <p>AI 时代最大的机会不在于「用 AI 做什么」，而在于「AI 还做不了什么」。找到 AI 的能力边界，就是你的创业护城河。</p>
+      </div>
+
+      <div class="section-marker">06 · 使用建议与注意事项</div>
+      <h2>使用建议与注意事项</h2>
+      <p>任何工具的价值都取决于使用者如何运用它。以下是一些实用的建议，帮你从这个项目库中获得最大收益：</p>
+
+      <div class="tip-card">
+        <h4>高效使用建议</h4>
+        <p>带着问题去浏览，而不是漫无目的地刷。<strong>先列出你的约束条件</strong>（预算、时间、技能），再据此筛选项目。每看一个项目，问自己三个问题：我能做吗？我想做吗？有人需要吗？三个「是」就是你的方向。</p>
+      </div>
+
+      <ul class="bullet-list">
+        <li><strong>不要照搬</strong>——别人的成功路径不可复制，但底层逻辑可以借鉴</li>
+        <li><strong>注意时效性</strong>——部分项目信息可能已过时，务必交叉验证当前市场状况</li>
+        <li><strong>关注失败案例</strong>——知道为什么失败，比知道为什么成功更有价值</li>
+        <li><strong>结合本地化</strong>——海外项目需要考虑国内市场的差异和本地化改造</li>
+        <li><strong>警惕幸存者偏差</strong>——你看到的是活下来的项目，还有更多你看不到的已经消亡</li>
+      </ul>
+
+      <div class="info-box">
+        <strong>重要提醒：</strong>项目库提供的是灵感和方向，不是现成的成功模板。任何项目都需要你结合自身情况做深入调研和验证，切忌盲目跟风。
+      </div>
+
+      <div class="section-marker">07 · 原视频</div>
+      <h2>原视频</h2>
+      <p>以下为抖音原视频，点击前往观看完整内容。</p>
+      <div class="cta-box">
+        <div class="content">
+          <h3>去抖音看原视频</h3>
+          <p>它有2800+真实项目，挖掘创业副业灵感</p>
+        <a class="cta-btn" id="cta-link" href="https://www.iesdouyin.com/share/video/7661102804710198534/?region=CN&mid=7661102801728162601&u_code=jmha93a5&did=MS4wLjABAAAApGsVQhc7a78WngfBMOYbEGiD-v5YTthFg_663KbDKI-GLDinlKF6LEN4_oEr0AZ_&iid=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=xyx0OEadgftbRKz8JEGT8YexizcKMCMH8_hsfTvmYTA-&share_version=801001&ts=1783778420&from_aid=6383&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D&from=web_code_link" target="_blank" rel="noopener">
+            <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往抖音
+          </a>
+        </div>
+      </div>
+      <div class="tags-row">
+        <a href="#">#创业灵感</a>
+        <a href="#">#副业</a>
+        <a href="#">#2800项目</a>
+        <a href="#">#网站分享</a>
+        <a href="#">#神级网站</a>
+        <a href="#">#创业者</a>
+        <a href="#">#AI工具测评</a>
+        <a href="#">#抖音</a>
+      </div>
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用。视频封面版权归抖音原视频作者所有。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
