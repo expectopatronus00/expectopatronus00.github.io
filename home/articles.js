@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'dy-7659729868686533541',
+            title: '硬核开源项目分享第九期：awesome-llm-apps',
+            url: '../post/dy-7659729868686533541/dy-7659729868686533541.html',
+            summary: '抖音博主硬核开源分享第九期——awesome-llm-apps开源AI项目合集。收录AI助手、RAG、Agent、多模态等大模型应用，帮助开发者快速找到LLM应用灵感。',
+            category: '开源项目',
+            date: '2026-07-12',
+            tags: ["awesome-llm-apps","开源项目","大模型","LLM应用","AI开源","agent","程序员","抖音"],
+          },
+          {
             id: 'dy-7651221727833279784',
             title: '微信公众号AI运营Skill套件：让公众号运营事半功倍',
             url: '../post/dy-7651221727833279784/dy-7651221727833279784.html',

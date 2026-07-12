@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>硬核开源项目分享第九期：awesome-llm-apps · EXPECTOPATRONUS</title>
+    <meta name="description" content="硬核开源项目分享第九期——awesome-llm-apps，一个收录了各种大模型应用的开源项目合集。本文带你了解它是什么、为什么值得关注、收录了哪些应用、如何使用，以及对开发者的实际价值。" />
+    <meta name="keywords" content="awesome-llm-apps,开源项目,大模型,LLM应用,AI开源,agent,程序员,抖音" />
+    <meta property="og:title" content="硬核开源项目分享第九期：awesome-llm-apps" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="硬核开源项目分享第九期——awesome-llm-apps，一个收录了各种大模型应用的开源项目合集。本文带你了解它是什么、为什么值得关注、收录了哪些应用、如何使用，以及对开发者的实际价值。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 圆点列表 */
+      .bullet-list { margin: 0 0 var(--sp-6); padding: 0; list-style: none; }
+      .bullet-list li { position: relative; padding-left: var(--sp-5); margin-bottom: var(--sp-3); font-family: var(--font-serif); color: var(--text-soft); line-height: 1.8; font-size: 0.98rem; }
+      .bullet-list li::before { content: ''; position: absolute; left: 0; top: 0.7em; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-rust); }
+
+      /* 技巧卡片 */
+      .tip-card { margin: 0 0 var(--sp-6); padding: var(--sp-5) var(--sp-6); border-radius: var(--r-lg); background: var(--bg-card); border: 1px solid var(--line); }
+      .tip-card h4 { font-family: var(--font-display); font-weight: 500; font-size: 1.05rem; color: var(--text); margin: 0 0 var(--sp-3); display: flex; align-items: center; gap: 8px; }
+      .tip-card h4::before { content: '💡'; font-size: 1.1em; }
+      .tip-card p { margin: 0; font-size: 0.95rem; line-height: 1.7; }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">抖音搬运</div>
+      <h1>硬核开源项目分享第九期：<em>awesome-llm-apps</em></h1>
+      <p>抖音「硬核开源项目分享」系列第九期带来 <strong>awesome-llm-apps</strong>——一个公开开源的 AI 项目合集，收录了各种基于大语言模型的应用示例。本项目为纯技术知识讲解分享，帮助开发者快速找到大模型应用灵感，从 Agent、RAG 到 AI 助手，一站收齐可直接复用的 LLM 应用模板。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 硬核开源分享</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-07-12</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 6 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 视频 · 搬运整理</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="视频封面" src="" />
+    </div>
+
+    <article class="article-body">
+      <div class="section-marker">01 · awesome-llm-apps 是什么</div>
+      <h2>一个大模型应用的「开源合集」</h2>
+      <p><strong>awesome-llm-apps</strong> 是一个托管在 GitHub 上的开源项目合集，顾名思义——「<span class="hl">awesome</span>」系列收录的，是各种基于大语言模型（LLM）的真实应用。它不是某个单一产品，而是一座<strong>面向开发者的 LLM 应用素材库</strong>。</p>
+      <p>与普通的「awesome 列表」只堆链接不同，awesome-llm-apps 的特别之处在于：每一个收录的应用都附带<strong>完整可运行的源码</strong>，克隆下来就能跑。这让它在「资料汇总」和「即用模板」之间找到了一个独特的位置。</p>
+
+      <ul class="bullet-list">
+        <li><strong>开源公开</strong>——MIT 协议，任何人都能自由查看、学习、二次开发</li>
+        <li><strong>纯技术分享</strong>——定位为技术知识讲解，无商业绑定，无引流套路</li>
+        <li><strong>覆盖面广</strong>——从 AI 助手、RAG 知识库到 Agent 智能体，主流方向一网打尽</li>
+        <li><strong>即用即跑</strong>——每个应用都带完整源码与依赖说明，克隆即用</li>
+      </ul>
+
+      <div class="info-box">
+        <strong>一句话定位：</strong>awesome-llm-apps 是大模型时代的「应用样板间」——你不必从零造轮子，先看别人怎么把 LLM 落地成真实应用。
+      </div>
+
+      <div class="section-marker">02 · 为什么值得关注</div>
+      <h2>它解决了开发者的什么痛点</h2>
+      <p>大模型火了两年多，但很多开发者依然卡在同一个问题上：<strong>知道 LLM 很强，却不知道能拿它做什么</strong>。官方文档教你怎么调 API，教程教你怎么写 Prompt，但「从 API 到一个完整应用」之间那段路，始终少有人带。</p>
+      <p>awesome-llm-apps 正好补上了这一段。它值得关注的理由很实在：</p>
+
+      <ul class="bullet-list">
+        <li><strong>摆脱「Hello World 陷阱」</strong>——不再停留在「调通接口就结束」，而是看到完整的产品形态</li>
+        <li><strong>降低试错成本</strong>——别人踩过的坑、走过的弯路，都凝结成可复用的代码结构</li>
+        <li><strong>建立应用直觉</strong>——批量浏览成熟案例，能快速建立「LLM 适合做什么」的判断力</li>
+        <li><strong>跟上技术风向</strong>——合集持续更新，Agent、RAG、多模态等新方向第一时间被收录</li>
+        <li><strong>开源可商用</strong>——MIT 协议意味着你可以直接拿去改造成自己的产品起点</li>
+      </ul>
+
+      <div class="tip-card">
+        <h4>新手友好</h4>
+        <p>对刚接触大模型的开发者来说，awesome-llm-apps 是一条<strong>从「会用 API」到「会做应用」</strong>的捷径。与其对着空白工程发呆，不如先拆解一个跑通的真实项目。</p>
+      </div>
+
+      <div class="section-marker">03 · 项目收录了哪些应用</div>
+      <h2>主流 LLM 应用方向一览</h2>
+      <p>awesome-llm-apps 的收录思路是「<span class="hl">按应用形态分类</span>」，让开发者能按需取用。下面是几个主要的方向脉络：</p>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">AI 助手</div>
+          <div class="tl-text"><strong>个人 AI 助手类应用</strong>——集成多种工具与记忆能力，模拟「私人助理」形态，是 LLM 最直观的落地形态之一。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">RAG</div>
+          <div class="tl-text"><strong>检索增强生成应用</strong>——结合向量数据库与私有知识，让模型基于你的文档作答，是企业知识库的核心模式。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Agent</div>
+          <div class="tl-text"><strong>智能体应用</strong>——具备规划、工具调用、自主决策能力的 Agent 示例，展示 LLM 如何「主动干活」而非「被动问答」。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">多模态</div>
+          <div class="tl-text"><strong>多模态应用</strong>——涉及图像、语音、文档等多种输入形态的处理，体现 LLM 与视觉、语音模型的协同。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">行业场景</div>
+          <div class="tl-text"><strong>垂直行业应用</strong>——面向写作、编程、教育、客服等具体场景的定制化应用，贴近真实业务需求。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">工具集成</div>
+          <div class="tl-text"><strong>工具调用与工作流</strong>——把 LLM 与外部 API、数据库、自动化工具串联，构建可执行真实任务的系统。</div>
+        </div>
+      </div>
+
+      <div class="info-box info-box-jade">
+        <strong>提示：</strong>具体收录的应用会随项目更新而变化，建议直接到 GitHub 仓库查看最新目录，按自己感兴趣的方向挑一两个深入拆解，比囫囵浏览更有收获。
+      </div>
+
+      <div class="section-marker">04 · 如何使用这个项目</div>
+      <h2>从浏览到落地的四步法</h2>
+      <p>拿到这样一个合集，最忌讳的就是「从头到尾刷一遍」——信息量太大，反而容易迷失。推荐按下面的节奏来用：</p>
+
+      <ul class="bullet-list">
+        <li><strong>第一步 · 浏览目录</strong>——先不读代码，只看每个应用的标题和简介，建立全局认知</li>
+        <li><strong>第二步 · 选定方向</strong>——结合自己手头的需求或兴趣，锁定 1～2 个最相关的应用</li>
+        <li><strong>第三步 · 克隆运行</strong>——把仓库 clone 到本地，照着 README 把选定应用跑起来</li>
+        <li><strong>第四步 · 拆解改造</strong>——逐文件读懂结构，然后替换成自己的数据、Prompt、模型，改造成属于你的版本</li>
+      </ul>
+
+      <div class="tip-card">
+        <h4>克隆即用</h4>
+        <p>大多数应用都附带了环境依赖说明和示例数据，按 README 步骤配置好 Python 环境与 API Key 后，就能本地运行体验效果，<strong>建议先跑通再读代码</strong>，有体感之后再理解起来事半功倍。</p>
+      </div>
+
+      <div class="tip-card">
+        <h4>注意 API Key 安全</h4>
+        <p>运行示例需要配置各家模型的 API Key，请务必使用环境变量或 <code>.env</code> 文件管理，<strong>切勿把 Key 硬编码进代码或提交到公开仓库</strong>，以免造成费用损失或信息泄露。</p>
+      </div>
+
+      <div class="section-marker">05 · 对开发者的价值</div>
+      <h2>不止是代码，更是「应用图谱」</h2>
+      <p>对开发者而言，awesome-llm-apps 的价值远不止「拿到几份能跑的代码」。它真正提供的，是一张<strong>大模型应用的落地图谱</strong>——告诉你哪些方向已经被验证、哪些模式值得复用、哪些坑可以绕开。</p>
+
+      <div class="tip-card">
+        <h4>学习价值</h4>
+        <p>每个应用都是一次完整的工程实践：Prompt 设计、上下文管理、工具调用、错误处理、状态保存……这些在文档里很难讲清的「工程细节」，在真实代码里一目了然。读优质代码，本身就是最高效的学习方式之一。</p>
+      </div>
+
+      <div class="tip-card">
+        <h4>起步价值</h4>
+        <p>做新项目时，与其从空文件夹开始，不如找一个形态接近的应用做骨架。把数据层、Prompt、UI 替换成自己的，能省下大量搭脚手架的时间，把精力集中在真正有差异化的部分。</p>
+      </div>
+
+      <div class="tip-card">
+        <h4>选型价值</h4>
+        <p>合集里同一方向往往有多个实现，对比它们的架构选择、依赖取舍、复杂度差异，能帮你建立对 LLM 应用工程权衡的判断力——这种「横向对比」的机会，单看一个项目是得不到的。</p>
+      </div>
+
+      <div class="pull-quote">
+        <p>看懂一个 LLM 应用怎么做，比记住十个 Prompt 模板更有用——前者给你的是「<em>造物的方法</em>」，后者给你的只是「拼装的零件」。</p>
+      </div>
+
+      <div class="section-marker">06 · 开源社区与生态</div>
+      <h2>为什么开源能跑赢闭源</h2>
+      <p>awesome-llm-apps 之所以能持续焕发活力，靠的是<strong>开源社区的共建机制</strong>。大模型应用方向迭代极快，单靠一个团队根本追不上——而开源把「发现好应用、贡献好代码」这件事，分发给了全球开发者。</p>
+
+      <ul class="bullet-list">
+        <li><strong>持续更新</strong>——新模型、新框架、新范式出现后，社区会快速跟进并提交对应的应用示例</li>
+        <li><strong>多元视角</strong>——不同背景的贡献者带来不同行业的落地经验，让合集覆盖面远超单一团队</li>
+        <li><strong>质量自纠</strong>——开源代码接受公开审视，问题会被 Issue 暴露、被 PR 修复，整体质量持续提升</li>
+        <li><strong>生态联动</strong>——与 LangChain、LlamaIndex、各类向量库等上下游开源项目形成互补与共振</li>
+        <li><strong>低门槛参与</strong>——任何人都能从提交一个应用、修一个文档错字开始，逐步深入参与共建</li>
+      </ul>
+
+      <div class="info-box">
+        <strong>给开发者的建议：</strong>如果你在某次实践中做出一个好用的 LLM 应用，不妨按仓库规范提交一个 PR 回馈社区。开源的本质是「<span class="hl">取之于社区，用之于社区</span>」——你贡献的每一个示例，都可能成为下一位开发者的起点。
+      </div>
+
+      <p>这种「合集 + 社区」的模式，也是当下 AI 开源生态的缩影：闭源产品赢在打磨与体验，开源项目赢在<strong>速度、广度与可定制性</strong>。对学习者而言，拥抱开源，就是拥抱这个时代最快的进化通道。</p>
+
+      <div class="section-marker">07 · 原视频</div>
+      <h2>去抖音看完整分享</h2>
+      <p>本文是对抖音「硬核开源项目分享第九期」视频的整理搬运，原视频对 awesome-llm-apps 有更直观的讲解与演示。想要看原汁原味的分享，点击下方按钮前往抖音观看。</p>
+    <div class="cta-box">
+      <div class="content">
+        <h3>去抖音看原视频</h3>
+        <p>点击跳转抖音，观看「硬核开源项目分享第九期 · awesome-llm-apps」完整视频</p>
+      <a class="cta-btn" id="cta-link" href="https://www.iesdouyin.com/share/video/7659729868686533541/?region=CN&mid=7175704290304378939&u_code=jmha93a5&did=MS4wLjABAAAApGsVQhc7a78WngfBMOYbEGiD-v5YTthFg_663KbDKI-GLDinlKF6LEN4_oEr0AZ_&iid=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=GB8JZF7LjaNaCc8iDCUlqDi5diREtgc4l1UmRPgVzvQ-&share_version=801001&ts=1783863396&from_aid=6383&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D&from=web_code_link" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往抖音
+        </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?tag=awesome-llm-apps">#awesome-llm-apps</a>
+      <a href="../../home/home.html?tag=开源项目">#开源项目</a>
+      <a href="../../home/home.html?tag=大模型">#大模型</a>
+      <a href="../../home/home.html?tag=LLM应用">#LLM应用</a>
+      <a href="../../home/home.html?tag=AI开源">#AI开源</a>
+      <a href="../../home/home.html?tag=agent">#agent</a>
+      <a href="../../home/home.html?tag=程序员">#程序员</a>
+      <a href="../../home/home.html?tag=抖音">#抖音</a>
+    </div>
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用。视频封面版权归抖音原视频作者所有。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
