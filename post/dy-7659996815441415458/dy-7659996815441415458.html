@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>一次讲透AI计费：输入输出Token与缓存命中 · EXPECTOPATRONUS</title>
+    <meta name="description" content="用动画视频形式讲解AI Token计费机制，包括输入输出Token、缓存命中等内容。一次讲透AI计费。" />
+    <meta name="keywords" content="Token,AI计费,缓存命中,AI成本,动画视频,大模型,AI教程,抖音" />
+    <meta property="og:title" content="一次讲透AI计费：输入输出Token与缓存命中" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="用动画视频形式讲解AI Token计费机制，包括输入输出Token、缓存命中等内容。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 列表组件（要点列表） */
+      .bullet-list { margin: 0 0 var(--sp-6); padding: 0; list-style: none; }
+      .bullet-list li { position: relative; padding-left: var(--sp-5); margin-bottom: var(--sp-3); font-family: var(--font-serif); color: var(--text-soft); line-height: 1.8; font-size: 0.98rem; }
+      .bullet-list li::before { content: ''; position: absolute; left: 0; top: 0.7em; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-rust); }
+
+      /* 提示卡片 */
+      .tip-card { margin: 0 0 var(--sp-6); padding: var(--sp-5) var(--sp-6); border-radius: var(--r-lg); background: var(--bg-card); border: 1px solid var(--line); }
+      .tip-card h4 { font-family: var(--font-display); font-weight: 500; font-size: 1.05rem; color: var(--text); margin: 0 0 var(--sp-3); display: flex; align-items: center; gap: 8px; }
+      .tip-card h4::before { content: '💡'; font-size: 1.1em; }
+      .tip-card p { margin: 0; font-size: 0.95rem; line-height: 1.7; }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">抖音搬运</div>
+      <h1>一次讲透AI计费：<em>输入输出Token与缓存命中</em></h1>
+      <p>调用一次大模型，账单上到底写了什么？这篇用动画视频拆解 AI 计费的全过程——从 Token 是什么，到输入输出怎么分开收费，再到「缓存命中」这条最容易被忽视的省钱捷径。看懂这三件事，你就能在每次请求里看到钱是怎么花出去的。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 佚名</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-07-12</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 6 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 动画视频 · 搬运整理</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="一次讲透AI计费：输入输出Token与缓存命中" src="" />
+    </div>
+
+    <article class="article-body">
+      <div class="section-marker">01 · AI计费为什么让人困惑</div>
+      <h2>AI计费为什么让人困惑</h2>
+      <p>很多人第一次看到大模型的账单都会愣住：明明只问了一句话，怎么费用忽高忽低？同样的提示词，这次几分钱，下次就翻倍。这种「看不懂的账单」背后，藏着一套和我们日常订阅软件完全不同的计费逻辑——<span class="hl">按用量计费，而不是按时间</span>。</p>
+      <p>困惑的根源主要有三个：一是计费单位 <strong>Token</strong> 对大多数人来说是个新概念；二是「输入」和「输出」要分开算钱，单价还不一样；三是「缓存命中」这种隐藏的折扣机制，没人主动告诉你。这篇视频就是要把这三件事一次性讲清楚。</p>
+      <ul class="bullet-list">
+        <li>计费单位是 Token，不是字、不是次数、也不是分钟</li>
+        <li>输入 Token 和输出 Token 价格不同，输出通常贵 3~5 倍</li>
+        <li>命中缓存的部分会大幅打折，是省成本的关键开关</li>
+        <li>不同模型厂商计价方式差异大，跨厂商对比要看单价而不是总价</li>
+      </ul>
+      <div class="info-box">看懂 AI 计费，本质上是在看懂「一次请求」里到底发生了什么。账单上的每一个数字，都对应着模型在背后做的一次计算或一次读取。</div>
+
+      <div class="section-marker">02 · Token是什么</div>
+      <h2>Token是什么</h2>
+      <p>Token 是大模型处理文本的最小单位。可以把它理解成「模型的字符切片」——它不等于一个汉字，也不等于一个英文单词，而是模型用分词器把文本切开后的<strong>一段片段</strong>。一个 Token 可能是一个完整的词，也可能只是半个汉字。</p>
+      <p>中文场景下，一个汉字通常对应 1~2 个 Token；英文里一个常见单词大约是 1 个 Token。这也是为什么同样长度的中英文，中文消耗的 Token 往往更多——<span class="hl">分词方式决定了成本</span>。</p>
+      <ul class="bullet-list">
+        <li><strong>英文单词</strong>：常见词约 1 Token，如 "apple" ≈ 1 Token</li>
+        <li><strong>中文字符</strong>：常见字约 1~2 Token，如"计费"可能被切成 2 Token</li>
+        <li><strong>标点与空格</strong>：也会被计入，不要忽略</li>
+        <li><strong>代码</strong>：缩进、符号都会增加 Token 数量</li>
+      </ul>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">Step 1</div>
+          <div class="tl-text"><strong>输入文本</strong>：用户写下的提示词送进分词器</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Step 2</div>
+          <div class="tl-text"><strong>分词（Tokenize）</strong>：把整段文字切成一个个 Token</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Step 3</div>
+          <div class="tl-text"><strong>计数</strong>：模型按 Token 数量计费，与字符数无关</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Step 4</div>
+          <div class="tl-text"><strong>生成</strong>：模型输出的回答同样按 Token 计数</div>
+        </div>
+      </div>
+      <div class="tip-card">
+        <h4>估算小窍门</h4>
+        <p>中文大约按「字数 × 1.5」估算 Token 量；英文按「单词数 × 1.3」估算。写 prompt 时心里有这个换算，就能粗略预判单次请求的成本量级。</p>
+      </div>
+
+      <div class="section-marker">03 · 输入Token与输出Token</div>
+      <h2>输入Token与输出Token</h2>
+      <p>这是 AI 计费最核心的一条分界线。<span class="hl">输入 Token（Input Token）</span>是你发给模型的内容，包括系统提示、历史对话、当前问题；<span class="hl">输出 Token（Output Token）</span>是模型生成给你的回答。这两者单价不同，输出通常比输入贵 3~5 倍。</p>
+      <p>为什么输出更贵？因为输入只是「读取」，模型做的是一次前向计算；而输出是「逐个生成」，每多生成一个 Token 就要多跑一次前向计算，算力消耗呈线性增长。所以同样 1000 Token，输入可能只要几分钱，输出却要几毛钱。</p>
+      <ul class="bullet-list">
+        <li><strong>输入 Token</strong>：提示词、上下文、系统消息、工具调用结果都算在内</li>
+        <li><strong>输出 Token</strong>：模型实际生成的回答文本</li>
+        <li><strong>单价差异</strong>：输出通常是输入的 3~5 倍，部分模型可达 6 倍以上</li>
+        <li><strong>隐藏成本</strong>：长上下文会让输入 Token 快速膨胀，是超支的常见原因</li>
+      </ul>
+      <div class="pull-quote">
+        <p>一句话记住：你写得多花得少，模型说得多花得多。控制输出长度，比精简输入更省钱。</p>
+      </div>
+      <div class="info-box info-box-jade">实际计费公式：<strong>总费用 = 输入Token × 输入单价 + 输出Token × 输出单价</strong>。下次看账单，先把这两项拆开看，就能立刻定位贵在哪一侧。</div>
+
+      <div class="section-marker">04 · 缓存命中：省钱的关键</div>
+      <h2>缓存命中：省钱的关键</h2>
+      <p>如果说前面三条是「明规则」，那缓存命中就是 AI 计费里最大的「暗福利」。<span class="hl">当你的请求中有一部分内容和之前请求完全一致时，模型厂商会复用已计算的结果，这部分只按很低的折扣价收费</span>，通常是输入单价的 10%~50%，部分厂商甚至直接免费。</p>
+      <p>典型场景是<strong>多轮对话</strong>：每轮都把完整历史发回去，其实前面那些轮次的内容在第一次就已经计算过了。带缓存的模型会把这些重复内容识别出来，按缓存价收费，省下的可能是 80% 以上的输入费用。</p>
+      <ul class="bullet-list">
+        <li>缓存只对<strong>输入 Token</strong> 生效，输出 Token 不参与缓存</li>
+        <li>命中条件通常是「前缀完全一致」，从第一个 Token 开始连续匹配</li>
+        <li>缓存有<strong>时效性</strong>，一般几分钟到几小时不等，过期需重新计算</li>
+        <li>不同厂商缓存折扣差异巨大：有的 5 折，有的低至 1 折甚至免费</li>
+      </ul>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">请求 1</div>
+          <div class="tl-text"><strong>首次发送</strong>：长上下文全部按原价计算，结果被缓存</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">请求 2</div>
+          <div class="tl-text"><strong>前缀命中</strong>：重复部分按缓存价（如 1 折）收费，仅新增部分原价</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">请求 N</div>
+          <div class="tl-text"><strong>持续复用</strong>：只要前缀稳定，每次都能省下大头输入成本</div>
+        </div>
+      </div>
+      <div class="tip-card">
+        <h4>缓存命中的实操技巧</h4>
+        <p>把稳定的指令、知识库、示例放在 prompt 最前面，把会变化的问题放在最后。这样前缀能稳定命中缓存，长对话和多轮调用下成本能降一个数量级。这是优化 AI 成本最立竿见影的一招。</p>
+      </div>
+
+      <div class="section-marker">05 · 各大模型计费对比</div>
+      <h2>各大模型计费对比</h2>
+      <p>不同厂商的计费结构差异很大，不能只看「每百万 Token 多少钱」这一个数字。要把输入价、输出价、缓存折扣三个维度放在一起看，才能选出最适合自己场景的模型。下面是主流厂商的大致档位（仅供量级参考，实际价格以官方为准）。</p>
+      <ul class="bullet-list">
+        <li><strong>第一梯队</strong>：闭源旗舰模型，输入约 $2~3 / 百万 Token，输出 $10~15</li>
+        <li><strong>第二梯队</strong>：闭源标准模型，输入约 $0.15~0.5，输出 $0.6~2</li>
+        <li><strong>开源模型</strong>：API 转售价通常最低，部分厂商输入低于 $0.1</li>
+        <li><strong>缓存折扣</strong>：从无缓存到 1 折不等，长对话场景下差距拉大到数倍</li>
+      </ul>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">旗舰类</div>
+          <div class="tl-text"><strong>高输入价 + 高输出价 + 中等缓存折扣</strong>：适合对质量要求极高、调用量不大的场景</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">标准类</div>
+          <div class="tl-text"><strong>中等价位 + 良好缓存</strong>：性价比之选，大多数业务场景的最佳平衡点</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">轻量类</div>
+          <div class="tl-text"><strong>极低单价 + 部分支持缓存</strong>：高频调用、可接受质量降级的批处理任务首选</div>
+        </div>
+      </div>
+      <div class="info-box">选型不是越便宜越好。一个便宜的模型如果输出质量差导致你要重试三次，最终成本反而高于一次成功的旗舰模型。把「单次成功率」也算进成本里。</div>
+
+      <div class="section-marker">06 · 如何优化AI使用成本</div>
+      <h2>如何优化AI使用成本</h2>
+      <p>看懂计费机制之后，优化就有章可循了。核心思路是四件事：<strong>压输入、控输出、用缓存、选对模型</strong>。下面是实践中最有效的几条具体做法。</p>
+      <ul class="bullet-list">
+        <li><strong>压输入</strong>：精简 system prompt，去掉冗余示例，长文本先做摘要再喂模型</li>
+        <li><strong>控输出</strong>：明确要求「简短回答」「只给结论」，避免模型长篇大论</li>
+        <li><strong>用缓存</strong>：稳定内容前置，让前缀命中缓存，多轮对话能省 50%~90%</li>
+        <li><strong>选对模型</strong>：简单任务用轻量模型，复杂任务再上旗舰，不要一上来就顶配</li>
+        <li><strong>批处理</strong>：能离线处理的请求用 Batch API，通常再打 5 折</li>
+        <li><strong>监控</strong>：每次请求记录输入/输出/缓存三项 Token 数，才能定位超支点</li>
+      </ul>
+      <div class="tip-card">
+        <h4>最容易被忽视的一招</h4>
+        <p>很多人不知道，把 prompt 里的「请详细解释」改成「用 3 句话回答」，可能让单次成本下降 70% 以上。输出 Token 是最贵的部分，限制输出长度是性价比最高的优化，没有之一。</p>
+      </div>
+      <div class="info-box info-box-jade">一个健康的项目，输入 Token 应该远大于输出 Token（比如 10:1）。如果你的账单上输出 Token 占比很高，多半是 prompt 没约束好输出长度，或者让模型做了不该做的长篇生成。</div>
+
+      <div class="section-marker">07 · 原视频</div>
+      <h2>原视频</h2>
+      <p>这篇文字版是对原动画视频的整理与扩展。动画里把 Token 切分、输入输出计费、缓存命中的全过程都用可视化方式演了一遍，配合文字版理解会更透彻。建议先看视频建立直觉，再回来对照本文的清单做实操。</p>
+    <div class="cta-box">
+      <div class="content">
+        <h3>去抖音看原视频</h3>
+        <p>动画形式完整讲解 AI 计费机制，含 Token 切分演示与缓存命中流程可视化</p>
+      <a class="cta-btn" id="cta-link" href="https://www.iesdouyin.com/share/video/7659996815441415458/?region=CN&mid=7659996951636282175&u_code=jmha93a5&did=MS4wLjABAAAApGsVQhc7a78WngfBMOYbEGiD-v5YTthFg_663KbDKI-GLDinlKF6LEN4_oEr0AZ_&iid=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=4Oks_bQqCbridsvxHBT15nmuHp4zqJQkshgsIQ9qcDM-&share_version=801001&ts=1783868465&from_aid=6383&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D&from=web_code_link" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往抖音
+        </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="#">#Token</a>
+      <a href="#">#AI计费</a>
+      <a href="#">#缓存命中</a>
+      <a href="#">#AI成本</a>
+      <a href="#">#动画视频</a>
+      <a href="#">#大模型</a>
+      <a href="#">#AI教程</a>
+      <a href="#">#抖音</a>
+    </div>
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用。视频封面版权归抖音原视频作者所有。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
