@@ -1,0 +1,566 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>不会写代码也能做AI量化实盘：这款开源AI交易员来了 · EXPECTOPATRONUS</title>
+    <meta name="description" content="不会写代码也能做AI量化实盘？这款开源AI交易员工具让量化交易门槛大幅降低，普通人也能参与AI量化交易" />
+    <meta name="keywords" content="AI量化,量化交易,开源交易员,AI交易,投资工具,金融科技,不会写代码" />
+    <meta property="og:title" content="不会写代码也能做AI量化实盘：这款开源AI交易员来了" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="不会写代码也能做AI量化实盘？这款开源AI交易员工具让量化交易门槛大幅降低，普通人也能参与AI量化交易" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      .bullet-list { margin: 0 0 var(--sp-6); padding: 0; list-style: none; }
+      .bullet-list li { position: relative; padding-left: var(--sp-5); margin-bottom: var(--sp-3); font-family: var(--font-serif); color: var(--text-soft); line-height: 1.8; font-size: 0.98rem; }
+      .bullet-list li::before { content: ''; position: absolute; left: 0; top: 0.7em; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-rust); }
+
+      .tip-card { margin: 0 0 var(--sp-6); padding: var(--sp-5) var(--sp-6); border-radius: var(--r-lg); background: var(--bg-card); border: 1px solid var(--line); }
+      .tip-card h4 { font-family: var(--font-display); font-weight: 500; font-size: 1.05rem; color: var(--text); margin: 0 0 var(--sp-3); display: flex; align-items: center; gap: 8px; }
+      .tip-card h4::before { content: '💡'; font-size: 1.1em; }
+      .tip-card p { margin: 0; font-size: 0.95rem; line-height: 1.7; }
+
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">抖音搬运</div>
+      <h1>不会写代码也能做AI量化实盘：这款开源AI交易员来了</h1>
+      <p>一直以来，量化交易被认为是专业程序员和金融精英的专属领域。但今天要介绍的这款<strong>开源AI交易员工具</strong>，正在彻底改变这个局面。它让<strong>不会写代码</strong>的普通人也能轻松参与AI量化交易，将量化投资的门槛大幅降低。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 山无棱</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-07-12</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 6 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 视频 · 搬运整理</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="AI量化交易" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=AI%20quantitative%20trading%20dashboard%20with%20charts%20and%20neural%20network%20visualization%2C%20dark%20theme%2C%20futuristic%20interface%2C%20professional%20financial%20tech%20style&image_size=landscape_16_9" />
+    </div>
+
+    <article class="article-body">
+      <div class="section-marker">01 · 为什么量化交易门槛高</div>
+      <h2>为什么量化交易门槛高</h2>
+      <p>量化交易，简单来说就是利用数学模型和计算机算法来制定交易策略。长期以来，它一直是华尔街精英和专业机构的领域。</p>
+      <ul class="bullet-list">
+        <li><strong>编程技能要求高：</strong>传统量化交易需要掌握Python、C++等高级编程语言，编写复杂的交易策略代码</li>
+        <li><strong>金融知识门槛：</strong>需要深入理解市场微观结构、统计学、机器学习等专业知识</li>
+        <li><strong>数据获取成本：</strong>高质量的历史数据和实时行情数据往往价格不菲</li>
+        <li><strong>技术基础设施：</strong>需要搭建稳定的交易系统、回测框架和风控体系</li>
+      </ul>
+      <div class="pull-quote">
+        <p>"量化交易不是普通人能玩的"——这是很多人对量化投资的固有印象。但AI的出现，正在打破这道壁垒。</p>
+      </div>
+
+      <div class="section-marker">02 · 这款开源AI交易员是什么</div>
+      <h2>这款开源AI交易员是什么</h2>
+      <p>这款开源AI交易员是一款基于人工智能的量化交易工具，它最大的特点就是<strong>无需编程基础</strong>。用户通过直观的图形界面，就能创建、测试和部署自己的量化策略。</p>
+      <div class="tip-card">
+        <h4>核心定位</h4>
+        <p>它不是一个黑盒交易软件，而是一个<strong>开源</strong>的AI量化交易平台。用户可以查看源码、自定义策略、接入自己的数据源，同时享受AI带来的智能化体验。</p>
+      </div>
+      <p>项目完全开源在GitHub上，任何人都可以免费使用、修改和贡献代码。这种开放的模式吸引了大量开发者和量化爱好者加入，形成了一个活跃的社区。</p>
+
+      <div class="section-marker">03 · 核心功能：不会写代码也能用</div>
+      <h2>核心功能：不会写代码也能用</h2>
+      <p>这款工具的设计理念就是<strong>降低门槛</strong>，让普通人也能玩转AI量化交易。它提供了以下核心功能：</p>
+      <ul class="bullet-list">
+        <li><strong>可视化策略编辑器：</strong>通过拖拽组件的方式构建交易策略，无需写一行代码</li>
+        <li><strong>AI策略生成器：</strong>基于大语言模型，用自然语言描述策略，AI自动生成代码</li>
+        <li><strong>回测引擎：</strong>使用历史数据快速测试策略效果，评估收益和风险</li>
+        <li><strong>模拟交易：</strong>用虚拟资金进行实盘模拟，检验策略可行性</li>
+        <li><strong>实盘接入：</strong>支持多家券商接口，一键部署到真实市场</li>
+      </ul>
+      <div class="info-box">
+        <strong>亮点功能：AI策略生成器</strong><br>
+        只需用自然语言描述你的交易想法，比如"当MACD金叉且RSI低于30时买入"，AI就能自动生成对应的量化策略代码，并进行回测验证。这是真正意义上的"不会写代码也能做量化"。
+      </div>
+
+      <div class="section-marker">04 · AI量化实盘怎么运作</div>
+      <h2>AI量化实盘怎么运作</h2>
+      <p>AI量化实盘的运作流程其实并不复杂，这款工具将整个流程简化为几个清晰的步骤：</p>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">Step 1</div>
+          <div class="tl-text"><strong>策略设计</strong>：通过可视化编辑器或AI生成器创建交易策略</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Step 2</div>
+          <div class="tl-text"><strong>历史回测</strong>：使用历史数据测试策略，优化参数</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Step 3</div>
+          <div class="tl-text"><strong>模拟交易</strong>：用虚拟资金进行一段时间的模拟运行</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Step 4</div>
+          <div class="tl-text"><strong>实盘部署</strong>：接入券商接口，启动真实交易</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Step 5</div>
+          <div class="tl-text"><strong>监控优化</strong>：实时监控策略表现，持续优化调整</div>
+        </div>
+      </div>
+      <div class="tip-card">
+        <h4>风险控制</h4>
+        <p>系统内置了完善的风控机制，包括最大回撤限制、单笔交易上限、仓位管理等，确保你的资金安全。建议在实盘前充分测试策略。</p>
+      </div>
+
+      <div class="section-marker">05 · 风险与收益的平衡</div>
+      <h2>风险与收益的平衡</h2>
+      <p>任何投资都有风险，AI量化交易也不例外。在使用这款工具时，需要注意以下几点：</p>
+      <ul class="bullet-list">
+        <li><strong>回测不等于实盘：</strong>历史表现不代表未来，市场环境变化可能导致策略失效</li>
+        <li><strong>过度拟合风险：</strong>策略可能在历史数据上表现优异，但在实盘中却亏损</li>
+        <li><strong>AI幻觉问题：</strong>AI生成的策略可能存在逻辑漏洞，需要人工审核</li>
+        <li><strong>市场风险：</strong>黑天鹅事件、极端行情可能突破风控限制</li>
+      </ul>
+      <div class="info-box info-box-jade">
+        <strong>建议配置：</strong>不要将全部资金投入单一策略，建议先用小资金试跑，观察一段时间后再逐步加大仓位。同时定期检查策略表现，及时调整优化。
+      </div>
+
+      <div class="section-marker">06 · 适合哪些人使用</div>
+      <h2>适合哪些人使用</h2>
+      <p>这款开源AI交易员并不是所有人都适合使用，以下几类人群特别适合：</p>
+      <ul class="bullet-list">
+        <li><strong>投资爱好者：</strong>对量化交易感兴趣但不会编程的普通投资者</li>
+        <li><strong>金融从业者：</strong>希望快速验证交易想法的分析师和交易员</li>
+        <li><strong>开发者：</strong>想学习量化交易或贡献开源代码的程序员</li>
+        <li><strong>学生：</strong>学习金融科技和量化投资的学生群体</li>
+        <li><strong>小型机构：</strong>希望低成本搭建量化交易系统的小型团队</li>
+      </ul>
+      <div class="pull-quote">
+        <p>"工具是中性的，关键在于使用者。这款AI交易员为普通人打开了量化交易的大门，但最终能否盈利，取决于你的策略设计和风险控制能力。"</p>
+      </div>
+
+      <div class="section-marker">07 · 原视频</div>
+      <h2>原视频</h2>
+      <p>本文内容来自抖音博主<strong>山无棱</strong>的分享视频，详细讲解了这款开源AI交易员的使用方法和核心功能。点击下方按钮前往抖音观看原视频。</p>
+      <div class="cta-box">
+        <div class="content">
+          <h3>去抖音看原视频</h3>
+          <p>点击跳转抖音原视频页，观看完整讲解</p>
+          <a class="cta-btn" id="cta-link" href="https://www.iesdouyin.com/share/video/7661476600529297914/?region=CN&mid=7655541730045217582&u_code=jmha93a5&did=MS4wLjABAAAAIl6YTQLDrN8FRHs1KZfJa4znpwEqLb7omXWj5i1HUA0&iid=MS4wLjABAAAAAWZSvHPrh71AZkRUEBzUO0amUsLFOvcxOMWfXE6agsz8PAOWflLhEqjWVulFjoHr&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=5AvMSi9nlMIuGQR8b8ZDh_wh._Vgzw39DEVe696x7lI-&share_version=390500&ts=1783870020&from_aid=1128&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D&utm_source=copy&utm_campaign=client_share&utm_medium=android&app=aweme&ug_share_id=416a01fc07da_1783870183498&activity_info=%7B%22social_author_id%22%3A%2289034921497%22%2C%22social_share_id%22%3A%2268060800617_1783870183498%22%2C%22social_share_time%22%3A%22870183%22%2C%22social_share_user_id%22%3A%2268060800617%22%7D&share_extra_params=%7B%22schema_type%22%3A%221%22%7D" target="_blank" rel="noopener">
+            <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往抖音
+          </a>
+        </div>
+      </div>
+      <div class="tags-row">
+        <a href="#">#AI量化</a>
+        <a href="#">#量化交易</a>
+        <a href="#">#开源交易员</a>
+        <a href="#">#AI交易</a>
+        <a href="#">#投资工具</a>
+        <a href="#">#金融科技</a>
+        <a href="#">#不会写代码</a>
+        <a href="#">#抖音</a>
+      </div>
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用。视频封面版权归抖音原视频作者所有。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
