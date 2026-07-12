@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'dy-7658411673698457834',
+            title: 'Agent的职责边界：写Prompt、判复杂度、执行任务',
+            url: '../post/dy-7658411673698457834/dy-7658411673698457834.html',
+            summary: 'CarryU王同学分享——Agent只负责写Prompt、判断任务复杂度和执行任务，深入解析AI Agent的职责边界与分工逻辑。',
+            category: 'AI教程',
+            date: '2026-07-12',
+            tags: ["Agent","Prompt工程","任务复杂度","Agent职责","智能体架构","任务执行","AI分工","抖音"],
+          },
+          {
             id: 'dy-7659309585488719345',
             title: 'Java + React + AI Agent：全栈开发的新范式',
             url: '../post/dy-7659309585488719345/dy-7659309585488719345.html',
