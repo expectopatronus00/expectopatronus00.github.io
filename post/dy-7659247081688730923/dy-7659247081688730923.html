@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>与其蒸馏别人不如蒸馏自己：GitHub开源模型蒸馏新思路 · EXPECTOPATRONUS</title>
+    <meta name="description" content="AI星视界分享GitHub开源模型蒸馏工具/项目——与其蒸馏别人，不如蒸馏自己。用自己的大模型蒸馏出自己的小模型。" />
+    <meta name="keywords" content="模型蒸馏,知识蒸馏,GitHub开源,AI模型,大模型,模型压缩,AI教程,抖音,AI星视界" />
+    <meta property="og:title" content="与其蒸馏别人不如蒸馏自己：GitHub开源模型蒸馏新思路" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="AI星视界分享GitHub开源模型蒸馏工具/项目——与其蒸馏别人，不如蒸馏自己。用自己的大模型蒸馏出自己的小模型。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* bullet-list 要点列表 */
+      .bullet-list { margin: 0 0 var(--sp-6); padding: 0; list-style: none; }
+      .bullet-list li { position: relative; padding-left: var(--sp-5); margin-bottom: var(--sp-3); font-family: var(--font-serif); color: var(--text-soft); line-height: 1.8; font-size: 0.98rem; }
+      .bullet-list li::before { content: ''; position: absolute; left: 0; top: 0.7em; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-rust); }
+      .bullet-list li strong { color: var(--text); font-weight: 600; }
+
+      /* tip-card 提示卡 */
+      .tip-card { margin: 0 0 var(--sp-6); padding: var(--sp-5) var(--sp-6); border-radius: var(--r-lg); background: var(--bg-card); border: 1px solid var(--line); }
+      .tip-card h4 { font-family: var(--font-display); font-weight: 500; font-size: 1.05rem; color: var(--text); margin: 0 0 var(--sp-3); display: flex; align-items: center; gap: 8px; }
+      .tip-card h4::before { content: '💡'; font-size: 1.1em; }
+      .tip-card p { margin: 0; font-size: 0.95rem; line-height: 1.7; }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">抖音搬运</div>
+      <h1>与其蒸馏别人<em>不如</em>蒸馏自己：GitHub开源模型蒸馏新思路</h1>
+      <p>模型蒸馏（Knowledge Distillation）是用大模型的知识训练小模型的技术，传统思路是"借用别人的大模型"。AI星视界本期介绍的 GitHub 开源项目，提出了一种新思路——"蒸馏自己"，用自己的大模型蒸馏出自己的小模型，让私有数据、私有能力不外泄。本文围绕模型蒸馏原理、"蒸馏自己"的新思路与该项目的能力展开。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> AI星视界</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-07-12</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 6 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 视频 · 搬运整理</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="视频封面：与其蒸馏别人不如蒸馏自己" src="" />
+    </div>
+
+    <article class="article-body">
+      <div class="section-marker">01 · 什么是模型蒸馏</div>
+      <h2>什么是模型蒸馏</h2>
+      <p>模型蒸馏（<span class="hl">Knowledge Distillation</span>）是一种"以大带小"的模型压缩技术：把一个容量大、能力强的"教师模型"（Teacher）所学到的知识，迁移给一个体积小、推理快的"学生模型"（Student），让小模型在参数量更少的情况下，尽可能逼近大模型的表现。</p>
+      <p>这一概念最早由 Hinton 等人在 2015 年系统化提出，核心思想是让学生模型不仅学习"硬标签"（hard label，即最终分类结果），还学习教师模型输出的<span class="hl">软标签</span>（soft label，即概率分布），从而获得更丰富的"暗知识"（dark knowledge）。</p>
+      <div class="info-box">
+        <strong>一句话理解：</strong>模型蒸馏就像"老师带学生"——老师（大模型）把解题思路、对各个选项的判断倾向都教给学生（小模型），而不只是告诉学生标准答案。
+      </div>
+      <p>在如今大模型动辄数百亿参数、推理成本高昂的背景下，模型蒸馏已成为工程落地中几乎必备的一环。</p>
+
+      <div class="section-marker">02 · 为什么要"蒸馏自己"</div>
+      <h2>为什么要"蒸馏自己"</h2>
+      <p>传统的蒸馏流程通常是：找一个公开的、别人的大模型当老师，蒸馏出自己的小模型。但这条路在实际业务里会撞上几堵墙：</p>
+      <ul class="bullet-list">
+        <li><strong>数据安全墙：</strong>把自家的私域数据喂给第三方大模型，存在数据外泄与合规风险，金融、医疗、政企等场景几乎不可行。</li>
+        <li><strong>能力适配墙：</strong>别人的大模型擅长的是通用任务，未必懂你的业务黑话、领域逻辑，蒸馏出来的小模型"水土不服"。</li>
+        <li><strong>调用成本墙：</strong>按 token 计费的 API 调用，在生成海量蒸馏训练数据时账单会非常夸张。</li>
+        <li><strong>迭代节奏墙：</strong>依赖外部模型，迭代节奏、版本升级都受制于人，没法闭环。</li>
+      </ul>
+      <p>而"蒸馏自己"的思路是：<span class="hl">用自己的大模型当老师，蒸馏出自己的小模型</span>。数据不出域、能力可定制、成本可控、迭代自主——这正是这个 GitHub 开源项目想要解决的核心问题。</p>
+      <div class="tip-card">
+        <h4>关键洞察</h4>
+        <p>当你的大模型已经在私域数据上训练过、已经"懂业务"，那么让它来当老师，蒸馏出的小模型天然继承了这份领域知识，远比借用通用大模型更贴合业务。</p>
+      </div>
+
+      <div class="section-marker">03 · 蒸馏别人 vs 蒸馏自己</div>
+      <h2>蒸馏别人 vs 蒸馏自己</h2>
+      <p>两种思路看似都是"大模型教小模型"，但在数据主权、能力上限、成本结构和工程闭环上差异巨大。</p>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">维度一</div>
+          <div class="tl-text"><strong>数据主权：</strong>蒸馏别人需要把私域数据发给第三方；蒸馏自己数据全程不出域，安全可控。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">维度二</div>
+          <div class="tl-text"><strong>教师能力：</strong>别人家的教师是通用大模型；自家的教师已在业务数据上微调，懂领域黑话与业务逻辑。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">维度三</div>
+          <div class="tl-text"><strong>成本结构：</strong>蒸馏别人按 API token 付费，数据量越大越贵；蒸馏自己一次性投入算力，长期边际成本更低。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">维度四</div>
+          <div class="tl-text"><strong>工程闭环：</strong>蒸馏别人依赖外部服务，迭代受限；蒸馏自己从教师到学生都在内部闭环，可随业务一起进化。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">维度五</div>
+          <div class="tl-text"><strong>合规风险：</strong>蒸馏别人可能触发第三方模型的使用条款限制；蒸馏自己使用自有资产，合规链路更清晰。</div>
+        </div>
+      </div>
+      <div class="pull-quote">
+        <p>"与其费尽心思把私有数据塞进别人的大模型，不如让自己的大模型把知识传给自己的孩子。"</p>
+      </div>
+
+      <div class="section-marker">04 · 这个GitHub开源项目是什么</div>
+      <h2>这个GitHub开源项目是什么</h2>
+      <p>AI星视界本期分享的是一个面向"<span class="hl">自蒸馏</span>"（Self-Distillation）场景的开源工具/项目，它把"用自有大模型蒸馏自有小模型"这条流水线工程化、脚本化，让团队不必从零造轮子。</p>
+      <p>项目整体定位可以概括为三件事：把大模型当教师、把蒸馏流程当流水线、把小模型当交付物。</p>
+      <div class="info-box info-box-jade">
+        <strong>项目定位：</strong>一个开源的模型蒸馏工具链，支持以自有大模型为教师，自动生成蒸馏数据、训练学生模型、评测对齐效果，覆盖"数据—训练—评测—部署"的完整闭环。
+      </div>
+      <ul class="bullet-list">
+        <li><strong>开源开放：</strong>代码托管在 GitHub，可自由 fork、二次开发，社区持续迭代。</li>
+        <li><strong>自蒸馏导向：</strong>原生支持"自家大模型当老师"的场景，而非只能调用第三方 API。</li>
+        <li><strong>流程化：</strong>把数据合成、教师标注、学生训练、效果评测拆成可单独执行的阶段。</li>
+        <li><strong>可复现：</strong>配置即代码，一次配置可复现整条蒸馏流水线。</li>
+      </ul>
+
+      <div class="section-marker">05 · 核心能力与使用场景</div>
+      <h2>核心能力与使用场景</h2>
+      <p>从项目能力看，它围绕"教师—数据—学生—评测"四个环节提供了一组成熟的组件。</p>
+      <h3>核心能力</h3>
+      <ul class="bullet-list">
+        <li><strong>教师调用：</strong>支持对接本地部署的自有大模型，作为蒸馏流水线的"知识来源"。</li>
+        <li><strong>数据合成：</strong>基于种子任务/提示词，让教师模型批量生成问答对、思维链等蒸馏训练数据。</li>
+        <li><strong>学生训练：</strong>支持常见开源小模型作为学生，提供 SFT、指令蒸馏、 logits 蒸馏等多种训练范式。</li>
+        <li><strong>效果评测：</strong>内置对齐评测，对比学生与教师在测试集上的表现差距，量化蒸馏收益。</li>
+        <li><strong>导出部署：</strong>训练完成后可导出量化后的轻量模型，直接对接推理服务。</li>
+      </ul>
+      <h3>典型使用场景</h3>
+      <ul class="bullet-list">
+        <li><strong>私域助手压缩：</strong>把内部大模型蒸馏成可在边缘/本地部署的小模型，降低推理成本。</li>
+        <li><strong>垂类小模型定制：</strong>用领域大模型蒸馏出垂类小模型，覆盖客服、文档、代码等场景。</li>
+        <li><strong>多尺寸版本矩阵：</strong>一次教师训练，蒸馏出大/中/小多档学生模型，适配不同端侧算力。</li>
+        <li><strong>合规优先场景：</strong>金融、医疗等数据不能出域的行业，用自有大模型完成"知识传承"。</li>
+      </ul>
+      <div class="tip-card">
+        <h4>使用建议</h4>
+        <p>先在小规模种子任务上跑通"教师—数据—学生—评测"闭环，验证蒸馏收益后再放量；评测环节务必保留一份与教师同分布的测试集，否则学生"看起来变强"可能只是过拟合。</p>
+      </div>
+
+      <div class="section-marker">06 · 对开发者的价值</div>
+      <h2>对开发者的价值</h2>
+      <p>对一线开发者而言，这个项目带来的不是"又一个模型"，而是一条可复用的工程流水线，价值集中在四个方面。</p>
+      <ul class="bullet-list">
+        <li><strong>省去造轮子：</strong>数据合成、训练脚本、评测对齐都已封装好，开发者聚焦业务而非基础设施。</li>
+        <li><strong>数据不出域：</strong>私域数据全程留在自有环境，满足合规与安全审计要求。</li>
+        <li><strong>成本可控：</strong>用自有算力替代按量付费的 API 调用，蒸馏规模越大越划算。</li>
+        <li><strong>能力可继承：</strong>自家大模型的领域知识被"固化"进小模型，可独立交付、独立部署。</li>
+      </ul>
+      <div class="info-box">
+        <strong>适合谁：</strong>有自有大模型、希望压缩出可端侧/低成本部署的小模型的团队；以及需要在私域数据上构建轻量推理服务的开发者。
+      </div>
+      <p>换句话说，它把"大模型很贵、小模型很笨"的两难，变成"<span class="hl">大模型当老师，小模型当交付</span>"的工程解。</p>
+
+      <div class="section-marker">07 · 原视频</div>
+      <h2>原视频</h2>
+      <p>以上内容基于 AI星视界发布的抖音视频整理，原始讲解、演示与项目链接请前往抖音观看原视频。</p>
+    <div class="cta-box">
+      <div class="content">
+        <h3>去抖音看原视频</h3>
+        <p>AI星视界 · 与其蒸馏别人不如蒸馏自己：GitHub开源模型蒸馏新思路。点击跳转抖音原视频页，查看完整讲解与项目地址。</p>
+      <a class="cta-btn" id="cta-link" href="https://www.iesdouyin.com/share/video/7659247081688730923/?region=CN&mid=7659247044753787674&u_code=jmha93a5&did=MS4wLjABAAAAIl6YTQLDrN8FRHs1KZfJa4znpwEqLb7omXWj5i1HUA0&iid=MS4wLjABAAAAAWZSvHPrh71AZkRUEBzUO0amUsLFOvcxOMWfXE6agsz8PAOWflLhEqjWVulFjoHr&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=_uR1siDS83LI.I3NLYWJCtS4PtQL0tGPHWo6kXhd4L4-&share_version=390500&ts=1783870167&from_aid=1128&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D&utm_source=copy&utm_campaign=client_share&utm_medium=android&app=aweme&ug_share_id=416a01fc07da_1783870218590&activity_info=%7B%22social_author_id%22%3A%22297306268116739%22%2C%22social_share_id%22%3A%2268060800617_1783870218589%22%2C%22social_share_time%22%3A%221783870218%22%2C%22social_share_user_id%22%3A%2268060800617%22%7D&share_extra_params=%7B%22schema_type%22%3A%221%22%7D" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往抖音
+        </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="#">#模型蒸馏</a>
+      <a href="#">#知识蒸馏</a>
+      <a href="#">#GitHub开源</a>
+      <a href="#">#AI模型</a>
+      <a href="#">#大模型</a>
+      <a href="#">#模型压缩</a>
+      <a href="#">#AI教程</a>
+      <a href="#">#抖音</a>
+    </div>
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用。视频封面版权归抖音原视频作者所有。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
