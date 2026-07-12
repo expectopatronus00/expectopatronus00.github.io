@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'dy-7659309585488719345',
+            title: 'Java + React + AI Agent：全栈开发的新范式',
+            url: '../post/dy-7659309585488719345/dy-7659309585488719345.html',
+            summary: 'Chris IT先生分享——Java后端、React前端与AI Agent三者结合，探讨全栈开发的新范式与技术演进。',
+            category: 'AI编程',
+            date: '2026-07-12',
+            tags: ["Java","React","Agent","全栈开发","AI编程","后端开发","前端开发","抖音"],
+          },
+          {
             id: 'dy-7659996815441415458',
             title: '一次讲透AI计费：输入输出Token与缓存命中',
             url: '../post/dy-7659996815441415458/dy-7659996815441415458.html',
