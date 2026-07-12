@@ -1,0 +1,722 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NextAIDrawio：一句话生成架构图的AI神器 · EXPECTOPATRONUS</title>
+    <meta name="description" content="NextAIDrawio 是一个用 AI 一句话生成架构图的工具，大幅提升技术文档效率。" />
+    <meta name="keywords" content="NextAIDrawio,架构图,AI神器,GitHub星探,技术文档,AI工具,程序员,抖音" />
+    <meta property="og:title" content="NextAIDrawio：一句话生成架构图的AI神器" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="NextAIDrawio 是一个用 AI 一句话生成架构图的工具，大幅提升技术文档效率。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 项目符号列表 */
+      .bullet-list {
+        margin: 0 0 var(--sp-6);
+        padding: 0;
+        list-style: none;
+      }
+      .bullet-list li {
+        position: relative;
+        padding-left: var(--sp-5);
+        margin-bottom: var(--sp-3);
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.75;
+        font-size: 0.98rem;
+      }
+      .bullet-list li::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0.7em;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent-rust);
+      }
+      .bullet-list li strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 提示卡片 */
+      .tip-card {
+        margin: var(--sp-6) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .tip-card .tip-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: var(--r-md);
+        background: rgba(201, 119, 47, 0.12);
+        color: var(--accent-rust);
+        margin-bottom: var(--sp-3);
+      }
+      .tip-card h4 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.05rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-2);
+      }
+      .tip-card p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.93rem;
+        margin: 0;
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">抖音搬运</div>
+      <h1>NextAIDrawio：<em>一句话生成架构图</em>的AI神器</h1>
+      <p>还在手动拖拽画架构图？NextAIDrawio 让你用一句话描述就能生成专业级架构图，彻底解放双手，技术文档效率提升 10 倍。今天的 GitHub 星探带你探秘这款 AI 绘图神器。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> GitHub星探</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-07-12</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 5 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 视频 · 搬运整理</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="NextAIDrawio 一句话生成架构图" src="https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=NextAIDrawio%20AI%E7%94%9F%E6%88%90%E6%9E%B6%E6%9E%84%E5%9B%BE%E5%B7%A5%E5%85%B7%E7%9A%84%E5%B1%95%E7%A4%BA%E5%9B%BE%EF%BC%8C%E4%B8%80%E4%B8%AA%E7%8E%B0%E4%BB%A3%E5%8C%96%E7%9A%84%E7%95%8C%E9%9D%A2%E4%B8%AD%E6%98%BE%E7%A4%BA%E7%9D%80%E6%8A%80%E6%9C%AF%E6%9E%B6%E6%9E%84%E5%9B%BE%EF%BC%8C%E8%83%8C%E6%99%AF%E6%98%AF%E6%B7%B1%E8%93%9D%E8%89%B2%E7%A7%91%E6%8A%80%E9%A3%8E%E6%A0%BC&image_size=landscape_16_9" />
+    </div>
+
+    <article class="article-body">
+
+      <div class="section-marker">01 · 为什么需要AI生成架构图</div>
+      <h2>为什么需要AI生成架构图</h2>
+      <p>在软件开发和系统设计中，架构图是<strong>沟通的核心载体</strong>。无论是技术方案评审、文档编写还是团队协作，一张清晰的架构图胜过千言万语。</p>
+
+      <div class="bullet-list">
+        <li><strong>传统绘图效率低下</strong>：手动拖拽组件、调整布局、对齐线条，画一张图动辄半小时起步</li>
+        <li><strong>反复修改耗时耗力</strong>：需求一变，整张图几乎要重画，调整成本极高</li>
+        <li><strong>风格不统一</strong>：不同人画的图样式各异，团队文档缺乏一致性</li>
+        <li><strong>新手门槛高</strong>：刚入门的开发者不知道该怎么画，画出来的图不专业</li>
+      </div>
+
+      <div class="pull-quote">
+        <p>如果说架构图是技术人的「第二语言」，那 AI 生成就是让这门语言的学习成本降到零。</p>
+      </div>
+
+      <p>这正是 <span class="hl">NextAIDrawio</span> 诞生的背景——用 AI 的力量，让架构图生成从「手工时代」进入「一句话时代」。</p>
+
+      <div class="section-marker">02 · NextAIDrawio 是什么</div>
+      <h2>NextAIDrawio 是什么</h2>
+      <p>NextAIDrawio 是一款基于大语言模型的 <strong>AI 架构图生成工具</strong>。它的核心理念非常简单：<span class="hl">你用一句话描述你想要的架构，AI 帮你生成专业的 draw.io 格式架构图</span>。</p>
+
+      <div class="info-box">
+        <strong>项目定位：</strong>NextAIDrawio 不是要取代专业的绘图工具，而是让绘图的<strong>启动成本降到最低</strong>。你不需要再从空白画布开始，AI 给你一个高质量的起点，你只需要在此基础上微调。
+      </div>
+
+      <p>它生成的是标准的 draw.io（ diagrams.net ）格式文件，这意味着：</p>
+
+      <div class="bullet-list">
+        <li><strong>完全兼容</strong>：生成的文件可以直接在 draw.io 中打开、编辑、导出</li>
+        <li><strong>开源格式</strong>：不锁定任何商业工具，数据完全在你手中</li>
+        <li><strong>生态丰富</strong>：draw.io 拥有海量模板、插件和集成支持</li>
+        <li><strong>免费使用</strong>：draw.io 本身就是开源免费的工具</li>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-icon">
+          <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M2 17l10 5 10-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M2 12l10 5 10-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        </div>
+        <h4>GitHub 星探点评</h4>
+        <p>NextAIDrawio 最聪明的地方在于「站在巨人的肩膀上」。它没有重新发明一个绘图工具，而是用 AI 给 draw.io 装上了「语音输入」的翅膀，这是一个非常聪明的产品策略。</p>
+      </div>
+
+      <div class="section-marker">03 · 核心能力一览</div>
+      <h2>核心能力一览</h2>
+      <p>NextAIDrawio 虽然主打「一句话生成」，但背后的能力远不止于此。让我们来看看它的核心功能矩阵。</p>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">能力 01</div>
+          <div class="tl-text"><strong>自然语言生成</strong> — 用中文或英文描述你的系统架构，AI 自动理解并生成对应的图表结构，支持微服务、云原生、数据流等多种架构风格。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">能力 02</div>
+          <div class="tl-text"><strong>多种图表类型</strong> — 不只是架构图，还支持流程图、时序图、ER图、思维导图、部署图等十几种常用技术图表。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">能力 03</div>
+          <div class="tl-text"><strong>智能布局优化</strong> — AI 自动规划节点位置和连线走向，生成的图布局合理、层次清晰，不需要你再手动调整。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">能力 04</div>
+          <div class="tl-text"><strong>可编辑输出</strong> — 生成标准 draw.io XML 格式，所有元素都是可编辑的矢量图形，支持二次修改和定制。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">能力 05</div>
+          <div class="tl-text"><strong>迭代优化</strong> — 生成后可以继续用自然语言告诉 AI 要怎么改，比如「把数据库改成 MySQL」「加一个缓存层」，AI 会自动调整。</div>
+        </div>
+      </div>
+
+      <div class="info-box info-box-jade">
+        <strong>划重点：</strong>NextAIDrawio 的真正价值在于<strong>「生成 + 迭代」</strong>的闭环。第一次生成可能不够完美，但你可以用对话的方式不断调整，直到满意为止。这比从零开始画要高效得多。
+      </div>
+
+      <div class="section-marker">04 · 一句话生成架构图怎么用</div>
+      <h2>一句话生成架构图怎么用</h2>
+      <p>使用 NextAIDrawio 的流程简单到令人发指。整个过程只需要三步，我们用一个实际例子来演示。</p>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">Step 1</div>
+          <div class="tl-text"><strong>输入描述</strong> — 在输入框中用一句话描述你想要的架构。例如：「一个电商微服务架构，包含用户服务、商品服务、订单服务、支付服务，用 Nacos 做注册中心，MySQL 做数据库，Redis 做缓存」。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Step 2</div>
+          <div class="tl-text"><strong>AI 生成</strong> — 点击生成按钮，等待几秒到十几秒，AI 会自动分析你的描述，选择合适的组件图标，规划布局，生成完整的架构图。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Step 3</div>
+          <div class="tl-text"><strong>导出使用</strong> — 生成后可以直接在线预览，也可以导出为 draw.io 文件、PNG 图片或 SVG 矢量图，导入到你的文档或演示文稿中。</div>
+        </div>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-icon">
+          <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        </div>
+        <h4>使用小技巧</h4>
+        <p>描述越具体，生成效果越好。建议包含：系统类型、核心组件、使用的技术栈、分层结构等信息。但即使描述很简单，AI 也会基于最佳实践给你一个合理的默认方案。</p>
+      </div>
+
+      <p>如果生成的图需要调整，你不需要重新画。只需要在对话框里继续说：</p>
+
+      <div class="bullet-list">
+        <li>「把用户服务拆成用户认证和用户信息两个服务」</li>
+        <li>「加一个消息队列，用 Kafka」</li>
+        <li>「把数据库改成主从架构」</li>
+        <li>「整体布局改成左右结构」</li>
+      </div>
+
+      <p>AI 会理解你的修改意图，自动调整架构图。这就是 <span class="hl">对话式绘图</span> 的魅力。</p>
+
+      <div class="section-marker">05 · 适用场景与人群</div>
+      <h2>适用场景与人群</h2>
+      <p>NextAIDrawio 不是银弹，但在很多场景下它能发挥巨大价值。让我们来看看哪些人最应该尝试这款工具。</p>
+
+      <h3>最适合的人群</h3>
+      <div class="bullet-list">
+        <li><strong>后端开发工程师</strong> — 经常需要画系统架构图、数据流图，用 AI 快速出稿</li>
+        <li><strong>架构师 / 技术负责人</strong> — 方案讨论时快速可视化想法，提升沟通效率</li>
+        <li><strong>技术文档工程师</strong> — 批量生成文档中的技术插图，保证风格统一</li>
+        <li><strong>产品经理</strong> — 不需要懂绘图工具，用自然语言就能画出功能流程图</li>
+        <li><strong>学生 / 初学者</strong> — 学习系统设计时，用 AI 生成的图作为参考范本</li>
+      </div>
+
+      <h3>高频使用场景</h3>
+      <div class="bullet-list">
+        <li><strong>技术方案评审</strong> — 会前快速生成架构图，会上大家对着图讨论，效率翻倍</li>
+        <li><strong>技术文档编写</strong> — 文档里需要插图？一句话生成，直接插入文档</li>
+        <li><strong>面试准备</strong> — 系统设计面试前，用 AI 生成各种架构图辅助复习</li>
+        <li><strong>学习笔记</strong> — 学到新技术，用 AI 画一张架构图帮你理解和记忆</li>
+        <li><strong>团队 onboarding</strong> — 新人入职，用 AI 生成的系统全景图快速上手</li>
+      </div>
+
+      <div class="pull-quote">
+        <p>每个人都有需要画架构图的时候，但不是每个人都有时间去学专业绘图工具。NextAIDrawio 让「画图」这件事的门槛，降到了几乎为零。</p>
+      </div>
+
+      <div class="section-marker">06 · 与传统绘图工具的对比</div>
+      <h2>与传统绘图工具的对比</h2>
+      <p>可能有人会问：现在已经有 draw.io、Lucidchart、ProcessOn 这些工具了，为什么还需要 NextAIDrawio？答案很简单：<strong>它们不是替代关系，而是互补关系</strong>。</p>
+
+      <div class="info-box">
+        <strong>核心区别：</strong>传统绘图工具解决的是「<span class="hl">怎么画</span>」的问题——给你提供画布、组件、连线，让你自由创作。而 NextAIDrawio 解决的是「<span class="hl">从 0 到 1</span>」的问题——直接给你一张已经画好的图，你只需要在此基础上修改。
+      </div>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">启动速度</div>
+          <div class="tl-text">传统工具：从零开始，找组件、拖位置、连线、调样式，<strong>30 分钟起步</strong>。NextAIDrawio：一句话输入，<strong>10 秒出图</strong>。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">修改成本</div>
+          <div class="tl-text">传统工具：加一个组件可能要调整半张图的布局，<strong>牵一发而动全身</strong>。NextAIDrawio：说一句「加个 Redis 缓存层」，AI 自动调整布局，<strong>秒级响应</strong>。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">专业程度</div>
+          <div class="tl-text">传统工具：画得好不好全看个人水平，<strong>新手容易画丑</strong>。NextAIDrawio：AI 基于最佳实践生成，<strong>起步就是专业水准</strong>。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">灵活度</div>
+          <div class="tl-text">传统工具：完全自由创作，<strong>想怎么画就怎么画</strong>。NextAIDrawio：生成后可以导出到 draw.io 继续编辑，<strong>灵活度不打折</strong>。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">学习成本</div>
+          <div class="tl-text">传统工具：需要学习界面操作、快捷键、各种功能，<strong>上手有门槛</strong>。NextAIDrawio：会说话就会用，<strong>零学习成本</strong>。</div>
+        </div>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-icon">
+          <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20l-7-4V8l7-4 7 4v8l-7 4z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 12l7-4M12 12v8M12 12L5 8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        </div>
+        <h4>最佳实践建议</h4>
+        <p>用 NextAIDrawio 快速生成初稿，然后导出到 draw.io 进行精细调整。这是目前效率最高的工作方式——既享受了 AI 的速度，又保留了手动编辑的灵活度。</p>
+      </div>
+
+      <div class="section-marker">07 · 原视频</div>
+      <h2>原视频</h2>
+      <p>以上内容整理自抖音视频「GitHub星探-NextAIDrawio-一句话生成架构图，每天一个AI神器」。想看原视频演示的朋友，点击下方按钮直接跳转抖音观看。</p>
+
+      <div class="cta-box">
+        <div class="content">
+          <h3>去抖音看原视频</h3>
+          <p>点击跳转抖音原视频页，观看 NextAIDrawio 实操演示</p>
+          <a class="cta-btn" id="cta-link" href="https://www.iesdouyin.com/share/video/7661513368141892873/?region=CN&mid=7661513325628427058&u_code=jmha93a5&did=MS4wLjABAAAApGsVQhc7a78WngfBMOYbEGiD-v5YTthFg_663KbDKI-GLDinlKF6LEN4_oEr0AZ_&iid=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=s5uyXk0SBUYX6mxkqhA3ra3VYdKttdNrRfMupkD4EBo-&share_version=801001&ts=1783863857&from_aid=6383&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D&from=web_code_link" target="_blank" rel="noopener">
+            <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往抖音
+          </a>
+        </div>
+      </div>
+
+      <div class="tags-row">
+        <a href="#">#NextAIDrawio</a>
+        <a href="#">#架构图</a>
+        <a href="#">#AI神器</a>
+        <a href="#">#GitHub星探</a>
+        <a href="#">#技术文档</a>
+        <a href="#">#AI工具</a>
+        <a href="#">#程序员</a>
+        <a href="#">#抖音</a>
+      </div>
+
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用。视频封面版权归抖音原视频作者所有。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
