@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'xhs-6a2be11d00000000160279a4',
+            title: '让Skill自己训练自己：微软开源工具破5k星',
+            url: '../post/xhs-6a2be11d00000000160279a4/xhs-6a2be11d00000000160279a4.html',
+            summary: '量子位分享——让Skill自己训练自己！微软开源自训练AI技能工具，GitHub破5k星，探索AI技能自我进化的新方向。',
+            category: '开源项目',
+            date: '2026-07-12',
+            tags: ["自训练Skill","微软开源","AI技能","GitHub热门","自我进化","AI工具","开源项目","小红书"],
+          },
+          {
             id: 'dy-7652011374368935211',
             title: 'HS量化：基于机器学习的概率预测模型',
             url: '../post/dy-7652011374368935211/dy-7652011374368935211.html',
