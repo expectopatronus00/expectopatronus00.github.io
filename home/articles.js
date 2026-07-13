@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'post-2026-06-20-tj6zly',
+            title: 'WorkBuddy 对接微信公众号完整部署教程',
+            url: '../post/post-2026-06-20-tj6zly/post-2026-06-20-tj6zly.html',
+            summary: '本教程指导用户在 WorkBuddy 平台中部署两套 MCP Server，实现 AI 自动撰写、排版、推送微信公众号草稿的完整自动化链路。预计耗时 1-2 小时。',
+            category: '微信搬运',
+            date: '2026-06-20',
+            tags: ['AI','大模型','技术'],
+          },
+          {
             id: '144pcie-gen6-lane-ssd',
             title: '144条PCIe Gen6 Lane：如何连接SSD、GPU、DPU、网卡、AI加速卡',
             url: '../post/144pcie-gen6-lane-ssd/144pcie-gen6-lane-ssd.html',
