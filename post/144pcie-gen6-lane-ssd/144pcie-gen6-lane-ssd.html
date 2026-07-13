@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>【技术前沿】144条PCIe Gen6 Lane，到底如何连接SSD, GPU, DPU,网卡, AI加速卡？ · EXPECTOPATRONUS</title>
+    <meta name="description" content="一张PCIe Gen6 144 lane扩展板如何连接GPU、SSD、DPU、NIC？" />
+    <meta name="keywords" content="AI,大模型,技术,深度分析" />
+    <meta property="og:title" content="【技术前沿】144条PCIe Gen6 Lane，到底如何连接SSD, GPU, DPU,网卡, AI加速卡？" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="一张PCIe Gen6 144 lane扩展板如何连接GPU、SSD、DPU、NIC？" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try { var t = localStorage.getItem('theme') || 'dark'; if (t === 'light') document.documentElement.dataset.theme = 'light'; } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+
+      body {
+        font-family: var(--font-serif);
+        background: var(--bg-0);
+        color: var(--text);
+        line-height: 1.8;
+        margin: 0;
+        font-size: 1.05rem;
+      }
+
+      /* 顶部导航 */
+      nav.site-nav {
+        position: sticky; top: 0; z-index: 100;
+        display: flex; align-items: center; justify-content: space-between;
+        padding: var(--sp-4) var(--sp-6);
+        background: rgba(10, 12, 15, 0.85);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--line);
+        font-family: var(--font-mono);
+      }
+      nav.site-nav .brand { display: flex; align-items: center; gap: var(--sp-2); color: var(--text); font-weight: 600; text-decoration: none; }
+      nav.site-nav .brand .logo {
+        display: inline-flex; align-items: center; justify-content: center;
+        width: 28px; height: 28px; border-radius: 8px;
+        background: var(--accent-rust); color: #fff; font-weight: 700; font-family: var(--font-display);
+      }
+      nav.site-nav .nav-links { display: flex; gap: var(--sp-5); align-items: center; }
+      nav.site-nav .nav-links a { color: var(--text-soft); text-decoration: none; font-size: 0.92rem; }
+      nav.site-nav .nav-links a:hover { color: var(--accent-rust); }
+      nav.site-nav .nav-links a.is-active { color: var(--accent-rust); }
+      .theme-btn {
+        background: transparent; border: 1px solid var(--line); color: var(--text-soft);
+        padding: 6px 10px; border-radius: 8px; cursor: pointer; font-size: 0.85rem;
+        transition: all 0.2s;
+      }
+      .theme-btn:hover { border-color: var(--accent-rust); color: var(--accent-rust); }
+
+      /* 页面 hero */
+      section.page-head {
+        max-width: var(--container, 960px);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      section.page-head .eyebrow {
+        font-family: var(--font-mono); font-size: 0.8rem;
+        color: var(--accent-rust); letter-spacing: 0.12em;
+        text-transform: uppercase; margin-bottom: var(--sp-4);
+      }
+      section.page-head h1 {
+        font-family: var(--font-display); font-weight: 500;
+        font-size: clamp(1.8rem, 4vw, 2.8rem); line-height: 1.15;
+        letter-spacing: -0.01em; margin: 0 0 var(--sp-4);
+      }
+      section.page-head > p { color: var(--text-soft); font-size: 1.1rem; max-width: 680px; }
+      section.page-head .meta {
+        display: flex; flex-wrap: wrap; gap: var(--sp-4);
+        margin-top: var(--sp-5); font-family: var(--font-mono); font-size: 0.85rem;
+        color: var(--text-dim);
+      }
+      section.page-head .meta span { display: inline-flex; align-items: center; gap: 6px; }
+      section.page-head .meta svg { color: var(--accent-rust); }
+
+      .hero-image {
+        max-width: var(--container, 960px); margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%; border-radius: var(--r-lg, 16px); display: block;
+        border: 1px solid var(--line);
+      }
+
+      /* 正文 */
+      article.article-body {
+        max-width: 760px;
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+      article.article-body h2 {
+        font-family: var(--font-display); font-weight: 500;
+        font-size: 1.55rem; margin: var(--sp-8) 0 var(--sp-4);
+        color: var(--text);
+      }
+      article.article-body h3 {
+        font-family: var(--font-display); font-weight: 500;
+        font-size: 1.15rem; margin: var(--sp-6) 0 var(--sp-3);
+        color: var(--text);
+      }
+      article.article-body p {
+        font-family: var(--font-serif); color: var(--text-soft);
+        line-height: 1.9; margin: 0 0 var(--sp-4);
+      }
+      article.article-body p strong { color: var(--text); font-weight: 600; }
+      article.article-body .hl {
+        background: linear-gradient(transparent 60%, rgba(200, 120, 80, 0.35) 60%);
+        padding: 0 3px; border-radius: 2px; color: var(--text);
+      }
+
+      .section-marker {
+        font-family: var(--font-mono); font-size: 0.78rem;
+        color: var(--accent-rust); letter-spacing: 0.08em;
+        margin-top: var(--sp-8); margin-bottom: var(--sp-2);
+      }
+
+      .info-box {
+        border-left: 3px solid var(--accent-rust);
+        padding: var(--sp-3) var(--sp-4);
+        margin: var(--sp-4) 0;
+        background: rgba(200, 120, 80, 0.08);
+        border-radius: 0 var(--r-md) var(--r-md) 0;
+        color: var(--text-soft);
+      }
+      .info-box.info-box-jade {
+        border-left-color: var(--accent-jade, #4a9b8a);
+        background: rgba(74, 155, 138, 0.08);
+      }
+      .info-box p { margin: 0; }
+
+      .pull-quote {
+        border-left: 3px solid var(--accent-rust);
+        padding: var(--sp-3) var(--sp-4);
+        margin: var(--sp-5) 0;
+        font-style: italic;
+        color: var(--text-soft);
+      }
+      .pull-quote::before { content: '“'; color: var(--accent-rust); font-size: 2.5rem; font-family: var(--font-display); display: block; line-height: 0.6; margin-bottom: var(--sp-2); }
+      .pull-quote p { margin: 0; font-size: 1.1rem; }
+
+      .timeline { margin: var(--sp-5) 0; padding: 0; }
+      .timeline .tl-item { display: flex; gap: var(--sp-4); padding: var(--sp-3) 0; border-bottom: 1px dashed var(--line); }
+      .timeline .tl-item:last-child { border-bottom: none; }
+      .timeline .tl-time { font-family: var(--font-mono); color: var(--accent-rust); font-size: 0.88rem; flex-shrink: 0; min-width: 110px; }
+      .timeline .tl-text { color: var(--text-soft); font-size: 1rem; }
+      .timeline .tl-text strong { color: var(--text); }
+
+      .platform-list {
+        display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: var(--sp-3); margin: var(--sp-6) 0;
+      }
+      .platform-list a {
+        display: flex; flex-direction: column; gap: 4px;
+        padding: var(--sp-3);
+        border: 1px solid var(--line); border-radius: var(--r-md);
+        color: var(--text-soft); text-decoration: none;
+        font-family: var(--font-mono); font-size: 0.88rem;
+        transition: all 0.2s;
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust); transform: translateY(-2px);
+        background: rgba(200, 120, 80, 0.05);
+      }
+      .platform-list .pn { color: var(--text); font-weight: 500; }
+      .platform-list .pd { color: var(--text-dim); font-size: 0.82rem; }
+
+      .tags-row {
+        display: flex; flex-wrap: wrap; gap: var(--sp-2);
+        margin: var(--sp-8) 0 var(--sp-5);
+        padding-top: var(--sp-5); border-top: 1px dashed var(--line);
+      }
+      .tags-row a {
+        font-family: var(--font-mono); font-size: 0.82rem;
+        padding: 4px 12px; border: 1px solid var(--line);
+        border-radius: 20px; color: var(--text-soft); text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover { border-color: var(--accent-rust); color: var(--accent-rust); }
+
+      .cta-box {
+        margin: var(--sp-8) 0;
+        display: flex; flex-direction: column; align-items: flex-start;
+        padding: var(--sp-4);
+        border: 1px solid var(--line); border-radius: var(--r-lg);
+        background: linear-gradient(135deg, rgba(200, 120, 80, 0.08), transparent);
+      }
+      .cta-box h3 {
+        font-family: var(--font-display); font-weight: 500;
+        font-size: 1.2rem; margin: 0 0 var(--sp-2);
+      }
+      .cta-box p { margin: 0 0 var(--sp-4); color: var(--text-soft); font-size: 0.95rem; }
+      .cta-btn {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 10px 20px; background: var(--accent-rust);
+        color: #fff; text-decoration: none; border-radius: 8px;
+        font-family: var(--font-mono); font-size: 0.9rem;
+        transition: transform 0.2s;
+      }
+      .cta-btn:hover { transform: translateY(-2px); }
+
+      /* footer */
+      footer.site-footer {
+        border-top: 1px solid var(--line);
+        padding: var(--sp-6);
+        margin-top: var(--sp-8);
+        color: var(--text-dim);
+        font-size: 0.85rem;
+        font-family: var(--font-mono);
+      }
+      footer.site-footer .footer-content {
+        max-width: 960px; margin: 0 auto;
+        display: flex; justify-content: space-between; gap: var(--sp-4); flex-wrap: wrap;
+      }
+      footer.site-footer .footer-brand { color: var(--text); font-weight: 500; font-family: var(--font-display); }
+
+      .floating-top {
+        position: fixed; bottom: 24px; right: 24px; z-index: 50;
+        background: var(--bg-card, #1a1f2a); color: var(--text);
+        border: 1px solid var(--line); border-radius: 50%;
+        width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+        cursor: pointer; opacity: 0; transition: opacity 0.3s;
+      }
+      .floating-top.visible { opacity: 1; }
+      .floating-top:hover { border-color: var(--accent-rust); }
+
+      /* 响应式 */
+      @media (max-width: 768px) {
+        nav.site-nav .nav-links { gap: var(--sp-3); font-size: 0.85rem; }
+        article.article-body { padding: var(--sp-6) var(--sp-4); }
+        article.article-body h2 { font-size: 1.35rem; }
+      }
+
+      /* 主题切换 - light */
+      [data-theme="light"] nav.site-nav { background: rgba(248, 248, 245, 0.9); }
+      [data-theme="light"] .cta-btn { color: #fff; }
+      [data-theme="light"] .floating-top { background: #fff; }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner" style="display:flex;align-items:center;justify-content:space-between;gap:var(--sp-5);">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../post/deepseek/deepseek.html">DeepSeek</a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换">
+          <svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">微信搬运 · 144pcie-gen6-lane-ssd</div>
+      <h1>【技术前沿】144条PCIe Gen6 Lane，到底如何连接SSD, GPU, DPU,网卡, AI加速卡？</h1>
+      <p>一张PCIe Gen6 144 lane扩展板如何连接GPU、SSD、DPU、NIC？</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg> Saniffer</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-06-20</span>
+      </div>
+
+    <div class="hero-image"><img loading="lazy" src="https://mmbiz.qpic.cn/sz_mmbiz_jpg/DrdLyP9K49XHvwnNEeiavwS5oWh6j0PRIBrNTN9bicytVOxDGZNUtVBjic2XUib8MuFElr2ySZXAlwjM9GA6ibtfnSRtrHdO5szzwtUek1snGV44/0?wx_fmt=jpeg" alt="【技术前沿】144条PCIe Gen6 Lane，到底如何连接SSD, GPU, DPU,网卡, AI加速卡？"/></div>
+    </section>
+
+    <article class="article-body">
+      <div class="section-marker on-scroll">00 · 导读</div>
+      <h2 class="on-scroll">导读</h2>
+      <p class="on-scroll">服务器主板提供几个PCIe x16插槽：</p>
+      <p class="on-scroll">如果插槽不够怎么办？</p>
+      <p class="on-scroll">很多工程师第一反应：</p>
+      <p class="on-scroll">“加一个PCIe Switch。”</p>
+      <p class="on-scroll">但是进入PCIe 5.0、PCIe 6.0时代以后，这个问题开始变复杂。</p>
+      <p class="on-scroll">因为现在服务器里面的设备越来越多：</p>
+      <p class="on-scroll">这时候，传统“主板给几个槽位”的方式已经无法满足需求。</p>
+      <p class="on-scroll">真正的问题变成：</p>
+      <p class="on-scroll">如何把CPU有限的PCIe Root Complex资源，重新组织成一个高密度、高灵活性的高速互连系统？</p>
+      <p class="on-scroll">这也是PCIe Switch存在的价值。</p>
+      <p class="on-scroll">最近看到的一款基于Broadcom Atlas3 PEX90144 PCIe Gen6 Switch芯片设计的MCIO Switch Board，就是针对这一类问题设计的高速扩展平台。</p>
+      <p class="on-scroll">这张PCIe Gen6 MCIO Switch Board最大的特点，就是采用：</p>
+      <p class="on-scroll">Broadcom Atlas3 PCIe Gen6 Switch PEX90144</p>
+      <p class="on-scroll">它不是简单的PCIe转接芯片，而是一颗真正面向下一代服务器架构的PCIe Gen6交换芯片。</p>
+      <div class="pull-quote on-scroll"><p>根据规格：</p></div>
+      <p class="on-scroll">简单理解：</p>
+      <p class="on-scroll">一颗CPU出来的PCIe资源，通过这颗Switch，可以重新分配成几十个高速设备连接口。</p>
+      <p class="on-scroll">如果把传统服务器比作“一条高速公路”，那么PCIe Switch就是一个超级立交桥。</p>
+      <p class="on-scroll">CPU只有有限入口：</p>
+      <p class="on-scroll">Switch的作用：</p>
+      <p class="on-scroll">不是增加CPU本身的PCIe能力；</p>
+      <p class="on-scroll">而是重新调度这些高速Lane。</p>
+      <p class="on-scroll">很多工程师第一次看到这张板，会问：</p>
+      <p class="on-scroll">为什么不用PCIe Slot？</p>
+      <p class="on-scroll">为什么大量使用MCIO？</p>
+      <p class="on-scroll">原因很简单：</p>
+      <p class="on-scroll">服务器未来不会只有几个PCIe槽。</p>
+      <p class="on-scroll">尤其是AI服务器。</p>
+      <p class="on-scroll">内部越来越多采用：</p>
+      <p class="on-scroll">这张板上一共有：</p>
+      <p class="on-scroll">其中UMCIO更加灵活。</p>
+      <p class="on-scroll">它可以：</p>
+      <p class="on-scroll">而普通MCIO接口主要用于连接：</p>
+      <p class="on-scroll">MCIO x8</p>
+      <p class="on-scroll">x16 AIC Slot Adapter</p>
+      <p class="on-scroll">MCIO</p>
+      <p class="on-scroll">4）AI/MI(machine learning)存储节点</p>
+      <p class="on-scroll">之前很多工程师问：</p>
+      <p class="on-scroll">“服务器只有8个GPU槽，如果我要扩展16颗GPU怎么办？”</p>
+      <p class="on-scroll">传统方式：</p>
+      <p class="on-scroll">买更大的服务器。</p>
+      <p class="on-scroll">但是PCIe Switch提供另一种思路。</p>
+      <p class="on-scroll">Switch负责：</p>
+      <p class="on-scroll">对于AI服务器：</p>
+      <p class="on-scroll">可以实现：</p>
+      <p class="on-scroll">PCIe Gen6 Switch</p>
+      <p class="on-scroll">GPU Cluster</p>
+      <p class="on-scroll">NVMe SSD Storage</p>
+      <p class="on-scroll">GPU + SSD + DPU</p>
+      <p class="on-scroll">统一高速互联。</p>
+      <p class="on-scroll">手册中也展示了AI/ML场景：</p>
+      <p class="on-scroll">通过Switch连接：</p>
+      <p class="on-scroll">支持AI存储和GPUDirect应用。</p>
+      <p class="on-scroll">对于做PCIe SSD验证的人来说，这类Switch更加重要。</p>
+      <p class="on-scroll">因为未来Gen6 SSD测试不会只是：</p>
+      <p class="on-scroll">“一块SSD插服务器。”</p>
+      <p class="on-scroll">而会变成：</p>
+      <p class="on-scroll">为什么？</p>
+      <p class="on-scroll">因为企业级SSD测试需要：</p>
+      <p class="on-scroll">一个Gen6 Switch：</p>
+      <p class="on-scroll">8 Bay E3.S JBOF</p>
+      <p class="on-scroll">8颗PCIe Gen6 SSD。</p>
+      <p class="on-scroll">测试人员可以模拟：</p>
+      <p class="on-scroll">真实AI服务器存储环境。</p>
+      <p class="on-scroll">很多PCIe Switch产品最大的问题：</p>
+      <p class="on-scroll">买回来能跑。</p>
+      <p class="on-scroll">出了问题不知道怎么办。</p>
+      <p class="on-scroll">这张板提供完整CLI管理能力。</p>
+      <p class="on-scroll">通过USB Type-C管理接口：</p>
+      <p class="on-scroll">可以访问：</p>
+      <p class="on-scroll">板上还有MCU：</p>
+      <p class="on-scroll">负责运行CLI命令。</p>
+      <p class="on-scroll">下面看看几个工程师最关心的命令。</p>
+      <p class="on-scroll">这是最常用命令。</p>
+      <p class="on-scroll">查看所有MCIO Port当前Link状态。</p>
+      <p class="on-scroll">测试环境：</p>
+      <p class="on-scroll">SSD无法枚举。</p>
+      <p class="on-scroll">第一步：</p>
+      <p class="on-scroll">类似PCIe Analyzer里面查看LTSSM状态。</p>
+      <p class="on-scroll">对于PCIe Gen6高速Switch：</p>
+      <p class="on-scroll">电源稳定性非常重要。</p>
+      <p class="on-scroll">144 Lane同时工作时，</p>
+      <p class="on-scroll">任何电压波动都可能导致：</p>
+      <p class="on-scroll">PCIe测试里面经常需要：</p>
+      <p class="on-scroll">重新拉PERST#。</p>
+      <p class="on-scroll">300ms PERST#。</p>
+      <p class="on-scroll">测试环境最怕：</p>
+      <p class="on-scroll">硬件一样。</p>
+      <p class="on-scroll">Firmware不同。</p>
+      <p class="on-scroll">整个Switch Board状态。</p>
+      <p class="on-scroll">PCIe Gen6时代：</p>
+      <p class="on-scroll">Firmware越来越重要。</p>
+      <p class="on-scroll">这些属于高级Debug命令。</p>
+      <p class="on-scroll">写Switch寄存器：</p>
+      <p class="on-scroll">修改Atlas3寄存器。</p>
+      <p class="on-scroll">读取Switch寄存器：</p>
+      <p class="on-scroll">Debug芯片内部状态。</p>
+      <p class="on-scroll">读取Port寄存器：</p>
+      <p class="on-scroll">某一个PCIe Port问题。</p>
+      <p class="on-scroll">读取Flash内容：</p>
+      <p class="on-scroll">Firmware Debug。</p>
+      <p class="on-scroll">这些命令对于普通用户可能不常用，</p>
+      <p class="on-scroll">但是对于：</p>
+      <p class="on-scroll">非常关键。</p>
+      <p class="on-scroll">提前搭建Gen6环境。</p>
+      <p class="on-scroll">不用等待完整服务器。</p>
+      <p class="on-scroll">未来AI服务器：</p>
+      <p class="on-scroll">不会只是：</p>
+      <p class="on-scroll">8 GPU。</p>
+      <p class="on-scroll">16 GPU；</p>
+      <p class="on-scroll">32 GPU；</p>
+      <p class="on-scroll">GPU + SSD池。</p>
+      <p class="on-scroll">PCIe Switch重新组织资源。</p>
+      <p class="on-scroll">尤其是：</p>
+      <p class="on-scroll">PCIe Gen6 E3.S SSD。</p>
+      <p class="on-scroll">这类开放平台非常适合教学和研究。</p>
+      <p class="on-scroll">PCIe Switch只是：</p>
+      <p class="on-scroll">“不够插槽时的补丁”。</p>
+      <p class="on-scroll">但是进入PCIe 6.0时代：</p>
+      <p class="on-scroll">情况正在改变。</p>
+      <p class="on-scroll">PCIe Switch正在成为服务器内部的重要基础设施。</p>
+      <p class="on-scroll">一张144 Lane的PCIe Gen6 Switch Board，本质上不是一个简单扩展卡。</p>
+      <p class="on-scroll">它更像：</p>
+      <p class="on-scroll">一个小型PCIe高速交换网络。</p>
+      <p class="on-scroll">未来测试PCIe Gen6设备时，</p>
+      <p class="on-scroll">真正的问题可能不再是：</p>
+      <p class="on-scroll">“有没有插槽？”</p>
+      <p class="on-scroll">“有没有能力搭建一个完整、高速、可调试的PCIe生态环境？”</p>
+      <p class="on-scroll">这也是为什么下一代PCIe验证平台，需要：</p>
+      <p class="on-scroll">Switch + Retimer + Analyzer + Exerciser + SSD + GPU</p>
+      <p class="on-scroll">共同组成完整测试体系。</p>
+      <p class="on-scroll">PCIe 6.0的时代，</p>
+      <p class="on-scroll">连接方式正在改变。</p>
+      <p class="on-scroll">而真正懂得如何搭建高速互联环境的人，</p>
+      <p class="on-scroll">才有机会提前进入下一代计算平台的核心验证环节。</p>
+      <p class="on-scroll">更多PCIe5&amp;6.0, CXL, NVMe SSD, SAS/SATA, NVMe over Fabric (NVMoF), NAND,新型存储技术NVM（RRAM/ReRAM, FRAM/FeRAM, MRAM, PCM, 3D-NOR, SRAM/DRAM等） DDR5/LPDDR5以及UFS测试方面的问题想咨询，可以查看Saniffer公司2026.2.24最新更新的测试工具白皮书15.1版本，我们已经整理收录在Saniffer公众号的【白皮书】菜单中。</p>
+      <p class="on-scroll">欢迎关注Saniffer公众号，点击底部菜单栏即可免费获取。如有任何技术问题，也可直接在公众号内留言交流。</p>
+      <p class="on-scroll">微信扫一扫 关注该公众号</p>
+      <p class="on-scroll">微信扫一扫可打开此内容， 使用完整服务</p>
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用。原文版权归微信原作者所有。</div>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+      })();
+    </script>
+  </body>
+</html>

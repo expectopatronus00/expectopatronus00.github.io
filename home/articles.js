@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: '144pcie-gen6-lane-ssd',
+            title: '144条PCIe Gen6 Lane：如何连接SSD、GPU、DPU、网卡、AI加速卡',
+            url: '../post/144pcie-gen6-lane-ssd/144pcie-gen6-lane-ssd.html',
+            summary: 'Saniffer分享——深入解析144条PCIe Gen6 Lane扩展板如何连接GPU、SSD、DPU、网卡和AI加速卡，探讨数据中心硬件架构的技术前沿。',
+            category: '技术前沿',
+            date: '2026-06-20',
+            tags: ["PCIe Gen6","GPU","SSD","DPU","AI加速卡","硬件架构","数据中心","技术前沿"],
+          },
+          {
             id: 'xhs-6a534d6d000000000f01f2ca',
             title: '提升自媒体表达能力：两周实战心得分享',
             url: '../post/xhs-6a534d6d000000000f01f2ca/xhs-6a534d6d000000000f01f2ca.html',
