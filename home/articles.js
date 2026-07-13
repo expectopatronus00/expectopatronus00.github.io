@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'xhs-6a51bf22000000001c027412',
+            title: '免费用6个月的CodeX Pro',
+            url: '../post/xhs-6a51bf22000000001c027412/xhs-6a51bf22000000001c027412.html',
+            summary: '程序员晚枫分享——免费用6个月的CodeX Pro的获取方法和使用技巧，助力开发者提升编程效率。',
+            category: 'AI工具',
+            date: '2026-07-13',
+            tags: ["CodeX Pro","免费工具","AI编程","开发效率","程序员","工具分享","小红书"],
+          },
+          {
             id: 'opc-10-skill',
             title: '盘点一人公司 OPC 必备的 10 个Skill',
             url: '../post/opc-10-skill/opc-10-skill.html',
