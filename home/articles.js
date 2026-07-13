@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'opc-10-skill',
+            title: '盘点一人公司 OPC 必备的 10 个Skill',
+            url: '../post/opc-10-skill/opc-10-skill.html',
+            summary: '这个趋势越来越明显了，包括我自己也把做视频的流程封装成了一套 Skill。',
+            category: '微信搬运',
+            date: '2026-06-20',
+            tags: ['AI','大模型','技术'],
+          },
+          {
             id: 'post-2026-06-20-tj6zly',
             title: 'WorkBuddy 对接微信公众号完整部署教程',
             url: '../post/post-2026-06-20-tj6zly/post-2026-06-20-tj6zly.html',
