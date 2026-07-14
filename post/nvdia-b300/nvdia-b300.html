@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NVIDIA B300 验收实战指南 · EXPECTOPATRONUS</title>
+    <meta name="description" content="凌云智算分享——B300 到场先看原始采样、GPU 诊断、NVLink、RoCE、长稳和恢复动作。脚本可以拆，结论不能靠猜。" />
+    <meta name="keywords" content="NVIDIA,B300,GPU验收,NVLink,RoCE,DCGM,数据中心,硬件架构" />
+    <meta property="og:title" content="NVIDIA B300 验收实战指南" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="凌云智算分享——B300 到场先看原始采样、GPU 诊断、NVLink、RoCE、长稳和恢复动作。脚本可以拆，结论不能靠猜。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try { var t = localStorage.getItem('theme') || 'dark'; if (t === 'light') document.documentElement.dataset.theme = 'light'; } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+
+      body {
+        font-family: var(--font-serif);
+        background: var(--bg-0);
+        color: var(--text);
+        line-height: 1.8;
+        margin: 0;
+        font-size: 1.05rem;
+      }
+
+      /* 顶部导航 */
+      nav.site-nav {
+        position: sticky; top: 0; z-index: 100;
+        display: flex; align-items: center; justify-content: space-between;
+        padding: var(--sp-4) var(--sp-6);
+        background: rgba(10, 12, 15, 0.85);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--line);
+        font-family: var(--font-mono);
+      }
+      nav.site-nav .brand { display: flex; align-items: center; gap: var(--sp-2); color: var(--text); font-weight: 600; text-decoration: none; }
+      nav.site-nav .brand .logo {
+        display: inline-flex; align-items: center; justify-content: center;
+        width: 28px; height: 28px; border-radius: 8px;
+        background: var(--accent-rust); color: #fff; font-weight: 700; font-family: var(--font-display);
+      }
+      nav.site-nav .nav-links { display: flex; gap: var(--sp-5); align-items: center; }
+      nav.site-nav .nav-links a { color: var(--text-soft); text-decoration: none; font-size: 0.92rem; }
+      nav.site-nav .nav-links a:hover { color: var(--accent-rust); }
+      nav.site-nav .nav-links a.is-active { color: var(--accent-rust); }
+      .theme-btn {
+        background: transparent; border: 1px solid var(--line); color: var(--text-soft);
+        padding: 6px 10px; border-radius: 8px; cursor: pointer; font-size: 0.85rem;
+        transition: all 0.2s;
+      }
+      .theme-btn:hover { border-color: var(--accent-rust); color: var(--accent-rust); }
+
+      /* 页面 hero */
+      section.page-head {
+        max-width: var(--container, 960px);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      section.page-head .eyebrow {
+        font-family: var(--font-mono); font-size: 0.8rem;
+        color: var(--accent-rust); letter-spacing: 0.12em;
+        text-transform: uppercase; margin-bottom: var(--sp-4);
+      }
+      section.page-head h1 {
+        font-family: var(--font-display); font-weight: 500;
+        font-size: clamp(1.8rem, 4vw, 2.8rem); line-height: 1.15;
+        letter-spacing: -0.01em; margin: 0 0 var(--sp-4);
+      }
+      section.page-head > p { color: var(--text-soft); font-size: 1.1rem; max-width: 680px; }
+      section.page-head .meta {
+        display: flex; flex-wrap: wrap; gap: var(--sp-4);
+        margin-top: var(--sp-5); font-family: var(--font-mono); font-size: 0.85rem;
+        color: var(--text-dim);
+      }
+      section.page-head .meta span { display: inline-flex; align-items: center; gap: 6px; }
+      section.page-head .meta svg { color: var(--accent-rust); }
+
+      .hero-image {
+        max-width: var(--container, 960px); margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%; border-radius: var(--r-lg, 16px); display: block;
+        border: 1px solid var(--line);
+      }
+
+      /* 正文 */
+      article.article-body {
+        max-width: 760px;
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+      article.article-body h2 {
+        font-family: var(--font-display); font-weight: 500;
+        font-size: 1.55rem; margin: var(--sp-8) 0 var(--sp-4);
+        color: var(--text);
+      }
+      article.article-body h3 {
+        font-family: var(--font-display); font-weight: 500;
+        font-size: 1.15rem; margin: var(--sp-6) 0 var(--sp-3);
+        color: var(--text);
+      }
+      article.article-body p {
+        font-family: var(--font-serif); color: var(--text-soft);
+        line-height: 1.9; margin: 0 0 var(--sp-4);
+      }
+      article.article-body p strong { color: var(--text); font-weight: 600; }
+      article.article-body .hl {
+        background: linear-gradient(transparent 60%, rgba(200, 120, 80, 0.35) 60%);
+        padding: 0 3px; border-radius: 2px; color: var(--text);
+      }
+
+      .section-marker {
+        font-family: var(--font-mono); font-size: 0.78rem;
+        color: var(--accent-rust); letter-spacing: 0.08em;
+        margin-top: var(--sp-8); margin-bottom: var(--sp-2);
+      }
+
+      .info-box {
+        border-left: 3px solid var(--accent-rust);
+        padding: var(--sp-3) var(--sp-4);
+        margin: var(--sp-4) 0;
+        background: rgba(200, 120, 80, 0.08);
+        border-radius: 0 var(--r-md) var(--r-md) 0;
+        color: var(--text-soft);
+      }
+      .info-box.info-box-jade {
+        border-left-color: var(--accent-jade, #4a9b8a);
+        background: rgba(74, 155, 138, 0.08);
+      }
+      .info-box p { margin: 0; }
+
+      .pull-quote {
+        border-left: 3px solid var(--accent-rust);
+        padding: var(--sp-3) var(--sp-4);
+        margin: var(--sp-5) 0;
+        font-style: italic;
+        color: var(--text-soft);
+      }
+      .pull-quote::before { content: '“'; color: var(--accent-rust); font-size: 2.5rem; font-family: var(--font-display); display: block; line-height: 0.6; margin-bottom: var(--sp-2); }
+      .pull-quote p { margin: 0; font-size: 1.1rem; }
+
+      .timeline { margin: var(--sp-5) 0; padding: 0; }
+      .timeline .tl-item { display: flex; gap: var(--sp-4); padding: var(--sp-3) 0; border-bottom: 1px dashed var(--line); }
+      .timeline .tl-item:last-child { border-bottom: none; }
+      .timeline .tl-time { font-family: var(--font-mono); color: var(--accent-rust); font-size: 0.88rem; flex-shrink: 0; min-width: 110px; }
+      .timeline .tl-text { color: var(--text-soft); font-size: 1rem; }
+      .timeline .tl-text strong { color: var(--text); }
+
+      .platform-list {
+        display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: var(--sp-3); margin: var(--sp-6) 0;
+      }
+      .platform-list a {
+        display: flex; flex-direction: column; gap: 4px;
+        padding: var(--sp-3);
+        border: 1px solid var(--line); border-radius: var(--r-md);
+        color: var(--text-soft); text-decoration: none;
+        font-family: var(--font-mono); font-size: 0.88rem;
+        transition: all 0.2s;
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust); transform: translateY(-2px);
+        background: rgba(200, 120, 80, 0.05);
+      }
+      .platform-list .pn { color: var(--text); font-weight: 500; }
+      .platform-list .pd { color: var(--text-dim); font-size: 0.82rem; }
+
+      .tags-row {
+        display: flex; flex-wrap: wrap; gap: var(--sp-2);
+        margin: var(--sp-8) 0 var(--sp-5);
+        padding-top: var(--sp-5); border-top: 1px dashed var(--line);
+      }
+      .tags-row a {
+        font-family: var(--font-mono); font-size: 0.82rem;
+        padding: 4px 12px; border: 1px solid var(--line);
+        border-radius: 20px; color: var(--text-soft); text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover { border-color: var(--accent-rust); color: var(--accent-rust); }
+
+      .cta-box {
+        margin: var(--sp-8) 0;
+        display: flex; flex-direction: column; align-items: flex-start;
+        padding: var(--sp-4);
+        border: 1px solid var(--line); border-radius: var(--r-lg);
+        background: linear-gradient(135deg, rgba(200, 120, 80, 0.08), transparent);
+      }
+      .cta-box h3 {
+        font-family: var(--font-display); font-weight: 500;
+        font-size: 1.2rem; margin: 0 0 var(--sp-2);
+      }
+      .cta-box p { margin: 0 0 var(--sp-4); color: var(--text-soft); font-size: 0.95rem; }
+      .cta-btn {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 10px 20px; background: var(--accent-rust);
+        color: #fff; text-decoration: none; border-radius: 8px;
+        font-family: var(--font-mono); font-size: 0.9rem;
+        transition: transform 0.2s;
+      }
+      .cta-btn:hover { transform: translateY(-2px); }
+
+      /* footer */
+      footer.site-footer {
+        border-top: 1px solid var(--line);
+        padding: var(--sp-6);
+        margin-top: var(--sp-8);
+        color: var(--text-dim);
+        font-size: 0.85rem;
+        font-family: var(--font-mono);
+      }
+      footer.site-footer .footer-content {
+        max-width: 960px; margin: 0 auto;
+        display: flex; justify-content: space-between; gap: var(--sp-4); flex-wrap: wrap;
+      }
+      footer.site-footer .footer-brand { color: var(--text); font-weight: 500; font-family: var(--font-display); }
+
+      .floating-top {
+        position: fixed; bottom: 24px; right: 24px; z-index: 50;
+        background: var(--bg-card, #1a1f2a); color: var(--text);
+        border: 1px solid var(--line); border-radius: 50%;
+        width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+        cursor: pointer; opacity: 0; transition: opacity 0.3s;
+      }
+      .floating-top.visible { opacity: 1; }
+      .floating-top:hover { border-color: var(--accent-rust); }
+
+      .code-block {
+        margin: var(--sp-5) 0;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        background: var(--bg-card);
+        overflow-x: auto;
+      }
+      .code-block pre {
+        margin: 0;
+        padding: var(--sp-5) var(--sp-6);
+        font-family: var(--font-mono);
+        font-size: 0.88rem;
+        line-height: 1.75;
+        color: var(--text-soft);
+      }
+      .code-block code {
+        font-family: inherit;
+      }
+      .bullet-list {
+        list-style: none;
+        padding: 0;
+        margin: var(--sp-2) 0 0;
+      }
+      .bullet-list li {
+        position: relative;
+        padding-left: 22px;
+        margin-bottom: var(--sp-2);
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.95rem;
+      }
+      .bullet-list li::before {
+        content: '';
+        position: absolute;
+        left: 2px;
+        top: 10px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent-rust);
+      }
+      .tip-card {
+        margin: var(--sp-5) 0;
+        padding: var(--sp-5);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-left: 3px solid var(--accent-rust);
+      }
+      .tip-card .tip-title {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.05rem;
+        color: var(--text);
+        margin-bottom: var(--sp-2);
+      }
+      .tip-card p {
+        margin: var(--sp-2) 0 0;
+        font-size: 0.95rem;
+        color: var(--text-soft);
+      }
+
+      /* 响应式 */
+      @media (max-width: 768px) {
+        nav.site-nav .nav-links { gap: var(--sp-3); font-size: 0.85rem; }
+        article.article-body { padding: var(--sp-6) var(--sp-4); }
+        article.article-body h2 { font-size: 1.35rem; }
+      }
+
+      /* 主题切换 - light */
+      [data-theme="light"] nav.site-nav { background: rgba(248, 248, 245, 0.9); }
+      [data-theme="light"] .cta-btn { color: #fff; }
+      [data-theme="light"] .floating-top { background: #fff; }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner" style="display:flex;align-items:center;justify-content:space-between;gap:var(--sp-5);">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../post/deepseek/deepseek.html">DeepSeek</a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换">
+          <svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">技术前沿</div>
+      <h1>NVIDIA B300 验收实战指南</h1>
+      <p>B300 到场先看原始采样、GPU 诊断、NVLink、RoCE、长稳和恢复动作。脚本可以拆，结论不能靠猜。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg> 凌云智算</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-06-20</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 8 分钟阅读</span>
+      </div>
+
+    <div class="hero-image"><img loading="lazy" src="https://mmbiz.qpic.cn/mmbiz_jpg/iaWH1wQoCP7tDfNmujb0icDdSpTzPpvyCPvw2Cj1Yf4GcPB8ejX9A7AwQzHVqbEdz3bespfer2SHZlyHiaIBibQKGbCliabQKWf82q6xR9HNRwAI/0?wx_fmt=jpeg" alt="nvdia B300 验收实战指南"/></div>
+    </section>
+
+    <article class="article-body">
+
+      <div class="section-marker">01 · 验收总览</div>
+      <h2>验收总览</h2>
+      <p>B300 到场，我一般不会先问跑分。先把<span class="hl">证据链</span>跑起来，才知道这台机器是真正常，还是只是看起来正常。</p>
+      <p>NVIDIA DGX B300 的官方手册把 Quick Health Check 和 Pre-flight Test 放在前面，意思很直接：先确认机器和环境，再进入带宽、通信、长稳。有 NVSM 的环境，可以把 <code>sudo nvsm stress-test --force</code> 当成官方口径的前置压力检查。DCGM 的 NVBandwidth 是 level 3 及以上测试，nccl-tests 同时看性能和正确性，Redfish 的 ComputerSystem.Reset 则留给恢复链路。验收这件事，本来就该按命令链来做。</p>
+
+      <div class="info-box">
+        <strong>验收四问：</strong>B300 不是一张卡的事情，是一台 8 GPU 节点的事情。命令要能回答的，不是"通没通"，而是——<strong>机器是什么、装了什么、通了什么、证据留没留下来</strong>。
+      </div>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">第一层</div>
+          <div class="tl-text"><strong>原始采样</strong> — 收集机器身份、资产态、运行态和网络态</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">第二层</div>
+          <div class="tl-text"><strong>GPU 诊断</strong> — 健康、拓扑和节点内带宽</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">第三层</div>
+          <div class="tl-text"><strong>跨节点通信</strong> — 链路、拥塞控制、集合通信</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">第四层</div>
+          <div class="tl-text"><strong>长稳测试</strong> — 18 小时满载，温度、风扇、XID、ECC</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">第五层</div>
+          <div class="tl-text"><strong>恢复链路</strong> — BMC、Redfish、ComputerSystem.Reset</div>
+        </div>
+      </div>
+
+      <div class="section-marker">02 · 原始采样</div>
+      <h2>原始采样</h2>
+      <p>我做现场验收时，第一步通常不是跑压测，而是<span class="hl">收集原始状态</span>。这样后面不管是 GPU、NVLink，还是 RoCE 出问题，都能回到同一份底稿上看。</p>
+      <p>真正的验收，先从采样开始。下面这组命令不负责下结论，只负责把机器的底子摸清楚：</p>
+
+      <div class="code-block"><pre><code>dmidecode -t 1
+dmidecode -t 17
+dmidecode -t 39
+nvidia-smi -L
+nvidia-smi -q
+lspci
+lsblk
+ibstat
+ibdev2netdev
+free -h
+uname -a
+hostnamectl</code></pre></div>
+
+      <p>这一步看的是<span class="hl">资产态、运行态和网络态</span>。<code>dmidecode</code> 和 <code>hostnamectl</code> 先把机器身份说清楚，<code>nvidia-smi -L</code> 先确认 8 张卡是不是都在，<code>lspci</code> 和 <code>lsblk</code> 看总线和盘位，<code>ibstat</code>、<code>ibdev2netdev</code> 看网卡和端口是不是按预期上线。</p>
+
+      <div class="tip-card">
+        <div class="tip-title">重点留三类输出</div>
+        <ul class="bullet-list">
+          <li>主机型号和序列号</li>
+          <li>GPU / 内存 / 磁盘数量</li>
+          <li>网卡和端口映射</li>
+        </ul>
+        <p>不是为了好看，是为了后面出问题时能追得回去。</p>
+      </div>
+
+      <div class="pull-quote">
+        <p>如果这一层都没采全，后面的带宽数字再漂亮也没意义。现场最怕的就是把别的机器的结果拿来当本机结果。</p>
+      </div>
+
+      <div class="section-marker">03 · GPU 诊断</div>
+      <h2>GPU 诊断</h2>
+      <p>第二层才轮到 GPU 诊断。这里要同时看<span class="hl">健康、拓扑和节点内带宽</span>，少一步都不踏实。</p>
+
+      <div class="code-block"><pre><code>dcgmi diag -r 4
+nvidia-smi topo -m
+nvidia-smi nvlink --status
+nvbandwidth
+p2pBandwidthLatencyTest
+systemctl status nvidia-fabricmanager</code></pre></div>
+
+      <p><code>dcgmi diag -r 4</code> 适合把显存、互联和常规健康项一次性过一遍。<code>nvbandwidth</code> 属于 DCGM 的 level 3+ 测试，重点就是把单机带宽测明白。<code>nvidia-smi topo -m</code> 和 <code>nvidia-smi nvlink --status</code> 是拓扑和链路状态的证据，<code>p2pBandwidthLatencyTest</code> 则把任意 GPU 对之间的点对点能力拉出来看。</p>
+
+      <div class="tip-card">
+        <div class="tip-title">输出盯住这些点</div>
+        <ul class="bullet-list">
+          <li>8 张 B300 都能识别</li>
+          <li>DCGM 项目没有失败</li>
+          <li>Fabric Manager 是 <strong>active running</strong></li>
+          <li>NVLink 没有 inactive / degraded</li>
+          <li>GPU 对之间 P2P 访问和带宽不要出现明显掉队</li>
+        </ul>
+      </div>
+
+      <div class="pull-quote">
+        <p>我最在意的，不是"能跑"，而是"拓扑和数值能不能同时成立"。拓扑错了，带宽只是偶然；带宽不对，拓扑图再好看也没用。</p>
+      </div>
+
+      <div class="section-marker">04 · 跨节点通信与 RoCE</div>
+      <h2>跨节点通信与 RoCE</h2>
+      <p>跨节点通信不能揉成一坨看。先看<span class="hl">链路</span>，再看<span class="hl">拥塞控制</span>，最后再看<span class="hl">集合通信</span>，这样才知道问题在网口、交换机，还是框架层。</p>
+
+      <div class="code-block"><pre><code># 链路层
+ibstat
+ibdev2netdev
+ethtool
+mlxconfig
+
+# 带宽与延迟
+ib_write_bw
+ib_read_bw
+ib_send_lat -R
+
+# 集合通信
+all_reduce_perf
+all_gather_perf
+reduce_scatter_perf
+sendrecv_perf
+alltoall_perf</code></pre></div>
+
+      <p>RoCE 这层里，<span class="hl">PFC、ECN、DCQCN 要放在一起看</span>。单点开关开了，不代表无损队列真的在工作。<code>ib_write_bw</code> 和 <code>ib_read_bw</code> 先把链路吞吐压出来，<code>ib_send_lat -R</code> 看小消息延迟，nccl-tests 则把训练更接近的通信场景带进来，尤其是 <code>all_reduce_perf</code>、<code>all_gather_perf</code>、<code>reduce_scatter_perf</code>、<code>sendrecv_perf</code> 和 <code>alltoall_perf</code> 这几项，能把跨节点瓶颈看得更实。</p>
+
+      <div class="tip-card">
+        <div class="tip-title">记录要分开写</div>
+        <ul class="bullet-list">
+          <li>端口是 UP</li>
+          <li>RoCE 模式和 MTU 符合设计</li>
+          <li>PFC / ECN / DCQCN 配置能对上</li>
+          <li>ib_* 测试有吞吐和延迟结果</li>
+          <li>NCCL 输出里 busbw、algbw 和错误计数都要留下</li>
+        </ul>
+        <p>只贴一个 all-reduce 峰值，现场复盘时基本不够用。</p>
+      </div>
+
+      <div class="pull-quote">
+        <p>网口亮了不算，链路、拥塞和通信都闭上了，才算。</p>
+      </div>
+
+      <div class="section-marker">05 · 长稳测试</div>
+      <h2>长稳测试</h2>
+      <p>真正把问题逼出来的，往往不是短跑，而是长稳。B300 这种节点，我会把满载拉到<span class="hl">18 小时</span>左右，再盯温度、风扇、XID 和 ECC。</p>
+
+      <div class="code-block"><pre><code>gpu_burn -tc 64800
+nvidia-smi dmon -s pucvmet -d 60
+journalctl -k | grep -i xid</code></pre></div>
+
+      <p>这时候看的不是"还能不能跑"，而是<span class="hl">"热起来以后会不会掉链子"</span>。温度峰值、风扇曲线、可纠正 ECC、XID 日志，都会在这个阶段露出真相。经验上，温度别顶得太狠，<strong>86°C 附近就该紧张起来了</strong>。</p>
+
+      <div class="info-box info-box-jade">
+        <strong>长稳日志留档要点：</strong>按分钟留 dmon，按阶段留 XID/ECC 摘要，结束时再补一份 GPU 列表和 Fabric Manager 状态。前后状态能对上，才知道这 18 小时没有把问题藏起来。
+      </div>
+
+      <div class="section-marker">06 · 恢复链路</div>
+      <h2>恢复链路</h2>
+      <p>如果节点真卡住了，恢复动作要留给 BMC 和 Redfish，<code>ComputerSystem.Reset</code> 就是那类该被保留、但不该被公开展开的动作。验收里把<span class="hl">恢复链路记清楚</span>，比现场赌一次重启有用得多。</p>
+
+      <div class="section-marker">07 · 脚本五角色</div>
+      <h2>脚本五角色</h2>
+      <p>如果把本地脚本拆开，它其实不是一坨命令，而是<span class="hl">五个角色</span>：</p>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">角色 1</div>
+          <div class="tl-text"><strong>采样器</strong> — 原始状态采集（dmidecode / nvidia-smi / lspci / ibstat）</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">角色 2</div>
+          <div class="tl-text"><strong>诊断器</strong> — GPU 健康与带宽检查（dcgmi / nvbandwidth / p2p）</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">角色 3</div>
+          <div class="tl-text"><strong>通信器</strong> — 跨节点链路和集合通信（ib_* / nccl-tests）</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">角色 4</div>
+          <div class="tl-text"><strong>长稳器</strong> — 满载压力和日志追踪（gpu_burn / dmon / XID）</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">角色 5</div>
+          <div class="tl-text"><strong>恢复器</strong> — BMC / Redfish 恢复操作记录</div>
+        </div>
+      </div>
+
+      <div class="pull-quote">
+        <p>脚本可以分工，证据不能分家。只要每一层的输出都能回到命令、阈值和日志，这台 B300 才算真正往交付里走了一步。</p>
+      </div>
+
+      <p>命令可以按环境调整，但<span class="hl">证据角色不要乱</span>。</p>
+
+      <div class="tags-row">
+        <a href="../home/home.html?tag=NVIDIA">#NVIDIA</a>
+        <a href="../home/home.html?tag=B300">#B300</a>
+        <a href="../home/home.html?tag=GPU验收">#GPU验收</a>
+        <a href="../home/home.html?tag=NVLink">#NVLink</a>
+        <a href="../home/home.html?tag=RoCE">#RoCE</a>
+        <a href="../home/home.html?tag=DCGM">#DCGM</a>
+        <a href="../home/home.html?tag=数据中心">#数据中心</a>
+        <a href="../home/home.html?tag=硬件架构">#硬件架构</a>
+      </div>
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用。原文版权归微信原作者所有。</div>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+      })();
+    </script>
+  </body>
+</html>

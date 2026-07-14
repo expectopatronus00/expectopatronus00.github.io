@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'nvdia-b300',
+            title: 'NVIDIA B300 验收实战指南',
+            url: '../post/nvdia-b300/nvdia-b300.html',
+            summary: '凌云智算分享——B300 到场先看原始采样、GPU 诊断、NVLink、RoCE、长稳和恢复动作。脚本可以拆，结论不能靠猜。',
+            category: '技术前沿',
+            date: '2026-06-20',
+            tags: ["NVIDIA","B300","GPU验收","NVLink","RoCE","DCGM","数据中心","硬件架构"],
+          },
+          {
             id: 'xhs-6a51bf22000000001c027412',
             title: '免费用6个月的CodeX Pro',
             url: '../post/xhs-6a51bf22000000001c027412/xhs-6a51bf22000000001c027412.html',
