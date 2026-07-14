@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'xhs-6a5468250000000015027f67',
+            title: '傻瓜式Loop教程：一行命令开启AI自循环',
+            url: '../post/xhs-6a5468250000000015027f67/xhs-6a5468250000000015027f67.html',
+            summary: '量子位分享——Loop Engineer 傻瓜式教程，一行命令让AI进入自循环模式，实现自动化任务迭代与优化。',
+            category: 'AI编程',
+            date: '2026-07-14',
+            tags: ["Loop Engineer","AI编程","自循环","自动化","AI工作流","教程","小红书"],
+          },
+          {
             id: 'nvdia-b300',
             title: 'NVIDIA B300 验收实战指南',
             url: '../post/nvdia-b300/nvdia-b300.html',
