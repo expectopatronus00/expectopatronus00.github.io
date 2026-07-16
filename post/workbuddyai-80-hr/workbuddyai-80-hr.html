@@ -1,0 +1,571 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>我用WorkBuddy搭了一套AI招聘流水线，简历处理从8小时压到0分钟，HR只干一件事：挑人 · EXPECTOPATRONUS</title>
+    <meta name="description" content="叶小钗分享——用WorkBuddy搭建AI招聘流水线，从简历自动采集、信息提取、智能评分到入库通知，全流程自动化，HR只需挑人。" />
+    <meta name="keywords" content="WorkBuddy,AI招聘,工作流自动化,简历筛选,HR效率,AI工具,效率提升" />
+    <meta property="og:title" content="我用WorkBuddy搭了一套AI招聘流水线，简历处理从8小时压到0分钟，HR只干一件事：挑人" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="叶小钗分享——用WorkBuddy搭建AI招聘流水线，从简历自动采集、信息提取、智能评分到入库通知，全流程自动化，HR只需挑人。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try { var t = localStorage.getItem('theme') || 'dark'; if (t === 'light') document.documentElement.dataset.theme = 'light'; } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+
+      body {
+        font-family: var(--font-serif);
+        background: var(--bg-0);
+        color: var(--text);
+        line-height: 1.8;
+        margin: 0;
+        font-size: 1.05rem;
+      }
+
+      /* 顶部导航 */
+      nav.site-nav {
+        position: sticky; top: 0; z-index: 100;
+        display: flex; align-items: center; justify-content: space-between;
+        padding: var(--sp-4) var(--sp-6);
+        background: rgba(10, 12, 15, 0.85);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--line);
+        font-family: var(--font-mono);
+      }
+      nav.site-nav .brand { display: flex; align-items: center; gap: var(--sp-2); color: var(--text); font-weight: 600; text-decoration: none; }
+      nav.site-nav .brand .logo {
+        display: inline-flex; align-items: center; justify-content: center;
+        width: 28px; height: 28px; border-radius: 8px;
+        background: var(--accent-rust); color: #fff; font-weight: 700; font-family: var(--font-display);
+      }
+      nav.site-nav .nav-links { display: flex; gap: var(--sp-5); align-items: center; }
+      nav.site-nav .nav-links a { color: var(--text-soft); text-decoration: none; font-size: 0.92rem; }
+      nav.site-nav .nav-links a:hover { color: var(--accent-rust); }
+      nav.site-nav .nav-links a.is-active { color: var(--accent-rust); }
+      .theme-btn {
+        background: transparent; border: 1px solid var(--line); color: var(--text-soft);
+        padding: 6px 10px; border-radius: 8px; cursor: pointer; font-size: 0.85rem;
+        transition: all 0.2s;
+      }
+      .theme-btn:hover { border-color: var(--accent-rust); color: var(--accent-rust); }
+
+      /* 页面 hero */
+      section.page-head {
+        max-width: var(--container, 960px);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      section.page-head .eyebrow {
+        font-family: var(--font-mono); font-size: 0.8rem;
+        color: var(--accent-rust); letter-spacing: 0.12em;
+        text-transform: uppercase; margin-bottom: var(--sp-4);
+      }
+      section.page-head h1 {
+        font-family: var(--font-display); font-weight: 500;
+        font-size: clamp(1.8rem, 4vw, 2.8rem); line-height: 1.15;
+        letter-spacing: -0.01em; margin: 0 0 var(--sp-4);
+      }
+      section.page-head > p { color: var(--text-soft); font-size: 1.1rem; max-width: 680px; }
+      section.page-head .meta {
+        display: flex; flex-wrap: wrap; gap: var(--sp-4);
+        margin-top: var(--sp-5); font-family: var(--font-mono); font-size: 0.85rem;
+        color: var(--text-dim);
+      }
+      section.page-head .meta span { display: inline-flex; align-items: center; gap: 6px; }
+      section.page-head .meta svg { color: var(--accent-rust); }
+
+      .hero-image {
+        max-width: var(--container, 960px); margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%; border-radius: var(--r-lg, 16px); display: block;
+        border: 1px solid var(--line);
+      }
+
+      /* 正文 */
+      article.article-body {
+        max-width: 760px;
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+      article.article-body h2 {
+        font-family: var(--font-display); font-weight: 500;
+        font-size: 1.55rem; margin: var(--sp-8) 0 var(--sp-4);
+        color: var(--text);
+      }
+      article.article-body h3 {
+        font-family: var(--font-display); font-weight: 500;
+        font-size: 1.15rem; margin: var(--sp-6) 0 var(--sp-3);
+        color: var(--text);
+      }
+      article.article-body p {
+        font-family: var(--font-serif); color: var(--text-soft);
+        line-height: 1.9; margin: 0 0 var(--sp-4);
+      }
+      article.article-body p strong { color: var(--text); font-weight: 600; }
+      article.article-body .hl {
+        background: linear-gradient(transparent 60%, rgba(200, 120, 80, 0.35) 60%);
+        padding: 0 3px; border-radius: 2px; color: var(--text);
+      }
+
+      .section-marker {
+        font-family: var(--font-mono); font-size: 0.78rem;
+        color: var(--accent-rust); letter-spacing: 0.08em;
+        margin-top: var(--sp-8); margin-bottom: var(--sp-2);
+      }
+
+      .info-box {
+        border-left: 3px solid var(--accent-rust);
+        padding: var(--sp-3) var(--sp-4);
+        margin: var(--sp-4) 0;
+        background: rgba(200, 120, 80, 0.08);
+        border-radius: 0 var(--r-md) var(--r-md) 0;
+        color: var(--text-soft);
+      }
+      .info-box.info-box-jade {
+        border-left-color: var(--accent-jade, #4a9b8a);
+        background: rgba(74, 155, 138, 0.08);
+      }
+      .info-box p { margin: 0; }
+
+      .pull-quote {
+        border-left: 3px solid var(--accent-rust);
+        padding: var(--sp-3) var(--sp-4);
+        margin: var(--sp-5) 0;
+        font-style: italic;
+        color: var(--text-soft);
+      }
+      .pull-quote::before { content: '“'; color: var(--accent-rust); font-size: 2.5rem; font-family: var(--font-display); display: block; line-height: 0.6; margin-bottom: var(--sp-2); }
+      .pull-quote p { margin: 0; font-size: 1.1rem; }
+
+      .timeline { margin: var(--sp-5) 0; padding: 0; }
+      .timeline .tl-item { display: flex; gap: var(--sp-4); padding: var(--sp-3) 0; border-bottom: 1px dashed var(--line); }
+      .timeline .tl-item:last-child { border-bottom: none; }
+      .timeline .tl-time { font-family: var(--font-mono); color: var(--accent-rust); font-size: 0.88rem; flex-shrink: 0; min-width: 110px; }
+      .timeline .tl-text { color: var(--text-soft); font-size: 1rem; }
+      .timeline .tl-text strong { color: var(--text); }
+
+      .platform-list {
+        display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: var(--sp-3); margin: var(--sp-6) 0;
+      }
+      .platform-list a {
+        display: flex; flex-direction: column; gap: 4px;
+        padding: var(--sp-3);
+        border: 1px solid var(--line); border-radius: var(--r-md);
+        color: var(--text-soft); text-decoration: none;
+        font-family: var(--font-mono); font-size: 0.88rem;
+        transition: all 0.2s;
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust); transform: translateY(-2px);
+        background: rgba(200, 120, 80, 0.05);
+      }
+      .platform-list .pn { color: var(--text); font-weight: 500; }
+      .platform-list .pd { color: var(--text-dim); font-size: 0.82rem; }
+
+      .tags-row {
+        display: flex; flex-wrap: wrap; gap: var(--sp-2);
+        margin: var(--sp-8) 0 var(--sp-5);
+        padding-top: var(--sp-5); border-top: 1px dashed var(--line);
+      }
+      .tags-row a {
+        font-family: var(--font-mono); font-size: 0.82rem;
+        padding: 4px 12px; border: 1px solid var(--line);
+        border-radius: 20px; color: var(--text-soft); text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover { border-color: var(--accent-rust); color: var(--accent-rust); }
+
+      .cta-box {
+        margin: var(--sp-8) 0;
+        display: flex; flex-direction: column; align-items: flex-start;
+        padding: var(--sp-4);
+        border: 1px solid var(--line); border-radius: var(--r-lg);
+        background: linear-gradient(135deg, rgba(200, 120, 80, 0.08), transparent);
+      }
+      .cta-box h3 {
+        font-family: var(--font-display); font-weight: 500;
+        font-size: 1.2rem; margin: 0 0 var(--sp-2);
+      }
+      .cta-box p { margin: 0 0 var(--sp-4); color: var(--text-soft); font-size: 0.95rem; }
+      .cta-btn {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 10px 20px; background: var(--accent-rust);
+        color: #fff; text-decoration: none; border-radius: 8px;
+        font-family: var(--font-mono); font-size: 0.9rem;
+        transition: transform 0.2s;
+      }
+      .cta-btn:hover { transform: translateY(-2px); }
+
+      /* footer */
+      footer.site-footer {
+        border-top: 1px solid var(--line);
+        padding: var(--sp-6);
+        margin-top: var(--sp-8);
+        color: var(--text-dim);
+        font-size: 0.85rem;
+        font-family: var(--font-mono);
+      }
+      footer.site-footer .footer-content {
+        max-width: 960px; margin: 0 auto;
+        display: flex; justify-content: space-between; gap: var(--sp-4); flex-wrap: wrap;
+      }
+      footer.site-footer .footer-brand { color: var(--text); font-weight: 500; font-family: var(--font-display); }
+
+      .floating-top {
+        position: fixed; bottom: 24px; right: 24px; z-index: 50;
+        background: var(--bg-card, #1a1f2a); color: var(--text);
+        border: 1px solid var(--line); border-radius: 50%;
+        width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+        cursor: pointer; opacity: 0; transition: opacity 0.3s;
+      }
+      .floating-top.visible { opacity: 1; }
+      .floating-top:hover { border-color: var(--accent-rust); }
+
+      /* 圆点列表 */
+      .bullet-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 var(--sp-6);
+      }
+      .bullet-list li {
+        position: relative;
+        padding-left: 28px;
+        margin-bottom: var(--sp-3);
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.75;
+        font-size: 0.98rem;
+      }
+      .bullet-list li::before {
+        content: '';
+        position: absolute;
+        left: 4px;
+        top: 11px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent-rust);
+      }
+
+      /* 技巧卡片 */
+      .tip-card {
+        margin: var(--sp-4) 0;
+        padding: var(--sp-5);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-left: 3px solid var(--accent-rust);
+      }
+      .tip-card .tip-title {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.05rem;
+        color: var(--text);
+        margin-bottom: var(--sp-2);
+      }
+      .tip-card p {
+        margin: var(--sp-2) 0 0;
+        font-size: 0.95rem;
+        color: var(--text-soft);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        nav.site-nav .nav-links { gap: var(--sp-3); font-size: 0.85rem; }
+        article.article-body { padding: var(--sp-6) var(--sp-4); }
+        article.article-body h2 { font-size: 1.35rem; }
+      }
+
+      /* 主题切换 - light */
+      [data-theme="light"] nav.site-nav { background: rgba(248, 248, 245, 0.9); }
+      [data-theme="light"] .cta-btn { color: #fff; }
+      [data-theme="light"] .floating-top { background: #fff; }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner" style="display:flex;align-items:center;justify-content:space-between;gap:var(--sp-5);">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../post/deepseek/deepseek.html">DeepSeek</a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换">
+          <svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">AI工具</div>
+      <h1>我用WorkBuddy搭了一套AI招聘流水线，简历处理从8小时压到0分钟，HR只干一件事：挑人</h1>
+      <p>叶小钗分享——用WorkBuddy搭建AI招聘流水线，从简历自动采集、信息提取、智能评分到入库通知，全流程自动化，HR只需挑人。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg> 叶小钗</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-06-20</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 10 分钟阅读</span>
+      </div>
+
+    <div class="hero-image"><img loading="lazy" src="https://mmbiz.qpic.cn/sz_mmbiz_jpg/6Uzn2S5AAyTqiaNKkP9CBA8ypTFGmFlYQH0S3nYHxazyqN1JczuvHpQr6sQ8PwWcIhNy6DiaSiaN04ta8oiccDokr99LPbcr7lPp8StR6iaC7wJs/0?wx_fmt=jpeg" alt="我用WorkBuddy搭了一套AI招聘流水线，简历处理从8小时压到0分钟，HR只干一件事：挑人"/></div>
+    </section>
+
+    <article class="article-body">
+
+      <div class="section-marker">01 · 导读</div>
+      <h2>导读</h2>
+      <p>之前我们在做 AI 原生组织建设方法论的时候提出了一套公式，其中有个核心模块就是 <span class="hl">AI 操作系统</span>，而里面能立竿见影切实提效的板块就是工作流容器了。从实践来看，<span class="hl">工作流AI仍然是当前企业提效最为明显的方式</span>。</p>
+      <p>之前讨论工作流AI的时候，会经常把 Coze、Dify 等平台带上一起来讨论，但这些低代码AI开发平台拖拉拽的交互方式让很多人都不喜欢。尤其是业务逻辑复杂以后，整个界面跟蜘蛛网一样让人眼花缭乱。</p>
+      <p>而现在，国内的 <span class="hl">WorkBuddy</span> 似乎逐渐在把以前通过 Coze 做的很多事情慢慢在吃掉。WorkBuddy 通过真正的低门槛和丰富的生态融合，把桌面端 Agent 带入到了大家的工作日常，通过自然语言描述处理规则就把事情搞定。</p>
+
+      <div class="info-box">
+        <strong>核心差异：</strong>Coze/Dify 是面向开发者的低代码工具，WorkBuddy 是面向业务人员的自然语言 Agent。前者需要定义数据传输格式，后者只需要描述处理流程。
+      </div>
+
+      <div class="section-marker">02 · 招聘流程的痛点</div>
+      <h2>招聘流程的痛点</h2>
+      <p>从整个 HR 招聘流程来看，工作量最大的就是<span class="hl">简历筛选环节</span>。一个岗位发布出去，一天可能收到上百份简历，要从海量的简历里面筛选出匹配的候选人，这种工作量显然是巨大的。</p>
+      <p>现实中很多简历根本就没有被 HR 打开过，完全靠抽签，这也导致错过真正符合企业需求的候选人。</p>
+
+      <div class="tip-card">
+        <div class="tip-title">经典问题</div>
+        <ul class="bullet-list">
+          <li>筛选流程要经过两道关，评价标准不一致</li>
+          <li>HR 给过去的简历不是业务部门想要的</li>
+          <li>简历入人才库时，录入工作量很大</li>
+          <li>大量简历被遗漏，靠"抽签"决定命运</li>
+        </ul>
+      </div>
+
+      <div class="pull-quote">
+        <p>有没有一种更加公平的方式，确保每一份简历都能被看到，并且按照同样的标准被评价，还能减少 HR 工作量？</p>
+      </div>
+
+      <div class="section-marker">03 · 流程拆解：哪些环节适合AI</div>
+      <h2>流程拆解：哪些环节适合AI</h2>
+      <p>首先把招聘流程拆开来看，找到主要卡点是什么，哪些环节能让 AI 介入，哪些需要人为把关。</p>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">简历采集</div>
+          <div class="tl-text"><strong>适合AI</strong> — 从邮箱自动下载简历附件，去重处理</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">信息提取</div>
+          <div class="tl-text"><strong>适合AI</strong> — 自动读取 PDF/Word，提取关键字段</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">简历评分</div>
+          <div class="tl-text"><strong>适合AI</strong> — 按预设标准多维度打分，加权计算</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">数据入库</div>
+          <div class="tl-text"><strong>适合AI</strong> — 自动写入飞书多维表格，生成结构化数据</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">面试决策</div>
+          <div class="tl-text"><strong>需要人</strong> — 专业判断力和沟通技巧，AI 无法替代</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">谈 Offer</div>
+          <div class="tl-text"><strong>需要人</strong> — 需要灵活应变和谈判技巧</div>
+        </div>
+      </div>
+
+      <div class="info-box info-box-jade">
+        <strong>设计原则：</strong>把主观判断尽可能转化为客观规则，只有规则客观了，AI 才能精准执行。信息提取、结构化存储、简历打分、面试问题准备，这些有规则可循的环节，正是 AI 擅长的地方。
+      </div>
+
+      <div class="section-marker">04 · WorkBuddy三大核心能力</div>
+      <h2>WorkBuddy三大核心能力</h2>
+      <p>搭建这套流程需要用到 WorkBuddy 的三个核心能力：</p>
+
+      <div class="tip-card">
+        <div class="tip-title">1. Skill（技能）</div>
+        <p>把做某件事的完整步骤写清楚，存成一个技能文件。下次遇到同样的事情，直接调用这个技能，AI 就按照写好的步骤一步一步执行。整个招聘流程，都可以定义在一个 Skill 文件里。</p>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">2. Connector（连接器）</div>
+        <p>WorkBuddy 默认只能读写本地文件，但流程里有很多操作要跟外部系统打交道，比如把数据写入飞书多维表格，从邮箱里拉取简历附件。连接器就是用来解决这个问题的，通过添加飞书多维表、邮箱连接器，就能与外部系统交互。</p>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">3. Automation（自动化）</div>
+        <p>整个流程要自动运行，可以通过定时任务来实现。比如每天早上九点自动检查邮箱里有没有新简历，如果有，就自动走一遍处理流程。</p>
+      </div>
+
+      <div class="pull-quote">
+        <p>技能定义怎么做，连接器完成与外部系统交互，自动化实现什么时候做。三者配合，就能把招聘流程完整地跑起来。</p>
+      </div>
+
+      <div class="section-marker">05 · 第一步：简历自动采集</div>
+      <h2>第一步：简历自动采集</h2>
+      <p>通过 WorkBuddy 的自动化任务实现从邮箱中自动采集简历附件，需要解决三个问题：</p>
+
+      <ul class="bullet-list">
+        <li><strong>如何连接邮箱？</strong> — 通过邮箱连接器实现，根据使用的邮箱类型选择不同的连接器</li>
+        <li><strong>如何识别简历邮件？</strong> — 提前约定邮件主题格式，如「应聘xxx岗位-姓名」，通过主题内容判断</li>
+        <li><strong>如何避免重复下载？</strong> — 以邮箱地址作为唯一ID，在本地维护下载清单，下载前检查是否已存在</li>
+      </ul>
+
+      <p>配置好自动化任务后，每天早上自动检查邮箱新简历，下载附件并更新去重记录。采集频率建议不要太频繁，否则很浪费积分。</p>
+
+      <div class="section-marker">06 · 第二步：信息提取与结构化</div>
+      <h2>第二步：信息提取与结构化</h2>
+      <p>拿到简历附件后，让 WorkBuddy 读取简历内容，无论 PDF 还是 Word 都能处理。需要提取的关键信息包括：</p>
+
+      <div class="tip-card">
+        <div class="tip-title">基础信息提取</div>
+        <ul class="bullet-list">
+          <li>姓名、手机号、邮箱、年龄、性别</li>
+          <li>求职意向岗位</li>
+          <li>毕业院校、学历层次、专业</li>
+          <li>每段工作经历的时间和公司名称</li>
+          <li>掌握的技能清单</li>
+          <li>做过的项目描述</li>
+        </ul>
+      </div>
+
+      <p>除了这些基础信息，还可以让 AI 基于这些信息作进一步推断：</p>
+      <ul class="bullet-list">
+        <li>根据院校名称判断是否 985 或 211</li>
+        <li>根据工作经历计算总工作年限</li>
+        <li>根据公司名称判断是否有大厂背景</li>
+      </ul>
+
+      <div class="section-marker">07 · 第三步：智能评分体系</div>
+      <h2>第三步：智能评分体系</h2>
+      <p>简历评分是整个流程中最关键的一步，评分的准确性直接决定这套流程是否真的可用。</p>
+      <p>核心是每个岗位的<span class="hl">评分标准必须事先定义清楚</span>，标准不清，AI 就会自由发挥，导致不同简历之间的评分缺乏可比性。</p>
+
+      <div class="tip-card">
+        <div class="tip-title">评分维度（每个维度满分10分）</div>
+        <ul class="bullet-list">
+          <li><strong>学历背景</strong> — 院校层次、专业匹配度</li>
+          <li><strong>工作经验</strong> — 年限、行业匹配度、职位层级</li>
+          <li><strong>技能匹配</strong> — 硬技能与岗位要求的匹配度</li>
+          <li><strong>项目经历</strong> — 项目复杂度、与岗位相关性</li>
+          <li><strong>稳定性</strong> — 跳槽频率、每段工作时长</li>
+        </ul>
+        <p style="margin-top:var(--sp-3);">具体权重由 HR 和业务部门共同商定，按权重加权后的总分满分也是 10 分。</p>
+      </div>
+
+      <p>评分标准存放在飞书文档中，每个岗位单独一个文档，包含岗位描述和评分标准。团队协作维护，随时能改，改完后 WorkBuddy 自动读取最新内容。</p>
+
+      <div class="section-marker">08 · 第四步：数据入库与全流程串联</div>
+      <h2>第四步：数据入库与全流程串联</h2>
+      <p>使用飞书多维表格来存储候选人信息，首先需要定义好表结构。手动创建太麻烦，直接让 WorkBuddy 创建表结构。</p>
+      <p>通过飞书多维表格连接器授权后，就可以通过自然语言的方式让 WorkBuddy 操作飞书多维表了。</p>
+
+      <div class="info-box">
+        <strong>完整串联方式：</strong>自动化任务 + hr-resume Skill + 飞书连接器 + 邮箱连接器，从采集到评分、到写入、通知，整个过程无需人为参与。
+      </div>
+
+      <p>自定义 Skill 的处理流程为：读取简历 → 提取信息 → 智能推断 → 多维度评分 → 写入飞书多维表 → 通知业务负责人。</p>
+
+      <div class="section-marker">09 · 持续校准与优化</div>
+      <h2>持续校准与优化</h2>
+      <p>这套流程搭建完成后，还要在实际使用中不断校准。岗位要求会变，业务负责人对候选人的判断也会变，评分标准也需要同步调整。</p>
+
+      <div class="tip-card">
+        <div class="tip-title">校准信号</div>
+        <ul class="bullet-list">
+          <li>某个岗位十份高分简历推送给业务负责人，但只有两份符合要求 → 评分标准偏松</li>
+          <li>连续一周没有简历进入高分区间 → 评分标准偏严</li>
+          <li>业务部门反馈"这个候选人评分不高但实际很好" → 某个维度权重不合理</li>
+        </ul>
+      </div>
+
+      <div class="section-marker">10 · WorkBuddy vs Coze/Dify</div>
+      <h2>WorkBuddy vs Coze/Dify</h2>
+      <p>如果用 Coze 或 Dify 来做，整个流程也能实现，但两者有本质区别：</p>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">Coze/Dify</div>
+          <div class="tl-text"><strong>工程师思维</strong> — 每一步都需要定义标准的数据传输格式，一步错会导致后续步步错。界面复杂，非技术背景难以上手。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">WorkBuddy</div>
+          <div class="tl-text"><strong>业务人员思维</strong> — 容错性更高，对非技术同学更为友好。只需要把处理流程放到一个 Skill 文件里，AI 照着执行，关注最终意图达成。</div>
+        </div>
+      </div>
+
+      <div class="section-marker">11 · 总结</div>
+      <h2>总结</h2>
+      <p>用 WorkBuddy 搭建的 HR 简历自动化筛选流程，<span class="hl">全自动跑通</span>，HR 只需要在飞书多维表里看一眼评分结果，挑出高分候选人进入下一轮即可。</p>
+
+      <div class="info-box info-box-jade">
+        <strong>落地建议：</strong>企业在落地工作流AI时，没必要一开始就追求覆盖整个流程。先把几个高频环节跑通，效果稳定后，再逐步接入后续流程，<strong>渐进式推进反而更稳妥</strong>。
+      </div>
+
+      <div class="pull-quote">
+        <p>简历处理从 8 小时压到 0 分钟，HR 只干一件事：挑人。这就是工作流AI的价值——不是替代人，而是把人从重复劳动中解放出来，去做更有价值的事。</p>
+      </div>
+
+      <div class="tags-row">
+        <a href="../home/home.html?tag=WorkBuddy">#WorkBuddy</a>
+        <a href="../home/home.html?tag=AI招聘">#AI招聘</a>
+        <a href="../home/home.html?tag=工作流自动化">#工作流自动化</a>
+        <a href="../home/home.html?tag=简历筛选">#简历筛选</a>
+        <a href="../home/home.html?tag=HR效率">#HR效率</a>
+        <a href="../home/home.html?tag=AI工具">#AI工具</a>
+        <a href="../home/home.html?tag=效率提升">#效率提升</a>
+      </div>
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用。原文版权归微信原作者所有。</div>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+      })();
+    </script>
+  </body>
+</html>

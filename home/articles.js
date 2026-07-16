@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'workbuddyai-80-hr',
+            title: '我用WorkBuddy搭了一套AI招聘流水线，简历处理从8小时压到0分钟，HR只干一件事：挑人',
+            url: '../post/workbuddyai-80-hr/workbuddyai-80-hr.html',
+            summary: '叶小钗分享——用WorkBuddy搭建AI招聘流水线，从简历自动采集、信息提取、智能评分到入库通知，全流程自动化，HR只需挑人。',
+            category: 'AI工具',
+            date: '2026-06-20',
+            tags: ["WorkBuddy","AI招聘","工作流自动化","简历筛选","HR效率","AI工具","效率提升"],
+          },
+          {
             id: 'dy-7661986671767883014',
             title: 'AI数字员工页面开源了，免费拿走！',
             url: '../post/dy-7661986671767883014/dy-7661986671767883014.html',
