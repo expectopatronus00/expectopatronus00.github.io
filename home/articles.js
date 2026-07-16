@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'xhs-6a58dd8a000000001101d929',
+            title: 'AI瞎写代码终于有救了，这个项目直接给它立规矩',
+            url: '../post/xhs-6a58dd8a000000001101d929/xhs-6a58dd8a000000001101d929.html',
+            summary: '青青王-AI分享——AI编程乱写代码的解决方案，通过Skill项目给AI立规矩，让Vibe Coding从"瞎写"变成"规范写"。',
+            category: 'AI编程',
+            date: '2026-07-16',
+            tags: ["AI编程","Skill","Vibe Coding","Claude Code","代码规范","AI工具","小红书"],
+          },
+          {
             id: 'dy-7662303729881713929',
             title: '小白组装电脑也不会翻车！这些神级网站帮你避坑',
             url: '../post/dy-7662303729881713929/dy-7662303729881713929.html',
