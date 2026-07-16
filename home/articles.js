@@ -6,10 +6,10 @@ window.articles = [
             id: 'post-2026-06-20-ij5uk0',
             title: '好用的Skill = 某个领域的专业大神！越用越得劲！',
             url: '../post/post-2026-06-20-ij5uk0/post-2026-06-20-ij5uk0.html',
-            summary: 'GitHub 上最顶级的 Vibe Coding Skill，背后站着三个真大神：',
-            category: '微信搬运',
+            summary: 'Turing实验室分享——GitHub上最顶级的Vibe Coding Skill盘点，从Karpathy到Jesse Vincent，揭示大神经验如何结晶为结构化约束。',
+            category: 'AI编程',
             date: '2026-06-20',
-            tags: ['AI','大模型','技术'],
+            tags: ["Vibe Coding","Skill","Claude Code","AI编程","开源项目","Karpathy","GitHub"],
           },
           {
             id: 'claude-code-bug-ai',

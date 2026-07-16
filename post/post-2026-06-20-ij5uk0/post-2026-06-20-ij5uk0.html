@@ -4,11 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>好用的Skill = 某个领域的专业大神！越用越得劲！ · EXPECTOPATRONUS</title>
-    <meta name="description" content="GitHub 上最顶级的 Vibe Coding Skill，背后站着三个真大神：" />
-    <meta name="keywords" content="AI,大模型,技术,深度分析" />
+    <meta name="description" content="Turing实验室分享——GitHub上最顶级的Vibe Coding Skill盘点，从Karpathy到Jesse Vincent，揭示大神经验如何结晶为结构化约束。" />
+    <meta name="keywords" content="Vibe Coding,Skill,Claude Code,AI编程,开源项目,Karpathy,GitHub" />
     <meta property="og:title" content="好用的Skill = 某个领域的专业大神！越用越得劲！" />
     <meta property="og:type" content="article" />
-    <meta property="og:description" content="GitHub 上最顶级的 Vibe Coding Skill，背后站着三个真大神：" />
+    <meta property="og:description" content="Turing实验室分享——GitHub上最顶级的Vibe Coding Skill盘点，从Karpathy到Jesse Vincent，揭示大神经验如何结晶为结构化约束。" />
     <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
     <script>
       (function () {
@@ -235,8 +235,56 @@
       .floating-top.visible { opacity: 1; }
       .floating-top:hover { border-color: var(--accent-rust); }
 
+      /* 圆点列表 */
+      .bullet-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 var(--sp-6);
+      }
+      .bullet-list li {
+        position: relative;
+        padding-left: 28px;
+        margin-bottom: var(--sp-3);
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.75;
+        font-size: 0.98rem;
+      }
+      .bullet-list li::before {
+        content: '';
+        position: absolute;
+        left: 4px;
+        top: 11px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent-rust);
+      }
+
+      /* 技巧卡片 */
+      .tip-card {
+        margin: var(--sp-4) 0;
+        padding: var(--sp-5);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-left: 3px solid var(--accent-rust);
+      }
+      .tip-card .tip-title {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.05rem;
+        color: var(--text);
+        margin-bottom: var(--sp-2);
+      }
+      .tip-card p {
+        margin: var(--sp-2) 0 0;
+        font-size: 0.95rem;
+        color: var(--text-soft);
+      }
+
       /* 响应式 */
-      @media (max-width: 768px) {
+      @media (max-width: 820px) {
         nav.site-nav .nav-links { gap: var(--sp-3); font-size: 0.85rem; }
         article.article-body { padding: var(--sp-6) var(--sp-4); }
         article.article-body h2 { font-size: 1.35rem; }
@@ -264,56 +312,137 @@
     </nav>
 
     <section class="page-head">
-      <div class="eyebrow">微信搬运 · post-2026-06-20-ij5uk0</div>
+      <div class="eyebrow">AI编程</div>
       <h1>好用的Skill = 某个领域的专业大神！越用越得劲！</h1>
-      <p>GitHub 上最顶级的 Vibe Coding Skill，背后站着三个真大神：</p>
+      <p>Turing实验室分享——GitHub上最顶级的Vibe Coding Skill盘点，从Karpathy到Jesse Vincent，揭示大神经验如何结晶为结构化约束。</p>
       <div class="meta">
         <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg> Turing 实验室</span>
         <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-06-20</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 6 分钟阅读</span>
       </div>
-
-    <div class="hero-image"><img loading="lazy" src="https://mmbiz.qpic.cn/sz_mmbiz_jpg/eKibqyicaB5BwPIcx9IliapYt0ynBqSiaib90h7YMRrSL5fltvPlyGH7RlclebAXdSffICMybh4VbOakPQ6oiaCsuJxQUpebEADXUYjKttdiaSqQias/0?wx_fmt=jpeg" alt="好用的Skill = 某个领域的专业大神！越用越得劲！"/></div>
+      <div class="hero-image"><img loading="lazy" src="https://mmbiz.qpic.cn/sz_mmbiz_jpg/eKibqyicaB5BwPIcx9IliapYt0ynBqSiaib90h7YMRrSL5fltvPlyGH7RlclebAXdSffICMybh4VbOakPQ6oiaCsuJxQUpebEADXUYjKttdiaSqQias/0?wx_fmt=jpeg" alt="好用的Skill = 某个领域的专业大神！越用越得劲！"/></div>
     </section>
 
     <article class="article-body">
-      <div class="section-marker on-scroll">00 · 导读</div>
-      <h2 class="on-scroll">导读</h2>
-      <p class="on-scroll">GitHub 上最顶级的 Vibe Coding Skill，背后站着三个真大神：</p>
-      <p class="on-scroll">Jesse Vincent — superpowers（23 万 star）</p>
-      <p class="on-scroll">前 Stripe 工程师，构建过多个生产系统。他的 Skill 是一套 7 步工作流：brainstorming → writing-plans → subagent-driven → TDD → review → merge。用 HARD-GATE 强制 AI：用户批准设计前，禁止写代码。</p>
-      <p class="on-scroll">Andrej Karpathy — karpathy-skills（17 万 star）</p>
-      <p class="on-scroll">前 Tesla AI 总监，OpenAI 创始成员。他的 Skill 只有一个 CLAUDE.md 文件，四条原则：Think Before Coding、Simplicity First、Surgical Changes、Goal-Driven Execution。证明：约束不在多，在精准。</p>
-      <p class="on-scroll">Affaan Mustafa — ECC（21 万 star）</p>
-      <p class="on-scroll">企业级 AI 应用专家。他的 Skill 不止流程，还有 instincts（自动学习）、memory（跨会话持久化）、AgentShield（安全扫描）。让 AI 编码从「一次性会话」变成「持续进化的系统」。</p>
-      <p class="on-scroll">02 / 更多大神</p>
-      <p class="on-scroll">Julius Brussee — caveman（7 万 star）</p>
-      <p class="on-scroll">资深开发者。他的 Skill 让 AI 用「穴居人」风格说话，减少 75% token 消耗。核心洞察：技术准确性不变，表达方式可以极简。</p>
-      <p class="on-scroll">Safi Shamsi — graphify（6 万 star）</p>
-      <p class="on-scroll">知识图谱专家。他的 Skill 把任何代码库转成交互式知识图谱，71.5x token 效率提升。核心洞察：AI 需要「代码地图」，不然会迷路。</p>
-      <p class="on-scroll">GSD Build — get-shit-done（6 万 star）</p>
-      <p class="on-scroll">元提示工程专家。他的 Skill 是轻量级 spec-driven 开发系统。核心洞察：用规范驱动，让 AI 不再自行发挥。</p>
-      <p class="on-scroll">Ruv — ruflo（5 万 star）</p>
-      <p class="on-scroll">Agent 编排专家。他的 Skill 部署智能多 agent 集群，协调自主工作流。核心洞察：一个 harness，管理一群 agent。</p>
-      <p class="on-scroll">Shan Rais — claude-code-best-practice（5 万 star）</p>
-      <p class="on-scroll">系统化工程专家。他的 Skill 覆盖 skills、subagents、commands 最佳实践。核心洞察：practice makes claude perfect。</p>
-      <p class="on-scroll">Jarrod Watts — claude-hud（2.5 万 star）</p>
-      <p class="on-scroll">开发者工具专家。他的 Skill 实时显示 AI 编码状态：上下文使用率、工具活动、agent 状态。核心洞察：让 AI 编码过程「可见」。</p>
-      <p class="on-scroll">Blader — humanizer（2.4 万 star）</p>
-      <p class="on-scroll">内容质量专家。他的 Skill 基于 Wikipedia 的「AI 写作迹象」指南，33 种检测模式。核心洞察：让 AI 写的文字像人写的。</p>
-      <p class="on-scroll">Mksglu — context-mode（1.7 万 star）</p>
-      <p class="on-scroll">性能优化专家。他的 Skill 沙盒化工具输出，98% 上下文减少。核心洞察：让 AI 的「记忆力」提升 50 倍。</p>
-      <p class="on-scroll">03 / 本质</p>
-      <p class="on-scroll">这些 Skill 的共同点：</p>
-      <p class="on-scroll">作者都是真大神。</p>
-      <p class="on-scroll">Karpathy 是前 Tesla AI 总监。Jesse Vincent 构建过多个生产系统。Affaan Mustafa 是企业级 AI 专家。Julius Brussee 优化过无数代码库。Safi Shamsi 是知识图谱专家。</p>
-      <p class="on-scroll">他们写的不是「提示词技巧」，而是「经验结晶」——</p>
-      <p class="on-scroll">踩过坑，知道哪里会错。 成功过无数次，知道正确步骤。 审过无数代码，知道好代码和坏代码的区别。</p>
-      <p class="on-scroll">Skill 的本质 = 大神经验 × 结构化约束 × 社区验证</p>
-      <p class="on-scroll">不是大神写不出好 Skill。</p>
-      <p class="on-scroll">不会结构化写不出好 Skill。</p>
-      <p class="on-scroll">没经过实战验证的不是好 Skill。</p>
-      <p class="on-scroll">微信扫一扫 关注该公众号</p>
-      <p class="on-scroll">微信扫一扫可打开此内容， 使用完整服务</p>
+
+      <div class="section-marker">01 · 三位顶级大神</div>
+      <h2>三位顶级大神</h2>
+      <p>GitHub 上最顶级的 Vibe Coding Skill，背后站着三个真大神：</p>
+
+      <div class="tip-card">
+        <div class="tip-title">Jesse Vincent — superpowers（23 万 star）</div>
+        <p>前 Stripe 工程师，构建过多个生产系统。他的 Skill 是一套 <span class="hl">7 步工作流</span>：brainstorming → writing-plans → subagent-driven → TDD → review → merge。用 <strong>HARD-GATE</strong> 强制 AI：用户批准设计前，禁止写代码。</p>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">Andrej Karpathy — karpathy-skills（17 万 star）</div>
+        <p>前 Tesla AI 总监，OpenAI 创始成员。他的 Skill 只有一个 <strong>CLAUDE.md</strong> 文件，四条原则：Think Before Coding、Simplicity First、Surgical Changes、Goal-Driven Execution。证明：<span class="hl">约束不在多，在精准</span>。</p>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">Affaan Mustafa — ECC（21 万 star）</div>
+        <p>企业级 AI 应用专家。他的 Skill 不止流程，还有 <strong>instincts</strong>（自动学习）、<strong>memory</strong>（跨会话持久化）、<strong>AgentShield</strong>（安全扫描）。让 AI 编码从「一次性会话」变成「<span class="hl">持续进化的系统</span>」。</p>
+      </div>
+
+      <div class="section-marker">02 · 更多大神Skill</div>
+      <h2>更多大神Skill</h2>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">7万 star</div>
+          <div class="tl-text"><strong>caveman</strong> — Julius Brussee。让AI用「穴居人」风格说话，减少75% token消耗。核心洞察：技术准确性不变，表达方式可以极简。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">6万 star</div>
+          <div class="tl-text"><strong>graphify</strong> — Safi Shamsi。把任何代码库转成交互式知识图谱，71.5x token效率提升。核心洞察：AI需要「代码地图」，不然会迷路。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">6万 star</div>
+          <div class="tl-text"><strong>get-shit-done</strong> — GSD Build。轻量级spec-driven开发系统。核心洞察：用规范驱动，让AI不再自行发挥。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">5万 star</div>
+          <div class="tl-text"><strong>ruflo</strong> — Ruv。部署智能多agent集群，协调自主工作流。核心洞察：一个harness，管理一群agent。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">5万 star</div>
+          <div class="tl-text"><strong>claude-code-best-practice</strong> — Shan Rais。覆盖skills、subagents、commands最佳实践。核心洞察：practice makes claude perfect。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">2.5万 star</div>
+          <div class="tl-text"><strong>claude-hud</strong> — Jarrod Watts。实时显示AI编码状态：上下文使用率、工具活动、agent状态。核心洞察：让AI编码过程「可见」。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">2.4万 star</div>
+          <div class="tl-text"><strong>humanizer</strong> — Blader。基于Wikipedia的「AI写作迹象」指南，33种检测模式。核心洞察：让AI写的文字像人写的。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">1.7万 star</div>
+          <div class="tl-text"><strong>context-mode</strong> — Mksglu。沙盒化工具输出，98%上下文减少。核心洞察：让AI的「记忆力」提升50倍。</div>
+        </div>
+      </div>
+
+      <div class="section-marker">03 · Skill的本质</div>
+      <h2>Skill的本质</h2>
+      <p>这些 Skill 的共同点：<span class="hl">作者都是真大神</span>。</p>
+
+      <ul class="bullet-list">
+        <li><strong>Karpathy</strong> — 前Tesla AI总监</li>
+        <li><strong>Jesse Vincent</strong> — 构建过多个生产系统</li>
+        <li><strong>Affaan Mustafa</strong> — 企业级AI专家</li>
+        <li><strong>Julius Brussee</strong> — 优化过无数代码库</li>
+        <li><strong>Safi Shamsi</strong> — 知识图谱专家</li>
+      </ul>
+
+      <p>他们写的不是「提示词技巧」，而是<span class="hl">「经验结晶」</span>：</p>
+
+      <div class="info-box">
+        <strong>经验结晶 = 三层叠加</strong>
+        <ul class="bullet-list" style="margin-top:var(--sp-3);">
+          <li>踩过坑，知道哪里会错</li>
+          <li>成功过无数次，知道正确步骤</li>
+          <li>审过无数代码，知道好代码和坏代码的区别</li>
+        </ul>
+      </div>
+
+      <div class="pull-quote">
+        <p>Skill的本质 = 大神经验 × 结构化约束 × 社区验证</p>
+      </div>
+
+      <div class="section-marker">04 · 好Skill的三要素</div>
+      <h2>好Skill的三要素</h2>
+
+      <div class="tip-card">
+        <div class="tip-title">1. 大神经验</div>
+        <p>不是大神写不出好 Skill。只有真正经历过实战、踩过坑、解决过复杂问题的人，才知道哪些约束是必要的，哪些是多余的。</p>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">2. 结构化约束</div>
+        <p>不会结构化写不出好 Skill。经验必须转化为可执行的规则、流程、检查点，AI才能精准执行。零散的提示词不是 Skill。</p>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">3. 社区验证</div>
+        <p>没经过实战验证的不是好 Skill。GitHub star 数、社区反馈、实际使用效果，都是验证 Skill 价值的重要指标。</p>
+      </div>
+
+      <div class="section-marker">05 · 总结</div>
+      <h2>总结</h2>
+
+      <div class="info-box info-box-jade">
+        <strong>核心观点：</strong>好用的 Skill 确实等于某个领域的专业大神。Karpathy、Jesse Vincent、Affaan Mustafa 等人之所以能写出顶级 Skill，是因为他们把自己的多年经验结构化为可复用的约束。越用越得劲，因为每一次使用都是在调用大神的「经验结晶」。
+      </div>
+
+      <div class="tags-row">
+        <a href="../home/home.html?tag=Vibe Coding">#Vibe Coding</a>
+        <a href="../home/home.html?tag=Skill">#Skill</a>
+        <a href="../home/home.html?tag=Claude Code">#Claude Code</a>
+        <a href="../home/home.html?tag=AI编程">#AI编程</a>
+        <a href="../home/home.html?tag=开源项目">#开源项目</a>
+        <a href="../home/home.html?tag=Karpathy">#Karpathy</a>
+        <a href="../home/home.html?tag=GitHub">#GitHub</a>
+      </div>
     </article>
 
     <footer class="site-footer">
