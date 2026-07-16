@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'ai-agent-skills-137',
+            title: 'AI Agent Skills 生态正在成形：从技能死代码检测到 137 个生产级技能库，开发者如何抓住这波浪潮',
+            url: '../post/ai-agent-skills-137/ai-agent-skills-137.html',
+            summary: 'CheeseLab分享——AI Agent Skills生态全景：deadskills治理工具、137个生产级技能库、跨工具统一工作流，三大基础设施层正在成形。',
+            category: 'AI编程',
+            date: '2026-06-20',
+            tags: ["AI Agent","Skills","Claude Code","Codex","AI编程","开源生态","开发者工具"],
+          },
+          {
             id: 'post-2026-06-20-ij5uk0',
             title: '好用的Skill = 某个领域的专业大神！越用越得劲！',
             url: '../post/post-2026-06-20-ij5uk0/post-2026-06-20-ij5uk0.html',

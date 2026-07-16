@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Agent Skills 生态正在成形：从技能死代码检测到 137 个生产级技能库，开发者如何抓住这波浪潮 · EXPECTOPATRONUS</title>
+    <meta name="description" content="CheeseLab分享——AI Agent Skills生态全景：deadskills治理工具、137个生产级技能库、跨工具统一工作流，三大基础设施层正在成形。" />
+    <meta name="keywords" content="AI Agent,Skills,Claude Code,Codex,AI编程,开源生态,开发者工具" />
+    <meta property="og:title" content="AI Agent Skills 生态正在成形：从技能死代码检测到 137 个生产级技能库" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="CheeseLab分享——AI Agent Skills生态全景：deadskills治理工具、137个生产级技能库、跨工具统一工作流，三大基础设施层正在成形。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try { var t = localStorage.getItem('theme') || 'dark'; if (t === 'light') document.documentElement.dataset.theme = 'light'; } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+
+      body {
+        font-family: var(--font-serif);
+        background: var(--bg-0);
+        color: var(--text);
+        line-height: 1.8;
+        margin: 0;
+        font-size: 1.05rem;
+      }
+
+      /* 顶部导航 */
+      nav.site-nav {
+        position: sticky; top: 0; z-index: 100;
+        display: flex; align-items: center; justify-content: space-between;
+        padding: var(--sp-4) var(--sp-6);
+        background: rgba(10, 12, 15, 0.85);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--line);
+        font-family: var(--font-mono);
+      }
+      nav.site-nav .brand { display: flex; align-items: center; gap: var(--sp-2); color: var(--text); font-weight: 600; text-decoration: none; }
+      nav.site-nav .brand .logo {
+        display: inline-flex; align-items: center; justify-content: center;
+        width: 28px; height: 28px; border-radius: 8px;
+        background: var(--accent-rust); color: #fff; font-weight: 700; font-family: var(--font-display);
+      }
+      nav.site-nav .nav-links { display: flex; gap: var(--sp-5); align-items: center; }
+      nav.site-nav .nav-links a { color: var(--text-soft); text-decoration: none; font-size: 0.92rem; }
+      nav.site-nav .nav-links a:hover { color: var(--accent-rust); }
+      nav.site-nav .nav-links a.is-active { color: var(--accent-rust); }
+      .theme-btn {
+        background: transparent; border: 1px solid var(--line); color: var(--text-soft);
+        padding: 6px 10px; border-radius: 8px; cursor: pointer; font-size: 0.85rem;
+        transition: all 0.2s;
+      }
+      .theme-btn:hover { border-color: var(--accent-rust); color: var(--accent-rust); }
+
+      /* 页面 hero */
+      section.page-head {
+        max-width: var(--container, 960px);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      section.page-head .eyebrow {
+        font-family: var(--font-mono); font-size: 0.8rem;
+        color: var(--accent-rust); letter-spacing: 0.12em;
+        text-transform: uppercase; margin-bottom: var(--sp-4);
+      }
+      section.page-head h1 {
+        font-family: var(--font-display); font-weight: 500;
+        font-size: clamp(1.8rem, 4vw, 2.8rem); line-height: 1.15;
+        letter-spacing: -0.01em; margin: 0 0 var(--sp-4);
+      }
+      section.page-head > p { color: var(--text-soft); font-size: 1.1rem; max-width: 680px; }
+      section.page-head .meta {
+        display: flex; flex-wrap: wrap; gap: var(--sp-4);
+        margin-top: var(--sp-5); font-family: var(--font-mono); font-size: 0.85rem;
+        color: var(--text-dim);
+      }
+      section.page-head .meta span { display: inline-flex; align-items: center; gap: 6px; }
+      section.page-head .meta svg { color: var(--accent-rust); }
+
+      .hero-image {
+        max-width: var(--container, 960px); margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%; border-radius: var(--r-lg, 16px); display: block;
+        border: 1px solid var(--line);
+      }
+
+      /* 正文 */
+      article.article-body {
+        max-width: 760px;
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+      article.article-body h2 {
+        font-family: var(--font-display); font-weight: 500;
+        font-size: 1.55rem; margin: var(--sp-8) 0 var(--sp-4);
+        color: var(--text);
+      }
+      article.article-body h3 {
+        font-family: var(--font-display); font-weight: 500;
+        font-size: 1.15rem; margin: var(--sp-6) 0 var(--sp-3);
+        color: var(--text);
+      }
+      article.article-body p {
+        font-family: var(--font-serif); color: var(--text-soft);
+        line-height: 1.9; margin: 0 0 var(--sp-4);
+      }
+      article.article-body p strong { color: var(--text); font-weight: 600; }
+      article.article-body .hl {
+        background: linear-gradient(transparent 60%, rgba(200, 120, 80, 0.35) 60%);
+        padding: 0 3px; border-radius: 2px; color: var(--text);
+      }
+
+      .section-marker {
+        font-family: var(--font-mono); font-size: 0.78rem;
+        color: var(--accent-rust); letter-spacing: 0.08em;
+        margin-top: var(--sp-8); margin-bottom: var(--sp-2);
+      }
+
+      .info-box {
+        border-left: 3px solid var(--accent-rust);
+        padding: var(--sp-3) var(--sp-4);
+        margin: var(--sp-4) 0;
+        background: rgba(200, 120, 80, 0.08);
+        border-radius: 0 var(--r-md) var(--r-md) 0;
+        color: var(--text-soft);
+      }
+      .info-box.info-box-jade {
+        border-left-color: var(--accent-jade, #4a9b8a);
+        background: rgba(74, 155, 138, 0.08);
+      }
+      .info-box p { margin: 0; }
+
+      .pull-quote {
+        border-left: 3px solid var(--accent-rust);
+        padding: var(--sp-3) var(--sp-4);
+        margin: var(--sp-5) 0;
+        font-style: italic;
+        color: var(--text-soft);
+      }
+      .pull-quote::before { content: '“'; color: var(--accent-rust); font-size: 2.5rem; font-family: var(--font-display); display: block; line-height: 0.6; margin-bottom: var(--sp-2); }
+      .pull-quote p { margin: 0; font-size: 1.1rem; }
+
+      .timeline { margin: var(--sp-5) 0; padding: 0; }
+      .timeline .tl-item { display: flex; gap: var(--sp-4); padding: var(--sp-3) 0; border-bottom: 1px dashed var(--line); }
+      .timeline .tl-item:last-child { border-bottom: none; }
+      .timeline .tl-time { font-family: var(--font-mono); color: var(--accent-rust); font-size: 0.88rem; flex-shrink: 0; min-width: 110px; }
+      .timeline .tl-text { color: var(--text-soft); font-size: 1rem; }
+      .timeline .tl-text strong { color: var(--text); }
+
+      .platform-list {
+        display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: var(--sp-3); margin: var(--sp-6) 0;
+      }
+      .platform-list a {
+        display: flex; flex-direction: column; gap: 4px;
+        padding: var(--sp-3);
+        border: 1px solid var(--line); border-radius: var(--r-md);
+        color: var(--text-soft); text-decoration: none;
+        font-family: var(--font-mono); font-size: 0.88rem;
+        transition: all 0.2s;
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust); transform: translateY(-2px);
+        background: rgba(200, 120, 80, 0.05);
+      }
+      .platform-list .pn { color: var(--text); font-weight: 500; }
+      .platform-list .pd { color: var(--text-dim); font-size: 0.82rem; }
+
+      .tags-row {
+        display: flex; flex-wrap: wrap; gap: var(--sp-2);
+        margin: var(--sp-8) 0 var(--sp-5);
+        padding-top: var(--sp-5); border-top: 1px dashed var(--line);
+      }
+      .tags-row a {
+        font-family: var(--font-mono); font-size: 0.82rem;
+        padding: 4px 12px; border: 1px solid var(--line);
+        border-radius: 20px; color: var(--text-soft); text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover { border-color: var(--accent-rust); color: var(--accent-rust); }
+
+      .cta-box {
+        margin: var(--sp-8) 0;
+        display: flex; flex-direction: column; align-items: flex-start;
+        padding: var(--sp-4);
+        border: 1px solid var(--line); border-radius: var(--r-lg);
+        background: linear-gradient(135deg, rgba(200, 120, 80, 0.08), transparent);
+      }
+      .cta-box h3 {
+        font-family: var(--font-display); font-weight: 500;
+        font-size: 1.2rem; margin: 0 0 var(--sp-2);
+      }
+      .cta-box p { margin: 0 0 var(--sp-4); color: var(--text-soft); font-size: 0.95rem; }
+      .cta-btn {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 10px 20px; background: var(--accent-rust);
+        color: #fff; text-decoration: none; border-radius: 8px;
+        font-family: var(--font-mono); font-size: 0.9rem;
+        transition: transform 0.2s;
+      }
+      .cta-btn:hover { transform: translateY(-2px); }
+
+      /* footer */
+      footer.site-footer {
+        border-top: 1px solid var(--line);
+        padding: var(--sp-6);
+        margin-top: var(--sp-8);
+        color: var(--text-dim);
+        font-size: 0.85rem;
+        font-family: var(--font-mono);
+      }
+      footer.site-footer .footer-content {
+        max-width: 960px; margin: 0 auto;
+        display: flex; justify-content: space-between; gap: var(--sp-4); flex-wrap: wrap;
+      }
+      footer.site-footer .footer-brand { color: var(--text); font-weight: 500; font-family: var(--font-display); }
+
+      .floating-top {
+        position: fixed; bottom: 24px; right: 24px; z-index: 50;
+        background: var(--bg-card, #1a1f2a); color: var(--text);
+        border: 1px solid var(--line); border-radius: 50%;
+        width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+        cursor: pointer; opacity: 0; transition: opacity 0.3s;
+      }
+      .floating-top.visible { opacity: 1; }
+      .floating-top:hover { border-color: var(--accent-rust); }
+
+      /* 圆点列表 */
+      .bullet-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 var(--sp-6);
+      }
+      .bullet-list li {
+        position: relative;
+        padding-left: 28px;
+        margin-bottom: var(--sp-3);
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.75;
+        font-size: 0.98rem;
+      }
+      .bullet-list li::before {
+        content: '';
+        position: absolute;
+        left: 4px;
+        top: 11px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent-rust);
+      }
+
+      /* 技巧卡片 */
+      .tip-card {
+        margin: var(--sp-4) 0;
+        padding: var(--sp-5);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-left: 3px solid var(--accent-rust);
+      }
+      .tip-card .tip-title {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.05rem;
+        color: var(--text);
+        margin-bottom: var(--sp-2);
+      }
+      .tip-card p {
+        margin: var(--sp-2) 0 0;
+        font-size: 0.95rem;
+        color: var(--text-soft);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        nav.site-nav .nav-links { gap: var(--sp-3); font-size: 0.85rem; }
+        article.article-body { padding: var(--sp-6) var(--sp-4); }
+        article.article-body h2 { font-size: 1.35rem; }
+      }
+
+      /* 主题切换 - light */
+      [data-theme="light"] nav.site-nav { background: rgba(248, 248, 245, 0.9); }
+      [data-theme="light"] .cta-btn { color: #fff; }
+      [data-theme="light"] .floating-top { background: #fff; }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner" style="display:flex;align-items:center;justify-content:space-between;gap:var(--sp-5);">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../post/deepseek/deepseek.html">DeepSeek</a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换">
+          <svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">AI编程</div>
+      <h1>AI Agent Skills 生态正在成形：从技能死代码检测到 137 个生产级技能库，开发者如何抓住这波浪潮</h1>
+      <p>CheeseLab分享——AI Agent Skills生态全景：deadskills治理工具、137个生产级技能库、跨工具统一工作流，三大基础设施层正在成形。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg> CheeseLab 知识实验室</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-06-20</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 10 分钟阅读</span>
+      </div>
+      <div class="hero-image"><img loading="lazy" src="https://mmbiz.qpic.cn/sz_mmbiz_jpg/7Md1Jdc3iaesTqFMjx8fuibWcma2RibVRRWJwtOQ7FeCCHrrEF7M8qjvpYbYLEibqxoAsz8YMCoe7hmwRr166vTibYDLWLiaeTpU58vMqk9k62xfA/0?wx_fmt=jpeg" alt="AI Agent Skills 生态正在成形"/></div>
+    </section>
+
+    <article class="article-body">
+
+      <div class="section-marker">01 · Skills是什么</div>
+      <h2>Skills是什么</h2>
+      <p>如果你是 Claude Code 或 Codex 的用户，你可能已经接触过 <span class="hl">Skills</span>——它们是 Markdown 文件，告诉 AI Agent 在特定场景下应该怎么工作。比如：</p>
+
+      <ul class="bullet-list">
+        <li><strong>python-testing skill</strong> — 告诉 Agent 使用 pytest 框架写测试</li>
+        <li><strong>react-patterns skill</strong> — 告诉 Agent 遵循特定的 React 编码规范</li>
+        <li><strong>database-migration skill</strong> — 指导 Agent 安全地执行数据库变更</li>
+      </ul>
+
+      <p>Skills 的好处是：你把好的工作模式固化为 skill，Agent 下次遇到类似场景就自动按最佳实践执行。</p>
+
+      <div class="info-box">
+        <strong>核心问题：</strong>当你装了 20 个 skills，哪些真的在用？哪些只是白白消耗 token？
+      </div>
+
+      <div class="section-marker">02 · 三大核心项目</div>
+      <h2>三大核心项目</h2>
+
+      <div class="tip-card">
+        <div class="tip-title">deadskills — 技能死代码检测</div>
+        <p>⭐ 25 · TypeScript · 本地优先分析工具</p>
+        <p>每个安装的 skill 都会在每次 prompt 中注入名称和描述，无论它是否被使用。这意味着<span class="hl">冗余技能在持续浪费 token 和上下文窗口</span>。deadskills 帮你找出哪些 skills 只是占着位置。</p>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">Claude-Skills-collection — 137个生产级技能库</div>
+        <p>⭐ 15 · Python · MIT 协议</p>
+        <p>这不是一个工具，而是一个内容库——<span class="hl">137 个经过验证的、生产级别的 Agent Skills</span>，覆盖代码生成与重构、测试编写与覆盖率、API 设计与文档、数据库操作与迁移、部署与 CI/CD、安全审计。</p>
+        <ul class="bullet-list" style="margin-top:var(--sp-3);">
+          <li><strong>统一结构</strong> — 所有 skill 遵循同一套 Markdown 模板</li>
+          <li><strong>统一语气</strong> — Agent 加载后的行为一致</li>
+          <li><strong>即装即用</strong> — 每个 skill 都能直接改变 Agent 的行为</li>
+        </ul>
+        <p>这个项目的意义在于——它把 Skills 从「个人经验」变成了「<span class="hl">社区资产</span>」。</p>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">AI-Project-Workflow — 跨工具统一工作流</div>
+        <p>⭐ 11 · JavaScript · MIT 协议</p>
+        <p>不同的 AI 编程工具（Cursor、Claude Code、Codex、TRAE、Qoder 等）有各自的工作方式，但项目应该是工具无关的。它提供了一套统一的、AI 原生的软件交付工作流：</p>
+        <ul class="bullet-list" style="margin-top:var(--sp-3);">
+          <li>SDD（Specification-Driven Development）流程定义</li>
+          <li>跨工具的 skill 和规则共享</li>
+          <li>CI/CD 集成</li>
+        </ul>
+      </div>
+
+      <div class="section-marker">03 · 生态为什么现在成形</div>
+      <h2>生态为什么现在成形</h2>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">前提1</div>
+          <div class="tl-text"><strong>用户量足够大</strong> — Claude Code 和 Codex 的用户增长迅速，Skills 的用户足够多了。任何技术领域的生态化，第一个前提就是用户量。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">前提2</div>
+          <div class="tl-text"><strong>痛点足够痛</strong> — 装了 20 个 skills 但只用了 3 个？每次对话都在消耗额外 token？这些问题在「只有 3 个 skills」的阶段不明显，但在「管理 20+ 个 skills」的阶段变得无法忽视。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">前提3</div>
+          <div class="tl-text"><strong>基础设施栈成形</strong> — 最早的 skills 是个人随手写的。现在出现了管理工具、内容库、标准工作流，三个层次构成了一个完整的基础设施栈。</div>
+        </div>
+      </div>
+
+      <div class="section-marker">04 · 三层基础设施栈</div>
+      <h2>三层基础设施栈</h2>
+
+      <div class="info-box">
+        <strong>三大层次：</strong>
+        <ul class="bullet-list" style="margin-top:var(--sp-3);">
+          <li><strong>治理层</strong> — deadskills：帮你治理想法，哪些 skills 真的在用？</li>
+          <li><strong>内容层</strong> — Claude-Skills-collection：帮你发现好用的 skills</li>
+          <li><strong>流程层</strong> — AI-Project-Workflow：帮你统一使用方式，skills 怎么嵌入工作流？</li>
+        </ul>
+      </div>
+
+      <div class="pull-quote">
+        <p>这三件事加在一起，勾勒出了 AI 编程的下一个基础设施层。现在入场的开发者，将有机会塑造这个生态的早期形态。</p>
+      </div>
+
+      <div class="section-marker">05 · 未来展望</div>
+      <h2>未来展望</h2>
+
+      <div class="tip-card">
+        <div class="tip-title">即将出现的生态形态</div>
+        <ul class="bullet-list">
+          <li><strong>Skills 市场/注册中心</strong> — 一个可以搜索、评分、安装 skills 的中心化平台</li>
+          <li><strong>Skills 分析仪表盘</strong> — 可视化展示哪些 skills 最常用、哪些拖慢性能</li>
+          <li><strong>Skills 自动推荐</strong> — 根据项目类型自动推荐合适的 skills</li>
+          <li><strong>Skills 版本管理</strong> — 像 npm 一样管理 skills 的版本和依赖</li>
+          <li><strong>Skills 互操作性标准</strong> — 跨 Claude Code、Codex、Cursor 等工具的通用 skill 格式</li>
+          <li><strong>Skills 自动生成</strong> — 从你的编码习惯中自动学习并生成 skills</li>
+        </ul>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">更远的变化</div>
+        <ul class="bullet-list">
+          <li><strong>Skills = 开发团队的知识资产</strong> — 团队的编码规范、架构决策、最佳实践全部固化为 skills</li>
+          <li><strong>Skills 经济</strong> — 高质量的 skills 可以付费分发</li>
+        </ul>
+      </div>
+
+      <div class="section-marker">06 · 开发者行动指南</div>
+      <h2>开发者行动指南</h2>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">入门</div>
+          <div class="tl-text">
+            <strong>从少量开始</strong> — 先装 3-5 个与你日常工作最相关的 skills<br/>
+            <strong>观察效果</strong> — 注意 Agent 的行为是否真的改善了<br/>
+            <strong>自己写一个</strong> — 把你团队的一条编码规范写成 skill
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">进阶</div>
+          <div class="tl-text">
+            <strong>用 deadskills 做一次审计</strong> — 找出哪些 skills 只是占着位置<br/>
+            <strong>整理你的 skill 库</strong> — 确保每个 skill 都有清晰的触发条件<br/>
+            <strong>参考 Claude-Skills-collection</strong> — 看看别人的 skill 怎么写，优化自己的
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">团队级</div>
+          <div class="tl-text">
+            <strong>建立团队的 skill 仓库</strong> — 把团队规范固化为 skills<br/>
+            <strong>新成员入职即配备 skills</strong> — 让 AI Agent 自动遵循团队规范<br/>
+            <strong>定期审计和更新</strong> — Skills 也需要维护
+          </div>
+        </div>
+      </div>
+
+      <div class="section-marker">07 · 总结</div>
+      <h2>总结</h2>
+
+      <div class="info-box info-box-jade">
+        <strong>核心观点：</strong>Agent Skills 生态的成形是一个重要信号——它说明 AI 编程不再是「写 prompt 的玄学」，而是正在建立可复用、可治理、可共享的知识体系。三个核心项目抓住的是三个不同的层次：治理、内容、流程。这三件事加在一起，勾勒出了 AI 编程的下一个基础设施层。
+      </div>
+
+      <p>相关仓库：</p>
+      <ul class="bullet-list">
+        <li>github.com/anandsaini18/deadskills</li>
+        <li>github.com/nimadorostkar/Claude-Skills-collection</li>
+        <li>github.com/AlanHuang168/AI-Project-Workflow</li>
+      </ul>
+
+      <div class="tags-row">
+        <a href="../home/home.html?tag=AI Agent">#AI Agent</a>
+        <a href="../home/home.html?tag=Skills">#Skills</a>
+        <a href="../home/home.html?tag=Claude Code">#Claude Code</a>
+        <a href="../home/home.html?tag=Codex">#Codex</a>
+        <a href="../home/home.html?tag=AI编程">#AI编程</a>
+        <a href="../home/home.html?tag=开源生态">#开源生态</a>
+        <a href="../home/home.html?tag=开发者工具">#开发者工具</a>
+      </div>
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用。原文版权归微信原作者所有。</div>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+      })();
+    </script>
+  </body>
+</html>
