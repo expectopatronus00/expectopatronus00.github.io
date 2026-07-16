@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'xhs-6a4104f4000000001702d6f4',
+            title: 'Agent架构全景：7种主流架构从简单到企业级',
+            url: '../post/xhs-6a4104f4000000001702d6f4/xhs-6a4104f4000000001702d6f4.html',
+            summary: 'AlunTalk分享——从简单到企业级，系统梳理7种主流Agent架构，帮助你理解智能体设计模式与选型思路。',
+            category: 'AI智能体',
+            date: '2026-07-16',
+            tags: ["Agent架构","AI智能体","Agent设计模式","企业级Agent","LLM","多智能体","小红书"],
+          },
+          {
             id: 'dy-7662725504767646833',
             title: '股票分析Skill开源了',
             url: '../post/dy-7662725504767646833/dy-7662725504767646833.html',
