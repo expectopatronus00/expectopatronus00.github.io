@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'claude-code-bug-ai',
+            title: '不会写代码的高管用Claude Code两天上线新程序，工程师接手后发现：一个Bug，让AI一天烧掉一个月服务器费！',
+            url: '../post/claude-code-bug-ai/claude-code-bug-ai.html',
+            summary: '作为一名高级云基础设施工程师，Jumpei Ueno 最近接手了一个由「氛围编码」留下的项目。',
+            category: '微信搬运',
+            date: '2026-06-20',
+            tags: ['AI','大模型','技术'],
+          },
+          {
             id: 'workbuddyai-80-hr',
             title: '我用WorkBuddy搭了一套AI招聘流水线，简历处理从8小时压到0分钟，HR只干一件事：挑人',
             url: '../post/workbuddyai-80-hr/workbuddyai-80-hr.html',
