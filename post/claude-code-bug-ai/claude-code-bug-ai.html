@@ -4,11 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>不会写代码的高管用Claude Code两天上线新程序，工程师接手后发现：一个Bug，让AI一天烧掉一个月服务器费！ · EXPECTOPATRONUS</title>
-    <meta name="description" content="作为一名高级云基础设施工程师，Jumpei Ueno 最近接手了一个由「氛围编码」留下的项目。" />
-    <meta name="keywords" content="AI,大模型,技术,深度分析" />
+    <meta name="description" content="程序员指南分享——CFO用Claude Code两天上线SaaS产品，但一个重试机制Bug导致AI一天烧掉一个月服务器费，揭示了"氛围编码"背后的工程风险。" />
+    <meta name="keywords" content="Claude Code,AI编程,氛围编码,工程风险,重试风暴,幂等性,成本控制,AI成本" />
     <meta property="og:title" content="不会写代码的高管用Claude Code两天上线新程序，工程师接手后发现：一个Bug，让AI一天烧掉一个月服务器费！" />
     <meta property="og:type" content="article" />
-    <meta property="og:description" content="作为一名高级云基础设施工程师，Jumpei Ueno 最近接手了一个由「氛围编码」留下的项目。" />
+    <meta property="og:description" content="程序员指南分享——CFO用Claude Code两天上线SaaS产品，但一个重试机制Bug导致AI一天烧掉一个月服务器费，揭示了"氛围编码"背后的工程风险。" />
     <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
     <script>
       (function () {
@@ -235,8 +235,56 @@
       .floating-top.visible { opacity: 1; }
       .floating-top:hover { border-color: var(--accent-rust); }
 
+      /* 圆点列表 */
+      .bullet-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 var(--sp-6);
+      }
+      .bullet-list li {
+        position: relative;
+        padding-left: 28px;
+        margin-bottom: var(--sp-3);
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.75;
+        font-size: 0.98rem;
+      }
+      .bullet-list li::before {
+        content: '';
+        position: absolute;
+        left: 4px;
+        top: 11px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent-rust);
+      }
+
+      /* 技巧卡片 */
+      .tip-card {
+        margin: var(--sp-4) 0;
+        padding: var(--sp-5);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-left: 3px solid var(--accent-rust);
+      }
+      .tip-card .tip-title {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.05rem;
+        color: var(--text);
+        margin-bottom: var(--sp-2);
+      }
+      .tip-card p {
+        margin: var(--sp-2) 0 0;
+        font-size: 0.95rem;
+        color: var(--text-soft);
+      }
+
       /* 响应式 */
-      @media (max-width: 768px) {
+      @media (max-width: 820px) {
         nav.site-nav .nav-links { gap: var(--sp-3); font-size: 0.85rem; }
         article.article-body { padding: var(--sp-6) var(--sp-4); }
         article.article-body h2 { font-size: 1.35rem; }
@@ -264,84 +312,143 @@
     </nav>
 
     <section class="page-head">
-      <div class="eyebrow">微信搬运 · claude-code-bug-ai</div>
+      <div class="eyebrow">AI技术</div>
       <h1>不会写代码的高管用Claude Code两天上线新程序，工程师接手后发现：一个Bug，让AI一天烧掉一个月服务器费！</h1>
-      <p>作为一名高级云基础设施工程师，Jumpei Ueno 最近接手了一个由「氛围编码」留下的项目。</p>
+      <p>程序员指南分享——CFO用Claude Code两天上线SaaS产品，但一个重试机制Bug导致AI一天烧掉一个月服务器费，揭示了「氛围编码」背后的工程风险。</p>
       <div class="meta">
         <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg> 程序员指南</span>
         <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-06-20</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 8 分钟阅读</span>
       </div>
-
-    <div class="hero-image"><img loading="lazy" src="https://mmbiz.qpic.cn/mmbiz_jpg/JCyLAdLcyYR6RbN6wX5ibwPndk8iawTgeE10E3GGKkj3xbap2TSm9SQmxE9ibUmd83R21esmf4b24yNrTnCZWJUSVoetTgGWrBIDjOETn2NHhQ/0?wx_fmt=jpeg" alt="不会写代码的高管用Claude Code两天上线新程序，工程师接手后发现：一个Bug，让AI一天烧掉一个月服务器费！"/></div>
+      <div class="hero-image"><img loading="lazy" src="https://mmbiz.qpic.cn/mmbiz_jpg/JCyLAdLcyYR6RbN6wX5ibwPndk8iawTgeE10E3GGKkj3xbap2TSm9SQmxE9ibUmd83R21esmf4b24yNrTnCZWJUSVoetTgGWrBIDjOETn2NHhQ/0?wx_fmt=jpeg" alt="不会写代码的高管用Claude Code两天上线新程序，工程师接手后发现：一个Bug，让AI一天烧掉一个月服务器费！"/></div>
     </section>
 
     <article class="article-body">
-      <div class="section-marker on-scroll">00 · 导读</div>
-      <h2 class="on-scroll">导读</h2>
-      <p class="on-scroll">作为一名高级云基础设施工程师，Jumpei Ueno 最近接手了一个由「氛围编码」留下的项目。</p>
-      <p class="on-scroll">这个项目的开发者并不是专业工程师，而是公司的 CFO（首席财务官）。他借助 Claude Code，仅用两天时间就完成了一款 SaaS 产品的开发并上线，随后便把后续维护工作交给了 Jumpei Ueno。</p>
-      <p class="on-scroll">对 Jumpei Ueno 来说，这样的情况早已见怪不怪了。没有工程背景的人快速搭出产品，真正负责长期维护的工程师再一点点梳理后端系统。然而，每深入检查一次，他都能发现一些不一样的新的问题。</p>
-      <p class="on-scroll">不过，这次最让他意外的，并不是密钥管理混乱，也不是整个项目没有一项测试，而是云服务成本已经失控，真金白银地往外烧。</p>
-      <p class="on-scroll">为此，Jumpei Ueno 将整个排查过程完整记录下来，希望给更多使用「氛围编码」开发产品的人提个醒。</p>
-      <p class="on-scroll">CFO：我不记得做了什么</p>
-      <p class="on-scroll">一切事情起因源于某一天，Jumpei Ueno 在查看 LLM API 的费用图表时，发现其中一天的支出异常突出。要知道其他天的开销几乎都贴着底部，唯独那一天直冲天际，几乎占据了整个月 API 费用的一半。</p>
-      <p class="on-scroll">看到这个数字时，Jumpei Ueno 坦言自己”简直惊呆了”。</p>
-      <p class="on-scroll">原因很简单：仅仅那一天的 AI 调用费用，就超过了整个服务器集群一个月的运行成本。换句话说，维持所有服务器运行一个月，竟然比让 AI 工作一天还便宜。这让他一时难以理解，这样的开销究竟是怎么产生的。</p>
-      <p class="on-scroll">于是，他找到当初开发这套系统的 CFO，问了一个最直接的问题：“你那天到底做了什么？”</p>
-      <p class="on-scroll">对方的回答却只有一句：</p>
-      <p class="on-scroll">“说实话，我已经不记得那天做了什么。”</p>
-      <p class="on-scroll">这个回答让人哭笑不得。</p>
-      <p class="on-scroll">不过，Jumpei Ueno 认为，此时也不是一个追究责任的时间点（至少不完全是）。随着调查不断深入，他越来越意识到，对方记不起来其实再正常不过。真正”烧钱”的，并不是某个人的一次操作，而是系统背后的重试机制。</p>
-      <p class="on-scroll">开始排查：起初，他以为只是人为反复调用</p>
-      <p class="on-scroll">一开始，Jumpei Ueno 想的很简单，第一反应大概是：“你一天之内开发了这么多功能，又不断在生产环境里测试，每测试一次都会调用昂贵的大模型 API。积少成多，最后账单自然就炸了。”</p>
-      <p class="on-scroll">这个推测看起来也很合理。毕竟那一天的提交记录从早到晚几乎没停过，围绕 AI 生成功能就有二十多次提交。所以，把高昂成本归因于开发过程中反复测试，似乎说得通。</p>
-      <p class="on-scroll">但当他们真正去排查应用侧日志——包括任务队列、数据库以及请求记录——时，发现事实完全不是这样。</p>
-      <p class="on-scroll">这并不是一次次人工操作累积出来的”慢性烧钱”，而是同一批高成本任务被机器反复完整执行了一遍又一遍。对于同一个租户，一个正常情况下只会运行一次的任务，竟然被执行了 21 次。</p>
-      <p class="on-scroll">人不会在一天里把同一个按钮按 21 次。</p>
-      <p class="on-scroll">真正反复”按下按钮”的，并不是人，而是程序。</p>
-      <p class="on-scroll">最可怕的地方在于：任务成功了，却倒在了最后一步</p>
-      <p class="on-scroll">在 Jumpei Ueno 看来，这才是整起事件的核心。</p>
-      <p class="on-scroll">这项批处理任务会依次调用多个大模型，并将返回结果写入数据库，整体流程大致如下：</p>
-      <p class="on-scroll">首先，向多个 LLM 发起一系列请求——这也是费用产生的主要环节；</p>
-      <p class="on-scroll">随后，将模型返回的结果写入数据库。</p>
-      <p class="on-scroll">真正的问题，恰恰出现在第二步。</p>
-      <p class="on-scroll">写入数据库时，程序引用了一个本应已经新增的字段，但当时生产环境中的数据库尚未完成迁移，这个字段实际上并不存在。于是，数据库直接抛出了 “column does not exist” 错误，整个任务最终以 500 错误结束。</p>
-      <p class="on-scroll">很多人听到”任务失败”，第一反应往往是：“模型调用失败了，钱白花了。”</p>
-      <p class="on-scroll">但事实并非如此。</p>
-      <p class="on-scroll">所有 LLM 请求都成功返回了 200 状态码，也就是说，每一次调用都已经完成计费。模型完成了推理，也返回了结果，只是在最后一步写入数据库时出了问题，整个任务才宣告失败。</p>
-      <p class="on-scroll">Jumpei Ueno 用了一个形象的比喻：</p>
-      <p class="on-scroll">这就像在餐厅里吃完整套套餐，也已经结完账。正准备起身说一句”谢谢招待”时，却突然摔了一跤，失去了记忆。等醒来时，又回到了座位，以为自己还没吃饭，于是重新点了一整套套餐。如此循环，整整 21 次。</p>
-      <p class="on-scroll">已经吃下去的饭不会消失，就像已经完成的大模型调用也不会取消计费；但每一次重试，系统都会从头再来。</p>
-      <p class="on-scroll">业内有一个术语叫 “Retry Storm（重试风暴）”。通常，人们理解的 Retry Storm 是请求不断失败，于是系统一次又一次重试。但这次的情况完全不同。</p>
-      <p class="on-scroll">真正发生的是：每一次调用其实都成功了，只是成功的结果被最后一步”丢掉”了，系统随后又重新发起了一整轮新的调用。</p>
-      <p class="on-scroll">在 Jumpei Ueno 看来，这正是整件事最违反直觉、也最可怕的地方。</p>
-      <p class="on-scroll">两个问题叠加，最终导致任务被重复执行 21 次</p>
-      <p class="on-scroll">进一步排查后，Jumpei Ueno 发现，系统之所以不断重复执行同一批任务，是两个问题共同作用的结果。</p>
-      <p class="on-scroll">第一个问题，是部署顺序出了错。</p>
-      <p class="on-scroll">代码已经率先部署到生产环境，并默认数据库中已经存在新增字段；然而，负责添加该字段的数据库迁移却尚未执行。也就是说，代码先上线，数据库结构后更新。结果，程序每次都会访问一个根本不存在的字段，从而稳定地报错。</p>
-      <p class="on-scroll">Jumpei Ueno 特别强调，这是一种确定性失败——无论重试多少次，都不可能自行恢复。</p>
-      <p class="on-scroll">第二个问题，则来自任务队列的自动重试机制。</p>
-      <p class="on-scroll">对于托管任务队列来说，当任务返回 500 错误时，它会默认认为只是一次临时故障，于是自动重新执行任务。这种机制原本是为了应对网络抖动等偶发问题，本身并没有错。</p>
-      <p class="on-scroll">但这次的问题并不是网络故障，而是数据库里根本没有对应字段。字段不会因为不断重试就凭空出现，但任务队列却仍然”善意”地一次又一次重新执行同一个任务。更糟糕的是，这套批处理任务本身并不具备幂等性。</p>
-      <p class="on-scroll">也就是说，它不会检查哪些工作已经完成，而是每次重试都会从头开始执行。因此，每重试一次，就会重新调用所有 LLM，也重新产生一整轮完整的 API 费用。</p>
-      <p class="on-scroll">确定性失败 + 自动重试 + 非幂等设计。Jumpei Ueno 表示，当这三个因素叠加在一起时，资金就会在悄无声息中不断流失。</p>
-      <p class="on-scroll">也正因如此，自家公司 CFO 根本不记得自己做过什么——因为真正不停”按下按钮”的，并不是人，而是任务队列。</p>
-      <p class="on-scroll">当他把整个原因梳理给 CFO 听时，对方只是皱着眉头，一脸困惑地发出一句：“嗯？”</p>
-      <p class="on-scroll">Jumpei Ueno 认为，对于没有工程背景的人来说，“模型调用已经成功、费用已经产生，但最后却把成功结果丢掉，又重新调用一遍”这样的机制，确实很难第一时间理解。</p>
-      <p class="on-scroll">重试机制并不总是一种善意</p>
-      <p class="on-scroll">经历了这次事件后，Jumpei Ueno 总结了几条经验。他认为，这些教训不仅适用于自己，也适用于所有接手维护别人已经上线系统的工程师。</p>
-      <p class="on-scroll">首先，确定性失败并不会因为不断重试而自行恢复。无论是数据库 Schema 不一致，还是 4xx 这类明确属于程序自身问题的错误，重试多少次，结果都不会改变。对于这类错误，系统应当立即终止，而不是无限重试。同时，任何重试机制都应该设置明确的次数上限，重试并不是万能的保险。</p>
-      <p class="on-scroll">其次，副作用越大的任务，就越需要具备幂等性。凡是涉及真实成本的操作，例如调用计费 API 或大模型接口，从第一天开始就应该具备”跳过已完成任务”的能力。否则，每一次重试都不是简单地”重新执行”，而是在重复计费。</p>
-      <p class="on-scroll">第三，生产环境部署必须遵循”先更新数据库，再部署代码”的顺序。只有数据库完成迁移后，再上线依赖新字段的代码，才能避免在两者之间的时间窗口内，大量产生这种确定性错误。</p>
-      <p class="on-scroll">此外，他还提到，如果成本本身不可观测，那么往往只有钱烧完之后，人们才会意识到问题已经发生。这次之所以能够发现异常，仅仅是因为他碰巧查看了 API 成本曲线。如果没有将生产环境与测试环境使用不同的 API Key，也没有预算告警等监控机制，那么直到收到月底账单之前，几乎没有人会察觉异常。</p>
-      <p class="on-scroll">最后，Jumpei Ueno 也谈到了氛围编码带来的变化。</p>
-      <p class="on-scroll">其表示，AI 的确大幅降低了非工程人员开发生产系统的门槛，让他们能够在短时间内完成产品开发。但知道如何把功能做出来，与知道系统会如何出错、又会如何在无声无息中烧掉大量成本，是两种完全不同的能力。而后者，仍然需要后来接手系统的工程师来承担。</p>
-      <p class="on-scroll">正如他总结的那样：</p>
-      <p class="on-scroll">两天时间足以开发出一个功能，但要避免”善意的自动重试”演变成”丢弃已经成功的结果，再重新计费一次”这样的事故，却绝不是两天就能学会的事情。</p>
-      <p class="on-scroll">来源：https://junueno.dev/en/retry-storm-rebilled-llm-cost/</p>
-      <p class="on-scroll">加上面微信，备注：程序员指南，发一份项目资料。</p>
-      <p class="on-scroll">微信扫一扫 关注该公众号</p>
-      <p class="on-scroll">微信扫一扫可打开此内容， 使用完整服务</p>
+
+      <div class="section-marker">01 · 案例背景</div>
+      <h2>案例背景：「氛围编码」的产物</h2>
+      <p>作为一名高级云基础设施工程师，Jumpei Ueno 最近接手了一个由「氛围编码」留下的项目。这个项目的开发者并不是专业工程师，而是公司的 <span class="hl">CFO（首席财务官）</span>。他借助 <span class="hl">Claude Code</span>，仅用两天时间就完成了一款 SaaS 产品的开发并上线。</p>
+      <p>对 Jumpei Ueno 来说，这样的情况早已见怪不怪了。没有工程背景的人快速搭出产品，真正负责长期维护的工程师再一点点梳理后端系统。然而，每深入检查一次，他都能发现一些新问题。</p>
+      <p>不过，这次最让他意外的，并不是密钥管理混乱，也不是整个项目没有一项测试，而是 <span class="hl">云服务成本已经失控</span>，真金白银地往外烧。</p>
+
+      <div class="pull-quote">
+        <p>两天时间足以开发出一个功能，但要避免"善意的自动重试"演变成"丢弃已经成功的结果，再重新计费一次"这样的事故，却绝不是两天就能学会的事情。</p>
+      </div>
+
+      <div class="section-marker">02 · 惊人的成本异常</div>
+      <h2>惊人的成本异常：一天烧掉一个月费用</h2>
+      <p>一切事情起因源于某一天，Jumpei Ueno 在查看 LLM API 的费用图表时，发现其中一天的支出异常突出。其他天的开销几乎都贴着底部，唯独那一天直冲天际，几乎占据了整个月 API 费用的一半。</p>
+
+      <div class="info-box">
+        <strong>核心数据：</strong>仅仅那一天的 AI 调用费用，就超过了整个服务器集群一个月的运行成本。维持所有服务器运行一个月，竟然比让 AI 工作一天还便宜。
+      </div>
+
+      <p>他找到当初开发这套系统的 CFO，问了一个最直接的问题：“你那天到底做了什么？”</p>
+      <p>对方的回答却只有一句：<span class="hl">“说实话，我已经不记得那天做了什么。”</span></p>
+
+      <p>随着调查不断深入，Jumpei Ueno 越来越意识到，对方记不起来其实再正常不过。真正“烧钱”的，并不是某个人的一次操作，而是 <span class="hl">系统背后的重试机制</span>。</p>
+
+      <div class="section-marker">03 · 排查过程</div>
+      <h2>排查过程：从人为操作到机器重试</h2>
+      <p>一开始，Jumpei Ueno 的第一反应是：“你一天之内开发了这么多功能，又不断在生产环境里测试，每测试一次都会调用昂贵的大模型 API。积少成多，最后账单自然就炸了。”</p>
+      <p>这个推测看起来很合理——那一天的提交记录从早到晚几乎没停过，围绕 AI 生成功能就有二十多次提交。</p>
+
+      <div class="tip-card">
+        <div class="tip-title">真相：机器而非人为</div>
+        <p>排查应用侧日志（任务队列、数据库、请求记录）后发现，这并不是一次次人工操作累积出来的“慢性烧钱”，而是同一批高成本任务被机器反复完整执行了一遍又一遍。对于同一个租户，一个正常情况下只会运行一次的任务，竟然被执行了 <span class="hl">21 次</span>。</p>
+      </div>
+
+      <div class="section-marker">04 · 最可怕的地方：任务成功了，却倒在了最后一步</div>
+      <h2>最可怕的地方：任务成功了，却倒在了最后一步</h2>
+      <p>这项批处理任务会依次调用多个大模型，并将返回结果写入数据库：</p>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">步骤1</div>
+          <div class="tl-text"><strong>调用 LLM API</strong> — 向多个 LLM 发起请求，费用产生的主要环节</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">步骤2</div>
+          <div class="tl-text"><strong>写入数据库</strong> — 将模型返回结果写入数据库</div>
+        </div>
+      </div>
+
+      <p>真正的问题，恰恰出现在第二步。写入数据库时，程序引用了一个本应已经新增的字段，但当时生产环境中的数据库尚未完成迁移，这个字段实际上并不存在。于是，数据库直接抛出了 <span class="hl">“column does not exist”</span> 错误，整个任务最终以 500 错误结束。</p>
+
+      <div class="info-box info-box-jade">
+        <strong>关键误解：</strong>很多人听到“任务失败”，第一反应是“模型调用失败了，钱白花了”。但事实并非如此——所有 LLM 请求都成功返回了 200 状态码，每一次调用都已经完成计费。模型完成了推理，也返回了结果，只是在最后一步写入数据库时出了问题。
+      </div>
+
+      <p>Jumpei Ueno 用了一个形象的比喻：</p>
+      <blockquote>这就像在餐厅里吃完整套套餐，也已经结完账。正准备起身说一句“谢谢招待”时，却突然摔了一跤，失去了记忆。等醒来时，又回到了座位，以为自己还没吃饭，于是重新点了一整套套餐。如此循环，整整 21 次。</blockquote>
+
+      <p>已经吃下去的饭不会消失，就像已经完成的大模型调用也不会取消计费；但每一次重试，系统都会从头再来。</p>
+
+      <div class="section-marker">05 · Retry Storm：成功被丢弃后的重试</div>
+      <h2>Retry Storm：成功被丢弃后的重试</h2>
+      <p>业内有一个术语叫 <span class="hl">“Retry Storm（重试风暴）”</span>。通常，人们理解的 Retry Storm 是请求不断失败，于是系统一次又一次重试。但这次的情况完全不同。</p>
+
+      <div class="tip-card">
+        <div class="tip-title">这次的不同之处</div>
+        <p>真正发生的是：<strong>每一次调用其实都成功了</strong>，只是成功的结果被最后一步“丢掉”了，系统随后又重新发起了一整轮新的调用。这正是整件事最违反直觉、也最可怕的地方。</p>
+      </div>
+
+      <div class="section-marker">06 · 三个因素叠加：确定性失败 + 自动重试 + 非幂等设计</div>
+      <h2>三个因素叠加：确定性失败 + 自动重试 + 非幂等设计</h2>
+      <p>系统之所以不断重复执行同一批任务，是两个问题共同作用的结果：</p>
+
+      <div class="tip-card">
+        <div class="tip-title">问题一：部署顺序错误</div>
+        <p>代码已经率先部署到生产环境，并默认数据库中已经存在新增字段；然而，负责添加该字段的数据库迁移却尚未执行。这是一种 <span class="hl">确定性失败</span>——无论重试多少次，都不可能自行恢复。</p>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">问题二：任务队列自动重试</div>
+        <p>当任务返回 500 错误时，任务队列默认认为只是一次临时故障，于是自动重新执行任务。这种机制原本是为了应对网络抖动等偶发问题，但这次的问题并不是网络故障，而是数据库里根本没有对应字段。更糟糕的是，这套批处理任务本身并不具备 <span class="hl">幂等性</span>。</p>
+      </div>
+
+      <div class="info-box">
+        <strong>致命组合：</strong>确定性失败 + 自动重试 + 非幂等设计。当这三个因素叠加在一起时，资金就会在悄无声息中不断流失。
+      </div>
+
+      <div class="section-marker">07 · 经验教训</div>
+      <h2>经验教训：重试机制并不总是一种善意</h2>
+      <p>经历了这次事件后，Jumpei Ueno 总结了几条经验：</p>
+
+      <ul class="bullet-list">
+        <li><strong>确定性失败不应重试</strong> — 无论是数据库 Schema 不一致，还是 4xx 这类明确属于程序自身问题的错误，重试多少次结果都不会改变。系统应当立即终止，并设置明确的重试次数上限。</li>
+        <li><strong>副作用大的任务必须具备幂等性</strong> — 凡是涉及真实成本的操作，例如调用计费 API 或大模型接口，从第一天开始就应该具备“跳过已完成任务”的能力。</li>
+        <li><strong>部署顺序至关重要</strong> — 必须遵循“先更新数据库，再部署代码”的顺序，避免在两者之间的时间窗口内产生确定性错误。</li>
+        <li><strong>成本必须可观测</strong> — 如果成本本身不可观测，往往只有钱烧完之后才会意识到问题。需要将生产环境与测试环境使用不同的 API Key，并设置预算告警等监控机制。</li>
+      </ul>
+
+      <div class="section-marker">08 · 氛围编码的反思</div>
+      <h2>氛围编码的反思：快速上线 vs 工程稳定性</h2>
+      <p>AI 的确大幅降低了非工程人员开发生产系统的门槛，让他们能够在短时间内完成产品开发。但 <span class="hl">知道如何把功能做出来</span>，与 <span class="hl">知道系统会如何出错、又会如何在无声无息中烧掉大量成本</span>，是两种完全不同的能力。</p>
+
+      <div class="pull-quote">
+        <p>两天时间足以开发出一个功能，但要避免“善意的自动重试”演变成“丢弃已经成功的结果，再重新计费一次”这样的事故，却绝不是两天就能学会的事情。</p>
+      </div>
+
+      <div class="section-marker">09 · 总结</div>
+      <h2>总结</h2>
+
+      <div class="info-box info-box-jade">
+        <strong>核心警示：</strong>这个案例揭示了「氛围编码」时代的一个重要风险——AI 降低了开发门槛，但工程知识的缺失可能导致隐性成本失控。对于任何涉及 AI API 调用的生产系统，幂等性设计、错误分类处理、成本监控都是不可忽视的工程实践。
+      </div>
+
+      <p>来源：<a href="https://junueno.dev/en/retry-storm-rebilled-llm-cost/" target="_blank" rel="noopener">https://junueno.dev/en/retry-storm-rebilled-llm-cost/</a></p>
+
+      <div class="tags-row">
+        <a href="../home/home.html?tag=Claude Code">#Claude Code</a>
+        <a href="../home/home.html?tag=AI编程">#AI编程</a>
+        <a href="../home/home.html?tag=氛围编码">#氛围编码</a>
+        <a href="../home/home.html?tag=工程风险">#工程风险</a>
+        <a href="../home/home.html?tag=重试风暴">#重试风暴</a>
+        <a href="../home/home.html?tag=幂等性">#幂等性</a>
+        <a href="../home/home.html?tag=成本控制">#成本控制</a>
+        <a href="../home/home.html?tag=AI成本">#AI成本</a>
+      </div>
     </article>
 
     <footer class="site-footer">

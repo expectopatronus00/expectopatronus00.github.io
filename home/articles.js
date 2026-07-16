@@ -6,10 +6,10 @@ window.articles = [
             id: 'claude-code-bug-ai',
             title: '不会写代码的高管用Claude Code两天上线新程序，工程师接手后发现：一个Bug，让AI一天烧掉一个月服务器费！',
             url: '../post/claude-code-bug-ai/claude-code-bug-ai.html',
-            summary: '作为一名高级云基础设施工程师，Jumpei Ueno 最近接手了一个由「氛围编码」留下的项目。',
-            category: '微信搬运',
+            summary: '程序员指南分享——CFO用Claude Code两天上线SaaS产品，但一个重试机制Bug导致AI一天烧掉一个月服务器费，揭示了"氛围编码"背后的工程风险。',
+            category: 'AI技术',
             date: '2026-06-20',
-            tags: ['AI','大模型','技术'],
+            tags: ["Claude Code","AI编程","氛围编码","工程风险","重试风暴","幂等性","成本控制","AI成本"],
           },
           {
             id: 'workbuddyai-80-hr',
