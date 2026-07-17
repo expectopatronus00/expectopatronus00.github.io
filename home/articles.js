@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'xhs-6a580c05000000000f02af00',
+            title: '代码现在能自己"画出来"，这个Skill让新人秒懂复杂代码',
+            url: '../post/xhs-6a580c05000000000f02af00/xhs-6a580c05000000000f02af00.html',
+            summary: '青青王-AI分享——代码可视化Skill，自动生成代码架构图和调用关系，让新人秒懂复杂项目，老板再也不用担心新人看不懂代码了。',
+            category: 'AI编程',
+            date: '2026-07-17',
+            tags: ["AI编程","代码可视化","Skill","架构图","CodeX","AI工具","新人入门","小红书"],
+          },
+          {
             id: 'xhs-6a58dd8a000000001101d929',
             title: 'AI瞎写代码终于有救了，这个项目直接给它立规矩',
             url: '../post/xhs-6a58dd8a000000001101d929/xhs-6a58dd8a000000001101d929.html',
