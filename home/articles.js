@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'xhs-6a59f9a2000000000f0309df',
+            title: '提升AI前端审美的开源项目：让AI设计不再土',
+            url: '../post/xhs-6a59f9a2000000000f0309df/xhs-6a59f9a2000000000f0309df.html',
+            summary: '亚莱加德分享——一个可以提升AI前端审美的开源项目，让AI生成的UI不再土气，秒变专业设计师水平。',
+            category: 'AI工具',
+            date: '2026-07-17',
+            tags: ["AI工具","前端设计","UI设计","开源项目","Vibe Coding","AI审美","小红书"],
+          },
+          {
             id: 'xhs-6a56fdfd00000000210168c2',
             title: '超级工程师多任务全并行解决方案：AI同时处理多个任务',
             url: '../post/xhs-6a56fdfd00000000210168c2/xhs-6a56fdfd00000000210168c2.html',
