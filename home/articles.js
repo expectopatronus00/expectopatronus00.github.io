@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'xhs-6a56fdfd00000000210168c2',
+            title: '超级工程师多任务全并行解决方案：AI同时处理多个任务',
+            url: '../post/xhs-6a56fdfd00000000210168c2/xhs-6a56fdfd00000000210168c2.html',
+            summary: '哈工大AI全栈工程师Peter分享——超级工程师多任务、全并行解决方案，让AI同时处理多个开发任务，大幅提升工程效率。',
+            category: 'AI编程',
+            date: '2026-07-17',
+            tags: ["AI编程","多任务并行","超级工程师","AI Agent","全栈开发","效率提升","小红书"],
+          },
+          {
             id: 'xhs-6a580c05000000000f02af00',
             title: '代码现在能自己"画出来"，这个Skill让新人秒懂复杂代码',
             url: '../post/xhs-6a580c05000000000f02af00/xhs-6a580c05000000000f02af00.html',
