@@ -1,0 +1,786 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>一个人就是一支团队：扣子工作流打造AI超级个体的完整指南 · EXPECTOPATRONUS</title>
+    <meta name="description" content="只研究一个人就能干的事情！用扣子(Coze)工作流打造AI超级个体，零代码搭建自动化流水线，让一个人拥有一个团队的战斗力。从智能体创建到工作流编排，从知识库到插件生态，完整指南。" />
+    <meta name="keywords" content="扣子,Coze,工作流,AI智能体,AI超级个体,零代码,字节跳动,自动化,一人公司,小渔讲AI,抖音" />
+    <meta property="og:title" content="一个人就是一支团队：扣子工作流打造AI超级个体的完整指南" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="用扣子工作流打造AI超级个体，零代码搭建自动化流水线，让一个人拥有一个团队的战斗力。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+
+      /* 要点列表 */
+      .bullet-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 var(--sp-6);
+      }
+      .bullet-list li {
+        position: relative;
+        padding-left: 28px;
+        margin-bottom: var(--sp-3);
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.75;
+        font-size: 0.98rem;
+      }
+      .bullet-list li::before {
+        content: '';
+        position: absolute;
+        left: 4px;
+        top: 11px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent-rust);
+      }
+
+      /* 技巧卡片 */
+      .tip-card {
+        margin: var(--sp-4) 0;
+        padding: var(--sp-5);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-left: 3px solid var(--accent-rust);
+      }
+      .tip-card .tip-title {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.05rem;
+        color: var(--text);
+        margin-bottom: var(--sp-2);
+      }
+      .tip-card p {
+        margin: 0;
+        font-size: 0.95rem;
+      }
+
+      /* 代码块 */
+      .article-body pre {
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        padding: var(--sp-5) var(--sp-6);
+        overflow-x: auto;
+        margin: 0 0 var(--sp-6);
+      }
+      .article-body code {
+        font-family: var(--font-mono);
+        font-size: 0.9rem;
+        color: var(--accent-rust);
+        background: rgba(201, 119, 47, 0.08);
+        padding: 2px 6px;
+        border-radius: 4px;
+      }
+      .article-body pre code {
+        background: none;
+        padding: 0;
+        color: var(--text-soft);
+        font-size: 0.88rem;
+        line-height: 1.7;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">抖音搬运 · AI工具</div>
+      <h1>一个人就是一支团队：<em>扣子工作流</em>打造AI超级个体</h1>
+      <p>「只研究一个人就能干的事情！」——这句口号背后，是AI时代全新的工作哲学。字节跳动出品的扣子（Coze）平台，让你用零代码方式搭建专属AI智能体和工作流，把选题、创作、排版、发布等环节全部自动化。一个人，就能拥有一个团队的战斗力。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 小渔讲AI</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-07-18</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 10 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 视频 · 搬运整理</span>
+      </div>
+    </section>
+
+    <article class="article-body">
+      <div class="section-marker">01 · 时代变了</div>
+      <h2>为什么说「一个人就能干」是未来趋势？</h2>
+      <p>过去，做一个项目需要一整个团队——策划、文案、设计、剪辑、运营、数据分析，每个环节都得有人盯着。但现在，<strong>AI 正在重新定义「个人生产力」的边界</strong>。</p>
+      
+      <p>一个人，只要懂得用 AI 工具，就能同时扮演多个角色。而扣子（Coze），就是目前最值得研究的「一个人就能干」的平台之一。</p>
+
+      <div class="pull-quote">
+        <p>不要研究一百个工具，只研究一个人就能干的事情。</p>
+      </div>
+
+      <p>为什么是扣子？因为它把复杂的 AI 能力拆解成了标准化的「积木块」——你不需要写代码，不需要懂大模型原理，<span class="hl">拖拖拽拽就能造出一个能帮你干活的 AI 员工</span>。</p>
+
+      <div class="info-box">
+        <strong>核心数据：</strong> 扣子全球注册开发者超 300 万，日均活跃智能体 80 万+，已成为字节 AI 战略的核心平台之一。无论你是自媒体、运营、产品、创业者，还是普通上班族，都能从中找到适合自己的自动化方案。
+      </div>
+
+      <div class="section-marker">02 · 扣子是什么</div>
+      <h2>扣子（Coze）：字节出品的「AI 造物平台」</h2>
+      <p>很多人容易把扣子和豆包搞混，其实两者定位截然不同：</p>
+
+      <ul class="bullet-list">
+        <li><strong>豆包</strong> — 通用型对话助手，即开即用，满足日常问答、写作、学习等基础需求</li>
+        <li><strong>扣子</strong> — AI 智能体开发平台，让你亲手「造 AI」，实现复杂任务自动化</li>
+      </ul>
+
+      <p>一句话理解：<strong>豆包是「现成的工具」，扣子是「造工具的平台」</strong>。</p>
+
+      <h3>扣子的核心定位</h3>
+      <p>扣子是一个<strong>零代码/低代码的 AI 智能体搭建平台</strong>，把复杂的 AI 能力封装成可视化组件：</p>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">智能体</div>
+          <div class="tl-text"><strong>AI 员工</strong> — 具备自主决策能力，能判断意图、调用工具、完成完整任务</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">工作流</div>
+          <div class="tl-text"><strong>SOP 操作手册</strong> — 多节点串联的自动化流水线，处理复杂多步骤任务</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">知识库</div>
+          <div class="tl-text"><strong>内部培训资料</strong> — 检索增强生成（RAG），让 AI 基于你的私有数据回答</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">插件</div>
+          <div class="tl-text"><strong>工具箱</strong> — API 能力封装，让智能体连接外部世界（搜索、图片、日历等）</div>
+        </div>
+      </div>
+
+      <div class="section-marker">03 · 三大理由</div>
+      <h2>为什么推荐扣子？三个无法拒绝的理由</h2>
+
+      <h3>🎯 真正零门槛</h3>
+      <p>不需要 Python，不需要懂大模型原理。扣子提供了<strong>可视化拖拽界面</strong>，像搭积木一样搭工作流。有位 60 岁的退休教师，用扣子 3 天搭出了一个「古诗词赏析智能体」，发布到微信上给孙子用。</p>
+
+      <h3>🧩 生态超级丰富</h3>
+      <p>扣子内置了上百个官方插件：新闻搜索、天气查询、图片生成、飞书通知、剪映对接……你需要的它基本都有。不满足？还能自己写自定义插件。</p>
+
+      <h3>🚀 一键多渠道发布</h3>
+      <p>做好的智能体，可以<strong>一键发布</strong>到多个渠道：</p>
+
+      <ul class="bullet-list">
+        <li>扣子商店（公开展示）</li>
+        <li>飞书机器人</li>
+        <li>微信公众号</li>
+        <li>微信客服</li>
+        <li>Web 网页</li>
+        <li>API 接口</li>
+      </ul>
+
+      <p>这意味着你做了一个智能体，就能同时在多个渠道使用，真正实现「一次搭建，多端运行」。</p>
+
+      <div class="section-marker">04 · 工作流实战</div>
+      <h2>工作流：让 AI 自动干活的核心武器</h2>
+      <p>如果说智能体是「AI 员工」，那工作流就是它的「SOP 操作手册」。工作流是扣子的<strong>核心功能</strong>，本质是一条流程生产线——开始节点和结束节点之间的所有节点都是流水线上的「工人」，每个工人负责一个环节。</p>
+
+      <h3>工作流的 8 大节点类型</h3>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">Start</div>
+          <div class="tl-text"><strong>开始节点</strong> — 设置输入变量（如主题、关键词），定义工作流的入口</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">LLM</div>
+          <div class="tl-text"><strong>大模型节点</strong> — 选择模型（豆包/DeepSeek 等），编写提示词，执行核心 AI 任务</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Plugin</div>
+          <div class="tl-text"><strong>插件节点</strong> — 调用搜索、图片生成、翻译等外部能力</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Code</div>
+          <div class="tl-text"><strong>代码节点</strong> — 用简单 Python/JS 处理数据，实现复杂逻辑</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Condition</div>
+          <div class="tl-text"><strong>条件分支</strong> — 根据结果走不同路径，实现智能决策</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Loop</div>
+          <div class="tl-text"><strong>循环节点</strong> — 批量处理任务，比如一次生成 10 篇内容</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Variable</div>
+          <div class="tl-text"><strong>变量节点</strong> — 存储中间结果，实现数据流转</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">End</div>
+          <div class="tl-text"><strong>结束节点</strong> — 输出最终结果，定义工作流的出口</div>
+        </div>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">💡 工作流搭建 5 步法</div>
+        <p>① 新建工作流 → ② 理解基础结构（开始→结束）→ ③ 添加中间节点 → ④ 配置节点内容（提示词/变量引用）→ ⑤ 连接与试运行测试。从简单开始，逐步增加复杂度。</p>
+      </div>
+
+      <div class="section-marker">05 · 实战场景</div>
+      <h2>一个人就能干的 5 个典型场景</h2>
+      <p>「只研究一个人就能干的事情」，到底能干什么？下面是几个典型的自动化场景：</p>
+
+      <h3>📝 场景一：自媒体内容生产流水线</h3>
+      <p>做头条号/公众号，搭建 Coze 工作流：<strong>关键词搜集 → 生成文章初稿 → 配图生成 → 数据复盘</strong>，每天只需输入热点，整套流程自动跑完。</p>
+
+      <div class="info-box">
+        <strong>工作流示例：</strong><br/>
+        Start（输入热点话题）→ LLM（生成大纲）→ LLM（扩写正文）→ Plugin（生成配图）→ LLM（生成标题+摘要）→ End（输出完整文章）
+      </div>
+
+      <h3>📊 场景二：电商运营自动化</h3>
+      <p>每日监控竞品、整理活动数据、自动生成活动复盘。一个 AI 写竞品分析、一个 AI 整理数据、一个 AI 生成报告，<strong>多 Agent 协同干活</strong>，同步推进。</p>
+
+      <h3>🎯 场景三：智能客服机器人</h3>
+      <p>上传产品资料、FAQ 到知识库，AI 永久记住业务规则，24 小时自动回复客户问题。越用越贴合你的业务，适合中小企业和个体商家。</p>
+
+      <h3>🎬 场景四：短视频批量生产</h3>
+      <p>一个 AI 写脚本、一个 AI 做封面、一个 AI 整理数据，<strong>多智能体协作</strong>搞定短视频全流程。从选题到发布，一条龙自动化。</p>
+
+      <h3>💼 场景五：个人 AI 秘书</h3>
+      <p>自动整理会议纪要、管理日程、生成周报、分析数据。把重复性工作交给 AI，把时间花在更有价值的事情上。</p>
+
+      <div class="pull-quote">
+        <p>你是厂长，扣子给你全套积木，随便搭专属员工，自动处理一整套连贯任务。</p>
+      </div>
+
+      <div class="section-marker">06 · 上手指南</div>
+      <h2>15 分钟创建你的第一个智能体</h2>
+
+      <h3>第一步：注册账号</h3>
+      <p>打开扣子官网（国内版 coze.cn，海外版 coze.com），用手机号或字节账号登录即可。国内版默认使用豆包、DeepSeek 等国内模型，面向中文用户。</p>
+
+      <h3>第二步：创建智能体</h3>
+      <p>扣子提供两种创建方式：</p>
+      <ul class="bullet-list">
+        <li><strong>AI 创建（推荐新手）</strong> — 用自然语言描述需求，AI 自动生成 Bot 配置</li>
+        <li><strong>标准创建（适合进阶）</strong> — 手动配置人设、技能、知识库、工作流</li>
+      </ul>
+
+      <h3>第三步：配置核心能力</h3>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">人设</div>
+          <div class="tl-text"><strong>角色定义</strong> — 告诉 AI 它是谁、擅长什么、用什么语气说话</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">技能</div>
+          <div class="tl-text"><strong>插件+工作流</strong> — 给 AI 配备工具箱和操作手册</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">知识</div>
+          <div class="tl-text"><strong>知识库</strong> — 上传私有数据，让 AI 基于你的资料回答</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">对话</div>
+          <div class="tl-text"><strong>开场白+推荐问题</strong> — 优化用户体验，引导对话方向</div>
+        </div>
+      </div>
+
+      <h3>第四步：测试与发布</h3>
+      <p>在右侧预览区测试对话效果，确认无误后点击发布。可一键发布到飞书、微信、网页等多个渠道。</p>
+
+      <div class="tip-card">
+        <div class="tip-title">🚀 新手捷径</div>
+        <p>别从零开始！先去<strong>模板市场</strong>复制一个现成应用，研究它的内部结构，改改提示词和配置就能用。这是最快上手的方式。</p>
+      </div>
+
+      <div class="section-marker">07 · 适合谁用</div>
+      <h2>扣子适合你吗？</h2>
+
+      <div class="platform-list">
+        <a href="#">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 2 7v10l10 5 10-5V7L12 2z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          <span>自媒体博主</span>
+        </a>
+        <a href="#">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span>电商运营</span>
+        </a>
+        <a href="#">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span>创业者</span>
+        </a>
+        <a href="#">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4z" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M9 9h6v6H9z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+          <span>中小企业</span>
+        </a>
+        <a href="#">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          <span>产品经理</span>
+        </a>
+      </div>
+
+      <p>如果你符合以下任意一种，扣子值得你深入研究：</p>
+
+      <ul class="bullet-list">
+        <li>每天批量写稿、剪辑、复盘数据，需要固定自动化流程</li>
+        <li>需要搭建客服机器人、客户信息自动整理工具，分给团队共用</li>
+        <li>做长期项目，需要沉淀资料，让 AI 持续跟进任务</li>
+        <li>有固定工作流程，希望一劳永逸搭建机器人，后续一键启动</li>
+      </ul>
+
+      <div class="info-box info-box-jade">
+        <strong>⚠️ 注意：</strong> 扣子适合<strong>长期重复的流水线工作</strong>。如果你只是临时写个文档、做个报表，用 Trae Work 或豆包这类即开即用的工具更合适。别为了用工具而用工具。
+      </div>
+
+      <div class="section-marker">08 · 写在最后</div>
+      <h2>AI 时代，个人即团队</h2>
+      <p>「只研究一个人就能干的事情」——这句话的核心不是「偷懒」，而是<strong>聚焦</strong>。</p>
+
+      <p>过去我们追求「全能」，什么都要会一点；现在我们追求「会用工具」，让 AI 帮我们补齐短板。一个人 + AI 工具链，就能拥有过去一个团队的战斗力。</p>
+
+      <div class="pull-quote">
+        <p>不要研究一百个工具，只研究一个人就能干的事情。聚焦，才是这个时代最大的杠杆。</p>
+      </div>
+
+      <p>扣子只是起点，真正重要的是<strong>建立你的 AI 工作流思维</strong>：哪些环节可以自动化？哪些任务可以交给 AI？哪些流程值得长期投入搭建？想清楚这些问题，你就能在 AI 时代找到属于自己的「一人公司」路径。</p>
+
+      <div class="info-box">
+        <strong>🌟 行动建议：</strong> 别光看，动手试！打开扣子官网，花 15 分钟搭一个最简单的智能体，哪怕只是让它帮你写日报。真正用过，你才会理解「一个人就能干」的含金量。
+      </div>
+
+      <div class="section-marker">09 · 原视频</div>
+      <h2>原视频</h2>
+      <p>以下为抖音原视频链接，感兴趣的朋友可以前往观看原版视频：</p>
+    <div class="cta-box">
+      <div class="content">
+        <h3>去抖音看原视频</h3>
+        <p>小渔讲AI 原作 · 只研究一个人就能干的事情！</p>
+      <a class="cta-btn" id="cta-link" href="https://www.iesdouyin.com/share/video/7663695071040882383/?region=CN&mid=7663695013368417065&u_code=jmha93a5&did=MS4wLjABAAAAIl6YTQLDrN8FRHs1KZfJa4znpwEqLb7omXWj5i1HUA0&iid=MS4wLjABAAAARvNiy3kzur-EGff4dkM6ShqL00SUhBnl-cSlVHkZZvs&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=M8tNYCODJ.JaAvGLQDzUJnsxQX2bLq9EN7IwbaGd2Do-&share_version=390600&ts=1784349903&from_aid=1128&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D&utm_source=copy&utm_campaign=client_share&utm_medium=android&app=aweme&ug_share_id=416a01fc07da_1784349962773&activity_info=%7B%22social_author_id%22%3A%227578767377471587387%22%2C%22social_share_id%22%3A%2268060800617_1784349962773%22%2C%22social_share_time%22%3A%221784349962%22%2C%22social_share_user_id%22%3A%2268060800617%22%7D&share_extra_params=%7B%22schema_type%22%3A%221%22%7D" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往抖音
+        </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="#">#扣子</a>
+      <a href="#">#Coze</a>
+      <a href="#">#工作流</a>
+      <a href="#">#AI智能体</a>
+      <a href="#">#AI超级个体</a>
+      <a href="#">#零代码</a>
+      <a href="#">#自动化</a>
+      <a href="#">#一人公司</a>
+      <a href="#">#抖音</a>
+    </div>
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用。视频封面版权归抖音原视频作者所有。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
