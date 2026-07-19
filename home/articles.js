@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'dy-7663846136494752070',
+            title: 'UI Skills集合：让AI写的前端从「能用」升级到「惊艳能卖」的8大技能包',
+            url: '../post/dy-7663846136494752070/dy-7663846136494752070.html',
+            summary: 'AI写前端最容易翻车的是「能用但丑」。这8个UI Skills把设计师的审美和规范喂给Claude Code/Codex，从UI生成、设计系统、Tailwind样式到动效、无障碍、转化，全流程打通。',
+            category: '抖音搬运',
+            date: '2026-07-19',
+            tags: ["UI Skills","Claude Code","Codex","前端设计","frontend-design","Tailwind","设计系统","AI编程","抖音"],
+          },
+          {
             id: 'dy-7663695071040882383',
             title: '一个人就是一支团队：扣子工作流打造AI超级个体的完整指南',
             url: '../post/dy-7663695071040882383/dy-7663695071040882383.html',

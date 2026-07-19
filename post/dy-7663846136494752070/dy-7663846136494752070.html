@@ -1,0 +1,804 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UI Skills集合：让AI写的前端从「能用」升级到「惊艳能卖」的8大技能包 · EXPECTOPATRONUS</title>
+    <meta name="description" content="AI写前端最容易翻车的不是跑不起来，而是能用但丑。这8个UI Skills把设计师的审美和规范喂给Claude Code/Codex，从UI生成、设计系统、Tailwind样式到动效、无障碍、转化，全流程打通。" />
+    <meta name="keywords" content="UI Skills,Claude Code,Codex,前端设计,frontend-design,ui-ux-pro-max,ui-audit,设计系统,Tailwind,AI编程,是只短短,抖音" />
+    <meta property="og:title" content="UI Skills集合：让AI写的前端从「能用」升级到「惊艳能卖」的8大技能包" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="8个UI Skills把设计师的审美和规范喂给Claude Code/Codex，从UI生成、设计系统、Tailwind样式到动效、无障碍、转化，全流程打通。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+
+      /* 要点列表 */
+      .bullet-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 var(--sp-6);
+      }
+      .bullet-list li {
+        position: relative;
+        padding-left: 28px;
+        margin-bottom: var(--sp-3);
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.75;
+        font-size: 0.98rem;
+      }
+      .bullet-list li::before {
+        content: '';
+        position: absolute;
+        left: 4px;
+        top: 11px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent-rust);
+      }
+
+      /* 技巧卡片 */
+      .tip-card {
+        margin: var(--sp-4) 0;
+        padding: var(--sp-5);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-left: 3px solid var(--accent-rust);
+      }
+      .tip-card .tip-title {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.05rem;
+        color: var(--text);
+        margin-bottom: var(--sp-2);
+      }
+      .tip-card p {
+        margin: 0;
+        font-size: 0.95rem;
+      }
+
+      /* 代码块 */
+      .article-body pre {
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        padding: var(--sp-5) var(--sp-6);
+        overflow-x: auto;
+        margin: 0 0 var(--sp-6);
+      }
+      .article-body code {
+        font-family: var(--font-mono);
+        font-size: 0.9rem;
+        color: var(--accent-rust);
+        background: rgba(201, 119, 47, 0.08);
+        padding: 2px 6px;
+        border-radius: 4px;
+      }
+      .article-body pre code {
+        background: none;
+        padding: 0;
+        color: var(--text-soft);
+        font-size: 0.88rem;
+        line-height: 1.7;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">抖音搬运 · AI编程</div>
+      <h1>UI Skills集合：<em>让AI写的前端</em>从「能用」升级到「惊艳能卖」</h1>
+      <p>AI写前端，最容易翻车的不是「跑不起来」，而是「能用但丑」——按钮能点但间距歪、配色脏、CTA藏得深、读屏软件读不出来。这8个UI Skills把人类设计师的审美和规范「喂」给Claude Code/Codex，从UI生成、设计系统、Tailwind样式到动效、无障碍、转化，按一条完整的设计工作流串联，装上它们，AI写出的前端才配得上「惊艳」两个字。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 是只短短-UI设计师</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-07-18</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 12 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 视频 · 搬运整理</span>
+      </div>
+    </section>
+
+    <article class="article-body">
+      <div class="section-marker">01 · 痛点剖析</div>
+      <h2>为什么AI写的前端，总差那么一口气？</h2>
+      <p>先说个扎心的共识：<strong>Claude Code、Codex 这类 Agent 写代码很快，但「设计」很弱。</strong></p>
+      
+      <p>它知道怎么写一个能跑的 React 组件，但不知道：</p>
+
+      <ul class="bullet-list">
+        <li>间距用 8 的倍数还是随便来（结果页面全是 13px、17px 这种诡异数字）</li>
+        <li>配色该遵循什么色板（结果一个页面出现 7 种「差不多」的蓝）</li>
+        <li>CTA 按钮该放在哪、写什么文案（结果注册按钮灰扑扑地缩在角落）</li>
+        <li>无障碍要满足 WCAG（结果对比度不够，视障用户根本看不清）</li>
+      </ul>
+
+      <p>这些不是「编码问题」，是<span class="hl">「设计问题」</span>。而解药就是<strong>前端设计 Skills</strong>——它们把设计师的审美、规范、checklist 压缩进一个 SKILL.md，让 Agent 在写前端时自动遵循。</p>
+
+      <div class="pull-quote">
+        <p>AI slop 的定义：技术上正确，但视觉上与任何其他 AI 生成的界面 interchangeable（可互换）。</p>
+      </div>
+
+      <div class="info-box">
+        <strong>什么是 Skill？</strong> Skill 本质上是为 Claude Code 注入的<strong>领域专业知识包</strong>。它们让 Claude 在特定场景下具备专家级的判断力和执行力。与系统提示不同，Skill 采用<strong>条件加载</strong>——只在任务匹配时才激活，不占用上下文窗口。
+      </div>
+
+      <div class="section-marker">02 · 全景速览</div>
+      <h2>8大UI Skills全景图</h2>
+      <p>这8个 Skill 对应前端设计的<strong>完整闭环</strong>：</p>
+
+      <div class="info-box">
+        <strong>设计工作流：</strong> UI 生成 → 设计系统 → Tailwind 样式 → 动效交互 → 极简简化 → 视觉打磨 → 无障碍合规 → 落地页转化
+      </div>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">No.1</div>
+          <div class="tl-text"><strong>UI Design Engine</strong> — UI 设计生成引擎，从0到1生成符合现代审美的界面</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">No.2</div>
+          <div class="tl-text"><strong>Design System Enforcer</strong> — 设计系统执行器，强制组件遵循 design tokens</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">No.3</div>
+          <div class="tl-text"><strong>tailwind-expert</strong> — Tailwind 专家，最佳实践写样式，装机率最高</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">No.4</div>
+          <div class="tl-text"><strong>Motion & Interaction</strong> — 动效与交互设计师，添加有意义的微交互</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">No.5</div>
+          <div class="tl-text"><strong>Minimalist UI Simplifier</strong> — 极简 UI 简化器，治AI喜欢「加东西」的毛病</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">No.6</div>
+          <div class="tl-text"><strong>Impeccable</strong> — 设计打磨引擎，专治各种「AI 味」设计</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">No.7</div>
+          <div class="tl-text"><strong>Accessibility Audit</strong> — 无障碍审核，确保符合 WCAG 标准</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">No.8</div>
+          <div class="tl-text"><strong>Conversion Optimizer</strong> — 转化率优化，让界面不只是好看，更能卖</div>
+        </div>
+      </div>
+
+      <div class="section-marker">03 · 逐个拆解</div>
+      <h2>8个Skill深度解析</h2>
+
+      <h3>🎨 No.1 UI Design Engine — UI 设计生成引擎</h3>
+      <p><strong>解决痛点：</strong>从 0 到 1 生成界面时，Agent 容易给出「能用但毫无美感」的布局。</p>
+      <p><strong>它做什么：</strong>根据需求，生成符合现代审美趋势的 UI 布局和组件方案。不是套模板，而是结合设计原则（层次、留白、视觉动线）给出有设计感的方案。</p>
+      <p><strong>什么时候用：</strong>新页面/新组件起步阶段，让设计有个高起点，而不是从「默认丑」开始慢慢调。</p>
+
+      <div class="tip-card">
+        <div class="tip-title">💡 典型用法</div>
+        <p>「帮我设计一个 SaaS 定价页，三档套餐，主推中间档，要有现代感」</p>
+      </div>
+
+      <h3>📐 No.2 Design System Enforcer — 设计系统执行器</h3>
+      <p><strong>解决痛点：</strong>组件写着写着就跑偏——按钮圆角忽大忽小、字号乱跳、颜色越用越多。</p>
+      <p><strong>它做什么：</strong>强制所有组件遵循你定义的<strong>设计令牌（design tokens）</strong>——统一的颜色、字号、间距、圆角、阴影规范。一旦定好设计系统，生成的代码自动对齐，保证全站一致性。</p>
+      <p><strong>什么时候用：</strong>团队有设计系统（或想建立一套）时。这是从「一个能用的页面」到「一套一致的产品」的分水岭。</p>
+
+      <div class="tip-card">
+        <div class="tip-title">💡 典型用法</div>
+        <p>「按我们 design-tokens.json 里的规范，重构这个表单组件」</p>
+      </div>
+
+      <h3>💨 No.3 tailwind-expert — Tailwind 专家</h3>
+      <p><strong>解决痛点：</strong>Tailwind 写起来快，但容易写出一堆反模式——类名堆成山、自定义值乱用、响应式断点乱来。</p>
+      <p><strong>它做什么：</strong>用 Tailwind 的最佳实践写样式——优先用工具类而非任意值（<code>[...]</code>）、合理拆分组件类、正确使用响应式前缀和深色模式变体。生成的 Tailwind 代码更干净、更可维护。</p>
+      <p><strong>什么时候用：</strong>前端样式实现的高频场景，几乎每个页面都要用到。<strong>这是8个里装机率最高的一个。</strong></p>
+
+      <div class="tip-card">
+        <div class="tip-title">💡 典型用法</div>
+        <p>「用 Tailwind 实现这个卡片，要支持深色模式和移动端响应式」</p>
+      </div>
+
+      <h3>✨ No.4 Motion & Interaction Designer — 动效与交互设计师</h3>
+      <p><strong>解决痛点：</strong>界面静态死板，缺少「活的感觉」——hover 没反馈、状态切换突兀、加载干等。</p>
+      <p><strong>它做什么：</strong>为界面添加<strong>有意义的微交互和过渡动效</strong>——按钮 hover/press 反馈、模态框进出过渡、列表项加载动画、状态切换的平滑过渡。重点在「有意义」：动效服务交互，不是炫技。</p>
+      <p><strong>什么时候用：</strong>界面骨架搭完后，提升「质感」的关键一步。好的动效能让「普通界面」显得「高级」。</p>
+
+      <h3>✂️ No.5 Minimalist UI Simplifier — 极简 UI 简化器</h3>
+      <p><strong>解决痛点：</strong>AI 喜欢「加东西」——塞满信息、堆砌功能、恨不得一个页面放8个卡片。</p>
+      <p><strong>它做什么：</strong>做减法。识别冗余元素、合并相似功能、精简视觉层级，让界面回归「少即是多」。遵循 Dieter Rams 的「好设计是尽可能少的设计」原则。</p>
+      <p><strong>什么时候用：</strong>页面信息过载、视觉混乱时。特别适合 AI 生成的「大杂烩」页面做后处理。</p>
+
+      <h3>💎 No.6 Impeccable — 设计打磨引擎</h3>
+      <p><strong>解决痛点：</strong>界面「差不多」但不够「精致」——细节粗糙、对齐不严谨、视觉节奏断裂。</p>
+      <p><strong>它做什么：</strong>专治各种「AI 味」设计。从字体配对、色彩调和、间距节奏到视觉层次，逐项打磨，让界面从「能用」升级到「惊艳」。</p>
+
+      <div class="pull-quote">
+        <p>frontend-design 这个 Skill 明确禁止了一系列被滥用的字体（Inter、Roboto、Arial、Space Grotesk），推动 Claude 在写代码前就确定一个具体的视觉方向。</p>
+      </div>
+
+      <h3>♿ No.7 Accessibility Audit — 无障碍审核</h3>
+      <p><strong>解决痛点：</strong>AI 生成的界面经常忽略无障碍——对比度不够、缺少 alt 文本、键盘导航失效、ARIA 标签缺失。</p>
+      <p><strong>它做什么：</strong>基于 <strong>WCAG 标准</strong>进行系统化审查，检查对比度、语义化标签、键盘可操作性、屏幕阅读器兼容性等。确保界面不只好看，还<strong>对所有人可用</strong>。</p>
+      <p><strong>什么时候用：</strong>产品上线前必做的一步，尤其面向欧美市场或有合规要求的项目。</p>
+
+      <h3>🚀 No.8 Conversion Optimizer — 转化率优化</h3>
+      <p><strong>解决痛点：</strong>界面好看但不「能卖」——CTA 不突出、信任元素缺失、转化路径断裂。</p>
+      <p><strong>它做什么：</strong>从转化率角度优化界面——CTA 位置/文案/视觉权重、信任信号（评价/认证/保障）、紧迫感设计、A/B 测试建议。让界面不只是艺术品，更是<strong>商业工具</strong>。</p>
+
+      <div class="section-marker">04 · 进阶Skill</div>
+      <h2> beyond UI：3个值得关注的进阶Skill</h2>
+      <p>除了上述8个UI专项Skill，还有几个「元 Skill」和「流程 Skill」值得搭配使用：</p>
+
+      <h3>🔧 skill-creator — 自定义 Skill 构建器</h3>
+      <p>这是所有 Skill 的「元 Skill」——它让你能够<strong>创造、修改和优化</strong>属于自己的 Skill。掌握了它，你就从「Skill 的使用者」晋升为「Skill 的创造者」。</p>
+
+      <ul class="bullet-list">
+        <li><strong>创建新 Skill</strong> — 根据团队规范、项目需求，从零编写定制化 Skill</li>
+        <li><strong>优化已有 Skill</strong> — 对官方或社区 Skill 进行裁剪、增强</li>
+        <li><strong>评测与验证</strong> — 测试 Skill 的触发效果，新增完整的技能评估和基准测试框架</li>
+      </ul>
+
+      <h3>🔍 ui-ux-pro-max — UI/UX 设计智审</h3>
+      <p>一个涵盖了 Web 和移动端设计全维度的智能审查专家。不会直接给你代码，而是先出<strong>线框图描述、交互流程、再出视觉方案</strong>。</p>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">输出1</div>
+          <div class="tl-text"><strong>风格指南</strong> — 根据项目定位推荐配色方案、字体组合、视觉风格</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">输出2</div>
+          <div class="tl-text"><strong>UX 规则检查</strong> — 从信息架构、交互流程到可用性原则的全方位评估</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">输出3</div>
+          <div class="tl-text"><strong>组件建议</strong> — 针对数据可视化、表单设计、导航结构给出专业建议</div>
+        </div>
+      </div>
+
+      <h3>📋 ui-audit — UI 审核框架</h3>
+      <p>基于成熟 UX 原则和系统化方法论的专业级界面审查工具。以业界公认的<strong>Nielsen 十大可用性原则</strong>为基准进行审查，按照预设的决策树和检查清单逐项排查界面问题。</p>
+
+      <div class="section-marker">05 · 安装使用</div>
+      <h2>如何安装和使用这些Skill？</h2>
+
+      <h3>方法一：使用 skills-hub CLI（推荐）</h3>
+      <p>skills-hub 是 Claude Skills 的开放注册表，支持一条命令安装：</p>
+      <pre><code class="language-bash"># 安装单个 skill
+npx @skills-hub-ai/cli install frontend-design
+
+# 安装 code-review skill
+npx @skills-hub-ai/cli install code-review</code></pre>
+
+      <h3>方法二：手动复制 SKILL.md</h3>
+      <p>Skill 本质上就是一个 Markdown 文件，可以手动复制到项目的 <code>.claude/skills/</code> 目录下：</p>
+      <pre><code class="language-bash">.claude/skills/
+├── frontend-design/
+│   └── SKILL.md
+├── ui-ux-pro-max/
+│   └── SKILL.md
+└── tailwind-expert/
+    └── SKILL.md</code></pre>
+
+      <h3>方法三：在 Codex / Cursor / TRAE 中使用</h3>
+      <p>这些 Skill 采用开放的 <strong>SKILL.md 标准</strong>，不只 Claude Code 能用——Codex CLI、Cursor、OpenClaw、TRAE、Qoder 都能装，真正做到<strong>一次配置，到处运行</strong>。</p>
+
+      <div class="tip-card">
+        <div class="tip-title">🚀 查看已安装的 Skills</div>
+        <p>在 Claude Code / Codex 中执行 <code>/skills</code> 命令，可以查看当前安装了哪些 Skills。</p>
+      </div>
+
+      <div class="section-marker">06 · 实战对比</div>
+      <h2>装与不装 Skill，差别有多大？</h2>
+      <p>以「设计一个现代化的登录页面，包含邮箱、密码输入框，支持深色模式切换」为例：</p>
+
+      <h3>不装 Skill 的默认输出</h3>
+      <ul class="bullet-list">
+        <li>配色：默认蓝色按钮 + 白色背景，毫无辨识度</li>
+        <li>字体：Inter 或 Roboto，AI 最爱用的「安全字体」</li>
+        <li>视觉：扁平死板，没有任何质感</li>
+        <li>深色模式：简单的黑底白字，对比度可能不达标</li>
+      </ul>
+
+      <h3>装了 frontend-design 后的输出</h3>
+      <ul class="bullet-list">
+        <li><strong>色彩</strong> — 深色模式使用深黑炭色 + 琥珀金点缀，浅色模式使用暖白 + 深灰</li>
+        <li><strong>字体</strong> — Playfair Display（标题）+ Source Serif 4（正文），经典优雅的组合</li>
+        <li><strong>视觉</strong> — 细腻的渐变背景、微妙的噪声纹理、精致的边框、流畅的动画</li>
+        <li><strong>差异化</strong> — 金色光泽效果、玻璃拟态卡片、优雅的悬停动画</li>
+      </ul>
+
+      <div class="pull-quote">
+        <p>差别不是「能不能跑」，而是「能不能卖」。装了 Skill 的界面，从「AI 默认风格」变成了「有品牌感的产品」。</p>
+      </div>
+
+      <div class="section-marker">07 · 适合人群</div>
+      <h2>这些Skill适合谁？</h2>
+
+      <div class="platform-list">
+        <a href="#">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 2 7v10l10 5 10-5V7L12 2z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          <span>独立开发者</span>
+        </a>
+        <a href="#">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span>全栈工程师</span>
+        </a>
+        <a href="#">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span>UI设计师</span>
+        </a>
+        <a href="#">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4z" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M9 9h6v6H9z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+          <span>前端团队</span>
+        </a>
+        <a href="#">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          <span>创业者</span>
+        </a>
+      </div>
+
+      <div class="info-box info-box-jade">
+        <strong>🌟 核心价值：</strong> 对独立开发者来说，这些 Skill 相当于免费雇佣了一位 UI 设计顾问；对设计师来说，它是把设计规范「固化」给开发团队的桥梁；对团队来说，它是保证全站视觉一致性的护栏。
+      </div>
+
+      <div class="section-marker">08 · 写在最后</div>
+      <h2>AI时代的「设计民主化」</h2>
+      <p>过去，好的前端设计是一门「手艺活」——需要多年的审美积累、反复的细节打磨。设计师和开发者之间，隔着一道「审美」的墙。</p>
+
+      <p>而 UI Skills 的出现，正在打破这道墙。它把设计师的专业知识<strong>结构化、可复用、可传播</strong>，让每一个用 AI 编程的人，都能产出有设计感的界面。</p>
+
+      <div class="pull-quote">
+        <p>这不是替代设计师，而是让设计的专业判断力，成为每个开发者都能调用的「公共资源」。</p>
+      </div>
+
+      <p>当然，Skill 不是万能的。它提供的是<strong>下限保障</strong>——让 AI 生成的界面不至于太丑；而真正的上限，还是取决于你的审美判断、业务理解和对细节的追求。</p>
+
+      <div class="info-box">
+        <strong>🌟 行动建议：</strong> 如果你正在用 Claude Code、Codex 或其他 AI 编程工具写前端，强烈建议从 <code>frontend-design</code> 和 <code>tailwind-expert</code> 这两个开始装。这是性价比最高、效果最明显的两个 Skill。装上之后，同样的需求，输出质量会有肉眼可见的提升。
+      </div>
+
+      <div class="section-marker">09 · 原视频</div>
+      <h2>原视频</h2>
+      <p>以下为抖音原视频链接，感兴趣的朋友可以前往观看原版视频：</p>
+    <div class="cta-box">
+      <div class="content">
+        <h3>去抖音看原视频</h3>
+        <p>是只短短-UI设计师 原作 · Ui skills集合</p>
+      <a class="cta-btn" id="cta-link" href="https://www.iesdouyin.com/share/video/7663846136494752070/?region=CN&mid=7663846103910009627&u_code=jmha93a5&did=MS4wLjABAAAAIl6YTQLDrN8FRHs1KZfJa4znpwEqLb7omXWj5i1HUA0&iid=MS4wLjABAAAARvNiy3kzur-EGff4dkM6ShqL00SUhBnl-cSlVHkZZvs&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=7aC4LFNrBEEfvy8rJIPXmerv5uShleQR7ivcGDIH7.w-&share_version=390600&ts=1784465838&from_aid=1128&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D&utm_source=copy&utm_campaign=client_share&utm_medium=android&app=aweme&ug_share_id=416a01fc07da_1784466154132&activity_info=%7B%22social_author_id%22%3A%2295451334450%22%2C%22social_share_id%22%3A%2268060800617_1784466154128%22%2C%22social_share_time%22%3A%221784466154%22%2C%22social_share_user_id%22%3A%2268060800617%22%7D&share_extra_params=%7B%22schema_type%22%3A%221%22%7D" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往抖音
+        </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="#">#UI Skills</a>
+      <a href="#">#Claude Code</a>
+      <a href="#">#Codex</a>
+      <a href="#">#前端设计</a>
+      <a href="#">#frontend-design</a>
+      <a href="#">#Tailwind</a>
+      <a href="#">#设计系统</a>
+      <a href="#">#AI编程</a>
+      <a href="#">#抖音</a>
+    </div>
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用。视频封面版权归抖音原视频作者所有。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
