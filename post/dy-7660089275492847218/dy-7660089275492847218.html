@@ -1,0 +1,881 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>测试必备的8个Claude Skills：从需求澄清到缺陷复盘，搞定90%测试工作 · EXPECTOPATRONUS</title>
+    <meta name="description" content="练完这8个Skills，搞定你90%的测试工作！从需求澄清、用例设计、场景模拟、优先级排序、缺陷报告、根因分析、回归验证到测试复盘，覆盖完整测试链路，附完整代码+md模板。" />
+    <meta name="keywords" content="软件测试,Claude Code Skills,测试用例,缺陷报告,根因分析,测试复盘,自动化测试,Tricy聊软件测试,AI测试,抖音" />
+    <meta property="og:title" content="测试必备的8个Claude Skills：从需求澄清到缺陷复盘，搞定90%测试工作" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="练完这8个Skills，搞定90%测试工作！覆盖需求澄清、用例设计、场景模拟、优先级排序、缺陷报告、根因分析、回归验证、测试复盘全链路。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+
+      /* 要点列表 */
+      .bullet-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 var(--sp-6);
+      }
+      .bullet-list li {
+        position: relative;
+        padding-left: 28px;
+        margin-bottom: var(--sp-3);
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.75;
+        font-size: 0.98rem;
+      }
+      .bullet-list li::before {
+        content: '';
+        position: absolute;
+        left: 4px;
+        top: 11px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent-rust);
+      }
+
+      /* 技巧卡片 */
+      .tip-card {
+        margin: var(--sp-4) 0;
+        padding: var(--sp-5);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-left: 3px solid var(--accent-rust);
+      }
+      .tip-card .tip-title {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.05rem;
+        color: var(--text);
+        margin-bottom: var(--sp-2);
+      }
+      .tip-card p {
+        margin: 0;
+        font-size: 0.95rem;
+      }
+
+      /* 代码块 */
+      .article-body pre {
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        padding: var(--sp-5) var(--sp-6);
+        overflow-x: auto;
+        margin: 0 0 var(--sp-6);
+      }
+      .article-body code {
+        font-family: var(--font-mono);
+        font-size: 0.9rem;
+        color: var(--accent-rust);
+        background: rgba(201, 119, 47, 0.08);
+        padding: 2px 6px;
+        border-radius: 4px;
+      }
+      .article-body pre code {
+        background: none;
+        padding: 0;
+        color: var(--text-soft);
+        font-size: 0.88rem;
+        line-height: 1.7;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">抖音搬运 · AI测试</div>
+      <h1>测试必备的8个<em>Claude Skills</em>：搞定90%测试工作</h1>
+      <p>用例写了很多线上还是漏问题？缺陷提上去研发一句「无法复现」就打回来？上线前时间不够不知道先测什么？项目做完复盘只会写「沟通不足」？这些问题不是单点能力不够，而是缺一套可以反复调用的测试工作流。这8个Skills把测试方法论变成可复用的能力，从需求澄清到缺陷复盘，覆盖完整测试链路。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Tricy聊软件测试</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-07-19</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 12 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 视频 · 搬运整理</span>
+      </div>
+    </section>
+
+    <article class="article-body">
+      <div class="section-marker">01 · 为什么需要</div>
+      <h2>测试从业者为什么要用Skills？</h2>
+      <p>很多人现在用AI做测试，还是停留在「复制一段需求，让它帮我生成用例」。这当然能用，但问题也很明显：</p>
+
+      <ul class="bullet-list">
+        <li>生成结果不稳定，每次质量参差不齐</li>
+        <li>每次都要重新描述规则，效率太低</li>
+        <li>不同人问出来的结果差异很大，团队无法对齐</li>
+        <li>新人容易把AI的输出当标准答案，反而引入风险</li>
+        <li>团队无法沉淀统一规范，经验无法传承</li>
+      </ul>
+
+      <p><strong>Skills解决的就是这个问题。</strong></p>
+
+      <p>它更像是你给AI配了一套「测试工作手册」。比如团队里规定：</p>
+
+      <ul class="bullet-list">
+        <li>缺陷标题必须包含模块、动作、异常现象</li>
+        <li>用例必须覆盖正常、异常、边界、权限、兼容</li>
+        <li>上线前必须按风险、业务价值、历史缺陷、测试成本排序</li>
+        <li>复盘必须包含数据、原因、动作和责任人</li>
+      </ul>
+
+      <p>这些规则如果每次都靠人工提醒，很容易漏。但如果写进Skill，Claude每次执行对应任务时，就会按这套规则来输出。</p>
+
+      <div class="info-box">
+        <strong>什么是Skill？</strong> Skill不是普通提示词，而是把一套固定工作方法、检查清单、输出模板和操作步骤，封装成Claude可以随时调用的模块化能力。采用渐进式披露架构——平时只加载描述（约100token），任务匹配时才加载完整内容，装几十个也不撑爆上下文。
+      </div>
+
+      <div class="section-marker">02 · 全景速览</div>
+      <h2>8个Skills覆盖完整测试链路</h2>
+      <p>测试从业者真正高频使用的Skills，不应该是花里胡哨的工具，而应该围绕<strong>真实工作链路</strong>来设计。</p>
+
+      <p>一条完整的测试链路，可以拆成8个关键环节：</p>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">需求</div>
+          <div class="tl-text"><strong>需求澄清Skill</strong> — 需求看不懂、测点抓不准，先澄清再动手</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">用例</div>
+          <div class="tl-text"><strong>用例分层Skill</strong> — 按6维度分层设计，覆盖全不重复</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">场景</div>
+          <div class="tl-text"><strong>场景模拟Skill</strong> — 从用户路径设计真实业务场景</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">排期</div>
+          <div class="tl-text"><strong>优先级排序Skill</strong> — 时间不够时，知道先测什么后测什么</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">缺陷</div>
+          <div class="tl-text"><strong>缺陷报告Skill</strong> — Bug一次写清楚，不被研发打回</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">分析</div>
+          <div class="tl-text"><strong>根因分析Skill</strong> — 不只复现，更要分析为什么出问题</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">回归</div>
+          <div class="tl-text"><strong>回归验证Skill</strong> — 修复后怎么测、测哪些，有章法</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">复盘</div>
+          <div class="tl-text"><strong>测试复盘Skill</strong> — 项目做完沉淀经验，下次不踩同样的坑</div>
+        </div>
+      </div>
+
+      <div class="pull-quote">
+        <p>练完这8个Skills，搞定你90%的测试工作。剩下的10%，留给真正需要人判断的复杂场景。</p>
+      </div>
+
+      <div class="section-marker">03 · 逐个拆解</div>
+      <h2>8个Skills深度解析</h2>
+
+      <h3>🔍 Skill 1：需求澄清Skill — 别一上来就写用例</h3>
+      <p><strong>解决的问题：</strong>需求看不懂、测点抓不准、拿到需求就急着写用例，结果测到一半发现理解错了。</p>
+      <p><strong>核心思路：</strong>真正有经验的测试工程师，会先问三个问题——这个需求解决什么业务问题？哪些规则明确、哪些模糊？哪些地方一旦理解错，后面测试一定会漏？</p>
+
+      <div class="tip-card">
+        <div class="tip-title">📋 需求澄清输出框架</div>
+        <p>业务背景 → 核心流程 → 明确规则 → 模糊点（需确认）→ 风险点（高影响）→ 测试关注点 → 待确认问题清单</p>
+      </div>
+
+      <p><strong>适用场景：</strong></p>
+      <ul class="bullet-list">
+        <li>产品文档写得很粗，细节缺失</li>
+        <li>需求评审时没人说清楚异常规则</li>
+        <li>研发已经开始做了，测试才发现规则缺失</li>
+        <li>面试被问「你如何参与需求评审」</li>
+      </ul>
+
+      <h3>📝 Skill 2：用例分层Skill — 覆盖全不重复</h3>
+      <p><strong>解决的问题：</strong>用例写了很多，但要么覆盖不全要么大量重复，效率和质量都上不去。</p>
+      <p><strong>核心方法：6维度分层法</strong></p>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">主流程</div>
+          <div class="tl-text"><strong>正常路径</strong> — 用户最常用的Happy Path，必须100%通过</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">异常</div>
+          <div class="tl-text"><strong>错误处理</strong> — 输入非法、操作失误、网络异常等场景</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">边界</div>
+          <div class="tl-text"><strong>边界值</strong> — 等价类划分、边界值分析，最容易出Bug的地方</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">权限</div>
+          <div class="tl-text"><strong>权限控制</strong> — 不同角色、未登录、越权访问等场景</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">兼容</div>
+          <div class="tl-text"><strong>兼容性</strong> — 浏览器、设备、分辨率、网络环境</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">数据</div>
+          <div class="tl-text"><strong>数据状态</strong> — 空数据、大数据量、特殊字符、数据流转</div>
+        </div>
+      </div>
+
+      <div class="info-box info-box-jade">
+        <strong>💡 经验之谈：</strong> 用例不是越多越好，而是越有层次越好。按6个维度分层后，你会发现很多用例其实是重复的，可以合并。覆盖率提升的同时，维护成本反而下降。
+      </div>
+
+      <h3>🎬 Skill 3：场景模拟Skill — 从用户路径设计</h3>
+      <p><strong>解决的问题：</strong>只会按功能点写用例，不会从用户真实使用路径设计场景，导致线上「功能都测了但流程不通」。</p>
+      <p><strong>核心思路：</strong>从用户角色出发，设计完整的用户旅程（User Journey），而不是孤立的功能点。</p>
+
+      <p>典型场景设计框架：</p>
+      <ul class="bullet-list">
+        <li><strong>角色定义</strong> — 这个场景是给谁用的？新用户/老用户/管理员？</li>
+        <li><strong>目标驱动</strong> — 用户想完成什么事？下单？发布内容？数据分析？</li>
+        <li><strong>完整路径</strong> — 从进入到离开，完整的操作链路是什么？</li>
+        <li><strong>关键节点</strong> — 路径上有哪些分支、决策点、可能出错的地方？</li>
+        <li><strong>异常中断</strong> — 中间退出、网络中断、切换设备，会发生什么？</li>
+      </ul>
+
+      <h3>⚖️ Skill 4：优先级排序Skill — 时间不够先测什么</h3>
+      <p><strong>解决的问题：</strong>上线前时间永远不够，面试官问「你怎么排优先级」，只能回答「先测核心流程」。</p>
+      <p><strong>核心方法：四维评估法</strong></p>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">风险</div>
+          <div class="tl-text"><strong>出问题的影响有多大</strong> — 涉及支付、数据安全、核心交易的优先级最高</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">价值</div>
+          <div class="tl-text"><strong>业务价值有多高</strong> — 高频使用、直接影响收入、核心功能优先</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">历史</div>
+          <div class="tl-text"><strong>历史缺陷密度</strong> — 这个模块以前出过多少Bug？出过的地方容易再出</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">成本</div>
+          <div class="tl-text"><strong>测试成本有多高</strong> — 同样的收益，成本低的先做</div>
+        </div>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">🎯 优先级矩阵</div>
+        <p>高风险高价值 → P0 必须测<br/>高风险低价值 → P1 尽量测<br/>低风险高价值 → P2 可以测<br/>低风险低价值 → P3 最后测或不测</p>
+      </div>
+
+      <h3>🐛 Skill 5：缺陷报告Skill — Bug不被打回</h3>
+      <p><strong>解决的问题：</strong>Bug提上去，研发一句「无法复现」就打回来，来回沟通浪费大量时间。</p>
+      <p><strong>核心原则：</strong>一个好的缺陷报告，应该让研发<strong>不需要问你任何问题</strong>，看完就能定位和修复。</p>
+
+      <p>标准缺陷模板：</p>
+      <pre><code class="language-markdown">【缺陷标题】模块 + 动作 + 异常现象
+【严重程度】致命/严重/一般/轻微/建议
+【优先级】P0/P1/P2/P3
+【环境信息】系统/浏览器/版本/账号
+【前置条件】触发这个Bug需要什么前提
+【复现步骤】1. ... 2. ... 3. ... （可操作、可复现）
+【预期结果】正确情况下应该是什么样
+【实际结果】实际上发生了什么
+【日志/截图】错误日志、网络请求、截图/录屏
+【影响范围】影响哪些用户、哪些功能、严重程度</code></pre>
+
+      <div class="info-box">
+        <strong>💡 提Bug的艺术：</strong> 缺陷不是「越详细越好」，而是「越精准越好」。步骤要可操作、结果要可对比、环境要说清楚。研发看完能直接复现，才是高质量的缺陷报告。
+      </div>
+
+      <h3>🔬 Skill 6：根因分析Skill — 不只复现，更要分析</h3>
+      <p><strong>解决的问题：</strong>只会复现Bug，不会分析原因，研发说「这不是Bug」就不知道怎么反驳。</p>
+      <p><strong>核心思路：</strong>从现象倒推原因，用排除法缩小范围，最终定位根因。</p>
+
+      <p>根因分析5步法：</p>
+      <ul class="bullet-list">
+        <li><strong>复现确认</strong> — 稳定复现吗？还是偶发？复现率多少？</li>
+        <li><strong>范围缩小</strong> — 是前端问题还是后端问题？是接口问题还是逻辑问题？</li>
+        <li><strong>数据验证</strong> — 数据库数据对不对？接口请求和响应是什么？</li>
+        <li><strong>对比排除</strong> — 正常数据和异常数据有什么区别？改一个变量试试？</li>
+        <li><strong>根因归类</strong> — 业务缺陷/数据问题/环境问题/兼容性问题/性能问题</li>
+      </ul>
+
+      <h3>✅ Skill 7：回归验证Skill — 修复后怎么测</h3>
+      <p><strong>解决的问题：</strong>Bug修复了不知道怎么回归，只测了修复点，结果修了一个引出三个。</p>
+      <p><strong>核心策略：三层回归法</strong></p>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">第一层</div>
+          <div class="tl-text"><strong>Bug本身验证</strong> — 确认原问题确实修复了，按复现步骤走一遍</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">第二层</div>
+          <div class="tl-text"><strong>关联功能验证</strong> — 这个改动可能影响哪些周边功能？都要测</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">第三层</div>
+          <div class="tl-text"><strong>核心流程冒烟</strong> — 主流程走一遍，确保没有「修一个坏一片」</div>
+        </div>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">🔄 回归测试黄金法则</div>
+        <p>修复的Bug → 必须重测<br/>改动模块的核心功能 → 必须重测<br/>有依赖关系的上下游 → 必须重测<br/>历史高频出问题的地方 → 重点重测</p>
+      </div>
+
+      <h3>📊 Skill 8：测试复盘Skill — 沉淀经验不踩坑</h3>
+      <p><strong>解决的问题：</strong>项目做完了，复盘只会写「沟通不足、时间紧张、后续优化」，正确的废话一堆，下次该踩的坑还踩。</p>
+      <p><strong>核心方法：数据驱动的复盘框架</strong></p>
+
+      <p>高质量复盘应该包含：</p>
+
+      <ul class="bullet-list">
+        <li><strong>缺陷分布</strong> — 按模块、类型、严重程度统计，哪些地方问题最多？</li>
+        <li><strong>漏测分析</strong> — 线上出的问题为什么没测出来？是用例缺失、环境不同还是时间不够？</li>
+        <li><strong>流程问题</strong> — 需求评审/开发自测/测试介入/上线流程，哪些环节可以优化？</li>
+        <li><strong>改进动作</strong> — 具体改什么、谁来做、什么时候完成（可落地、可追踪）</li>
+        <li><strong>经验沉淀</strong> — 这次踩的坑，下次怎么避免？写成Checklist或Skill</li>
+      </ul>
+
+      <div class="pull-quote">
+        <p>复盘的目的不是追责，而是让团队的能力随项目推进持续增长。</p>
+      </div>
+
+      <div class="section-marker">04 · 自动化进阶</div>
+      <h2>进阶：自动化测试类Skills</h2>
+      <p>除了上述8个测试流程类Skills，还有一类更偏技术的<strong>自动化测试Skills</strong>，适合测试开发和自动化测试工程师：</p>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">webapp-testing</div>
+          <div class="tl-text"><strong>Web应用测试专家</strong> — 基于Playwright的全栈测试解决方案，覆盖从E2E到移动端</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">api-auto-gen</div>
+          <div class="tl-text"><strong>接口自动化生成</strong> — 输入OpenAPI YAML，一键生成完整pytest项目，带自愈闭环</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">test-coverage-gap</div>
+          <div class="tl-text"><strong>覆盖率缺口分析</strong> — 读取覆盖率报告，精准找出未覆盖的分支并补充测试</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">flaky-test-detector</div>
+          <div class="tl-text"><strong>偶发测试检测</strong> — 多次运行识别非确定性测试，定位并修复不稳定用例</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">self-healing</div>
+          <div class="tl-text"><strong>自愈选择器</strong> — DOM变化时自动修复定位器，而不是重写整个测试</div>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <strong>怎么安装？</strong> 可以通过 QASkills CLI 一键安装：<br/><code>npm install -g @qaskills/cli</code><br/><code>npx @qaskills/cli add playwright-auto-test-generation --agent claude-code</code>
+      </div>
+
+      <div class="section-marker">05 · 适合人群</div>
+      <h2>这些Skills适合谁？</h2>
+
+      <div class="platform-list">
+        <a href="#">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 2 7v10l10 5 10-5V7L12 2z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          <span>初中级测试</span>
+        </a>
+        <a href="#">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span>测试开发</span>
+        </a>
+        <a href="#">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span>测试组长</span>
+        </a>
+        <a href="#">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4h16v16H4z" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M9 9h6v6H9z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+          <span>质量经理</span>
+        </a>
+        <a href="#">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          <span>产品/研发</span>
+        </a>
+      </div>
+
+      <p>不管你是哪个阶段的测试从业者，这8个Skills都能帮到你：</p>
+
+      <ul class="bullet-list">
+        <li><strong>新手</strong> — 快速建立系统的测试思维，少走弯路</li>
+        <li><strong>熟手</strong> — 把经验沉淀成可复用的工作流，效率翻倍</li>
+        <li><strong>测试开发</strong> — 结合自动化Skills，打造AI测试助手集群</li>
+        <li><strong>管理者</strong> — 统一团队规范，让AI成为团队的「虚拟培训师」</li>
+      </ul>
+
+      <div class="section-marker">06 · 写在最后</div>
+      <h2>AI时代，测试的价值是什么？</h2>
+      <p>很多测试同学会焦虑：AI会不会取代测试？</p>
+
+      <p>答案是：<strong>不会取代测试，但会取代不会用AI的测试。</strong></p>
+
+      <p>AI能帮你生成用例、写缺陷、做回归，但有一些事情是AI做不了的：</p>
+
+      <ul class="bullet-list">
+        <li>对业务的深度理解和判断</li>
+        <li>跨团队的沟通协调和推动</li>
+        <li>对质量风险的直觉和权衡</li>
+        <li>设计合理的测试策略和体系</li>
+      </ul>
+
+      <div class="pull-quote">
+        <p>未来的测试工程师，不是比谁更能写用例、更能找Bug，而是比谁更懂得用AI放大自己的能力，把时间花在真正需要人判断的地方。</p>
+      </div>
+
+      <p>这8个Skills只是起点。真正厉害的测试工程师，会把自己的经验持续沉淀成Skills，让AI成为自己的「数字分身」——它帮你处理80%的重复性工作，你专注那20%最有价值的判断和决策。</p>
+
+      <div class="info-box info-box-jade">
+        <strong>🌟 行动建议：</strong> 别光收藏，动手练！从你最痛的那个环节开始：① 需求总理解错？先用需求澄清Skill；② Bug总被打回？先练缺陷报告Skill；③ 上线前总乱？试试优先级排序Skill。一个一个练，练完8个，你的测试能力会上一个台阶。
+      </div>
+
+      <div class="section-marker">07 · 原视频</div>
+      <h2>原视频</h2>
+      <p>以下为抖音原视频链接，感兴趣的朋友可以前往观看原版视频：</p>
+    <div class="cta-box">
+      <div class="content">
+        <h3>去抖音看原视频</h3>
+        <p>Tricy聊软件测试 原作 · 练完这8个Skills（完整代码+md）搞定你90...</p>
+      <a class="cta-btn" id="cta-link" href="https://www.iesdouyin.com/share/video/7660089275492847218/?region=CN&mid=7659358820217128969&u_code=jmha93a5&did=MS4wLjABAAAAIl6YTQLDrN8FRHs1KZfJa4znpwEqLb7omXWj5i1HUA0&iid=MS4wLjABAAAARvNiy3kzur-EGff4dkM6ShqL00SUhBnl-cSlVHkZZvs&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=f_nIwLs7i.m07RqQZvwVT36GmsxxUjZd8P.dWHCx4iI-&share_version=390600&ts=1784485941&from_aid=1128&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D&utm_source=copy&utm_campaign=client_share&utm_medium=android&app=aweme&ug_share_id=416a01fc07da_1784485980264&activity_info=%7B%22social_author_id%22%3A%223658801474447848%22%2C%22social_share_id%22%3A%2268060800617_1784485980264%22%2C%22social_share_time%22%3A%221784485980%22%2C%22social_share_user_id%22%3A%2268060800617%22%7D&share_extra_params=%7B%22schema_type%22%3A%221%22%7D" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往抖音
+        </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="#">#软件测试</a>
+      <a href="#">#Claude Code</a>
+      <a href="#">#测试用例</a>
+      <a href="#">#缺陷管理</a>
+      <a href="#">#根因分析</a>
+      <a href="#">#测试复盘</a>
+      <a href="#">#自动化测试</a>
+      <a href="#">#AI测试</a>
+      <a href="#">#抖音</a>
+    </div>
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用。视频封面版权归抖音原视频作者所有。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
