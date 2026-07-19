@@ -1,0 +1,796 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>超级工程师多任务全并行解决方案：1个人顶1个团队的AI编程工作流 · EXPECTOPATRONUS</title>
+    <meta name="description" content="终端开5个Claude会话并行、网页端再挂5-10个任务、全程不用IDE、一个月产出100%由AI完成仅2个Bug。Claude Code创始人亲授的超级工程师多任务全并行解决方案，让你1个人顶1个团队。" />
+    <meta name="keywords" content="超级工程师,多任务全并行,Claude Code,Codex,git worktree,多智能体并行,CLAUDE.md,Plan模式,斜杠命令,子智能体,哈工大AI工程师Peter,AI编程" />
+    <meta property="og:title" content="超级工程师多任务全并行解决方案：1个人顶1个团队的AI编程工作流" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="终端开5个Claude会话并行、网页端再挂5-10个任务、一个月产出100%由AI完成仅2个Bug。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+
+      /* 要点列表 */
+      .bullet-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 var(--sp-6);
+      }
+      .bullet-list li {
+        position: relative;
+        padding-left: 28px;
+        margin-bottom: var(--sp-3);
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.75;
+        font-size: 0.98rem;
+      }
+      .bullet-list li::before {
+        content: '';
+        position: absolute;
+        left: 4px;
+        top: 11px;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--accent-rust);
+      }
+
+      /* 技巧卡片 */
+      .tip-card {
+        margin: var(--sp-4) 0;
+        padding: var(--sp-5);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-left: 3px solid var(--accent-rust);
+      }
+      .tip-card .tip-title {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.05rem;
+        color: var(--text);
+        margin-bottom: var(--sp-2);
+      }
+      .tip-card p {
+        margin: 0;
+        font-size: 0.95rem;
+      }
+
+      /* 代码块 */
+      .article-body pre {
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        padding: var(--sp-5) var(--sp-6);
+        overflow-x: auto;
+        margin: 0 0 var(--sp-6);
+      }
+      .article-body code {
+        font-family: var(--font-mono);
+        font-size: 0.9rem;
+        color: var(--accent-rust);
+        background: rgba(201, 119, 47, 0.08);
+        padding: 2px 6px;
+        border-radius: 4px;
+      }
+      .article-body pre code {
+        background: none;
+        padding: 0;
+        color: var(--text-soft);
+        font-size: 0.88rem;
+        line-height: 1.7;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../deepseek/deepseek.html">DeepSeek</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+    <section class="page-head">
+      <div class="eyebrow">抖音搬运 · AI编程</div>
+      <h1>超级工程师<em>多任务全并行</em>解决方案：1个人顶1个团队</h1>
+      <p>终端开5个Claude会话并行、网页端再挂5-10个任务、全程不用IDE、一个月产出100%由AI完成仅2个Bug——这不是炫技，是Claude Code创始人Boris Cherny亲授的下一代软件开发工作流。从git worktree并行到CLAUDE.md记忆中枢，从Plan模式到子智能体协作，这套「多任务全并行」方案，让1个人真正拥有1个团队的战斗力。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 哈工大AI工程师Peter</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-07-19</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 12 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 视频 · 搬运整理</span>
+      </div>
+    </section>
+
+    <article class="article-body">
+      <div class="section-marker">01 · 认知颠覆</div>
+      <h2>你用的不是AI编程，是「高级补全」</h2>
+      <p>大多数人用AI编程，还停留在：</p>
+
+      <ul class="bullet-list">
+        <li>写一行补一行</li>
+        <li>问个Bug等答案</li>
+        <li>用完就忘，每次都要重新解释项目</li>
+      </ul>
+
+      <p>而真正的<strong>超级工程师</strong>，早已进入下一个阶段——把Claude Code、Codex这类工具当成<strong>能自主规划、执行、验证、迭代的智能体（Agent）</strong>。</p>
+
+      <div class="pull-quote">
+        <p>你从「敲代码的人」，变成「指挥AI的指挥官」。</p>
+      </div>
+
+      <p>一个超级工程师能做什么？</p>
+
+      <ul class="bullet-list">
+        <li>读懂整个代码库、记住团队规范</li>
+        <li>自主拆任务、写代码、跑测试、提PR</li>
+        <li>多智能体并行，同时干前端、后端、测试</li>
+        <li>从错误中学习，越用越准</li>
+      </ul>
+
+      <div class="info-box">
+        <strong>实战数据：</strong> Claude Code创始人Boris Cherny一个月所有代码AI全权编写，仅2个Bug；人类手写通常20个+。这就是「多任务全并行」的威力。
+      </div>
+
+      <div class="section-marker">02 · 核心秘籍</div>
+      <h2>多智能体并行：把编程玩成「战略游戏」</h2>
+      <p>这是Boris的标配，也是<strong>提升生产力的最强秘诀</strong>：</p>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">终端</div>
+          <div class="tl-text"><strong>5个Claude窗口并行</strong> — 编号1-5，开系统通知，一个跑测试、一个重构、一个写文档</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">网页端</div>
+          <div class="tl-text"><strong>再挂5-10个任务</strong> — claude.ai/code 网页端，处理后台批量任务</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">手机端</div>
+          <div class="tl-text"><strong>早上启动任务</strong> — iOS App 启动任务，电脑无缝接力</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">同步</div>
+          <div class="tl-text"><strong>--teleport 传送</strong> — 终端/网页/手机间无缝传送任务进度</div>
+        </div>
+      </div>
+
+      <p>效果：<strong>同步推进，工期直接减半</strong>。</p>
+
+      <div class="tip-card">
+        <div class="tip-title">🚀 git worktree 并行法</div>
+        <p>同时启动3-5个git worktree，每个worktree在后台并行运行独立的Claude会话。给不同worktree命名并设置shell别名（如 <code>za</code>、<code>zb</code>、<code>zc</code>），实现快速切换。单独创建「分析型」worktree，专门用于读取日志和运行BigQuery。</p>
+      </div>
+
+      <div class="section-marker">03 · 记忆中枢</div>
+      <h2>CLAUDE.md：团队的「AI记忆中枢」</h2>
+      <p>这是Anthropic全员必用的<strong>项目级知识库</strong>，相当于AI的「入职手册」：</p>
+
+      <ul class="bullet-list">
+        <li>放在Git仓库根目录，团队共享</li>
+        <li>记录：命令、规范、测试流程、避坑点、代码风格</li>
+        <li>AI每次对话<strong>自动加载</strong>，永不「失忆」</li>
+        <li>每次AI出错，就把规则写进CLAUDE.md，<strong>错误变资产</strong></li>
+      </ul>
+
+      <p>极简版示例：</p>
+      <pre><code class="language-markdown"># 开发规范
+- 用 bun，不用 npm
+- 禁止 enum，用字符串联合类型
+- 提交前必跑：typecheck → lint → test</code></pre>
+
+      <div class="info-box info-box-jade">
+        <strong>💡 迭代原则：</strong> 每当Claude犯错并被纠正后，以这句话结尾：「更新CLAUDE.md，确保以后不再犯同样的错误。」Claude在自我制定规则方面表现出色。持续修订CLAUDE.md，直到错误率出现可衡量的下降。
+      </div>
+
+      <div class="section-marker">04 · 谋定后动</div>
+      <h2>Plan模式：先规划，返工率降80%</h2>
+      <p>Boris最强原则：<strong>先规划，后编码</strong>。</p>
+
+      <p>操作：连按两次 <code>Shift+Tab</code> 进入Plan模式。</p>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">Step 1</div>
+          <div class="tl-text"><strong>告诉AI需求</strong> — AI输出完整方案</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Step 2</div>
+          <div class="tl-text"><strong>你审核、迭代</strong> — 直到满意</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">Step 3</div>
+          <div class="tl-text"><strong>开启自动接受修改</strong> — AI一波完成，无需盯守</div>
+        </div>
+      </div>
+
+      <p>官方强调：<strong>复杂任务75%精力放在规划，25%用于编码</strong>，返工成本最低。</p>
+
+      <div class="tip-card">
+        <div class="tip-title">🔍 双重验证法</div>
+        <p>让一个Claude实例编写计划，启动第二个实例以「主任工程师（Staff Engineer）」视角评审。任务执行偏离预期时，立即切回计划模式重新规划，不硬推。要求Claude设计<strong>验证步骤</strong>，而非仅编写代码逻辑。</p>
+      </div>
+
+      <div class="section-marker">05 · 一键自动化</div>
+      <h2>自定义斜杠命令：重复工作一键自动化</h2>
+      <p>把高频流程封装成 <code>/命令</code>，存在 <code>.claude/commands/</code>，提交Git共享。</p>
+
+      <p>Boris每日用几十次的神命令：</p>
+      <pre><code class="language-bash">/commit-push-pr
+# 一键完成：暂存 → 写提交信息 → 推送 → 开 PR
+# 零对话、极快</code></pre>
+
+      <p>你也可以封装：</p>
+
+      <ul class="bullet-list">
+        <li><code>/fix-issue 编号</code> — 自动修Bug + 测 + 提PR</li>
+        <li><code>/code-review</code> — 自动做代码审查、规范检查</li>
+        <li><code>/techdebt</code> — 会话结束时扫描并消除重复代码</li>
+        <li><strong>上下文快照</strong> — 同步过去7天Slack、Google Drive、Asana和GitHub记录</li>
+      </ul>
+
+      <div class="info-box">
+        <strong>💡 核心原则：</strong> 每天重复超过1次的操作，转化为「技能」或斜杠命令。
+      </div>
+
+      <div class="section-marker">06 · 分工协作</div>
+      <h2>子智能体（Subagents）：AI互相校验，质量翻3倍</h2>
+      <p>核心思路：<strong>让多个AI分工协作、互相审核</strong>，比单AI更稳。</p>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">code-simplifier</div>
+          <div class="tl-text"><strong>代码简化器</strong> — 代码写完后自动简化架构</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">verify-app</div>
+          <div class="tl-text"><strong>端到端验证器</strong> — 自动跑端到端测试</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">审查AI</div>
+          <div class="tl-text"><strong>代码审查员</strong> — 查风格、查Bug、查上下文</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">分析工程师</div>
+          <div class="tl-text"><strong>垂直领域Agent</strong> — 编写dbt模型、评审代码、测试变更</div>
+        </div>
+      </div>
+
+      <div class="pull-quote">
+        <p>Boris实测：有验证闭环，产出质量提升2-3倍。</p>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">🎯 Claude Code vs Codex 多代理能力对比</div>
+        <p>Claude Code可配置<strong>6个专门审查代理</strong>并行执行；Codex虽支持最多<strong>8个并行代理</strong>，却在复杂工程深度理解上持续处于下风。大型前端项目跨文件批量改造，Claude Code稳赢。</p>
+      </div>
+
+      <div class="section-marker">07 · 安全双保险</div>
+      <h2>权限与Hook：安全自动化双保险</h2>
+
+      <ul class="bullet-list">
+        <li><strong>不用危险参数</strong> — 不用 <code>--dangerously-skip-permissions</code></li>
+        <li><strong>预授权安全命令</strong> — 用 <code>/permissions</code> 预授权安全命令，配置共享团队</li>
+        <li><strong>PostToolUse Hook</strong> — AI写完代码<strong>自动格式化</strong>，避免CI报错</li>
+      </ul>
+
+      <div class="section-marker">08 · 官方实践</div>
+      <h2>Anthropic官方6条最佳实践</h2>
+      <p>不管个人还是团队，这6条是<strong>效率底线</strong>：</p>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-time">No.1</div>
+          <div class="tl-text"><strong>先探索→再计划→再编码</strong>，绝不直接上手写</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">No.2</div>
+          <div class="tl-text"><strong>指令越具体，结果越准</strong> — 「为foo.py写未登录边界单测，禁止Mock」优于「加测试」</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">No.3</div>
+          <div class="tl-text"><strong>用CLAUDE.md做长期记忆</strong>，一次配置，终身受益</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">No.4</div>
+          <div class="tl-text"><strong>多任务用子智能体/并行会话</strong>，不污染主上下文</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">No.5</div>
+          <div class="tl-text"><strong>必做验证闭环</strong>：测试、截图对比、自动校验</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-time">No.6</div>
+          <div class="tl-text"><strong>频繁 /clear 清上下文</strong>，保持AI专注不走神</div>
+        </div>
+      </div>
+
+      <div class="section-marker">09 · 模型选择</div>
+      <h2>只选最强模型：Opus 4.5+Thinking模式</h2>
+      <p>Boris<strong>只使用Opus 4.5</strong>，理由很扎心：</p>
+
+      <ul class="bullet-list">
+        <li>更大、更慢，但<strong>工具调用极强、极少跑偏</strong></li>
+        <li>思考模式（think/think hard）让AI先深度推理再动手</li>
+        <li>整体效率远高于小模型，<strong>干预成本几乎为零</strong></li>
+      </ul>
+
+      <div class="info-box">
+        <strong>📊 性能对比：</strong><br/>
+        • SWE-bench Verified（真实Bug修复）：Claude Opus 4.8得分88.6%，GPT-5.5为88.7%，几无差距<br/>
+        • SWE-bench Pro（更难的跨文件多任务）：Claude Opus 4.8以69.2%大幅领先GPT-5.5的58.6%<br/>
+        • Terminal-Bench 2.0（终端操作）：Codex 82.7%，Claude Opus 4.6为65.4%
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-title">🧠 Claude vs Codex vs Cursor 怎么选</div>
+        <p><strong>终端党、追求代码质量、复杂重构</strong> → Claude Code（推理深度无人能敌）<br/>
+        <strong>要速度、要并行、要接入CI/CD</strong> → Codex（快就完事了）<br/>
+        <strong>喜欢IDE体验、实时辅助</strong> → Cursor（用起来最丝滑）<br/>
+        <strong>全栈大佬？三个都用</strong>：Cursor日常编码 + Claude Code复杂重构 + Codex批量任务</p>
+      </div>
+
+      <div class="section-marker">10 · 写在最后</div>
+      <h2>AI时代，程序员的真正出路</h2>
+      <p>Boris的工作流，本质上是<strong>把程序员从「执行者」升级为「指挥官」</strong>。</p>
+
+      <p>未来的超级工程师，不是比谁更能熬、谁更能肝，而是比谁更懂得<strong>调度AI、设计工作流、建立验证闭环</strong>。</p>
+
+      <div class="pull-quote">
+        <p>超级工程师 = 指挥官思维 + 多智能体并行 + 记忆中枢 + 验证闭环。1个人顶1个团队，不是口号，是已验证的实战结果。</p>
+      </div>
+
+      <p>这套「多任务全并行」方案的核心可以浓缩为四句话：</p>
+
+      <ul class="bullet-list">
+        <li><strong>并行</strong> — 多worktree/多窗口/多智能体同步推进</li>
+        <li><strong>记忆</strong> — CLAUDE.md让AI永不遗忘，错误变资产</li>
+        <li><strong>规划</strong> — 75%精力在Plan模式，返工率降80%</li>
+        <li><strong>验证</strong> — 子智能体互相校验，质量提升3倍</li>
+      </ul>
+
+      <div class="info-box info-box-jade">
+        <strong>🌟 行动建议：</strong> 别光看，动手试！从今天开始：① 创建你的CLAUDE.md；② 试试Plan模式（连按两次Shift+Tab）；③ 开2个git worktree并行跑任务。真正用过，你才会理解「1个人顶1个团队」的含金量。
+      </div>
+
+      <div class="section-marker">11 · 原视频</div>
+      <h2>原视频</h2>
+      <p>以下为抖音原视频链接，感兴趣的朋友可以前往观看原版视频：</p>
+    <div class="cta-box">
+      <div class="content">
+        <h3>去抖音看原视频</h3>
+        <p>哈工大AI工程师Peter 原作 · 第147集 超级工程师多任务、全并行解决方案</p>
+      <a class="cta-btn" id="cta-link" href="https://www.iesdouyin.com/share/video/7662989219727461658/?region=CN&mid=7662989180615674665&u_code=jmha93a5&did=MS4wLjABAAAAIl6YTQLDrN8FRHs1KZfJa4znpwEqLb7omXWj5i1HUA0&iid=MS4wLjABAAAARvNiy3kzur-EGff4dkM6ShqL00SUhBnl-cSlVHkZZvs&with_sec_did=1&video_share_track_ver=&titleType=title&share_sign=HUI2ibMwCXP9YrZmA4bAKjLhr9.1uqquWqLvN3OTAJU-&share_version=390600&ts=1784467935&from_aid=1128&from_ssr=1&share_track_info=%7B%22link_description_type%22%3A%22%22%7D&utm_source=copy&utm_campaign=client_share&utm_medium=android&app=aweme&ug_share_id=416a01fc07da_1784467969323&activity_info=%7B%22social_author_id%22%3A%227649310672429483045%22%2C%22social_share_id%22%3A%2268060800617_1784467969321%22%2C%22social_share_time%22%3A%221784467969%22%2C%22social_share_user_id%22%3A%2268060800617%22%7D&share_extra_params=%7B%22schema_type%22%3A%221%22%7D" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往抖音
+        </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="#">#超级工程师</a>
+      <a href="#">#多任务全并行</a>
+      <a href="#">#Claude Code</a>
+      <a href="#">#Codex</a>
+      <a href="#">#git worktree</a>
+      <a href="#">#CLAUDE.md</a>
+      <a href="#">#Plan模式</a>
+      <a href="#">#子智能体</a>
+      <a href="#">#AI编程</a>
+      <a href="#">#抖音</a>
+    </div>
+    </article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本站内容纯学习用途，非商用。视频封面版权归抖音原视频作者所有。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
