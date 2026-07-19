@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'dy-7661941275884637491',
+            title: '对话即开发：零代码时代来了？Vibe Coding重塑软件开发方式',
+            url: '../post/dy-7661941275884637491/dy-7661941275884637491.html',
+            summary: '不用写一行代码，仅靠对话就能开发产品！从bolt.new到Cursor，Vibe Coding正在重塑软件开发的底层逻辑——你描述需求，AI生成代码，产品在对话中逐渐成形。一文了解对话式开发的原理、工具、案例和未来趋势。',
+            category: '抖音搬运',
+            date: '2026-07-19',
+            tags: ["Vibe Coding","对话式开发","零代码","AI编程","自然语言编程","bolt.new","Cursor","Claude Code","抖音"],
+          },
+          {
             id: 'dy-7660089275492847218',
             title: '测试必备的8个Claude Skills：从需求澄清到缺陷复盘，搞定90%测试工作',
             url: '../post/dy-7660089275492847218/dy-7660089275492847218.html',
