@@ -48,6 +48,9 @@
         } catch (e) {}
       })();
     </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
     <link rel="stylesheet" href="../../home/design-tokens.css" />
     <style>
       .page-head {
@@ -367,6 +370,54 @@
           padding-top: var(--sp-8);
         }
       }
+
+      /* 视频时间戳：标明每个模式在视频中的起始位置 */
+      .mode-time {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        font-weight: 400;
+        color: var(--accent-rust-text);
+        letter-spacing: 0.08em;
+        padding: 2px 8px;
+        margin-left: 8px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        vertical-align: middle;
+        white-space: nowrap;
+      }
+
+      /* 可直接复制的提示词模板 */
+      .prompt-list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--sp-3);
+        margin: var(--sp-5) 0 var(--sp-7);
+      }
+      .prompt-item {
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        padding: var(--sp-4) var(--sp-5);
+        transition: border-color var(--dur-fast);
+      }
+      .prompt-item:hover {
+        border-color: var(--accent-rust);
+      }
+      .prompt-label {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        color: var(--text-dim);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-2);
+      }
+      .prompt-text {
+        font-family: var(--font-mono);
+        font-size: 0.92rem;
+        line-height: 1.65;
+        color: var(--text);
+        user-select: all;
+      }
     </style>
   </head>
   <body>
@@ -392,9 +443,9 @@
         普通人用 AI 逐条生成内容，高手用 AI 自动规划、批量处理、循环执行——把时间留给真正的创造力。本文解析让效率提升数倍的 AI 五大王牌工作模式。
       </p>
       <div class="meta">
-        <span><i class="fa-regular fa-user"></i> 阿豪 AI科技</span>
+        <span><i class="fa-regular fa-user"></i> 阿豪 AI科技（抖音）</span>
         <span><i class="fa-regular fa-calendar"></i> 2026-06-17</span>
-        <span><i class="fa-regular fa-clock"></i> 1 分 24 秒</span>
+        <span><i class="fa-regular fa-clock"></i> 视频 1 分 24 秒</span>
         <span><i class="fa-solid fa-layer-group"></i> 视频 · 搬运整理</span>
       </div>
     </section>
@@ -417,7 +468,7 @@
       <div class="section-marker">02 · 五大工作模式</div>
       <h2>AI 五大的王牌工作模式</h2>
 
-      <h3>一、目标模式：说清楚终点，AI 自己找路</h3>
+      <h3>一、目标模式：说清楚终点，AI 自己找路 <span class="mode-time">00:09</span></h3>
       <p>
         目标模式是最基础也是最强大的模式。你不需要告诉 AI 每一步怎么走，只需要描述清楚最终想要的结果——比如「把这个脚本改成支持多线程的」「给这个 API 加上缓存机制」。
       </p>
@@ -429,7 +480,7 @@
         <p>设定最终目标，AI 自动规划流程并执行——你从执行者变成了审核者。</p>
       </div>
 
-      <h3>二、批量模式：复杂任务交给 AI 拆解</h3>
+      <h3>二、批量模式：复杂任务交给 AI 拆解 <span class="mode-time">00:20</span></h3>
       <p>
         当你有一个涉及多个文件、多步操作的大型任务时，目标模式就有点不够用了。这时候需要的是<span class="hl">批量模式</span>：AI 会自动将任务拆分成多个子任务，按逻辑顺序执行，最后汇总结果。
       </p>
@@ -437,7 +488,7 @@
         比如「把这个项目从 JavaScript 迁移到 TypeScript」，AI 可以自动遍历所有文件，识别类型定义缺失的地方，逐个修复并保持一致性——这在过去需要人类开发者花费数天的工作。
       </p>
 
-      <h3>三、排错模式：快速定位问题根源</h3>
+      <h3>三、排错模式：快速定位问题根源 <span class="mode-time">00:36</span></h3>
       <p>
         调试是开发者最耗时的工作之一。排错模式让 AI<span class="hl">精准区分问题与症状</span>，快速锁定真正的故障根源，而不是被表面错误信息误导。
       </p>
@@ -445,7 +496,7 @@
         你可以把完整的报错信息、堆栈跟踪、甚至日志片段扔给 AI，让它帮你分析：「这不是数据库连接的问题，真正的问题是某个环境变量没有正确加载。」
       </p>
 
-      <h3>四、循环模式：睡前开启，睡醒完成</h3>
+      <h3>四、循环模式：睡前开启，睡醒完成 <span class="mode-time">00:51</span></h3>
       <p>
         这是最有「黑客感」的一个模式。<span class="hl">循环模式</span>让 AI 在一个闭环中持续工作：执行 → 检查结果 → 发现问题 → 修正 → 再执行，直到任务完成或达到预设的迭代上限。
       </p>
@@ -457,7 +508,7 @@
         <p>睡前开启循环任务，睡醒后工作完成——这才是 AI 时代该有的工作姿势。</p>
       </div>
 
-      <h3>五、精简模式：自动审计，降低返工成本</h3>
+      <h3>五、精简模式：自动审计，降低返工成本 <span class="mode-time">01:09</span></h3>
       <p>
         写代码容易，维护代码难。精简模式让 AI 自动审计代码质量：识别冗余逻辑、建议更好的命名、检测潜在的安全隐患、提出性能优化建议。
       </p>
@@ -503,8 +554,41 @@
         当你能熟练使用目标模式之后，再逐步引入其他四种模式，慢慢找到适合自己工作流的组合方式。记住，<span class="hl">AI 不是你的搜索引擎，它是你的工作搭档</span>——区别在于，这个搭档可以 24 小时不休息。
       </p>
 
+      <h3>五种模式的开场提示词</h3>
+      <p>
+        不知道怎么开口？下面五句可以直接复制，分别对应五种模式。把它们当成模板，替换掉引号里的内容即可。
+      </p>
+
+      <div class="prompt-list">
+        <div class="prompt-item">
+          <div class="prompt-label">目标模式 · 描述最终结果</div>
+          <div class="prompt-text">帮我写一个用户登录模块，包含注册、登录、找回密码</div>
+        </div>
+        <div class="prompt-item">
+          <div class="prompt-label">批量模式 · 批量处理任务</div>
+          <div class="prompt-text">将所有 .js 文件中的 var 替换为 const</div>
+        </div>
+        <div class="prompt-item">
+          <div class="prompt-label">排错模式 · 定位问题</div>
+          <div class="prompt-text">这个报错是什么原因？帮我分析并修复</div>
+        </div>
+        <div class="prompt-item">
+          <div class="prompt-label">循环模式 · 睡前开启</div>
+          <div class="prompt-text">运行单元测试，直到全部通过为止</div>
+        </div>
+        <div class="prompt-item">
+          <div class="prompt-label">精简模式 · 代码审计</div>
+          <div class="prompt-text">审查这段代码，指出潜在问题和优化建议</div>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <strong><i class="fa-solid fa-triangle-exclamation" style="color: var(--accent-rust-text)"></i> 注意</strong><br />
+        AI 生成的内容需要人工审核，特别是涉及安全、金融、医疗等敏感领域。AI 是助手，不是替代品。
+      </div>
+
       <div class="info-box info-box-jade">
-        <strong><i class="fa-solid fa-circle-info" style="color: var(--accent-jade)"></i> 写在最后</strong><br />
+        <strong><i class="fa-solid fa-circle-info" style="color: var(--accent-jade-text)"></i> 写在最后</strong><br />
         效率的差距不在于工具本身，而在于使用工具的方式。高手与普通人的区别，往往在于是否愿意花时间设计「让 AI 替你干活」的工作流，而不是事必躬亲地一步步指挥 AI。
       </div>
 

@@ -6,6 +6,9 @@
     <title>EXPECTOPATRONUS · 关于 AI、硬件与技术思考的笔记</title>
     <meta name="description" content="关于 AI 工具、GPU 硬件、部署实战的个人笔记与资源整理。" />
     <link rel="shortcut icon" href="home/logo.svg" type="image/svg+xml" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="home/fonts.css" />
     <link rel="stylesheet" href="home/design-tokens.css" />
     <style>
       /* SVG 图标工具类 */
@@ -119,6 +122,9 @@
         line-height: 1;
         color: var(--text);
         letter-spacing: -0.02em;
+        /* Cormorant 默认旧式数字（2 会下沉、像 1），统计数字必须等高 */
+        font-variant-numeric: lining-nums;
+        font-feature-settings: 'lnum' 1;
       }
       .hero-stats .label {
         font-family: var(--font-mono);
@@ -695,7 +701,7 @@
 
           <div class="hero-stats">
             <div class="stat">
-              <div class="num">122</div>
+              <div class="num">121</div>
               <div class="label">articles</div>
             </div>
             <div class="stat">
