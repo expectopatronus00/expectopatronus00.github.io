@@ -994,6 +994,15 @@ window.articles = [
             tags: ['GPU', '压测', '满载', 'nvidia-smi', '烤机'],
           },
           {
+            id: 'wx-gpu-server-hardware-2',
+            title: 'GPU 服务器硬件构成详解（二）：互连、供电、散热与工作流',
+            url: '../post/wx-gpu-server-hardware-2/wx-gpu-server-hardware-2.html',
+            summary: '一台 8 卡 H100 服务器里不止有 GPU。从 PCIe 交换机到 NVLink 桥接器，从 CRPS 冗余电源到液冷散热，从 BMC 到 DPU——梳理 GPU 服务器的互连、供电散热与训练推理工作流。',
+            category: 'GPU',
+            date: '2026-06-20 10:00',
+            tags: ['GPU', 'H100', 'NVLink', 'PCIe', '液冷', 'DPU', '服务器硬件'],
+          },
+          {
             id: 'wx-b300-hardware',
             title: '实测 HGX B300 · 一篇看懂关键硬件数据',
             url: '../post/wx-b300-hardware/wx-b300-hardware.html',
@@ -1073,15 +1082,6 @@ window.articles = [
             category: 'AI',
             date: '2026-06-14 23:43',
             tags: ['DeepSeek', '导航', '教程', '提示词'],
-          },
-          {
-            id: 'dy-Wg9bhGEpSQ',
-            title: '别人睡觉在休息，高手睡觉在开发',
-            url: '../post/dy-Wg9bhGEpSQ/dy-Wg9bhGEpSQ.html',
-            summary: 'AI 的五大王牌工作模式，让你的开发效率提升 10 倍',
-            category: '抖音搬运',
-            date: '2026-06-09 00:00',
-            tags: ['AI工作模式', 'vibecoding', '开发者工具', '智能体', '循环模式'],
           },
           {
             id: 'post1',
