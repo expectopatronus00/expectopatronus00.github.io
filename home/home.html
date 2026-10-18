@@ -114,6 +114,35 @@
         color: var(--ink-950);
         border-color: var(--accent-rust);
       }
+      /* 标签使用频次：让读者一眼看出哪些标签真正有聚合内容 */
+      .cat-pills .tag-count {
+        margin-left: 6px;
+        font-size: 0.66rem;
+        opacity: 0.55;
+      }
+      /* 长尾标签折叠区 */
+      .cat-pills .tag-rest {
+        display: contents;
+      }
+      .cat-pills .tag-rest[hidden] {
+        display: none;
+      }
+      .cat-pills .tag-more {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        padding: 5px 12px;
+        border-radius: 6px;
+        background: transparent;
+        border: 1px dashed var(--line);
+        color: var(--accent-rust-text);
+        cursor: pointer;
+        transition: all var(--dur-fast);
+      }
+      .cat-pills .tag-more:hover {
+        border-style: solid;
+        border-color: var(--accent-rust);
+        background: var(--bg-soft);
+      }
 
       /* Article list */
       .article-list {
@@ -123,7 +152,7 @@
       }
       .article-row {
         display: grid;
-        grid-template-columns: 80px 1fr auto;
+        grid-template-columns: 108px 1fr auto;
         gap: var(--sp-6);
         padding: var(--sp-6) 0;
         border-bottom: 1px solid var(--line);
@@ -141,6 +170,9 @@
         color: var(--text-dim);
         letter-spacing: 0.05em;
         padding-top: 6px;
+        /* 80px 列宽装不下「2026 · 07 · 19」，强制单行避免折成三行 */
+        white-space: nowrap;
+        font-variant-numeric: lining-nums;
       }
       .article-row .art-body {
         min-width: 0;
@@ -201,13 +233,31 @@
 
       @media (max-width: 700px) {
         .article-row {
-          grid-template-columns: 70px 1fr;
+          grid-template-columns: 1fr;
+          gap: var(--sp-2);
         }
         .article-row .arrow {
           display: none;
         }
+        .article-row .art-date {
+          padding-top: 0;
+          font-size: 0.72rem;
+        }
         .article-row .art-body h3 {
           font-size: 1.2rem;
+        }
+        /* 移动端标签与分类横向铺满，避免长标签撑破视口 */
+        .filter-bar,
+        .cat-pills {
+          padding-left: var(--sp-4);
+          padding-right: var(--sp-4);
+        }
+        .cat-pills a,
+        .filter-btn {
+          max-width: 100%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
       }
 
@@ -361,12 +411,19 @@
           if (categories.indexOf(a.category) === -1) categories.push(a.category);
         });
 
-        // 从 articles 中提取所有标签（去重）
-        var tagSet = {};
+        // 从 articles 中提取所有标签，并按使用频次排序
+        // 459 个标签里 372 个只用过一次 —— 全部平铺会把文章列表挤出首屏，
+        // 因此只默认展示高频标签，长尾折叠到「展开全部」之后。
+        var tagCount = {};
         articles.forEach(function (a) {
-          (a.tags || []).forEach(function (t) { tagSet[t] = true; });
+          (a.tags || []).forEach(function (t) {
+            tagCount[t] = (tagCount[t] || 0) + 1;
+          });
         });
-        var tags = Object.keys(tagSet);
+        var tags = Object.keys(tagCount).sort(function (a, b) {
+          return tagCount[b] - tagCount[a] || a.localeCompare(b, 'zh');
+        });
+        var TAG_VISIBLE = 16; // 首屏展示的高频标签数量
 
         // 动态渲染分类按钮
         var catBar = document.getElementById('cat-bar');
@@ -377,14 +434,37 @@
         );
         catBar.insertAdjacentHTML('beforeend', catButtons.join(''));
 
-        // 动态渲染标签云
+        // 动态渲染标签云（高频优先 + 长尾折叠）
         var tagPills = document.getElementById('tag-pills');
-        var tagLinks = ['<a href="#" data-tag="all">全标签</a>'].concat(
-          tags.map(function (t) {
-            return '<a href="#" data-tag="' + t + '">' + t + '</a>';
-          })
-        );
-        tagPills.innerHTML = tagLinks.join('');
+        var pill = function (t) {
+          return '<a href="#" data-tag="' + t + '">' + t + '<span class="tag-count">' + tagCount[t] + '</span></a>';
+        };
+        var tagHead = tags.slice(0, TAG_VISIBLE);
+        var tagTail = tags.slice(TAG_VISIBLE);
+        tagPills.innerHTML =
+          '<a href="#" data-tag="all" class="is-active">全标签</a>' +
+          tagHead.map(pill).join('') +
+          (tagTail.length
+            ? '<button class="tag-more" id="tag-more">展开全部 ' +
+              tags.length +
+              ' 个标签 →</button>' +
+              '<span class="tag-rest" id="tag-rest" hidden>' +
+              tagTail.map(pill).join('') +
+              '</span>'
+            : '');
+
+        var tagMore = document.getElementById('tag-more');
+        if (tagMore) {
+          tagMore.addEventListener('click', function () {
+            var rest = document.getElementById('tag-rest');
+            var opening = rest.hasAttribute('hidden');
+            if (opening) rest.removeAttribute('hidden');
+            else rest.setAttribute('hidden', '');
+            tagMore.textContent = opening
+              ? '收起长尾标签 ←'
+              : '展开全部 ' + tags.length + ' 个标签 →';
+          });
+        }
 
         // UI: set active filter btn
         document.querySelectorAll('.filter-btn').forEach(function (btn) {
@@ -437,7 +517,10 @@
                 a.url +
                 '">' +
                 '<div class="art-date">' +
-                a.date.replace(/-/g, ' · ') +
+                // 只取日期部分：列表里显示到分钟既无信息量，又把日期列挤成三行
+                a.date
+                  .slice(0, 10)
+                  .replace(/-/g, ' · ') +
                 '</div>' +
                 '<div class="art-body">' +
                 '<div class="art-meta"><span class="tag cat">' +
