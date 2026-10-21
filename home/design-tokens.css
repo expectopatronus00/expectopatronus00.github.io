@@ -716,6 +716,22 @@ button:focus-visible,
 .api-table tr:last-child td {
   border-bottom: 0;
 }
+/* 窄屏：表格改为横向滚动，避免四列表格撑破视口 */
+@media (max-width: 700px) {
+  .api-table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .api-table th,
+  .api-table td {
+    padding: 11px 14px;
+    white-space: nowrap;
+  }
+  .api-table td:last-child {
+    white-space: normal;
+  }
+}
 
 /* Code block（代码块） */
 .code-block {

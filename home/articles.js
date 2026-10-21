@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'dy-7699051728071948154',
+            title: 'Harness²：权重冻结的自我改进，到底改了什么',
+            url: '../post/dy-7699051728071948154/dy-7699051728071948154.html',
+            summary: 'Google Research 开源的 Harness² 不微调、不做强化学习，权重一个字节不动，靠两层递归改模型外面那层壳。本文拆开它的八个可编辑组件、Propose-Probe-Compose 三步和真实 benchmark 数字，也说明它贵在哪、不适合谁。',
+            category: 'AI 编程',
+            date: '2026-10-21',
+            tags: ["Harness2","RSI","递归自我改进","Agent","Propose-Probe-Compose","Google Research","AI工程","抖音"],
+          },
+          {
             id: 'dy-7661941275884637491',
             title: '对话即开发：零代码时代来了？Vibe Coding重塑软件开发方式',
             url: '../post/dy-7661941275884637491/dy-7661941275884637491.html',

@@ -5,8 +5,16 @@
     <link>https://expectopatronus00.github.io/</link>
     <description>一个 AI 工具与实战的中文学习归档：原创踩坑记录 + 精选转载，每篇都标注来源。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 21 Oct 2026 14:06:26 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 21 Oct 2026 14:48:32 GMT</lastBuildDate>
     <atom:link href="https://expectopatronus00.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Harness²：权重冻结的自我改进，到底改了什么</title>
+      <link>https://expectopatronus00.github.io/post/dy-7699051728071948154/dy-7699051728071948154.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7699051728071948154/dy-7699051728071948154.html</guid>
+      <pubDate>Tue, 20 Oct 2026 16:00:00 GMT</pubDate>
+      <category>杂项</category>
+      <description>Google Research 开源的 Harness² 不微调、不做强化学习，权重一个字节不动，靠两层递归改模型外面那层壳。本文拆开它的八个可编辑组件、Propose-Probe-Compose 三步和真实 benchmark 数字，也说明它贵在哪、不适合谁。（转载 · 来源：抖音）</description>
+    </item>
     <item>
       <title>对话即开发：零代码时代来了？Vibe Coding重塑软件开发方式</title>
       <link>https://expectopatronus00.github.io/post/dy-7661941275884637491/dy-7661941275884637491.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
       <category>AI 基础设施</category>
       <description>用动画视频一次讲透AI计费机制——Token是什么、输入输出怎么收费、缓存命中如何省钱，帮你优化AI使用成本。（转载 · 来源：抖音）</description>
-    </item>
-    <item>
-      <title>到底啥是Skill？从实用主义视角讲清楚</title>
-      <link>https://expectopatronus00.github.io/post/dy-7646390254617857295/dy-7646390254617857295.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7646390254617857295/dy-7646390254617857295.html</guid>
-      <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
-      <category>AI 编程</category>
-      <description>从实用主义视角为小白讲清楚Skill——什么是Skill、为什么要用、去哪里找、怎么用别人的Skill，四个问题一次搞定。（转载 · 来源：抖音）</description>
     </item>
   </channel>
 </rss>
