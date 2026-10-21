@@ -42,12 +42,7 @@
     <nav class="site-nav">
       <div class="nav-inner">
         <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
-        <div class="nav-links">
-          <a href="../../index.html">首页</a>
-          <a href="../../home/home.html" class="is-active">文章</a>
-          <a href="../deepseek/deepseek.html">DeepSeek</a>
-          <a href="../../nav/index.html" target="_blank">导航站</a>
-        </div>
+        <div class="nav-links"><a href="../../index.html">首页</a><a href="../../home/home.html" class="is-active">文章</a><a href="../../home/series.html">系列</a><a href="../../home/about.html">关于</a><a href="../../nav/index.html" target="_blank" rel="noopener">导航站</a></div>
         <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><i class="fa-solid fa-moon"></i></button>
       </div>
     </nav>
@@ -459,6 +454,28 @@
       </div>
     </footer>
 
-    <script src="../../home/script.js"></script>
+    <script>
+      /* 主题切换。原先靠 home/script.js，那个文件是上一代列表页脚本，
+         早已不再使用，这里换成和其他文章页一致的独立实现。 */
+      (function () {
+        var btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        var icon = btn.querySelector('i');
+        function paint() {
+          var d = document.documentElement.dataset.theme || 'dark';
+          if (icon) icon.className = d === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+        }
+        paint();
+        btn.addEventListener('click', function () {
+          var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+          document.documentElement.dataset.theme = next;
+          try {
+            localStorage.setItem('theme', next);
+          } catch (e) {}
+          paint();
+        });
+      })();
+    </script>
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
   </body>
 </html>

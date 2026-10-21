@@ -1,257 +1,286 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Linux 清除 history 记录的方式 · EXPECTOPATRONUS</title>
-    <meta name="description" content="详细介绍 Linux 系统中清除 history 记录的多种方法" />
-    <meta name="keywords" content="Linux,history,清除历史记录,bash,命令行" />
-    <meta property="og:title" content="Linux 清除 history 记录的方式" />
-    <meta property="og:type" content="article" />
-    <meta property="og:image" content="images/1.png" />
-<link rel="stylesheet" href="../../home/fonts.css" />
-        <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
-    <link
-      id="fa-cdn"
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    <title>Linux 清除 history 记录的方式 · expectopatronus</title>
+    <meta
+      name="description"
+      content="Linux 下清除 bash / zsh 历史记录的几种做法：清空当前会话、删除指定行、直接删 .bash_history 文件，以及各自留下的痕迹。"
     />
-    <script>
-      (function () {
-        var l = document.getElementById('fa-cdn');
-        var chk = function () {
-          var ok = false;
-          try {
-            var s = getComputedStyle(document.querySelector('.fa-solid') || document.body);
-            ok = !s.fontFamily || s.fontFamily.indexOf('Font Awesome') !== -1;
-          } catch (e) {
-            ok = false;
-          }
-          if (!ok && window._fa_retried === undefined) {
-            window._fa_retried = true;
-            var n = document.createElement('link');
-            n.rel = 'stylesheet';
-            n.href = 'https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css';
-            document.head.appendChild(n);
-          }
-        };
-        l.onload = chk;
-        l.onerror = function () {
-          chk();
-        };
-      })();
-    </script>
-    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.10.0/styles/atom-one-dark.min.css" />
-    <script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/11.10.0/highlight.min.js"></script>
+    <meta name="keywords" content="Linux,history,清除历史记录,bash,命令行,zsh" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
     <script>
       (function () {
         try {
-          const t = localStorage.getItem('theme') || 'dark';
+          var t = localStorage.getItem('theme') || 'dark';
           if (t === 'light') document.documentElement.dataset.theme = 'light';
         } catch (e) {}
       })();
     </script>
-    <link rel="stylesheet" href="style.css" />
+    <style>
+      /* 本文独有的示意表格样式，其余全部走 design-tokens.css */
+      .note-warn {
+        padding: var(--sp-4) var(--sp-5);
+        border: 1px solid rgba(184, 88, 29, 0.35);
+        border-left: 3px solid var(--accent-rust);
+        border-radius: 0 var(--r-md) var(--r-md) 0;
+        background: rgba(184, 88, 29, 0.06);
+        font-family: var(--font-sans);
+        font-size: 0.88rem;
+        line-height: 1.75;
+        color: var(--text-soft);
+        margin: var(--sp-3) 0 var(--sp-7);
+      }
+      .note-warn b {
+        color: var(--accent-rust-text);
+      }
+    </style>
   </head>
   <body>
-    <div class="progress" id="progress"></div>
-    <canvas id="stars-bg"></canvas>
-    <div class="backdrop"></div>
-
-    <nav class="topbar">
-      <div class="inner">
+    <nav class="site-nav">
+      <div class="nav-inner">
         <a href="../../index.html" class="brand">
-          <div class="logo"></div>
-          <span>EXPECTOPATRONUS · BLOG</span>
+          <span class="logo">
+            <svg class="icon icon-lg" viewBox="0 0 64 64" aria-hidden="true">
+              <circle cx="32" cy="32" r="30" fill="var(--ink-900)" stroke="var(--accent-rust)" stroke-width="1.5" />
+              <text
+                x="32"
+                y="39"
+                text-anchor="middle"
+                font-family="Georgia, 'Times New Roman', serif"
+                font-size="30"
+                font-style="italic"
+                font-weight="500"
+                fill="var(--ink-50)"
+                >E</text
+              >
+            </svg>
+          </span>
+          <span>expectopatronus</span>
         </a>
-        <div class="nav">
-          <a href="../../index.html"><i class="fa-solid fa-house"></i> 首页</a>
-          <a href="../../home/home.html" class="active"><i class="fa-solid fa-newspaper"></i> 文章</a>
-          <a href="../deepseek/deepseek.html"><i class="fa-solid fa-robot"></i> DeepSeek</a>
-          <a href="../../nav/index.html" target="_blank"><i class="fa-solid fa-compass"></i> 导航</a>
+        <div class="nav-links" id="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank" rel="noopener">导航站</a>
         </div>
-        <button id="theme-toggle" aria-label="主题切换"><i class="fa-solid fa-moon"></i></button>
+        <button class="menu-toggle" id="menu-toggle" aria-label="菜单">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 6h18M3 12h18M3 18h18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+          </svg>
+        </button>
+        <button id="theme-toggle" class="theme-btn" aria-label="切换主题">
+          <svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+          </svg>
+        </button>
       </div>
     </nav>
 
-    <div class="breadcrumb">
-      <a href="../../index.html"><i class="fa-solid fa-house"></i></a>
-      <span class="sep">/</span>
-      <a href="../../home/home.html">文章列表</a>
-      <span class="sep">/</span>
-      <span>Linux 清除 history 记录</span>
-    </div>
+    <section class="page-head">
+      <div class="eyebrow">Linux · 运维</div>
+      <h1>Linux 清除 history 记录的<em>几种方式</em></h1>
+      <p>
+        <code>history</code> 命令看到的是内存里的会话历史，磁盘上还有一份 <code>~/.bash_history</code>。想真的清干净，
+        这两处都得处理。这篇把几种常见做法和它们各自的漏洞列一遍。
+      </p>
+      <div class="meta-row">
+        <span>原创</span>
+        <span>2024-02-23</span>
+        <span>运维与部署</span>
+      </div>
+    </section>
 
-    <main class="layout">
-      <article class="article-wrap">
-        <div class="article-body">
-          <header class="article-header">
-            <h1>Linux 清除 history 记录的方式</h1>
-            <div class="article-meta">
-              <span class="cat"><i class="fa-solid fa-folder"></i> Linux</span>
-              <span><i class="fa-regular fa-calendar"></i> 2024-02-23</span>
-              <span><i class="fa-regular fa-clock"></i> 3 分钟</span>
-              <span><i class="fa-regular fa-eye"></i> <span id="view-count">0</span></span>
-            </div>
-            <div class="article-rating">
-              <span>文章评分</span>
-              <div class="stars" id="stars">
-                <i class="fa-regular fa-star" data-v="1"></i>
-                <i class="fa-regular fa-star" data-v="2"></i>
-                <i class="fa-regular fa-star" data-v="3"></i>
-                <i class="fa-regular fa-star" data-v="4"></i>
-                <i class="fa-regular fa-star" data-v="5"></i>
-              </div>
-              <span id="rating-count">(0 人评分)</span>
-            </div>
-          </header>
+    <article class="article-body">
+      <div class="section-marker on-scroll">01 · 先分清两个地方</div>
+      <h2 class="on-scroll">内存里的会话历史，和磁盘上的历史文件</h2>
+      <p class="on-scroll">
+        bash 把历史记录同时放在两个位置：一是当前 shell 进程内存里的会话历史，<code>history</code> 命令读的就是它；二是退出时
+        写入的 <code>~/.bash_history</code> 文件。只清内存，退出 shell 时又会被写回磁盘；只删文件，当前会话里的记录还在。
+      </p>
+      <p class="on-scroll">所以任何「彻底清除」的操作，本质上都是这两步的组合。</p>
 
-          <h2 id="sec-1">1. 清除当前用户会话的历史记录</h2>
-          <p>如果你只想清除当前终端会话中产生的历史命令，可以使用下面两条命令组合：</p>
-          <pre><code class="language-bash">history -c
-export HISTSIZE=0</code></pre>
-          <p>
-            <code>history -c</code> 会清空当前 shell 的历史缓存；<code>export HISTSIZE=0</code>
-            则阻止新的历史写入（临时）。
-          </p>
+      <div class="section-marker on-scroll">02 · 清空当前会话</div>
+      <h2 class="on-scroll">只清内存，不碰磁盘</h2>
+      <p class="on-scroll">如果只想让当前终端会话里的命令不再被翻到：</p>
+      <div class="code-block on-scroll"><span class="cmd">history</span> <span class="arg">-c</span>
+<span class="kw">export</span> <span class="arg">HISTSIZE</span>=<span class="num">0</span></div>
+      <p class="on-scroll">
+        <code>history -c</code> 清空当前 shell 的历史缓存；<code>export HISTSIZE=0</code> 让之后的命令不再被记入。 注意这两个
+        都只影响当前这个 shell 进程——新开一个终端，历史还是从文件里读出来的。
+      </p>
 
-          <h2 id="sec-2">2. 删除指定行数的历史命令记录</h2>
-          <p><code>history -d &lt;行号&gt;</code> 可以删除某一行。如果你想"只保留最上面 N 条"，可以用重定向覆盖：</p>
-          <pre><code class="language-bash">history -d &lt;行号&gt;
-# 例如：只保存最上面 3 条历史记录，其余全部删除
-history | head -n 3 &gt; ~/.bash_history  # 保存最上面 3 条记录
-history -c    # 清除记录
-history -r    # 重新加载 history 记录</code></pre>
-          <img src="images/1.png" alt="history 操作示意图" loading="lazy" />
+      <div class="note-warn on-scroll">
+        <b>容易忽略的一点：</b><code>HISTSIZE=0</code> 是临时环境变量，关掉这个终端就失效了。想持久化要写进
+        <code>~/.bashrc</code>，但那样连你自己也查不到历史，一般不建议。
+      </div>
 
-          <h2 id="sec-3">3. Bash 历史记录文件和 Bash 会话历史</h2>
-          <p>
-            Bash 会同时在两个地方保存历史：内存中的会话历史（<code>history</code> 命令看到的）和磁盘上的
-            <code>~/.bash_history</code> 文件。两者需要同时处理：
-          </p>
-          <pre><code class="language-bash">rm ~/.bash_history    # 删除 bash 历史记录文件
-history -c            # 删除当前会话中历史记录
+      <div class="section-marker on-scroll">03 · 删除指定行</div>
+      <h2 class="on-scroll">只想抹掉其中几条</h2>
+      <p class="on-scroll">
+        <code>history -d &lt;行号&gt;</code> 删除内存里的某一行。想批量删，可以先把要保留的写回文件，再重新加载：
+      </p>
+      <div class="code-block on-scroll"><span class="cmt"># 只保留最上面 3 条，其余全部丢弃</span>
+<span class="cmd">history</span> | <span class="cmd">head</span> <span class="arg">-n</span> <span class="num">3</span> &gt; ~/.bash_history
+<span class="cmd">history</span> <span class="arg">-c</span>   <span class="cmt"># 清空内存</span>
+<span class="cmd">history</span> <span class="arg">-r</span>   <span class="cmt"># 从文件重新加载</span></div>
+      <p class="on-scroll">
+        这个组合的逻辑是：先把想留的写进文件（覆盖掉原来的），再清内存，再从文件读回来。顺序不能反——先 <code>history -c</code>
+        再重定向的话，<code>history</code> 命令输出已经是空的了。
+      </p>
 
-# 查看完整 bash_history 内容示例：
-[root@Aliyun ~]# cat ~/.bash_history
-history history
-cd /temp/YLMonitor/ls
-ps -ef | grep frps
-ps -ef | grep Monitor
-vim /temp/YLMonitor/YLMonitor.ini
-telnet 127.0.0.1 8185
-telnet 127.0.0.1 8175
-docker ps
-docker ps -a
-free -m
-ls</code></pre>
-          <img src="images/2.png" alt="bash_history 文件截图" loading="lazy" />
+      <div class="section-marker on-scroll">04 · 彻底删掉文件</div>
+      <h2 class="on-scroll">删 <code>.bash_history</code> 本身</h2>
+      <div class="code-block on-scroll"><span class="cmd">rm</span> ~/.bash_history      <span class="cmt"># 当前用户</span>
+<span class="cmd">history</span> <span class="arg">-c</span>            <span class="cmt"># 同时清内存</span></div>
+      <p class="on-scroll">
+        文件删掉后，bash 在下次退出时会重新创建一个空的。所以删文件这一步要在清完内存之后做，否则退出时又把内存里的内容写回来了。
+      </p>
 
-          <h2 id="sec-4">4. 手动删除历史记录文件</h2>
-          <p>如果想彻底清除所有历史，直接删文件：</p>
-          <pre><code class="language-bash">rm /home/用户名/.bash_history    # 删除其他用户的历史记录
-rm ~/.bash_history                 # 删除当前用户的历史记录
-history -c                         # 同时清空内存
-history -r                         # 可选：立即生效（重新加载后会变成空）</code></pre>
-          <p>
-            如果你用的不是 bash（而是 zsh / fish 等），对应的历史文件分别是
-            <code>~/.zsh_history</code>、<code>~/.local/share/fish/fish_history</code>。
-          </p>
+      <div class="api-table-wrap on-scroll">
+        <table class="api-table">
+          <thead>
+            <tr>
+              <th>Shell</th>
+              <th>历史文件位置</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>bash</td>
+              <td><code>~/.bash_history</code></td>
+            </tr>
+            <tr>
+              <td>zsh</td>
+              <td><code>~/.zsh_history</code></td>
+            </tr>
+            <tr>
+              <td>fish</td>
+              <td><code>~/.local/share/fish/fish_history</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-          <div class="share-tags">
-            <span class="label">标签</span>
-            <a href="../../home/home.html?tag=Linux">Linux</a>
-            <a href="../../home/home.html?tag=命令行">命令行</a>
-            <a href="../../home/home.html?tag=安全">安全</a>
-            <a href="../../home/home.html?tag=系统管理">系统管理</a>
-          </div>
+      <div class="section-marker on-scroll">05 · 清不掉的痕迹</div>
+      <h2 class="on-scroll">history 之外还有别的记录</h2>
+      <p class="on-scroll">这一节比上面几节都重要。清 <code>history</code> 只解决了自己终端里的那一条线，服务器上还有别的日志：</p>
+      <ul class="on-scroll">
+        <li><strong>审计日志</strong>：<code>/var/log/secure</code>（RHEL 系）或 <code>/var/log/auth.log</code>（Debian 系）记登录</li>
+        <li><strong>进程记账</strong>：开了 <code>psacct</code> / <code>acct</code> 的话，每条命令都单独有记录</li>
+        <li><strong>其他 shell 的 history</strong>：su 到别的用户、tmux / screen 里的会话，各有各的历史</li>
+        <li><strong>命令本身留下的痕迹</strong>：写过的文件、连过的端口、数据库里的操作记录</li>
+      </ul>
+      <div class="info-box on-scroll">
+        <strong>说句实话：</strong>在别人的服务器上，清 history 与其说是抹除痕迹，不如说是给自己心理安慰。真要追溯，审计日志和网络设备那一侧都还在。
+        所以更实际的做法是——不要在别人的机器上执行不该执行的命令。
+      </div>
 
-          <div class="share-btns">
-            <span class="label">分享</span>
-            <a href="javascript:void(0)" id="share-weibo" title="分享到微博"
-              ><i class="fa-brands fa-weibo share-weibo"></i
-            ></a>
-            <a href="javascript:void(0)" id="share-wechat" title="微信"
-              ><i class="fa-brands fa-weixin share-weixin"></i
-            ></a>
-            <a href="javascript:void(0)" id="share-link" title="复制链接"
-              ><i class="fa-solid fa-link share-link"></i
-            ></a>
-          </div>
+      <div class="tags-row on-scroll">
+        <a href="../../home/home.html?q=Linux">Linux</a>
+        <a href="../../home/home.html?q=命令行">命令行</a>
+        <a href="../../home/home.html?q=bash">bash</a>
+        <a href="../../home/home.html?q=运维">运维</a>
+      </div>
+    </article>
 
-          <section class="related">
-            <h3>相关文章</h3>
-            <div class="related-grid">
-              <a class="related-item" href="../../home/home.html">
-                <img src="images/1.png" alt="" loading="lazy" />
-                <div class="info">
-                  <h4>Linux 常用命令大全</h4>
-                  <p>文件操作、系统管理、网络配置高频命令汇总。</p>
-                </div>
-              </a>
-              <a class="related-item" href="../../home/home.html">
-                <img src="images/2.png" alt="" loading="lazy" />
-                <div class="info">
-                  <h4>如何保护 Linux 服务器安全</h4>
-                  <p>防火墙、账户管理、日志监控安全加固实践。</p>
-                </div>
-              </a>
-              <a class="related-item" href="../../home/home.html">
-                <img src="images/1.png" alt="" loading="lazy" />
-                <div class="info">
-                  <h4>Bash 脚本编程入门</h4>
-                  <p>从零掌握自动化运维必备的 Bash 脚本能力。</p>
-                </div>
-              </a>
-            </div>
-          </section>
-
-          <section class="comments">
-            <h3>评论</h3>
-            <form class="comment-form" id="comment-form">
-              <div class="field-row">
-                <div class="field">
-                  <label>昵称</label>
-                  <input type="text" id="comment-name" placeholder="你的昵称" autocomplete="off" />
-                </div>
-                <div class="field">
-                  <label>邮箱 (不公开)</label>
-                  <input type="email" id="comment-email" placeholder="your@email.com" autocomplete="off" />
-                </div>
-              </div>
-              <div class="field" style="margin-top: 10px">
-                <label>评论内容</label>
-                <textarea id="comment-content" placeholder="欢迎留言友善讨论…"></textarea>
-              </div>
-              <button type="submit" class="submit"><i class="fa-solid fa-paper-plane"></i> 发表评论</button>
-              <div class="no-comments" id="no-comments">暂无评论，来做第一个吧 ✨</div>
-            </form>
-          </section>
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2026 · 个人笔记 · GitHub Pages · 所有外链归原作者所有</div>
         </div>
-      </article>
-
-      <aside class="side">
-        <div class="toc-panel" id="toc-panel">
-          <h3><i class="fa-solid fa-list-ul"></i> 目录</h3>
-          <ul id="toc-list"></ul>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.45-1.16-1.1-1.47-1.1-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.56-1.11-4.56-4.95 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.29 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.85-2.34 4.7-4.57 4.95.36.31.68.92.68 1.85v2.74c0 .27.18.58.69.48A10 10 0 0 0 12 2z"
+                fill="currentColor"
+              />
+            </svg>
+          </a>
+          <a href="mailto:18821772508@163.com" aria-label="Email">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 6h18v12H3z" fill="none" stroke="currentColor" stroke-width="1.5" />
+              <path d="M3 7l9 6 9-6" fill="none" stroke="currentColor" stroke-width="1.5" />
+            </svg>
+          </a>
         </div>
-      </aside>
-    </main>
-
-    <footer class="footer">
-      <div>© 2025 EXPECTOPATRONUS · 本站内容纯学习用途，非商用</div>
-      <div class="social">
-        <a href="https://github.com/expectopatronus00" target="_blank" title="GitHub"
-          ><i class="fa-brands fa-github"></i
-        ></a>
-        <a href="#" id="wechat-footer" title="微信"><i class="fa-brands fa-weixin"></i></a>
-        <a href="tencent://message/?uin=1018938913" title="QQ"><i class="fa-brands fa-qq"></i></a>
-        <a href="https://weibo.com/u/6888368987" target="_blank" title="微博"><i class="fa-brands fa-weibo"></i></a>
       </div>
     </footer>
 
-    <button id="back" aria-label="返回顶部"><i class="fa-solid fa-arrow-up"></i></button>
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部">
+      <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+        <path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </button>
 
-    <script src="script.js"></script>
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+    <script>
+      (function () {
+        var MOON_SVG =
+          '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG =
+          '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+
+        var saved = localStorage.getItem('theme') || 'dark';
+        document.documentElement.dataset.theme = saved;
+        var ti = document.querySelector('#theme-toggle .theme-icon');
+        if (ti) ti.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var toggle = document.getElementById('theme-toggle');
+        if (toggle)
+          toggle.addEventListener('click', function () {
+            var cur = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = cur;
+            localStorage.setItem('theme', cur);
+            var i = document.querySelector('#theme-toggle .theme-icon');
+            if (i) i.innerHTML = cur === 'light' ? SUN_SVG : MOON_SVG;
+          });
+
+        var menu = document.getElementById('menu-toggle');
+        var links = document.getElementById('nav-links');
+        if (menu && links)
+          menu.addEventListener('click', function () {
+            links.classList.toggle('open');
+          });
+
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+
+        if ('IntersectionObserver' in window) {
+          var io = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (e) {
+                if (e.isIntersecting) {
+                  e.target.classList.add('is-in');
+                  io.unobserve(e.target);
+                }
+              });
+            },
+            { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+          );
+          document.querySelectorAll('.on-scroll').forEach(function (el) {
+            io.observe(el);
+          });
+        } else {
+          document.querySelectorAll('.on-scroll').forEach(function (el) {
+            el.classList.add('is-in');
+          });
+        }
+      })();
+    </script>
   </body>
 </html>

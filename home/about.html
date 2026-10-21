@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>关于这个站 · expectopatronus</title>
+    <meta
+      name="description"
+      content="这是一个 AI 工具与实战的中文学习归档：原创踩坑 + 精选转载，全部标注来源。附 now 页、技术栈与转载规则。"
+    />
+    <link rel="preload" href="fonts/SourceSerif4-var-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="fonts/CormorantGaramond-var-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="fonts.css" />
+    <link rel="stylesheet" href="design-tokens.css" />
+    <link rel="alternate" type="application/rss+xml" title="expectopatronus" href="../feed.xml" />
+    <style>
+      .icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 1em;
+        height: 1em;
+        vertical-align: -0.125em;
+        color: currentColor;
+        flex-shrink: 0;
+      }
+      .icon svg {
+        width: 100%;
+        height: 100%;
+      }
+      .icon-sm {
+        width: 0.82em;
+        height: 0.82em;
+      }
+      .icon-lg {
+        width: 1.3em;
+        height: 1.3em;
+      }
+
+      .page-intro {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+      }
+      .page-intro .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--accent-rust-text);
+        margin-bottom: var(--sp-4);
+      }
+      .page-intro h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2.4rem, 5.5vw, 4rem);
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .page-intro h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+
+      /* 正文单栏，和文章页同宽，读起来一致 */
+      .doc {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: 0 var(--sp-6) var(--sp-10);
+      }
+      .doc section {
+        padding-top: var(--sp-6);
+      }
+      .doc h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(1.5rem, 3vw, 1.95rem);
+        line-height: 1.2;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: var(--sp-6) 0 var(--sp-4);
+      }
+      .doc h2:first-child {
+        margin-top: 0;
+      }
+      .doc p {
+        font-family: var(--font-serif);
+        font-size: 1.02rem;
+        line-height: 1.85;
+        color: var(--text-soft);
+        margin: 0 0 var(--sp-4);
+      }
+      .doc p strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+      .doc a {
+        color: var(--accent-rust-text);
+        text-decoration: none;
+        border-bottom: 1px solid rgba(184, 88, 29, 0.35);
+        transition: border-color var(--dur-fast);
+      }
+      .doc a:hover {
+        border-color: var(--accent-rust);
+      }
+
+      /* 定义列表用来放技术栈，比表格轻 */
+      .deflist {
+        margin: 0 0 var(--sp-4);
+        display: grid;
+        grid-template-columns: 108px 1fr;
+        gap: var(--sp-3) var(--sp-4);
+        font-size: 0.94rem;
+      }
+      .deflist dt {
+        font-family: var(--font-mono);
+        font-size: 0.74rem;
+        color: var(--text-dim);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        padding-top: 4px;
+      }
+      .deflist dd {
+        margin: 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+      }
+
+      /* 引用块 */
+      .doc blockquote {
+        margin: var(--sp-5) 0;
+        padding: var(--sp-4) 0 var(--sp-4) var(--sp-5);
+        border-left: 2px solid var(--accent-rust);
+        font-family: var(--font-display);
+        font-size: 1.35rem;
+        font-style: italic;
+        line-height: 1.5;
+        color: var(--text);
+      }
+
+      /* 状态卡：now 页用 */
+      .status-card {
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        background: var(--bg-soft);
+        padding: var(--sp-5);
+        margin-bottom: var(--sp-4);
+      }
+      .status-card .sc-label {
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--accent-rust-text);
+        margin-bottom: var(--sp-3);
+      }
+      .status-card ul {
+        margin: 0;
+        padding-left: 1.1em;
+        font-family: var(--font-serif);
+        font-size: 0.98rem;
+        line-height: 1.8;
+        color: var(--text-soft);
+      }
+      .status-card li {
+        margin-bottom: 4px;
+      }
+      .status-card li::marker {
+        color: var(--accent-rust);
+      }
+
+      /* 规则列表：转载规范的编号条目 */
+      .rules {
+        counter-reset: r;
+        list-style: none;
+        margin: 0 0 var(--sp-4);
+        padding: 0;
+      }
+      .rules li {
+        counter-increment: r;
+        position: relative;
+        padding-left: var(--sp-6);
+        margin-bottom: var(--sp-3);
+        font-family: var(--font-serif);
+        font-size: 0.98rem;
+        line-height: 1.75;
+        color: var(--text-soft);
+      }
+      .rules li::before {
+        content: '0' counter(r);
+        position: absolute;
+        left: 0;
+        top: 0.15em;
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        color: var(--accent-rust-text);
+        letter-spacing: 0.06em;
+      }
+
+      .doc .divider {
+        height: 1px;
+        background: var(--line);
+        margin: var(--sp-7) 0;
+      }
+
+      @media (max-width: 700px) {
+        .page-intro {
+          padding: var(--sp-8) var(--sp-4) var(--sp-5);
+        }
+        .doc {
+          padding: 0 var(--sp-4) var(--sp-8);
+        }
+        .deflist {
+          grid-template-columns: 1fr;
+          gap: var(--sp-1) 0;
+        }
+        .deflist dt {
+          padding-top: var(--sp-3);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../index.html" class="brand">
+          <span class="logo">
+            <svg class="icon icon-lg" viewBox="0 0 64 64" aria-hidden="true">
+              <circle cx="32" cy="32" r="30" fill="var(--ink-900)" stroke="var(--accent-rust)" stroke-width="1.5" />
+              <path d="M 18 22 Q 32 16 46 22" fill="none" stroke="var(--accent-rust)" stroke-width="1" stroke-linecap="round" opacity="0.55" />
+              <path d="M 18 42 Q 32 48 46 42" fill="none" stroke="var(--accent-rust)" stroke-width="1" stroke-linecap="round" opacity="0.55" />
+              <text x="32" y="39" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="30" font-style="italic" font-weight="500" fill="var(--ink-50)">E</text>
+              <circle cx="32" cy="18" r="1.8" fill="var(--accent-rust)" />
+            </svg>
+          </span>
+          <span>expectopatronus</span>
+        </a>
+        <div class="nav-links" id="nav-links">
+          <a href="../index.html">首页</a>
+          <a href="home.html">文章</a>
+          <a href="series.html">系列</a>
+          <a href="about.html" class="is-active">关于</a>
+          <a href="../nav/index.html" target="_blank" rel="noopener">导航站</a>
+        </div>
+        <button class="menu-toggle" id="menu-toggle" aria-label="菜单">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></svg>
+        </button>
+        <button id="theme-toggle" class="theme-btn" aria-label="切换主题">
+          <svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <section class="page-intro">
+      <div class="eyebrow">about · now · colophon</div>
+      <h1>关于这个<em>站</em></h1>
+    </section>
+
+    <div class="doc">
+      <section>
+        <h2>这是什么</h2>
+        <p>
+          一个 AI 工具与实战的中文学习归档。原创的踩坑记录，加上精选的转载——<strong>每篇都标注来源</strong>。
+        </p>
+        <p>
+          建这个站的起因很简单：AI 领域的资料更新太快，今天看到的东西下个月就找不到。与其把链接塞进收藏夹里等着腐烂，不如整理成能读的形式，顺便逼自己把没想清楚的地方写清楚。
+        </p>
+        <blockquote>写下来，比记忆可靠；验证过，比抄来靠谱；整理好，比收藏有用。</blockquote>
+        <p>
+          这句话贴在首页，也是这个站唯一的标准。所以这里的转载不是「复制粘贴」：每一篇都重新组织过结构、补过上下文、标了原文链接和作者。如果你在某一篇里发现没标来源，那是我的疏漏，欢迎<a href="mailto:18821772508@163.com">写信告诉我</a>。
+        </p>
+      </section>
+
+      <div class="divider"></div>
+
+      <section>
+        <h2>现在在做什么</h2>
+        <p style="font-family: var(--font-mono); font-size: 0.76rem; color: var(--text-dim); letter-spacing: 0.06em">
+          最后更新 · 2026 年 7 月
+        </p>
+        <div class="status-card">
+          <div class="sc-label">正在读 / 正在用</div>
+          <ul>
+            <li><strong>Claude Code 与 Skill 生态</strong>——把重复的活儿封装成 Skill，正在试哪些真能省时间</li>
+            <li><strong>Loop Engineering</strong>——从「调提示词」到「设计循环」，这套说法到底解决了什么</li>
+            <li><strong>GPU 硬件实测</strong>——B300 的互连带宽、整机功耗、压测曲线</li>
+            <li><strong>国内服务器部署</strong>——glibc 版本、镜像源、外网访问，一个个坑填过去</li>
+          </ul>
+        </div>
+        <div class="status-card">
+          <div class="sc-label">这个站接下来要做的</div>
+          <ul>
+            <li>把 400 多个标签收敛成 8 个主题桶（已完成）</li>
+            <li>文章页加目录、阅读进度、上一篇/下一篇（进行中）</li>
+            <li>RSS 与站内搜索索引（构建期生成）</li>
+            <li>把重复的同题文章合并成长文（Loop 系列已完成）</li>
+          </ul>
+        </div>
+      </section>
+
+      <div class="divider"></div>
+
+      <section>
+        <h2>转载规则</h2>
+        <p>这里的内容分两类，标注方式不同：</p>
+        <ol class="rules">
+          <li>
+            <strong>原创</strong>——标题旁有绿色的「原创」标记。是我自己动手做过的：部署、压测、写脚本、踩坑、复盘。
+          </li>
+          <li>
+            <strong>转载整理</strong>——标注来源平台（抖音 / 小红书 / 微信）。正文重新组织过，不是逐字稿；文末有原文链接和原作者。
+          </li>
+          <li>转载内容只做学习归档，不做商业用途，不代替原文。如果原作者要求下架，我会立刻删除。</li>
+          <li>标题不做夸张化处理。原标题里的「炸了」「王炸」「神级」这类词会改掉——不是原文不好，是这个站的气质不适合。</li>
+        </ol>
+      </section>
+
+      <div class="divider"></div>
+
+      <section>
+        <h2>这个站是怎么做的</h2>
+        <p>
+          没有框架、没有构建、没有数据库。就是一堆手写的 HTML、一份 CSS 变量表、和一个 JSON 一样的数据文件。这样做的好处是：十年后它还能打开。
+        </p>
+        <dl class="deflist">
+          <dt>托管</dt>
+          <dd>GitHub Pages，纯静态，无服务端</dd>
+
+          <dt>结构</dt>
+          <dd>HTML + CSS + 原生 JS（ES5 语法，不引入框架）</dd>
+
+          <dt>数据</dt>
+          <dd><code>home/articles.js</code> 里一个 <code>window.articles</code> 数组，页面自己渲染</dd>
+
+          <dt>字体</dt>
+          <dd>
+            拉丁文 Cormorant Garamond 与 Source Serif 4 自托管（woff2 可变字体）；中文走
+            <a href="https://chinese-font.netlify.app/" target="_blank" rel="noopener">中文网字计划</a> 的 CDN 分片。不依赖 Google Fonts——它在中国大陆不可直连。
+          </dd>
+
+          <dt>配色</dt>
+          <dd>深色底 + 赭橙强调色，另有一套暖纸浅色主题。所有文字对比度按 WCAG AA 校准过。</dd>
+
+          <dt>排版</dt>
+          <dd>正文每行 30–40 个汉字，行高 1.85，中文与英文、数字之间手动加空格</dd>
+
+          <dt>图标</dt>
+          <dd>内联 SVG，不加载图标字体库</dd>
+        </dl>
+        <p>
+          想看看具体怎么写的，源码在 <a href="https://github.com/expectopatronus00" target="_blank" rel="noopener">GitHub</a>。
+        </p>
+      </section>
+
+      <div class="divider"></div>
+
+      <section>
+        <h2>联系</h2>
+        <p>
+          有问题、发现错误、或者想指出某篇转载的出处标错了，都可以写信：
+          <a href="mailto:18821772508@163.com">18821772508@163.com</a>。我通常几天内会回。
+        </p>
+        <p style="font-family: var(--font-mono); font-size: 0.76rem; color: var(--text-dim); letter-spacing: 0.04em">
+          © 2026 expectopatronus · 个人笔记 · 内容仅供学习 · 所有外链归原作者所有
+        </p>
+      </section>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2026 · 个人笔记 · GitHub Pages</div>
+        </div>
+        <div class="footer-social">
+          <a href="../feed.xml" aria-label="RSS 订阅" title="RSS 订阅">
+            <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 19a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" fill="currentColor" />
+              <path d="M4 10.5a9.5 9.5 0 0 1 9.5 9.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+              <path d="M4 4.5A15.5 15.5 0 0 1 19.5 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+            </svg>
+          </a>
+          <a href="https://github.com/expectopatronus00" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z" />
+            </svg>
+          </a>
+          <a href="mailto:18821772508@163.com" aria-label="Email">
+            <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5" />
+              <path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部">
+      <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+        <path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </button>
+
+    <script>
+      (function () {
+        var MOON_SVG =
+          '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG =
+          '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+
+        var saved = localStorage.getItem('theme') || 'dark';
+        document.documentElement.dataset.theme = saved;
+        var ti = document.querySelector('#theme-toggle .theme-icon');
+        if (ti) ti.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var toggle = document.getElementById('theme-toggle');
+        if (toggle)
+          toggle.addEventListener('click', function () {
+            var cur = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = cur;
+            localStorage.setItem('theme', cur);
+            if (ti) ti.innerHTML = cur === 'light' ? SUN_SVG : MOON_SVG;
+          });
+
+        var back = document.getElementById('back-to-top');
+        if (back) {
+          window.addEventListener('scroll', function () {
+            back.classList.toggle('visible', window.scrollY > 500);
+          });
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        }
+
+        var menuBtn = document.getElementById('menu-toggle');
+        var navLinks = document.getElementById('nav-links');
+        if (menuBtn && navLinks) {
+          menuBtn.addEventListener('click', function () {
+            navLinks.classList.toggle('is-open');
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

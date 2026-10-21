@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>expectopatronus</title>
+    <link>https://expectopatronus00.github.io/</link>
+    <description>一个 AI 工具与实战的中文学习归档：原创踩坑记录 + 精选转载，每篇都标注来源。</description>
+    <language>zh-CN</language>
+    <lastBuildDate>Wed, 21 Oct 2026 14:06:26 GMT</lastBuildDate>
+    <atom:link href="https://expectopatronus00.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>对话即开发：零代码时代来了？Vibe Coding重塑软件开发方式</title>
+      <link>https://expectopatronus00.github.io/post/dy-7661941275884637491/dy-7661941275884637491.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7661941275884637491/dy-7661941275884637491.html</guid>
+      <pubDate>Sat, 18 Jul 2026 16:00:00 GMT</pubDate>
+      <category>杂项</category>
+      <description>不用写一行代码，仅靠对话就能开发产品！从bolt.new到Cursor，Vibe Coding正在重塑软件开发的底层逻辑——你描述需求，AI生成代码，产品在对话中逐渐成形。一文了解对话式开发的原理、工具、案例和未来趋势。（转载 · 来源：抖音）</description>
+    </item>
+    <item>
+      <title>测试必备的8个Claude Skills：从需求澄清到缺陷复盘，搞定90%测试工作</title>
+      <link>https://expectopatronus00.github.io/post/dy-7660089275492847218/dy-7660089275492847218.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7660089275492847218/dy-7660089275492847218.html</guid>
+      <pubDate>Sat, 18 Jul 2026 16:00:00 GMT</pubDate>
+      <category>杂项</category>
+      <description>练完这8个Skills，搞定你90%的测试工作！从需求澄清、用例设计、场景模拟、优先级排序、缺陷报告、根因分析、回归验证到测试复盘，覆盖完整测试链路，附完整代码+md模板。（转载 · 来源：抖音）</description>
+    </item>
+    <item>
+      <title>超级工程师多任务全并行解决方案：1个人顶1个团队的AI编程工作流</title>
+      <link>https://expectopatronus00.github.io/post/dy-7662989219727461658/dy-7662989219727461658.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7662989219727461658/dy-7662989219727461658.html</guid>
+      <pubDate>Sat, 18 Jul 2026 16:00:00 GMT</pubDate>
+      <category>杂项</category>
+      <description>终端开5个Claude会话并行、网页端再挂5-10个任务、一个月产出100%由AI完成仅2个Bug。Claude Code创始人亲授的超级工程师多任务全并行解决方案，让你1个人顶1个团队。（转载 · 来源：抖音）</description>
+    </item>
+    <item>
+      <title>UI Skills集合：让AI写的前端从「能用」升级到「惊艳能卖」的8大技能包</title>
+      <link>https://expectopatronus00.github.io/post/dy-7663846136494752070/dy-7663846136494752070.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7663846136494752070/dy-7663846136494752070.html</guid>
+      <pubDate>Sat, 18 Jul 2026 16:00:00 GMT</pubDate>
+      <category>杂项</category>
+      <description>AI写前端最容易翻车的是「能用但丑」。这8个UI Skills把设计师的审美和规范喂给Claude Code/Codex，从UI生成、设计系统、Tailwind样式到动效、无障碍、转化，全流程打通。（转载 · 来源：抖音）</description>
+    </item>
+    <item>
+      <title>一个人就是一支团队：扣子工作流打造AI超级个体的完整指南</title>
+      <link>https://expectopatronus00.github.io/post/dy-7663695071040882383/dy-7663695071040882383.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7663695071040882383/dy-7663695071040882383.html</guid>
+      <pubDate>Fri, 17 Jul 2026 16:00:00 GMT</pubDate>
+      <category>杂项</category>
+      <description>用扣子(Coze)工作流打造AI超级个体，零代码搭建自动化流水线，让一个人拥有一个团队的战斗力。从智能体创建到工作流编排，从知识库到插件生态，完整指南。（转载 · 来源：抖音）</description>
+    </item>
+    <item>
+      <title>AI自己刷小红书？全流程自动化运营工具大盘点，以后做内容真不用一条条发了</title>
+      <link>https://expectopatronus00.github.io/post/xhs-6a4c61ba0000000011012352/xhs-6a4c61ba0000000011012352.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/xhs-6a4c61ba0000000011012352/xhs-6a4c61ba0000000011012352.html</guid>
+      <pubDate>Fri, 17 Jul 2026 16:00:00 GMT</pubDate>
+      <category>AI 工具</category>
+      <description>AI时代小红书运营新玩法！从选题采集、内容创作、智能排版到自动发布，全流程AI工具大盘点，日均释放6小时创作时间，让账号24小时不间断产出。（转载 · 来源：小红书）</description>
+    </item>
+    <item>
+      <title>上交大爆火开源教程：3万星《动手学大模型》，从入门到实战全搞定</title>
+      <link>https://expectopatronus00.github.io/post/dy-7663052798950444330/dy-7663052798950444330.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7663052798950444330/dy-7663052798950444330.html</guid>
+      <pubDate>Thu, 16 Jul 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>上海交大张倬胜教授团队出品的《动手学大模型》开源教程，3万+GitHub星标，11章核心内容，PPT+代码+实验手册三位一体，从微调部署到智能体安全，完全免费。（转载 · 来源：抖音）</description>
+    </item>
+    <item>
+      <title>提升AI前端审美的开源项目：让AI设计不再土</title>
+      <link>https://expectopatronus00.github.io/post/xhs-6a59f9a2000000000f0309df/xhs-6a59f9a2000000000f0309df.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/xhs-6a59f9a2000000000f0309df/xhs-6a59f9a2000000000f0309df.html</guid>
+      <pubDate>Thu, 16 Jul 2026 16:00:00 GMT</pubDate>
+      <category>AI 工具</category>
+      <description>亚莱加德分享——一个可以提升AI前端审美的开源项目，让AI生成的UI不再土气，秒变专业设计师水平。（转载 · 来源：小红书）</description>
+    </item>
+    <item>
+      <title>超级工程师多任务全并行解决方案：AI同时处理多个任务</title>
+      <link>https://expectopatronus00.github.io/post/xhs-6a56fdfd00000000210168c2/xhs-6a56fdfd00000000210168c2.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/xhs-6a56fdfd00000000210168c2/xhs-6a56fdfd00000000210168c2.html</guid>
+      <pubDate>Thu, 16 Jul 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>哈工大AI全栈工程师Peter分享——超级工程师多任务、全并行解决方案，让AI同时处理多个开发任务，大幅提升工程效率。（转载 · 来源：小红书）</description>
+    </item>
+    <item>
+      <title>代码现在能自己&quot;画出来&quot;，这个Skill让新人秒懂复杂代码</title>
+      <link>https://expectopatronus00.github.io/post/xhs-6a580c05000000000f02af00/xhs-6a580c05000000000f02af00.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/xhs-6a580c05000000000f02af00/xhs-6a580c05000000000f02af00.html</guid>
+      <pubDate>Thu, 16 Jul 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>青青王-AI分享——代码可视化Skill，自动生成代码架构图和调用关系，让新人秒懂复杂项目，老板再也不用担心新人看不懂代码了。（转载 · 来源：小红书）</description>
+    </item>
+    <item>
+      <title>AI瞎写代码终于有救了，这个项目直接给它立规矩</title>
+      <link>https://expectopatronus00.github.io/post/xhs-6a58dd8a000000001101d929/xhs-6a58dd8a000000001101d929.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/xhs-6a58dd8a000000001101d929/xhs-6a58dd8a000000001101d929.html</guid>
+      <pubDate>Wed, 15 Jul 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>青青王-AI分享——AI编程乱写代码的解决方案，通过Skill项目给AI立规矩，让Vibe Coding从&quot;瞎写&quot;变成&quot;规范写&quot;。（转载 · 来源：小红书）</description>
+    </item>
+    <item>
+      <title>小白组装电脑也不会翻车！这些神级网站帮你避坑</title>
+      <link>https://expectopatronus00.github.io/post/dy-7662303729881713929/dy-7662303729881713929.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7662303729881713929/dy-7662303729881713929.html</guid>
+      <pubDate>Wed, 15 Jul 2026 16:00:00 GMT</pubDate>
+      <category>AI 基础设施</category>
+      <description>大有乾坤分享——小白组装电脑不翻车的秘密武器，推荐装机配置查询、兼容性检测、价格比价等实用网站。（转载 · 来源：抖音）</description>
+    </item>
+    <item>
+      <title>AI数字员工页面开源了，免费拿走！</title>
+      <link>https://expectopatronus00.github.io/post/dy-7661986671767883014/dy-7661986671767883014.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7661986671767883014/dy-7661986671767883014.html</guid>
+      <pubDate>Wed, 15 Jul 2026 16:00:00 GMT</pubDate>
+      <category>AI 工具</category>
+      <description>赛文同学(AI版)分享——AI数字员工页面开源项目，包含聊天界面、任务管理、数据分析等完整功能，免费使用。（转载 · 来源：抖音）</description>
+    </item>
+    <item>
+      <title>Agent架构全景：7种主流架构从简单到企业级</title>
+      <link>https://expectopatronus00.github.io/post/xhs-6a4104f4000000001702d6f4/xhs-6a4104f4000000001702d6f4.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/xhs-6a4104f4000000001702d6f4/xhs-6a4104f4000000001702d6f4.html</guid>
+      <pubDate>Wed, 15 Jul 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>AlunTalk分享——从简单到企业级，系统梳理7种主流Agent架构，帮助你理解智能体设计模式与选型思路。（转载 · 来源：小红书）</description>
+    </item>
+    <item>
+      <title>股票分析Skill开源了</title>
+      <link>https://expectopatronus00.github.io/post/dy-7662725504767646833/dy-7662725504767646833.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7662725504767646833/dy-7662725504767646833.html</guid>
+      <pubDate>Wed, 15 Jul 2026 16:00:00 GMT</pubDate>
+      <category>量化与投资</category>
+      <description>量化佬也玩摄影分享——开源股票分析Skill，项目名称page1，基于AI的股票分析与量化交易技能包。（转载 · 来源：抖音）</description>
+    </item>
+    <item>
+      <title>非科班转型大模型工程师需要达到的强度</title>
+      <link>https://expectopatronus00.github.io/post/dy-7662589088586861874/dy-7662589088586861874.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7662589088586861874/dy-7662589088586861874.html</guid>
+      <pubDate>Wed, 15 Jul 2026 16:00:00 GMT</pubDate>
+      <category>AI 基础设施</category>
+      <description>大语言模型分享——非科班转型大模型工程师需要达到的学习强度和路线规划，从基础到实战全面覆盖。（转载 · 来源：抖音）</description>
+    </item>
+    <item>
+      <title>AI做不出好看的文档？直到遇见Kami</title>
+      <link>https://expectopatronus00.github.io/post/dy-7662780489756921134/dy-7662780489756921134.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7662780489756921134/dy-7662780489756921134.html</guid>
+      <pubDate>Wed, 15 Jul 2026 16:00:00 GMT</pubDate>
+      <category>AI 工具</category>
+      <description>Orbital工作室分享——Kami，一款让AI生成文档不再丑陋的工具，支持精美排版、实时预览和多格式导出。（转载 · 来源：抖音）</description>
+    </item>
+    <item>
+      <title>无需穿戴设备，AI动作捕捉！</title>
+      <link>https://expectopatronus00.github.io/post/dy-7662683288191929627/dy-7662683288191929627.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7662683288191929627/dy-7662683288191929627.html</guid>
+      <pubDate>Wed, 15 Jul 2026 16:00:00 GMT</pubDate>
+      <category>AI 工具</category>
+      <description>成也2077分享——无需穿戴设备，纯AI驱动的动作捕捉方案，用摄像头即可实时捕捉人体动作，Vibe Coding 新玩法。（转载 · 来源：抖音）</description>
+    </item>
+    <item>
+      <title>傻瓜式Loop教程：一行命令开启AI自循环</title>
+      <link>https://expectopatronus00.github.io/post/xhs-6a5468250000000015027f67/xhs-6a5468250000000015027f67.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/xhs-6a5468250000000015027f67/xhs-6a5468250000000015027f67.html</guid>
+      <pubDate>Mon, 13 Jul 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>量子位分享——Loop Engineer 傻瓜式教程，一行命令让AI进入自循环模式，实现自动化任务迭代与优化。（转载 · 来源：小红书）</description>
+    </item>
+    <item>
+      <title>免费用6个月的CodeX Pro</title>
+      <link>https://expectopatronus00.github.io/post/xhs-6a51bf22000000001c027412/xhs-6a51bf22000000001c027412.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/xhs-6a51bf22000000001c027412/xhs-6a51bf22000000001c027412.html</guid>
+      <pubDate>Sun, 12 Jul 2026 16:00:00 GMT</pubDate>
+      <category>AI 工具</category>
+      <description>程序员晚枫分享——免费用6个月的CodeX Pro的获取方法和使用技巧，助力开发者提升编程效率。（转载 · 来源：小红书）</description>
+    </item>
+    <item>
+      <title>提升自媒体表达能力：两周实战心得分享</title>
+      <link>https://expectopatronus00.github.io/post/xhs-6a534d6d000000000f01f2ca/xhs-6a534d6d000000000f01f2ca.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/xhs-6a534d6d000000000f01f2ca/xhs-6a534d6d000000000f01f2ca.html</guid>
+      <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
+      <category>效率与成长</category>
+      <description>橘斯斯sisi分享——提升自媒体表达能力的两周实战心得，三大核心方法：开口练习、内容结构化、反馈与迭代。（转载 · 来源：小红书）</description>
+    </item>
+    <item>
+      <title>让Skill自己训练自己：微软开源工具破5k星</title>
+      <link>https://expectopatronus00.github.io/post/xhs-6a2be11d00000000160279a4/xhs-6a2be11d00000000160279a4.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/xhs-6a2be11d00000000160279a4/xhs-6a2be11d00000000160279a4.html</guid>
+      <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>量子位分享——让Skill自己训练自己！微软开源自训练AI技能工具，GitHub破5k星，探索AI技能自我进化的新方向。（转载 · 来源：小红书）</description>
+    </item>
+    <item>
+      <title>HS量化：基于机器学习的概率预测模型</title>
+      <link>https://expectopatronus00.github.io/post/dy-7652011374368935211/dy-7652011374368935211.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7652011374368935211/dy-7652011374368935211.html</guid>
+      <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
+      <category>量化与投资</category>
+      <description>神秘小哥分享HS量化系统——基于机器学习的概率预测模型，用AI提升量化交易的概率优势。（转载 · 来源：抖音）</description>
+    </item>
+    <item>
+      <title>企业AI改造：启动FDE百万计划</title>
+      <link>https://expectopatronus00.github.io/post/dy-7661599145157001339/dy-7661599145157001339.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7661599145157001339/dy-7661599145157001339.html</guid>
+      <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
+      <category>AI 工具</category>
+      <description>Aaron（第一代AI FDE）分享——企业AI改造的趋势与FDE百万计划，探讨AI工具如何落地企业数字化转型。（转载 · 来源：抖音）</description>
+    </item>
+    <item>
+      <title>与其蒸馏别人不如蒸馏自己：GitHub开源模型蒸馏新思路</title>
+      <link>https://expectopatronus00.github.io/post/dy-7659247081688730923/dy-7659247081688730923.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7659247081688730923/dy-7659247081688730923.html</guid>
+      <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>AI星视界分享——与其蒸馏别人不如蒸馏自己！GitHub开源模型蒸馏新思路，用自己的大模型蒸馏出自己的小模型。（转载 · 来源：抖音）</description>
+    </item>
+    <item>
+      <title>不会写代码也能做AI量化实盘：这款开源AI交易员来了</title>
+      <link>https://expectopatronus00.github.io/post/dy-7661476600529297914/dy-7661476600529297914.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7661476600529297914/dy-7661476600529297914.html</guid>
+      <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
+      <category>量化与投资</category>
+      <description>山无棱分享——不会写代码也能做AI量化实盘！这款开源AI交易员工具让量化交易门槛大幅降低，普通人也能参与AI量化交易。（转载 · 来源：抖音）</description>
+    </item>
+    <item>
+      <title>Agent的职责边界：写Prompt、判复杂度、执行任务</title>
+      <link>https://expectopatronus00.github.io/post/dy-7658411673698457834/dy-7658411673698457834.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7658411673698457834/dy-7658411673698457834.html</guid>
+      <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>CarryU王同学分享——Agent只负责写Prompt、判断任务复杂度和执行任务，深入解析AI Agent的职责边界与分工逻辑。（转载 · 来源：抖音）</description>
+    </item>
+    <item>
+      <title>Java + React + AI Agent：全栈开发的新范式</title>
+      <link>https://expectopatronus00.github.io/post/dy-7659309585488719345/dy-7659309585488719345.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7659309585488719345/dy-7659309585488719345.html</guid>
+      <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>Chris IT先生分享——Java后端、React前端与AI Agent三者结合，探讨全栈开发的新范式与技术演进。（转载 · 来源：抖音）</description>
+    </item>
+    <item>
+      <title>一次讲透AI计费：输入输出Token与缓存命中</title>
+      <link>https://expectopatronus00.github.io/post/dy-7659996815441415458/dy-7659996815441415458.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7659996815441415458/dy-7659996815441415458.html</guid>
+      <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
+      <category>AI 基础设施</category>
+      <description>用动画视频一次讲透AI计费机制——Token是什么、输入输出怎么收费、缓存命中如何省钱，帮你优化AI使用成本。（转载 · 来源：抖音）</description>
+    </item>
+    <item>
+      <title>到底啥是Skill？从实用主义视角讲清楚</title>
+      <link>https://expectopatronus00.github.io/post/dy-7646390254617857295/dy-7646390254617857295.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7646390254617857295/dy-7646390254617857295.html</guid>
+      <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>从实用主义视角为小白讲清楚Skill——什么是Skill、为什么要用、去哪里找、怎么用别人的Skill，四个问题一次搞定。（转载 · 来源：抖音）</description>
+    </item>
+  </channel>
+</rss>

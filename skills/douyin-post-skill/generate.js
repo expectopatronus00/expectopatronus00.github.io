@@ -117,7 +117,10 @@ for (let i = 0; i < videos.length; i++) {
   if (Array.isArray(v.tags) && v.tags.length > 0) {
     const tagItems = [];
     for (let m = 0; m < v.tags.length; m++) {
-      tagItems.push('      <a href="#">#' + v.tags[m] + '</a>');
+      // 标签直接链到归档页的搜索深链，不再用 href="#" 死链
+      tagItems.push(
+        '      <a href="../../home/home.html?q=' + encodeURIComponent(v.tags[m]) + '">#' + v.tags[m] + '</a>'
+      );
     }
     tagsHtml =
       '    <div class="tags-row">\n' +
@@ -205,7 +208,7 @@ if (idx === -1) {
       '            title: \'' + String(g.title).replace(/'/g, "\\'") + '\',\n' +
       '            url: \'../post/' + g.id + '/' + g.id + '.html\',\n' +
       '            summary: \'' + String(g.summary || '').replace(/'/g, "\\'") + '\',\n' +
-      '            category: \'抖音搬运\',\n' +
+      '            category: \'' + String(g.category || '抖音搬运').replace(/'/g, "\\'") + '\',\n' +
       '            date: \'' + g.date + '\',\n' +
       '            tags: ' + tagStr + ',\n' +
       '          },'

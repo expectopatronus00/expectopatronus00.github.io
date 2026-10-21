@@ -7,6 +7,14 @@
 <link rel="stylesheet" href="../home/fonts.css" />
         <link rel="shortcut icon" href="../home/logo.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
     <style>
       *,
       *::before,
@@ -15,23 +23,25 @@
         margin: 0;
         padding: 0;
       }
+      /* 色值对齐 home/design-tokens.css，避免导航站看起来是另一个站。
+         变量名保留本站自己的（间距/圆角刻度与主站不同，不共用）。 */
       :root {
-        --bg-0: #1a1a24;
-        --bg-1: #22222e;
-        --bg-2: #2a2a38;
-        --bg-3: #32323f;
-        --ink: #ede8e0;
-        --ink-60: rgba(237, 232, 224, 0.6);
-        --ink-30: rgba(237, 232, 224, 0.3);
+        --bg-0: #0b0d16;
+        --bg-1: #12151f;
+        --bg-2: #1a1d2e;
+        --bg-3: #1f2333;
+        --ink: #ede9df;
+        --ink-60: rgba(237, 233, 223, 0.62);
+        --ink-30: rgba(237, 233, 223, 0.14);
         --accent: #b8581d;
         --accent-hover: #d4692a;
-        --accent-jade: #3a8d7b;
-        --font-display: 'Cormorant Garamond', 'LXGWNeoZhiSong', serif;
-        --font-serif: 'Source Serif 4', 'LXGWNeoZhiSong', serif;
-        --font-mono: 'JetBrains Mono', monospace;
-        --r-sm: 6px;
-        --r-md: 12px;
-        --r-lg: 20px;
+        --accent-jade: #2f7d5d;
+        --font-display: 'Cormorant Garamond', 'LXGWNeoZhiSong', 'Source Han Serif SC', georgia, 'Songti SC', serif;
+        --font-serif: 'Source Serif 4', 'LXGWNeoZhiSong', 'Source Han Serif SC', georgia, 'Songti SC', serif;
+        --font-mono: 'SF Mono', 'JetBrains Mono', menlo, consolas, monospace;
+        --r-sm: 4px;
+        --r-md: 8px;
+        --r-lg: 14px;
         --sp-1: 8px;
         --sp-2: 16px;
         --sp-3: 24px;
@@ -41,13 +51,16 @@
         --dur: 0.25s;
       }
       [data-theme='light'] {
-        --bg-0: #f5f0e8;
-        --bg-1: #ede8df;
-        --bg-2: #e4ddd2;
-        --bg-3: #d8d0c3;
-        --ink: #1a1814;
-        --ink-60: rgba(26, 24, 20, 0.6);
-        --ink-30: rgba(26, 24, 20, 0.3);
+        --bg-0: #f4efe4;
+        --bg-1: #ebe5d4;
+        --bg-2: #e4ddc9;
+        --bg-3: #d8d0b8;
+        --ink: #2a2518;
+        --ink-60: rgba(42, 37, 24, 0.62);
+        --ink-30: rgba(42, 37, 24, 0.16);
+        --accent: #a34d18;
+        --accent-hover: #b8581d;
+        --accent-jade: #256b4e;
       }
       html {
         scroll-behavior: smooth;
@@ -448,10 +461,12 @@
   </head>
   <body>
     <nav class="site-nav">
-      <a href="../../index.html" class="nav-brand"><span>AI</span> Nav</a>
+      <a href="../index.html" class="nav-brand"><span>AI</span> Nav</a>
       <div class="nav-links">
-        <a href="../../index.html"><i class="fa-solid fa-house"></i> 首页</a>
-        <a href="../../home/home.html"><i class="fa-solid fa-book-open"></i> 文章</a>
+        <a href="../index.html"><i class="fa-solid fa-house"></i> 首页</a>
+        <a href="../home/home.html"><i class="fa-solid fa-book-open"></i> 文章</a>
+        <a href="../home/series.html"><i class="fa-solid fa-layer-group"></i> 系列</a>
+        <a href="../home/about.html"><i class="fa-solid fa-circle-info"></i> 关于</a>
         <a href="./index.html" class="active"><i class="fa-solid fa-compass"></i> 导航</a>
       </div>
       <div class="nav-right">
@@ -482,7 +497,7 @@
     <main class="main" id="mainContent"></main>
 
     <footer class="site-footer">
-      <a href="../../index.html">expectopatronus.top</a> · AI 导航 · <span id="lastUpdate"></span>
+      <a href="../index.html">expectopatronus.top</a> · AI 导航 · <span id="lastUpdate"></span>
     </footer>
 
     <script>

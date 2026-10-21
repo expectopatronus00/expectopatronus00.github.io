@@ -1,0 +1,471 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>系列连载 · expectopatronus</title>
+    <meta
+      name="description"
+      content="按顺序读的成组文章：Loop Engineering、Skill 生态、GPU 硬件实测。时间流会打断系列，所以单独给它们一个入口。"
+    />
+    <link rel="preload" href="fonts/SourceSerif4-var-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="fonts/CormorantGaramond-var-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="fonts.css" />
+    <link rel="stylesheet" href="design-tokens.css" />
+    <link rel="alternate" type="application/rss+xml" title="expectopatronus" href="../feed.xml" />
+    <style>
+      .icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 1em;
+        height: 1em;
+        vertical-align: -0.125em;
+        color: currentColor;
+        flex-shrink: 0;
+      }
+      .icon svg {
+        width: 100%;
+        height: 100%;
+      }
+      .icon-sm {
+        width: 0.82em;
+        height: 0.82em;
+      }
+      .icon-lg {
+        width: 1.3em;
+        height: 1.3em;
+      }
+
+      .page-intro {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+      }
+      .page-intro .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--accent-rust-text);
+        margin-bottom: var(--sp-4);
+      }
+      .page-intro h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2.4rem, 5.5vw, 4rem);
+        line-height: 1.05;
+        letter-spacing: -0.03em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .page-intro h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-intro p {
+        font-family: var(--font-serif);
+        font-size: 1.05rem;
+        color: var(--text-soft);
+        max-width: 620px;
+        line-height: 1.7;
+        margin: 0;
+      }
+
+      /* ---------- 系列主体 ---------- */
+      .series-list {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: 0 var(--sp-6) var(--sp-10);
+      }
+      .series-block {
+        border-top: 1px solid var(--line);
+        padding: var(--sp-7) 0 var(--sp-6);
+        scroll-margin-top: calc(var(--nav-height) + var(--sp-5));
+      }
+      .series-block:first-of-type {
+        border-top: 0;
+      }
+      .sb-head {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: var(--sp-5);
+        align-items: end;
+        margin-bottom: var(--sp-5);
+      }
+      .sb-head .sb-kicker {
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        letter-spacing: 0.12em;
+        color: var(--text-dim);
+        text-transform: uppercase;
+        margin-bottom: var(--sp-2);
+      }
+      .sb-head h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+      .sb-head p {
+        font-family: var(--font-serif);
+        font-size: 0.98rem;
+        line-height: 1.65;
+        color: var(--text-soft);
+        margin: 0;
+        max-width: 560px;
+      }
+      .sb-head .sb-count {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        color: var(--accent-rust-text);
+        letter-spacing: 0.06em;
+        white-space: nowrap;
+        padding-bottom: 4px;
+      }
+
+      /* 系列内的编号条目 */
+      .ep-list {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+      .ep {
+        display: grid;
+        grid-template-columns: 56px 1fr auto;
+        gap: var(--sp-4);
+        align-items: baseline;
+        padding: var(--sp-3) var(--sp-2) var(--sp-3) 0;
+        border-bottom: 1px solid var(--line);
+        text-decoration: none;
+        color: inherit;
+        transition:
+          padding-left var(--dur-fast),
+          border-color var(--dur-fast);
+      }
+      .ep:hover {
+        padding-left: var(--sp-2);
+        border-color: var(--accent-rust);
+      }
+      .ep .ep-no {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        color: var(--text-dim);
+        letter-spacing: 0.08em;
+        font-variant-numeric: lining-nums;
+      }
+      .ep:hover .ep-no {
+        color: var(--accent-rust-text);
+      }
+      .ep .ep-body {
+        min-width: 0;
+      }
+      .ep h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.16rem;
+        line-height: 1.3;
+        color: var(--text);
+        margin: 0 0 4px;
+        transition: color var(--dur-fast);
+      }
+      .ep:hover h3 {
+        color: var(--accent-rust);
+      }
+      .ep .ep-sum {
+        font-family: var(--font-serif);
+        font-size: 0.86rem;
+        line-height: 1.55;
+        color: var(--text-dim);
+        margin: 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+      .ep .ep-date {
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        color: var(--text-dim);
+        white-space: nowrap;
+        font-variant-numeric: lining-nums;
+      }
+
+      /* 系列内被合并掉的文章，标注出来而不是直接消失 */
+      .ep.is-merged {
+        opacity: 0.55;
+        cursor: default;
+      }
+      .ep.is-merged:hover {
+        padding-left: 0;
+        border-color: var(--line);
+      }
+      .ep.is-merged:hover h3 {
+        color: var(--text);
+      }
+      .ep .ep-note {
+        font-family: var(--font-mono);
+        font-size: 0.66rem;
+        color: var(--text-dim);
+        border: 1px dashed var(--line);
+        border-radius: var(--r-sm);
+        padding: 1px 6px;
+        white-space: nowrap;
+      }
+
+      .empty-note {
+        font-family: var(--font-serif);
+        color: var(--text-dim);
+        font-size: 0.95rem;
+        padding: var(--sp-5) 0;
+      }
+
+      @media (max-width: 760px) {
+        .page-intro {
+          padding: var(--sp-8) var(--sp-4) var(--sp-5);
+        }
+        .series-list {
+          padding: 0 var(--sp-4) var(--sp-8);
+        }
+        .sb-head {
+          grid-template-columns: 1fr;
+          gap: var(--sp-2);
+        }
+        .ep {
+          grid-template-columns: 40px 1fr;
+        }
+        .ep .ep-date {
+          grid-column: 2;
+          padding-top: 2px;
+        }
+        .ep h3 {
+          font-size: 1.05rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../index.html" class="brand">
+          <span class="logo">
+            <svg class="icon icon-lg" viewBox="0 0 64 64" aria-hidden="true">
+              <circle cx="32" cy="32" r="30" fill="var(--ink-900)" stroke="var(--accent-rust)" stroke-width="1.5" />
+              <path d="M 18 22 Q 32 16 46 22" fill="none" stroke="var(--accent-rust)" stroke-width="1" stroke-linecap="round" opacity="0.55" />
+              <path d="M 18 42 Q 32 48 46 42" fill="none" stroke="var(--accent-rust)" stroke-width="1" stroke-linecap="round" opacity="0.55" />
+              <text x="32" y="39" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="30" font-style="italic" font-weight="500" fill="var(--ink-50)">E</text>
+              <circle cx="32" cy="18" r="1.8" fill="var(--accent-rust)" />
+            </svg>
+          </span>
+          <span>expectopatronus</span>
+        </a>
+        <div class="nav-links" id="nav-links">
+          <a href="../index.html">首页</a>
+          <a href="home.html">文章</a>
+          <a href="series.html" class="is-active">系列</a>
+          <a href="about.html">关于</a>
+          <a href="../nav/index.html" target="_blank" rel="noopener">导航站</a>
+        </div>
+        <button class="menu-toggle" id="menu-toggle" aria-label="菜单">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></svg>
+        </button>
+        <button id="theme-toggle" class="theme-btn" aria-label="切换主题">
+          <svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <section class="page-intro">
+      <div class="eyebrow">series</div>
+      <h1>按顺序<em>读</em>的<em>成组</em>文章</h1>
+      <p>
+        时间流会把一个系列打散——你读完第一篇，下一篇链接可能跳到完全无关的主题。所以这里把成组的文章单独排好，从头到尾连着读。
+      </p>
+    </section>
+
+    <div class="series-list" id="series-list"></div>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2026 · 个人笔记 · GitHub Pages</div>
+        </div>
+        <div class="footer-social">
+          <a href="../feed.xml" aria-label="RSS 订阅" title="RSS 订阅">
+            <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 19a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" fill="currentColor" />
+              <path d="M4 10.5a9.5 9.5 0 0 1 9.5 9.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+              <path d="M4 4.5A15.5 15.5 0 0 1 19.5 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+            </svg>
+          </a>
+          <a href="https://github.com/expectopatronus00" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z" />
+            </svg>
+          </a>
+          <a href="mailto:18821772508@163.com" aria-label="Email">
+            <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5" />
+              <path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部">
+      <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+        <path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </button>
+
+    <script src="articles.js"></script>
+    <script>
+      (function () {
+        var MOON_SVG =
+          '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG =
+          '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+
+        var saved = localStorage.getItem('theme') || 'dark';
+        document.documentElement.dataset.theme = saved;
+        var ti = document.querySelector('#theme-toggle .theme-icon');
+        if (ti) ti.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var toggle = document.getElementById('theme-toggle');
+        if (toggle)
+          toggle.addEventListener('click', function () {
+            var cur = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = cur;
+            localStorage.setItem('theme', cur);
+            if (ti) ti.innerHTML = cur === 'light' ? SUN_SVG : MOON_SVG;
+          });
+
+        var back = document.getElementById('back-to-top');
+        if (back) {
+          window.addEventListener('scroll', function () {
+            back.classList.toggle('visible', window.scrollY > 500);
+          });
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        }
+
+        var menuBtn = document.getElementById('menu-toggle');
+        var navLinks = document.getElementById('nav-links');
+        if (menuBtn && navLinks) {
+          menuBtn.addEventListener('click', function () {
+            navLinks.classList.toggle('is-open');
+          });
+        }
+
+        /* ---------- 渲染系列 ---------- */
+        var BLOG = window.BLOG;
+        var box = document.getElementById('series-list');
+        var html = '';
+
+        BLOG.series.forEach(function (s, si) {
+          var eps = BLOG.inSeries(s.id);
+          var no = ('0' + (si + 1)).slice(-2);
+
+          var items = eps
+            .map(function (a) {
+              return (
+                '<a class="ep" href="' +
+                a.url +
+                '">' +
+                '<span class="ep-no">' +
+                ('0' + a.series.index).slice(-2) +
+                '</span>' +
+                '<span class="ep-body">' +
+                '<h3>' +
+                a.title +
+                '</h3>' +
+                '<p class="ep-sum">' +
+                a.summary +
+                '</p>' +
+                '</span>' +
+                '<span class="ep-date">' +
+                a.date.slice(0, 10).replace(/-/g, ' · ') +
+                '</span>' +
+                '</a>'
+              );
+            })
+            .join('');
+
+          // 被合并掉的文章仍然列出来，标注去向，避免读者以为漏了
+          var mergedItems = BLOG.all
+            .filter(function (a) {
+              return a.hidden && a.mergedInto && BLOG.get(a.mergedInto) && BLOG.get(a.mergedInto).series && BLOG.get(a.mergedInto).series.id === s.id;
+            })
+            .map(function (a) {
+              return (
+                '<div class="ep is-merged">' +
+                '<span class="ep-no">—</span>' +
+                '<span class="ep-body">' +
+                '<h3>' +
+                a.title +
+                '</h3>' +
+                '<p class="ep-sum">' +
+                a.summary +
+                '</p>' +
+                '</span>' +
+                '<span class="ep-note">已并入第 ' +
+                ('0' + BLOG.get(a.mergedInto).series.index).slice(-2) +
+                ' 篇</span>' +
+                '</div>'
+              );
+            })
+            .join('');
+
+          if (!items && !mergedItems) {
+            items = '<p class="empty-note">这个系列还没有文章。</p>';
+          }
+
+          html +=
+            '<section class="series-block" id="' +
+            s.id +
+            '">' +
+            '<div class="sb-head">' +
+            '<div>' +
+            '<div class="sb-kicker">series ' +
+            no +
+            '</div>' +
+            '<h2>' +
+            s.name +
+            '</h2>' +
+            '<p>' +
+            s.desc +
+            '</p>' +
+            '</div>' +
+            '<div class="sb-count">' +
+            eps.length +
+            ' 篇</div>' +
+            '</div>' +
+            '<div class="ep-list">' +
+            items +
+            mergedItems +
+            '</div>' +
+            '</section>';
+        });
+
+        box.innerHTML = html;
+
+        // 从 home.html 的系列卡跳过来时，滚到对应系列
+        if (window.location.hash) {
+          var target = document.querySelector(window.location.hash);
+          if (target) setTimeout(function () {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 60);
+        }
+      })();
+    </script>
+  </body>
+</html>

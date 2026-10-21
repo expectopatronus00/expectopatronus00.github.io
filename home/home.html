@@ -1,27 +1,48 @@
 <!doctype html>
 <html lang="zh-CN" data-theme="dark">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>文章索引 · EXPECTOPATRONUS</title>
-    <meta name="description" content="个人博客的全部文章索引，按主题、日期或标签浏览。" />
-    <link rel="shortcut icon" href="logo.svg" type="image/svg+xml" />
-    <link rel="preload" as="font" type="font/woff2" crossorigin href="../home/fonts/CormorantGaramond-var-normal.woff2" />
-    <link rel="preload" as="font" type="font/woff2" crossorigin href="../home/fonts/SourceSerif4-var-normal.woff2" />
-    <link rel="stylesheet" href="../home/fonts.css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>全部笔记与文章 · expectopatronus</title>
+    <meta
+      name="description"
+      content="按时间倒序排列的全部笔记：AI 编程、AI 工具、AI 基础设施、运维部署、量化投资、效率成长与生活记录。"
+    />
+    <link rel="preload" href="fonts/SourceSerif4-var-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="fonts/CormorantGaramond-var-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="fonts.css" />
     <link rel="stylesheet" href="design-tokens.css" />
+    <link rel="alternate" type="application/rss+xml" title="expectopatronus" href="../feed.xml" />
     <style>
       /* SVG 图标工具类 */
-      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
-      .icon svg { width: 100%; height: 100%; }
-      .icon-sm { width: 0.82em; height: 0.82em; }
-      .icon-lg { width: 1.3em; height: 1.3em; }
-      /* Archive page styles */
+      .icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 1em;
+        height: 1em;
+        vertical-align: -0.125em;
+        color: currentColor;
+        flex-shrink: 0;
+      }
+      .icon svg {
+        width: 100%;
+        height: 100%;
+      }
+      .icon-sm {
+        width: 0.82em;
+        height: 0.82em;
+      }
+      .icon-lg {
+        width: 1.3em;
+        height: 1.3em;
+      }
+
+      /* ---------- 页头 ---------- */
       .page-intro {
         max-width: var(--container);
         margin: 0 auto;
         padding: var(--sp-10) var(--sp-6) var(--sp-7);
-        border-bottom: 1px solid var(--line);
       }
       .page-intro h1 {
         font-family: var(--font-display);
@@ -30,7 +51,7 @@
         line-height: 1.05;
         letter-spacing: -0.03em;
         color: var(--text);
-        margin-bottom: var(--sp-5);
+        margin: 0 0 var(--sp-5);
       }
       .page-intro h1 em {
         font-style: italic;
@@ -41,38 +62,128 @@
         font-family: var(--font-serif);
         font-size: 1.05rem;
         color: var(--text-soft);
-        max-width: 600px;
+        max-width: 620px;
         line-height: 1.7;
+        margin: 0;
+      }
+      /* 计数条：把「共 N 篇」拆成原创 / 转载两个诚实数字 */
+      .intro-counts {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-5);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.76rem;
+        color: var(--text-dim);
+        letter-spacing: 0.06em;
+      }
+      .intro-counts b {
+        font-weight: 600;
+        color: var(--text-soft);
+        font-variant-numeric: lining-nums;
+      }
+      .intro-counts .is-original b {
+        color: var(--accent-jade-text);
       }
 
+      /* ---------- 搜索 ---------- */
+      .search-bar {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: 0 var(--sp-6) var(--sp-5);
+      }
+      .search-field {
+        display: flex;
+        align-items: center;
+        gap: var(--sp-3);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        background: var(--bg-soft);
+        padding: 0 var(--sp-4);
+        transition: border-color var(--dur-fast);
+      }
+      .search-field:focus-within {
+        border-color: var(--accent-rust);
+      }
+      .search-field .icon {
+        color: var(--text-dim);
+        font-size: 1rem;
+      }
+      .search-field input {
+        flex: 1;
+        min-width: 0;
+        border: 0;
+        outline: 0;
+        background: transparent;
+        color: var(--text);
+        font-family: var(--font-sans);
+        font-size: 0.95rem;
+        padding: 12px 0;
+      }
+      .search-field input::placeholder {
+        color: var(--text-dim);
+      }
+      .search-field kbd {
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        color: var(--text-dim);
+        border: 1px solid var(--line);
+        border-radius: var(--r-sm);
+        padding: 2px 6px;
+        line-height: 1.4;
+      }
+      .search-clear {
+        display: none;
+        border: 0;
+        background: transparent;
+        color: var(--text-dim);
+        cursor: pointer;
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        padding: 4px;
+      }
+      .search-clear:hover {
+        color: var(--accent-rust);
+      }
+      .search-field.has-value .search-clear {
+        display: block;
+      }
+      .search-field.has-value kbd {
+        display: none;
+      }
+
+      /* ---------- 主题筛选 ---------- */
       .filter-bar {
         max-width: var(--container);
         margin: 0 auto;
-        padding: var(--sp-6) var(--sp-6) var(--sp-5);
+        padding: 0 var(--sp-6) var(--sp-6);
         display: flex;
         flex-wrap: wrap;
         align-items: center;
-        gap: var(--sp-3);
+        gap: var(--sp-2);
         border-bottom: 1px solid var(--line);
       }
       .filter-bar .bar-label {
         font-family: var(--font-mono);
-        font-size: 0.72rem;
+        font-size: 0.7rem;
         color: var(--text-dim);
         text-transform: uppercase;
-        letter-spacing: 0.1em;
-        margin-right: var(--sp-3);
+        letter-spacing: 0.12em;
+        margin-right: var(--sp-2);
       }
       .filter-btn {
         font-family: var(--font-sans);
         font-size: 0.82rem;
-        padding: 7px 14px;
+        padding: 6px 13px;
         border-radius: 999px;
         background: transparent;
         border: 1px solid var(--line);
         color: var(--text-soft);
         cursor: pointer;
-        transition: all var(--dur-fast);
+        transition:
+          color var(--dur-fast),
+          border-color var(--dur-fast),
+          background var(--dur-fast);
       }
       .filter-btn:hover {
         color: var(--text);
@@ -84,190 +195,240 @@
         border-color: var(--accent-rust);
         font-weight: 600;
       }
-
-      /* Tag pills */
-      .cat-pills {
-        max-width: var(--container);
-        margin: 0 auto;
-        padding: var(--sp-5) var(--sp-6);
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-      }
-      .cat-pills a {
-        font-family: var(--font-mono);
-        font-size: 0.72rem;
-        padding: 5px 12px;
-        border-radius: 6px;
-        background: var(--bg-soft);
-        border: 1px solid var(--line);
-        color: var(--text-soft);
-        text-decoration: none;
-        transition: all var(--dur-fast);
-      }
-      .cat-pills a:hover {
-        color: var(--accent-rust);
-        border-color: var(--accent-rust);
-      }
-      .cat-pills a.is-active {
-        background: var(--accent-rust);
-        color: var(--ink-950);
-        border-color: var(--accent-rust);
-      }
-      /* 标签使用频次：让读者一眼看出哪些标签真正有聚合内容 */
-      .cat-pills .tag-count {
+      .filter-btn .n {
         margin-left: 6px;
-        font-size: 0.66rem;
-        opacity: 0.55;
-      }
-      /* 长尾标签折叠区 */
-      .cat-pills .tag-rest {
-        display: contents;
-      }
-      .cat-pills .tag-rest[hidden] {
-        display: none;
-      }
-      .cat-pills .tag-more {
         font-family: var(--font-mono);
-        font-size: 0.72rem;
-        padding: 5px 12px;
-        border-radius: 6px;
-        background: transparent;
-        border: 1px dashed var(--line);
-        color: var(--accent-rust-text);
-        cursor: pointer;
-        transition: all var(--dur-fast);
+        font-size: 0.68rem;
+        opacity: 0.6;
       }
-      .cat-pills .tag-more:hover {
-        border-style: solid;
-        border-color: var(--accent-rust);
-        background: var(--bg-soft);
+      .filter-btn.is-active .n {
+        opacity: 0.75;
       }
 
-      /* Article list */
-      .article-list {
+      /* ---------- 归档列表 ---------- */
+      .archive {
         max-width: var(--container);
         margin: 0 auto;
         padding: var(--sp-6) var(--sp-6) var(--sp-10);
       }
+      /* 月份分节头 */
+      .month-head {
+        display: flex;
+        align-items: baseline;
+        gap: var(--sp-4);
+        padding: var(--sp-6) 0 var(--sp-3);
+      }
+      .month-head .m-label {
+        font-family: var(--font-mono);
+        font-size: 0.74rem;
+        letter-spacing: 0.1em;
+        color: var(--accent-rust-text);
+        white-space: nowrap;
+      }
+      .month-head .m-line {
+        flex: 1;
+        height: 1px;
+        background: var(--line);
+      }
+      .month-head .m-count {
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        color: var(--text-dim);
+        white-space: nowrap;
+      }
+
       .article-row {
         display: grid;
-        grid-template-columns: 108px 1fr auto;
-        gap: var(--sp-6);
-        padding: var(--sp-6) 0;
+        /* 日期列 108px：「2026 · 07 · 19」在 mono 0.76rem 下实测要 100px，
+           92px 会把最后一位数字裁掉 */
+        grid-template-columns: 108px 1fr;
+        gap: var(--sp-5);
+        padding: var(--sp-4) var(--sp-2) var(--sp-4) 0;
         border-bottom: 1px solid var(--line);
         text-decoration: none;
         color: inherit;
-        transition: padding var(--dur-fast);
+        transition:
+          padding-left var(--dur-fast),
+          border-color var(--dur-fast);
         align-items: start;
       }
       .article-row:hover {
-        padding-left: var(--sp-3);
+        padding-left: var(--sp-2);
+        border-color: var(--accent-rust);
       }
       .article-row .art-date {
         font-family: var(--font-mono);
-        font-size: 0.78rem;
+        font-size: 0.76rem;
         color: var(--text-dim);
-        letter-spacing: 0.05em;
-        padding-top: 6px;
-        /* 80px 列宽装不下「2026 · 07 · 19」，强制单行避免折成三行 */
+        letter-spacing: 0.04em;
+        padding-top: 5px;
         white-space: nowrap;
         font-variant-numeric: lining-nums;
       }
       .article-row .art-body {
         min-width: 0;
       }
-      .article-row .art-body h3 {
-        font-family: var(--font-display);
-        font-weight: 500;
-        font-size: 1.5rem;
-        line-height: 1.2;
-        letter-spacing: -0.01em;
-        color: var(--text);
-        margin: 0 0 var(--sp-2);
-        transition: color var(--dur-fast);
-      }
-      .article-row:hover .art-body h3 {
-        color: var(--accent-rust);
-      }
-      .article-row .art-meta {
+      .article-row .art-title {
         display: flex;
         flex-wrap: wrap;
-        gap: 6px;
-        margin-bottom: var(--sp-3);
+        align-items: baseline;
+        gap: var(--sp-2);
+        margin-bottom: 6px;
       }
-      .article-row .art-meta .tag {
+      .article-row h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.32rem;
+        line-height: 1.28;
+        letter-spacing: -0.005em;
+        color: var(--text);
+        margin: 0;
+        transition: color var(--dur-fast);
+      }
+      .article-row:hover h3 {
+        color: var(--accent-rust);
+      }
+      /* 来源徽章：把「抖音 / 小红书 / 微信」从分类槽位里拿出来 */
+      .badge {
         font-family: var(--font-mono);
-        font-size: 0.7rem;
-        padding: 3px 10px;
-        border-radius: 4px;
+        font-size: 0.64rem;
+        line-height: 1.5;
+        padding: 1px 7px;
+        border-radius: var(--r-sm);
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      .badge.src {
         background: var(--bg-soft);
         color: var(--text-dim);
         border: 1px solid var(--line);
       }
-      .article-row .art-meta .tag.cat {
+      .badge.src.is-original {
+        color: var(--accent-jade-text);
+        border-color: rgba(74, 158, 127, 0.4);
         background: transparent;
-        color: var(--accent-rust);
-        border-color: rgba(201, 119, 47, 0.35);
+      }
+      .badge.cat {
+        color: var(--accent-rust-text);
+        border: 1px solid rgba(184, 88, 29, 0.35);
+        background: transparent;
       }
       .article-row p {
         font-family: var(--font-serif);
         color: var(--text-soft);
-        font-size: 0.95rem;
-        line-height: 1.65;
+        font-size: 0.94rem;
+        line-height: 1.6;
         margin: 0;
-      }
-      .article-row .arrow {
-        font-family: var(--font-mono);
-        color: var(--text-dim);
-        font-size: 0.85rem;
-        padding-top: 10px;
-        transition:
-          transform var(--dur-fast),
-          color var(--dur-fast);
-      }
-      .article-row:hover .arrow {
-        color: var(--accent-rust);
-        transform: translateX(6px);
+        /* 摘要只留两行，长摘要不再把列表拉长 */
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
       }
 
-      @media (max-width: 700px) {
-        .article-row {
-          grid-template-columns: 1fr;
-          gap: var(--sp-2);
-        }
-        .article-row .arrow {
-          display: none;
-        }
-        .article-row .art-date {
-          padding-top: 0;
-          font-size: 0.72rem;
-        }
-        .article-row .art-body h3 {
-          font-size: 1.2rem;
-        }
-        /* 移动端标签与分类横向铺满，避免长标签撑破视口 */
-        .filter-bar,
-        .cat-pills {
-          padding-left: var(--sp-4);
-          padding-right: var(--sp-4);
-        }
-        .cat-pills a,
-        .filter-btn {
-          max-width: 100%;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-        }
-      }
-
-      /* Empty state */
+      /* ---------- 空状态 ---------- */
       .empty {
         text-align: center;
         padding: var(--sp-10) var(--sp-6);
         color: var(--text-dim);
         font-family: var(--font-display);
         font-size: 1.4rem;
+      }
+      .empty span {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        margin-top: var(--sp-3);
+        letter-spacing: 0.04em;
+      }
+
+      /* ---------- 系列入口 ---------- */
+      .series-strip {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-7) var(--sp-6) 0;
+      }
+      .series-strip .strip-head {
+        font-family: var(--font-mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+        margin-bottom: var(--sp-4);
+      }
+      .series-cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--sp-4);
+      }
+      .series-card {
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        padding: var(--sp-4) var(--sp-5);
+        text-decoration: none;
+        color: inherit;
+        background: var(--bg-soft);
+        transition:
+          border-color var(--dur-fast),
+          transform var(--dur-fast);
+      }
+      .series-card:hover {
+        border-color: var(--accent-rust);
+        transform: translateY(-2px);
+      }
+      .series-card .s-name {
+        font-family: var(--font-display);
+        font-size: 1.1rem;
+        color: var(--text);
+        margin-bottom: 6px;
+      }
+      .series-card .s-desc {
+        font-family: var(--font-serif);
+        font-size: 0.86rem;
+        line-height: 1.55;
+        color: var(--text-dim);
+        margin: 0 0 10px;
+      }
+      .series-card .s-meta {
+        font-family: var(--font-mono);
+        font-size: 0.68rem;
+        color: var(--accent-rust-text);
+        letter-spacing: 0.06em;
+      }
+
+      @media (max-width: 900px) {
+        .series-cards {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 700px) {
+        .page-intro {
+          padding: var(--sp-8) var(--sp-4) var(--sp-5);
+        }
+        .search-bar,
+        .filter-bar,
+        .archive,
+        .series-strip {
+          padding-left: var(--sp-4);
+          padding-right: var(--sp-4);
+        }
+        .article-row {
+          grid-template-columns: 1fr;
+          gap: var(--sp-1);
+        }
+        .article-row .art-date {
+          padding-top: 0;
+          font-size: 0.7rem;
+        }
+        .article-row h3 {
+          font-size: 1.1rem;
+        }
+        .filter-btn {
+          max-width: 100%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
       }
     </style>
   </head>
@@ -277,11 +438,11 @@
         <a href="../index.html" class="brand">
           <span class="logo">
             <svg class="icon icon-lg" viewBox="0 0 64 64" aria-hidden="true">
-              <circle cx="32" cy="32" r="30" fill="var(--ink-900)" stroke="var(--accent-rust)" stroke-width="1.5"/>
-              <path d="M 18 22 Q 32 16 46 22" fill="none" stroke="var(--accent-rust)" stroke-width="1" stroke-linecap="round" opacity="0.55"/>
-              <path d="M 18 42 Q 32 48 46 42" fill="none" stroke="var(--accent-rust)" stroke-width="1" stroke-linecap="round" opacity="0.55"/>
+              <circle cx="32" cy="32" r="30" fill="var(--ink-900)" stroke="var(--accent-rust)" stroke-width="1.5" />
+              <path d="M 18 22 Q 32 16 46 22" fill="none" stroke="var(--accent-rust)" stroke-width="1" stroke-linecap="round" opacity="0.55" />
+              <path d="M 18 42 Q 32 48 46 42" fill="none" stroke="var(--accent-rust)" stroke-width="1" stroke-linecap="round" opacity="0.55" />
               <text x="32" y="39" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="30" font-style="italic" font-weight="500" fill="var(--ink-50)">E</text>
-              <circle cx="32" cy="18" r="1.8" fill="var(--accent-rust)"/>
+              <circle cx="32" cy="18" r="1.8" fill="var(--accent-rust)" />
             </svg>
           </span>
           <span>expectopatronus</span>
@@ -289,16 +450,16 @@
         <div class="nav-links" id="nav-links">
           <a href="../index.html">首页</a>
           <a href="home.html" class="is-active">文章</a>
-          <a href="home.html?cat=健康生活">健康生活</a>
-          <a href="../post/deepseek/deepseek.html">DeepSeek</a>
+          <a href="series.html">系列</a>
+          <a href="about.html">关于</a>
           <a href="../nav/index.html" target="_blank" rel="noopener">导航站</a>
         </div>
         <button class="menu-toggle" id="menu-toggle" aria-label="菜单">
-          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></svg>
         </button>
         <button id="theme-toggle" class="theme-btn" aria-label="切换主题">
           <svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" />
           </svg>
         </button>
       </div>
@@ -306,21 +467,37 @@
 
     <section class="page-intro">
       <h1>全部<em>笔记</em>与<em>文章</em></h1>
-      <p>按日期倒序排列——最新的在最上方。使用筛选器按主题浏览，或点击标签查看相关内容。共 121 篇。</p>
+      <p>
+        按时间倒序排列。上方可以直接搜索标题、摘要与标签，下方按主题筛选。每篇转载都标注了来源，原创的会带一个绿色的「原创」标记。
+      </p>
+      <div class="intro-counts" id="intro-counts"><span>共 121 篇</span></div>
     </section>
+
+    <div class="search-bar">
+      <div class="search-field" id="search-field">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6" />
+          <path d="M16 16l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+        </svg>
+        <input
+          type="search"
+          id="q"
+          placeholder="搜索标题、摘要、标签……"
+          autocomplete="off"
+          aria-label="搜索文章"
+        />
+        <kbd>/</kbd>
+        <button class="search-clear" id="q-clear" type="button" aria-label="清除搜索">✕</button>
+      </div>
+    </div>
 
     <div class="filter-bar" id="cat-bar">
       <span class="bar-label">主题</span>
-      <!-- 分类按钮由 JS 动态渲染 -->
     </div>
 
-    <div class="cat-pills" id="tag-pills">
-      <!-- 标签云由 JS 动态渲染 -->
-    </div>
+    <div class="series-strip" id="series-strip"></div>
 
-    <div class="article-list" id="article-list">
-      <!-- Rendered by JS below -->
-    </div>
+    <div class="archive" id="archive"></div>
 
     <footer class="site-footer">
       <div class="footer-content">
@@ -329,15 +506,22 @@
           <div class="footer-meta">© 2026 · 个人笔记 · GitHub Pages</div>
         </div>
         <div class="footer-social">
+          <a href="../feed.xml" aria-label="RSS 订阅" title="RSS 订阅">
+            <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 19a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" fill="currentColor" />
+              <path d="M4 10.5a9.5 9.5 0 0 1 9.5 9.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+              <path d="M4 4.5A15.5 15.5 0 0 1 19.5 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+            </svg>
+          </a>
           <a href="https://github.com/expectopatronus00" target="_blank" rel="noopener" aria-label="GitHub">
             <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true">
-              <path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/>
+              <path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z" />
             </svg>
           </a>
           <a href="mailto:18821772508@163.com" aria-label="Email">
             <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true">
-              <rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/>
-              <path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5" />
+              <path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </a>
         </div>
@@ -346,16 +530,20 @@
 
     <button class="floating-top" id="back-to-top" aria-label="返回顶部">
       <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-        <path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+        <path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
       </svg>
     </button>
 
     <script src="articles.js"></script>
     <script>
       (function () {
-        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
-        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var MOON_SVG =
+          '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG =
+          '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+
+        /* ---------- 主题 ---------- */
         var saved = localStorage.getItem('theme') || 'dark';
         document.documentElement.dataset.theme = saved;
         var ti = document.querySelector('#theme-toggle .theme-icon');
@@ -369,7 +557,7 @@
             if (ti) ti.innerHTML = cur === 'light' ? SUN_SVG : MOON_SVG;
           });
 
-        // Back to top
+        /* ---------- 返回顶部 ---------- */
         var back = document.getElementById('back-to-top');
         if (back) {
           window.addEventListener('scroll', function () {
@@ -380,7 +568,7 @@
           });
         }
 
-        // Mobile menu toggle
+        /* ---------- 移动端菜单 ---------- */
         var menuBtn = document.getElementById('menu-toggle');
         var navLinks = document.getElementById('nav-links');
         if (menuBtn && navLinks) {
@@ -389,158 +577,209 @@
           });
         }
 
-        // Articles data — 由 articles.js 提供 (window.articles)
-        var articles = window.articles;
+        /* ---------- 数据 ---------- */
+        var BLOG = window.BLOG;
+        var articles = BLOG.visible; // 已按日期倒序，已剔除合并掉的重复文章
 
-        // Sort by date desc
-        articles.sort(function (a, b) {
-          return b.date.localeCompare(a.date);
-        });
-
-        // State
-        var state = { cat: 'all', tag: 'all' };
-
-        // Apply URL params
-        var params = new URLSearchParams(window.location.search);
-        if (params.get('cat')) state.cat = params.get('cat');
-        if (params.get('tag')) state.tag = params.get('tag');
-
-        // 从 articles 中提取所有分类（去重，保持原顺序）
-        var categories = [];
-        articles.forEach(function (a) {
-          if (categories.indexOf(a.category) === -1) categories.push(a.category);
-        });
-
-        // 从 articles 中提取所有标签，并按使用频次排序
-        // 459 个标签里 372 个只用过一次 —— 全部平铺会把文章列表挤出首屏，
-        // 因此只默认展示高频标签，长尾折叠到「展开全部」之后。
-        var tagCount = {};
-        articles.forEach(function (a) {
-          (a.tags || []).forEach(function (t) {
-            tagCount[t] = (tagCount[t] || 0) + 1;
-          });
-        });
-        var tags = Object.keys(tagCount).sort(function (a, b) {
-          return tagCount[b] - tagCount[a] || a.localeCompare(b, 'zh');
-        });
-        var TAG_VISIBLE = 16; // 首屏展示的高频标签数量
-
-        // 动态渲染分类按钮
-        var catBar = document.getElementById('cat-bar');
-        var catButtons = ['<button class="filter-btn" data-cat="all">全部</button>'].concat(
-          categories.map(function (c) {
-            return '<button class="filter-btn" data-cat="' + c + '">' + c + '</button>';
-          })
-        );
-        catBar.insertAdjacentHTML('beforeend', catButtons.join(''));
-
-        // 动态渲染标签云（高频优先 + 长尾折叠）
-        var tagPills = document.getElementById('tag-pills');
-        var pill = function (t) {
-          return '<a href="#" data-tag="' + t + '">' + t + '<span class="tag-count">' + tagCount[t] + '</span></a>';
-        };
-        var tagHead = tags.slice(0, TAG_VISIBLE);
-        var tagTail = tags.slice(TAG_VISIBLE);
-        tagPills.innerHTML =
-          '<a href="#" data-tag="all" class="is-active">全标签</a>' +
-          tagHead.map(pill).join('') +
-          (tagTail.length
-            ? '<button class="tag-more" id="tag-more">展开全部 ' +
-              tags.length +
-              ' 个标签 →</button>' +
-              '<span class="tag-rest" id="tag-rest" hidden>' +
-              tagTail.map(pill).join('') +
-              '</span>'
-            : '');
-
-        var tagMore = document.getElementById('tag-more');
-        if (tagMore) {
-          tagMore.addEventListener('click', function () {
-            var rest = document.getElementById('tag-rest');
-            var opening = rest.hasAttribute('hidden');
-            if (opening) rest.removeAttribute('hidden');
-            else rest.setAttribute('hidden', '');
-            tagMore.textContent = opening
-              ? '收起长尾标签 ←'
-              : '展开全部 ' + tags.length + ' 个标签 →';
-          });
+        /* ---------- 计数条 ---------- */
+        // 注意：第一段必须是纯文本「共 N 篇」，scripts/repo-lint.cjs 用 /共\s*(\d+)\s*篇/ 校验
+        var counts = document.getElementById('intro-counts');
+        if (counts) {
+          var merged = BLOG.count.total - BLOG.count.visible;
+          counts.innerHTML =
+            '<span>共 ' + BLOG.count.total + ' 篇</span>' +
+            '<span class="is-original">原创 ' + BLOG.count.original + ' 篇</span>' +
+            '<span>转载 ' + (BLOG.count.total - BLOG.count.original) + ' 篇</span>' +
+            (merged > 0 ? '<span>' + merged + ' 篇同题内容已并入系列长文</span>' : '');
         }
 
-        // UI: set active filter btn
-        document.querySelectorAll('.filter-btn').forEach(function (btn) {
-          btn.classList.toggle('is-active', btn.dataset.cat === state.cat);
-          btn.addEventListener('click', function () {
-            state.cat = btn.dataset.cat;
-            state.tag = 'all';
-            document.querySelectorAll('.filter-btn').forEach(function (b) {
-              b.classList.toggle('is-active', b === btn);
-            });
-            document.querySelectorAll('#tag-pills a').forEach(function (a) {
-              a.classList.toggle('is-active', a.dataset.tag === 'all');
-            });
-            render();
-          });
-        });
-        document.querySelectorAll('#tag-pills a').forEach(function (a) {
-          a.classList.toggle('is-active', a.dataset.tag === state.tag);
-          a.addEventListener('click', function (e) {
-            e.preventDefault();
-            state.tag = a.dataset.tag;
-            document.querySelectorAll('#tag-pills a').forEach(function (x) {
-              x.classList.toggle('is-active', x === a);
-            });
-            render();
-          });
-        });
+        /* ---------- 主题筛选 ---------- */
+        var state = { cat: 'all', q: '' };
 
-        // Render
-        function render() {
-          var list = document.getElementById('article-list');
-          var filtered = articles.filter(function (a) {
-            var ok = state.cat === 'all' || a.category === state.cat;
-            if (ok && state.tag !== 'all') ok = (a.tags || []).indexOf(state.tag) >= 0;
-            return ok;
-          });
-          if (filtered.length === 0) {
-            list.innerHTML = '<div class="empty">该筛选下暂无内容</div>';
-            return;
+        var params = new URLSearchParams(window.location.search);
+        if (params.get('cat')) state.cat = params.get('cat');
+        if (params.get('q')) state.q = params.get('q').trim().toLowerCase();
+
+        var catBar = document.getElementById('cat-bar');
+        var catButtons = [
+          '<button class="filter-btn" data-cat="all">全部<span class="n">' + articles.length + '</span></button>'
+        ];
+        BLOG.categories.forEach(function (c) {
+          var n = BLOG.inCategory(c.name).length;
+          if (n === 0) return;
+          catButtons.push(
+            '<button class="filter-btn" data-cat="' +
+              c.name +
+              '">' +
+              c.name +
+              '<span class="n">' +
+              n +
+              '</span></button>'
+          );
+        });
+        catBar.insertAdjacentHTML('beforeend', catButtons.join(''));
+
+        var catBtns = catBar.querySelectorAll('.filter-btn');
+        function syncCatButtons() {
+          for (var i = 0; i < catBtns.length; i++) {
+            catBtns[i].classList.toggle('is-active', catBtns[i].dataset.cat === state.cat);
           }
-          list.innerHTML = filtered
-            .map(function (a) {
-              var tags = (a.tags || [])
-                .map(function (t) {
-                  return '<span class="tag">' + t + '</span>';
-                })
-                .join('');
+        }
+        for (var bi = 0; bi < catBtns.length; bi++) {
+          catBtns[bi].addEventListener('click', function () {
+            state.cat = this.dataset.cat;
+            syncCatButtons();
+            render();
+          });
+        }
+        syncCatButtons();
+
+        /* ---------- 系列入口 ---------- */
+        var strip = document.getElementById('series-strip');
+        if (strip) {
+          var cards = BLOG.series
+            .map(function (s) {
+              var n = BLOG.inSeries(s.id).length;
               return (
-                '<a class="article-row" href="' +
-                a.url +
+                '<a class="series-card" href="series.html#' +
+                s.id +
                 '">' +
-                '<div class="art-date">' +
-                // 只取日期部分：列表里显示到分钟既无信息量，又把日期列挤成三行
-                a.date
-                  .slice(0, 10)
-                  .replace(/-/g, ' · ') +
+                '<div class="s-name">' +
+                s.name +
                 '</div>' +
-                '<div class="art-body">' +
-                '<div class="art-meta"><span class="tag cat">' +
-                a.category +
-                '</span>' +
-                tags +
-                '</div>' +
-                '<h3>' +
-                a.title +
-                '</h3>' +
-                '<p>' +
-                a.summary +
+                '<p class="s-desc">' +
+                s.desc +
                 '</p>' +
-                '</div>' +
-                '<div class="arrow">→</div>' +
+                '<div class="s-meta">' +
+                n +
+                ' 篇 · 按顺序阅读 →</div>' +
                 '</a>'
               );
             })
             .join('');
+          strip.innerHTML =
+            '<div class="strip-head">系列连载 · series</div><div class="series-cards">' + cards + '</div>';
         }
+
+        /* ---------- 搜索 ---------- */
+        var field = document.getElementById('search-field');
+        var input = document.getElementById('q');
+        var clearBtn = document.getElementById('q-clear');
+
+        function setQuery(v) {
+          state.q = v.trim().toLowerCase();
+          field.classList.toggle('has-value', v.length > 0);
+          render();
+        }
+
+        if (input) {
+          // 支持从文章页搜索链接带过来的 ?q=
+          if (state.q) {
+            input.value = state.q;
+            field.classList.add('has-value');
+          }
+          input.addEventListener('input', function () {
+            setQuery(this.value);
+          });
+          // 「/」聚焦搜索框，和主流阅读器一致
+          document.addEventListener('keydown', function (e) {
+            if (e.key === '/' && document.activeElement !== input) {
+              e.preventDefault();
+              input.focus();
+            }
+            if (e.key === 'Escape' && document.activeElement === input) {
+              input.value = '';
+              setQuery('');
+              input.blur();
+            }
+          });
+        }
+        if (clearBtn) {
+          clearBtn.addEventListener('click', function () {
+            input.value = '';
+            setQuery('');
+            input.focus();
+          });
+        }
+
+        /* ---------- 匹配 ---------- */
+        function matches(a) {
+          if (state.cat !== 'all' && a.category !== state.cat) return false;
+          if (!state.q) return true;
+          var hay = (a.title + ' ' + a.summary + ' ' + (a.tags || []).join(' ') + ' ' + a.category).toLowerCase();
+          // 空格分隔的多个词要全部命中
+          var terms = state.q.split(/\s+/);
+          for (var i = 0; i < terms.length; i++) {
+            if (terms[i] && hay.indexOf(terms[i]) === -1) return false;
+          }
+          return true;
+        }
+
+        /* ---------- 渲染 ---------- */
+        function rowHTML(a, showCat) {
+          var srcCls = a.original ? 'badge src is-original' : 'badge src';
+          return (
+            '<a class="article-row" href="' +
+            a.url +
+            '">' +
+            '<div class="art-date">' +
+            a.date.slice(0, 10).replace(/-/g, ' · ') +
+            '</div>' +
+            '<div class="art-body">' +
+            '<div class="art-title">' +
+            '<h3>' +
+            a.title +
+            '</h3>' +
+            '<span class="' +
+            srcCls +
+            '">' +
+            a.source +
+            '</span>' +
+            (showCat ? '<span class="badge cat">' + a.category + '</span>' : '') +
+            '</div>' +
+            '<p>' +
+            a.summary +
+            '</p>' +
+            '</div>' +
+            '</a>'
+          );
+        }
+
+        function render() {
+          var box = document.getElementById('archive');
+          var list = articles.filter(matches);
+          var showCat = state.cat === 'all';
+
+          if (list.length === 0) {
+            box.innerHTML =
+              '<div class="empty">没有找到匹配的文章<span>换个关键词，或点「全部」回到完整归档</span></div>';
+            return;
+          }
+
+          // 按月分组，给长列表一个可扫读的骨架
+          var html = '';
+          var curMonth = '';
+          for (var i = 0; i < list.length; i++) {
+            var a = list[i];
+            var m = a.date.slice(0, 7).replace('-', ' · ');
+            if (m !== curMonth) {
+              curMonth = m;
+              var nInMonth = 0;
+              for (var j = i; j < list.length; j++) {
+                if (list[j].date.slice(0, 7) === a.date.slice(0, 7)) nInMonth++;
+              }
+              html +=
+                '<div class="month-head"><span class="m-label">' +
+                m +
+                '</span><span class="m-line"></span><span class="m-count">' +
+                nInMonth +
+                ' 篇</span></div>';
+            }
+            html += rowHTML(a, showCat);
+          }
+          box.innerHTML = html;
+        }
+
         render();
       })();
     </script>

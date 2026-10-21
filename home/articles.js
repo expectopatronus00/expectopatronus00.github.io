@@ -1093,3 +1093,276 @@ window.articles = [
             tags: ['Linux', 'Bash', '运维', '命令行'],
           },
 ];
+
+/* ==================================================================
+   派生层 · derived fields
+   ------------------------------------------------------------------
+   上面是原始条目，由 skills/douyin-post-skill/generate.js 等脚本维护。
+   下面不改动原始数据，只就地补齐四个字段：
+
+     source     来源：原创 / 抖音 / 小红书 / 微信
+     category   主题：八个语义桶之一（原来的 21 个分类混了来源维度）
+     series     所属系列（可选）
+     hidden     已合并的重复文章，列表页不展示，页面本身保留避免 404
+
+   加载顺序：本文件必须在页面脚本之前执行，页面脚本直接用
+   window.BLOG.visible 即可拿到「该显示的、按日期倒序」的文章。
+   ================================================================== */
+(function () {
+  'use strict';
+
+  /* ---- 八个主题桶（顺序即列表页顺序） ---- */
+  var CATEGORIES = [
+    { id: 'ai-code',  name: 'AI 编程',     desc: 'Claude Code、Skill、Agent 工作流与提示词工程' },
+    { id: 'ai-tool',  name: 'AI 工具',     desc: '工具评测、开源项目与上手教程' },
+    { id: 'ai-infra', name: 'AI 基础设施', desc: 'GPU、芯片、服务器硬件与模型能力' },
+    { id: 'ops',      name: '运维与部署',   desc: 'Linux、Docker、自建服务与踩坑记录' },
+    { id: 'quant',    name: '量化与投资',   desc: '交易工具、数据接口与选股框架' },
+    { id: 'growth',   name: '效率与成长',   desc: '工作流、职业选择与副业' },
+    { id: 'life',     name: '健康与生活',   desc: '身体、饮食与日常' },
+    { id: 'misc',     name: '杂项',         desc: '不属于以上分类的笔记' }
+  ];
+
+  /* ---- 旧分类 → 新主题桶 ---- */
+  var DEFAULT_CATEGORY = {
+    'AI编程': 'ai-code', 'AI智能体': 'ai-code', '前端开发': 'ai-code',
+    'AI工具': 'ai-tool', 'AI应用': 'ai-tool', 'AI教程': 'ai-tool',
+    'AI': 'ai-tool', '开发工具': 'ai-tool', '开源项目': 'ai-tool',
+    'AI技术': 'ai-infra', 'GPU': 'ai-infra', '技术前沿': 'ai-infra',
+    '运维': 'ops', 'Linux': 'ops',
+    'AI量化': 'quant',
+    '效率工具': 'growth', '自我提升': 'growth',
+    '职业发展': 'growth', '创业副业': 'growth',
+    '健康生活': 'life', '健康科普': 'life',
+    'AI资讯': 'misc',
+    '抖音搬运': 'misc', '小红书搬运': 'misc', '微信搬运': 'misc'
+  };
+
+  /* ---- 按 id 指定，覆盖上面的默认映射 ----
+     旧分类里 '抖音搬运' / '小红书搬运' / '微信搬运' 是来源维度，
+     这 47 条必须逐条归位，机器猜不准。 */
+  var CATEGORY_BY_ID = {
+    /* 早期混合分类里的修正 */
+    'xhs-6a4c61ba0000000011012352': 'ai-tool',
+    'dy-7662303729881713929': 'ai-infra',
+    'dy-7657928758317305140': 'growth',
+    'xhs-6a5059e2000000001101f32b': 'ai-tool',
+    'dy-7646390254617857295': 'ai-code',
+    'dy-7659996815441415458': 'ai-infra',
+    'dy-7646286048544275363': 'ai-code',
+    'dy-7659683712757435658': 'ai-code',
+    'dy-7658411673698457834': 'ai-code',
+    'dy-7659247081688730923': 'ai-code',
+    'dy-7663052798950444330': 'ai-code',
+    'dy-7650419412096355626': 'ai-code',
+    'xhs-6a534d6d000000000f01f2ca': 'growth',
+    'dy-7660510161102032162': 'growth',
+    'dy-7661102804710198534': 'growth',
+    'dy-7658867632518597951': 'ai-tool',
+    'dy-7659729868686533541': 'ai-tool',
+    'xhs-6a2be11d00000000160279a4': 'ai-code',
+    'dy-7661107087703419890': 'misc',
+    'nvdia-b300': 'ai-infra',
+    '144pcie-gen6-lane-ssd': 'ai-infra',
+    'dy-7659354802962752741': 'ai-infra',
+    'dy-7662725504767646833': 'quant',
+    'dy-7652011374368935211': 'quant',
+    'dy-7661476600529297914': 'quant',
+    'dy-7660100925658320174': 'quant',
+    'opc-10-skill': 'ai-code',
+    'post-2026-06-20-tj6zly': 'ai-tool',
+
+    /* 尾部 43 条「抖音搬运」逐条归位 */
+    'dy-7650112502977678627': 'ai-code',
+    'dy-fdpDisviqWg': 'ai-tool',
+    'dy-JEeapIvdA9Y': 'ai-tool',
+    'dy-CevBBUATVbU': 'growth',
+    'dy-Qr1ftmiqCiY': 'ai-code',
+    'dy-12riNYVQrSg': 'ai-code',
+    'dy-shwRRX6Qljo': 'ai-code',
+    'post-2026-06-20-wx': 'ai-infra',
+    'dy-7655001000000000001': 'ai-code',
+    'dy-7654001000000000001': 'ai-code',
+    'dy-7653001000000000001': 'ai-code',
+    'dy-7653002000000000002': 'ai-code',
+    'dy-7653003000000000003': 'ai-code',
+    'dy-7652001000000000001': 'ai-code',
+    'dy-7651892795757595958': 'ai-code',
+    'dy-7652003000000000003': 'ai-code',
+    'dy-7652004000000000004': 'ai-infra',
+    'dy-7652005000000000005': 'ai-code',
+    'dy-7651216304736685355': 'ai-code',
+    'dy-7650776381453765903': 'ai-code',
+    'dy-7652681300725206291': 'misc',
+    'dy-7652678566227741961': 'ai-tool',
+    'dy-7651829281382731051': 'ai-tool',
+    'dy-7651654548859145491': 'ai-code',
+    'dy-7643296846928039183': 'ai-tool',
+    'dy-7639879161721479968': 'ai-code',
+    'dy-7631174704484699433': 'growth',
+    'dy-7640259628177181992': 'misc',
+    'dy-7649321749746476261': 'ai-code',
+    'wx-openclaw': 'ops',
+    'wx-gpu-burn': 'ai-infra',
+    'wx-gpu-server-hardware-2': 'ai-infra',
+    'wx-b300-hardware': 'ai-infra',
+    'dy-7651998760762871090': 'ai-code',
+    'dy-7646747643204900836': 'quant',
+    'dy-7641962519699017001': 'ai-infra',
+    'dy-7651945427952078131': 'misc',
+    'dy-7651525917084372224': 'quant',
+    'deepseek-doc': 'ai-tool',
+    'deepseek-api': 'ai-tool',
+    'deepseek-main': 'ai-tool',
+    'post1': 'ops'
+  };
+
+  /* ---- 系列 ---- */
+  var SERIES = [
+    {
+      id: 'loop',
+      name: 'Loop Engineering',
+      desc: '从 Prompt 到 Agent 再到 Loop，AI 工程范式的三次跃迁。',
+      members: [
+        'dy-12riNYVQrSg', 'dy-shwRRX6Qljo', 'dy-7651892795757595958',
+        'dy-7652003000000000003', 'dy-7651216304736685355', 'dy-7659073795524676890'
+      ]
+    },
+    {
+      id: 'skill',
+      name: 'Skill 生态',
+      desc: 'Skill 是什么、怎么写、去哪找——一个正在成形的开发生态。',
+      members: [
+        'dy-7646390254617857295', 'ai-agent-skills-137', 'post-2026-06-20-ij5uk0',
+        'dy-7653002000000000002', 'dy-7650112502977678627', 'dy-7660089275492847218',
+        'dy-7660493457156279567', 'dy-7657399738630671666', 'dy-7660555275438427434',
+        'dy-Qr1ftmiqCiY', 'dy-7645689246305212278', 'dy-7663846136494752070',
+        'xhs-6a5059e2000000001101f32b', 'dy-7652678566227741961', 'dy-7658162037171817766'
+      ]
+    },
+    {
+      id: 'gpu',
+      name: 'GPU 硬件实测',
+      desc: '从压测、互连到整机功耗，把服务器硬件拆开看。',
+      members: [
+        'wx-gpu-burn', 'wx-gpu-server-hardware-2', 'wx-b300-hardware',
+        'nvdia-b300', '144pcie-gen6-lane-ssd', 'dy-7652004000000000004'
+      ]
+    }
+  ];
+
+  /* ---- 合并：标题几乎相同的重复文章，保留第一条 ---- */
+  var MERGED = {
+    'dy-7652001000000000001': 'dy-12riNYVQrSg',
+    'dy-7650776381453765903': 'dy-12riNYVQrSg'
+  };
+
+  /* ---- 标题修正：抓取时被截断的条目 ---- */
+  var TITLE_FIX = {
+    'post-2026-06-20-wx': 'vLLM 部署方案：FP8 量化与 2×H20 的显存账'
+  };
+
+  /* ---- 原创白名单：其余非 dy-/xhs- 前缀的都是微信转载 ---- */
+  var ORIGINAL = ['deepseek-doc', 'deepseek-api', 'deepseek-main', 'post1'];
+
+  function sourceOf(id) {
+    if (id.indexOf('dy-') === 0) return '抖音';
+    if (id.indexOf('xhs-') === 0) return '小红书';
+    if (ORIGINAL.indexOf(id) !== -1) return '原创';
+    return '微信';
+  }
+
+  function categoryName(id) {
+    for (var i = 0; i < CATEGORIES.length; i++) {
+      if (CATEGORIES[i].id === id) return CATEGORIES[i].name;
+    }
+    return '杂项';
+  }
+
+  /* 系列索引：id -> { id, name, index, total } */
+  var seriesIndex = {};
+  for (var s = 0; s < SERIES.length; s++) {
+    var members = SERIES[s].members;
+    for (var m = 0; m < members.length; m++) {
+      seriesIndex[members[m]] = {
+        id: SERIES[s].id,
+        name: SERIES[s].name,
+        index: m + 1,
+        total: members.length
+      };
+    }
+  }
+
+  /* 就地补字段 */
+  var raw = window.articles || [];
+  for (var i = 0; i < raw.length; i++) {
+    var a = raw[i];
+    var cid = CATEGORY_BY_ID[a.id] || DEFAULT_CATEGORY[a.category] || 'misc';
+    a.source = sourceOf(a.id);
+    a.original = a.source === '原创';
+    a.categoryId = cid;
+    a.legacyCategory = a.category;
+    a.category = categoryName(cid);
+    if (TITLE_FIX[a.id]) a.title = TITLE_FIX[a.id];
+    if (seriesIndex[a.id]) a.series = seriesIndex[a.id];
+    if (MERGED[a.id]) {
+      a.hidden = true;
+      a.mergedInto = MERGED[a.id];
+    }
+  }
+
+  function byDateDesc(x, y) {
+    return x.date < y.date ? 1 : (x.date > y.date ? -1 : 0);
+  }
+
+  var visible = [];
+  for (var j = 0; j < raw.length; j++) {
+    if (!raw[j].hidden) visible.push(raw[j]);
+  }
+  visible.sort(byDateDesc);
+
+  var counts = { total: raw.length, visible: visible.length, original: 0, repost: 0 };
+  for (var k = 0; k < visible.length; k++) {
+    if (visible[k].original) counts.original++; else counts.repost++;
+  }
+
+  window.BLOG = {
+    categories: CATEGORIES,
+    series: SERIES,
+    all: raw,
+    visible: visible,
+    count: counts,
+
+    /* 某个主题桶下的文章，已按日期倒序 */
+    inCategory: function (name) {
+      var out = [];
+      for (var i = 0; i < visible.length; i++) {
+        if (visible[i].category === name) out.push(visible[i]);
+      }
+      return out;
+    },
+
+    /* 某个系列的文章，按系列内序号 */
+    inSeries: function (id) {
+      var out = [];
+      for (var i = 0; i < visible.length; i++) {
+        if (visible[i].series && visible[i].series.id === id) out.push(visible[i]);
+      }
+      out.sort(function (x, y) { return x.series.index - y.series.index; });
+      return out;
+    },
+
+    /* 最近 n 篇 */
+    latest: function (n) {
+      return visible.slice(0, n || 10);
+    },
+
+    /* 按 id 取 */
+    get: function (id) {
+      for (var i = 0; i < raw.length; i++) {
+        if (raw[i].id === id) return raw[i];
+      }
+      return null;
+    }
+  };
+})();

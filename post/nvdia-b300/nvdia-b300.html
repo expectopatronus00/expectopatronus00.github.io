@@ -318,11 +318,7 @@
     <nav class="site-nav">
       <div class="nav-inner" style="display:flex;align-items:center;justify-content:space-between;gap:var(--sp-5);">
         <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
-        <div class="nav-links">
-          <a href="../../index.html">首页</a>
-          <a href="../../home/home.html" class="is-active">文章</a>
-          <a href="../../post/deepseek/deepseek.html">DeepSeek</a>
-        </div>
+        <div class="nav-links"><a href="../../index.html">首页</a><a href="../../home/home.html" class="is-active">文章</a><a href="../../home/series.html">系列</a><a href="../../home/about.html">关于</a><a href="../../nav/index.html" target="_blank" rel="noopener">导航站</a></div>
         <button id="theme-toggle" class="theme-btn" aria-label="主题切换">
           <svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
         </button>
@@ -530,14 +526,14 @@ journalctl -k | grep -i xid</code></pre></div>
       <p>命令可以按环境调整，但<span class="hl">证据角色不要乱</span>。</p>
 
       <div class="tags-row">
-        <a href="../home/home.html?tag=NVIDIA">#NVIDIA</a>
-        <a href="../home/home.html?tag=B300">#B300</a>
-        <a href="../home/home.html?tag=GPU验收">#GPU验收</a>
-        <a href="../home/home.html?tag=NVLink">#NVLink</a>
-        <a href="../home/home.html?tag=RoCE">#RoCE</a>
-        <a href="../home/home.html?tag=DCGM">#DCGM</a>
-        <a href="../home/home.html?tag=数据中心">#数据中心</a>
-        <a href="../home/home.html?tag=硬件架构">#硬件架构</a>
+        <a href="../../home/home.html?q=NVIDIA">#NVIDIA</a>
+        <a href="../../home/home.html?q=B300">#B300</a>
+        <a href="../../home/home.html?q=GPU%E9%AA%8C%E6%94%B6">#GPU验收</a>
+        <a href="../../home/home.html?q=NVLink">#NVLink</a>
+        <a href="../../home/home.html?q=RoCE">#RoCE</a>
+        <a href="../../home/home.html?q=DCGM">#DCGM</a>
+        <a href="../../home/home.html?q=%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83">#数据中心</a>
+        <a href="../../home/home.html?q=%E7%A1%AC%E4%BB%B6%E6%9E%B6%E6%9E%84">#硬件架构</a>
       </div>
     </article>
 
@@ -579,5 +575,6 @@ journalctl -k | grep -i xid</code></pre></div>
           });
       })();
     </script>
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
   </body>
 </html>

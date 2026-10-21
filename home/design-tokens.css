@@ -1060,3 +1060,280 @@ button:focus-visible,
     bottom: 18px;
   }
 }
+
+/* ══════════════════════════════════════════════════════════
+   ARTICLE ENHANCEMENTS（文章页增强组件）
+   阅读进度条 / 侧边目录 / 来源声明 / 上下篇 / 相关文章
+   全部由 post/article.js 在运行时注入，文章 HTML 本身不需要
+   手写这些结构 —— 118 篇文章无需逐个改。
+   ══════════════════════════════════════════════════════════ */
+
+/* ── 阅读进度条 ─────────────────────────── */
+.read-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0;
+  background: linear-gradient(90deg, var(--accent-rust), var(--accent-gold));
+  z-index: 200;
+  transition: width 0.08s linear;
+  pointer-events: none;
+}
+
+/* ── 正文 + 侧边目录的双栏布局 ───────────── */
+/* 只在宽屏生效：正文保持 780px 不变，TOC 浮在右侧留白里。
+   1180px 会差 20px 溢出（50% + 400 + 210 需要 1220px 才放得下），
+   所以断点取 1240px。 */
+.article-layout {
+  position: relative;
+}
+.article-toc {
+  display: none;
+}
+@media (min-width: 1240px) {
+  .article-toc {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: calc(50% + 400px);
+    width: 210px;
+    padding-top: var(--sp-9);
+    font-family: var(--font-sans);
+  }
+  .article-toc.is-stuck .toc-inner {
+    position: fixed;
+    top: calc(var(--nav-height) + var(--sp-6));
+    left: calc(50% + 400px);
+    width: 210px;
+  }
+}
+.article-toc .toc-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: var(--sp-3);
+  padding-bottom: var(--sp-2);
+  border-bottom: 1px solid var(--line);
+}
+.article-toc ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: toc;
+}
+.article-toc li {
+  counter-increment: toc;
+  margin: 0;
+}
+.article-toc a {
+  display: block;
+  padding: 5px 0 5px var(--sp-3);
+  border-left: 2px solid transparent;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--text-dim);
+  text-decoration: none;
+  transition:
+    color var(--dur-fast),
+    border-color var(--dur-fast);
+}
+.article-toc a::before {
+  content: counter(toc, decimal-leading-zero) ' ';
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text-dim);
+  opacity: 0.7;
+}
+.article-toc a:hover {
+  color: var(--text);
+  border-left-color: var(--line);
+}
+.article-toc a.is-current {
+  color: var(--accent-rust-text);
+  border-left-color: var(--accent-rust);
+}
+.article-toc a.is-current::before {
+  color: var(--accent-rust-text);
+}
+
+/* ── 来源声明块（转载文章） ──────────────── */
+/* 被合并文章的落点提示：页面还在，但内容已并入长文 */
+.merged-note {
+  max-width: var(--container-narrow);
+  margin: 0 auto var(--sp-8);
+  padding: var(--sp-5) var(--sp-6);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent-rust);
+  border-radius: var(--r-md);
+  background: var(--bg-soft);
+}
+.merged-note .mn-head {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-rust-text);
+  margin-bottom: var(--sp-3);
+}
+.merged-note p {
+  font-family: var(--font-sans);
+  font-size: 0.86rem;
+  line-height: 1.75;
+  color: var(--text-soft);
+  margin: 0;
+}
+.merged-note a {
+  color: var(--accent-rust-text);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(212, 105, 42, 0.35);
+  margin-left: 4px;
+}
+.merged-note a:hover {
+  border-bottom-color: var(--accent-rust-text);
+}
+
+/* 替代旧模板里廉价的 .cta-box + .platforms 三卡 */
+.source-note {
+  margin: var(--sp-8) 0 0;
+  padding: var(--sp-5) var(--sp-6);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent-jade);
+  border-radius: var(--r-md);
+  background: var(--bg-soft);
+}
+.source-note .sn-head {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-jade-text);
+  margin-bottom: var(--sp-3);
+}
+.source-note p {
+  font-family: var(--font-sans);
+  font-size: 0.86rem;
+  line-height: 1.75;
+  color: var(--text-soft);
+  margin: 0;
+}
+.source-note a {
+  color: var(--accent-rust-text);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(212, 105, 42, 0.35);
+}
+.source-note a:hover {
+  border-bottom-color: var(--accent-rust-text);
+}
+
+/* ── 上一篇 / 下一篇 ─────────────────────── */
+.prev-next {
+  max-width: var(--container-narrow);
+  margin: 0 auto;
+  padding: var(--sp-8) var(--sp-6) 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-4);
+}
+.prev-next a {
+  display: block;
+  padding: var(--sp-4) var(--sp-5);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  text-decoration: none;
+  transition:
+    border-color var(--dur-fast),
+    transform var(--dur-fast);
+}
+.prev-next a:hover {
+  border-color: var(--accent-rust);
+  transform: translateY(-2px);
+}
+.prev-next .pn-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: var(--sp-2);
+}
+.prev-next .pn-title {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  line-height: 1.35;
+  color: var(--text);
+}
+.prev-next .is-next {
+  text-align: right;
+}
+.prev-next .pn-empty {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* ── 相关文章 ────────────────────────────── */
+.related {
+  max-width: var(--container-narrow);
+  margin: 0 auto;
+  padding: var(--sp-8) var(--sp-6) 0;
+}
+.related .rel-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: var(--sp-4);
+  padding-bottom: var(--sp-3);
+  border-bottom: 1px solid var(--line);
+}
+.related ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.related li {
+  margin: 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+.related li:last-child {
+  border-bottom: 0;
+}
+.related a {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  padding: var(--sp-3) 0;
+  text-decoration: none;
+  color: var(--text-soft);
+  transition: color var(--dur-fast);
+}
+.related a:hover {
+  color: var(--accent-rust-text);
+}
+.related .rel-title {
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+.related .rel-date {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+@media (max-width: 700px) {
+  .prev-next {
+    grid-template-columns: 1fr;
+  }
+  .prev-next .is-next {
+    text-align: left;
+  }
+}
+
