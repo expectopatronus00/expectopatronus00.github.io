@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'dy-7700095546324749594',
+            title: 'SpaceX 开放 146 个 Grok Bot 智能体模板：免费拿之前，先看清这几点',
+            url: '../post/dy-7700095546324749594/dy-7700095546324749594.html',
+            summary: '146 个 Grok Bot 智能体模板号称价值 29200 美元、现在免费——拆开看：免费的是模板，账单是你的。顺带理清 Agent Org Chart 组织架构怎么用，GitHub 上 700 多个智能体项目怎么挑。',
+            category: 'AI 编程',
+            date: '2026-10-24',
+            tags: ["Grok Bot","SpaceXAI","Agent Org Chart","智能体模板","多智能体协作","任务编排","自动化执行","独立验证","抖音"],
+          },
+          {
             id: 'dy-7699051728071948154',
             title: 'Harness²：权重冻结的自我改进，到底改了什么',
             url: '../post/dy-7699051728071948154/dy-7699051728071948154.html',

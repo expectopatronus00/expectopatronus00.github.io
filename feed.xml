@@ -5,14 +5,22 @@
     <link>https://expectopatronus00.github.io/</link>
     <description>一个 AI 工具与实战的中文学习归档：原创踩坑记录 + 精选转载，每篇都标注来源。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 21 Oct 2026 14:48:32 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 24 Oct 2026 06:52:49 GMT</lastBuildDate>
     <atom:link href="https://expectopatronus00.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SpaceX 开放 146 个 Grok Bot 智能体模板：免费拿之前，先看清这几点</title>
+      <link>https://expectopatronus00.github.io/post/dy-7700095546324749594/dy-7700095546324749594.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7700095546324749594/dy-7700095546324749594.html</guid>
+      <pubDate>Fri, 23 Oct 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>146 个 Grok Bot 智能体模板号称价值 29200 美元、现在免费——拆开看：免费的是模板，账单是你的。顺带理清 Agent Org Chart 组织架构怎么用，GitHub 上 700 多个智能体项目怎么挑。（转载 · 来源：抖音）</description>
+    </item>
     <item>
       <title>Harness²：权重冻结的自我改进，到底改了什么</title>
       <link>https://expectopatronus00.github.io/post/dy-7699051728071948154/dy-7699051728071948154.html</link>
       <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7699051728071948154/dy-7699051728071948154.html</guid>
       <pubDate>Tue, 20 Oct 2026 16:00:00 GMT</pubDate>
-      <category>杂项</category>
+      <category>AI 编程</category>
       <description>Google Research 开源的 Harness² 不微调、不做强化学习，权重一个字节不动，靠两层递归改模型外面那层壳。本文拆开它的八个可编辑组件、Propose-Probe-Compose 三步和真实 benchmark 数字，也说明它贵在哪、不适合谁。（转载 · 来源：抖音）</description>
     </item>
     <item>
@@ -20,7 +28,7 @@
       <link>https://expectopatronus00.github.io/post/dy-7661941275884637491/dy-7661941275884637491.html</link>
       <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7661941275884637491/dy-7661941275884637491.html</guid>
       <pubDate>Sat, 18 Jul 2026 16:00:00 GMT</pubDate>
-      <category>杂项</category>
+      <category>AI 编程</category>
       <description>不用写一行代码，仅靠对话就能开发产品！从bolt.new到Cursor，Vibe Coding正在重塑软件开发的底层逻辑——你描述需求，AI生成代码，产品在对话中逐渐成形。一文了解对话式开发的原理、工具、案例和未来趋势。（转载 · 来源：抖音）</description>
     </item>
     <item>
@@ -28,7 +36,7 @@
       <link>https://expectopatronus00.github.io/post/dy-7660089275492847218/dy-7660089275492847218.html</link>
       <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7660089275492847218/dy-7660089275492847218.html</guid>
       <pubDate>Sat, 18 Jul 2026 16:00:00 GMT</pubDate>
-      <category>杂项</category>
+      <category>AI 编程</category>
       <description>练完这8个Skills，搞定你90%的测试工作！从需求澄清、用例设计、场景模拟、优先级排序、缺陷报告、根因分析、回归验证到测试复盘，覆盖完整测试链路，附完整代码+md模板。（转载 · 来源：抖音）</description>
     </item>
     <item>
@@ -36,7 +44,7 @@
       <link>https://expectopatronus00.github.io/post/dy-7662989219727461658/dy-7662989219727461658.html</link>
       <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7662989219727461658/dy-7662989219727461658.html</guid>
       <pubDate>Sat, 18 Jul 2026 16:00:00 GMT</pubDate>
-      <category>杂项</category>
+      <category>AI 编程</category>
       <description>终端开5个Claude会话并行、网页端再挂5-10个任务、一个月产出100%由AI完成仅2个Bug。Claude Code创始人亲授的超级工程师多任务全并行解决方案，让你1个人顶1个团队。（转载 · 来源：抖音）</description>
     </item>
     <item>
@@ -44,7 +52,7 @@
       <link>https://expectopatronus00.github.io/post/dy-7663846136494752070/dy-7663846136494752070.html</link>
       <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7663846136494752070/dy-7663846136494752070.html</guid>
       <pubDate>Sat, 18 Jul 2026 16:00:00 GMT</pubDate>
-      <category>杂项</category>
+      <category>AI 编程</category>
       <description>AI写前端最容易翻车的是「能用但丑」。这8个UI Skills把设计师的审美和规范喂给Claude Code/Codex，从UI生成、设计系统、Tailwind样式到动效、无障碍、转化，全流程打通。（转载 · 来源：抖音）</description>
     </item>
     <item>
@@ -52,7 +60,7 @@
       <link>https://expectopatronus00.github.io/post/dy-7663695071040882383/dy-7663695071040882383.html</link>
       <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7663695071040882383/dy-7663695071040882383.html</guid>
       <pubDate>Fri, 17 Jul 2026 16:00:00 GMT</pubDate>
-      <category>杂项</category>
+      <category>AI 工具</category>
       <description>用扣子(Coze)工作流打造AI超级个体，零代码搭建自动化流水线，让一个人拥有一个团队的战斗力。从智能体创建到工作流编排，从知识库到插件生态，完整指南。（转载 · 来源：抖音）</description>
     </item>
     <item>
@@ -238,14 +246,6 @@
       <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
       <category>AI 编程</category>
       <description>Chris IT先生分享——Java后端、React前端与AI Agent三者结合，探讨全栈开发的新范式与技术演进。（转载 · 来源：抖音）</description>
-    </item>
-    <item>
-      <title>一次讲透AI计费：输入输出Token与缓存命中</title>
-      <link>https://expectopatronus00.github.io/post/dy-7659996815441415458/dy-7659996815441415458.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7659996815441415458/dy-7659996815441415458.html</guid>
-      <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
-      <category>AI 基础设施</category>
-      <description>用动画视频一次讲透AI计费机制——Token是什么、输入输出怎么收费、缓存命中如何省钱，帮你优化AI使用成本。（转载 · 来源：抖音）</description>
     </item>
   </channel>
 </rss>
