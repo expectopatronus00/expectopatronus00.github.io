@@ -145,7 +145,7 @@
     {
       "id": "ai-oss",
       "name": "开源 AI 项目",
-      "desc": "GitHub 近 30 天星标增速最快 · 2026-10 整理",
+      "desc": "GitHub 近 30 天星标增速 Top 100 · 2026-10 整理（新库按创建以来星标、老库按月度趋势榜）",
       "items": [
         {
           "name": "rea",
@@ -219,6 +219,441 @@
           "name": "CLI-Anything",
           "url": "https://github.com/HKUDS/CLI-Anything",
           "desc": "港大团队「让所有软件 Agent 原生化」的命令行改造计划；本周 +3.3 千星"
+        },
+        {
+          "name": "deepseek-harness",
+          "url": "https://github.com/deepseek-ai/deepseek-harness",
+          "desc": "DeepSeek 官方 agent harness：Everything is a Plugin，插件化搭 agent 的底座；两个月 26 万星",
+          "badge": "热门"
+        },
+        {
+          "name": "scientific-agent-skills",
+          "url": "https://github.com/K-Dense-AI/scientific-agent-skills",
+          "desc": "科研 agent skills 库：177 个经过验证的技能接 100 多个科学数据库，本周 +3 千星"
+        },
+        {
+          "name": "ruflo",
+          "url": "https://github.com/ruvnet/ruflo",
+          "desc": "多智能体蜂群 harness：自主工作流、记忆与 RAG，本周 +3.3 千星"
+        },
+        {
+          "name": "claude-plugins-official",
+          "url": "https://github.com/anthropics/claude-plugins-official",
+          "desc": "Anthropic 官方 Claude Code 插件目录，质量分层的官方收录"
+        },
+        {
+          "name": "knowledge-work-plugins",
+          "url": "https://github.com/anthropics/knowledge-work-plugins",
+          "desc": "Anthropic 开源的 Claude Cowork 知识工作插件集"
+        },
+        {
+          "name": "context-mode",
+          "url": "https://github.com/mksglu/context-mode",
+          "desc": "上下文窗口优化：沙箱化工具输出（省 98%），经 MCP 路由 17 个平台"
+        },
+        {
+          "name": "t3code",
+          "url": "https://github.com/pingdotgg/t3code",
+          "desc": "Theo 出品的 T3 编码工具链，本月 +6.4 千星"
+        },
+        {
+          "name": "dsh-our-free-model",
+          "url": "https://github.com/Ebony-Vinyl/dsh-our-free-model",
+          "desc": "免登录免 API Key 用上 DeepSeek V4.1 Flash、Kimi K3 等前沿模型",
+          "badge": "免费"
+        },
+        {
+          "name": "text-to-cad",
+          "url": "https://github.com/earthtojake/text-to-cad",
+          "desc": "给你的 agent CAD 超能力：自然语言生成参数化 3D 模型"
+        },
+        {
+          "name": "magpie",
+          "url": "https://github.com/yetone/magpie",
+          "desc": "菜单栏统一接入各家模型：Codex 跑 DeepSeek、Claude Code 跑 Kimi"
+        },
+        {
+          "name": "moli",
+          "url": "https://github.com/lexmount/moli",
+          "desc": "为 AI agent 打造的 Rust headless 浏览器：轻、快、高兼容"
+        },
+        {
+          "name": "img2threejs",
+          "url": "https://github.com/img2threejs/img2threejs",
+          "desc": "参考图一键转程序化 Three.js 模型，可直接动画"
+        },
+        {
+          "name": "artemis",
+          "url": "https://github.com/google/artemis",
+          "desc": "Google 出品：自然语言指令转可靠的 Android 自动化"
+        },
+        {
+          "name": "plugins",
+          "url": "https://github.com/cursor/plugins",
+          "desc": "Cursor 插件规范与官方插件集"
+        },
+        {
+          "name": "video-shotcraft",
+          "url": "https://github.com/Vincentwei1021/video-shotcraft",
+          "desc": "给 Claude Code / Codex 用的 AI 视频 skill，Remotion 产出产品级短片"
+        },
+        {
+          "name": "ai-memory",
+          "url": "https://github.com/akitaonrails/ai-memory",
+          "desc": "编码 agent 的长期记忆，跨厂商交接无痛"
+        },
+        {
+          "name": "Trail-Code",
+          "url": "https://github.com/trailhq/Trail-Code",
+          "desc": "给 Claude Code / Cursor / Codex 提速：代码库级上下文理解"
+        },
+        {
+          "name": "Octop",
+          "url": "https://github.com/TencentCloud/Octop",
+          "desc": "腾讯云出品：自托管多用户、多 agent AI 助手"
+        },
+        {
+          "name": "solidcraft",
+          "url": "https://github.com/tangency-labs/solidcraft",
+          "desc": "纯 Rust 写的开源参数化 3D CAD，桌面 / Web / MCP 自动化"
+        },
+        {
+          "name": "universal-modder",
+          "url": "https://github.com/rehan-remade/universal-modder",
+          "desc": "指哪改哪：让 Claude Code 给几乎任何 PC 游戏写 mod"
+        },
+        {
+          "name": "codex-with-chatgpt",
+          "url": "https://github.com/XiaoDuoYa/codex-with-chatgpt",
+          "desc": "ChatGPT 负责想、Codex 负责干，规划脑与执行体分离"
+        },
+        {
+          "name": "AIHOT",
+          "url": "https://github.com/KKKKhazix/AIHOT",
+          "desc": "自己找热点、自己写日报的网站框架，换成你的信源就是你的行业站"
+        },
+        {
+          "name": "utopia",
+          "url": "https://github.com/deeplethe/utopia",
+          "desc": "号称首个开源企业级世界模型"
+        },
+        {
+          "name": "jev-chat-jarvis",
+          "url": "https://github.com/jev-chat/jev-chat-jarvis",
+          "desc": "聊天决策助手：回复前先读对话、判意图、估风险"
+        },
+        {
+          "name": "open-seo-mcp-skills",
+          "url": "https://github.com/Ryze-AI-Adgent/open-seo-mcp-skills",
+          "desc": "免费 SEO MCP + 开源 SEO/GEO skills：关键词、排名追踪、站审"
+        },
+        {
+          "name": "ai-infra-book",
+          "url": "https://github.com/bojieli/ai-infra-book",
+          "desc": "开源书稿《深入理解 AI Infra》：从硬件约束讲到系统设计"
+        },
+        {
+          "name": "reef",
+          "url": "https://github.com/Human-Agent-Society/reef",
+          "desc": "持续自我改进 agent 的基础设施，本周 +3.3 千星"
+        },
+        {
+          "name": "rakazo",
+          "url": "https://github.com/elie222/rakazo",
+          "desc": "开源 Grok Bot 替代：自带模型与沙箱"
+        },
+        {
+          "name": "replica-skill",
+          "url": "https://github.com/Jakeschincariol/replica-skill",
+          "desc": "11 个免费 Claude skills：逆向任意应用、重建、测 bug"
+        },
+        {
+          "name": "shaders",
+          "url": "https://github.com/shader-effects-inc/shaders",
+          "desc": "WebGPU 特效组件，支持 React / Vue / Svelte / Framer"
+        },
+        {
+          "name": "agent-memory",
+          "url": "https://github.com/tigerless-labs/agent-memory",
+          "desc": "Agent 长期记忆运行时：纯 Markdown 为事实源，本地排序检索"
+        },
+        {
+          "name": "Easel",
+          "url": "https://github.com/ZJU-REAL/Easel",
+          "desc": "浙大出品：社媒全流程 agent，找热点、做内容、全平台发布"
+        },
+        {
+          "name": "answer-me-with-html",
+          "url": "https://github.com/QingYunA/answer-me-with-html",
+          "desc": "agent skill：难题用一页交互 HTML 回答"
+        },
+        {
+          "name": "unlazy",
+          "url": "https://github.com/Leonxlnx/unlazy",
+          "desc": "治 AI 偷懒的 skill：Depth Tree 方法逼出深度"
+        },
+        {
+          "name": "esp32-iphone-agent",
+          "url": "https://github.com/onehumanbeing/esp32-iphone-agent",
+          "desc": "7 美元的 ESP32 让 AI 模型操作真 iPhone"
+        },
+        {
+          "name": "folkbench",
+          "url": "https://github.com/Folkbench/folkbench",
+          "desc": "AI API 中转站评测排行：实测可用率、延迟与价格"
+        },
+        {
+          "name": "sepia",
+          "url": "https://github.com/Nanako0129/sepia",
+          "desc": "去 AI 味写作 skill，兼容 77+ 个 Agent Skills 平台"
+        },
+        {
+          "name": "harnessrouter",
+          "url": "https://github.com/HarnessRouter/harnessrouter",
+          "desc": "社区版自托管统一界面：一个入口调度多个 agent"
+        },
+        {
+          "name": "Fuxi",
+          "url": "https://github.com/fuxicodex/Fuxi",
+          "desc": "住在终端里的快速自包含 AI 编码 agent"
+        },
+        {
+          "name": "VoiceMem",
+          "url": "https://github.com/xzf-thu/VoiceMem",
+          "desc": "下一代语音 agent 的通用记忆基础设施"
+        },
+        {
+          "name": "earshot",
+          "url": "https://github.com/Leonxlnx/earshot",
+          "desc": "让编码 agent 听见声音：审听、配音 CPU 可跑"
+        },
+        {
+          "name": "nanoMuse",
+          "url": "https://github.com/nano-muse/nanoMuse",
+          "desc": "开源个人 agent：跨你所有设备，有名字有形象"
+        },
+        {
+          "name": "ffmpeg-skill",
+          "url": "https://github.com/kajisho5/ffmpeg-skill",
+          "desc": "编码 agent 的本地视频剪辑：42 个 FFmpeg 工具 + MCP"
+        },
+        {
+          "name": "lcu",
+          "url": "https://github.com/amontlabs/lcu",
+          "desc": "Codex computer use 与应用解耦，任意 harness 可用"
+        },
+        {
+          "name": "solid-glass",
+          "url": "https://github.com/deeplethe/solid-glass",
+          "desc": "为 AI 应用设计的「实体玻璃」视觉体系"
+        },
+        {
+          "name": "headcount",
+          "url": "https://github.com/cbrock84/headcount",
+          "desc": "公司式 agent 组织：15+ 部门、125+ 技能可独立安装"
+        },
+        {
+          "name": "ARTEX",
+          "url": "https://github.com/trhhubsd/ARTEX",
+          "desc": "AI 自主渗透测试系统：多 agent LLM，Go + Next.js"
+        },
+        {
+          "name": "awesome-remote-mcp-servers",
+          "url": "https://github.com/punkpeye/awesome-remote-mcp-servers",
+          "desc": "远程 MCP 服务器精选目录"
+        },
+        {
+          "name": "yovoice",
+          "url": "https://github.com/leemysw/yovoice",
+          "desc": "开源本地 AI 语音与音乐工作室：TTS、克隆、写歌"
+        },
+        {
+          "name": "new-term-radar",
+          "url": "https://github.com/zhuyansen/new-term-radar",
+          "desc": "新词雷达：从 X / Hugging Face / GitHub 抓新模型新产品的名字"
+        },
+        {
+          "name": "llm-master",
+          "url": "https://github.com/youngyangyang04/llm-master",
+          "desc": "大模型全栈中文学习路线：Prompt、RAG、Agent、MCP、微调、部署"
+        },
+        {
+          "name": "motionmaxxing",
+          "url": "https://github.com/Tejashmakwana/motionmaxxing",
+          "desc": "动效界的 looksmaxxing：把 AI 味视频修成电影感"
+        },
+        {
+          "name": "codeAgent",
+          "url": "https://github.com/Harvil1/codeAgent",
+          "desc": "开源终端编码 agent，理解你的仓库"
+        },
+        {
+          "name": "indra",
+          "url": "https://github.com/datalab-to/indra",
+          "desc": "100 万参数 OCR：CPU 可跑，比 tesseract 快 15 倍"
+        },
+        {
+          "name": "mcd-coupon-strategist",
+          "url": "https://github.com/Ayzzz123/mcd-coupon-strategist",
+          "desc": "麦当劳 MCP 点餐省钱 skill：算最省组合、提示凑单陷阱"
+        },
+        {
+          "name": "open-intelligent-ui",
+          "url": "https://github.com/thesysdev/open-intelligent-ui",
+          "desc": "开源版 ChatGPT Intelligent UI：答案以交互组件流出"
+        },
+        {
+          "name": "ai-system-design",
+          "url": "https://github.com/amitshekhariitbhu/ai-system-design",
+          "desc": "AI 系统设计分步教程：LLM、RAG、Agent 逐层搭"
+        },
+        {
+          "name": "strands-decider",
+          "url": "https://github.com/strands-labs/strands-decider",
+          "desc": "agent 工作流用的小而快决策模型"
+        },
+        {
+          "name": "Grandet",
+          "url": "https://github.com/hanzohanzhe/Grandet",
+          "desc": "给 agent 找最便宜 API 的 skill，附匿名网关"
+        },
+        {
+          "name": "agent-me",
+          "url": "https://github.com/jzjzzzzzzz/agent-me",
+          "desc": "把你的知识、记忆与决策蒸馏成可审查的 Agent Twin"
+        },
+        {
+          "name": "ai_goodpractice",
+          "url": "https://github.com/xop01/ai_goodpractice",
+          "desc": "AI 工作流集成实践指南，新手老手都能用"
+        },
+        {
+          "name": "whirl",
+          "url": "https://github.com/whirlchat/whirl",
+          "desc": "细节控 AI 聊天应用：全家桶模型、真记忆、活文档"
+        },
+        {
+          "name": "OXR",
+          "url": "https://github.com/SoMarkAI/OXR",
+          "desc": "开源文档解析模型：SOTA 精度与速度，后训练带 RSI 循环"
+        },
+        {
+          "name": "box",
+          "url": "https://github.com/strands-agents/box",
+          "desc": "在受限沙箱里跑 agent：执行、读写、网络全可约束"
+        },
+        {
+          "name": "ai-companion-kit",
+          "url": "https://github.com/pinganbbOvO/ai-companion-kit",
+          "desc": "会记事、会看场合的 QQ 陪聊 + 能控安卓手机的 MCP"
+        },
+        {
+          "name": "ms-cookbook",
+          "url": "https://github.com/modelscope/ms-cookbook",
+          "desc": "魔搭紫皮书：模型选型、推理、微调、评测、RAG 实战"
+        },
+        {
+          "name": "carrel",
+          "url": "https://github.com/FengZhenfei/carrel",
+          "desc": "本体增强生成（Ontology-Augmented Generation）for agents"
+        },
+        {
+          "name": "movo",
+          "url": "https://github.com/himovo/movo",
+          "desc": "把 DeepSeek Harness 变成自托管企业 Agent 平台"
+        },
+        {
+          "name": "Comma",
+          "url": "https://github.com/AFK-surf/Comma",
+          "desc": "免费开源个人助手：常驻、主动、无会话概念"
+        },
+        {
+          "name": "awesome-REA-cases",
+          "url": "https://github.com/songshikang0111/awesome-REA-cases",
+          "desc": "REA 与 AI 辅助逆向工程案例集，持续更新"
+        },
+        {
+          "name": "aurelio-finance",
+          "url": "https://github.com/LosaLosSantos/aurelio-finance",
+          "desc": "开源个人理财 app：AI 财务顾问、净值与投资追踪"
+        },
+        {
+          "name": "crosspet",
+          "url": "https://github.com/lokicorvus/crosspet",
+          "desc": "跨 AI 桌宠：跟着你用的 AI 换形象、跟着工作状态做动作"
+        },
+        {
+          "name": "hello-agent-system",
+          "url": "https://github.com/heaven999b/hello-agent-system",
+          "desc": "动手搭企业级 agent 系统：每一层生产件都自己写一遍"
+        },
+        {
+          "name": "py-idp",
+          "url": "https://github.com/rollroyces/py-idp",
+          "desc": "Python 智能文档处理：12+ LLM 后端、Pydantic 约束、自托管"
+        },
+        {
+          "name": "SOMA",
+          "url": "https://github.com/Kai-Jungsthoefel/SOMA",
+          "desc": "与编码 agent 协作设计参数化 3D 模型的桌面应用"
+        },
+        {
+          "name": "transwork",
+          "url": "https://github.com/shuyu-labs/transwork",
+          "desc": "企业级桌面 agent 工作台：技能、知识与任务同处协作"
+        },
+        {
+          "name": "openchart",
+          "url": "https://github.com/longsurf-ai/openchart",
+          "desc": "开源交易工作台：接入你顺手的 agents"
+        },
+        {
+          "name": "dexsql-release",
+          "url": "https://github.com/LSPosed/dexsql-release",
+          "desc": "用 SQL 查询 Android apk 与 dex 文件"
+        },
+        {
+          "name": "ThinkTerm",
+          "url": "https://github.com/RoversX/ThinkTerm",
+          "desc": "会话保活的现代终端：关掉窗口任务照跑"
+        },
+        {
+          "name": "AgentGarten",
+          "url": "https://github.com/MirroS-Lab/AgentGarten",
+          "desc": "AgentGarten：给可进化 agent 准备的代码世界"
+        },
+        {
+          "name": "ai-engineering-from-scratch",
+          "url": "https://github.com/rohitg00/ai-engineering-from-scratch",
+          "desc": "AI 工程从零到一的学习仓库，本月 +1.7 万星"
+        },
+        {
+          "name": "skills",
+          "url": "https://github.com/android/skills",
+          "desc": "Android 官方出的 agent skills 仓库",
+          "badge": "免费"
+        },
+        {
+          "name": "hypit",
+          "url": "https://github.com/hypit-ai/hypit",
+          "desc": "用 agent 克隆爆款视频：换脸、改写、批量出变体全流程"
+        },
+        {
+          "name": "PageIndex",
+          "url": "https://github.com/VectifyAI/PageIndex",
+          "desc": "无向量化、推理式 RAG 的文档索引"
+        },
+        {
+          "name": "ComfyUI",
+          "url": "https://github.com/Comfy-Org/ComfyUI",
+          "desc": "模块化扩散模型 GUI 与后端，本地推理的事实标准；本周 +4.5 千星",
+          "badge": "热门"
+        },
+        {
+          "name": "agency-agents",
+          "url": "https://github.com/msitarzewski/agency-agents",
+          "desc": "一周 +2.3 万星：把一整个 AI 代理公司装进指尖的 agents 合集",
+          "badge": "热门"
         }
       ]
     },
