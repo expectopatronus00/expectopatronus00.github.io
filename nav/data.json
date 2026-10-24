@@ -1,219 +1,286 @@
 {
   "meta": {
     "name": "AI 导航",
-    "description": "AI 工具与资源导航",
-    "version": "1.0.0",
-    "updated": "2026-06-17"
+    "description": "AI 工具与资源导航 · 逐类目精选重建中",
+    "version": "2.1.0",
+    "updated": "2026-10-24"
   },
   "categories": [
     {
       "id": "cn-ai-chat",
-      "name": "🇨🇳 AI 对话",
-      "icon": "fa-comment-dots",
+      "name": "国内 AI 对话",
       "desc": "国内大模型对话平台",
       "items": [
-        { "name": "DeepSeek", "url": "https://chat.deepseek.com/", "desc": "深度求索官方对话", "badge": "热门" },
-        { "name": "文心一言", "url": "https://yiyan.baidu.com/", "desc": "百度大模型" },
-        { "name": "通义千问", "url": "https://tongyi.aliyun.com/", "desc": "阿里云大模型" },
-        { "name": "智谱清言", "url": "https://www.zhipuai.cn/", "desc": "智谱 AI" },
-        { "name": "讯飞星火", "url": "https://xinghuo.xfyun.cn/", "desc": "科大讯飞大模型" },
-        { "name": "Kimi", "url": "https://kimi.moonshot.cn/", "desc": "月之暗面 AI 助手", "badge": "新星" },
-        { "name": "豆包", "url": "https://www.doubao.com/", "desc": "字节跳动 AI" },
-        { "name": "腾讯元宝", "url": "https://yuanbao.tencent.com/", "desc": "腾讯混元大模型" },
-        { "name": "秘塔 AI 搜索", "url": "https://metaso.cn/", "desc": "AI 驱动的搜索引擎" },
-        { "name": "天工 AI", "url": "https://www.tiangong.cn/", "desc": "昆仑万维大模型" }
-      ]
-    },
-    {
-      "id": "intl-ai-chat",
-      "name": "🌐 AI 对话",
-      "icon": "fa-globe",
-      "desc": "国际大模型对话平台",
-      "items": [
-        { "name": "ChatGPT", "url": "https://chat.openai.com/", "desc": "OpenAI GPT 系列", "badge": "经典" },
-        { "name": "Claude", "url": "https://claude.ai/", "desc": "Anthropic Claude", "badge": "热门" },
-        { "name": "Gemini", "url": "https://gemini.google.com/", "desc": "Google Gemini" },
-        { "name": "Perplexity", "url": "https://www.perplexity.ai/", "desc": "AI 搜索引擎" },
-        { "name": "Copilot", "url": "https://copilot.microsoft.com/", "desc": "Microsoft AI 助手" },
-        { "name": "Grok", "url": "https://grok.com/", "desc": "xAI Grok" },
-        { "name": "Mistral", "url": "https://chat.mistral.ai/", "desc": "Mistral AI" }
-      ]
-    },
-    {
-      "id": "ai-model",
-      "name": "🤖 AI 模型",
-      "icon": "fa-brain",
-      "desc": "模型平台与 API",
-      "items": [
         {
-          "name": "DeepSeek API",
-          "url": "https://platform.deepseek.com/",
-          "desc": "DeepSeek 模型 API",
-          "badge": "🔥 便宜"
+          "name": "DeepSeek",
+          "url": "https://chat.deepseek.com/",
+          "desc": "深度求索官方对话，R1/V3 开源系列的门面，推理、数学与代码是长项，免费可用",
+          "badge": "热门"
         },
-        { "name": "OpenAI API", "url": "https://platform.openai.com/", "desc": "GPT / DALL·E / Whisper" },
-        { "name": "Anthropic API", "url": "https://docs.anthropic.com/", "desc": "Claude API" },
-        { "name": "Google AI Studio", "url": "https://aistudio.google.com/", "desc": "Gemini API" },
-        { "name": "Groq", "url": "https://console.groq.com/", "desc": "超快推理 API" },
-        { "name": "Cohere", "url": "https://cohere.com/", "desc": "Command / Embed 系列" },
-        { "name": "Together AI", "url": "https://together.ai/", "desc": "开源模型聚合" },
-        { "name": "Replicate", "url": "https://replicate.com/", "desc": "运行开源模型" },
-        { "name": "Hugging Face", "url": "https://huggingface.co/", "desc": "模型库 & 推理端点", "badge": "开源" },
-        { "name": "Modelscope", "url": "https://www.modelscope.cn/", "desc": "阿里魔搭社区" }
-      ]
-    },
-    {
-      "id": "ai-coding",
-      "name": "⚡ AI 编程",
-      "icon": "fa-code",
-      "desc": "AI 辅助编程工具",
-      "items": [
-        { "name": "Cursor", "url": "https://www.cursor.com/", "desc": "AI 代码编辑器", "badge": "热门" },
-        { "name": "Windsurf", "url": "https://www.windsurf.ai/", "desc": "Codeium AI IDE" },
-        { "name": "GitHub Copilot", "url": "https://github.com/features/copilot", "desc": "微软 AI 编程助手" },
-        { "name": "Codeium", "url": "https://codeium.com/", "desc": "免费 AI 编程插件", "badge": "免费" },
-        { "name": "Cody", "url": "https://sourcegraph.com/cody", "desc": "Sourcegraph AI" },
-        { "name": "Tabnine", "url": "https://www.tabnine.com/", "desc": "AI 代码补全" },
-        { "name": "Amazon CodeWhisperer", "url": "https://aws.amazon.com/codewhisperer/", "desc": "AWS AI 编程" },
-        { "name": "CodeRabbit", "url": "https://coderabbit.ai/", "desc": "AI 代码审查" },
-        { "name": "Bolt.new", "url": "https://bolt.new/", "desc": "AI 全栈开发" },
-        { "name": "Lovable", "url": "https://lovable.dev/", "desc": "AI 应用构建" }
-      ]
-    },
-    {
-      "id": "ai-agent",
-      "name": "🧠 AI Agent",
-      "icon": "fa-robot",
-      "desc": "AI Agent 与自动化",
-      "items": [
-        { "name": "AutoGPT", "url": "https://news.agpt.co/", "desc": "自主 AI Agent" },
-        { "name": "AgentGPT", "url": "https://agentgpt.reworkd.ai/", "desc": "浏览器端 Agent" },
-        { "name": "Coze", "url": "https://www.coze.cn/", "desc": "字节扣子 Agent 平台", "badge": "国内" },
-        { "name": "Dify", "url": "https://dify.ai/", "desc": "开源 LLM 应用开发平台", "badge": "开源" },
-        { "name": "n8n", "url": "https://n8n.io/", "desc": "工作流自动化" },
-        { "name": "Make", "url": "https://www.make.com/", "desc": "自动化平台" },
-        { "name": "Zapier", "url": "https://zapier.com/", "desc": "AI 自动化连接" }
-      ]
-    },
-    {
-      "id": "ai-image",
-      "name": "🎨 AI 图像",
-      "icon": "fa-image",
-      "desc": "AI 绘画与图像生成",
-      "items": [
-        { "name": "Midjourney", "url": "https://www.midjourney.com/", "desc": "AI 图像生成", "badge": "热门" },
-        { "name": "Stable Diffusion", "url": "https://stability.ai/", "desc": "开源图像生成" },
-        { "name": "DALL·E", "url": "https://openai.com/dall-e-3", "desc": "OpenAI 图像模型" },
-        { "name": "Adobe Firefly", "url": "https://firefly.adobe.com/", "desc": "Adobe AI 创意" },
-        { "name": "Ideogram", "url": "https://ideogram.ai/", "desc": "AI 图像 + 文字渲染" },
-        { "name": "Flux", "url": "https://flux.ai/", "desc": "Black Forest Labs" },
-        { "name": "即梦", "url": "https://jimeng.jianying.com/", "desc": "字节 AI 绘画", "badge": "国内" },
-        { "name": "通义万相", "url": "https://tongyi.aliyun.com/wanxiang", "desc": "阿里 AI 绘画" },
-        { "name": "LiblibAI", "url": "https://www.liblib.ai/", "desc": "国内 SD 模型社区" }
-      ]
-    },
-    {
-      "id": "ai-video",
-      "name": "🎬 AI 视频",
-      "icon": "fa-video",
-      "desc": "AI 视频生成与编辑",
-      "items": [
-        { "name": "Sora", "url": "https://openai.com/sora", "desc": "OpenAI 视频生成" },
-        { "name": "Runway", "url": "https://runwayml.com/", "desc": "AI 视频创作平台" },
-        { "name": "Pika", "url": "https://pika.art/", "desc": "AI 视频生成" },
-        { "name": "Kling", "url": "https://klingai.com/", "desc": "快手可灵 AI 视频", "badge": "🔥" },
-        { "name": "Vidu", "url": "https://www.vidu.studio/", "desc": "生数科技 AI 视频" },
-        { "name": "海螺 AI", "url": "https://hailuoai.video/", "desc": "字节 AI 视频", "badge": "新" },
-        { "name": "PixVerse", "url": "https://pixverse.ai/", "desc": "AI 视频生成" }
-      ]
-    },
-    {
-      "id": "ai-audio",
-      "name": "🎙️ AI 音频",
-      "icon": "fa-microphone",
-      "desc": "AI 语音合成与处理",
-      "items": [
-        { "name": "ElevenLabs", "url": "https://elevenlabs.io/", "desc": "AI 语音合成", "badge": "热门" },
-        { "name": "Murf AI", "url": "https://murf.ai/", "desc": "AI 配音平台" },
-        { "name": "Resemble AI", "url": "https://www.resemble.ai/", "desc": "语音克隆" },
         {
-          "name": "Azure TTS",
-          "url": "https://azure.microsoft.com/services/cognitive-services/text-to-speech/",
-          "desc": "微软语音服务"
+          "name": "Kimi",
+          "url": "https://www.kimi.com/",
+          "desc": "月之暗面对话入口，K3 系列主打长上下文与智能体任务，长文档阅读整理顺手",
+          "badge": "热门"
         },
-        { "name": "剪映", "url": "https://www.capcut.com/", "desc": "字节 AI 视频剪辑" }
-      ]
-    },
-    {
-      "id": "ai-learning",
-      "name": "📚 AI 学习",
-      "icon": "fa-graduation-cap",
-      "desc": "AI/ML 学习资源",
-      "items": [
-        { "name": "Fast.ai", "url": "https://www.fast.ai/", "desc": "深度学习实战课程" },
-        { "name": "DeepLearning.AI", "url": "https://www.deeplearning.ai/", "desc": "吴恩达课程" },
-        { "name": "Hugging Face Course", "url": "https://huggingface.co/learn", "desc": "NLP 课程" },
         {
-          "name": "Google ML Crash Course",
-          "url": "https://developers.google.com/machine-learning",
-          "desc": "机器学习入门"
+          "name": "豆包",
+          "url": "https://www.doubao.com/",
+          "desc": "字节跳动全家桶，对话、图像、语音一体，移动端体验顺滑，日常轻量使用首选"
         },
-        { "name": "Papers with Code", "url": "https://paperswithcode.com/", "desc": "论文 + 代码" },
-        { "name": "ArXiv", "url": "https://arxiv.org/", "desc": "AI 论文预印本" },
         {
-          "name": "Coursera ML",
-          "url": "https://www.coursera.org/browse/data-science/machine-learning",
-          "desc": "机器学习课程"
+          "name": "通义千问",
+          "url": "https://tongyi.aliyun.com/",
+          "desc": "阿里 Qwen 系列官方对话，开源生态最大，文档解析与办公场景完善"
+        },
+        {
+          "name": "腾讯元宝",
+          "url": "https://yuanbao.tencent.com/",
+          "desc": "腾讯混元大模型，接入微信公众号内容池，查中文互联网资料有独特优势"
+        },
+        {
+          "name": "文心一言",
+          "url": "https://yiyan.baidu.com/",
+          "desc": "百度 ERNIE 系列网页版，中文知识问答底子厚，App 端已更名「文心」"
+        },
+        {
+          "name": "智谱清言",
+          "url": "https://chatglm.cn/",
+          "desc": "智谱 AI 的 GLM 系列对话，学术出身，长文本与 Agent 能力跟进快"
+        },
+        {
+          "name": "讯飞星火",
+          "url": "https://xinghuo.xfyun.cn/",
+          "desc": "科大讯飞大模型，语音交互与教育场景是强项"
+        },
+        {
+          "name": "MiniMax",
+          "url": "https://chat.minimaxi.com/",
+          "desc": "MiniMax 官方对话，创意写作与角色扮演调校出色"
+        },
+        {
+          "name": "秘塔 AI 搜索",
+          "url": "https://metaso.cn/",
+          "desc": "「没有广告，直达结果」的搜索式对话，学术模式可直接溯源到文献"
+        },
+        {
+          "name": "纳米 AI 搜索",
+          "url": "https://www.n.cn/",
+          "desc": "360 出品的搜索问答，多模型同时作答可横向对比"
         }
       ]
     },
     {
-      "id": "ai-prompt",
-      "name": "💡 AI 提示词",
-      "icon": "fa-lightbulb",
-      "desc": "提示词工程与资源",
+      "id": "intl-ai-chat",
+      "name": "海外 AI 对话",
+      "desc": "国际大模型对话平台",
       "items": [
         {
-          "name": "Prompt Engineering Guide",
-          "url": "https://www.promptingguide.ai/zh",
-          "desc": "提示词工程指南",
-          "badge": "中文"
+          "name": "ChatGPT",
+          "url": "https://chatgpt.com/",
+          "desc": "OpenAI 官方对话，GPT 系列最低门槛入口，多模态与插件生态最全",
+          "badge": "热门"
         },
-        { "name": "PromptBase", "url": "https://promptbase.com/", "desc": "提示词 marketplace" },
-        { "name": "FlowGPT", "url": "https://flowgpt.com/", "desc": "提示词分享社区" },
-        { "name": " AIPRM", "url": "https://www.aiprm.com/", "desc": "ChatGPT 提示词插件" },
-        { "name": "Snack Prompt", "url": "https://snackprompt.com/", "desc": "提示词排行榜" }
+        {
+          "name": "Claude",
+          "url": "https://claude.ai/",
+          "desc": "Anthropic 官方对话，长文写作、代码与 Artifacts 体验出色",
+          "badge": "热门"
+        },
+        {
+          "name": "Gemini",
+          "url": "https://gemini.google.com/",
+          "desc": "Google 官方对话，多模态能力强，与搜索及 Workspace 结合最深"
+        },
+        {
+          "name": "Grok",
+          "url": "https://grok.com/",
+          "desc": "xAI 官方对话，接入 X（Twitter）实时数据流"
+        },
+        {
+          "name": "Copilot",
+          "url": "https://copilot.microsoft.com/",
+          "desc": "微软 AI 助手，Windows 与 Office 生态的原生入口，有免费层",
+          "badge": "免费"
+        },
+        {
+          "name": "Perplexity",
+          "url": "https://www.perplexity.ai/",
+          "desc": "答案引擎，每个回答都带来源引用，查资料比传统搜索引擎快"
+        },
+        {
+          "name": "Poe",
+          "url": "https://poe.com/",
+          "desc": "Quora 出品的多模型聚合，一个入口聊 GPT / Claude / Gemini 全家"
+        },
+        {
+          "name": "Qwen Chat",
+          "url": "https://chat.qwen.ai/",
+          "desc": "阿里 Qwen 海外版，免费额度大方，开源新模型同步最快",
+          "badge": "免费"
+        },
+        {
+          "name": "Le Chat",
+          "url": "https://chat.mistral.ai/",
+          "desc": "法国 Mistral 官方对话，欧洲阵营代表，响应速度出众"
+        },
+        {
+          "name": "LMArena",
+          "url": "https://lmarena.ai/",
+          "desc": "模型盲测竞技场，社区投票生成排行榜，选模型前先看这里"
+        },
+        {
+          "name": "HuggingChat",
+          "url": "https://huggingface.co/chat",
+          "desc": "Hugging Face 的开源模型聚合对话，新开源模型首发试玩处",
+          "badge": "开源"
+        },
+        {
+          "name": "Character.AI",
+          "url": "https://character.ai/",
+          "desc": "角色扮演与 AI 陪伴向，自定义人格对话的代表作"
+        }
       ]
+    },
+    {
+      "id": "ai-oss",
+      "name": "开源 AI 项目",
+      "desc": "GitHub 近 30 天星标增速最快 · 2026-10 整理",
+      "items": [
+        {
+          "name": "rea",
+          "url": "https://github.com/morluto/rea",
+          "desc": "用 agent 做逆向工程：从应用行为一路拆到原生二进制，经 MCP 接 Ghidra / IDA，分析全在本地；本周 +8.8 万星，当前全站最快",
+          "badge": "热门"
+        },
+        {
+          "name": "VoiceStudio",
+          "url": "https://github.com/debpalash/VoiceStudio",
+          "desc": "完全本地的 ElevenLabs 开源替代：声音克隆、配音、转写覆盖 646 种语言，CUDA / Metal / CPU 都能跑；本月 +4.8 万星",
+          "badge": "热门"
+        },
+        {
+          "name": "hindsight",
+          "url": "https://github.com/vectorize-io/hindsight",
+          "desc": "「会学习」的 Agent 记忆层，为长期运行的 agent 做记忆检索与更新；本月 +2.8 万星"
+        },
+        {
+          "name": "paperclip",
+          "url": "https://github.com/paperclipai/paperclip",
+          "desc": "开源的工作 Agent 管理台：任务分配、进度与协作集中在一处；本月 +2.6 万星"
+        },
+        {
+          "name": "ECC",
+          "url": "https://github.com/affaan-m/ECC",
+          "desc": "给 Claude Code / Codex / Cursor 做 skills、记忆与安全加固的 harness 优化层；本月 +2.3 万星，总量 28.7 万"
+        },
+        {
+          "name": "security-audit-skill",
+          "url": "https://github.com/cloudflare/security-audit-skill",
+          "desc": "Cloudflare 出品的多阶段安全审计 skill，给编码 agent 用，产出机器可读报告；本月 +2.1 万星"
+        },
+        {
+          "name": "hyperframes",
+          "url": "https://github.com/heygen-com/hyperframes",
+          "desc": "「写 HTML，渲染视频」：为 agent 设计的程序化视频生成；本月 +1.8 万星"
+        },
+        {
+          "name": "impeccable",
+          "url": "https://github.com/pbakaus/impeccable",
+          "desc": "一套喂给 AI agent 的设计语言，专治「能用但丑」的生成界面；本月 +1.6 万星"
+        },
+        {
+          "name": "freellmapi",
+          "url": "https://github.com/tashfeenahmed/freellmapi",
+          "desc": "34 家免费 LLM、635 个免费端点聚合成一个 /v1 接口，带智能路由；本月 +1.2 万星",
+          "badge": "免费"
+        },
+        {
+          "name": "orca",
+          "url": "https://github.com/stablyai/orca",
+          "desc": "用自己的订阅在桌面 / 移动 / 远程跑 Claude Code 等编码 agent；本周 +9.5 千星"
+        },
+        {
+          "name": "OpenShell",
+          "url": "https://github.com/NVIDIA/OpenShell",
+          "desc": "NVIDIA 出品的自主 Agent 安全运行时：沙箱、权限与隐私隔离；本月 +9.7 千星"
+        },
+        {
+          "name": "claude-mem",
+          "url": "https://github.com/thedotmack/claude-mem",
+          "desc": "Agent 跨会话持久记忆：自动压缩历史会话并按需回注上下文；本月 +8.4 千星"
+        },
+        {
+          "name": "opencode",
+          "url": "https://github.com/anomalyco/opencode",
+          "desc": "开源编码 Agent，终端里的 Claude Code 平替；本周 +6.8 千星，总量 22 万"
+        },
+        {
+          "name": "CLI-Anything",
+          "url": "https://github.com/HKUDS/CLI-Anything",
+          "desc": "港大团队「让所有软件 Agent 原生化」的命令行改造计划；本周 +3.3 千星"
+        }
+      ]
+    },
+    {
+      "id": "ai-model",
+      "name": "AI 模型",
+      "desc": "模型平台与 API",
+      "items": []
+    },
+    {
+      "id": "ai-coding",
+      "name": "AI 编程",
+      "desc": "代码助手与编程工具",
+      "items": []
+    },
+    {
+      "id": "ai-agent",
+      "name": "AI Agent",
+      "desc": "智能体与自动化工作流",
+      "items": []
+    },
+    {
+      "id": "ai-image",
+      "name": "AI 图像",
+      "desc": "绘图与设计工具",
+      "items": []
+    },
+    {
+      "id": "ai-video",
+      "name": "AI 视频",
+      "desc": "视频生成与剪辑",
+      "items": []
+    },
+    {
+      "id": "ai-audio",
+      "name": "AI 音频",
+      "desc": "语音合成与音乐生成",
+      "items": []
+    },
+    {
+      "id": "ai-learning",
+      "name": "AI 学习",
+      "desc": "教程、课程与学习资源",
+      "items": []
+    },
+    {
+      "id": "ai-prompt",
+      "name": "AI 提示词",
+      "desc": "提示词工程资源",
+      "items": []
     },
     {
       "id": "dev-tools",
-      "name": "🔧 开发工具",
-      "icon": "fa-screwdriver-wrench",
+      "name": "开发工具",
       "desc": "开发者效率工具",
-      "items": [
-        { "name": "GitHub", "url": "https://github.com/", "desc": "代码托管" },
-        { "name": "Vercel", "url": "https://vercel.com/", "desc": "前端部署" },
-        { "name": "Netlify", "url": "https://www.netlify.com/", "desc": "静态网站托管" },
-        { "name": "Cloudflare", "url": "https://www.cloudflare.com/", "desc": "CDN / 边缘计算" },
-        { "name": "Postman", "url": "https://www.postman.com/", "desc": "API 测试" },
-        { "name": "Docker Hub", "url": "https://hub.docker.com/", "desc": "容器镜像" },
-        { "name": "Notion", "url": "https://www.notion.so/", "desc": "笔记与文档" },
-        { "name": "Obsidian", "url": "https://obsidian.md/", "desc": "本地笔记知识库" }
-      ]
+      "items": []
     },
     {
       "id": "ai-news",
-      "name": "📡 AI 资讯",
-      "icon": "fa-newspaper",
-      "desc": "AI 行业资讯",
-      "items": [
-        { "name": "Hacker News", "url": "https://news.ycombinator.com/", "desc": "科技新闻" },
-        { "name": "Product Hunt", "url": "https://www.producthunt.com/", "desc": "新产品发现" },
-        { "name": "Reddit r/MachineLearning", "url": "https://reddit.com/r/MachineLearning", "desc": "ML 社区" },
-        { "name": "Twitter / X AI", "url": "https://x.com/search?q=AI&src=typed_query", "desc": "AI Twitter 动态" },
-        { "name": "稀土掘金", "url": "https://juejin.cn/", "desc": "国内技术社区" },
-        { "name": "InfoQ", "url": "https://www.infoq.cn/", "desc": "技术资讯平台" }
-      ]
+      "name": "AI 资讯",
+      "desc": "新闻、榜单与资讯源",
+      "items": []
     }
   ]
 }
