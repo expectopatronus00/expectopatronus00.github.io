@@ -93,15 +93,6 @@ window.articles = [
             tags: ["AI工具","前端设计","UI设计","开源项目","Vibe Coding","AI审美","小红书"],
           },
           {
-            id: 'xhs-6a56fdfd00000000210168c2',
-            title: '超级工程师多任务全并行解决方案：AI同时处理多个任务',
-            url: '../post/xhs-6a56fdfd00000000210168c2/xhs-6a56fdfd00000000210168c2.html',
-            summary: '哈工大AI全栈工程师Peter分享——超级工程师多任务、全并行解决方案，让AI同时处理多个开发任务，大幅提升工程效率。',
-            category: 'AI编程',
-            date: '2026-07-17',
-            tags: ["AI编程","多任务并行","超级工程师","AI Agent","全栈开发","效率提升","小红书"],
-          },
-          {
             id: 'xhs-6a580c05000000000f02af00',
             title: '代码现在能自己"画出来"，这个Skill让新人秒懂复杂代码',
             url: '../post/xhs-6a580c05000000000f02af00/xhs-6a580c05000000000f02af00.html',
@@ -849,15 +840,6 @@ window.articles = [
             tags: ["AI原生应用","WebSDK","AI新星计划","前端","一行代码"],
           },
           {
-            id: 'dy-7652001000000000001',
-            title: 'Prompt 已死，Loop 已来！还在逐句调 Prompt 的你该醒醒了',
-            url: '../post/dy-7652001000000000001/dy-7652001000000000001.html',
-            summary: '还在一句句调 Prompt、改了又改？HeyGen 内部已经换了打法——Loop。一句话丢过去，Agent 自己把整条链跑完。变的不是模型，是协作方式。',
-            category: '抖音搬运',
-            date: '2026-06-18',
-            tags: ["Prompt","Loop","LoopEngineering","Agent","AI自动化"],
-          },
-          {
             id: 'dy-7651892795757595958',
             title: '讲透 Loop Engineering，AI 工程的下一层',
             url: '../post/dy-7651892795757595958/dy-7651892795757595958.html',
@@ -903,15 +885,6 @@ window.articles = [
             tags: ['Loop', 'LoopEngineering', 'CI修复', 'TestUntilGreen', '代码保洁'],
           },
 
-          {
-            id: 'dy-7650776381453765903',
-            title: 'Prompt 已死，Loop已来！还在逐句调 Prompt 的你该醒醒了',
-            url: '../post/dy-7650776381453765903/dy-7650776381453765903.html',
-            summary: 'HeyGen 内部已经全面转向 Loop 模式。一句话丢过去，Agent 自己把整条链跑完。三件事告诉你 Prompt 为什么在过时。',
-            category: '抖音搬运',
-            date: '2026-06-18 12:00',
-            tags: ['Loop', 'Prompt已死', 'Agent', 'HeyGen', 'AI协作'],
-          },
           {
             id: 'dy-7652681300725206291',
             title: '一场毕业典礼，彻底点燃美国反AI情绪',
@@ -1284,12 +1257,6 @@ window.articles = [
     }
   ];
 
-  /* ---- 合并：标题几乎相同的重复文章，保留第一条 ---- */
-  var MERGED = {
-    'dy-7652001000000000001': 'dy-12riNYVQrSg',
-    'dy-7650776381453765903': 'dy-12riNYVQrSg'
-  };
-
   /* ---- 标题修正：抓取时被截断的条目 ---- */
   var TITLE_FIX = {
     'post-2026-06-20-wx': 'vLLM 部署方案：FP8 量化与 2×H20 的显存账'
@@ -1338,10 +1305,6 @@ window.articles = [
     a.category = categoryName(cid);
     if (TITLE_FIX[a.id]) a.title = TITLE_FIX[a.id];
     if (seriesIndex[a.id]) a.series = seriesIndex[a.id];
-    if (MERGED[a.id]) {
-      a.hidden = true;
-      a.mergedInto = MERGED[a.id];
-    }
   }
 
   function byDateDesc(x, y) {

@@ -8,6 +8,17 @@
       name="description"
       content="按顺序读的成组文章：Loop Engineering、Skill 生态、GPU 硬件实测。时间流会打断系列，所以单独给它们一个入口。"
     />
+    <meta property="og:title" content="系列连载 · expectopatronus" />
+    <meta property="og:type" content="website" />
+    <meta property="og:description" content="按顺序读的成组文章：Loop Engineering、Skill 生态、GPU 硬件实测。时间流会打断系列，所以单独给它们一个入口。" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
     <link rel="preload" href="fonts/SourceSerif4-var-normal.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="fonts/CormorantGaramond-var-normal.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="fonts.css" />
@@ -72,6 +83,16 @@
         line-height: 1.7;
         margin: 0;
       }
+      .intro-stats {
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: var(--fs-sm);
+        color: var(--text-dim);
+      }
+      .intro-stats strong {
+        color: var(--accent-rust-text);
+        font-weight: 600;
+      }
 
       /* ---------- 系列主体 ---------- */
       .series-list {
@@ -89,10 +110,26 @@
       }
       .sb-head {
         display: grid;
-        grid-template-columns: 1fr auto;
+        grid-template-columns: auto 1fr auto;
         gap: var(--sp-5);
-        align-items: end;
+        align-items: start;
         margin-bottom: var(--sp-5);
+      }
+      .sb-glyph {
+        width: 44px;
+        height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--bg-soft);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        color: var(--accent-rust-text);
+        margin-top: 4px;
+      }
+      .sb-glyph svg {
+        width: 22px;
+        height: 22px;
       }
       .sb-head .sb-kicker {
         font-family: var(--font-mono);
@@ -126,6 +163,27 @@
         letter-spacing: 0.06em;
         white-space: nowrap;
         padding-bottom: 4px;
+      }
+      .sb-side {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 10px;
+      }
+      .read-from {
+        font-family: var(--font-mono);
+        font-size: 0.72rem;
+        letter-spacing: 0.04em;
+        color: var(--accent-rust-text);
+        border: 1px solid var(--accent-rust);
+        border-radius: 999px;
+        padding: 6px 14px;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: background var(--dur-fast), color var(--dur-fast);
+      }
+      .read-from:hover {
+        background: rgba(184, 88, 29, 0.14);
       }
 
       /* 系列内的编号条目 */
@@ -195,11 +253,6 @@
         font-variant-numeric: lining-nums;
       }
 
-      /* 系列内被合并掉的文章，标注出来而不是直接消失 */
-      .ep.is-merged {
-        opacity: 0.55;
-        cursor: default;
-      }
       .ep.is-merged:hover {
         padding-left: 0;
         border-color: var(--line);
@@ -232,8 +285,13 @@
           padding: 0 var(--sp-4) var(--sp-8);
         }
         .sb-head {
-          grid-template-columns: 1fr;
-          gap: var(--sp-2);
+          grid-template-columns: 44px 1fr;
+        }
+        .sb-side {
+          grid-column: 1 / -1;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
         }
         .ep {
           grid-template-columns: 40px 1fr;
@@ -287,9 +345,14 @@
       <p>
         时间流会把一个系列打散——你读完第一篇，下一篇链接可能跳到完全无关的主题。所以这里把成组的文章单独排好，从头到尾连着读。
       </p>
+      <div class="intro-stats" id="intro-stats"></div>
     </section>
 
-    <div class="series-list" id="series-list"></div>
+    <div class="series-list" id="series-list">
+      <noscript>
+        <p class="empty-note">系列列表由 JavaScript 渲染，请启用 JavaScript 后刷新。</p>
+      </noscript>
+    </div>
 
     <footer class="site-footer">
       <div class="footer-content">
@@ -371,6 +434,32 @@
         var box = document.getElementById('series-list');
         var html = '';
 
+        /* 系列图标：id → 内联 SVG，与导航站同一套描边风格 */
+        var S = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">';
+        var GLYPHS = {
+          loop: S + '<path d="M17 4h3v3M7 20H4v-3M20 7a8 8 0 0 0-14.5-2M4 17a8 8 0 0 0 14.5 2"/><path d="M20 4v3h-3M4 20v-3h3"/></svg>',
+          skill: S + '<path d="M12 3l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L4.2 8.7l5.4-.8L12 3z"/></svg>',
+          gpu: S + '<rect x="7" y="7" width="10" height="10" rx="2"/><path d="M9 3v4M15 3v4M9 17v4M15 17v4M3 9h4M3 15h4M17 9h4M17 15h4"/></svg>'
+        };
+        function fmtDate(d) {
+          return d.slice(0, 10).replace(/-/g, ' · ');
+        }
+        /* 系列条目的编号顺序不一定等于日期顺序，跨度要对全组日期取 min/max；
+           部分条目的 date 带时间部分（如 2026-06-16 22:35），先截掉 */
+        function fmtSpan(dates) {
+          var sorted = dates
+            .map(function (d) {
+              return d.slice(0, 10);
+            })
+            .sort();
+          var a = sorted[0].split('-');
+          var b = sorted[sorted.length - 1].split('-');
+          if (a[0] === b[0] && a[1] === b[1]) return a[0] + '.' + a[1] + '.' + a[2] + '–' + b[2];
+          if (a[0] === b[0]) return a[0] + '.' + a[1] + '.' + a[2] + ' – ' + b[1] + '.' + b[2];
+          return a.join('.') + ' – ' + b.join('.');
+        }
+
+        var totalReadable = 0;
         BLOG.series.forEach(function (s, si) {
           var eps = BLOG.inSeries(s.id);
           var no = ('0' + (si + 1)).slice(-2);
@@ -400,43 +489,37 @@
             })
             .join('');
 
-          // 被合并掉的文章仍然列出来，标注去向，避免读者以为漏了
-          var mergedItems = BLOG.all
-            .filter(function (a) {
-              return a.hidden && a.mergedInto && BLOG.get(a.mergedInto) && BLOG.get(a.mergedInto).series && BLOG.get(a.mergedInto).series.id === s.id;
-            })
-            .map(function (a) {
-              return (
-                '<div class="ep is-merged">' +
-                '<span class="ep-no">—</span>' +
-                '<span class="ep-body">' +
-                '<h3>' +
-                a.title +
-                '</h3>' +
-                '<p class="ep-sum">' +
-                a.summary +
-                '</p>' +
-                '</span>' +
-                '<span class="ep-note">已并入第 ' +
-                ('0' + BLOG.get(a.mergedInto).series.index).slice(-2) +
-                ' 篇</span>' +
-                '</div>'
-              );
-            })
-            .join('');
-
-          if (!items && !mergedItems) {
+          if (!items) {
             items = '<p class="empty-note">这个系列还没有文章。</p>';
           }
+
+          /* 头部：图标 + 时间跨度；右侧统计 + 从头读起 */
+          totalReadable += eps.length;
+          var sortedDates = eps
+            .map(function (a) {
+              return a.date;
+            })
+            .sort();
+          var firstEp = eps.filter(function (a) {
+            return a.series.index === 1;
+          })[0] || eps[0];
+          var kicker = 'series ' + no + (sortedDates.length ? ' · ' + fmtSpan(sortedDates) : '');
+          var readCta =
+            firstEp && eps.length
+              ? '<a class="read-from" href="' + firstEp.url + '">从头读起 →</a>'
+              : '';
 
           html +=
             '<section class="series-block" id="' +
             s.id +
             '">' +
             '<div class="sb-head">' +
+            '<span class="sb-glyph">' +
+            (GLYPHS[s.id] || GLYPHS.loop) +
+            '</span>' +
             '<div>' +
-            '<div class="sb-kicker">series ' +
-            no +
+            '<div class="sb-kicker">' +
+            kicker +
             '</div>' +
             '<h2>' +
             s.name +
@@ -445,18 +528,22 @@
             s.desc +
             '</p>' +
             '</div>' +
+            '<div class="sb-side">' +
             '<div class="sb-count">' +
             eps.length +
             ' 篇</div>' +
+            readCta +
+            '</div>' +
             '</div>' +
             '<div class="ep-list">' +
             items +
-            mergedItems +
             '</div>' +
             '</section>';
         });
 
         box.innerHTML = html;
+        document.getElementById('intro-stats').innerHTML =
+          '<strong>' + BLOG.series.length + '</strong> 个系列 · <strong>' + totalReadable + '</strong> 篇可连读';
 
         // 从 home.html 的系列卡跳过来时，滚到对应系列
         if (window.location.hash) {

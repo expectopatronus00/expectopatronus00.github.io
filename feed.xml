@@ -5,7 +5,7 @@
     <link>https://expectopatronus00.github.io/</link>
     <description>一个 AI 工具与实战的中文学习归档：原创踩坑记录 + 精选转载，每篇都标注来源。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 24 Oct 2026 06:52:49 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 24 Oct 2026 09:12:32 GMT</lastBuildDate>
     <atom:link href="https://expectopatronus00.github.io/feed.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>SpaceX 开放 146 个 Grok Bot 智能体模板：免费拿之前，先看清这几点</title>
@@ -86,14 +86,6 @@
       <pubDate>Thu, 16 Jul 2026 16:00:00 GMT</pubDate>
       <category>AI 工具</category>
       <description>亚莱加德分享——一个可以提升AI前端审美的开源项目，让AI生成的UI不再土气，秒变专业设计师水平。（转载 · 来源：小红书）</description>
-    </item>
-    <item>
-      <title>超级工程师多任务全并行解决方案：AI同时处理多个任务</title>
-      <link>https://expectopatronus00.github.io/post/xhs-6a56fdfd00000000210168c2/xhs-6a56fdfd00000000210168c2.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/xhs-6a56fdfd00000000210168c2/xhs-6a56fdfd00000000210168c2.html</guid>
-      <pubDate>Thu, 16 Jul 2026 16:00:00 GMT</pubDate>
-      <category>AI 编程</category>
-      <description>哈工大AI全栈工程师Peter分享——超级工程师多任务、全并行解决方案，让AI同时处理多个开发任务，大幅提升工程效率。（转载 · 来源：小红书）</description>
     </item>
     <item>
       <title>代码现在能自己&quot;画出来&quot;，这个Skill让新人秒懂复杂代码</title>
@@ -246,6 +238,14 @@
       <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
       <category>AI 编程</category>
       <description>Chris IT先生分享——Java后端、React前端与AI Agent三者结合，探讨全栈开发的新范式与技术演进。（转载 · 来源：抖音）</description>
+    </item>
+    <item>
+      <title>一次讲透AI计费：输入输出Token与缓存命中</title>
+      <link>https://expectopatronus00.github.io/post/dy-7659996815441415458/dy-7659996815441415458.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7659996815441415458/dy-7659996815441415458.html</guid>
+      <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
+      <category>AI 基础设施</category>
+      <description>用动画视频一次讲透AI计费机制——Token是什么、输入输出怎么收费、缓存命中如何省钱，帮你优化AI使用成本。（转载 · 来源：抖音）</description>
     </item>
   </channel>
 </rss>
