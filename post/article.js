@@ -5,12 +5,14 @@
    文章 HTML 本身不需要包含任何 TOC / 上下篇 / 相关文章结构 ——
    全部在这里运行时生成，所以新增文章只要被注入一次就自动获得。
 
-   提供四样东西：
+   提供：
      1. 顶部阅读进度条
      2. 侧边目录（宽屏显示，从正文 h2 生成，滚动高亮）
      3. 上一篇 / 下一篇（按日期排序，来自 home/articles.js）
      4. 相关文章（同分类 + 标签交集，最多 3 篇）
      5. 缺失时补一条来源声明（仅转载文章）
+     6. 移动端导航按钮（文章页模板没有 menu-toggle，≤900px 时
+        导航链接整体隐藏，手机读者会被困在正文里）
 
    依赖：home/articles.js（提供 window.BLOG）。
    若 articles.js 加载失败，前三样里只有目录和进度条生效，
@@ -311,9 +313,41 @@
   }
 
   /* ══════════════════════════════════════════
+     6. 移动端导航
+     文章页模板只有 .nav-links，没有 menu-toggle 按钮；
+     ≤900px 时链接被 design-tokens.css 隐藏，手机读者只能靠
+     浏览器后退离开。这里运行时补上按钮和开合逻辑，
+     样式全部复用 design-tokens.css 的全局规则。
+     ══════════════════════════════════════════ */
+  function initMobileNav() {
+    var nav = document.querySelector('.site-nav');
+    var links = document.querySelector('.site-nav .nav-links');
+    if (!nav || !links || nav.querySelector('.menu-toggle')) return;
+
+    var btn = document.createElement('button');
+    btn.className = 'menu-toggle';
+    btn.setAttribute('aria-label', '菜单');
+    btn.innerHTML =
+      '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
+    btn.addEventListener('click', function () {
+      links.classList.toggle('is-open');
+    });
+
+    var inner = nav.querySelector('.nav-inner') || nav;
+    var themeBtn = nav.querySelector('.theme-btn');
+    if (themeBtn) {
+      inner.insertBefore(btn, themeBtn);
+    } else {
+      inner.appendChild(btn);
+    }
+  }
+
+  /* ══════════════════════════════════════════
      启动
      ══════════════════════════════════════════ */
   ready(function () {
+    initMobileNav();
+
     var articleEl = document.querySelector('.article-body');
     if (!articleEl) return;
 
