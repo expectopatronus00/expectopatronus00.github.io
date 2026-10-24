@@ -5,8 +5,16 @@
     <link>https://expectopatronus00.github.io/</link>
     <description>一个 AI 工具与实战的中文学习归档：原创踩坑记录 + 精选转载，每篇都标注来源。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 24 Oct 2026 09:12:32 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 24 Oct 2026 13:20:19 GMT</lastBuildDate>
     <atom:link href="https://expectopatronus00.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>一眼看清板块情绪：开源 A 股热力图 dapan.app</title>
+      <link>https://expectopatronus00.github.io/post/dy-7696073301038206248/dy-7696073301038206248.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7696073301038206248/dy-7696073301038206248.html</guid>
+      <pubDate>Fri, 23 Oct 2026 16:00:00 GMT</pubDate>
+      <category>量化与投资</category>
+      <description>抖音 30 万赞的看盘神器：开源 A 股热力图 dapan.app，色块大小是市值、颜色是涨跌幅，板块轮动一眼可见。本文讲怎么读图、数据链路与自部署，顺带对比东财星图和大盘云图。（转载 · 来源：抖音）</description>
+    </item>
     <item>
       <title>SpaceX 开放 146 个 Grok Bot 智能体模板：免费拿之前，先看清这几点</title>
       <link>https://expectopatronus00.github.io/post/dy-7700095546324749594/dy-7700095546324749594.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
       <category>AI 编程</category>
       <description>Chris IT先生分享——Java后端、React前端与AI Agent三者结合，探讨全栈开发的新范式与技术演进。（转载 · 来源：抖音）</description>
-    </item>
-    <item>
-      <title>一次讲透AI计费：输入输出Token与缓存命中</title>
-      <link>https://expectopatronus00.github.io/post/dy-7659996815441415458/dy-7659996815441415458.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7659996815441415458/dy-7659996815441415458.html</guid>
-      <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
-      <category>AI 基础设施</category>
-      <description>用动画视频一次讲透AI计费机制——Token是什么、输入输出怎么收费、缓存命中如何省钱，帮你优化AI使用成本。（转载 · 来源：抖音）</description>
     </item>
   </channel>
 </rss>

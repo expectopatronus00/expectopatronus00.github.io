@@ -439,7 +439,8 @@
         var GLYPHS = {
           loop: S + '<path d="M17 4h3v3M7 20H4v-3M20 7a8 8 0 0 0-14.5-2M4 17a8 8 0 0 0 14.5 2"/><path d="M20 4v3h-3M4 20v-3h3"/></svg>',
           skill: S + '<path d="M12 3l2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4L4.2 8.7l5.4-.8L12 3z"/></svg>',
-          gpu: S + '<rect x="7" y="7" width="10" height="10" rx="2"/><path d="M9 3v4M15 3v4M9 17v4M15 17v4M3 9h4M3 15h4M17 9h4M17 15h4"/></svg>'
+          gpu: S + '<rect x="7" y="7" width="10" height="10" rx="2"/><path d="M9 3v4M15 3v4M9 17v4M15 17v4M3 9h4M3 15h4M17 9h4M17 15h4"/></svg>',
+          sites: S + '<path d="M6 3h12v18l-6-4.5L6 21V3z"/><path d="M9.5 9.5l1.8 1.8 3.4-3.6"/></svg>'
         };
         function fmtDate(d) {
           return d.slice(0, 10).replace(/-/g, ' · ');
@@ -454,6 +455,7 @@
             .sort();
           var a = sorted[0].split('-');
           var b = sorted[sorted.length - 1].split('-');
+          if (a[0] === b[0] && a[1] === b[1] && a[2] === b[2]) return a.join('.');
           if (a[0] === b[0] && a[1] === b[1]) return a[0] + '.' + a[1] + '.' + a[2] + '–' + b[2];
           if (a[0] === b[0]) return a[0] + '.' + a[1] + '.' + a[2] + ' – ' + b[1] + '.' + b[2];
           return a.join('.') + ' – ' + b.join('.');

@@ -277,6 +277,19 @@
       "items": []
     },
     {
+      "id": "quant",
+      "name": "量化与投资",
+      "desc": "看盘工具、数据接口与选股框架",
+      "items": [
+        {
+          "name": "Dapan 热力图",
+          "url": "https://dapan.app/",
+          "desc": "开源 A 股大盘云图，色块面积是市值、颜色是涨跌幅，板块轮动一眼可见；MIT 可自部署",
+          "badge": "开源"
+        }
+      ]
+    },
+    {
       "id": "ai-news",
       "name": "AI 资讯",
       "desc": "新闻、榜单与资讯源",
