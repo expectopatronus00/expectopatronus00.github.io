@@ -30,7 +30,8 @@
     "summary": "1句话摘要",
     "meta_desc": "meta description",
     "meta_keywords": "关键词",
-    "category": "健康生活",
+    "category": "八个主题桶之一（AI 编程 / AI 工具 / AI 基础设施 / 运维与部署 / 量化与投资 / 效率与成长 / 健康与生活 / 杂项），按内容主题填，不要写「小红书」这类来源",
+    
     "content_html": ["<h2>章节标题</h2>", "<p>段落内容...</p>"],
     "cta": {
       "title": "去小红书看原笔记",

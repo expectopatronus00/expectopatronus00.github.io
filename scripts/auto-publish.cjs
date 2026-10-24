@@ -314,7 +314,6 @@ function handleXiaohongshu(rawInput) {
     summary: title + ' - 来自小红书笔记' + (author ? '，作者：' + author : ''),
     meta_desc: title + ' - 来自小红书笔记',
     meta_keywords: '小红书,笔记,' + (author || ''),
-    category: '健康生活',
     duration: '约 5 分钟阅读',
     content_html: [
       '<div class="section-marker">01 · 笔记简介</div>',

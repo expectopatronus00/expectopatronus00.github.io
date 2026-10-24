@@ -189,6 +189,9 @@ if (idx === -1) {
   const objects = [];
   for (let j = 0; j < generated.length; j++) {
     const g = generated[j];
+    if (!g.category) {
+      console.warn('  ⚠️  ' + g.id + ' 未填 category，将落入杂项；请补一个语义主题桶（AI 编程 / AI 工具 / AI 基础设施 / 运维与部署 / 量化与投资 / 效率与成长 / 健康与生活 / 杂项）');
+    }
     const tagStr = Array.isArray(g.tags) ? '["' + g.tags.join('","') + '"]' : '[]';
     objects.push(
       '\n          {\n' +
@@ -196,7 +199,7 @@ if (idx === -1) {
       '            title: \'' + String(g.title).replace(/'/g, "\\'") + '\',\n' +
       '            url: \'../post/' + g.id + '/' + g.id + '.html\',\n' +
       '            summary: \'' + String(g.summary || '').replace(/'/g, "\\'") + '\',\n' +
-      '            category: \'' + (g.category || '小红书') + '\',\n' +
+      '            category: \'' + (g.category || '小红书搬运') + '\',\n' +
       '            date: \'' + g.date + '\',\n' +
       '            tags: ' + tagStr + ',\n' +
       '          },'

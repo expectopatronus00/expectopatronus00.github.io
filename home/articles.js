@@ -1144,7 +1144,12 @@ window.articles = [
     '职业发展': 'growth', '创业副业': 'growth',
     '健康生活': 'life', '健康科普': 'life',
     'AI资讯': 'misc',
-    '抖音搬运': 'misc', '小红书搬运': 'misc', '微信搬运': 'misc'
+    '抖音搬运': 'misc', '小红书搬运': 'misc', '微信搬运': 'misc',
+    /* 语义桶名自映射：生成脚本只要把 category 写成八个桶名之一，
+       就会直接落对，无需再维护 CATEGORY_BY_ID 覆盖表 */
+    'AI 编程': 'ai-code', 'AI 工具': 'ai-tool', 'AI 基础设施': 'ai-infra',
+    '运维与部署': 'ops', '量化与投资': 'quant', '效率与成长': 'growth',
+    '健康与生活': 'life', '杂项': 'misc'
   };
 
   /* ---- 按 id 指定，覆盖上面的默认映射 ----
@@ -1223,7 +1228,17 @@ window.articles = [
     'deepseek-doc': 'ai-tool',
     'deepseek-api': 'ai-tool',
     'deepseek-main': 'ai-tool',
-    'post1': 'ops'
+    'post1': 'ops',
+
+    /* ---- 2026-07 抖音批量导入时落在「抖音搬运→misc」的技术文逐条归位 ----
+       剩余 misc：AI 热点日榜、反AI情绪评论、AI 创作科幻、Anthropic 监管新闻，
+       属于真正的杂项。 */
+    'dy-7699051728071948154': 'ai-code',
+    'dy-7661941275884637491': 'ai-code',
+    'dy-7660089275492847218': 'ai-code',
+    'dy-7662989219727461658': 'ai-code',
+    'dy-7663846136494752070': 'ai-code',
+    'dy-7663695071040882383': 'ai-tool'
   };
 
   /* ---- 系列 ---- */

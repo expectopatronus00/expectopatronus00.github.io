@@ -52,6 +52,7 @@ git add -A && git commit && git push
     "cover": "https://images.unsplash.com/xxx",
     "tags": ["标签1", "标签2", "标签3"],
     "summary": "一句话摘要，80~120字，用于文章库和首页卡片显示",
+    "category": "八个主题桶之一（AI 编程 / AI 工具 / AI 基础设施 / 运维与部署 / 量化与投资 / 效率与成长 / 健康与生活 / 杂项），规则见「分类 & 标签」一节",
     "meta_desc": "SEO meta description，150字内",
     "meta_keywords": "SEO 关键词，逗号分隔，10~15个",
     "duration": "约 5 分钟阅读",
@@ -316,6 +317,13 @@ site-footer    ← 底部
 - 分类按钮 (`#cat-bar`) 和 标签云 (`#tag-pills`) 均由 home.html 在页面加载时**从 articles 数组动态提取和渲染**
 - 也就是说：**只要 articles 数组里的 `category` 和 `tags` 字段正确，主题按钮和标签云就会自动出现新项**
 - 不再需要手工修改分类按钮或标签云 HTML
+
+**category 字段必须填语义主题桶（2026-10 起强制）**
+- 八个合法值：`AI 编程` / `AI 工具` / `AI 基础设施` / `运维与部署` / `量化与投资` / `效率与成长` / `健康与生活` / `杂项`
+- 按文章**内容主题**判断，不要写「抖音搬运」这类来源——来源由 id 前缀自动推导
+- articles.js 的 DEFAULT_CATEGORY 认识全部八个桶名，写对即落对，无需再维护 CATEGORY_BY_ID 覆盖表
+- 只有真正的资讯日榜、社会评论、AI 创作随笔才允许 `杂项`；技术类内容一律不得落入杂项
+- 缺省时 generate.js 回落为「抖音搬运」（→杂项），并在控制台打印警告——看到警告必须回头补分类
 
 **自动自检**
 - 脚本运行结束后会自动执行 `node scripts/repo-lint.cjs --fix`

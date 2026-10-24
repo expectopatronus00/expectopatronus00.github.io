@@ -7,6 +7,14 @@ const os = require('os');
 const path = require('path');
 
 const URL = process.argv[2];
+// 可选第二个参数：语义主题桶名（AI 编程 / AI 工具 / AI 基础设施 / 运维与部署 /
+// 量化与投资 / 效率与成长 / 健康与生活 / 杂项）。缺省「微信搬运」会落进杂项，
+// 建议按内容补一个，例如：
+//   node scripts/wx-post-quick.cjs <url> "AI 基础设施"
+const CATEGORY_ARG = process.argv[3] || '';
+if (!CATEGORY_ARG) {
+  console.warn('⚠️  未指定语义主题桶，文章将落入杂项；建议按内容补一个：AI 编程 / AI 工具 / AI 基础设施 / 运维与部署 / 量化与投资 / 效率与成长 / 健康与生活 / 杂项');
+}
 if (!URL) {
   console.error('需要一个 URL 参数');
   process.exit(1);
@@ -244,7 +252,7 @@ if (articlesAnchorIdx >= 0) {
     '            title: \'' + escapeJs(title) + '\',\n' +
     '            url: \'../post/' + slug + '/' + slug + '.html\',\n' +
     '            summary: \'' + escapeJs(summary) + '\',\n' +
-    '            category: \'微信搬运\',\n' +
+    '            category: \'' + escapeJs(CATEGORY_ARG || '微信搬运') + '\',\n' +
     '            date: \'' + date + '\',\n' +
     '            tags: [\'AI\',\'大模型\',\'技术\'],\n' +
     '          },\n';
