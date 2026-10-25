@@ -9,7 +9,10 @@
    `node scripts/source-radar.cjs 30`
    产出 `.tools/radar/candidates-<日期>.md` 的第一、二节。
 2. **刷抖音推荐流**（IAB 登录态）：douyin.com 推荐 tab 滚动 10–15 屏，
-   采集卡片标题与作者——推荐算法已学过用户口味，这是最准的信源。
+   采集卡片标题与作者。⚠️ 2026-10-25 实测：推荐流 AI 命中率仅 3%
+   （算法优化观看时长而非主题），本通道降为末位；**收藏增量为最强
+   信源**，小红书探索流次之（实测命中率 44%）。收藏 tab 若点击
+   不切入，改用 URL 直达 douyin.com/user/self?showTab=favorite_c。
 3. **抖音收藏增量**：user/self → 收藏 tab（按收藏时间倒序），对照
    `.tools/radar/seen.json` 只取新增，滚到已见条目即停。
 4. **刷小红书探索流**：xiaohongshu.com/explore 滚动约 10 屏采集笔记卡片；
