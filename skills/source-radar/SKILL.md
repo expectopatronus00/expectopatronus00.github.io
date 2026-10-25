@@ -8,17 +8,21 @@
 1. **跑雷达脚本**（收集本机留痕 + 手动收件箱）：
    `node scripts/source-radar.cjs 30`
    产出 `.tools/radar/candidates-<日期>.md` 的第一、二节。
-2. **GitHub 扫描**（WebFetch，本地直连不通）：
-   - 月度 / 周度趋势：`github.com/trending?since=monthly` 与 `weekly`，按语言各取一页
+2. **刷抖音推荐流**（IAB 登录态）：douyin.com 推荐 tab 滚动 10–15 屏，
+   采集卡片标题与作者——推荐算法已学过用户口味，这是最准的信源。
+3. **抖音收藏增量**：user/self → 收藏 tab（按收藏时间倒序），对照
+   `.tools/radar/seen.json` 只取新增，滚到已见条目即停。
+4. **刷小红书探索流**：xiaohongshu.com/explore 滚动约 10 屏采集笔记卡片；
+   搜索通道（WebSearch site:xiaohongshu.com + 偏好关键词）仅作补充——
+   站内笔记不被搜索引擎收录，搜索命中率天然低。
+5. **GitHub 扫描**（WebFetch，本地直连不通）：
+   - 月度 / 周度趋势：`github.com/trending?since=monthly` 与 `weekly`
    - 新库查询：`api.github.com/search/repositories?q=created:>7天前+topic:ai|llm|agent&sort=stars`
-   - 与 preferences.md 的主题优先级对照，筛出 ≤5 条
-3. **小红书发现（v1 搜索通道）**：
-   自动刷 feed 需要签名，一期不做。用 WebSearch 查
-   `site:xiaohongshu.com` + 偏好画像里的主题关键词（如 看盘工具 开源 AI 热力图），
-   从公开搜索结果里发现笔记；发现后尝试 WebFetch 笔记页拿标题与作者。
-4. **打分**：对每条候选按下方评分表打 0–100 分，写入候选清单。
-5. **产出日报**：收了什么（分数+理由）、待定什么、丢了什么，汇报给用户。
-   **不发布、不推送**——进入生成需用户点头（第二期改为限额直发）。
+6. **打分**：对每条候选按下方评分表打 0–100 分，对照 `.tools/radar/seen.json`
+   去重（含「超级工程师」多平台搬运教训：同内容只留一份）。
+7. **发布**：≥75 分全部走第三节管线整理发布，**数量不设上限，质量是唯一
+   门槛**；50–74 写入待定清单；<50 丢弃。已发布条目追加进 seen.json 防重复。
+8. **产出日报**：发布了什么（分数+链接）、待定什么、丢了什么，汇报给用户。
 
 ## 二、评分表（0–100）
 
@@ -30,10 +34,10 @@
 | 重复度 | 15 | 与 articles.js 全量标题归一化比对（含「超级工程师」教训），撞车 0 |
 | 标题健康度 | 15 | 可去夸张化改写的 15；夸张到无法救的 5 |
 
-**档位**：≥75 进生成草稿（当天最多 3 篇）｜50–74 待定清单｜<50 丢弃。
+**档位**：≥75 直接进发布线（数量不设上限）｜50–74 待定清单｜<50 丢弃。
 **硬条件**（preferences.md 第二节）不满足的直接丢弃，不打分。
 
-## 三、上传流程（用户点头后）
+## 三、上传流程
 
 走既有管线，不新造轮子：
 - 抖音 → `generate.js`（batch JSON 由 agent 按模板填）→ `repo-lint --fix` → `build-index`

@@ -188,8 +188,8 @@ async function wxMeta(url) {
   const outFile = path.join(RADAR_DIR, 'candidates-' + today + '.md');
   const header =
     '# 信源雷达候选 · ' + today + '\n\n' +
-    '> 只挑不发。下一步：按 skills/source-radar/SKILL.md 的评分闸门打分，\n' +
-    '> ≥75 分进入生成草稿，50–74 待定，<50 丢弃。每天最多 3 篇进入生成。\n\n' +
+    '> 多通道刷取后按 skills/source-radar/SKILL.md 的评分闸门打分，\n' +
+    '> ≥75 直接进发布线（数量不设上限），50–74 待定，<50 丢弃。\n\n' +
     lines.join('\n') + '\n';
   fs.writeFileSync(outFile, header, 'utf8');
   console.log('候选 ' + candidates.length + ' 条 → ' + outFile);
