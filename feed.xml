@@ -5,8 +5,16 @@
     <link>https://expectopatronus00.github.io/</link>
     <description>一个 AI 工具与实战的中文学习归档：原创踩坑记录 + 精选转载，每篇都标注来源。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 24 Oct 2026 13:20:19 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 25 Oct 2026 02:23:13 GMT</lastBuildDate>
     <atom:link href="https://expectopatronus00.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AI Agent Skill 必装榜 Top20：按场景选，别按星标选</title>
+      <link>https://expectopatronus00.github.io/post/dy-20261021-skill-top20/dy-20261021-skill-top20.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-20261021-skill-top20/dy-20261021-skill-top20.html</guid>
+      <pubDate>Sat, 24 Oct 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>抖音 2459 赞的 Skill 必装榜 Top20：从 superpowers 的四步开发流程到 caveman 的省 Token 哲学，20 个 Skill 按「干什么、用在哪」重新归组成场景清单，附正确用法与冷思考。（转载 · 来源：抖音）</description>
+    </item>
     <item>
       <title>一眼看清板块情绪：开源 A 股热力图 dapan.app</title>
       <link>https://expectopatronus00.github.io/post/dy-7696073301038206248/dy-7696073301038206248.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
       <category>AI 编程</category>
       <description>CarryU王同学分享——Agent只负责写Prompt、判断任务复杂度和执行任务，深入解析AI Agent的职责边界与分工逻辑。（转载 · 来源：抖音）</description>
-    </item>
-    <item>
-      <title>Java + React + AI Agent：全栈开发的新范式</title>
-      <link>https://expectopatronus00.github.io/post/dy-7659309585488719345/dy-7659309585488719345.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7659309585488719345/dy-7659309585488719345.html</guid>
-      <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
-      <category>AI 编程</category>
-      <description>Chris IT先生分享——Java后端、React前端与AI Agent三者结合，探讨全栈开发的新范式与技术演进。（转载 · 来源：抖音）</description>
     </item>
   </channel>
 </rss>

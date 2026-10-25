@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'dy-20261021-skill-top20',
+            title: 'AI Agent Skill 必装榜 Top20：按场景选，别按星标选',
+            url: '../post/dy-20261021-skill-top20/dy-20261021-skill-top20.html',
+            summary: '抖音 2459 赞的 Skill 必装榜 Top20：从 superpowers 的四步开发流程到 caveman 的省 Token 哲学，20 个 Skill 按「干什么、用在哪」重新归组成场景清单，附正确用法与冷思考。',
+            category: 'AI 编程',
+            date: '2026-10-25',
+            tags: ["Skill","AI编程","Agent","superpowers","榜单","效率工具","抖音"],
+          },
+          {
             id: 'dy-7696073301038206248',
             title: '一眼看清板块情绪：开源 A 股热力图 dapan.app',
             url: '../post/dy-7696073301038206248/dy-7696073301038206248.html',
