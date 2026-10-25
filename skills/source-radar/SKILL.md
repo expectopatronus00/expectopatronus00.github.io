@@ -40,6 +40,11 @@
 - 微信 → `wx-post-quick.cjs` / `auto-publish.cjs`
 - 小红书 → `skills/xhs-post-skill`
 - category 必须填语义主题桶，禁止落杂项（除非真杂项）
+- 封面保存为 post/<id>/cover.jpg——**目录名必须与 batch JSON 的 id 完全一致**
+  （2026-10-25 曾因目录名手滑存错导致封面 404）；generate 之后校验
+  `post/<id>/cover.jpg` 存在且大于 10KB，不满足不发布
+- 原榜的星标数据若无法与 GitHub 对账，文章只保留「干什么、用在哪」并
+  标注「以仓库实时数据为准」，不得把来路不明的星标当事实引用
 
 ## 四、信源边界（当前能力）
 
