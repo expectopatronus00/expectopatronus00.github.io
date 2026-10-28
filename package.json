@@ -6,6 +6,9 @@
   "type": "module",
   "scripts": {
     "dev": "live-server --port=5500 --no-browser",
+    "daily": "node scripts/daily-run.cjs",
+    "health": "node scripts/site-health.cjs",
+    "notify": "node scripts/notify.cjs",
     "lint": "eslint . --ext .js,.html",
     "lint:fix": "eslint . --ext .js,.html --fix",
     "format": "prettier --write .",

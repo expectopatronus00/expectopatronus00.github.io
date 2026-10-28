@@ -322,14 +322,41 @@ function main() {
 
   const site = siteUrl();
 
-  fs.writeFileSync(path.join(ROOT, 'feed.xml'), buildFeed(articles, site, categoryOf), 'utf8');
-  fs.writeFileSync(path.join(ROOT, 'sitemap.xml'), buildSitemap(articles, site), 'utf8');
+  const feedPath = path.join(ROOT, 'feed.xml');
+  const sitemapPath = path.join(ROOT, 'sitemap.xml');
+
+  /* 内容没变就不落盘：lastBuildDate 每次都取当前时间，无条件写会让「没有新文章
+     的日子」也产生一次只有时间戳变化的提交，把 git 历史搅浑。 */
+  const feedState = writeIfChanged(feedPath, buildFeed(articles, site, categoryOf), true);
+  const sitemapState = writeIfChanged(sitemapPath, buildSitemap(articles, site), false);
 
   console.log('站点地址  ' + site);
   console.log('文章总数  ' + articles.length);
   console.log('主题桶    ' + Object.keys(bucketNames).length + ' 个');
-  console.log('已写入    feed.xml（最近 30 篇）');
-  console.log('已写入    sitemap.xml（' + (articles.length - MERGED_IDS.length + 5) + ' 条 URL）');
+  console.log(
+    (feedState === 'written' ? '已写入    ' : '未变化    ') + 'feed.xml（最近 30 篇）'
+  );
+  console.log(
+    (sitemapState === 'written' ? '已写入    ' : '未变化    ') +
+      'sitemap.xml（' + (articles.length - MERGED_IDS.length + 5) + ' 条 URL）'
+  );
+}
+
+/** 只在内容真的变了才写盘。keepBuildDate 为真时，只有时间戳不同视为「没变」。 */
+function writeIfChanged(file, next, keepBuildDate) {
+  const prev = fs.existsSync(file) ? fs.readFileSync(file, 'utf8') : '';
+  if (prev === next) return 'unchanged';
+
+  if (keepBuildDate && prev) {
+    const prevDate = (prev.match(/<lastBuildDate>([^<]*)<\/lastBuildDate>/) || [])[1];
+    const nextDate = (next.match(/<lastBuildDate>([^<]*)<\/lastBuildDate>/) || [])[1];
+    if (prevDate && nextDate && next.replace(nextDate, prevDate) === prev) {
+      return 'unchanged';
+    }
+  }
+
+  fs.writeFileSync(file, next, 'utf8');
+  return 'written';
 }
 
 main();

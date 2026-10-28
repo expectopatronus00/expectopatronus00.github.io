@@ -384,6 +384,17 @@ try {
   console.log('⚠️ 一致性检查发现问题，请根据上方输出手动修复');
 }
 
+// ---------- 重建订阅产物 ----------
+// 少了这一步，push 上去的 feed.xml / sitemap.xml 还是旧的，RSS 订阅者看不到新文章
+console.log();
+console.log('--- 重建 feed.xml / sitemap.xml ---');
+try {
+  execSync('node scripts/build-index.cjs', { stdio: 'inherit', cwd: ROOT });
+} catch (e) {
+  console.error('❌ 索引重建失败，已中止发布');
+  process.exit(1);
+}
+
 // ---------- git commit + push ----------
 if (!NO_PUSH) {
   console.log();

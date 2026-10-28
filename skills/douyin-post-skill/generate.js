@@ -253,10 +253,10 @@ console.log('  - home/home.html    (共 ' + homeNewCount + ' 篇)');
 console.log('  - index.html        (hero 数: ' + indexNewCount + ', latest-grid 由前端 JS 动态渲染)');
 console.log();
 console.log('建议执行:');
-console.log('  cd /workspace');
-console.log('  git add -A');
-console.log('  git commit -m "feat: 新增' + generated.length + '篇抖音搬运文章"');
-console.log('  git push origin HEAD:main');
+console.log('  node scripts/daily-run.cjs    # 检查 + 重建索引 + 提交推送 + 通知');
+console.log('  # 或者手动:');
+console.log('  git add -A && git commit -m "feat: 新增' + generated.length + '篇抖音搬运文章"');
+console.log('  node scripts/build-index.cjs && git push origin HEAD:main');
 console.log();
 
 // ---------- 第 4 步: 自动调用 repo-lint 自检 ----------
@@ -273,5 +273,18 @@ try {
   if (err.stdout) console.log(err.stdout);
   if (err.stderr) console.error(err.stderr);
   console.log('⚠️  检查发现问题，请根据上方输出手工修复');
+  process.exitCode = 1;
+}
+
+// ---------- 第 5 步: 重建订阅产物 ----------
+const BUILD_PATH = path.join(ROOT, 'scripts', 'build-index.cjs');
+console.log('=== 重建 feed.xml / sitemap.xml ===');
+try {
+  execFileSync('node', [BUILD_PATH], { encoding: 'utf8', stdio: 'inherit' });
+  console.log('✅ 订阅产物已重建');
+} catch (err) {
+  if (err.stdout) console.log(err.stdout);
+  if (err.stderr) console.error(err.stderr);
+  console.log('⚠️  索引重建失败，请手动运行 node scripts/build-index.cjs');
   process.exitCode = 1;
 }

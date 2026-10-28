@@ -1,0 +1,42 @@
+name: site-health
+
+# 云端只做确定性校验，不生成内容、不抓取抖音/小红书（机房 IP + 无登录态，必然失败）。
+# 定时用 UTC：02:30 UTC = 北京时间 10:30，比本地 09:00 的产出晚一个半小时。
+#
+# 注意：公开仓库的 schedule 在连续 60 天无提交活动后会被 GitHub 自动禁用。
+# 如果某天开始收不到「站点健康」通知，先去 Actions 页面看是不是被停了。
+
+on:
+  schedule:
+    - cron: '30 2 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: 仓库一致性检查
+        run: node scripts/repo-lint.cjs
+
+      - name: 站点健康检查（含线上探活）
+        if: always()
+        env:
+          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+          BARK_URL: ${{ secrets.BARK_URL }}
+          SERVERCHAN_KEY: ${{ secrets.SERVERCHAN_KEY }}
+          FEISHU_WEBHOOK: ${{ secrets.FEISHU_WEBHOOK }}
+          WECOM_WEBHOOK: ${{ secrets.WECOM_WEBHOOK }}
+          DINGTALK_WEBHOOK: ${{ secrets.DINGTALK_WEBHOOK }}
+          NOTIFY_WEBHOOK: ${{ secrets.NOTIFY_WEBHOOK }}
+          STALE_DAYS: '7'
+        run: node scripts/site-health.cjs
