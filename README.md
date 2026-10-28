@@ -35,6 +35,13 @@ scripts/
   repo-lint.cjs             仓库一致性检查（文章数 / 死链 / 孤儿页 / 重复）
   build-index.cjs           生成 feed.xml 与 sitemap.xml
   enhance-articles.cjs      给文章页批量注入 post/article.js
+  daily-run.cjs             每日收尾：检查 → 重建索引 → 提交推送 → 通知
+  site-health.cjs           站点健康检查（feed 完整性 / 线上探活 / 断更）
+  notify.cjs                统一通知出口，所有自动化环节都调它
+  auto-publish.cjs          一条链接走完抓取 → 生成 → 发布
+
+.github/workflows/
+  health.yml                每日云端校验（只做确定性检查，不抓站）
 
 skills/                     内容生成 Skill（抖音 / 小红书 / 导航站）
 docs/                       设计与内容规划文档
@@ -56,7 +63,19 @@ node scripts/repo-lint.cjs        # 一致性检查，改了文章列表后跑�
 node scripts/repo-lint.cjs --fix  # 顺手修正首页与归档页的显示数字
 node scripts/build-index.cjs      # 重新生成 feed.xml 与 sitemap.xml
 node scripts/enhance-articles.cjs # 给新增的文章页注入文章增强脚本
+
+node scripts/daily-run.cjs        # 每日收尾：检查 → 重建索引 → 提交推送 → 通知
+node scripts/site-health.cjs      # 站点健康检查：feed 完整性 / 线上探活 / 断更检测
+node scripts/notify.cjs --title "标题" --body "正文"   # 手动发一条通知
 ```
+
+`daily-run.cjs` 只做「不需要判断」的那一段，采集、评分、写正文都不在里面（那些要
+agent 参与，见 `skills/source-radar/SKILL.md`）。常用参数：`--no-push` 只检查不推、
+`--dry-run` 全跑但不提交不通知、`--allow-lint-issues` 一致性检查有遗留问题时仍推送。
+
+通知渠道在仓库根目录 `.env` 里配（已 gitignore，模板见 `.env.example`），支持
+Telegram / Bark / Server 酱 / 飞书 / 企业微信 / 钉钉 / 通用 webhook。一个都没配时，
+`notify.cjs` 只把内容打印到终端，不会报错。
 
 `build-index.cjs` 的站点地址默认取 GitHub Pages 域名，绑了自定义域名的话：
 
