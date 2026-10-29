@@ -16,6 +16,40 @@
 原始数据只落 `.tools/radar/taste-<日期>/`（已被 .gitignore），
 **任何原始浏览条目不得进入公开仓库**；preferences.md 只写抽象画像。
 
+## 一·5 无人值守通道（2026-10-29 起 · 首选）
+
+不再依赖 ZCode 内置浏览器会话，改用本机 Playwright Chromium + 独立持久 profile，
+扫码登录一次即可长期复用，agent 可自行跑完采集。
+
+```
+运行环境
+  node   C:\Users\Administrator\.workbuddy-ai\binaries\node\versions\22.22.2-6\node.exe
+  NODE_PATH  C:\Users\Administrator\.workbuddy-ai\binaries\node\workspace\node_modules
+             （playwright 装在这里，项目依赖里没有，别往项目里装）
+  profile    .tools/browser-profile     （已被 .gitignore 的 .tools/ 覆盖）
+  auth 快照  .tools/radar/auth.json     （storageState，同样不入库）
+
+脚本（均在 .tools/，不进仓库）
+  browser-login.cjs   打开小红书/抖音供扫码，轮询 web_session / sid_tt 判定登录，
+                      两站都登好即落 storageState
+  scan-now.cjs        小红书探索流 + 抖音首页
+  douyin-fav.cjs      抖音收藏
+  analyze-increment.cjs  与 seen.json 去重、按关键词筛 AI 相关
+```
+
+实测产出（2026-10-29）：抖音收藏 358 条 / 小红书探索 129 条。
+
+**两个必须记住的坑**
+
+1. 抖音收藏的 tab 参数是 `?showTab=favorite_collection`，**不是** `favorite_c`
+   （后者落空页，只抓到 3 条导航噪声）。卡片选择器 `a[href*="/video/"]`，
+   标题取 `img[alt]`（格式「作者：标题 #标签」）——`li.innerText` 首行是播放量。
+2. 去重时 seen.json 里有「？」这类键，归一化成空串后 `includes('')` 恒真，
+   会把全部候选误判为已见。必须先过滤掉归一化长度 < 8 的键。
+
+**登录态失效的判断**：脚本报未登录、或抖音跳到验证码中间页，就是 cookie 过期，
+重跑 `browser-login.cjs` 让用户扫一次码即可；不要直接判定「登录态不可用」。
+
 ## 二、小红书（浏览记录）
 
 1. 打开 `https://www.xiaohongshu.com/user/profile/<uid>?tab=browseHistory`

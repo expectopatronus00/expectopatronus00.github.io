@@ -12,9 +12,13 @@
    采集卡片标题与作者。⚠️ 2026-10-25 实测：推荐流 AI 命中率仅 3%
    （算法优化观看时长而非主题），本通道降为末位；**收藏增量为最强
    信源**，小红书探索流次之（实测命中率 44%）。收藏 tab 若点击
-   不切入，改用 URL 直达 douyin.com/user/self?showTab=favorite_c。
+   不切入，改用 URL 直达 douyin.com/user/self?showTab=favorite_collection
+   （⚠️ 2026-10-29 实测：正确的 tab 参数是 `favorite_collection`，旧记的
+   `favorite_c` 会落到空页，只抓到 3 条导航噪声）。
 3. **抖音收藏增量**：user/self → 收藏 tab（按收藏时间倒序），对照
    `.tools/radar/seen.json` 只取新增，滚到已见条目即停。
+   卡片选择器：`a[href*="/video/"]`，标题取 `img[alt]`（格式「作者：标题 #标签」）；
+   `li.innerText` 首行是播放量不是标题，别用。
 4. **刷小红书探索流**：xiaohongshu.com/explore 滚动约 10 屏采集笔记卡片；
    搜索通道（WebSearch site:xiaohongshu.com + 偏好关键词）仅作补充——
    站内笔记不被搜索引擎收录，搜索命中率天然低。
@@ -58,7 +62,7 @@
 | 信源 | 状态 | 说明 |
 | --- | --- | --- |
 | 本机浏览器留痕（抖音/公众号/小红书网页端） | ✅ 自动 | 覆盖 PC 端看过的内容；手机 App 记录不可及 |
-| 内置浏览器登录态直读（小红书/抖音） | ✅ 半自动 | 完整操作规程见 `skills/taste-scan/SKILL.md`（2026-10-24 实测：XHS 96 条、抖音喜欢 58 / 收藏 39 / 历史 11） |
+| 内置浏览器登录态直读（小红书/抖音） | ✅ 半自动 | 完整操作规程见 `skills/taste-scan/SKILL.md`（2026-10-24 实测：XHS 96 条、抖音喜欢 58 / 收藏 39 / 历史 11）。**2026-10-29 起可无人值守**：Playwright Chromium + 持久 profile `.tools/browser-profile`，扫码登录一次长期复用，实测抖音收藏 358 条 / 小红书探索 129 条 |
 | 手动收件箱 `.tools/radar/inbox.txt` | ✅ 自动 | 每行一个链接，读后清空 |
 | GitHub 趋势 + 新库 API | ✅ agent | 本地直连 GitHub 被阻断，必须走 WebFetch |
 | 小红书发现 | ⚠️ 搜索通道 | 站内 feed 有签名墙；用搜索引擎站内检索近似 |
