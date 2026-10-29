@@ -59,7 +59,20 @@ function step(name, ok, detail) {
   console.log((ok ? '✅ ' : '⚠️  ') + name + (detail ? ' — ' + detail : ''));
 }
 
+/**
+ * 文章数以 home/articles.js 的索引为准。
+ * 早期实现数的是 post/ 下的目录数，但一个目录可以放多篇文章
+ * （如 post/deepseek/ 下就有 deepseek.html 与 api/api.html），
+ * 会稳定少报，故改为解析索引里的 url 字段（每篇一条，categories 没有 url）。
+ */
 function countPosts() {
+  try {
+    const src = fs.readFileSync(path.join(ROOT, 'home', 'articles.js'), 'utf8');
+    const n = (src.match(/\burl\s*:\s*['"]/g) || []).length;
+    if (n > 0) return n;
+  } catch (e) {
+    /* 索引读不到，回退目录计数 */
+  }
   try {
     return fs
       .readdirSync(POST_DIR, { withFileTypes: true })
