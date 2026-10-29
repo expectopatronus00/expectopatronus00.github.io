@@ -5,8 +5,16 @@
     <link>https://expectopatronus00.github.io/</link>
     <description>一个 AI 工具与实战的中文学习归档：原创踩坑记录 + 精选转载，每篇都标注来源。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 25 Oct 2026 02:23:13 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 29 Oct 2026 15:12:01 GMT</lastBuildDate>
     <atom:link href="https://expectopatronus00.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Uncle Bob 把工程纪律写成了 Skill：ub-mode 的三道硬闸门</title>
+      <link>https://expectopatronus00.github.io/post/gh-unclebob-ub-mode/gh-unclebob-ub-mode.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-unclebob-ub-mode/gh-unclebob-ub-mode.html</guid>
+      <pubDate>Wed, 28 Oct 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>《Clean Code》作者 Uncle Bob 开源的 ub-mode，仓库只有一份 4KB 的 SKILL.md，四天 4374 星。它把工程纪律拆成先跑通、再改对、日常三段，并用 CRAP 分数、结构重复率、变异测试三道确定性闸门，逼 AI 拿数字证明代码干净。本文讲它规定了什么、怎么装，以及为什么只装 Skill 不够。（转载 · 来源：微信）</description>
+    </item>
     <item>
       <title>AI Agent Skill 必装榜 Top20：按场景选，别按星标选</title>
       <link>https://expectopatronus00.github.io/post/dy-20261021-skill-top20/dy-20261021-skill-top20.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
       <category>量化与投资</category>
       <description>山无棱分享——不会写代码也能做AI量化实盘！这款开源AI交易员工具让量化交易门槛大幅降低，普通人也能参与AI量化交易。（转载 · 来源：抖音）</description>
-    </item>
-    <item>
-      <title>Agent的职责边界：写Prompt、判复杂度、执行任务</title>
-      <link>https://expectopatronus00.github.io/post/dy-7658411673698457834/dy-7658411673698457834.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7658411673698457834/dy-7658411673698457834.html</guid>
-      <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
-      <category>AI 编程</category>
-      <description>CarryU王同学分享——Agent只负责写Prompt、判断任务复杂度和执行任务，深入解析AI Agent的职责边界与分工逻辑。（转载 · 来源：抖音）</description>
     </item>
   </channel>
 </rss>

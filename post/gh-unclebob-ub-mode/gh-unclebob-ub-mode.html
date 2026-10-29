@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Uncle Bob 把工程纪律写成了 Skill：ub-mode 的三道硬闸门 · EXPECTOPATRONUS</title>
+    <meta name="description" content="Clean Code 作者 Uncle Bob 开源了 ub-mode：一份 4KB 的 SKILL.md，四天拿到 4374 星。它把工程纪律拆成先跑通、再改对、日常三条，并用 CRAP 分数、结构重复率、变异测试三道确定性闸门，逼 AI 拿数字证明代码是干净的。本文讲它规定了什么、怎么装，以及为什么光装 Skill 不够。" />
+    <meta name="keywords" content="Uncle Bob, ub-mode, Agent Skill, 工程纪律, CRAP, 变异测试, Claude Code, 代码质量" />
+    <meta property="og:title" content="Uncle Bob 把工程纪律写成了 Skill：ub-mode 的三道硬闸门" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="Clean Code 作者 Uncle Bob 开源了 ub-mode：一份 4KB 的 SKILL.md，四天拿到 4374 星。它把工程纪律拆成先跑通、再改对、日常三条，并用 CRAP 分数、结构重复率、变异测试三道确定性闸门，逼 AI 拿数字证明代码是干净的。本文讲它规定了什么、怎么装，以及为什么光装 Skill 不够。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>Uncle Bob 把工程纪律写成了 Skill：ub-mode 的三道硬闸门</h1>
+      <p>《Clean Code》作者 Uncle Bob 开源了一个 Agent Skill：ub-mode。仓库只有一份 4KB 的 SKILL.md，四天拿到 4374 星。它不教 AI 写代码，而是给 AI 立工程纪律——并且不靠嘴说，靠三个能算出数字的检查工具。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-10-29</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 8 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · 开源项目拆解</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="ub-mode 封面" src="cover.jpg" />
+    </div>
+
+    <article class="article-body">
+      <div class="section-marker">01 · 这件事</div>
+<h2>4KB 的 Markdown，四天 4374 星</h2>
+<p>2026 年 10 月 25 日，Robert C. Martin（圈内称 Uncle Bob，《Clean Code》《架构整洁之道》的作者）在 GitHub 发布了 <span class="hl">ub-mode</span>。仓库里没有一行程序代码，只有一份 SKILL.md，整个仓库 4KB。</p>
+<p>四天后它的数据是：<span class="hl">4374 星、241 个 fork、6 个 open issue</span>。对一个只装了一份 Markdown 的仓库来说，这个速度说明的不是代码质量，而是需求存在——太多人受够了 AI 写出来的东西「能跑但没法维护」。</p>
+<p>ub-mode 的定位很明确：它不是让 AI 更会写代码，而是<span class="hl">让 AI 按工程纪律写代码</span>。README 里也老实交代了来源——它脱胎于 @poteto 的 poteto-mode / pstack 规则，做了删减，然后配上一组确定性的质量闸门工具。</p>
+<div class="info-box">数据核对：仓库创建于 2026-10-25T16:04Z，本文写作时（2026-10-29）4374 星、241 fork、6 个 open issue，仓库体积 4KB、无 LICENSE 文件。星标是会变的，引用时请以仓库实时数据为准。</div>
+
+      <div class="section-marker">02 · 它规定了什么</div>
+<h2>先跑通、再改对、然后才是日常</h2>
+<p>整份 SKILL.md 分成三段，顺序本身就是态度：<strong>先让东西能跑，再让它变对，最后才谈习惯</strong>。这个顺序和很多「代码规范」相反——大部分规范一上来就要求你优雅，ub-mode 要求你先交付。</p>
+<p><strong>第一段：First Make it Work（先跑通）。</strong>里面塞了九条原则：Laziness Protocol（懒汉协议）、Foundational Thinking（先想地基）、TDD、Redesign From First Principles（从第一性原理重设计）、Attack the Premise（质疑前提）、Subtract Before You Add（先减后加）、Outcome-Oriented Execution（以结果为导向）、Build the Lever（造杠杆），以及一整套架构要求：领域建模、边界纪律、类型系统纪律、操作幂等、共享状态先分离再序列化。</p>
+<p>这一段的重点是两条容易被忽略的：<span class="hl">Attack the Premise</span> 要求 AI 在动手前先问「这个需求本身成立吗」；<span class="hl">Subtract Before You Add</span> 要求加功能之前先看能不能删。这两条恰恰是 AI 编程最容易失守的地方——模型天然倾向于「加点什么」来解决问题。</p>
+<p><strong>第二段：Then Make it Right（再改对）。</strong>修根因不修症状、把工作切成可验证的小单元、测行为而不是测实现，最后才是重构。注意重构被放在最后——不是不重要，而是<span class="hl">在测试和行为边界没立住之前，重构等于赌博</span>。</p>
+<p><strong>第三段：Practice（日常）。</strong>记工作日志、守住上下文窗口、清理 worktree、按顺序小步提交。这一段最像「老工程师的碎碎念」，但对长跑 Agent 任务特别有用：上下文窗口一旦被垃圾信息灌满，前面所有纪律都会失效。</p>
+
+      <div class="section-marker">03 · 三道硬闸门</div>
+<h2>AI 说「我测过了」不算数，数字才算</h2>
+<p>这份 Skill 真正有意思的地方，是它不满足于「告诉 AI 要守规矩」。规则写在提示词里，模型可以选择性遗忘；<span class="hl">能算出数字的工具不会遗忘</span>。ub-mode 配了三个这样的工具，都是 Uncle Bob 自己的仓库：</p>
+<p><strong>crapper</strong>（139 星）：算每个函数的圈复杂度、测试覆盖率和 CRAP 分数，阈值定在 <code>CRAP &lt; 10</code>。CRAP 这个指标的含义是「复杂且没测试覆盖的代码，改动风险有多高」——复杂度越高、覆盖越低，分数越难看。</p>
+<p><strong>dryer</strong>（64 星）：查结构性重复，相似度 <code>&gt;= 0.8</code> 的代码块判为重复，要求消除。它查的不是文本重复，是结构重复，所以改个变量名糊弄不过去。</p>
+<p><strong>mutator</strong>（81 星）：跑变异测试。做法是往代码里注入小错误，看测试能不能抓住；抓不住的变异体（surviving mutant）就是测试的盲区。它的三个动作写得很直白：补上没覆盖的、杀掉活下来的、删掉死代码。</p>
+<p>三个工具都是 Python 写的、0BSD 协议，输出统一是 uml-viewer（471 星，Clojure）能读的快照格式——后者把复杂度、覆盖率、CRAP、变异分数和依赖方向画成一张类图。四个仓库合起来，才是一套完整的闭环：<span class="hl">写 → 量 → 看 → 改</span>。</p>
+<div class="info-box">这里有个容易误解的点：ub-mode 仓库本身只有 SKILL.md，三个闸门工具是独立仓库。只装 Skill 不装工具，你得到的是「一份更详细的提示词」；把工具也接上，才拿得到可核对的数字。</div>
+
+      <div class="section-marker">04 · 怎么用</div>
+<h2>装法只有一行，但别只装这一行</h2>
+<p>安装本身简单到没什么可讲：把 SKILL.md 复制进对应 Agent 的 skills 目录，然后调用。</p>
+<p><code>cp ub-mode/SKILL.md ~/.claude/skills/ub-mode/SKILL.md</code></p>
+<p>路径按你的工具换，README 里给的是 <code>~/.grok/skills/</code>、<code>~/.claude/skills/</code>、<code>~/.cursor/skills/</code> 三种，装好后用 <code>/ub-mode</code> 唤起。</p>
+<p>但真正决定它有没有用的，是后面两步：一是把 crapper / dryer / mutator 装进项目，让闸门能跑；二是在你的工作流里给它一个位置——ub-mode 适合放在<span class="hl">「功能写完了，准备提交」</span>这个节点，而不是一开始就让它在旁边指手画脚。先跑通再改对，这个顺序它自己也是这么要求的。</p>
+
+      <div class="section-marker">05 · 冷思考</div>
+<h2>纪律不是许愿池</h2>
+<p>先说清楚一件事：<span class="hl">4374 星里，有相当一部分是冲着 Uncle Bob 这个名字来的</span>。同样一份 SKILL.md 换个无名作者发布，大概率不会有这个量级。热度不等于内容含金量，这一点得分开看。</p>
+<p>第二个更实际的问题：把纪律写进提示词，和 AI 真的遵守纪律，是两回事。模型会不会在长任务里忘掉前面的约束、会不会嘴上说「已按 TDD 执行」实际没写测试——这些都发生过。ub-mode 的价值恰恰在于它意识到了这一点，所以才配了三个能算数的工具。<span class="hl">如果只装 Skill 不装工具，你买到的是一份更啰嗦的提示词。</span></p>
+<p>第三个问题是对个人项目的适配度。<code>CRAP &lt; 10</code> 这类阈值是按生产代码设计的；你写个一次性脚本、做个数据清洗，硬套这套标准只会拖慢自己。ub-mode 自己的分段结构其实给了答案——第一段「先跑通」是普适的，第三段的日常习惯看情况，中间那套量化闸门留给真正要长期维护的代码。</p>
+<p>如果只想拿走最划算的部分，我建议两条：<strong>Attack the Premise</strong> 和 <strong>Subtract Before You Add</strong>。前者让 AI 在动手前先质疑需求，后者让它在加东西前先想能不能删。这两条不依赖任何工具，塞进你自己的 CLAUDE.md 就能用，收益却是最大的一档。</p>
+<p>至于 ub-mode 本身，它更像是这个阶段的一个信号：<span class="hl">Agent Skill 正在从「教 AI 做事」走向「给 AI 定验收标准」</span>。前者靠提示词，后者必须靠工具链。这个转向，比某一个具体 Skill 值得关注得多。</p>
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>unclebob/ub-mode，2026-10-25 创建，写作时 4374 星 / 241 fork，MIT 之外未声明许可证</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/unclebob/ub-mode" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/unclebob/ub-mode" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">ub-mode · 纪律本体</span>
+      </a>
+      <a class="plat-card" href="https://github.com/unclebob/crapper" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">crapper · CRAP 评分</span>
+      </a>
+      <a class="plat-card" href="https://github.com/unclebob/mutator" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">mutator · 变异测试</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Skill">#Skill</a>
+      <a href="../../home/home.html?q=AI%E7%BC%96%E7%A8%8B">#AI编程</a>
+      <a href="../../home/home.html?q=%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F">#代码质量</a>
+      <a href="../../home/home.html?q=Uncle%20Bob">#Uncle Bob</a>
+      <a href="../../home/home.html?q=ub-mode">#ub-mode</a>
+      <a href="../../home/home.html?q=%E5%B7%A5%E7%A8%8B%E7%BA%AA%E5%BE%8B">#工程纪律</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本文为转载整理，原视频来自抖音 @小龙（约 2026-10-21 发布，2459 赞）。原榜星标数据无法逐一与 GitHub 对账，本文已按「干什么、用在哪」重组并标注以仓库实时数据为准。本站仅做学习归档，不做商用。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

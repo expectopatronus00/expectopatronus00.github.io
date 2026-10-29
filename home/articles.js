@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'gh-unclebob-ub-mode',
+            title: 'Uncle Bob 把工程纪律写成了 Skill：ub-mode 的三道硬闸门',
+            url: '../post/gh-unclebob-ub-mode/gh-unclebob-ub-mode.html',
+            summary: '《Clean Code》作者 Uncle Bob 开源的 ub-mode，仓库只有一份 4KB 的 SKILL.md，四天 4374 星。它把工程纪律拆成先跑通、再改对、日常三段，并用 CRAP 分数、结构重复率、变异测试三道确定性闸门，逼 AI 拿数字证明代码干净。本文讲它规定了什么、怎么装，以及为什么只装 Skill 不够。',
+            category: 'AI 编程',
+            date: '2026-10-29',
+            tags: ["Uncle Bob","ub-mode","Skill","工程纪律","CRAP","变异测试","开源"],
+          },
+          {
             id: 'dy-20261021-skill-top20',
             title: 'AI Agent Skill 必装榜 Top20：按场景选，别按星标选',
             url: '../post/dy-20261021-skill-top20/dy-20261021-skill-top20.html',
