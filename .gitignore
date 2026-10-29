@@ -7,5 +7,10 @@ node_modules/
 /tmp/
 .uploads/
 .tools/
+# 凭据与登录态：任何情况都不得入库
 .env
+.env.*
+!.env.example
+**/auth.json
+**/browser-profile/
 .workbuddy-ai/
