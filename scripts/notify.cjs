@@ -17,6 +17,9 @@
  *   WECOM_WEBHOOK                  企业微信群机器人
  *   DINGTALK_WEBHOOK               钉钉自定义机器人
  *   NOTIFY_WEBHOOK                 通用 JSON POST（{ text }）
+ *   EMAIL_SMTP_USER + EMAIL_SMTP_PASS  邮件（SMTP，默认 smtp.163.com:465）
+ *       可选：EMAIL_SMTP_HOST / EMAIL_SMTP_PORT / EMAIL_TO / EMAIL_FROM / EMAIL_FROM_NAME
+ *       注意 163/126 的 EMAIL_SMTP_PASS 填「客户端授权密码」，不是登录密码。
  *
  * 配置写在仓库根目录 .env（已 gitignore），也支持直接给环境变量。
  * 无第三方依赖，只用 node 内置模块。
@@ -28,6 +31,8 @@ const fs = require('fs');
 const path = require('path');
 const https = require('https');
 const http = require('http');
+const net = require('net');
+const tls = require('tls');
 
 const ROOT = path.resolve(__dirname, '..');
 
@@ -119,6 +124,159 @@ function clip(s, n) {
   return s.length > n ? s.slice(0, n - 1) + '…' : s;
 }
 
+/* ─────────── SMTP 邮件（原生实现，零依赖） ─────────── */
+
+/** RFC 2047 编码标题/地址显示名 */
+function mimeWord(s) {
+  return '=?UTF-8?B?' + Buffer.from(String(s), 'utf8').toString('base64') + '?=';
+}
+
+/** 组装 MIME 报文：纯文本 + base64 正文，避免 8bit 与点号转义问题 */
+function buildMime(cfg, title, body) {
+  const b64 = Buffer.from(body || '', 'utf8')
+    .toString('base64')
+    .replace(/(.{1,76})/g, '$1\r\n');
+  const from = cfg.fromName
+    ? mimeWord(cfg.fromName) + ' <' + cfg.from + '>'
+    : cfg.from;
+  const headers = [
+    'From: ' + from,
+    'To: ' + cfg.to.join(', '),
+    'Subject: ' + mimeWord(title),
+    'Date: ' + new Date().toUTCString(),
+    'Message-ID: <' + Date.now() + '.' + Math.random().toString(36).slice(2) + '@' +
+      String(cfg.from).split('@')[1] + '>',
+    'MIME-Version: 1.0',
+    'Content-Type: text/plain; charset=UTF-8',
+    'Content-Transfer-Encoding: base64',
+  ];
+  return headers.join('\r\n') + '\r\n\r\n' + b64;
+}
+
+/**
+ * 最小 SMTP 客户端：465/994 隐式 TLS，25/587 明文 + STARTTLS。
+ * 只实现 AUTH LOGIN + 单发件人多收件人，够 notify 用。
+ */
+function smtpSend(cfg, mail) {
+  return new Promise((resolve, reject) => {
+    const host = cfg.host || 'smtp.163.com';
+    const port = Number(cfg.port) || 465;
+    const implicit = port === 465 || port === 994;
+    const timeout = 20000;
+
+    let sock = null;
+    let buf = '';
+    let waiter = null;
+    let settled = false;
+
+    const finish = err => {
+      if (settled) return;
+      settled = true;
+      try {
+        if (sock) sock.end();
+      } catch (e) {
+        /* 忽略 */
+      }
+      err ? reject(err) : resolve({ ok: true });
+    };
+
+    const onData = chunk => {
+      buf += chunk.toString('utf8');
+      let m;
+      while ((m = /^(\d{3})([ -])[^\r\n]*\r\n/.exec(buf)) !== null) {
+        const code = Number(m[1]);
+        const sep = m[2];
+        buf = buf.slice(m[0].length);
+        if (sep === '-') continue; // 多行响应续行
+        const cb = waiter;
+        waiter = null;
+        if (cb) cb(code);
+      }
+    };
+
+    const attach = s => {
+      sock = s;
+      sock.setTimeout(timeout);
+      sock.on('data', onData);
+      sock.on('error', e => finish(e));
+      sock.on('timeout', () => finish(new Error('SMTP 超时')));
+    };
+
+    const expect = codes =>
+      new Promise((res, rej) => {
+        waiter = code => (codes.indexOf(code) >= 0 ? res(code) : rej(new Error('SMTP 返回 ' + code)));
+      });
+
+    const cmd = line => sock.write(line + '\r\n');
+
+    const run = async () => {
+      await expect([220]);
+      cmd('EHLO ' + (cfg.ehloName || 'localhost'));
+      await expect([250]);
+
+      if (!implicit) {
+        cmd('STARTTLS');
+        await expect([220]);
+        sock.removeListener('data', onData);
+        const upgraded = tls.connect(
+          { socket: sock, servername: host, rejectUnauthorized: false },
+          () => {
+            attach(upgraded);
+            runTls();
+          }
+        );
+        upgraded.on('error', e => finish(e));
+        return;
+      }
+      await auth();
+    };
+
+    const runTls = async () => {
+      cmd('EHLO ' + (cfg.ehloName || 'localhost'));
+      await expect([250]);
+      await auth();
+    };
+
+    const auth = async () => {
+      cmd('AUTH LOGIN');
+      await expect([334]);
+      cmd(Buffer.from(cfg.user, 'utf8').toString('base64'));
+      await expect([334]);
+      cmd(Buffer.from(cfg.pass, 'utf8').toString('base64'));
+      await expect([235]);
+
+      cmd('MAIL FROM:<' + cfg.from + '>');
+      await expect([250]);
+      for (const rcpt of mail.to) {
+        cmd('RCPT TO:<' + rcpt + '>');
+        await expect([250, 251]);
+      }
+      cmd('DATA');
+      await expect([354]);
+      sock.write(mail.raw + '\r\n.\r\n');
+      await expect([250]);
+      try {
+        cmd('QUIT');
+      } catch (e) {
+        /* 有些服务端直接断开 */
+      }
+      finish();
+    };
+
+    const onConnect = () => {
+      run().catch(e => finish(e));
+    };
+
+    if (implicit) {
+      attach(
+        tls.connect({ host, port, servername: host, rejectUnauthorized: false }, onConnect)
+      );
+    } else {
+      attach(net.connect({ host, port }, onConnect));
+    }
+  });
+}
+
 /* ─────────── 渠道 ─────────── */
 
 function buildChannels() {
@@ -196,6 +354,31 @@ function buildChannels() {
         postJson(env.DINGTALK_WEBHOOK, {
           msgtype: 'text',
           text: { content: clip([title, body].filter(Boolean).join('\n\n'), 1500) },
+        }),
+    });
+  }
+
+  if (env.EMAIL_SMTP_USER && env.EMAIL_SMTP_PASS) {
+    const from = env.EMAIL_FROM || env.EMAIL_SMTP_USER;
+    const to = (env.EMAIL_TO || env.EMAIL_SMTP_USER)
+      .split(/[,;]/)
+      .map(s => s.trim())
+      .filter(Boolean);
+    const mailCfg = {
+      host: env.EMAIL_SMTP_HOST || 'smtp.163.com',
+      port: env.EMAIL_SMTP_PORT || 465,
+      user: env.EMAIL_SMTP_USER,
+      pass: env.EMAIL_SMTP_PASS,
+      from,
+      fromName: env.EMAIL_FROM_NAME || '博客信源雷达',
+      to,
+    };
+    list.push({
+      name: '邮件 ' + to.join(','),
+      send: (title, body) =>
+        smtpSend(mailCfg, {
+          to,
+          raw: buildMime(Object.assign({ to }, mailCfg), title, body),
         }),
     });
   }
