@@ -5,8 +5,16 @@
     <link>https://expectopatronus00.github.io/</link>
     <description>一个 AI 工具与实战的中文学习归档：原创踩坑记录 + 精选转载，每篇都标注来源。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 29 Oct 2026 15:12:01 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 30 Oct 2026 14:30:51 GMT</lastBuildDate>
     <atom:link href="https://expectopatronus00.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>106k 星的 Agent Reach：免费的代价是借出登录</title>
+      <link>https://expectopatronus00.github.io/post/gh-panniantong-agent-reach/gh-panniantong-agent-reach.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-panniantong-agent-reach/gh-panniantong-agent-reach.html</guid>
+      <pubDate>Thu, 29 Oct 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>Panniantong/Agent-Reach 用一条 CLI 打通 B站、V2EX、GitHub、YouTube、小红书、X 等 14 个渠道，GitHub 106317 星、MIT 协议。它把「首选 + 备选」的工具链藏在一个命令后面，代价是登录墙后的平台要复用你浏览器里的登录态。（转载 · 来源：微信）</description>
+    </item>
     <item>
       <title>Uncle Bob 把工程纪律写成了 Skill：ub-mode 的三道硬闸门</title>
       <link>https://expectopatronus00.github.io/post/gh-unclebob-ub-mode/gh-unclebob-ub-mode.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
       <category>AI 编程</category>
       <description>AI星视界分享——与其蒸馏别人不如蒸馏自己！GitHub开源模型蒸馏新思路，用自己的大模型蒸馏出自己的小模型。（转载 · 来源：抖音）</description>
-    </item>
-    <item>
-      <title>不会写代码也能做AI量化实盘：这款开源AI交易员来了</title>
-      <link>https://expectopatronus00.github.io/post/dy-7661476600529297914/dy-7661476600529297914.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7661476600529297914/dy-7661476600529297914.html</guid>
-      <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
-      <category>量化与投资</category>
-      <description>山无棱分享——不会写代码也能做AI量化实盘！这款开源AI交易员工具让量化交易门槛大幅降低，普通人也能参与AI量化交易。（转载 · 来源：抖音）</description>
     </item>
   </channel>
 </rss>

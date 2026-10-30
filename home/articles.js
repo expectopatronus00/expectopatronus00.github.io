@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'gh-panniantong-agent-reach',
+            title: '106k 星的 Agent Reach：免费的代价是借出登录',
+            url: '../post/gh-panniantong-agent-reach/gh-panniantong-agent-reach.html',
+            summary: 'Panniantong/Agent-Reach 用一条 CLI 打通 B站、V2EX、GitHub、YouTube、小红书、X 等 14 个渠道，GitHub 106317 星、MIT 协议。它把「首选 + 备选」的工具链藏在一个命令后面，代价是登录墙后的平台要复用你浏览器里的登录态。',
+            category: 'AI 编程',
+            date: '2026-10-30',
+            tags: ["Agent-Reach","Agent","CLI","开源","抓取","Skill"],
+          },
+          {
             id: 'gh-unclebob-ub-mode',
             title: 'Uncle Bob 把工程纪律写成了 Skill：ub-mode 的三道硬闸门',
             url: '../post/gh-unclebob-ub-mode/gh-unclebob-ub-mode.html',

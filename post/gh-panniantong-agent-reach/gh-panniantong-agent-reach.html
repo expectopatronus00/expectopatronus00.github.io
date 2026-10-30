@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>106k 星的 Agent Reach：免费的代价是借出登录 · EXPECTOPATRONUS</title>
+    <meta name="description" content="Panniantong/Agent-Reach 用一条 CLI 打通 B站、V2EX、GitHub、YouTube、小红书、X 等 14 个渠道，GitHub 106317 星、MIT 协议。它把「首选 + 备选」的工具链藏在一个命令后面，代价是登录墙后的平台要复用你浏览器里的登录态。" />
+    <meta name="keywords" content="Agent-Reach, Agent, CLI, 开源, 抓取, Skill" />
+    <meta property="og:title" content="106k 星的 Agent Reach：免费的代价是借出登录" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="Panniantong/Agent-Reach 用一条 CLI 打通 B站、V2EX、GitHub、YouTube、小红书、X 等 14 个渠道，GitHub 106317 星、MIT 协议。它把「首选 + 备选」的工具链藏在一个命令后面，代价是登录墙后的平台要复用你浏览器里的登录态。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head">
+      <div class="eyebrow">OPEN SOURCE · AGENT CLI</div>
+      <h1>106k 星的 Agent Reach：免费的代价是借出登录</h1>
+      <p>2026 年 2 月创建，10 月 30 日 106317 星、9432 fork——Agent-Reach 只做一件事：让 Agent 够得着它自己上不去的平台。14 个渠道里 5 个装好即用，6 个要登录，3 个作者自己标注「可能随时失效」。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-10-30</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 6 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="106k 星的 Agent Reach：免费的代价是借出登录 封面" src="cover.jpg" />
+    </div>
+
+    <article class="article-body">
+<div class="section-marker">01 · 这件事</div>
+<h2>8 个月 106317 星，一条命令打通 14 个平台</h2>
+<p>2026 年 2 月 24 日，GitHub 用户 Panniantong 建了一个叫 <span class="hl">Agent-Reach</span> 的仓库。8 个月后的 10 月 30 日，它的数据是 106317 星、9432 个 fork、261 个 open issue，MIT 协议，Python 写的，仓库体积 3244KB。README 顶部挂着 Trendshift 的「GitHub Trending #1 Repository of the Day」徽章。</p>
+<p>它要解决的问题很具体：Claude Code、Codex、Cursor 这类 CLI Agent 自带搜索和网页读取，但登录墙后面的东西够不着——在小红书搜笔记、在 X 查账号动态、在 Boss 看 JD；视频里的内容也够不着——B站和 YouTube 的字幕；中文平台更够不着，通用搜索对 B站、V2EX、雪球的覆盖一直很差。</p>
+<p>Agent-Reach 的做法不是给 Agent 换一个更强的搜索引擎，而是<span class="hl">把这些平台背后的工具替你装好、测好，收进一条命令</span>：<code>agent-reach &lt;渠道&gt; &lt;动作&gt; [参数]</code>。比如 <code>agent-reach bilibili search "大模型"</code>，或者给它一个链接让它自己判断走哪个渠道：<code>agent-reach read https://www.v2ex.com/t/123</code>。</p>
+<div class="info-box">数据核对：2026-10-30 经 api.github.com 读取，full_name = Panniantong/Agent-Reach，stargazers_count 106317，forks_count 9432，open_issues_count 261，created_at 2026-02-24T02:10:24Z，pushed_at 2026-10-25T04:37:26Z，license MIT，language Python，size 3244KB。星标是实时变化的，引用请以仓库当前数据为准。</div>
+
+<div class="section-marker">02 · 它到底怎么够到那些平台</div>
+<h2>每个动作背后是一串「首选 + 备选」</h2>
+<p>README 的「设计理念」一节只有一句话值得记住：每个平台的每个动作，都对应一个<span class="hl">按顺序尝试的工具列表</span>。读 B站视频先用 bili-cli，失败了自动换 B站公开接口；读网页先用 Jina Reader，再退到 Exa。成功就返回，失败就换下一个。</p>
+<p>这个设计不炫技，但它承认了一个事实：平台改版、上游工具失效是常态。换成传统的 SDK 封装，上游一挂你的代码就跟着挂；换成有序列表，换工具只是调整这个列表，Agent 的调用方式不变。对使用者来说，<code>agent-reach bilibili search</code> 这行命令在工具换代之后不用改一个字。</p>
+<p>第二层是渠道分级。14 个渠道被切成三档，这个切法本身就是一份风险声明：</p>
+<p><strong>默认档（5 个）</strong>：bilibili、v2ex、github、youtube、web。装好即用，不登录也能跑。其中 B站字幕需要扫码登录，YouTube 字幕和语音转文字需要额外配置。</p>
+<p><strong>可选档（6 个）</strong>：xiaohongshu、xueqiu、boss、xiaoyuzhou、linkedin、reddit。跟 Agent 说一句「帮我加上小红书」，它会把需要的软件和登录流程一起装好。雪球的实时行情不用登录，热帖和热股要。</p>
+<p><strong>实验档（3 个）</strong>：twitter、facebook、instagram。README 的原话是「能用，但平台反爬更严，可能随时失效」——<span class="hl">作者自己把这三条标成了不可靠</span>。</p>
+<p>第三层是登录。要登录的平台，Agent-Reach 用的是自己的专用浏览器，在后台跑、不弹窗。第一次访问某个网站时，它会把你 Chrome 里这个网站的登录复制一份过去，只复制这一个站，原浏览器不变，也不读密码库。所有东西（各渠道的工具、登录、配置）都放在同一个目录 <code>~/.agent-reach/</code>，升级和卸载都是整目录的事。</p>
+
+<div class="section-marker">03 · 关键细节与数据</div>
+<h2>「零 API 费用」这句话，要拆开看</h2>
+<p>仓库的英文简介写的是「one CLI, zero API fees」。这句话成立，但只成立于抓取这一层。B站、V2EX、GitHub、网页这四类确实不花钱；但 YouTube 和小宇宙的语音转文字要你自己的 Groq 或 OpenAI Key，那是有账单的。免费的<span class="hl">是绕过 API 收费的那段路，不是整条链路</span>。Key 要用 <code>agent-reach configure groq-key</code> 在自己的终端里填，别贴在聊天窗口。</p>
+<p>另一个容易被忽略的数字是 261 个 open issue。对照 9432 个 fork，这个比例说明用的人多、报问题的人也不少，而仓库是个人项目——README 里那句「这个项目我自己每天在用，所以我会一直维护它」，既是承诺，也暴露了维护者只有一个人。</p>
+<p>它的安全性设计有三条硬边界，写在 README 里：只读，只搜索和读取，不发帖、不评论、不点赞、不私信；从不替你登录，也不要你的密码；专用浏览器只对本机开放。但同一节里还有一句更值得注意的话——「复用过来的通常是主账号，建议换成小号」。这句话的潜台词是：<span class="hl">平台可能会限制自动访问的账号</span>，风险最终落在你的账号上。</p>
+<div class="info-box">一个必须知道的事：PyPI 上那个叫 <code>agent-reach</code> 的包不是这个项目。README 专门用一段警告「请勿从 PyPI 安装」，唯一正确的入口是 <code>docs/install.md</code> 里的 GitHub 地址。习惯性 <code>pip install</code> 的人，这一步就会装错东西。</div>
+
+<div class="section-marker">04 · 怎么用</div>
+<h2>装法是一句话，管法也是一句话</h2>
+<p>安装不需要你敲命令。把这句话原样发给你的 Agent 就行：<code>帮我安装 Agent Reach：https://raw.githubusercontent.com/Panniantong/Agent-Reach/main/docs/install.md</code>。它自己会去装 uv（一个不需要管理员权限的命令行工具安装器），再按 README 的清单把默认渠道配好。要求 Python 3.10 以上。</p>
+<p>装完先跑 <code>agent-reach channels</code>，它会列出每个渠道现在能不能用、能做什么。这一步比看文档有用——文档写的是设计意图，这条命令给的是你机器上的真实状态。</p>
+<p>日常管理全部用大白话：「看看 Agent Reach 状态」「加上小红书」「小红书登录过期了」「升级 Agent Reach」。作者把运维做成了对话，而不是一堆子命令，这个取舍对非工程用户很友好，代价是你得信任 Agent 去执行这些操作。</p>
+<p>真正决定它好不好用的，是给它一个位置。它适合放在<span class="hl">「我需要一个 Agent 自己上不去的平台上的具体信息」</span>这个节点：查某个小红书笔记的正文和评论、把一条 B站视频的字幕拉下来做摘要、看某个 GitHub issue 的完整讨论。不适合拿它做大规模采集——它是按次调用的 CLI，不是爬虫框架。</p>
+
+<div class="section-marker">05 · 冷思考</div>
+<h2>热度买不到维护，免费也不等于没有成本</h2>
+<p>先看一组容易被跳过的数字：106317 星，345 个 watcher。星标是收藏，watcher 才是「我想知道它接下来怎么样」。三百多比一的比值说明，绝大多数人点完星就再没回来过。<span class="hl">这个仓库的热度，很大一部分是「先存着，以后可能用得上」</span>，不是每天真在跑。</p>
+<p>第二个质疑更实际：这类工具的资产根本不是代码。仓库 3244KB，Python 写的，逻辑上就是把若干开源 CLI 串成有序列表。真正值钱的是那份「哪个平台现在还能用、哪个工具挂了该换谁」的知识，而这份知识每天都在过期。作者自己把 Twitter、Facebook、Instagram 标成实验档，等于承认了这一点。所以问题不是「它现在好不好用」，而是「半年后还有没有人修」——261 个 open issue 压在一个人身上，这个答案不乐观。</p>
+<p>第三点关于「免费」。免费的是抓取，不是推理；省下的是 API 费，付出的是账号风险和维护依赖。而且这个项目的赞助商名单很说明问题：Bright Data、RapidProxy、BrowserAct 三家都是抓取基础设施厂商，还有云厂商在卖「一键部署 OpenClaw 并接入 Agent Reach」。<span class="hl">工具免费、基础设施收费</span>，这是这类项目能持续的唯一模型，也意味着它的长期方向是把你引向付费的代理和数据层。</p>
+<p>最后是供应链。一个 10 万星的项目，README 里要专门写一段「PyPI 上同名的包不是我们」——这件事本身就是风险提示。装的时候多花十秒确认来源，比事后排查省事得多。</p>
+<p>我的判断是：Agent-Reach 值得装，但只值得装在<span class="hl">一台你愿意用小号登录的机器上</span>，并且只用来做按次的、具体的取数，不要把它接进任何自动化流水线。抓取层是过渡方案——平台官方 API 和付费数据层迟早会覆盖掉大部分场景，现在用它，本质是用账号风险换几个月的时间窗口。这个交换划不划算，取决于你要取的那份数据值不值一个账号。</p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>Panniantong/Agent-Reach，2026-02-24 创建，写作时 106317 星 / 9432 fork，MIT 协议，Python 3.10+</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/Panniantong/Agent-Reach" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/Panniantong/Agent-Reach" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 一条 CLI 读 14 个平台的 Agent 工具</span>
+      </a>
+      <a class="plat-card" href="https://raw.githubusercontent.com/Panniantong/Agent-Reach/main/docs/install.md" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 12h17M12 3.5c2.4 2.3 3.6 5.2 3.6 8.5s-1.2 6.2-3.6 8.5c-2.4-2.3-3.6-5.2-3.6-8.5S9.6 5.8 12 3.5z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+        <span class="pn">安装说明</span>
+        <span class="pd">docs/install.md · 唯一正确的安装入口</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Agent-Reach">#Agent-Reach</a>
+      <a href="../../home/home.html?q=Agent">#Agent</a>
+      <a href="../../home/home.html?q=CLI">#CLI</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=%E6%8A%93%E5%8F%96">#抓取</a>
+      <a href="../../home/home.html?q=Skill">#Skill</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本文为转载整理，原视频来自抖音 @小龙（约 2026-10-21 发布，2459 赞）。原榜星标数据无法逐一与 GitHub 对账，本文已按「干什么、用在哪」重组并标注以仓库实时数据为准。本站仅做学习归档，不做商用。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
