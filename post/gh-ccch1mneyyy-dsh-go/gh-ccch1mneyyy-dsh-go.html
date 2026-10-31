@@ -1,0 +1,530 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2570 星的 DSH Go：手机能跑 Harness，但要交出屏幕 · EXPECTOPATRONUS</title>
+    <meta name="description" content="ccch1mneyyy/dsh-Go 是 DeepSeek Harness 的非官方安卓客户端，6 天 2570 星、AGPL-3.0。它两条路都做：在手机里装 Ubuntu 与 DSH 本机跑，或远程遥控电脑上的 DSH。代价是约 1 GB 运行环境、无障碍权限，以及 132 个还没修的 issue。" />
+    <meta name="keywords" content="dsh-Go, DeepSeek Harness, Android, Flutter, 开源, Agent" />
+    <meta property="og:title" content="2570 星的 DSH Go：手机能跑 Harness，但要交出屏幕" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="ccch1mneyyy/dsh-Go 是 DeepSeek Harness 的非官方安卓客户端，6 天 2570 星、AGPL-3.0。它两条路都做：在手机里装 Ubuntu 与 DSH 本机跑，或远程遥控电脑上的 DSH。代价是约 1 GB 运行环境、无障碍权限，以及 132 个还没修的 issue。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head">
+      <div class="eyebrow">OPEN SOURCE · ANDROID CLIENT</div>
+      <h1>2570 星的 DSH Go：手机能跑 Harness，但要交出屏幕</h1>
+      <p>2026 年 10 月 25 日建库，第 6 天 2570 星、106 fork、132 个 open issue——dsh-Go 把 DeepSeek Harness 塞进了安卓手机。手机里跑的是 DSH 本体，不是一个远程壳；代价是约 1 GB 运行环境，和一份无障碍权限。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-10-31</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 6 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="2570 星的 DSH Go：手机能跑 Harness，但要交出屏幕 封面" src="cover.jpg" />
+    </div>
+
+    <article class="article-body">
+<div class="section-marker">01 · 这件事</div>
+<h2>6 天 2570 星，一个非官方的安卓客户端</h2>
+<p>2026 年 10 月 25 日，GitHub 用户 ccch1mneyyy 建了一个叫 <span class="hl">dsh-Go</span> 的仓库。到 10 月 31 日，也就是第 6 天，它的数据是 2570 星、106 个 fork、132 个 open issue，Dart + Flutter 写的，AGPL-3.0 协议，仓库体积 323326 KB。</p>
+<p>它要做的事，README 第一句就写完了：「DeepSeek Harness 的 Android 客户端。手机上直接跑，也能遥控你电脑上的 DSH。」作者在同一份文档里把关系交代得很清楚：这是社区开发的非官方客户端，和 DeepSeek 官方没有关系；手机上运行的是 DSH 本身，模型请求发给你自己配置的模型提供方，按你在提供方的账户计费。</p>
+<p>「手机上直接跑」和「遥控电脑」是两条完全不同的路。前者意味着把 Ubuntu、Node.js 和整个 DSH 运行环境塞进手机，在本地起进程；后者只是个客户端，真正的活还在电脑上干。dsh-Go 两条都做了，这件事本身比星标数更值得看——它没有假装手机能替代电脑，而是承认两边算力不是一回事，然后让你在同一个 App 里切换。</p>
+
+<div class="section-marker">02 · 核心机制</div>
+<h2>手机里跑的是 DSH 本体，不是一个远程壳</h2>
+<p>本机模式的实现方式是不 Root、不装 Termux。App 内自带一套 Linux 环境，首次启动时把 Ubuntu、Node.js 和 DSH 运行环境装进去，README 建议预留约 <code>1 GB</code> 空间。默认走 PRoot 兼容启动——PRoot 是用户态的 chroot 替代品，不需要真实 root 权限，就能让程序以为自己待在一个完整的 Linux 里。开发者选项里另有一个「直接启动」，默认关闭，打开后兼容性会变差，回退办法写在常见问题里。</p>
+<p>远程模式走两条协议：SSH，或者作者自己做的 DSH Remote。v1.0.4 这一版把选路改成了自动——先试局域网 / P2P，不行退到 TURN，最后回落到 Relay；同时加了网络详情，点连接卡上的路径标签，能看到实际走了哪条路、连接花了多久、可测的往返延迟、以及为什么回落。这个改动看着小，实际解决的是 Wi-Fi 和蜂窝切换时最容易断的那一段，<span class="hl">连接质量从玄学变成了可观测的数字</span>。</p>
+<p>第三块是手机操控：开启权限后，本机引擎可以读屏、点按、输入。确认分成三档，付款、密码、验证码和系统设置这四类永远交还给你。这里有个容易漏掉的边界——「不打扰模式」要求 Android 14 及以上，并且需要 Shizuku 或自连 ADB，也就是说低版本系统上这个模式直接不可用。</p>
+<p>第四块是插件。仓库里有 <code>packages/dsh_client</code>（DSH Web API 的 Dart 客户端）、<code>packages/dsh_remote</code>（DSH Remote 的 Dart 客户端），以及 <code>sdk/plugin-kit</code> 这套给插件作者的工具包，能做出原生工具卡、表单和面板。工具包没发布到 npm，只能在仓库里用。</p>
+
+<div class="section-marker">03 · 关键细节与数据</div>
+<h2>132 个 issue 和 106 个 fork，说的是两件事</h2>
+<p>先看比例。6 天 106 个 fork，132 个 open issue，issue 比 fork 还多。常见的开源项目是 fork 一堆、issue 寥寥，因为多数人只是收藏或者改着玩。这个倒挂说明<span class="hl">真正装上手机跑的人不少，而且跑出了问题</span>——权限被系统拦、后台被杀、环境装不上，这些都是要在真机上才会暴露的。</p>
+<p>再看安装成本。最新版 v1.0.4 在 10 月 30 日 20:20 发布，arm64 的 APK 是 204959893 字节，约 195 MB，发布一天内下载 2585 次。这只是安装包；要在手机上跑本机引擎，还得再加约 1 GB 的运行环境。仓库没有 32 位 ARM 构建，x86_64 版本放在发布说明末尾的「其他版本下载」里，给模拟器用。</p>
+<p>授权这块要拆开看：主仓库是 AGPL-3.0，但 <code>sdk/</code> 和 <code>examples/</code> 是 MIT。AGPL 的意思是，你要是拿它改成网络服务给别人用，得把改动也开源。另外 README 明确写了，DSH Go 的名称、标识，以及 Deepy 和鲸娘两个吉祥物，不在开源授权范围内，条款单独放在 ASSETS.md。想拿它做二次分发或者套壳商用，这两条都得先读。</p>
+<p>还有几个 README 自己列出来的功能差异，装之前该知道：DSH Remote 当前只支持图片附件；用远程主机时 App 内打不开网页版；插件管理只能开关，不能配置；不支持 DS Bot，也不支持对话日志导出。这些不算 bug，是「两条路功能不对等」的实话。</p>
+<div class="info-box">数据核对：2026-10-31 经 api.github.com 读取，full_name = ccch1mneyyy/dsh-Go，stargazers_count 2570，forks_count 106，open_issues_count 132，created_at 2026-10-25T08:09:52Z，pushed_at 2026-10-30T20:20:50Z，language Dart，license AGPL-3.0，size 323326KB；releases/latest 为 v1.0.4，published_at 2026-10-30T20:20:50Z，arm64 APK 204959893 字节、download_count 2585。另需注意：APK 的 195 MB 是安装包大小，不等于占用的存储，跑本机引擎还要另算约 1 GB。星标实时变化，引用请以仓库当前数据为准。</div>
+
+<div class="section-marker">04 · 怎么用</div>
+<h2>装之前先决定：只当遥控器，还是让手机自己干活</h2>
+<p>如果只是想在外面看一眼电脑上跑到哪了，那就不装本机环境。下载 arm64 的 APK 侧载，首次启动选「连接远程主机」，填地址和凭据即可，占用的空间基本就是 APK 本身。这条路的好处是干净——手机只是个终端，出事卸载就完。</p>
+<p>如果要在手机上真跑，首次启动选本机安装，等它把 Ubuntu、Node.js 和 DSH 装完，再配置模型和凭据。README 提醒了两件容易踩的事：一是装过签名不同的早期测试包时不能覆盖安装，必须先卸载，而<span class="hl">卸载会清空对话、Linux 环境和设置</span>；二是部分国产系统的省电策略会杀后台，App 发现后会提示并直达对应的放行设置，vivo、小米、华为、荣耀、OPPO 都有入口。</p>
+<p>想自己编译的话，流程只面向 Linux x86_64，工具链是 JDK 17 + Flutter 3.47.7 + Android SDK/NDK，App 要求 Dart <code>^3.13.5</code>：</p>
+<p><code>bash tooling/setup-toolchain.sh</code><br><code>source tooling/env.sh</code><br><code>bash runtime/build-runtime.sh arm64-v8a</code><br><code>DSH_BETA_TOKEN_FILE= bash tooling/build-apk.sh -f arm64 --keep-daemon</code></p>
+<p>产物在 <code>app/build/app/outputs/flutter-apk/app-arm64-release.apk</code>。没配 <code>app/android/key.properties</code> 时，本地 release 构建用的是 debug 签名，装不进已经装了官方包的同名设备——这也是上面那条「不能覆盖安装」的来源。当前构建以 APK 侧载为目标，不是 Google Play 的发布配置。</p>
+<p>真正决定它值不值的，是你给它安排的位置。它适合<span class="hl">「人不在电脑前，但需要知道任务跑到哪、需要批一次工具调用」</span>这个节点；不适合当主力开发环境——手机屏幕小、后台容易被杀、编译大项目更是想都别想。</p>
+
+<div class="section-marker">05 · 冷思考</div>
+<h2>2570 星买不到六天，六天也买不到成熟</h2>
+<p>先算一个数：6 天 2570 星，平均每天 428 星。这个速度不太像「产品做得好所以被认可」，更像「需求已经堆在那里很久，终于有人接住了」。DeepSeek Harness 这一轮的热度是真实的，但桌面之外的使用场景，社区一直在自己补。dsh-Go 补的正是这个缺口——<span class="hl">它的星标里，有相当一部分是投给「终于有人做了」这件事的</span>，不是投给代码质量的。</p>
+<p>第二个质疑更硬：132 个 open issue，作者一个人。README 里那句「大家 Star 点得越多，我适配得越快哦 hhh」是句实话，也是一份坦白——iOS 和鸿蒙的适配没有时间表，进度和星标挂钩。六天里堆起一百多个 issue，说明打磨还没真正开始，现在是「能跑」，不是「好用」。</p>
+<p>第三是权限账。手机操控要无障碍权限，意味着它能看屏幕、能点、能输入；开启之后，任务需要的屏幕文字可能发给模型，支持看图的模型还可能收到截图；「发送匿名使用统计」默认是开着的，要在首次引导或者「设置 → 隐私与分享」里关。三件事叠起来，等于你把整台手机交给一个六天大的个人项目。作者在安全说明里写了「付款、密码、验证码一律交还给你」，这是设计上的克制，但克制不等于审计，这个仓库还没经过任何第三方安全审计。</p>
+<p>最后是成本。195 MB 的安装包加 1 GB 的运行环境，对「出门应急看一眼」这个场景来说偏重。如果需求只是远程看进度，一个 SSH 客户端就够了，没必要为它腾出 1 GB。</p>
+<p>我的判断是：dsh-Go 值得装，但值得装在一台<span class="hl">不当主力、不登主账号的安卓备用机</span>上，当「出门时的 DSH 遥控器」用；想在手机上真跑 agent，先等它把 132 个 issue 收到两位数，再谈替代笔记本。它现在的位置很像早期的 Termux 客户端——方向是对的，成熟度还差着一年。</p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>ccch1mneyyy/dsh-Go，2026-10-25 创建，写作时 2570 星 / 106 fork，AGPL-3.0，Android 8.0+</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/ccch1mneyyy/dsh-Go" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/ccch1mneyyy/dsh-Go" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · DeepSeek Harness 的安卓客户端，本机跑 + 遥控电脑</span>
+      </a>
+      <a class="plat-card" href="https://go.dshtui.com/download" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 12h17M12 3.5c2.4 2.3 3.6 5.2 3.6 8.5s-1.2 6.2-3.6 8.5c-2.4-2.3-3.6-5.2-3.6-8.5S9.6 5.8 12 3.5z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+        <span class="pn">下载页</span>
+        <span class="pd">官网 · arm64 APK，Android 8.0 及以上</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=dsh-Go">#dsh-Go</a>
+      <a href="../../home/home.html?q=DeepSeek%20Harness">#DeepSeek Harness</a>
+      <a href="../../home/home.html?q=Android">#Android</a>
+      <a href="../../home/home.html?q=Flutter">#Flutter</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=Agent">#Agent</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2026 · 本文依据 ccch1mneyyy/dsh-Go 仓库 README、Releases 与 GitHub API 公开数据整理，文内数字核对时间为 2026-10-31。本站仅做学习归档，不做商用。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

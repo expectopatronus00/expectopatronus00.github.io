@@ -220,7 +220,13 @@ ${spec.tags.map(t => '      <a href="../../home/home.html?q=' + encodeURICompone
 `
     : '';
 
-  return prefix + pageHead + '\n' + body + '\n' + cta + platforms + tagsRow + tpl.slice(articleEnd);
+  // 页脚来源声明：模板里写死了抖音某条视频的出处，对 GitHub 选题是错的，按 spec.footer 覆盖
+  let tail = tpl.slice(articleEnd);
+  if (spec.footer) {
+    tail = tail.replace(/(<div class="footer-meta">)[\s\S]*?(<\/div>)/, '$1' + attr(spec.footer) + '$2');
+  }
+
+  return prefix + pageHead + '\n' + body + '\n' + cta + platforms + tagsRow + tail;
 }
 
 /* ─────────── 封面 ─────────── */

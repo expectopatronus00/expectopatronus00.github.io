@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'gh-ccch1mneyyy-dsh-go',
+            title: '2570 星的 DSH Go：手机能跑 Harness，但要交出屏幕',
+            url: '../post/gh-ccch1mneyyy-dsh-go/gh-ccch1mneyyy-dsh-go.html',
+            summary: 'ccch1mneyyy/dsh-Go 是 DeepSeek Harness 的非官方安卓客户端，6 天 2570 星、AGPL-3.0。它两条路都做：在手机里装 Ubuntu 与 DSH 本机跑，或远程遥控电脑上的 DSH。代价是约 1 GB 运行环境、无障碍权限，以及 132 个还没修的 issue。',
+            category: 'AI 编程',
+            date: '2026-10-31',
+            tags: ["dsh-Go","DeepSeek Harness","Android","Flutter","开源","Agent"],
+          },
+          {
             id: 'gh-panniantong-agent-reach',
             title: '106k 星的 Agent Reach：免费的代价是借出登录',
             url: '../post/gh-panniantong-agent-reach/gh-panniantong-agent-reach.html',

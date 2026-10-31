@@ -5,8 +5,16 @@
     <link>https://expectopatronus00.github.io/</link>
     <description>一个 AI 工具与实战的中文学习归档：原创踩坑记录 + 精选转载，每篇都标注来源。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 30 Oct 2026 14:30:51 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 31 Oct 2026 14:31:15 GMT</lastBuildDate>
     <atom:link href="https://expectopatronus00.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2570 星的 DSH Go：手机能跑 Harness，但要交出屏幕</title>
+      <link>https://expectopatronus00.github.io/post/gh-ccch1mneyyy-dsh-go/gh-ccch1mneyyy-dsh-go.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-ccch1mneyyy-dsh-go/gh-ccch1mneyyy-dsh-go.html</guid>
+      <pubDate>Fri, 30 Oct 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>ccch1mneyyy/dsh-Go 是 DeepSeek Harness 的非官方安卓客户端，6 天 2570 星、AGPL-3.0。它两条路都做：在手机里装 Ubuntu 与 DSH 本机跑，或远程遥控电脑上的 DSH。代价是约 1 GB 运行环境、无障碍权限，以及 132 个还没修的 issue。（转载 · 来源：微信）</description>
+    </item>
     <item>
       <title>106k 星的 Agent Reach：免费的代价是借出登录</title>
       <link>https://expectopatronus00.github.io/post/gh-panniantong-agent-reach/gh-panniantong-agent-reach.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
       <category>AI 工具</category>
       <description>Aaron（第一代AI FDE）分享——企业AI改造的趋势与FDE百万计划，探讨AI工具如何落地企业数字化转型。（转载 · 来源：抖音）</description>
-    </item>
-    <item>
-      <title>与其蒸馏别人不如蒸馏自己：GitHub开源模型蒸馏新思路</title>
-      <link>https://expectopatronus00.github.io/post/dy-7659247081688730923/dy-7659247081688730923.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7659247081688730923/dy-7659247081688730923.html</guid>
-      <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
-      <category>AI 编程</category>
-      <description>AI星视界分享——与其蒸馏别人不如蒸馏自己！GitHub开源模型蒸馏新思路，用自己的大模型蒸馏出自己的小模型。（转载 · 来源：抖音）</description>
     </item>
   </channel>
 </rss>
