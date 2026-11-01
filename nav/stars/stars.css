@@ -97,14 +97,14 @@
 }
 .stars-sec-num {
   flex-shrink: 0;
+  min-width: 2em;
   font-family: var(--font-mono);
-  font-size: var(--fs-xs);
-  letter-spacing: 0.12em;
+  font-size: var(--fs-lg);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.02em;
   color: var(--accent-rust-text);
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  padding: 0.12em 0.6em;
-  align-self: center;
+  align-self: baseline;
 }
 .stars-sec-head h3 {
   flex: 1 1 auto;

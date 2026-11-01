@@ -25,6 +25,13 @@
       .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
+  /* 居中文字：热力图块内用，避免每处都拼一遍属性 */
+  function txt(cx, cy, fs, color, opacity, str, family, weight) {
+    return '<text x="' + cx.toFixed(1) + '" y="' + cy.toFixed(1) + '" text-anchor="middle"' +
+      ' font-family="' + family + '" font-size="' + fs + '" font-weight="' + weight + '"' +
+      ' fill="' + color + '" fill-opacity="' + opacity + '" pointer-events="none">' + esc(str) + '</text>';
+  }
+
   function fmt(n) {
     if (n === null || n === undefined || isNaN(n)) return '—';
     if (Math.abs(n) >= 10000) return (n / 10000).toFixed(1) + '万';
@@ -244,60 +251,135 @@
     return out;
   }
 
-  /* ── 热力图 ── */
+  /* ── 热力图：两级 treemap，外层按分类切板块，板块内铺项目 ── */
+  function buildGroups(rows, key) {
+    var order = [], map = {};
+    for (var i = 0; i < rows.length; i++) {
+      var name = rows[i].category;
+      if (!map[name]) {
+        map[name] = { name: name, rows: [], total: 0, pct: null };
+        order.push(map[name]);
+      }
+      map[name].rows.push(rows[i]);
+      map[name].total += rows[i].stars;
+    }
+    for (var g = 0; g < order.length; g++) {
+      var grp = order[g];
+      grp.rows.sort(function (a, b) { return b.stars - a.stars; });
+      // 板块增速按星标加权，小项目不会带偏整块
+      var ws = 0, wb = 0;
+      for (var k = 0; k < grp.rows.length; k++) {
+        var p = grp.rows[k][key];
+        if (p === null || p === undefined) continue;
+        ws += grp.rows[k].stars * p;
+        wb += grp.rows[k].stars;
+      }
+      grp.pct = wb > 0 ? ws / wb : null;
+    }
+    order.sort(function (a, b) { return b.total - a.total; });
+    return order;
+  }
+
   function drawHeat(rows) {
     var shell = el('stars-shell');
     if (!shell) return;
     var W = Math.max(320, Math.round(shell.clientWidth || 900));
     var narrow = W < 640;
-    var H = Math.round(narrow ? W * 1.15 : Math.min(540, W * 0.55));
+    var H = Math.round(narrow ? W * 1.15 : Math.min(560, W * 0.56));
 
     var key = state.win;
     var dom = domainFor(rows, key);
     var hasPct = false;
     for (var q = 0; q < rows.length; q++) { if (rows[q][key] !== null) { hasPct = true; break; } }
 
-    var items = rows.map(function (r) { return { r: r, value: r.stars, pct: r[key] }; })
-      .sort(function (a, b) { return b.value - a.value; });
+    var groups = buildGroups(rows, key);
+    // 组间距明显大于组内块间距，否则看不出是分组
+    var GAP = narrow ? 6 : 9;
+    var gRects = squarify(groups.map(function (x) { return { value: x.total, g: x }; }), 0, 0, W, H);
 
-    var cells = squarify(items, 0, 0, W, H);
-    var svg = ['<svg class="heat-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="开源项目星标热力图，面积代表星标量，颜色代表增速">'];
+    var svg = ['<svg class="heat-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="开源项目星标热力图，面积代表星标量，颜色代表增速，按分类分块">'];
+    var cells = [];
 
-    for (var i = 0; i < cells.length; i++) {
-      var c = cells[i];
-      var pad = 1.5;
-      var x = c.x + pad, y = c.y + pad;
-      var w = c.w - pad * 2, h = c.h - pad * 2;
-      if (w < 1 || h < 1) continue;
+    for (var r = 0; r < gRects.length; r++) {
+      var gr = gRects[r];
+      var gdef = gr.it.g;
+      var gx = gr.x + GAP / 2, gy = gr.y + GAP / 2;
+      var gw = gr.w - GAP, gh = gr.h - GAP;
+      if (gw < 8 || gh < 8) continue;
 
-      var fill = rateColor(c.it.pct, dom);
-      var tc = textOn(fill);
-      var subStr = c.it.pct === null || c.it.pct === undefined ? fmt(c.it.r.stars) : pctText(c.it.pct);
+      // 板块底：用页面背景色做“凹陷”，缝隙才看得出来是分组
+      svg.push('<rect x="' + gx.toFixed(1) + '" y="' + gy.toFixed(1) + '" width="' + gw.toFixed(1) +
+        '" height="' + gh.toFixed(1) + '" rx="3" fill="var(--bg-soft)" stroke="var(--line)" stroke-width="0.8"/>');
 
-      svg.push('<g class="heat-cell" data-idx="' + i + '">');
-      svg.push('<rect data-idx="' + i + '" x="' + x.toFixed(1) + '" y="' + y.toFixed(1) +
-        '" width="' + w.toFixed(1) + '" height="' + h.toFixed(1) + '" rx="2.5" fill="' + rgb(fill) + '"/>');
+      var hh = 0;
+      if (gh >= 58 && gw >= 62) hh = 21;
+      else if (gh >= 42 && gw >= 46) hh = 17;
 
-      var fs = 0, showPct = false;
-      if (w >= 148 && h >= 60) { fs = 15; showPct = true; }
-      else if (w >= 92 && h >= 40) { fs = 12.5; showPct = true; }
-      else if (w >= 58 && h >= 26) { fs = 10.5; showPct = false; }
-      else if (w >= 40 && h >= 18) { fs = 9; showPct = false; }
-
-      if (fs) {
-        var maxUnits = (w - 12) / fs;
-        var label = truncate(c.it.r.name, maxUnits);
-        var ty = showPct ? y + h / 2 - 1 : y + h / 2 + fs * 0.35;
-        svg.push('<text x="' + (x + 7).toFixed(1) + '" y="' + ty.toFixed(1) +
-          '" font-family="var(--font-sans)" font-size="' + fs + '" font-weight="600" fill="' + tc +
-          '" fill-opacity="0.95" pointer-events="none">' + esc(label) + '</text>');
-        if (showPct) {
-          svg.push('<text x="' + (x + 7).toFixed(1) + '" y="' + (ty + fs + 2).toFixed(1) +
-            '" font-family="var(--font-mono)" font-size="' + (fs - 3) + '" fill="' + tc +
-            '" fill-opacity="0.8" pointer-events="none">' + esc(subStr) + '</text>');
+      if (hh) {
+        var nameFs = hh >= 21 ? 11.5 : 10;
+        // 标题栏下划线：把板块头跟下面的色块分开
+        svg.push('<line x1="' + gx.toFixed(1) + '" y1="' + (gy + hh).toFixed(1) +
+          '" x2="' + (gx + gw).toFixed(1) + '" y2="' + (gy + hh).toFixed(1) +
+          '" stroke="var(--line)" stroke-width="1"/>');
+        var label = truncate(gdef.name, (gw - 14) / nameFs);
+        svg.push('<text x="' + (gx + 7).toFixed(1) + '" y="' + (gy + hh * 0.7).toFixed(1) +
+          '" font-family="var(--font-sans)" font-size="' + nameFs + '" font-weight="600" fill="var(--text-soft)">' +
+          esc(label) + '</text>');
+        if (gw >= 168) {
+          var stat = gdef.rows.length + ' 个' + (gdef.pct === null ? '' : ' · ' + pctText(gdef.pct));
+          svg.push('<text x="' + (gx + gw - 7).toFixed(1) + '" y="' + (gy + hh * 0.7).toFixed(1) +
+            '" text-anchor="end" font-family="var(--font-mono)" font-size="9.5" fill="var(--text-dim)">' +
+            esc(stat) + '</text>');
         }
       }
-      svg.push('</g>');
+
+      var items = gdef.rows.map(function (x) { return { value: x.stars, r: x, pct: x[key] }; });
+      var inner = squarify(items, gx, gy + hh, gw, gh - hh);
+
+      for (var i = 0; i < inner.length; i++) {
+        var c = inner[i];
+        var pad = 1.5;
+        var x = c.x + pad, y = c.y + pad;
+        var w = c.w - pad * 2, h = c.h - pad * 2;
+        if (w < 1 || h < 1) continue;
+
+        var fill = rateColor(c.it.pct, dom);
+        var tc = textOn(fill);
+        var hasValue = c.it.pct !== null && c.it.pct !== undefined;
+        var idx = cells.length;
+        cells.push(c);
+
+        svg.push('<g class="heat-cell" data-idx="' + idx + '">');
+        svg.push('<rect data-idx="' + idx + '" x="' + x.toFixed(1) + '" y="' + y.toFixed(1) +
+          '" width="' + w.toFixed(1) + '" height="' + h.toFixed(1) + '" rx="2" fill="' + rgb(fill) + '"/>');
+
+        var fs = 0, tier = 0;
+        if (w >= 132 && h >= 76) { fs = 15; tier = 3; }
+        else if (w >= 132 && h >= 54) { fs = 14; tier = 2; }
+        else if (w >= 86 && h >= 42) { fs = 12.5; tier = 2; }
+        else if (w >= 56 && h >= 26) { fs = 10.5; tier = 1; }
+        else if (w >= 36 && h >= 17) { fs = 9; tier = 1; }
+
+        if (fs) {
+          var label2 = truncate(c.it.r.name, (w - 10) / fs);
+          var cx = x + w / 2;
+          var cy = y + h / 2;
+          var lineGap = fs * 1.15;
+
+          if (tier === 3 && hasValue) {
+            svg.push(txt(cx, cy - lineGap * 0.75, fs, tc, 0.96, label2, 'var(--font-sans)', 600));
+            svg.push(txt(cx, cy + lineGap * 0.35, fs - 3.5, tc, 0.86, pctText(c.it.pct), 'var(--font-mono)', 400));
+            svg.push(txt(cx, cy + lineGap * 1.15, fs - 5, tc, 0.7, fmt(c.it.r.stars), 'var(--font-mono)', 400));
+          } else if (tier >= 2) {
+            svg.push(txt(cx, cy - lineGap * 0.35, fs, tc, 0.96, label2, 'var(--font-sans)', 600));
+            if (hasValue) svg.push(txt(cx, cy + lineGap * 0.72, fs - 3, tc, 0.86, pctText(c.it.pct), 'var(--font-mono)', 400));
+            else svg.push(txt(cx, cy + lineGap * 0.72, fs - 3.5, tc, 0.72, fmt(c.it.r.stars), 'var(--font-mono)', 400));
+          } else {
+            svg.push(txt(cx, cy + fs * 0.34, fs, tc, 0.94, label2, 'var(--font-sans)', 600));
+          }
+        }
+        svg.push('</g>');
+      }
     }
 
     svg.push('</svg>');
@@ -311,7 +393,7 @@
       lg.push('<span class="heat-scale-bar" style="background:linear-gradient(90deg,' + rgb(DOWN) + ',' + rgb(mid) + ',' + rgb(UP) + ')"></span>');
       lg.push('<span class="heat-scale-end">' + pctText(dom) + '</span>');
       lg.push('</span>');
-      lg.push('<span class="legend-item">颜色 = ' + WIN_LABEL[key] + '增速，红涨绿跌；面积 = 当前星标</span>');
+      lg.push('<span class="legend-item">颜色 = ' + WIN_LABEL[key] + '增速，红涨绿跌；面积 = 当前星标；板块按分类归并</span>');
     } else {
       lg.push('<span class="legend-item">只有 1 天快照：面积 = 当前星标，颜色要等下一次采样才有增速</span>');
     }
@@ -704,7 +786,8 @@
   fetch('stars/data.json', { cache: 'no-cache' })
     .then(function (r) { return r.json(); })
     .then(boot)
-    .catch(function () {
+    .catch(function (e) {
+      if (window.console && console.error) console.error('[stars] 渲染失败：', e);
       el('stars-chart').innerHTML = '<div class="stars-empty">读不到 stars/data.json。<br>先跑一次 <code>node scripts/stars-snapshot.cjs</code>。</div>';
       var meta = el('stars-meta');
       if (meta) meta.textContent = '数据缺失';
