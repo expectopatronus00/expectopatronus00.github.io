@@ -1,13 +1,29 @@
 /* 开源 AI 星标榜 · 由 nav/index.html 引入，读 stars/data.json
-   依赖页面里这几个容器：#stars-meta #stars-chart #stars-tip #stars-legend
-   #stars-rows #stars-count #stars-note #stars-shell */
+   依赖页面容器：#stars #stars-meta #stars-chart #stars-tip #stars-shell
+   #stars-legend #stars-rows #stars-note #stars-win-note
+   两种视图：heat（矩形树图，面积=星标 颜色=周期增速）/ line（折线趋势） */
 (function () {
   'use strict';
 
+  var WIN_LABEL = { p1: '1 日', p7: '7 日', p30: '30 日' };
   var PALETTE = ['#d4692a', '#4a9e7f', '#b8915c', '#7f77dd', '#5a9bd4', '#d4537e', '#639922', '#8a8ea8'];
-  var state = { sort: 'stars', dir: -1, mode: 'abs', repos: [], days: [] };
+
+  var state = {
+    view: 'heat',
+    win: 'p7',
+    scale: 'abs',
+    sort: 'stars',
+    dir: -1,
+    repos: [],
+    days: [],
+  };
 
   function el(id) { return document.getElementById(id); }
+  function isLight() { return document.documentElement.getAttribute('data-theme') === 'light'; }
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
 
   function fmt(n) {
     if (n === null || n === undefined || isNaN(n)) return '—';
@@ -20,6 +36,19 @@
     if (v > 0) return '<span class="delta-up">+' + fmt(v) + '</span>';
     if (v < 0) return '<span class="delta-down">' + fmt(v) + '</span>';
     return '<span class="delta-flat">0</span>';
+  }
+
+  function pctText(v) {
+    if (v === null || v === undefined || isNaN(v)) return '—';
+    var s = v > 0 ? '+' : v < 0 ? '−' : '';
+    var a = Math.abs(v);
+    return s + a.toFixed(a >= 10 ? 1 : 2) + '%';
+  }
+
+  function deltaPair(abs, p) {
+    var d = deltaHtml(abs);
+    if (p === null || p === undefined) return d;
+    return d + ' <span class="tip-pct">' + pctText(p) + '</span>';
   }
 
   function daysAgo(n) {
@@ -38,6 +67,12 @@
     return v;
   }
 
+  function pct(delta, base) {
+    if (delta === null || delta === undefined) return null;
+    if (!base || base <= 0) return null;
+    return (delta / base) * 100;
+  }
+
   function buildRows(data) {
     var rows = [];
     for (var i = 0; i < data.repos.length; i++) {
@@ -45,20 +80,23 @@
       var s = data.series[r.repo] || [];
       if (!s.length) continue;
       var now = s[s.length - 1][1];
-      var d1 = valueAt(s, daysAgo(1));
-      var d7 = valueAt(s, daysAgo(7));
-      var d30 = valueAt(s, daysAgo(30));
+      var v1 = valueAt(s, daysAgo(1));
+      var v7 = valueAt(s, daysAgo(7));
+      var v30 = valueAt(s, daysAgo(30));
+      var d1 = v1 === null ? null : now - v1;
+      var d7 = v7 === null ? null : now - v7;
+      var d30 = v30 === null ? null : now - v30;
       rows.push({
         repo: r.repo,
         name: r.name || r.repo.split('/')[1],
         owner: r.owner || r.repo.split('/')[0],
         desc: r.desc || '',
+        note: r.note || '',
         category: r.category || '未分类',
         license: r.license || '',
         stars: now,
-        d1: d1 === null ? null : now - d1,
-        d7: d7 === null ? null : now - d7,
-        d30: d30 === null ? null : now - d30,
+        d1: d1, d7: d7, d30: d30,
+        p1: pct(d1, v1), p7: pct(d7, v7), p30: pct(d30, v30),
         series: s,
       });
     }
@@ -69,11 +107,8 @@
     var key = state.sort;
     var dir = state.dir;
     return rows.slice().sort(function (a, b) {
-      if (key === 'name') {
-        return a.name.toLowerCase() < b.name.toLowerCase() ? -dir : dir;
-      }
-      var av = a[key];
-      var bv = b[key];
+      if (key === 'name') return a.name.toLowerCase() < b.name.toLowerCase() ? -dir : dir;
+      var av = a[key], bv = b[key];
       if (av === null && bv === null) return 0;
       if (av === null) return 1;
       if (bv === null) return -1;
@@ -81,8 +116,292 @@
     });
   }
 
-  /* ── 折线图 ── */
+  /* ── 色阶：红涨绿跌（A 股习惯），中点取主题中性色 ── */
+  var UP = [212, 105, 42];
+  var DOWN = [74, 158, 127];
+
+  function midColor() { return isLight() ? [211, 202, 183] : [56, 61, 84]; }
+
+  function mix(a, b, t) {
+    var c = [0, 0, 0];
+    for (var i = 0; i < 3; i++) c[i] = Math.round(a[i] + (b[i] - a[i]) * t);
+    return c;
+  }
+  function rgb(c) { return 'rgb(' + c[0] + ',' + c[1] + ',' + c[2] + ')'; }
+
+  function relLum(c) {
+    function f(v) { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }
+    return 0.2126 * f(c[0]) + 0.7152 * f(c[1]) + 0.0722 * f(c[2]);
+  }
+  function contrast(a, b) {
+    var hi = Math.max(a, b), lo = Math.min(a, b);
+    return (hi + 0.05) / (lo + 0.05);
+  }
+  /* 深字/白字里挑对比度更高的那个，避免中间色带两边都不够 */
+  function textOn(c) {
+    var l = relLum(c);
+    return contrast(l, relLum([31, 26, 18])) >= contrast(l, relLum([255, 253, 248])) ? '#1f1a12' : '#fffdf8';
+  }
+
+  function rateColor(v, dom) {
+    var mid = midColor();
+    if (v === null || v === undefined) return mid;
+    var t = Math.max(-1, Math.min(1, v / dom));
+    // 开方放大，让 0.02% 这种小增速也能看出差别
+    var k = Math.pow(Math.abs(t), 0.6);
+    return mix(mid, t >= 0 ? UP : DOWN, k);
+  }
+
+  function domainFor(rows, key) {
+    var vals = [];
+    for (var i = 0; i < rows.length; i++) {
+      var v = rows[i][key];
+      if (v !== null && v !== undefined && !isNaN(v)) vals.push(Math.abs(v));
+    }
+    if (!vals.length) return 1;
+    vals.sort(function (a, b) { return a - b; });
+    // 用 P90 而不是最大值，避免单个暴涨把其余全压成灰色
+    var p90 = vals[Math.min(vals.length - 1, Math.floor(vals.length * 0.9))];
+    return Math.max(p90 || vals[vals.length - 1], 0.05);
+  }
+
+  /* ── Squarified treemap ── */
+  function squarify(items, x0, y0, w0, h0) {
+    var out = [];
+    var total = 0, i;
+    for (i = 0; i < items.length; i++) total += items[i].value;
+    if (total <= 0 || w0 <= 0 || h0 <= 0) return out;
+
+    var area = w0 * h0;
+    var nodes = [];
+    for (i = 0; i < items.length; i++) {
+      nodes.push({ it: items[i], a: (items[i].value / total) * area });
+    }
+
+    var x = x0, y = y0, w = w0, h = h0;
+    var row = [];
+
+    function worst(r, side) {
+      var sum = 0, mx = -Infinity, mn = Infinity;
+      for (var k = 0; k < r.length; k++) {
+        sum += r[k].a;
+        if (r[k].a > mx) mx = r[k].a;
+        if (r[k].a < mn) mn = r[k].a;
+      }
+      if (sum <= 0 || side <= 0) return Infinity;
+      var s2 = sum * sum, side2 = side * side;
+      return Math.max((side2 * mx) / s2, s2 / (side2 * mn));
+    }
+
+    function flush() {
+      var sum = 0, k;
+      for (k = 0; k < row.length; k++) sum += row[k].a;
+      if (sum <= 0) { row = []; return; }
+      if (w >= h) {
+        var cw = sum / h;
+        var cy = y;
+        for (k = 0; k < row.length; k++) {
+          var ch = (row[k].a / sum) * h;
+          out.push({ it: row[k].it, x: x, y: cy, w: cw, h: ch });
+          cy += ch;
+        }
+        x += cw; w -= cw;
+      } else {
+        var rh = sum / w;
+        var cx = x;
+        for (k = 0; k < row.length; k++) {
+          var cw2 = (row[k].a / sum) * w;
+          out.push({ it: row[k].it, x: cx, y: y, w: cw2, h: rh });
+          cx += cw2;
+        }
+        y += rh; h -= rh;
+      }
+      row = [];
+    }
+
+    var idx = 0;
+    while (idx < nodes.length) {
+      var side = Math.min(w, h);
+      if (!row.length) { row.push(nodes[idx]); idx++; continue; }
+      if (worst(row, side) >= worst(row.concat([nodes[idx]]), side)) {
+        row.push(nodes[idx]); idx++;
+      } else {
+        flush();
+      }
+    }
+    if (row.length) flush();
+    return out;
+  }
+
+  function truncate(s, max) {
+    var w = 0, out = '';
+    for (var i = 0; i < s.length; i++) {
+      var ch = s.charAt(i);
+      var cw = /[\u2e80-\u9fff\uff00-\uffef\u3000-\u303f]/.test(ch) ? 1 : 0.56;
+      if (w + cw > max) return out + '…';
+      w += cw; out += ch;
+    }
+    return out;
+  }
+
+  /* ── 热力图 ── */
+  function drawHeat(rows) {
+    var shell = el('stars-shell');
+    if (!shell) return;
+    var W = Math.max(320, Math.round(shell.clientWidth || 900));
+    var narrow = W < 640;
+    var H = Math.round(narrow ? W * 1.15 : Math.min(540, W * 0.55));
+
+    var key = state.win;
+    var dom = domainFor(rows, key);
+    var hasPct = false;
+    for (var q = 0; q < rows.length; q++) { if (rows[q][key] !== null) { hasPct = true; break; } }
+
+    var items = rows.map(function (r) { return { r: r, value: r.stars, pct: r[key] }; })
+      .sort(function (a, b) { return b.value - a.value; });
+
+    var cells = squarify(items, 0, 0, W, H);
+    var svg = ['<svg class="heat-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="开源项目星标热力图，面积代表星标量，颜色代表增速">'];
+
+    for (var i = 0; i < cells.length; i++) {
+      var c = cells[i];
+      var pad = 1.5;
+      var x = c.x + pad, y = c.y + pad;
+      var w = c.w - pad * 2, h = c.h - pad * 2;
+      if (w < 1 || h < 1) continue;
+
+      var fill = rateColor(c.it.pct, dom);
+      var tc = textOn(fill);
+      var subStr = c.it.pct === null || c.it.pct === undefined ? fmt(c.it.r.stars) : pctText(c.it.pct);
+
+      svg.push('<g class="heat-cell" data-idx="' + i + '">');
+      svg.push('<rect data-idx="' + i + '" x="' + x.toFixed(1) + '" y="' + y.toFixed(1) +
+        '" width="' + w.toFixed(1) + '" height="' + h.toFixed(1) + '" rx="2.5" fill="' + rgb(fill) + '"/>');
+
+      var fs = 0, showPct = false;
+      if (w >= 148 && h >= 60) { fs = 15; showPct = true; }
+      else if (w >= 92 && h >= 40) { fs = 12.5; showPct = true; }
+      else if (w >= 58 && h >= 26) { fs = 10.5; showPct = false; }
+      else if (w >= 40 && h >= 18) { fs = 9; showPct = false; }
+
+      if (fs) {
+        var maxUnits = (w - 12) / fs;
+        var label = truncate(c.it.r.name, maxUnits);
+        var ty = showPct ? y + h / 2 - 1 : y + h / 2 + fs * 0.35;
+        svg.push('<text x="' + (x + 7).toFixed(1) + '" y="' + ty.toFixed(1) +
+          '" font-family="var(--font-sans)" font-size="' + fs + '" font-weight="600" fill="' + tc +
+          '" fill-opacity="0.95" pointer-events="none">' + esc(label) + '</text>');
+        if (showPct) {
+          svg.push('<text x="' + (x + 7).toFixed(1) + '" y="' + (ty + fs + 2).toFixed(1) +
+            '" font-family="var(--font-mono)" font-size="' + (fs - 3) + '" fill="' + tc +
+            '" fill-opacity="0.8" pointer-events="none">' + esc(subStr) + '</text>');
+        }
+      }
+      svg.push('</g>');
+    }
+
+    svg.push('</svg>');
+    el('stars-chart').innerHTML = svg.join('');
+
+    var mid = midColor();
+    var lg = [];
+    if (hasPct) {
+      lg.push('<span class="heat-scale">');
+      lg.push('<span class="heat-scale-end">' + pctText(-dom) + '</span>');
+      lg.push('<span class="heat-scale-bar" style="background:linear-gradient(90deg,' + rgb(DOWN) + ',' + rgb(mid) + ',' + rgb(UP) + ')"></span>');
+      lg.push('<span class="heat-scale-end">' + pctText(dom) + '</span>');
+      lg.push('</span>');
+      lg.push('<span class="legend-item">颜色 = ' + WIN_LABEL[key] + '增速，红涨绿跌；面积 = 当前星标</span>');
+    } else {
+      lg.push('<span class="legend-item">只有 1 天快照：面积 = 当前星标，颜色要等下一次采样才有增速</span>');
+    }
+    el('stars-legend').innerHTML = lg.join('');
+
+    var note = el('stars-win-note');
+    if (note) note.textContent = WIN_LABEL[key] + '增速';
+
+    bindHeat(cells, W, H);
+  }
+
+  function bindHeat(cells) {
+    var svgEl = el('stars-chart').querySelector('svg');
+    var tip = el('stars-tip');
+    var shell = el('stars-shell');
+    if (!svgEl || !tip || !shell) return;
+
+    var active = null;
+
+    function idxOf(node) {
+      while (node && node !== svgEl) {
+        if (node.getAttribute) {
+          var v = node.getAttribute('data-idx');
+          if (v !== null) return parseInt(v, 10);
+        }
+        node = node.parentNode;
+      }
+      return -1;
+    }
+
+    function paint(i) {
+      if (active === i) return;
+      var prev = svgEl.querySelector('.heat-cell.is-on');
+      if (prev) prev.classList.remove('is-on');
+      active = i;
+      if (i >= 0) {
+        var g = svgEl.querySelector('.heat-cell[data-idx="' + i + '"]');
+        if (g) g.classList.add('is-on');
+      }
+    }
+
+    function show(ev) {
+      var i = idxOf(ev.target);
+      if (i < 0 || !cells[i]) { hide(); return; }
+      paint(i);
+      var r = cells[i].it.r;
+      var html = '<div class="tip-date">' + esc(r.repo) + '</div>';
+      html += '<div class="tip-row"><span class="tip-k">星标</span><span class="tip-val">' + fmt(r.stars) + '</span></div>';
+      html += '<div class="tip-row"><span class="tip-k">日增</span><span class="tip-val">' + deltaPair(r.d1, r.p1) + '</span></div>';
+      html += '<div class="tip-row"><span class="tip-k">7 日</span><span class="tip-val">' + deltaPair(r.d7, r.p7) + '</span></div>';
+      html += '<div class="tip-row"><span class="tip-k">30 日</span><span class="tip-val">' + deltaPair(r.d30, r.p30) + '</span></div>';
+      html += '<div class="tip-foot">' + esc(r.category) + (r.license && r.license !== 'NOASSERTION' ? ' · ' + esc(r.license) : '') + ' · 点击打开仓库</div>';
+      tip.innerHTML = html;
+      tip.classList.add('is-on');
+
+      var rect = shell.getBoundingClientRect();
+      var left = ev.clientX - rect.left + 16;
+      var top = ev.clientY - rect.top + 12;
+      var tw = tip.offsetWidth, th = tip.offsetHeight;
+      if (left + tw > rect.width) left = Math.max(0, ev.clientX - rect.left - tw - 12);
+      if (top + th > rect.height + 60) top = Math.max(0, ev.clientY - rect.top - th - 12);
+      tip.style.left = left + 'px';
+      tip.style.top = top + 'px';
+    }
+
+    function hide() {
+      paint(-1);
+      tip.classList.remove('is-on');
+    }
+
+    svgEl.addEventListener('mousemove', show);
+    svgEl.addEventListener('mouseleave', hide);
+    svgEl.addEventListener('click', function (ev) {
+      var i = idxOf(ev.target);
+      if (i < 0 || !cells[i]) return;
+      window.open('https://github.com/' + cells[i].it.r.repo, '_blank', 'noopener');
+    });
+    svgEl.addEventListener('touchstart', function (e) { if (e.touches[0]) show(e.touches[0]); }, { passive: true });
+    svgEl.addEventListener('touchend', hide);
+  }
+
+  /* ── 折线趋势 ── */
   function drawLine(rows) {
+    var box = el('stars-chart');
+    if (state.days.length < 2) {
+      box.innerHTML = '<div class="stars-empty">趋势线要至少 2 天快照。<br>当前只有 ' + esc(state.days[0] || '—') + '，明天这个位置就有线了。</div>';
+      el('stars-legend').innerHTML = '';
+      return;
+    }
+
     var W = 900, H = 380, ml = 62, mr = 18, mt = 18, mb = 34;
     var n = state.days.length;
     var series = [];
@@ -94,7 +413,7 @@
       for (var j = 0; j < n; j++) {
         var v = map[state.days[j]];
         if (v === undefined) continue;
-        pts.push({ i: j, v: state.mode === 'norm' ? (v / first) * 100 : v, raw: v });
+        pts.push({ i: j, v: state.scale === 'norm' ? (v / first) * 100 : v, raw: v });
       }
       series.push({ name: rows[i].name, color: PALETTE[i % PALETTE.length], pts: pts });
     }
@@ -105,19 +424,18 @@
     if (min === max) { min = min * 0.98; max = max * 1.02; }
     var pad = (max - min) * 0.12;
     min -= pad; max += pad;
-    if (state.mode === 'norm') { min = Math.min(min, 100); max = Math.max(max, 100); }
+    if (state.scale === 'norm') { min = Math.min(min, 100); max = Math.max(max, 100); }
 
     function x(i) { return ml + (n <= 1 ? 0 : (i * (W - ml - mr)) / (n - 1)); }
     function y(v) { return mt + (1 - (v - min) / (max - min)) * (H - mt - mb); }
 
-    var svg = [];
-    svg.push('<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="星标趋势折线图">');
+    var svg = ['<svg class="line-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="星标趋势折线图">'];
 
     for (var g = 0; g <= 4; g++) {
       var gv = min + ((max - min) * g) / 4;
       var gy = y(gv);
       svg.push('<line x1="' + ml + '" y1="' + gy.toFixed(1) + '" x2="' + (W - mr) + '" y2="' + gy.toFixed(1) + '" stroke="var(--line-soft)" stroke-width="1"/>');
-      var label = state.mode === 'norm' ? gv.toFixed(0) : fmt(Math.round(gv));
+      var label = state.scale === 'norm' ? gv.toFixed(0) : fmt(Math.round(gv));
       svg.push('<text x="' + (ml - 10) + '" y="' + (gy + 4).toFixed(1) + '" text-anchor="end" font-family="var(--font-mono)" font-size="11" fill="var(--text-dim)">' + label + '</text>');
     }
 
@@ -144,7 +462,7 @@
     svg.push('<rect id="stars-hit" x="' + ml + '" y="' + mt + '" width="' + (W - ml - mr) + '" height="' + (H - mt - mb) + '" fill="transparent"/>');
     svg.push('</svg>');
 
-    el('stars-chart').innerHTML = svg.join('');
+    box.innerHTML = svg.join('');
 
     var lg = [];
     for (var q = 0; q < series.length; q++) {
@@ -152,10 +470,10 @@
     }
     el('stars-legend').innerHTML = lg.join('');
 
-    bindHover(series, x, n, ml, mr, W);
+    bindLineHover(series, x, n, ml, mr, W);
   }
 
-  function bindHover(series, x, n, ml, mr, W) {
+  function bindLineHover(series, x, n, ml, mr, W) {
     var hit = el('stars-hit');
     var guide = el('stars-guide');
     var tip = el('stars-tip');
@@ -216,27 +534,7 @@
     hit.addEventListener('touchend', leave);
   }
 
-  /* ── 只有一天数据时的横向条形图 ── */
-  function drawBars(rows) {
-    var top = rows.slice(0, 12);
-    var max = top.length ? top[0].stars : 1;
-    var W = 900, rowH = 30, ml = 180, mr = 70;
-    var H = top.length * rowH + 20;
-    var svg = ['<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="当前星标横向条形图">'];
-    for (var i = 0; i < top.length; i++) {
-      var y = 10 + i * rowH;
-      var w = ((W - ml - mr) * top[i].stars) / max;
-      svg.push('<text x="' + (ml - 10) + '" y="' + (y + 13) + '" text-anchor="end" font-family="var(--font-sans)" font-size="13" fill="var(--text-soft)">' + top[i].name + '</text>');
-      svg.push('<rect x="' + ml + '" y="' + (y + 2) + '" width="' + w.toFixed(1) + '" height="16" rx="3" fill="' + PALETTE[i % PALETTE.length] + '" opacity="0.85"/>');
-      svg.push('<text x="' + (ml + w + 8) + '" y="' + (y + 14) + '" font-family="var(--font-mono)" font-size="12" fill="var(--text-dim)">' + fmt(top[i].stars) + '</text>');
-    }
-    svg.push('</svg>');
-    el('stars-chart').innerHTML = svg.join('');
-    el('stars-legend').innerHTML = '';
-    el('stars-note').textContent = '当前只有 1 天快照，先看总量；明天起切换为折线趋势';
-  }
-
-  /* ── 表格 ── */
+  /* ── 明细表 ── */
   function drawTable(rows) {
     var sorted = sortRows(rows);
     var html = [];
@@ -244,15 +542,15 @@
       var r = sorted[i];
       html.push('<tr>');
       html.push(
-        '<td><div class="stars-name"><a href="https://github.com/' + r.repo + '" target="_blank" rel="noopener">' + r.name + '</a><span class="stars-sub-line">' + r.owner + (r.desc ? ' · ' + r.desc.slice(0, 42) : '') + '</span></div></td>'
+        '<td><div class="stars-name"><a href="https://github.com/' + r.repo + '" target="_blank" rel="noopener">' + esc(r.name) + '</a><span class="stars-sub-line">' + esc(r.owner) + (r.desc ? ' · ' + esc(r.desc.slice(0, 42)) : '') + '</span></div></td>'
       );
-      html.push('<td><span class="stars-tag">' + r.category + '</span></td>');
+      html.push('<td><span class="stars-tag">' + esc(r.category) + '</span></td>');
       html.push('<td class="stars-num stars-num-strong">' + fmt(r.stars) + '</td>');
       html.push('<td class="stars-num">' + deltaHtml(r.d1) + '</td>');
       html.push('<td class="stars-num">' + deltaHtml(r.d7) + '</td>');
       html.push('<td class="stars-num">' + deltaHtml(r.d30) + '</td>');
       html.push('<td>' + spark(r.series) + '</td>');
-      html.push('<td class="stars-num">' + (r.license && r.license !== 'NOASSERTION' ? r.license : '—') + '</td>');
+      html.push('<td class="stars-num">' + (r.license && r.license !== 'NOASSERTION' ? esc(r.license) : '—') + '</td>');
       html.push('</tr>');
     }
     el('stars-rows').innerHTML = html.join('');
@@ -277,11 +575,45 @@
     return '<svg width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '"><polyline points="' + pts.join(' ') + '" fill="none" stroke="' + color + '" stroke-width="1.5" stroke-linejoin="round"/></svg>';
   }
 
+  /* ── 本期看点：最大 / 最快 / 最慢 ── */
+  function renderPick(rows) {
+    var box = el('stars-pick');
+    if (!box || !rows.length) return;
+
+    var biggest = rows[0];
+    for (var i = 1; i < rows.length; i++) { if (rows[i].stars > biggest.stars) biggest = rows[i]; }
+
+    var fast = null, slow = null;
+    for (var j = 0; j < rows.length; j++) {
+      var v = rows[j][state.win];
+      if (v === null || v === undefined) continue;
+      if (!fast || v > fast[state.win]) fast = rows[j];
+      if (!slow || v < slow[state.win]) slow = rows[j];
+    }
+
+    var out = [];
+    out.push('<div class="pick-item"><span class="pick-k">体量最大</span><span class="pick-v"><a href="https://github.com/' + biggest.repo + '" target="_blank" rel="noopener">' + esc(biggest.name) + '</a> <b>' + fmt(biggest.stars) + '</b></span></div>');
+
+    if (fast) {
+      out.push('<div class="pick-item"><span class="pick-k">' + WIN_LABEL[state.win] + '最快</span><span class="pick-v"><a href="https://github.com/' + fast.repo + '" target="_blank" rel="noopener">' + esc(fast.name) + '</a> <b class="' + (fast[state.win] >= 0 ? 'delta-up' : 'delta-down') + '">' + pctText(fast[state.win]) + '</b></span></div>');
+      if (slow && slow !== fast) {
+        out.push('<div class="pick-item"><span class="pick-k">' + WIN_LABEL[state.win] + '最慢</span><span class="pick-v"><a href="https://github.com/' + slow.repo + '" target="_blank" rel="noopener">' + esc(slow.name) + '</a> <b class="' + (slow[state.win] >= 0 ? 'delta-up' : 'delta-down') + '">' + pctText(slow[state.win]) + '</b></span></div>');
+      }
+    } else {
+      out.push('<div class="pick-item"><span class="pick-k">增速</span><span class="pick-v">等下一次采样</span></div>');
+    }
+
+    box.innerHTML = out.join('');
+  }
+
   function render() {
+    var block = el('stars');
+    if (block) block.setAttribute('data-view', state.view);
     var rows = sortRows(state.repos);
-    if (state.days.length < 2) drawBars(rows);
+    if (state.view === 'heat') drawHeat(rows);
     else drawLine(rows.slice(0, 8));
     drawTable(state.repos);
+    renderPick(state.repos);
   }
 
   function bindSort() {
@@ -298,13 +630,15 @@
     }
   }
 
-  function bindMode() {
-    var btns = document.querySelectorAll('.stars-seg button');
+  function bindSeg(role, attr, apply) {
+    var seg = document.querySelector('.stars-seg[data-role="' + role + '"]');
+    if (!seg) return;
+    var btns = seg.querySelectorAll('button');
     for (var i = 0; i < btns.length; i++) {
       btns[i].addEventListener('click', function () {
         for (var j = 0; j < btns.length; j++) btns[j].setAttribute('aria-pressed', 'false');
         this.setAttribute('aria-pressed', 'true');
-        state.mode = this.getAttribute('data-mode');
+        apply(this.getAttribute(attr));
         render();
       });
     }
@@ -317,14 +651,33 @@
       for (var k = 0; k < state.repos[i].series.length; k++) all[state.repos[i].series[k][0]] = 1;
     }
     state.days = Object.keys(all).sort();
-    el('stars-meta').textContent = '更新 ' + (data.updated || '—') + ' · 采样 ' + state.days.length + ' 天 · ' + state.repos.length + ' 个项目';
+
+    var meta = el('stars-meta');
+    if (meta) meta.textContent = '更新 ' + (data.updated || '—') + ' · 采样 ' + state.days.length + ' 天 · ' + state.repos.length + ' 个项目';
+
     if (!state.days.length) {
       el('stars-chart').innerHTML = '<div class="stars-empty">还没有快照数据。<br>跑一次 <code>node scripts/stars-snapshot.cjs</code> 就有了。</div>';
       return;
     }
+
     bindSort();
-    bindMode();
+    bindSeg('view', 'data-view', function (v) { state.view = v; });
+    bindSeg('win', 'data-win', function (v) { state.win = v; });
+    bindSeg('scale', 'data-scale', function (v) { state.scale = v; });
     render();
+
+    var rt;
+    window.addEventListener('resize', function () {
+      if (state.view !== 'heat') return;
+      clearTimeout(rt);
+      rt = setTimeout(function () { drawHeat(sortRows(state.repos)); }, 180);
+    });
+
+    if (window.MutationObserver) {
+      new MutationObserver(function () {
+        if (state.view === 'heat') drawHeat(sortRows(state.repos));
+      }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    }
   }
 
   if (!el('stars-chart')) return;
@@ -334,6 +687,7 @@
     .then(boot)
     .catch(function () {
       el('stars-chart').innerHTML = '<div class="stars-empty">读不到 stars/data.json。<br>先跑一次 <code>node scripts/stars-snapshot.cjs</code>。</div>';
-      el('stars-meta').textContent = '数据缺失';
+      var meta = el('stars-meta');
+      if (meta) meta.textContent = '数据缺失';
     });
 })();

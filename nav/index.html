@@ -353,30 +353,64 @@
       <div class="loading-note">载入数据中……</div>
     </main>
 
-    <section class="stars-block" id="stars" style="max-width: 1080px; margin: 0 auto; padding: var(--sp-8) var(--sp-6) 0;">
-      <div class="stars-head">
-        <div>
-          <div class="eyebrow" style="margin-bottom: var(--sp-3);">open source · star tracking · 每日快照</div>
-          <h2>开源 AI，<em>涨得快不快</em>。</h2>
-          <p class="stars-sub">
-            每天抓一次 GitHub 星标，只存数字不做推测。<strong>星标是热度，不是质量</strong>——
-            这里看的是谁在变快、谁在停滞，选型判断还得回到仓库本身。
-          </p>
+    <section class="stars-block" id="stars" data-view="heat" style="max-width: 1080px; margin: 0 auto; padding: var(--sp-8) var(--sp-6) 0;">
+      <header class="stars-head">
+        <div class="eyebrow">open source · star tracking · 每日快照</div>
+        <h2>开源 AI，<em>涨得快不快</em>。</h2>
+        <p class="stars-lede">
+          25 个仓库，每天抓一次 GitHub 星标，只存数字不做推测。<strong>星标是热度，不是质量</strong>——
+          这张图看的是体量与增速，选型判断还得回到仓库本身。
+        </p>
+        <div class="stars-byline">
+          <span class="stars-meta" id="stars-meta">加载中…</span>
+          <span class="stars-src">来源 · GitHub REST API</span>
         </div>
-        <div class="stars-seg" role="group" aria-label="图表口径">
-          <button type="button" data-mode="abs" aria-pressed="true">绝对星标</button>
-          <button type="button" data-mode="norm" aria-pressed="false">相对增长</button>
-        </div>
-      </div>
+        <div class="stars-pick" id="stars-pick"></div>
+      </header>
 
-      <div class="stars-meta" id="stars-meta">加载中…</div>
-
-      <div class="stars-panel" style="margin-top: var(--sp-3);">
-        <div class="chart-shell" id="stars-shell">
-          <div id="stars-chart"></div>
-          <div class="chart-tip" id="stars-tip"></div>
+      <section class="stars-sec">
+        <div class="stars-sec-head">
+          <span class="stars-sec-num">01</span>
+          <h3>体量与增速，<em>一张图看完</em></h3>
+          <div class="stars-tools">
+            <div class="stars-seg" role="group" aria-label="视图" data-role="view">
+              <button type="button" data-view="heat" aria-pressed="true">热力图</button>
+              <button type="button" data-view="line" aria-pressed="false">趋势线</button>
+            </div>
+            <div class="stars-seg" role="group" aria-label="增速窗口" data-role="win">
+              <button type="button" data-win="p1" aria-pressed="false">日增</button>
+              <button type="button" data-win="p7" aria-pressed="true">7 日</button>
+              <button type="button" data-win="p30" aria-pressed="false">30 日</button>
+            </div>
+            <div class="stars-seg" role="group" aria-label="折线口径" data-role="scale">
+              <button type="button" data-scale="abs" aria-pressed="true">绝对星标</button>
+              <button type="button" data-scale="norm" aria-pressed="false">相对增长</button>
+            </div>
+          </div>
         </div>
-        <div class="stars-legend" id="stars-legend"></div>
+        <p class="stars-deck">
+          色块<strong>面积 = 当前星标</strong>，<strong>颜色 = <span id="stars-win-note">7 日</span>增速</strong>，红涨绿跌。
+          块越大说明盘子越大，颜色越暖说明跑得越快——大盘股不动、小盘股暴涨，一眼能分出来。
+        </p>
+        <div class="stars-panel">
+          <div class="chart-shell" id="stars-shell">
+            <div class="chart-scroll">
+              <div id="stars-chart"></div>
+            </div>
+            <div class="chart-tip" id="stars-tip"></div>
+          </div>
+          <div class="stars-legend" id="stars-legend"></div>
+        </div>
+      </section>
+
+      <section class="stars-sec">
+        <div class="stars-sec-head">
+          <span class="stars-sec-num">02</span>
+          <h3>明细榜</h3>
+          <div class="stars-tools">
+            <span class="stars-deck-inline">点表头排序，共 <span id="stars-count">25</span> 项</span>
+          </div>
+        </div>
         <div class="stars-table-shell">
           <table class="stars-rank">
             <thead>
@@ -394,15 +428,21 @@
             <tbody id="stars-rows"></tbody>
           </table>
         </div>
-        <p class="stars-sub" id="stars-note" style="margin-top: var(--sp-3);"></p>
-      </div>
+        <p class="stars-deck" id="stars-note" style="margin-top: var(--sp-3);"></p>
+      </section>
 
-      <p class="stars-sub" style="margin-top: var(--sp-4);">
-        数据由 <code style="font-family: var(--font-mono); font-size: 0.92em; color: var(--text-soft);">scripts/stars-snapshot.cjs</code>
-        每天抓一次，写进 <code style="font-family: var(--font-mono); font-size: 0.92em; color: var(--text-soft);">nav/stars/data.json</code>，
-        保留最近 180 天；清单在 <code style="font-family: var(--font-mono); font-size: 0.92em; color: var(--text-soft);">nav/stars/watchlist.json</code>。
-        历史从 2026-11-01 开始累积——GitHub 不提供公开的历史星标接口，没法回填。
-      </p>
+      <section class="stars-sec stars-sec-last">
+        <div class="stars-sec-head">
+          <span class="stars-sec-num">03</span>
+          <h3>口径与来源</h3>
+        </div>
+        <ul class="stars-facts">
+          <li><span class="k">采集</span><span class="v"><code>scripts/stars-snapshot.cjs</code> 每天 16:10 UTC 抓一次，写进 <code>nav/stars/data.json</code>，保留最近 180 天。</span></li>
+          <li><span class="k">清单</span><span class="v"><code>nav/stars/watchlist.json</code> 人工维护 25 个仓库，按推理与部署 / 模型 / Agent 框架 / 编码 Agent / 应用与多模态分五类。</span></li>
+          <li><span class="k">增量</span><span class="v">日增 / 7 日 / 30 日都拿当天星标减去「N 天前最近一次快照」，不足 N 天就留空，不插值不外推。</span></li>
+          <li><span class="k">局限</span><span class="v">GitHub 不提供公开的历史星标接口，历史从 2026-11-01 开始逐日累积，没法回填；星标会被刷，单看增速容易被营销活动带偏。</span></li>
+        </ul>
+      </section>
     </section>
 
     <script src="stars/stars.js"></script>
