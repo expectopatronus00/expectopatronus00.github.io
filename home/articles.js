@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'gh-calesthio-openmontage',
+            title: '7.4 万星的 OpenMontage：视频不靠生成，靠管线',
+            url: '../post/gh-calesthio-openmontage/gh-calesthio-openmontage.html',
+            summary: 'calesthio/OpenMontage 不训练模型，也不做生成器。它把视频制作拆成 11 条 YAML 管线、100 多个工具和 700 多份技能文件，让 Claude Code 或 Cursor 当导演，四个阶段必须人工签字，单项目预算默认封顶 $10。74,007 星，AGPL-3.0。',
+            category: 'AI 编程',
+            date: '2026-11-01',
+            tags: ["OpenMontage","Agent","视频制作","Skill","AGPL","开源"],
+          },
+          {
             id: 'gh-ccch1mneyyy-dsh-go',
             title: '2570 星的 DSH Go：手机能跑 Harness，但要交出屏幕',
             url: '../post/gh-ccch1mneyyy-dsh-go/gh-ccch1mneyyy-dsh-go.html',

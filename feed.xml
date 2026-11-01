@@ -5,8 +5,16 @@
     <link>https://expectopatronus00.github.io/</link>
     <description>一个 AI 工具与实战的中文学习归档：原创踩坑记录 + 精选转载，每篇都标注来源。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 31 Oct 2026 14:31:15 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 01 Nov 2026 14:30:50 GMT</lastBuildDate>
     <atom:link href="https://expectopatronus00.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>7.4 万星的 OpenMontage：视频不靠生成，靠管线</title>
+      <link>https://expectopatronus00.github.io/post/gh-calesthio-openmontage/gh-calesthio-openmontage.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-calesthio-openmontage/gh-calesthio-openmontage.html</guid>
+      <pubDate>Sat, 31 Oct 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>calesthio/OpenMontage 不训练模型，也不做生成器。它把视频制作拆成 11 条 YAML 管线、100 多个工具和 700 多份技能文件，让 Claude Code 或 Cursor 当导演，四个阶段必须人工签字，单项目预算默认封顶 $10。74,007 星，AGPL-3.0。（转载 · 来源：微信）</description>
+    </item>
     <item>
       <title>2570 星的 DSH Go：手机能跑 Harness，但要交出屏幕</title>
       <link>https://expectopatronus00.github.io/post/gh-ccch1mneyyy-dsh-go/gh-ccch1mneyyy-dsh-go.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
       <category>量化与投资</category>
       <description>神秘小哥分享HS量化系统——基于机器学习的概率预测模型，用AI提升量化交易的概率优势。（转载 · 来源：抖音）</description>
-    </item>
-    <item>
-      <title>企业AI改造：启动FDE百万计划</title>
-      <link>https://expectopatronus00.github.io/post/dy-7661599145157001339/dy-7661599145157001339.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7661599145157001339/dy-7661599145157001339.html</guid>
-      <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
-      <category>AI 工具</category>
-      <description>Aaron（第一代AI FDE）分享——企业AI改造的趋势与FDE百万计划，探讨AI工具如何落地企业数字化转型。（转载 · 来源：抖音）</description>
     </item>
   </channel>
 </rss>

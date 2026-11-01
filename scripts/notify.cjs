@@ -131,14 +131,252 @@ function mimeWord(s) {
   return '=?UTF-8?B?' + Buffer.from(String(s), 'utf8').toString('base64') + '?=';
 }
 
-/** 组装 MIME 报文：纯文本 + base64 正文，避免 8bit 与点号转义问题 */
-function buildMime(cfg, title, body) {
-  const b64 = Buffer.from(body || '', 'utf8')
-    .toString('base64')
-    .replace(/(.{1,76})/g, '$1\r\n');
-  const from = cfg.fromName
-    ? mimeWord(cfg.fromName) + ' <' + cfg.from + '>'
-    : cfg.from;
+/* ─────────── 邮件正文排版 ───────────
+   纯文本照旧保留（部分客户端与转发场景只认 text/plain），
+   同时生成一份 HTML 版：表格布局 + 全内联样式，Outlook / 163 / Gmail 都能正常渲染。
+   配色沿用站内 light 主题：暖纸底、墨色字、赭橙点缀。 */
+
+const MAIL = {
+  paper: '#f4efe4',
+  card: '#fffdf8',
+  line: '#e2d9c6',
+  ink: '#2a2518',
+  body: '#3a3323',
+  muted: '#8a8069',
+  rust: '#b8581d',
+  jade: '#2f7d5d',
+  red: '#a32d2d',
+};
+
+function escapeHtml(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function mdInline(s) {
+  let out = escapeHtml(s);
+  out = out.replace(/\*\*([^*]+)\*\*/g, '<strong style="color:' + MAIL.ink + ';font-weight:600">$1</strong>');
+  out = out.replace(
+    /`([^`]+)`/g,
+    '<code style="font-family:\'SF Mono\',Menlo,Consolas,monospace;font-size:12px;background:#f0e9da;padding:1px 5px;border-radius:4px;color:' + MAIL.rust + '">$1</code>'
+  );
+  out = out.replace(
+    /(https?:\/\/[^\s<）)】]+)/g,
+    '<a href="$1" style="color:' + MAIL.rust + ';text-decoration:none;border-bottom:1px dotted #d9b9a0">$1</a>'
+  );
+  return out;
+}
+
+/** 去掉正文开头重复的标题（日报正文第一行常常是「标题（补充说明）」） */
+function stripEchoTitle(title, body) {
+  const lines = String(body || '').split(/\r?\n/);
+  const i = lines.findIndex(l => l.trim());
+  if (i < 0) return body || '';
+  const norm = s => s.replace(/[\s·—\-|]/g, '');
+  if (norm(lines[i]).indexOf(norm(title)) === 0) {
+    let rest = lines[i].trim().slice(String(title).length).trim();
+    rest = rest.replace(/^[·—\-|:：]+/, '').trim();
+    lines[i] = rest;
+    if (!rest) lines.splice(i, 1);
+  }
+  return lines.join('\n');
+}
+
+/** 「标题：xxx」开头的正文 → 元信息两栏表 + 剩余段落。用于成稿通知。 */
+function metaBlocks(lines) {
+  const rows = [];
+  let i = 0;
+  for (; i < lines.length; i++) {
+    const t = lines[i].trim();
+    if (!t) continue;
+    // 标签不能是纯数字，否则「22:30 的 daily-run…」会被切成标签「22」
+    const m = t.match(/^([^\d\s：:]{1,8})[：:]\s*(.+)$/);
+    if (!m) break;
+    rows.push({ k: m[1], v: m[2] });
+  }
+  const rest = lines.slice(i).join('\n');
+
+  let html =
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" ' +
+    'style="margin:2px 0 18px;border-top:1px solid ' + MAIL.line + ';">';
+  rows.forEach(r => {
+    const isUrl = /^https?:\/\/\S+$/.test(r.v);
+    const val = isUrl
+      ? '<a href="' + escapeHtml(r.v) + '" style="display:inline-block;background:' + MAIL.rust +
+        ';color:#ffffff;padding:8px 16px;border-radius:6px;text-decoration:none;font-size:13px;font-weight:600;">打开链接</a>'
+      : mdInline(r.v);
+    html +=
+      '<tr>' +
+      '<td style="width:92px;padding:9px 0;border-bottom:1px solid #f2ece0;font-size:13px;color:' +
+      MAIL.muted + ';vertical-align:top;white-space:nowrap;">' + escapeHtml(r.k) + '</td>' +
+      '<td style="padding:9px 0;border-bottom:1px solid #f2ece0;font-size:14px;line-height:1.7;color:' +
+      MAIL.ink + ';">' + val + '</td>' +
+      '</tr>';
+  });
+  html += '</table>';
+
+  return html + (rest.trim() ? mdBlocks(rest) : '');
+}
+
+/** 轻量文本 → 邮件 HTML 块。认标题、【小节】、·/- 列表、数字列表、**粗体**、`代码`、裸链接。 */
+function mdBlocks(text) {
+  const lines = String(text || '').split(/\r?\n/);
+  const out = [];
+  let list = null; // { tag, items }
+
+  // 成稿通知固定以「标题：」开头，走元信息表
+  const firstIdx = lines.findIndex(l => l.trim());
+  if (firstIdx >= 0 && /^标题[：:]/.test(lines[firstIdx].trim())) {
+    return metaBlocks(lines.slice(firstIdx));
+  }
+
+  const flush = () => {
+    if (!list) return;
+    const tag = list.tag;
+    const style =
+      tag === 'ol'
+        ? 'margin:0 0 14px;padding-left:22px;font-size:15px;line-height:1.85;color:' + MAIL.body
+        : 'margin:0 0 14px;padding-left:18px;font-size:15px;line-height:1.85;color:' + MAIL.body;
+    out.push(
+      '<' + tag + ' style="' + style + '">' +
+        list.items
+          .map(
+            it =>
+              '<li style="margin:0 0 7px;padding-left:2px">' + mdInline(it) + '</li>'
+          )
+          .join('') +
+        '</' + tag + '>'
+    );
+    list = null;
+  };
+
+  for (const raw of lines) {
+    const line = raw.trim();
+    if (!line) {
+      flush();
+      continue;
+    }
+
+    const h = line.match(/^【(.+)】$/) || line.match(/^#{2,4}\s*(.+)$/);
+    if (h) {
+      flush();
+      out.push(
+        '<div style="margin:22px 0 10px;padding-left:10px;border-left:2px solid ' + MAIL.rust + ';' +
+          "font-family:'SF Mono',Menlo,Consolas,monospace;font-size:12px;letter-spacing:.06em;color:" + MAIL.muted + '">' +
+          mdInline(h[1]) +
+          '</div>'
+      );
+      continue;
+    }
+
+    // 「建议发布（≥75，4 条）：」这类短行当小节标题，比正文更像目录
+    if (/^.{2,26}[：:]$/.test(line)) {
+      flush();
+      out.push(
+        '<div style="margin:20px 0 8px;padding-left:10px;border-left:2px solid ' + MAIL.line + ';' +
+          'font-size:13px;font-weight:600;letter-spacing:.02em;color:' + MAIL.ink + '">' +
+          mdInline(line.replace(/[：:]$/, '')) +
+          '</div>'
+      );
+      continue;
+    }
+
+    const ul = line.match(/^[·•*\-]\s+(.+)$/);
+    if (ul) {
+      if (!list || list.tag !== 'ul') { flush(); list = { tag: 'ul', items: [] }; }
+      list.items.push(ul[1]);
+      continue;
+    }
+
+    const ol = line.match(/^(\d+)[.、)]\s+(.+)$/);
+    if (ol) {
+      if (!list || list.tag !== 'ol') { flush(); list = { tag: 'ol', items: [] }; }
+      list.items.push(ol[2]);
+      continue;
+    }
+
+    flush();
+    out.push(
+      '<p style="margin:0 0 12px;font-size:15px;line-height:1.85;color:' + MAIL.body + '">' + mdInline(line) + '</p>'
+    );
+  }
+  flush();
+  return out.join('');
+}
+
+function kindStyle(kind, title) {
+  const k = kind || (/失败|异常|错误|告警|FAIL/i.test(String(title)) ? 'alert' : 'report');
+  if (k === 'alert') return { accent: MAIL.red, label: '需要处理' };
+  if (k === 'ok') return { accent: MAIL.jade, label: '运行正常' };
+  return { accent: MAIL.rust, label: '每日自动化' };
+}
+
+/** 组装 HTML 邮件：600px 表格布局，全内联样式，不依赖任何外部资源 */
+function buildHtml(cfg, title, body, kind, rawHtml) {
+  const k = kindStyle(kind, title);
+  const stamp = new Date().toISOString().slice(0, 10);
+  const inner = rawHtml || mdBlocks(stripEchoTitle(title, body));
+
+  return [
+    '<!doctype html>',
+    '<html lang="zh-CN"><head>',
+    '<meta charset="utf-8">',
+    '<meta name="viewport" content="width=device-width,initial-scale=1">',
+    '<meta name="color-scheme" content="light">',
+    '<title>' + escapeHtml(title) + '</title>',
+    '</head>',
+    '<body style="margin:0;padding:0;background:' + MAIL.paper + ';">',
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:' + MAIL.paper + ';">',
+    '<tr><td align="center" style="padding:28px 12px;">',
+    '<table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:600px;background:' + MAIL.card + ';border:1px solid ' + MAIL.line + ';border-radius:14px;overflow:hidden;">',
+
+    // 顶部强调条
+    '<tr><td style="height:3px;background:' + k.accent + ';font-size:0;line-height:0;">&nbsp;</td></tr>',
+
+    // 眉标 + 标题
+    '<tr><td style="padding:26px 32px 0;">',
+    '<div style="font-family:\'SF Mono\',Menlo,Consolas,monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:' + k.accent + ';">',
+    escapeHtml(k.label) + ' · ' + stamp,
+    '</div>',
+    '<h1 style="margin:10px 0 0;font-family:Georgia,\'Songti SC\',\'SimSun\',serif;font-size:26px;line-height:1.35;font-weight:500;color:' + MAIL.ink + ';">',
+    escapeHtml(title),
+    '</h1>',
+    '</td></tr>',
+
+    // 分隔线
+    '<tr><td style="padding:16px 32px 0;"><div style="height:1px;background:' + MAIL.line + ';font-size:0;line-height:0;">&nbsp;</div></td></tr>',
+
+    // 正文
+    '<tr><td style="padding:18px 32px 6px;font-family:-apple-system,BlinkMacSystemFont,\'PingFang SC\',\'Microsoft YaHei\',sans-serif;">',
+    inner,
+    '</td></tr>',
+
+    // 页脚
+    '<tr><td style="padding:18px 32px 26px;">',
+    '<div style="border-top:1px solid ' + MAIL.line + ';padding-top:14px;font-family:-apple-system,\'PingFang SC\',\'Microsoft YaHei\',sans-serif;font-size:12px;line-height:1.9;color:' + MAIL.muted + ';">',
+    '由 expectopatronus 的每日自动化发出 · ',
+    '<a href="https://expectopatronus00.github.io" style="color:' + MAIL.rust + ';text-decoration:none;">expectopatronus00.github.io</a>',
+    '<br>星标与热度会变，判断请回到仓库本身。',
+    '</div>',
+    '</td></tr>',
+
+    '</table>',
+    '</td></tr></table>',
+    '</body></html>',
+  ].join('');
+}
+
+function chunk76(b64) {
+  return b64.replace(/(.{1,76})/g, '$1\r\n').replace(/\r\n$/, '');
+}
+
+/** 组装 MIME 报文：multipart/alternative，纯文本 + HTML 双份，均 base64 */
+function buildMime(cfg, title, body, html) {
+  const from = cfg.fromName ? mimeWord(cfg.fromName) + ' <' + cfg.from + '>' : cfg.from;
+  const boundary = '----=_blog_' + Date.now() + '_' + Math.random().toString(36).slice(2);
   const headers = [
     'From: ' + from,
     'To: ' + cfg.to.join(', '),
@@ -147,11 +385,31 @@ function buildMime(cfg, title, body) {
     'Message-ID: <' + Date.now() + '.' + Math.random().toString(36).slice(2) + '@' +
       String(cfg.from).split('@')[1] + '>',
     'MIME-Version: 1.0',
+    'Content-Type: multipart/alternative; boundary="' + boundary + '"',
+  ];
+
+  const textPart = [
+    '--' + boundary,
     'Content-Type: text/plain; charset=UTF-8',
     'Content-Transfer-Encoding: base64',
-  ];
-  return headers.join('\r\n') + '\r\n\r\n' + b64;
+    '',
+    chunk76(Buffer.from(body || '', 'utf8').toString('base64')),
+  ].join('\r\n');
+
+  const htmlPart = [
+    '--' + boundary,
+    'Content-Type: text/html; charset=UTF-8',
+    'Content-Transfer-Encoding: base64',
+    '',
+    chunk76(Buffer.from(html || '', 'utf8').toString('base64')),
+  ].join('\r\n');
+
+  return (
+    headers.join('\r\n') + '\r\n\r\n' +
+    textPart + '\r\n' + htmlPart + '\r\n--' + boundary + '--\r\n'
+  );
 }
+
 
 /**
  * 最小 SMTP 客户端：465/994 隐式 TLS，25/587 明文 + STARTTLS。
@@ -375,11 +633,11 @@ function buildChannels() {
     };
     list.push({
       name: '邮件 ' + to.join(','),
-      send: (title, body) =>
-        smtpSend(mailCfg, {
-          to,
-          raw: buildMime(Object.assign({ to }, mailCfg), title, body),
-        }),
+      send: (title, body, extra) => {
+        const cfg = Object.assign({ to }, mailCfg);
+        const html = buildHtml(cfg, title, body, extra && extra.kind, extra && extra.html);
+        return smtpSend(cfg, { to, raw: buildMime(cfg, title, body, html) });
+      },
     });
   }
 
@@ -406,6 +664,15 @@ async function notify(input) {
   const body = opts.body || '';
   const list = buildChannels();
   const text = [title, body].filter(Boolean).join('\n\n');
+  const extra = { kind: opts.kind, html: opts.html };
+
+  // 预览：把 HTML 版写到本地文件，不发送
+  if (opts.saveHtml) {
+    const fs = require('fs');
+    const html = buildHtml({ to: [] }, title, body, opts.kind, opts.html);
+    fs.writeFileSync(opts.saveHtml, html, 'utf8');
+    console.log('已写出 HTML 预览 ' + opts.saveHtml);
+  }
 
   if (opts.dryRun) {
     console.log('── dry-run ──');
@@ -427,7 +694,7 @@ async function notify(input) {
   for (const ch of list) {
     let r;
     try {
-      r = await ch.send(title, body);
+      r = await ch.send(title, body, extra);
     } catch (e) {
       r = { ok: false, error: e.message };
     }
@@ -455,6 +722,9 @@ function parseArgs(argv) {
     else if (a === '--title') out.title = argv[++i];
     else if (a === '--body') out.body = argv[++i];
     else if (a === '--file') out.file = argv[++i];
+    else if (a === '--kind') out.kind = argv[++i];
+    else if (a === '--html') out.htmlFile = argv[++i];
+    else if (a === '--save-html') out.saveHtml = argv[++i];
   }
   return out;
 }
@@ -470,9 +740,21 @@ if (require.main === module) {
       /* 无 stdin，忽略 */
     }
   }
-  notify({ title: args.title, body, dryRun: args.dryRun }).then(r => {
+  // --html 传一个 HTML 片段文件，直接替代自动排版（适合需要表格 / 图表的自定义邮件）
+  const html =
+    args.htmlFile && fs.existsSync(args.htmlFile)
+      ? fs.readFileSync(args.htmlFile, 'utf8')
+      : undefined;
+  notify({
+    title: args.title,
+    body,
+    kind: args.kind,
+    html,
+    saveHtml: args.saveHtml,
+    dryRun: args.dryRun,
+  }).then(r => {
     process.exit(r.failed > 0 && r.sent === 0 ? 1 : 0);
   });
 }
 
-module.exports = { notify };
+module.exports = { notify, buildHtml, mdBlocks };
