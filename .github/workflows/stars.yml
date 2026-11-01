@@ -33,11 +33,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node scripts/stars-snapshot.cjs
 
+      - name: 更新星标增速榜
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/stars-rank.cjs
+
       - name: 提交变更
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add nav/stars/data.json
+          git add nav/stars/data.json nav/stars/rank.json
           if git diff --cached --quiet; then
             echo "星标无变化，跳过提交"
             exit 0

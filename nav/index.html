@@ -262,6 +262,115 @@
         .tc-url { justify-self: start; padding-top: 0; }
       }
 
+      /* ── 开源 AI 星标增速榜（复用 .tool-card 的搜索/筛选，只改版式） ── */
+      .rank-note {
+        margin: var(--sp-3) 0 var(--sp-2);
+        font-size: var(--fs-xs);
+        line-height: 1.95;
+        color: var(--text-dim);
+      }
+      .rank-note b { color: var(--text-soft); font-weight: 600; }
+      .rank-divider {
+        margin-top: var(--sp-3);
+        padding: var(--sp-4) var(--sp-1) var(--sp-2);
+        border-top: 1px dashed var(--line);
+        font-size: var(--fs-xs);
+        line-height: 1.9;
+        color: var(--text-dim);
+      }
+      .rank-card {
+        grid-template-columns: 2.8em 200px 1fr auto;
+        grid-template-rows: auto auto;
+        align-items: center;
+        gap: 7px var(--sp-4);
+      }
+      .rk-no {
+        grid-row: 1 / 3;
+        align-self: start;
+        padding-top: 3px;
+        font-family: var(--font-mono);
+        font-size: var(--fs-sm);
+        color: var(--text-dim);
+        font-variant-numeric: tabular-nums;
+      }
+      .rank-card:nth-child(-n + 3) .rk-no {
+        color: var(--accent-rust-text);
+        font-weight: 600;
+      }
+      .rank-card .tc-head { grid-column: 2; grid-row: 1; }
+      .rk-desc {
+        grid-column: 3;
+        grid-row: 1;
+        min-width: 0;
+        margin: 0;
+      }
+      .rk-metric {
+        grid-column: 4;
+        grid-row: 1 / 3;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 3px;
+        min-width: 112px;
+      }
+      .rk-track {
+        grid-column: 2 / 4;
+        grid-row: 2;
+        height: 5px;
+        border-radius: 3px;
+        background: var(--line);
+        overflow: hidden;
+      }
+      .rk-fill {
+        display: block;
+        height: 100%;
+        border-radius: 3px;
+        background: linear-gradient(90deg, var(--accent-rust), var(--accent-rust-soft));
+      }
+      .rk-daily {
+        font-family: var(--font-mono);
+        font-size: var(--fs-base);
+        font-weight: 600;
+        color: var(--accent-rust-text);
+        font-variant-numeric: tabular-nums;
+        line-height: 1.2;
+        white-space: nowrap;
+      }
+      .rk-unit { font-size: var(--fs-xs); font-weight: 400; color: var(--text-dim); }
+      .rk-total {
+        font-family: var(--font-mono);
+        font-size: var(--fs-xs);
+        color: var(--text-dim);
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+      }
+      .rk-basis {
+        font-size: 0.66rem;
+        line-height: 1.6;
+        color: var(--text-dim);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 0 0.5em;
+        white-space: nowrap;
+      }
+      .rk-na { font-family: var(--font-mono); font-size: var(--fs-sm); color: var(--text-dim); }
+
+      @media (max-width: 700px) {
+        .rank-card {
+          grid-template-columns: 2.2em 1fr auto;
+          grid-template-rows: auto auto auto;
+          gap: 6px var(--sp-3);
+          align-items: start;
+          padding: var(--sp-4) var(--sp-1);
+        }
+        .rk-no { grid-row: 1 / 4; padding-top: 2px; }
+        .rank-card .tc-head { grid-column: 2; grid-row: 1; }
+        .rank-card .rk-metric { grid-column: 3; grid-row: 1 / 3; min-width: 78px; }
+        .rank-card .rk-desc { grid-column: 2 / 3; grid-row: 2; }
+        .rank-card .rk-track { grid-column: 2 / 4; grid-row: 3; }
+        .rank-card .rk-basis { display: none; }
+      }
+
       /* ── 空态 / 加载 ── */
       .no-result {
         text-align: center;
@@ -513,7 +622,23 @@
         }
 
         var DATA = null;
+        var RANK = null;
         var state = { cat: 'all', q: '' };
+
+        var BASIS_LABEL = { week: '本周', month: '本月', lifetime: '创建以来', none: '暂无数据' };
+
+        function escHtml(s) {
+          return String(s == null ? '' : s)
+            .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+        function fmtNum(n) {
+          if (n === null || n === undefined || isNaN(n)) return '—';
+          if (n >= 10000) return (n / 10000).toFixed(1) + '万';
+          return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
+        function pad2(n) {
+          return n < 10 ? '0' + n : String(n);
+        }
 
         function domainOf(url) {
           var bare = url.replace(/^https?:\/\//, '').replace(/\/.*$/, '');
@@ -530,6 +655,45 @@
           return '<span class="tc-badge' + cls + '">' + badge + '</span>';
         }
 
+        /* ── 开源 AI 类目：渲染成星标增速榜 ── */
+        function renderRankList(grid, rank) {
+          var items = rank.items || [];
+          var max = 0;
+          for (var i = 0; i < items.length; i++) {
+            if (items[i].daily && items[i].daily > max) max = items[i].daily;
+          }
+          var html = '';
+          for (var j = 0; j < items.length; j++) {
+            var r = items[j];
+            if (r.basis === 'none' && (j === 0 || items[j - 1].basis !== 'none')) {
+              html +=
+                '<div class="rank-divider">以下 ' +
+                items.filter(function (x) {
+                  return x.basis === 'none';
+                }).length +
+                ' 个项目暂无增速数据 —— 库龄超过 90 天，也没有人工整理的月度趋势，按总星标排列</div>';
+            }
+            var w = max && r.daily ? Math.max(1.5, (r.daily / max) * 100) : 0;
+            var hay = (r.name + ' ' + r.desc + ' ' + r.repo).toLowerCase();
+            html +=
+              '<a class="tool-card rank-card" href="' + escHtml(r.url) + '" target="_blank" rel="noopener"' +
+              ' data-hay="' + escHtml(hay) + '">' +
+              '<span class="rk-no">' + pad2(r.rank) + '</span>' +
+              '<div class="tc-head"><span class="tc-name">' + escHtml(r.name) + '</span>' + badgeHtml(r.badge) + '</div>' +
+              '<p class="tc-desc rk-desc">' + escHtml(r.desc) + '</p>' +
+              '<div class="rk-metric">' +
+              (r.daily
+                ? '<span class="rk-daily">+' + fmtNum(r.daily) + '<span class="rk-unit">/日</span></span>'
+                : '<span class="rk-na">—</span>') +
+              '<span class="rk-total">' + fmtNum(r.stars) + ' ★</span>' +
+              '<span class="rk-basis">' + (BASIS_LABEL[r.basis] || r.basis) + '</span>' +
+              '</div>' +
+              '<div class="rk-track"><span class="rk-fill" style="width:' + w.toFixed(1) + '%"></span></div>' +
+              '</a>';
+          }
+          grid.innerHTML = html;
+        }
+
         /* ── 一次性建 DOM；之后的搜索/筛选只切换显示，不重建 ── */
         function build(cats) {
           var main = document.getElementById('main-content');
@@ -543,10 +707,22 @@
               '<span class="cat-glyph">' + (CAT_GLYPHS[cat.id] || CAT_GLYPHS['ai-model']) + '</span>' +
               '<div><h2 class="cat-title">' + cat.name + '</h2>' +
               '<p class="cat-sub">' + cat.desc + '</p></div>' +
-              '<span class="cat-count">' + cat.items.length + ' 个站点</span>' +
+              '<span class="cat-count">' + cat.items.length + (cat.id === 'ai-oss' ? ' 个项目' : ' 个站点') + '</span>' +
               '</div>' +
               '<div class="tool-list"></div>';
             var grid = sec.querySelector('.tool-list');
+            if (cat.id === 'ai-oss' && RANK && RANK.items && RANK.items.length) {
+              grid.className = 'tool-list rank-list';
+              renderRankList(grid, RANK);
+              var note = document.createElement('p');
+              note.className = 'rank-note';
+              note.innerHTML =
+                '按 <b>日均新增</b> 降序 · 周/月增量取自人工整理的周期数据，库龄 90 天内的新库按创建以来平均折算，' +
+                '老库没有月度数据的不参与排序（沉底显示「—」）· 星标更新于 ' + escHtml(RANK.updated);
+              sec.insertBefore(note, grid);
+              main.appendChild(sec);
+              return;
+            }
             cat.items.forEach(function (item) {
               var a = document.createElement('a');
               a.className = 'tool-card';
@@ -629,7 +805,7 @@
             return s + c.items.length;
           }, 0);
           document.getElementById('nav-stats').innerHTML =
-            '<strong>' + cats.length + '</strong> 个分类 · <strong>' + total + '</strong> 个站点';
+            '<strong>' + cats.length + '</strong> 个分类 · <strong>' + total + '</strong> 条收录';
         }
 
         /* ── 滚动显现 ── */
@@ -689,9 +865,21 @@
             DATA = cats;
             initStats(cats);
             initCats(cats);
-            build(cats);
+            /* 星标榜数据单独取，取不到就退回普通卡片列表 */
+            return fetch('./stars/rank.json')
+              .then(function (r) {
+                return r.ok ? r.json() : null;
+              })
+              .catch(function () {
+                return null;
+              })
+              .then(function (rank) {
+                RANK = rank;
+                build(cats);
+              });
           })
-          .catch(function () {
+          .catch(function (e) {
+            if (window.console && console.error) console.error('[nav] 渲染失败：', e);
             document.getElementById('main-content').innerHTML =
               '<div class="no-result"><p>数据加载失败，请刷新页面。</p></div>';
           });
