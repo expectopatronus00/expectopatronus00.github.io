@@ -68,3 +68,32 @@
 | 小红书发现 | ⚠️ 搜索通道 | 站内 feed 有签名墙；用搜索引擎站内检索近似 |
 | 微信公众号更新 | ⛔ 第二期 | 需自托管 wewe-rss，订阅新文章而非翻历史 |
 | 抖音指定创作者 | ⛔ 第二期 | 主页接口需登录态，先靠留痕 + 收件箱覆盖 |
+
+## 五、积压台账（backlog.json）
+
+评分 ≥75 但没有当天发布的候选，必须写进 `.tools/radar/backlog.json`，否则第二天就只存在于某封邮件里，谁也数不清还剩多少。
+
+```json
+{
+  "updated": "2026-11-01",
+  "items": [
+    {
+      "repo": "AstrBotDevs/AstrBot",
+      "title": "AstrBot：把 QQ/微信/Discord/Telegram 接成同一个 agent 入口",
+      "score": 86,
+      "url": "https://github.com/AstrBotDevs/AstrBot",
+      "family": "agent-gateway",
+      "addedAt": "2026-11-01",
+      "status": "pending"
+    }
+  ]
+}
+```
+
+维护规则：
+
+- 每天雷达跑完，把当天 ≥75 且未写的新候选**合并**进去（按 `repo` 或 `url` 去重），不要整份重写。
+- `status` 三态：`pending`（待写）/ `published`（已写，由成稿环节回写）/ `stale`（超 7 天且复核掉到 75 分以下）。
+- `family` 用来做同族合并，取一个能归类的短标签（如 `context-memory`、`agent-gateway`、`video-pipeline`）；同一 family 有 ≥2 条时，成稿优先写成横评一次消耗掉。
+- 日报里的「积压 N 条」必须来自这个文件的实际计数，不能凭印象写。
+
