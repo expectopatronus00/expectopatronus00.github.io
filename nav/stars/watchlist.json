@@ -1,0 +1,31 @@
+{
+  "updated": "2026-11-01",
+  "note": "每日快照追踪的开源 AI 项目。加项目就往 repos 里加一条，repo 字段必须与 GitHub 的 owner/name 完全一致。",
+  "repos": [
+    { "repo": "ollama/ollama", "category": "推理与部署", "note": "本地跑模型的事实标准" },
+    { "repo": "vllm-project/vllm", "category": "推理与部署", "note": "高吞吐推理服务引擎" },
+    { "repo": "deepseek-ai/DeepSeek-V3", "category": "模型", "note": "MoE 主力模型" },
+    { "repo": "deepseek-ai/DeepSeek-R1", "category": "模型", "note": "推理模型" },
+    { "repo": "QwenLM/Qwen3", "category": "模型", "note": "通义千问开源系列" },
+    { "repo": "huggingface/transformers", "category": "模型", "note": "模型生态的地基" },
+    { "repo": "langchain-ai/langchain", "category": "Agent 框架", "note": "老牌编排框架" },
+    { "repo": "microsoft/autogen", "category": "Agent 框架", "note": "多智能体对话" },
+    { "repo": "crewAIInc/crewAI", "category": "Agent 框架", "note": "角色化多智能体" },
+    { "repo": "browser-use/browser-use", "category": "Agent 框架", "note": "浏览器操作智能体" },
+    { "repo": "openai/openai-agents-python", "category": "Agent 框架", "note": "官方 Agent SDK" },
+    { "repo": "modelcontextprotocol/servers", "category": "Agent 框架", "note": "MCP 官方服务集合" },
+    { "repo": "AstrBotDevs/AstrBot", "category": "Agent 框架", "note": "多平台 IM 接同一个 agent" },
+    { "repo": "openai/codex", "category": "编码 Agent", "note": "终端里的编码智能体" },
+    { "repo": "Aider-AI/aider", "category": "编码 Agent", "note": "命令行结对编程" },
+    { "repo": "cline/cline", "category": "编码 Agent", "note": "编辑器内自治 agent" },
+    { "repo": "musistudio/claude-code-router", "category": "编码 Agent", "note": "给编码 agent 换模型路由" },
+    { "repo": "Panniantong/Agent-Reach", "category": "编码 Agent", "note": "站内已写过" },
+    { "repo": "ccch1mneyyy/dsh-Go", "category": "编码 Agent", "note": "手机端跑 Harness" },
+    { "repo": "deepseek-ai/dsh-superagent-prototype", "category": "编码 Agent", "note": "DeepSeek agent 原型" },
+    { "repo": "Comfy-Org/ComfyUI", "category": "应用与多模态", "note": "节点式图像生成" },
+    { "repo": "calesthio/OpenMontage", "category": "应用与多模态", "note": "管线式视频制作" },
+    { "repo": "openfilm/openfilm", "category": "应用与多模态", "note": "开源 AI 影像" },
+    { "repo": "patch-gg/pixelfx", "category": "应用与多模态", "note": "像素画特效" },
+    { "repo": "mksglu/context-mode", "category": "应用与多模态", "note": "工具输出沙箱化省上下文" }
+  ]
+}

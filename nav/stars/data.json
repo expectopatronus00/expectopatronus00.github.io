@@ -1,0 +1,557 @@
+{
+  "updated": "2026-11-01",
+  "repos": [
+    {
+      "repo": "deepseek-ai/DeepSeek-R1",
+      "name": "DeepSeek-R1",
+      "owner": "deepseek-ai",
+      "desc": "",
+      "category": "模型",
+      "note": "推理模型",
+      "license": "MIT",
+      "language": "",
+      "stars": 91993,
+      "forks": 11669,
+      "openIssues": 45,
+      "created": "2025-01-20",
+      "first": "2026-11-01",
+      "last": "2026-11-01"
+    },
+    {
+      "repo": "ollama/ollama",
+      "name": "ollama",
+      "owner": "ollama",
+      "desc": "Get up and running with Kimi, GLM, MiniMax, DeepSeek, gpt-oss, Qwen, Gemma and other models.",
+      "category": "推理与部署",
+      "note": "本地跑模型的事实标准",
+      "license": "MIT",
+      "language": "Go",
+      "stars": 185542,
+      "forks": 18830,
+      "openIssues": 4530,
+      "created": "2023-06-26",
+      "first": "2026-11-01",
+      "last": "2026-11-01"
+    },
+    {
+      "repo": "QwenLM/Qwen3",
+      "name": "Qwen3",
+      "owner": "QwenLM",
+      "desc": "Qwen3 is the large language model series developed by Qwen team, Alibaba Cloud.",
+      "category": "模型",
+      "note": "通义千问开源系列",
+      "license": "NOASSERTION",
+      "language": "Python",
+      "stars": 27698,
+      "forks": 2090,
+      "openIssues": 69,
+      "created": "2024-02-05",
+      "first": "2026-11-01",
+      "last": "2026-11-01"
+    },
+    {
+      "repo": "huggingface/transformers",
+      "name": "transformers",
+      "owner": "huggingface",
+      "desc": "🤗 Transformers: the model-definition framework for state-of-the-art machine learning models in text, vision, audio, and multimodal models, ",
+      "category": "模型",
+      "note": "模型生态的地基",
+      "license": "Apache-2.0",
+      "language": "Python",
+      "stars": 168411,
+      "forks": 35073,
+      "openIssues": 1045,
+      "created": "2018-10-29",
+      "first": "2026-11-01",
+      "last": "2026-11-01"
+    },
+    {
+      "repo": "vllm-project/vllm",
+      "name": "vllm",
+      "owner": "vllm-project",
+      "desc": "A high-throughput and memory-efficient inference and serving engine for LLMs",
+      "category": "推理与部署",
+      "note": "高吞吐推理服务引擎",
+      "license": "Apache-2.0",
+      "language": "Python",
+      "stars": 96048,
+      "forks": 24254,
+      "openIssues": 9696,
+      "created": "2023-02-09",
+      "first": "2026-11-01",
+      "last": "2026-11-01"
+    },
+    {
+      "repo": "langchain-ai/langchain",
+      "name": "langchain",
+      "owner": "langchain-ai",
+      "desc": "The agent engineering platform.",
+      "category": "Agent 框架",
+      "note": "老牌编排框架",
+      "license": "MIT",
+      "language": "Python",
+      "stars": 148813,
+      "forks": 25012,
+      "openIssues": 713,
+      "created": "2022-10-17",
+      "first": "2026-11-01",
+      "last": "2026-11-01"
+    },
+    {
+      "repo": "deepseek-ai/DeepSeek-V3",
+      "name": "DeepSeek-V3",
+      "owner": "deepseek-ai",
+      "desc": "",
+      "category": "模型",
+      "note": "MoE 主力模型",
+      "license": "MIT",
+      "language": "Python",
+      "stars": 104707,
+      "forks": 16748,
+      "openIssues": 311,
+      "created": "2024-12-26",
+      "first": "2026-11-01",
+      "last": "2026-11-01"
+    },
+    {
+      "repo": "microsoft/autogen",
+      "name": "autogen",
+      "owner": "microsoft",
+      "desc": "A programming framework for agentic AI",
+      "category": "Agent 框架",
+      "note": "多智能体对话",
+      "license": "CC-BY-4.0",
+      "language": "Python",
+      "stars": 61661,
+      "forks": 9347,
+      "openIssues": 1127,
+      "created": "2023-08-18",
+      "first": "2026-11-01",
+      "last": "2026-11-01"
+    },
+    {
+      "repo": "browser-use/browser-use",
+      "name": "browser-use",
+      "owner": "browser-use",
+      "desc": "Open-source Python library for AI browser agents, plus Browser Use Cloud: stealth browsers and a hosted agent API.",
+      "category": "Agent 框架",
+      "note": "浏览器操作智能体",
+      "license": "MIT",
+      "language": "Python",
+      "stars": 119738,
+      "forks": 13339,
+      "openIssues": 617,
+      "created": "2024-10-31",
+      "first": "2026-11-01",
+      "last": "2026-11-01"
+    },
+    {
+      "repo": "crewAIInc/crewAI",
+      "name": "crewAI",
+      "owner": "crewAIInc",
+      "desc": "Framework for orchestrating role-playing, autonomous AI agents. By fostering collaborative intelligence, CrewAI empowers agents to work toge",
+      "category": "Agent 框架",
+      "note": "角色化多智能体",
+      "license": "MIT",
+      "language": "Python",
+      "stars": 60379,
+      "forks": 8993,
+      "openIssues": 983,
+      "created": "2023-10-27",
+      "first": "2026-11-01",
+      "last": "2026-11-01"
+    },
+    {
+      "repo": "openai/openai-agents-python",
+      "name": "openai-agents-python",
+      "owner": "openai",
+      "desc": "A lightweight, powerful framework for multi-agent workflows",
+      "category": "Agent 框架",
+      "note": "官方 Agent SDK",
+      "license": "MIT",
+      "language": "Python",
+      "stars": 30432,
+      "forks": 4971,
+      "openIssues": 28,
+      "created": "2025-03-11",
+      "first": "2026-11-01",
+      "last": "2026-11-01"
+    },
+    {
+      "repo": "modelcontextprotocol/servers",
+      "name": "servers",
+      "owner": "modelcontextprotocol",
+      "desc": "Model Context Protocol Servers",
+      "category": "Agent 框架",
+      "note": "MCP 官方服务集合",
+      "license": "NOASSERTION",
+      "language": "TypeScript",
+      "stars": 91732,
+      "forks": 11902,
+      "openIssues": 35,
+      "created": "2024-11-19",
+      "first": "2026-11-01",
+      "last": "2026-11-01"
+    },
+    {
+      "repo": "AstrBotDevs/AstrBot",
+      "name": "AstrBot",
+      "owner": "AstrBotDevs",
+      "desc": "AI Agent Assistant & development framework that integrates lots of IM platforms, LLMs, plugins and AI feature, and can be your openclaw alte",
+      "category": "Agent 框架",
+      "note": "多平台 IM 接同一个 agent",
+      "license": "AGPL-3.0",
+      "language": "Python",
+      "stars": 45472,
+      "forks": 3332,
+      "openIssues": 1137,
+      "created": "2022-12-08",
+      "first": "2026-11-01",
+      "last": "2026-11-01"
+    },
+    {
+      "repo": "Aider-AI/aider",
+      "name": "aider",
+      "owner": "Aider-AI",
+      "desc": "aider is AI pair programming in your terminal",
+      "category": "编码 Agent",
+      "note": "命令行结对编程",
+      "license": "Apache-2.0",
+      "language": "Python",
+      "stars": 49875,
+      "forks": 5123,
+      "openIssues": 1937,
+      "created": "2023-05-09",
+      "first": "2026-11-01",
+      "last": "2026-11-01"
+    },
+    {
+      "repo": "cline/cline",
+      "name": "cline",
+      "owner": "cline",
+      "desc": "Autonomous coding agent as an SDK, IDE extension, or CLI assistant.",
+      "category": "编码 Agent",
+      "note": "编辑器内自治 agent",
+      "license": "Apache-2.0",
+      "language": "TypeScript",
+      "stars": 71157,
+      "forks": 7821,
+      "openIssues": 1741,
+      "created": "2024-07-06",
+      "first": "2026-11-01",
+      "last": "2026-11-01"
+    },
+    {
+      "repo": "musistudio/claude-code-router",
+      "name": "claude-code-router",
+      "owner": "musistudio",
+      "desc": "One local control plane for every AI agent: route across models, fuse new capabilities, orchestrate tools, and stay fully in control.",
+      "category": "编码 Agent",
+      "note": "给编码 agent 换模型路由",
+      "license": "MIT",
+      "language": "TypeScript",
+      "stars": 37936,
+      "forks": 3186,
+      "openIssues": 1186,
+      "created": "2025-02-25",
+      "first": "2026-11-01",
+      "last": "2026-11-01"
+    },
+    {
+      "repo": "openai/codex",
+      "name": "codex",
+      "owner": "openai",
+      "desc": "Lightweight coding agent that runs in your terminal",
+      "category": "编码 Agent",
+      "note": "终端里的编码智能体",
+      "license": "Apache-2.0",
+      "language": "Rust",
+      "stars": 132672,
+      "forks": 20956,
+      "openIssues": 25941,
+      "created": "2025-04-13",
+      "first": "2026-11-01",
+      "last": "2026-11-01"
+    },
+    {
+      "repo": "Panniantong/Agent-Reach",
+      "name": "Agent-Reach",
+      "owner": "Panniantong",
+      "desc": "Give your AI agent eyes to see the entire internet. Read & search Twitter, Reddit, YouTube, GitHub, Bilibili, XiaoHongShu — one CLI, zero AP",
+      "category": "编码 Agent",
+      "note": "站内已写过",
+      "license": "MIT",
+      "language": "Python",
+      "stars": 107449,
+      "forks": 9580,
+      "openIssues": 264,
+      "created": "2026-02-24",
+      "first": "2026-11-01",
+      "last": "2026-11-01"
+    },
+    {
+      "repo": "deepseek-ai/dsh-superagent-prototype",
+      "name": "dsh-superagent-prototype",
+      "owner": "deepseek-ai",
+      "desc": "Towards a More Autonomous Agent System",
+      "category": "编码 Agent",
+      "note": "DeepSeek agent 原型",
+      "license": "MIT",
+      "language": "TypeScript",
+      "stars": 5804,
+      "forks": 549,
+      "openIssues": 0,
+      "created": "2026-10-31",
+      "first": "2026-11-01",
+      "last": "2026-11-01"
+    },
+    {
+      "repo": "openfilm/openfilm",
+      "name": "openfilm",
+      "owner": "openfilm",
+      "desc": "The open source AI video agent: turns any coding agent into a video agent, with an editor to change anything it makes.",
+      "category": "应用与多模态",
+      "note": "开源 AI 影像",
+      "license": "MIT",
+      "language": "TypeScript",
+      "stars": 4034,
+      "forks": 387,
+      "openIssues": 25,
+      "created": "2026-10-04",
+      "first": "2026-11-01",
+      "last": "2026-11-01"
+    },
+    {
+      "repo": "ccch1mneyyy/dsh-Go",
+      "name": "dsh-Go",
+      "owner": "ccch1mneyyy",
+      "desc": "dsh-go — DeepSeek Harness 装进口袋：手机本机运行，也能遥控你的电脑。",
+      "category": "编码 Agent",
+      "note": "手机端跑 Harness",
+      "license": "AGPL-3.0",
+      "language": "Dart",
+      "stars": 4307,
+      "forks": 202,
+      "openIssues": 188,
+      "created": "2026-10-25",
+      "first": "2026-11-01",
+      "last": "2026-11-01"
+    },
+    {
+      "repo": "patch-gg/pixelfx",
+      "name": "pixelfx",
+      "owner": "patch-gg",
+      "desc": "244 pixel art effects, every one a small piece of code. Plus a Claude Code skill to make your own.",
+      "category": "应用与多模态",
+      "note": "像素画特效",
+      "license": "MIT",
+      "language": "JavaScript",
+      "stars": 2171,
+      "forks": 280,
+      "openIssues": 1,
+      "created": "2026-10-30",
+      "first": "2026-11-01",
+      "last": "2026-11-01"
+    },
+    {
+      "repo": "Comfy-Org/ComfyUI",
+      "name": "ComfyUI",
+      "owner": "Comfy-Org",
+      "desc": "The most powerful and modular diffusion model GUI, api and backend with a graph/nodes interface. The fastest local inference engine in the w",
+      "category": "应用与多模态",
+      "note": "节点式图像生成",
+      "license": "GPL-3.0",
+      "language": "Python",
+      "stars": 144440,
+      "forks": 17191,
+      "openIssues": 5408,
+      "created": "2023-01-17",
+      "first": "2026-11-01",
+      "last": "2026-11-01"
+    },
+    {
+      "repo": "mksglu/context-mode",
+      "name": "context-mode",
+      "owner": "mksglu",
+      "desc": "Context window optimization for AI coding agents. Sandboxes tool output (98% reduction), persists session memory, and   enforces routing acr",
+      "category": "应用与多模态",
+      "note": "工具输出沙箱化省上下文",
+      "license": "NOASSERTION",
+      "language": "TypeScript",
+      "stars": 33096,
+      "forks": 2283,
+      "openIssues": 354,
+      "created": "2026-02-23",
+      "first": "2026-11-01",
+      "last": "2026-11-01"
+    },
+    {
+      "repo": "calesthio/OpenMontage",
+      "name": "OpenMontage",
+      "owner": "calesthio",
+      "desc": "World's first open-source, agentic video production system. 12 production pipelines, 100+ tools, 700+ agent skill and production-knowledge f",
+      "category": "应用与多模态",
+      "note": "管线式视频制作",
+      "license": "AGPL-3.0",
+      "language": "Python",
+      "stars": 74224,
+      "forks": 9748,
+      "openIssues": 421,
+      "created": "2026-03-29",
+      "first": "2026-11-01",
+      "last": "2026-11-01"
+    }
+  ],
+  "series": {
+    "deepseek-ai/DeepSeek-R1": [
+      [
+        "2026-11-01",
+        91993
+      ]
+    ],
+    "ollama/ollama": [
+      [
+        "2026-11-01",
+        185542
+      ]
+    ],
+    "QwenLM/Qwen3": [
+      [
+        "2026-11-01",
+        27698
+      ]
+    ],
+    "huggingface/transformers": [
+      [
+        "2026-11-01",
+        168411
+      ]
+    ],
+    "vllm-project/vllm": [
+      [
+        "2026-11-01",
+        96048
+      ]
+    ],
+    "langchain-ai/langchain": [
+      [
+        "2026-11-01",
+        148813
+      ]
+    ],
+    "deepseek-ai/DeepSeek-V3": [
+      [
+        "2026-11-01",
+        104707
+      ]
+    ],
+    "microsoft/autogen": [
+      [
+        "2026-11-01",
+        61661
+      ]
+    ],
+    "browser-use/browser-use": [
+      [
+        "2026-11-01",
+        119738
+      ]
+    ],
+    "crewAIInc/crewAI": [
+      [
+        "2026-11-01",
+        60379
+      ]
+    ],
+    "openai/openai-agents-python": [
+      [
+        "2026-11-01",
+        30432
+      ]
+    ],
+    "modelcontextprotocol/servers": [
+      [
+        "2026-11-01",
+        91732
+      ]
+    ],
+    "AstrBotDevs/AstrBot": [
+      [
+        "2026-11-01",
+        45472
+      ]
+    ],
+    "Aider-AI/aider": [
+      [
+        "2026-11-01",
+        49875
+      ]
+    ],
+    "cline/cline": [
+      [
+        "2026-11-01",
+        71157
+      ]
+    ],
+    "musistudio/claude-code-router": [
+      [
+        "2026-11-01",
+        37936
+      ]
+    ],
+    "openai/codex": [
+      [
+        "2026-11-01",
+        132672
+      ]
+    ],
+    "Panniantong/Agent-Reach": [
+      [
+        "2026-11-01",
+        107449
+      ]
+    ],
+    "deepseek-ai/dsh-superagent-prototype": [
+      [
+        "2026-11-01",
+        5804
+      ]
+    ],
+    "openfilm/openfilm": [
+      [
+        "2026-11-01",
+        4034
+      ]
+    ],
+    "ccch1mneyyy/dsh-Go": [
+      [
+        "2026-11-01",
+        4307
+      ]
+    ],
+    "patch-gg/pixelfx": [
+      [
+        "2026-11-01",
+        2171
+      ]
+    ],
+    "Comfy-Org/ComfyUI": [
+      [
+        "2026-11-01",
+        144440
+      ]
+    ],
+    "mksglu/context-mode": [
+      [
+        "2026-11-01",
+        33096
+      ]
+    ],
+    "calesthio/OpenMontage": [
+      [
+        "2026-11-01",
+        74224
+      ]
+    ]
+  }
+}

@@ -30,6 +30,7 @@ post/
   <id>/<id>.html            每篇文章独立目录
 
 nav/                        AI 工具导航站（读 data.json）
+  stars/                    开源 AI 星标榜（每日快照 + 趋势图，读 watchlist.json / data.json）
 
 scripts/
   repo-lint.cjs             仓库一致性检查（文章数 / 死链 / 孤儿页 / 重复）

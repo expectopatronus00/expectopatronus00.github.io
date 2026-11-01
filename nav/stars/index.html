@@ -1,0 +1,606 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>开源 AI 星标榜 · EXPECTOPATRONUS</title>
+    <meta
+      name="description"
+      content="每天抓一次 GitHub 星标，25 个开源 AI 项目的增长曲线：悬停看数值，按总量与 7 / 30 日增速排序。"
+    />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+
+      .page-head { max-width: 1080px; margin: 0 auto; padding: var(--sp-10) var(--sp-6) var(--sp-5); }
+      .eyebrow {
+        font-family: var(--font-mono); font-size: var(--fs-xs); letter-spacing: 0.18em;
+        text-transform: uppercase; color: var(--accent-rust-text); margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display); font-size: var(--fs-5xl); font-weight: 500;
+        line-height: 1.15; color: var(--text); margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em { font-style: italic; color: var(--accent-rust-text); }
+      .page-lede { max-width: 36em; font-size: var(--fs-lg); line-height: 1.8; color: var(--text-dim); margin: 0; }
+      .page-lede strong { color: var(--text-soft); font-weight: 600; }
+
+      .wrap { max-width: 1080px; margin: 0 auto; padding: 0 var(--sp-6) var(--sp-10); }
+
+      .toolbar {
+        display: flex; flex-wrap: wrap; gap: var(--sp-3); align-items: center;
+        justify-content: space-between; margin-bottom: var(--sp-4);
+        padding-bottom: var(--sp-4); border-bottom: 1px solid var(--line);
+      }
+      .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+      .seg button {
+        font-family: var(--font-sans); font-size: var(--fs-sm); color: var(--text-dim);
+        background: none; border: 0; padding: 0.42em 1em; cursor: pointer; transition: color 0.15s, background 0.15s;
+      }
+      .seg button + button { border-left: 1px solid var(--line); }
+      .seg button:hover { color: var(--text); }
+      .seg button[aria-pressed='true'] { background: var(--bg-card); color: var(--accent-rust-text); }
+      .toolbar-meta { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-dim); letter-spacing: 0.06em; }
+
+      .card {
+        background: var(--bg-card); border: 1px solid var(--line);
+        border-radius: var(--border-radius-lg, 12px); padding: var(--sp-5);
+      }
+      .card + .card { margin-top: var(--sp-5); }
+      .card-head { display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-4); align-items: baseline; justify-content: space-between; margin-bottom: var(--sp-3); }
+      .card-head h2 { font-family: var(--font-serif); font-size: var(--fs-xl); font-weight: 500; color: var(--text); margin: 0; }
+      .card-note { font-size: var(--fs-sm); color: var(--text-dim); }
+
+      .chart-shell { position: relative; }
+      .chart-shell svg { display: block; width: 100%; height: auto; overflow: visible; }
+      .chart-tip {
+        position: absolute; pointer-events: none; z-index: 5; min-width: 190px;
+        background: var(--bg); border: 1px solid var(--line); border-radius: 10px;
+        padding: 0.6em 0.75em; box-shadow: var(--shadow-md); opacity: 0; transition: opacity 0.12s;
+      }
+      .chart-tip.is-on { opacity: 1; }
+      .tip-date { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-dim); margin-bottom: 0.45em; letter-spacing: 0.05em; }
+      .tip-row { display: flex; align-items: center; gap: 0.5em; font-size: var(--fs-sm); color: var(--text-soft); line-height: 1.7; }
+      .tip-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+      .tip-name { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 130px; }
+      .tip-val { font-family: var(--font-mono); font-variant-numeric: tabular-nums; color: var(--text); }
+
+      .legend { display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-4); margin-top: var(--sp-3); }
+      .legend-item { display: inline-flex; align-items: center; gap: 0.4em; font-size: var(--fs-sm); color: var(--text-dim); }
+      .legend-swatch { width: 14px; height: 2px; border-radius: 1px; }
+
+      .table-shell { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      table.rank { width: 100%; border-collapse: collapse; font-size: var(--fs-sm); min-width: 720px; }
+      table.rank th, table.rank td { padding: 0.62em 0.7em; text-align: right; border-bottom: 1px solid var(--line-soft); white-space: nowrap; }
+      table.rank th:first-child, table.rank td:first-child { text-align: left; padding-left: 0; }
+      table.rank th:last-child, table.rank td:last-child { padding-right: 0; }
+      table.rank thead th {
+        font-family: var(--font-mono); font-size: var(--fs-xs); font-weight: 400; letter-spacing: 0.08em;
+        color: var(--text-dim); text-transform: uppercase; border-bottom: 1px solid var(--line);
+      }
+      table.rank th.sortable { cursor: pointer; user-select: none; }
+      table.rank th.sortable:hover { color: var(--text); }
+      table.rank th[aria-sort='descending'], table.rank th[aria-sort='ascending'] { color: var(--accent-rust-text); }
+      table.rank tbody tr:hover { background: var(--line-soft); }
+      .cell-name { display: flex; flex-direction: column; gap: 0.15em; }
+      .cell-name a { color: var(--text); text-decoration: none; font-weight: 600; font-size: var(--fs-base); }
+      .cell-name a:hover { color: var(--accent-rust-text); }
+      .cell-sub { font-size: var(--fs-xs); color: var(--text-dim); font-family: var(--font-mono); }
+      .num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; color: var(--text-soft); }
+      .num-strong { color: var(--text); font-weight: 600; }
+      .delta-up { color: var(--accent-rust-text); }
+      .delta-down { color: var(--accent-jade-text); }
+      .delta-flat { color: var(--text-dim); }
+      .tag { display: inline-block; padding: 0.15em 0.55em; border-radius: 999px; border: 1px solid var(--line); font-size: var(--fs-xs); color: var(--text-dim); }
+      .spark { display: block; }
+
+      .empty {
+        padding: var(--sp-8) var(--sp-4); text-align: center; color: var(--text-dim);
+        font-size: var(--fs-sm); line-height: 1.9;
+      }
+      .foot-note { margin-top: var(--sp-5); font-size: var(--fs-sm); color: var(--text-dim); line-height: 1.9; max-width: 46em; }
+      .foot-note code { font-family: var(--font-mono); font-size: 0.92em; color: var(--text-soft); }
+
+      @media (max-width: 640px) {
+        .page-head { padding-top: var(--sp-8); }
+        .page-head h1 { font-size: var(--fs-3xl); }
+        .card { padding: var(--sp-4); }
+        .toolbar { gap: var(--sp-2); }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand">
+          <span class="logo">
+            <svg class="icon icon-lg" viewBox="0 0 64 64" aria-hidden="true">
+              <circle cx="32" cy="32" r="30" fill="var(--ink-900)" stroke="var(--accent-rust)" stroke-width="1.5" />
+              <path d="M 18 22 Q 32 16 46 22" fill="none" stroke="var(--accent-rust)" stroke-width="1" stroke-linecap="round" opacity="0.55" />
+              <path d="M 18 42 Q 32 48 46 42" fill="none" stroke="var(--accent-rust)" stroke-width="1" stroke-linecap="round" opacity="0.55" />
+              <text x="32" y="39" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="30" font-style="italic" font-weight="500" fill="var(--ink-50)">E</text>
+              <circle cx="32" cy="18" r="1.8" fill="var(--accent-rust)" />
+            </svg>
+          </span>
+          <span>expectopatronus</span>
+        </a>
+        <div class="nav-links" id="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../index.html">导航站</a>
+          <a href="index.html" class="is-active">星标榜</a>
+        </div>
+        <button class="menu-toggle" id="menu-toggle" aria-label="菜单">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></svg>
+        </button>
+        <button id="theme-toggle" class="theme-btn" aria-label="切换主题">
+          <svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"></svg>
+        </button>
+      </div>
+    </nav>
+
+    <header class="page-head">
+      <div class="eyebrow">open source · star tracking · 每日快照</div>
+      <h1>开源 AI，<em>涨得快不快</em>。</h1>
+      <p class="page-lede">
+        每天抓一次 GitHub 星标，只存数字，不做推测。<strong>星标是热度，不是质量</strong>——
+        这里看的是谁在变快、谁在停滞，选型判断还得回到仓库本身。
+      </p>
+    </header>
+
+    <main class="wrap" id="main-content">
+      <div class="toolbar">
+        <div class="seg" role="group" aria-label="图表口径">
+          <button type="button" data-mode="abs" aria-pressed="true">绝对星标</button>
+          <button type="button" data-mode="norm" aria-pressed="false">相对增长（首日 = 100）</button>
+        </div>
+        <div class="toolbar-meta" id="meta">加载中…</div>
+      </div>
+
+      <section class="card">
+        <div class="card-head">
+          <h2>趋势</h2>
+          <span class="card-note" id="chart-note"></span>
+        </div>
+        <div class="chart-shell" id="chart-shell">
+          <div id="chart"></div>
+          <div class="chart-tip" id="tip" aria-hidden="true"></div>
+        </div>
+        <div class="legend" id="legend"></div>
+      </section>
+
+      <section class="card">
+        <div class="card-head">
+          <h2>排序</h2>
+          <span class="card-note">点表头切换排序 · 共 <span id="count">0</span> 个项目</span>
+        </div>
+        <div class="table-shell">
+          <table class="rank">
+            <thead>
+              <tr>
+                <th scope="col">项目</th>
+                <th scope="col">分类</th>
+                <th scope="col" class="sortable" data-sort="stars" aria-sort="descending">星标</th>
+                <th scope="col" class="sortable" data-sort="d1">日增</th>
+                <th scope="col" class="sortable" data-sort="d7">7 日</th>
+                <th scope="col" class="sortable" data-sort="d30">30 日</th>
+                <th scope="col">走势</th>
+                <th scope="col">许可</th>
+              </tr>
+            </thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <p class="foot-note">
+        数据由 <code>scripts/stars-snapshot.cjs</code> 每天跑一次，写进 <code>nav/stars/data.json</code>，
+        保留最近 180 天。清单在 <code>nav/stars/watchlist.json</code>，加项目改那里就行。
+        历史从 2026-11-01 开始累积——之前的天数没有回填，GitHub 不提供公开的历史星标接口。
+      </p>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2026 · 开源 AI 星标榜 · 数据来自 GitHub REST API，每日一次快照</div>
+        </div>
+        <div class="footer-social">
+          <a href="../../feed.xml" aria-label="RSS 订阅" title="RSS 订阅">
+            <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 19a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" fill="currentColor" />
+              <path d="M4 10.5a9.5 9.5 0 0 1 9.5 9.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+              <path d="M4 4.5A15.5 15.5 0 0 1 19.5 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+            </svg>
+          </a>
+          <a href="https://github.com/expectopatronus00" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">
+            <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z" /></svg>
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        'use strict';
+
+        var PALETTE = ['#d4692a', '#4a9e7f', '#b8915c', '#7f77dd', '#5a9bd4', '#d4537e', '#639922', '#8a8ea8'];
+        var state = { sort: 'stars', dir: -1, mode: 'abs', repos: [], days: [] };
+
+        function el(id) { return document.getElementById(id); }
+
+        function fmt(n) {
+          if (n === null || n === undefined || isNaN(n)) return '—';
+          if (Math.abs(n) >= 10000) return (n / 10000).toFixed(1) + '万';
+          return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
+
+        function deltaHtml(v) {
+          if (v === null || v === undefined) return '<span class="delta-flat">—</span>';
+          if (v > 0) return '<span class="delta-up">+' + fmt(v) + '</span>';
+          if (v < 0) return '<span class="delta-down">' + fmt(v) + '</span>';
+          return '<span class="delta-flat">0</span>';
+        }
+
+        function daysAgo(n) {
+          var d = new Date();
+          d.setDate(d.getDate() - n);
+          var p = function (x) { return String(x).padStart(2, '0'); };
+          return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate());
+        }
+
+        function valueAt(series, cutoff) {
+          var v = null;
+          for (var i = 0; i < series.length; i++) {
+            if (series[i][0] <= cutoff) v = series[i][1];
+            else break;
+          }
+          return v;
+        }
+
+        function buildRows(data) {
+          var rows = [];
+          for (var i = 0; i < data.repos.length; i++) {
+            var r = data.repos[i];
+            var s = data.series[r.repo] || [];
+            if (!s.length) continue;
+            var now = s[s.length - 1][1];
+            var d1 = valueAt(s, daysAgo(1));
+            var d7 = valueAt(s, daysAgo(7));
+            var d30 = valueAt(s, daysAgo(30));
+            rows.push({
+              repo: r.repo,
+              name: r.name || r.repo.split('/')[1],
+              owner: r.owner || r.repo.split('/')[0],
+              desc: r.desc || '',
+              category: r.category || '未分类',
+              license: r.license || '',
+              stars: now,
+              d1: d1 === null ? null : now - d1,
+              d7: d7 === null ? null : now - d7,
+              d30: d30 === null ? null : now - d30,
+              series: s,
+            });
+          }
+          return rows;
+        }
+
+        function sortRows(rows) {
+          var key = state.sort;
+          var dir = state.dir;
+          return rows.slice().sort(function (a, b) {
+            if (key === 'name') {
+              return a.name.toLowerCase() < b.name.toLowerCase() ? -dir : dir;
+            }
+            var av = a[key];
+            var bv = b[key];
+            if (av === null && bv === null) return 0;
+            if (av === null) return 1;
+            if (bv === null) return -1;
+            return (av - bv) * dir;
+          });
+        }
+
+        /* ── 折线图 ── */
+        function drawLine(rows) {
+          var W = 900, H = 380, ml = 62, mr = 18, mt = 18, mb = 34;
+          var n = state.days.length;
+          var series = [];
+          for (var i = 0; i < rows.length; i++) {
+            var map = {};
+            for (var k = 0; k < rows[i].series.length; k++) map[rows[i].series[k][0]] = rows[i].series[k][1];
+            var first = rows[i].series[0][1];
+            var pts = [];
+            for (var j = 0; j < n; j++) {
+              var v = map[state.days[j]];
+              if (v === undefined) continue;
+              pts.push({ i: j, v: state.mode === 'norm' ? (v / first) * 100 : v, raw: v });
+            }
+            series.push({ name: rows[i].name, color: PALETTE[i % PALETTE.length], pts: pts });
+          }
+
+          var all = [];
+          for (var a = 0; a < series.length; a++) for (var b = 0; b < series[a].pts.length; b++) all.push(series[a].pts[b].v);
+          var min = Math.min.apply(null, all), max = Math.max.apply(null, all);
+          if (min === max) { min = min * 0.98; max = max * 1.02; }
+          var pad = (max - min) * 0.12;
+          min -= pad; max += pad;
+          if (state.mode === 'norm') { min = Math.min(min, 100); max = Math.max(max, 100); }
+
+          function x(i) { return ml + (n <= 1 ? 0 : (i * (W - ml - mr)) / (n - 1)); }
+          function y(v) { return mt + (1 - (v - min) / (max - min)) * (H - mt - mb); }
+
+          var svg = [];
+          svg.push('<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="星标趋势折线图">');
+
+          // 网格与 y 轴刻度
+          for (var g = 0; g <= 4; g++) {
+            var gv = min + ((max - min) * g) / 4;
+            var gy = y(gv);
+            svg.push('<line x1="' + ml + '" y1="' + gy.toFixed(1) + '" x2="' + (W - mr) + '" y2="' + gy.toFixed(1) + '" stroke="var(--line-soft)" stroke-width="1"/>');
+            var label = state.mode === 'norm' ? gv.toFixed(0) : fmt(Math.round(gv));
+            svg.push('<text x="' + (ml - 10) + '" y="' + (gy + 4).toFixed(1) + '" text-anchor="end" font-family="var(--font-mono)" font-size="11" fill="var(--text-dim)">' + label + '</text>');
+          }
+
+          // x 轴日期
+          var tickIdx = n <= 4 ? [0, n - 1] : [0, Math.floor((n - 1) / 2), n - 1];
+          for (var t = 0; t < tickIdx.length; t++) {
+            var ti = tickIdx[t];
+            var anchor = t === 0 ? 'start' : t === tickIdx.length - 1 ? 'end' : 'middle';
+            svg.push('<text x="' + x(ti).toFixed(1) + '" y="' + (H - 10) + '" text-anchor="' + anchor + '" font-family="var(--font-mono)" font-size="11" fill="var(--text-dim)">' + state.days[ti].slice(5) + '</text>');
+          }
+
+          // 折线
+          for (var s = 0; s < series.length; s++) {
+            var pts = series[s].pts;
+            if (!pts.length) continue;
+            var d = '';
+            for (var p = 0; p < pts.length; p++) {
+              d += (p === 0 ? 'M' : 'L') + x(pts[p].i).toFixed(1) + ' ' + y(pts[p].v).toFixed(1) + ' ';
+            }
+            svg.push('<path d="' + d + '" fill="none" stroke="' + series[s].color + '" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>');
+            var lastPt = pts[pts.length - 1];
+            svg.push('<circle cx="' + x(lastPt.i).toFixed(1) + '" cy="' + y(lastPt.v).toFixed(1) + '" r="3" fill="' + series[s].color + '"/>');
+          }
+
+          svg.push('<line id="guide" x1="0" y1="' + mt + '" x2="0" y2="' + (H - mb) + '" stroke="var(--text-dim)" stroke-width="1" stroke-dasharray="3 3" opacity="0"/>');
+          svg.push('<rect id="hit" x="' + ml + '" y="' + mt + '" width="' + (W - ml - mr) + '" height="' + (H - mt - mb) + '" fill="transparent"/>');
+          svg.push('</svg>');
+
+          el('chart').innerHTML = svg.join('');
+
+          // 图例
+          var lg = [];
+          for (var q = 0; q < series.length; q++) {
+            lg.push('<span class="legend-item"><span class="legend-swatch" style="background:' + series[q].color + '"></span>' + series[q].name + '</span>');
+          }
+          el('legend').innerHTML = lg.join('');
+
+          bindHover(series, x, n, ml, mr, W);
+        }
+
+        /* ── 悬停：竖线 + 数值浮层 ── */
+        function bindHover(series, x, n, ml, mr, W) {
+          var hit = el('hit');
+          var guide = el('guide');
+          var tip = el('tip');
+          var shell = el('chart-shell');
+          if (!hit) return;
+
+          function move(ev) {
+            var rect = shell.getBoundingClientRect();
+            var svgEl = el('chart').querySelector('svg');
+            var box = svgEl.getBoundingClientRect();
+            var scale = W / box.width;
+            var px = (ev.clientX - box.left) * scale;
+            var ratio = (px - ml) / (W - ml - mr);
+            var idx = Math.round(ratio * (n - 1));
+            if (idx < 0) idx = 0;
+            if (idx > n - 1) idx = n - 1;
+
+            guide.setAttribute('x1', x(idx).toFixed(1));
+            guide.setAttribute('x2', x(idx).toFixed(1));
+            guide.setAttribute('opacity', '0.5');
+
+            var date = state.days[idx];
+            var items = [];
+            for (var i = 0; i < series.length; i++) {
+              for (var p = 0; p < series[i].pts.length; p++) {
+                if (series[i].pts[p].i === idx) {
+                  items.push({ name: series[i].name, color: series[i].color, v: series[i].pts[p].raw });
+                  break;
+                }
+              }
+            }
+            items.sort(function (a, b) { return b.v - a.v; });
+
+            var html = '<div class="tip-date">' + date + '</div>';
+            for (var m = 0; m < items.length && m < 8; m++) {
+              html += '<div class="tip-row"><span class="tip-dot" style="background:' + items[m].color + '"></span><span class="tip-name">' + items[m].name + '</span><span class="tip-val">' + fmt(items[m].v) + '</span></div>';
+            }
+            tip.innerHTML = html;
+            tip.classList.add('is-on');
+            tip.setAttribute('aria-hidden', 'false');
+
+            var left = ev.clientX - rect.left + 16;
+            var top = ev.clientY - rect.top + 12;
+            if (left + 210 > rect.width) left = ev.clientX - rect.left - 210;
+            if (top + tip.offsetHeight > rect.height + 40) top = ev.clientY - rect.top - tip.offsetHeight - 12;
+            tip.style.left = left + 'px';
+            tip.style.top = top + 'px';
+          }
+
+          function leave() {
+            guide.setAttribute('opacity', '0');
+            tip.classList.remove('is-on');
+            tip.setAttribute('aria-hidden', 'true');
+          }
+
+          hit.addEventListener('mousemove', move);
+          hit.addEventListener('mouseleave', leave);
+          hit.addEventListener('touchstart', function (e) { if (e.touches[0]) move(e.touches[0]); }, { passive: true });
+          hit.addEventListener('touchmove', function (e) { if (e.touches[0]) move(e.touches[0]); }, { passive: true });
+          hit.addEventListener('touchend', leave);
+        }
+
+        /* ── 只有一天数据时的横向条形图 ── */
+        function drawBars(rows) {
+          var top = rows.slice(0, 12);
+          var max = top.length ? top[0].stars : 1;
+          var W = 900, rowH = 30, ml = 180, mr = 70;
+          var H = top.length * rowH + 20;
+          var svg = ['<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="当前星标横向条形图">'];
+          for (var i = 0; i < top.length; i++) {
+            var y = 10 + i * rowH;
+            var w = ((W - ml - mr) * top[i].stars) / max;
+            svg.push('<text x="' + (ml - 10) + '" y="' + (y + 13) + '" text-anchor="end" font-family="var(--font-sans)" font-size="13" fill="var(--text-soft)">' + top[i].name + '</text>');
+            svg.push('<rect x="' + ml + '" y="' + (y + 2) + '" width="' + w.toFixed(1) + '" height="16" rx="3" fill="' + PALETTE[i % PALETTE.length] + '" opacity="0.85"/>');
+            svg.push('<text x="' + (ml + w + 8) + '" y="' + (y + 14) + '" font-family="var(--font-mono)" font-size="12" fill="var(--text-dim)">' + fmt(top[i].stars) + '</text>');
+          }
+          svg.push('</svg>');
+          el('chart').innerHTML = svg.join('');
+          el('legend').innerHTML = '';
+          el('chart-note').textContent = '当前只有 1 天快照，先看总量；明天起切换为折线趋势';
+        }
+
+        /* ── 表格 ── */
+        function drawTable(rows) {
+          var sorted = sortRows(rows);
+          var html = [];
+          for (var i = 0; i < sorted.length; i++) {
+            var r = sorted[i];
+            html.push('<tr>');
+            html.push(
+              '<td><div class="cell-name"><a href="https://github.com/' + r.repo + '" target="_blank" rel="noopener">' + r.name + '</a><span class="cell-sub">' + r.owner + (r.desc ? ' · ' + r.desc.slice(0, 42) : '') + '</span></div></td>'
+            );
+            html.push('<td><span class="tag">' + r.category + '</span></td>');
+            html.push('<td class="num num-strong">' + fmt(r.stars) + '</td>');
+            html.push('<td class="num">' + deltaHtml(r.d1) + '</td>');
+            html.push('<td class="num">' + deltaHtml(r.d7) + '</td>');
+            html.push('<td class="num">' + deltaHtml(r.d30) + '</td>');
+            html.push('<td>' + spark(r.series) + '</td>');
+            html.push('<td class="num">' + (r.license && r.license !== 'NOASSERTION' ? r.license : '—') + '</td>');
+            html.push('</tr>');
+          }
+          el('rows').innerHTML = html.join('');
+          el('count').textContent = rows.length;
+        }
+
+        function spark(series) {
+          var w = 92, h = 26, pad = 2;
+          if (series.length < 2) return '<span class="delta-flat" style="font-family:var(--font-mono);font-size:11px">待积累</span>';
+          var vals = series.map(function (p) { return p[1]; });
+          var min = Math.min.apply(null, vals), max = Math.max.apply(null, vals);
+          if (min === max) { min -= 1; max += 1; }
+          var pts = [];
+          for (var i = 0; i < vals.length; i++) {
+            var x = pad + (i * (w - pad * 2)) / (vals.length - 1);
+            var y = h - pad - ((vals[i] - min) / (max - min)) * (h - pad * 2);
+            pts.push(x.toFixed(1) + ',' + y.toFixed(1));
+          }
+          var up = vals[vals.length - 1] >= vals[0];
+          var color = up ? '#d4692a' : '#4a9e7f';
+          return '<svg class="spark" width="' + w + '" height="' + h + '" viewBox="0 0 ' + w + ' ' + h + '"><polyline points="' + pts.join(' ') + '" fill="none" stroke="' + color + '" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+        }
+
+        /* ── 渲染 ── */
+        function render() {
+          var rows = sortRows(state.repos);
+          if (state.days.length < 2) drawBars(rows);
+          else drawLine(rows.slice(0, 8));
+          drawTable(state.repos);
+        }
+
+        function bindSort() {
+          var ths = document.querySelectorAll('th.sortable');
+          for (var i = 0; i < ths.length; i++) {
+            ths[i].addEventListener('click', function () {
+              var key = this.getAttribute('data-sort');
+              if (state.sort === key) state.dir = -state.dir;
+              else { state.sort = key; state.dir = -1; }
+              for (var j = 0; j < ths.length; j++) ths[j].removeAttribute('aria-sort');
+              this.setAttribute('aria-sort', state.dir === -1 ? 'descending' : 'ascending');
+              render();
+            });
+          }
+        }
+
+        function bindMode() {
+          var btns = document.querySelectorAll('.seg button');
+          for (var i = 0; i < btns.length; i++) {
+            btns[i].addEventListener('click', function () {
+              for (var j = 0; j < btns.length; j++) btns[j].setAttribute('aria-pressed', 'false');
+              this.setAttribute('aria-pressed', 'true');
+              state.mode = this.getAttribute('data-mode');
+              render();
+            });
+          }
+        }
+
+        function boot(data) {
+          state.repos = buildRows(data);
+          var all = {};
+          for (var i = 0; i < state.repos.length; i++) {
+            for (var k = 0; k < state.repos[i].series.length; k++) all[state.repos[i].series[k][0]] = 1;
+          }
+          state.days = Object.keys(all).sort();
+          el('meta').textContent = '更新 ' + (data.updated || '—') + ' · 采样 ' + state.days.length + ' 天 · ' + state.repos.length + ' 个项目';
+          if (!state.days.length) {
+            el('chart').innerHTML = '<div class="empty">还没有快照数据。<br />跑一次 <code>node scripts/stars-snapshot.cjs</code> 就有了。</div>';
+            return;
+          }
+          bindSort();
+          bindMode();
+          render();
+        }
+
+        fetch('data.json', { cache: 'no-cache' })
+          .then(function (r) { return r.json(); })
+          .then(boot)
+          .catch(function () {
+            el('chart').innerHTML = '<div class="empty">读不到 data.json。<br />先跑一次 <code>node scripts/stars-snapshot.cjs</code>。</div>';
+            el('meta').textContent = '数据缺失';
+          });
+      })();
+    </script>
+    <script>
+      (function () {
+        var MOON = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var ti = document.querySelector('#theme-toggle .theme-icon');
+        var saved = localStorage.getItem('theme') || 'dark';
+        document.documentElement.dataset.theme = saved;
+        if (ti) ti.innerHTML = saved === 'light' ? SUN : MOON;
+        document.getElementById('theme-toggle').addEventListener('click', function () {
+          saved = saved === 'light' ? 'dark' : 'light';
+          document.documentElement.dataset.theme = saved;
+          localStorage.setItem('theme', saved);
+          if (ti) ti.innerHTML = saved === 'light' ? SUN : MOON;
+        });
+
+        var menuBtn = document.getElementById('menu-toggle');
+        var navLinks = document.getElementById('nav-links');
+        if (menuBtn && navLinks) {
+          menuBtn.addEventListener('click', function () { navLinks.classList.toggle('is-open'); });
+        }
+      })();
+    </script>
+  </body>
+</html>

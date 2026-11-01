@@ -1,0 +1,62 @@
+name: stars-snapshot
+
+# 每天抓一次 GitHub 星标，写进 nav/stars/data.json 并提交。
+# UTC 16:10 = 北京时间次日 00:10，赶在当天所有活动结束后采样，日期不会和本地任务打架。
+#
+# 用 GITHUB_TOKEN 调 API，配额 1000 次/小时，25 个仓库绰绰有余。
+# 这个工作流每天会产生一次提交，顺便把仓库的「60 天无活动」计时器清零。
+
+on:
+  schedule:
+    - cron: '10 16 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: stars-snapshot
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+
+      - name: 抓取星标快照
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/stars-snapshot.cjs
+
+      - name: 提交变更
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add nav/stars/data.json
+          if git diff --cached --quiet; then
+            echo "星标无变化，跳过提交"
+            exit 0
+          fi
+          git commit -m "chore(stars): 每日星标快照 $(date -u +%F)"
+          git push
+
+      - name: 失败通知
+        if: failure()
+        env:
+          TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+          TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
+          BARK_URL: ${{ secrets.BARK_URL }}
+          SERVERCHAN_KEY: ${{ secrets.SERVERCHAN_KEY }}
+          FEISHU_WEBHOOK: ${{ secrets.FEISHU_WEBHOOK }}
+          WECOM_WEBHOOK: ${{ secrets.WECOM_WEBHOOK }}
+          DINGTALK_WEBHOOK: ${{ secrets.DINGTALK_WEBHOOK }}
+          NOTIFY_WEBHOOK: ${{ secrets.NOTIFY_WEBHOOK }}
+          EMAIL_SMTP_USER: ${{ secrets.EMAIL_SMTP_USER }}
+          EMAIL_SMTP_PASS: ${{ secrets.EMAIL_SMTP_PASS }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+        run: node scripts/notify.cjs --title "星标快照失败" --body "GitHub Actions 的 stars-snapshot 工作流执行失败，去 Actions 页面看日志：${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
