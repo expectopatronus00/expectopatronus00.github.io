@@ -384,13 +384,32 @@
 
     svgEl.addEventListener('mousemove', show);
     svgEl.addEventListener('mouseleave', hide);
+
+    /* 触屏：第一次点看数据，再点同一块才开仓库；点击事件被 touch 吃掉 */
+    var lastTouch = -1;
+    var touchedAt = 0;
+    svgEl.addEventListener('touchstart', function (e) {
+      var t = e.touches[0];
+      if (!t) return;
+      touchedAt = Date.now();
+      var i = idxOf(e.target);
+      if (i < 0) { hide(); lastTouch = -1; return; }
+      if (i === lastTouch) {
+        lastTouch = -1;
+        hide();
+        window.open('https://github.com/' + cells[i].it.r.repo, '_blank', 'noopener');
+        return;
+      }
+      lastTouch = i;
+      show(t);
+    }, { passive: true });
+
     svgEl.addEventListener('click', function (ev) {
+      if (Date.now() - touchedAt < 700) return;
       var i = idxOf(ev.target);
       if (i < 0 || !cells[i]) return;
       window.open('https://github.com/' + cells[i].it.r.repo, '_blank', 'noopener');
     });
-    svgEl.addEventListener('touchstart', function (e) { if (e.touches[0]) show(e.touches[0]); }, { passive: true });
-    svgEl.addEventListener('touchend', hide);
   }
 
   /* ── 折线趋势 ── */
