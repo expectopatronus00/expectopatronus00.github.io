@@ -757,4 +757,4 @@ if (require.main === module) {
   });
 }
 
-module.exports = { notify, buildHtml, mdBlocks };
+module.exports = { notify, buildHtml, mdBlocks, buildMime };

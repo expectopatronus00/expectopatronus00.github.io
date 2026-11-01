@@ -82,8 +82,22 @@ NODE_PATH=C:/Users/Administrator/.workbuddy-ai/binaries/node/workspace/node_modu
 ## 七、收尾
 
 1. 从 `.tools/radar/backlog.json` 里把本篇消耗的条目状态改成 `published`（横评则改多条）。
-2. 邮件正文写进临时文件，执行 `node scripts/notify.cjs --title "今日成稿 · <日期> · <文章标题>" --file <临时文件>`，正文 8 行内：标题、分类、字数、核对到的关键数字、本地路径、预计上线链接、最后一行「22:30 的 daily-run 会自动发布」。
-3. 对话里给同样摘要。
+2. 邮件正文写进临时文件，**必须严格按下面七行**（`notify.cjs` 识别到「标题：」开头会自动排成元信息表，URL 自动变成按钮）：
+
+```
+标题：<文章标题>
+分类：<category> · <YYYY-MM-DD>
+字数：<N> 字，<M> 节
+关键数字：<核到的最硬的 2-3 个数字，用 / 分隔>
+本地路径：post/<id>/
+预计上线：https://expectopatronus00.github.io/post/<id>/<id>.html
+22:30 的 daily-run 会自动发布，若不想要请在 22:30 前告知。
+```
+
+3. 执行 `node scripts/notify.cjs --title "今日成稿 · <日期> · <文章标题>" --file <临时文件>`。
+4. 对话里给同样摘要。
+
+想先看效果不发信：加 `--dry-run --save-html .tools/shots/mail.html`，浏览器打开即可预览。
 
 ## 八、硬性约束
 
