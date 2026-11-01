@@ -18,6 +18,7 @@
     <link rel="preload" as="font" type="font/woff2" crossorigin href="../home/fonts/SourceSerif4-var-normal.woff2" />
     <link rel="stylesheet" href="../home/fonts.css" />
     <link rel="stylesheet" href="../home/design-tokens.css" />
+    <link rel="stylesheet" href="stars/stars.css" />
     <style>
       /* ── SVG 图标工具类（与主站 index.html 同款） ── */
       .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
@@ -317,7 +318,7 @@
           <a href="../home/series.html">系列</a>
           <a href="../home/about.html">关于</a>
           <a href="index.html" class="is-active">导航站</a>
-          <a href="stars/index.html">星标榜</a>
+          <a href="#stars">星标榜</a>
         </div>
         <button class="menu-toggle" id="menu-toggle" aria-label="菜单">
           <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -351,6 +352,60 @@
     <main class="nav-main" id="main-content">
       <div class="loading-note">载入数据中……</div>
     </main>
+
+    <section class="stars-block" id="stars" style="max-width: 1080px; margin: 0 auto; padding: var(--sp-8) var(--sp-6) 0;">
+      <div class="stars-head">
+        <div>
+          <div class="eyebrow" style="margin-bottom: var(--sp-3);">open source · star tracking · 每日快照</div>
+          <h2>开源 AI，<em>涨得快不快</em>。</h2>
+          <p class="stars-sub">
+            每天抓一次 GitHub 星标，只存数字不做推测。<strong>星标是热度，不是质量</strong>——
+            这里看的是谁在变快、谁在停滞，选型判断还得回到仓库本身。
+          </p>
+        </div>
+        <div class="stars-seg" role="group" aria-label="图表口径">
+          <button type="button" data-mode="abs" aria-pressed="true">绝对星标</button>
+          <button type="button" data-mode="norm" aria-pressed="false">相对增长</button>
+        </div>
+      </div>
+
+      <div class="stars-meta" id="stars-meta">加载中…</div>
+
+      <div class="stars-panel" style="margin-top: var(--sp-3);">
+        <div class="chart-shell" id="stars-shell">
+          <div id="stars-chart"></div>
+          <div class="chart-tip" id="stars-tip"></div>
+        </div>
+        <div class="stars-legend" id="stars-legend"></div>
+        <div class="stars-table-shell">
+          <table class="stars-rank">
+            <thead>
+              <tr>
+                <th scope="col">项目</th>
+                <th scope="col">分类</th>
+                <th scope="col" class="sortable" data-sort="stars" aria-sort="descending">星标</th>
+                <th scope="col" class="sortable" data-sort="d1">日增</th>
+                <th scope="col" class="sortable" data-sort="d7">7 日</th>
+                <th scope="col" class="sortable" data-sort="d30">30 日</th>
+                <th scope="col">走势</th>
+                <th scope="col">许可</th>
+              </tr>
+            </thead>
+            <tbody id="stars-rows"></tbody>
+          </table>
+        </div>
+        <p class="stars-sub" id="stars-note" style="margin-top: var(--sp-3);"></p>
+      </div>
+
+      <p class="stars-sub" style="margin-top: var(--sp-4);">
+        数据由 <code style="font-family: var(--font-mono); font-size: 0.92em; color: var(--text-soft);">scripts/stars-snapshot.cjs</code>
+        每天抓一次，写进 <code style="font-family: var(--font-mono); font-size: 0.92em; color: var(--text-soft);">nav/stars/data.json</code>，
+        保留最近 180 天；清单在 <code style="font-family: var(--font-mono); font-size: 0.92em; color: var(--text-soft);">nav/stars/watchlist.json</code>。
+        历史从 2026-11-01 开始累积——GitHub 不提供公开的历史星标接口，没法回填。
+      </p>
+    </section>
+
+    <script src="stars/stars.js"></script>
 
     <footer class="site-footer">
       <div class="footer-content">

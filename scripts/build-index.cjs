@@ -255,8 +255,7 @@ function buildSitemap(articles, site) {
     ['/home/home.html', '0.9', 'weekly'],
     ['/home/series.html', '0.7', 'monthly'],
     ['/home/about.html', '0.6', 'monthly'],
-    ['/nav/index.html', '0.5', 'weekly'],
-    ['/nav/stars/', '0.6', 'daily'],
+    ['/nav/index.html', '0.6', 'weekly'],
   ];
 
   const out = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'];
