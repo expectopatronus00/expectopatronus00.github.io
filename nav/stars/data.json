@@ -10,7 +10,7 @@
       "note": "推理模型",
       "license": "MIT",
       "language": "",
-      "stars": 91993,
+      "stars": 91992,
       "forks": 11669,
       "openIssues": 45,
       "created": "2025-01-20",
@@ -26,9 +26,9 @@
       "note": "本地跑模型的事实标准",
       "license": "MIT",
       "language": "Go",
-      "stars": 185542,
-      "forks": 18830,
-      "openIssues": 4530,
+      "stars": 185585,
+      "forks": 18848,
+      "openIssues": 4532,
       "created": "2023-06-26",
       "first": "2026-11-01",
       "last": "2026-11-01"
@@ -42,8 +42,8 @@
       "note": "通义千问开源系列",
       "license": "NOASSERTION",
       "language": "Python",
-      "stars": 27698,
-      "forks": 2090,
+      "stars": 27697,
+      "forks": 2091,
       "openIssues": 69,
       "created": "2024-02-05",
       "first": "2026-11-01",
@@ -58,9 +58,9 @@
       "note": "模型生态的地基",
       "license": "Apache-2.0",
       "language": "Python",
-      "stars": 168411,
-      "forks": 35073,
-      "openIssues": 1045,
+      "stars": 168415,
+      "forks": 35075,
+      "openIssues": 1052,
       "created": "2018-10-29",
       "first": "2026-11-01",
       "last": "2026-11-01"
@@ -74,9 +74,9 @@
       "note": "高吞吐推理服务引擎",
       "license": "Apache-2.0",
       "language": "Python",
-      "stars": 96048,
-      "forks": 24254,
-      "openIssues": 9696,
+      "stars": 96066,
+      "forks": 24258,
+      "openIssues": 9716,
       "created": "2023-02-09",
       "first": "2026-11-01",
       "last": "2026-11-01"
@@ -90,9 +90,9 @@
       "note": "老牌编排框架",
       "license": "MIT",
       "language": "Python",
-      "stars": 148813,
-      "forks": 25012,
-      "openIssues": 713,
+      "stars": 148831,
+      "forks": 25016,
+      "openIssues": 712,
       "created": "2022-10-17",
       "first": "2026-11-01",
       "last": "2026-11-01"
@@ -107,8 +107,8 @@
       "license": "MIT",
       "language": "Python",
       "stars": 104707,
-      "forks": 16748,
-      "openIssues": 311,
+      "forks": 16746,
+      "openIssues": 313,
       "created": "2024-12-26",
       "first": "2026-11-01",
       "last": "2026-11-01"
@@ -122,7 +122,7 @@
       "note": "多智能体对话",
       "license": "CC-BY-4.0",
       "language": "Python",
-      "stars": 61661,
+      "stars": 61662,
       "forks": 9347,
       "openIssues": 1127,
       "created": "2023-08-18",
@@ -138,9 +138,9 @@
       "note": "浏览器操作智能体",
       "license": "MIT",
       "language": "Python",
-      "stars": 119738,
-      "forks": 13339,
-      "openIssues": 617,
+      "stars": 119759,
+      "forks": 13342,
+      "openIssues": 619,
       "created": "2024-10-31",
       "first": "2026-11-01",
       "last": "2026-11-01"
@@ -154,9 +154,9 @@
       "note": "角色化多智能体",
       "license": "MIT",
       "language": "Python",
-      "stars": 60379,
-      "forks": 8993,
-      "openIssues": 983,
+      "stars": 60389,
+      "forks": 8992,
+      "openIssues": 984,
       "created": "2023-10-27",
       "first": "2026-11-01",
       "last": "2026-11-01"
@@ -170,8 +170,8 @@
       "note": "官方 Agent SDK",
       "license": "MIT",
       "language": "Python",
-      "stars": 30432,
-      "forks": 4971,
+      "stars": 30437,
+      "forks": 4970,
       "openIssues": 28,
       "created": "2025-03-11",
       "first": "2026-11-01",
@@ -186,9 +186,9 @@
       "note": "MCP 官方服务集合",
       "license": "NOASSERTION",
       "language": "TypeScript",
-      "stars": 91732,
-      "forks": 11902,
-      "openIssues": 35,
+      "stars": 91735,
+      "forks": 11903,
+      "openIssues": 38,
       "created": "2024-11-19",
       "first": "2026-11-01",
       "last": "2026-11-01"
@@ -202,9 +202,9 @@
       "note": "多平台 IM 接同一个 agent",
       "license": "AGPL-3.0",
       "language": "Python",
-      "stars": 45472,
-      "forks": 3332,
-      "openIssues": 1137,
+      "stars": 45501,
+      "forks": 3335,
+      "openIssues": 1139,
       "created": "2022-12-08",
       "first": "2026-11-01",
       "last": "2026-11-01"
@@ -218,9 +218,9 @@
       "note": "命令行结对编程",
       "license": "Apache-2.0",
       "language": "Python",
-      "stars": 49875,
+      "stars": 49883,
       "forks": 5123,
-      "openIssues": 1937,
+      "openIssues": 1942,
       "created": "2023-05-09",
       "first": "2026-11-01",
       "last": "2026-11-01"
@@ -234,8 +234,8 @@
       "note": "编辑器内自治 agent",
       "license": "Apache-2.0",
       "language": "TypeScript",
-      "stars": 71157,
-      "forks": 7821,
+      "stars": 71174,
+      "forks": 7823,
       "openIssues": 1741,
       "created": "2024-07-06",
       "first": "2026-11-01",
@@ -250,7 +250,7 @@
       "note": "给编码 agent 换模型路由",
       "license": "MIT",
       "language": "TypeScript",
-      "stars": 37936,
+      "stars": 37942,
       "forks": 3186,
       "openIssues": 1186,
       "created": "2025-02-25",
@@ -266,9 +266,9 @@
       "note": "终端里的编码智能体",
       "license": "Apache-2.0",
       "language": "Rust",
-      "stars": 132672,
-      "forks": 20956,
-      "openIssues": 25941,
+      "stars": 132715,
+      "forks": 20967,
+      "openIssues": 25975,
       "created": "2025-04-13",
       "first": "2026-11-01",
       "last": "2026-11-01"
@@ -282,9 +282,9 @@
       "note": "站内已写过",
       "license": "MIT",
       "language": "Python",
-      "stars": 107449,
-      "forks": 9580,
-      "openIssues": 264,
+      "stars": 107565,
+      "forks": 9590,
+      "openIssues": 265,
       "created": "2026-02-24",
       "first": "2026-11-01",
       "last": "2026-11-01"
@@ -298,8 +298,8 @@
       "note": "DeepSeek agent 原型",
       "license": "MIT",
       "language": "TypeScript",
-      "stars": 5804,
-      "forks": 549,
+      "stars": 6862,
+      "forks": 685,
       "openIssues": 0,
       "created": "2026-10-31",
       "first": "2026-11-01",
@@ -314,8 +314,8 @@
       "note": "开源 AI 影像",
       "license": "MIT",
       "language": "TypeScript",
-      "stars": 4034,
-      "forks": 387,
+      "stars": 4081,
+      "forks": 391,
       "openIssues": 25,
       "created": "2026-10-04",
       "first": "2026-11-01",
@@ -330,9 +330,9 @@
       "note": "手机端跑 Harness",
       "license": "AGPL-3.0",
       "language": "Dart",
-      "stars": 4307,
-      "forks": 202,
-      "openIssues": 188,
+      "stars": 4566,
+      "forks": 216,
+      "openIssues": 199,
       "created": "2026-10-25",
       "first": "2026-11-01",
       "last": "2026-11-01"
@@ -346,8 +346,8 @@
       "note": "像素画特效",
       "license": "MIT",
       "language": "JavaScript",
-      "stars": 2171,
-      "forks": 280,
+      "stars": 2455,
+      "forks": 314,
       "openIssues": 1,
       "created": "2026-10-30",
       "first": "2026-11-01",
@@ -362,9 +362,9 @@
       "note": "节点式图像生成",
       "license": "GPL-3.0",
       "language": "Python",
-      "stars": 144440,
-      "forks": 17191,
-      "openIssues": 5408,
+      "stars": 144476,
+      "forks": 17209,
+      "openIssues": 5413,
       "created": "2023-01-17",
       "first": "2026-11-01",
       "last": "2026-11-01"
@@ -378,8 +378,8 @@
       "note": "工具输出沙箱化省上下文",
       "license": "NOASSERTION",
       "language": "TypeScript",
-      "stars": 33096,
-      "forks": 2283,
+      "stars": 33142,
+      "forks": 2285,
       "openIssues": 354,
       "created": "2026-02-23",
       "first": "2026-11-01",
@@ -394,9 +394,9 @@
       "note": "管线式视频制作",
       "license": "AGPL-3.0",
       "language": "Python",
-      "stars": 74224,
-      "forks": 9748,
-      "openIssues": 421,
+      "stars": 74327,
+      "forks": 9770,
+      "openIssues": 423,
       "created": "2026-03-29",
       "first": "2026-11-01",
       "last": "2026-11-01"
@@ -406,37 +406,37 @@
     "deepseek-ai/DeepSeek-R1": [
       [
         "2026-11-01",
-        91993
+        91992
       ]
     ],
     "ollama/ollama": [
       [
         "2026-11-01",
-        185542
+        185585
       ]
     ],
     "QwenLM/Qwen3": [
       [
         "2026-11-01",
-        27698
+        27697
       ]
     ],
     "huggingface/transformers": [
       [
         "2026-11-01",
-        168411
+        168415
       ]
     ],
     "vllm-project/vllm": [
       [
         "2026-11-01",
-        96048
+        96066
       ]
     ],
     "langchain-ai/langchain": [
       [
         "2026-11-01",
-        148813
+        148831
       ]
     ],
     "deepseek-ai/DeepSeek-V3": [
@@ -448,109 +448,109 @@
     "microsoft/autogen": [
       [
         "2026-11-01",
-        61661
+        61662
       ]
     ],
     "browser-use/browser-use": [
       [
         "2026-11-01",
-        119738
+        119759
       ]
     ],
     "crewAIInc/crewAI": [
       [
         "2026-11-01",
-        60379
+        60389
       ]
     ],
     "openai/openai-agents-python": [
       [
         "2026-11-01",
-        30432
+        30437
       ]
     ],
     "modelcontextprotocol/servers": [
       [
         "2026-11-01",
-        91732
+        91735
       ]
     ],
     "AstrBotDevs/AstrBot": [
       [
         "2026-11-01",
-        45472
+        45501
       ]
     ],
     "Aider-AI/aider": [
       [
         "2026-11-01",
-        49875
+        49883
       ]
     ],
     "cline/cline": [
       [
         "2026-11-01",
-        71157
+        71174
       ]
     ],
     "musistudio/claude-code-router": [
       [
         "2026-11-01",
-        37936
+        37942
       ]
     ],
     "openai/codex": [
       [
         "2026-11-01",
-        132672
+        132715
       ]
     ],
     "Panniantong/Agent-Reach": [
       [
         "2026-11-01",
-        107449
+        107565
       ]
     ],
     "deepseek-ai/dsh-superagent-prototype": [
       [
         "2026-11-01",
-        5804
+        6862
       ]
     ],
     "openfilm/openfilm": [
       [
         "2026-11-01",
-        4034
+        4081
       ]
     ],
     "ccch1mneyyy/dsh-Go": [
       [
         "2026-11-01",
-        4307
+        4566
       ]
     ],
     "patch-gg/pixelfx": [
       [
         "2026-11-01",
-        2171
+        2455
       ]
     ],
     "Comfy-Org/ComfyUI": [
       [
         "2026-11-01",
-        144440
+        144476
       ]
     ],
     "mksglu/context-mode": [
       [
         "2026-11-01",
-        33096
+        33142
       ]
     ],
     "calesthio/OpenMontage": [
       [
         "2026-11-01",
-        74224
+        74327
       ]
     ]
   }
