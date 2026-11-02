@@ -5,8 +5,24 @@
     <link>https://expectopatronus00.github.io/</link>
     <description>一个 AI 工具与实战的中文学习归档：原创踩坑记录 + 精选转载，每篇都标注来源。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 01 Nov 2026 14:30:50 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 02 Nov 2026 14:31:26 GMT</lastBuildDate>
     <atom:link href="https://expectopatronus00.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2600 星对 8 万星：一份手册和一个运行时</title>
+      <link>https://expectopatronus00.github.io/post/gh-tstack-vs-ruflo/gh-tstack-vs-ruflo.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-tstack-vs-ruflo/gh-tstack-vs-ruflo.html</guid>
+      <pubDate>Sun, 01 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>t3dotgg/tstack 2,600 星、16 个文件、59,560 字节；ruvnet/ruflo 80,584 星、8,446 个文件、648 MB。两个都在管 agent 的仓库，插件数却有五套口径：32、33+21、35、48、49。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>56k 星对 25k 星：两个专业 skill，两种验收</title>
+      <link>https://expectopatronus00.github.io/post/gh-proskill-audit-vs-seo/gh-proskill-audit-vs-seo.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-proskill-audit-vs-seo/gh-proskill-audit-vs-seo.html</guid>
+      <pubDate>Sun, 01 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>Cloudflare 的安全审计 skill 有 56,449 星，六阶段、三档结论、两个零依赖校验器，37.5% 的体积是校验代码；个人开发的 claude-seo 有 25,579 星，最多 17 个 agent 并行出方案。同是专业 skill，一个交可复核的记录，一个交能执行的清单。（转载 · 来源：微信）</description>
+    </item>
     <item>
       <title>7.4 万星的 OpenMontage：视频不靠生成，靠管线</title>
       <link>https://expectopatronus00.github.io/post/gh-calesthio-openmontage/gh-calesthio-openmontage.html</link>
@@ -230,22 +246,6 @@
       <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
       <category>效率与成长</category>
       <description>橘斯斯sisi分享——提升自媒体表达能力的两周实战心得，三大核心方法：开口练习、内容结构化、反馈与迭代。（转载 · 来源：小红书）</description>
-    </item>
-    <item>
-      <title>让Skill自己训练自己：微软开源工具破5k星</title>
-      <link>https://expectopatronus00.github.io/post/xhs-6a2be11d00000000160279a4/xhs-6a2be11d00000000160279a4.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/xhs-6a2be11d00000000160279a4/xhs-6a2be11d00000000160279a4.html</guid>
-      <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
-      <category>AI 编程</category>
-      <description>量子位分享——让Skill自己训练自己！微软开源自训练AI技能工具，GitHub破5k星，探索AI技能自我进化的新方向。（转载 · 来源：小红书）</description>
-    </item>
-    <item>
-      <title>HS量化：基于机器学习的概率预测模型</title>
-      <link>https://expectopatronus00.github.io/post/dy-7652011374368935211/dy-7652011374368935211.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7652011374368935211/dy-7652011374368935211.html</guid>
-      <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
-      <category>量化与投资</category>
-      <description>神秘小哥分享HS量化系统——基于机器学习的概率预测模型，用AI提升量化交易的概率优势。（转载 · 来源：抖音）</description>
     </item>
   </channel>
 </rss>
