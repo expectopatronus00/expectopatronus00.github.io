@@ -3,7 +3,7 @@
     "name": "AI 导航",
     "description": "AI 工具与资源导航 · 逐类目精选重建中",
     "version": "2.1.0",
-    "updated": "2026-10-24"
+    "updated": "2026-11-02"
   },
   "categories": [
     {
@@ -145,7 +145,7 @@
     {
       "id": "ai-oss",
       "name": "开源 AI 项目",
-      "desc": "GitHub 近 30 天星标增速 Top 100 · 2026-10 整理（新库按创建以来星标、老库按月度趋势榜）",
+      "desc": "GitHub 近 30 天星标增速 Top 100 · 2026-11 整理（新库按创建以来星标、老库按月度趋势榜）",
       "items": [
         {
           "name": "rea",
@@ -583,16 +583,6 @@
           "desc": "跨 AI 桌宠：跟着你用的 AI 换形象、跟着工作状态做动作"
         },
         {
-          "name": "hello-agent-system",
-          "url": "https://github.com/heaven999b/hello-agent-system",
-          "desc": "动手搭企业级 agent 系统：每一层生产件都自己写一遍"
-        },
-        {
-          "name": "py-idp",
-          "url": "https://github.com/rollroyces/py-idp",
-          "desc": "Python 智能文档处理：12+ LLM 后端、Pydantic 约束、自托管"
-        },
-        {
           "name": "SOMA",
           "url": "https://github.com/Kai-Jungsthoefel/SOMA",
           "desc": "与编码 agent 协作设计参数化 3D 模型的桌面应用"
@@ -603,24 +593,9 @@
           "desc": "企业级桌面 agent 工作台：技能、知识与任务同处协作"
         },
         {
-          "name": "openchart",
-          "url": "https://github.com/longsurf-ai/openchart",
-          "desc": "开源交易工作台：接入你顺手的 agents"
-        },
-        {
-          "name": "dexsql-release",
-          "url": "https://github.com/LSPosed/dexsql-release",
-          "desc": "用 SQL 查询 Android apk 与 dex 文件"
-        },
-        {
           "name": "ThinkTerm",
           "url": "https://github.com/RoversX/ThinkTerm",
           "desc": "会话保活的现代终端：关掉窗口任务照跑"
-        },
-        {
-          "name": "AgentGarten",
-          "url": "https://github.com/MirroS-Lab/AgentGarten",
-          "desc": "AgentGarten：给可进化 agent 准备的代码世界"
         },
         {
           "name": "ai-engineering-from-scratch",
@@ -654,6 +629,56 @@
           "url": "https://github.com/msitarzewski/agency-agents",
           "desc": "一周 +2.3 万星：把一整个 AI 代理公司装进指尖的 agents 合集",
           "badge": "热门"
+        },
+        {
+          "name": "dsh-superagent-prototype",
+          "desc": "本周 +2.6万星 | Towards a More Autonomous Agent System",
+          "url": "https://github.com/deepseek-ai/dsh-superagent-prototype",
+          "badge": "本周 +2.6万星",
+          "tags": [
+            "agent"
+          ],
+          "origin": "GitHub Trending"
+        },
+        {
+          "name": "DeepInfer",
+          "desc": "本月 +4.4万星 | DeepInfer: High-performance, large-scale inference framework for DeepSeek models",
+          "url": "https://github.com/deepseek-ai/DeepInfer",
+          "badge": "本月 +4.4万星",
+          "tags": [
+            "model"
+          ],
+          "origin": "GitHub Trending"
+        },
+        {
+          "name": "jev-ultrafast",
+          "desc": "创建以来 +2.4万 | Fastest and cheapest web agent",
+          "url": "https://github.com/browser-use/jev-ultrafast",
+          "badge": "创建以来 +2.4万",
+          "tags": [
+            "agent"
+          ],
+          "origin": "GitHub Trending"
+        },
+        {
+          "name": "laya",
+          "desc": "创建以来 +3.5万 | Non-autoregressive System 1 decision engine. Typed choice, score and yes/no decisions over",
+          "url": "https://github.com/NandhaKishorM/laya",
+          "badge": "创建以来 +3.5万",
+          "tags": [
+            "agent"
+          ],
+          "origin": "GitHub Trending"
+        },
+        {
+          "name": "Strata",
+          "desc": "创建以来 +3.8万 | Qwen3.8-Flash-Next on any consumer hardware: one-click install for Windows / Linux. Strata",
+          "url": "https://github.com/Niko1221/Strata",
+          "badge": "创建以来 +3.8万",
+          "tags": [
+            "agent"
+          ],
+          "origin": "GitHub Trending"
         }
       ]
     },
