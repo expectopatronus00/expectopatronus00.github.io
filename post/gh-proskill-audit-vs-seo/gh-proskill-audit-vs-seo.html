@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>56k 星对 25k 星：两个专业 skill，两种验收 · EXPECTOPATRONUS</title>
+    <meta name="description" content="Cloudflare 的安全审计 skill 有 56,449 星，六阶段、三档结论、两个零依赖校验器，37.5% 的体积是校验代码；个人开发的 claude-seo 有 25,579 星，最多 17 个 agent 并行出方案。同是专业 skill，一个交可复核的记录，一个交能执行的清单。" />
+    <meta name="keywords" content="Skill, 安全审计, SEO, 开源, Claude Code, 横评" />
+    <meta property="og:title" content="56k 星对 25k 星：两个专业 skill，两种验收" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="Cloudflare 的安全审计 skill 有 56,449 星，六阶段、三档结论、两个零依赖校验器，37.5% 的体积是校验代码；个人开发的 claude-seo 有 25,579 星，最多 17 个 agent 并行出方案。同是专业 skill，一个交可复核的记录，一个交能执行的清单。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head">
+      <div class="eyebrow">OPEN SOURCE · PRO SKILL</div>
+      <h1>56k 星对 25k 星：两个专业 skill，两种验收</h1>
+      <p>56,449 星配 206 个订阅者，25,579 星配 172 个。两个 MIT 协议的「专业 skill」，一个把审计结论变成机器可校验的 JSON，一个把 SEO 问题变成按影响排序的方案。前者停更 49 天，后者昨天还在推。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-02</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 7 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="56k 星对 25k 星：两个专业 skill，两种验收 封面" src="cover.jpg" />
+    </div>
+
+    <article class="article-body">
+<div class="section-marker">01 · 这件事</div>
+<h2>两个「专业 skill」，一个停更 49 天，一个昨天还在推</h2>
+<p>2026 年 6 月 18 日建库，到 11 月 2 日，<code>cloudflare/security-audit-skill</code> 的数据是 56,449 星、3,681 个 fork、110 个未关闭 issue，MIT 协议，JavaScript，仓库体积 143 KB。最后一次 push 停在 9 月 14 日——49 天没有一行代码提交。</p>
+<p>另一个是 <code>AgriciDaniel/claude-seo</code>：2 月 7 日建库，25,579 星、3,358 个 fork、78 个未关闭 issue，同样是 MIT，Python 写的，仓库 6,934 KB。最后一次 push 是 11 月 1 日，昨天。</p>
+<p>这两个项目在选题池里躺了四天。10 月 29 日入池，评分 97 和 88，属于同一族：把某个专业领域的判断标准，写成 agent 能读、能执行的技能文件。Cloudflare 那份管安全审计，个人开发者那份管 SEO。星标差一倍多，但真正的差别不在星标——<span class="hl">在于「凭什么相信 agent 给出的结论」，两个人给了完全不同的答案</span>。</p>
+
+<div class="section-marker">02 · 核心机制</div>
+<h2>一个把结论变成可校验的记录，一个把结论变成能执行的方案</h2>
+<p>Cloudflare 那套是六阶段：侦察、按覆盖清单分配猎手、候选验证、结构化输出、独立记录核验、目标无关的报告。名字很绕，实质只有一句：先画清楚要查哪些面，再派人查，再派人推翻，最后按查过的面出报告，而不是按查出来的东西出报告。</p>
+<p>六阶段里最硬的一条是角色分离。README 的原话是 <code>The agent that checks a finding is never the agent that found it.</code> 检查漏洞的 agent，永远不是发现它的那一个。每条候选线索交给一个全新的验证 agent，任务不是「确认它成立」，而是「试着推翻它」。</p>
+<p>结论只有三档：<code>confirmed</code> 要有完整源码追踪和有界的实测结果，<code>needs_validation</code> 必须写明那个没解决的具体事实、且不给严重级别，<code>rejected</code> 记录被证伪的候选。三档一起写进 <code>findings.json</code>，用 <code>report-schema.json</code> 校验格式；覆盖情况记在 <code>coverage-ledger.json</code>，由 <code>validate-coverage-ledger.cjs</code> 在阶段一之后、以及之后每次更新后校验。<span class="hl">它不靠 agent 说自己审完了，靠两个零依赖脚本说格式对不对</span>。</p>
+<p>claude-seo 走的是反方向。最多 17 个 agent 并行，先判断站点类型——SaaS、本地商家、电商、出版、代理——再按类型调整检查项，最后交一份按影响排序的行动方案。README 的说法是 <code>You get a plan, not a pile of warnings</code>：给你一份方案，不是一堆告警。每条建议要写清三件事，基于什么、依赖什么、怎么知道它生效了。</p>
+<p>所以两者的「验收」根本不是一回事。Cloudflare 的验收是机器做的：schema 校验、独立 agent 证伪、覆盖清单对账。claude-seo 的验收是写给人看的：排序、归因、可验证的成功判据。前者适合交付给别人复核，后者适合今天下午就动手改。</p>
+
+<div class="section-marker">03 · 关键细节与数据</div>
+<h2>「26 个子技能」这句话，自己数一遍是 25 个</h2>
+<p>先对 claude-seo 的自述数字。<code>skills/</code> 目录下是 25 个子目录，从 <code>seo</code>、<code>seo-audit</code>、<code>seo-technical</code> 一路到 <code>seo-sxo</code>、<code>seo-flow</code>；仓库 description 和 README 都写 26。19 个子 agent 倒是完全对得上——<code>agents/</code> 下正好 19 个 <code>.md</code> 文件。差一个不算大事，但和上次 OpenMontage 的「12 条管线」一样，自述数量值得自己数一遍。</p>
+<p>Cloudflare 那边的体量更值得看。<code>skills/security-audit</code> 下 20 个文件，合计 312,670 字节。其中 15 个 Markdown 共 192,981 字节，4 个 <code>.cjs</code> 共 117,195 字节，1 个 JSON schema 14,494 字节。也就是说，<span class="hl">这个技能 37.5% 的体积不是提示词，是校验代码</span>；两个校验器的测试文件加起来 54,867 字节，单是测试就占了整体的 17.5%。</p>
+<p>提示词部分按攻击面切分，不按流程切分。最厚的是 <code>HUNTING.md</code> 22,446 字节和 <code>SKILL.md</code> 22,026 字节，然后是 <code>VALIDATION-AND-REPORTING.md</code> 17,843、<code>RECONNAISSANCE.md</code> 15,902、<code>ATTACK-CLASSES.md</code> 15,695。目标类型单独成篇：<code>AI-AND-LLM.md</code> 管提示注入与工具调用，<code>WEB-PROTOCOL-AND-AUTH.md</code> 管请求走私与认证协议，<code>CLIENT-SIDE.md</code> 管 DOM 注入与原型链污染，再往下是内存安全与内核、供应链与发布、云与部署、RPC 与消息队列、资源耗尽、数据隔离、桌面与本地 IPC。</p>
+<p>claude-seo 的 19 个 agent 里，5 个跑 Opus——content、geo、cluster、sxo、drift，其余 14 个跑 Sonnet。README 的说明是「需要更多判断的五个用 Opus」。另外两个数字：一次完整审计 10 到 15 分钟，测试徽章写着 1077 个测试通过。而 <code>CHANGELOG.md</code> 有 113,780 字节，占顶层文件总体积的 47%——更新非常勤。</p>
+<div class="info-box">数据核对：2026-11-02 经 api.github.com 读取。cloudflare/security-audit-skill：stargazers_count 56449，forks_count 3681，open_issues_count 110，subscribers_count 206，created_at 2026-06-18T14:08:44Z，pushed_at 2026-09-14T19:29:02Z，language JavaScript，license MIT，size 143KB。AgriciDaniel/claude-seo：stargazers_count 25579，forks_count 3358，open_issues_count 78，subscribers_count 172，created_at 2026-02-07T08:17:38Z，pushed_at 2026-11-01T06:07:26Z，language Python，license MIT，size 6934KB，homepage 指向 skool.com 上的付费社群。文件数与字节数取自 contents 接口：security-audit 目录 20 个文件 312,670 字节；claude-seo 的 skills 25 个目录、agents 19 个文件。易误解点有两个：一是 claude-seo 自称「26 sub-skills」，实际目录 25 个，description 里「9 optional extensions」在 README 的 Extensions 章节也只列到 5 个；二是「17 agents 并行」是上限描述，不是每次都跑满。星标实时变化，引用请以仓库当前数据为准。</div>
+
+<div class="section-marker">04 · 怎么用</div>
+<h2>怎么装，以及什么时候该选哪个</h2>
+<p>Cloudflare 一行：<code>npx skills add https://github.com/cloudflare/security-audit-skill --skill security-audit</code>，装到用户级加 <code>--global</code>。然后在代码库里直接说 security audit this codebase，触发词匹配就进全量审计模式。默认输出目录是 <code>~/security-audit-skill/&lt;repo-name&gt;/run-&lt;N&gt;</code>；同一个仓库多次跑是叠加的，它会拿上一次的覆盖清单去找缺口。</p>
+<p>硬门槛是沙箱。README 要求 OS 级强制隔离：断外网、白名单环境变量、资源上限、只能写指定临时目录。没有这套控制，遇到需要执行目标代码的线索，它会把结论停在 <code>needs_validation</code> 而不是真跑一遍。<span class="hl">这一条把大部分个人开发者挡在门外</span>——你需要的不只是一台笔记本，是一个能安全跑陌生代码的隔离环境。</p>
+<p>claude-seo 三条命令：<code>/plugin marketplace add AgriciDaniel/claude-seo</code>、<code>/plugin install claude-seo@agricidaniel-claude-seo</code>、<code>/seo setup</code>。前置是 Claude Code 1.0.33 以上、Python 3.11 到 3.14。<code>/seo setup</code> 自己建 Python 环境和无头浏览器，<code>/seo doctor</code> 体检。不接任何 key 也能跑，但 Core Web Vitals 只能是实验室估算值，索引状态靠页面推断——这是它自己写在 FAQ 里的限制。</p>
+<p>怎么选，我给三条：</p>
+<ul>
+<li>要交付、要别人复核结论：选 Cloudflare 那套。三档结论加 schema 校验，报告可以被第三方抽查。前提是你有隔离环境。</li>
+<li>要今天就把站点改一遍：选 claude-seo。<code>/seo audit https://your.site</code> 十几分钟出方案，不用配 key。</li>
+<li>只想要方法论：两个都别装，去读 Cloudflare 的 <code>VALIDATION-AND-REPORTING.md</code> 和 claude-seo 的 <code>agents/seo-technical.md</code>。前者 17,843 字节，讲清了「什么算确认」；后者讲清了技术 SEO 该看哪几项。</li>
+</ul>
+
+<div class="section-marker">05 · 冷思考</div>
+<h2>56,449 星，206 个人订阅</h2>
+<p>星标和 watch 一起看更清楚。Cloudflare 56,449 星配 206 个订阅者，0.36%；claude-seo 25,579 星配 172 个订阅者，0.67%。fork 比差得更明显：3,681 除以 56,449 是 6.5%，3,358 除以 25,579 是 13.1%。<span class="hl">claude-seo 的 fork 比例高一倍，更像是真有人拿它去改</span>，而 Cloudflare 那 5.6 万星，更像「官方出品，先收藏」。</p>
+<p>第二个质疑是停更的代价。49 天没提交、110 个 issue 挂着，但 README 里那句自述恰恰说明它最该继续做下去：<code>In our test runs, a single run found roughly half of the vulnerabilities that repeated runs found in total.</code> 单次运行大约只能找到重复运行总量的一半。这句话是它最有价值的一句，也是最危险的一句——攻击面在变，11 份攻击面文档不会自己更新，停更的专业 skill 会慢慢变成一份过时的检查表。</p>
+<p>第三个质疑是口径。claude-seo 的定价对比表把「数据留在本地」标成「是（本机运行）」，FAQ 又说分析的页面和数据会发给 Claude；两句话不算直接矛盾，文件确实留在本机，但宣传语容易被读成「数据不出门」。更要紧的是 homepage 直接指向 skool.com 上的付费社群，README 明说付费会员还有一个私有版，能提前拿到新功能。<span class="hl">开源版是漏斗的顶端，这不算错，但读者该知道自己在漏斗的哪一层</span>。</p>
+<p>第四个是成本被藏起来了。17 个 agent 并行、5 个跑 Opus、一次审计 10 到 15 分钟——token 账单不在「免费」两个字里，而在你的 Claude Code 套餐里。Cloudflare 那边反过来：它省 token，但要沙箱，还要一台敢跑陌生代码的机器。两种成本都不显示在星标数上。</p>
+<p>我的判断是，这两个项目回答的其实是同一个问题的两半。Cloudflare 回答「AI 找出的漏洞凭什么信」，答案是让另一个 agent 去证伪、让脚本去校验格式；claude-seo 回答「AI 找出的问题先改哪个」，答案是按影响排序、每条建议写清依据和验证方法。前者是审计的语法，后者是执行的语法。两个都装也不冲突，安装通道都不一样——一个走 skills CLI，一个走 Claude Code 插件市场。但真正该抄的是 Cloudflare 那条角色分离原则：<span class="hl">谁发现，谁就不能验</span>。这条规则跟安全无关，跟所有让 agent 自评的场合都有关。</p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看两个原始仓库</h3>
+        <p>cloudflare/security-audit-skill，2026-06-18 创建，56,449 星 / 3,681 fork，MIT；对照 agricidaniel/claude-seo，25,579 星 / 3,358 fork</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/cloudflare/security-audit-skill" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/cloudflare/security-audit-skill" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · Cloudflare 官方的六阶段安全审计 skill</span>
+      </a>
+      <a class="plat-card" href="https://github.com/AgriciDaniel/claude-seo" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 19 个 agent 并行的 SEO 审计插件</span>
+      </a>
+      <a class="plat-card" href="https://blog.cloudflare.com/build-your-own-vulnerability-harness" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 12h17M12 3.5c2.4 2.3 3.6 5.2 3.6 8.5s-1.2 6.2-3.6 8.5c-2.4-2.3-3.6-5.2-3.6-8.5S9.6 5.8 12 3.5z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+        <span class="pn">Cloudflare 博客</span>
+        <span class="pd">blog · 这个 skill 衍生自的漏洞挖掘流水线</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Skill">#Skill</a>
+      <a href="../../home/home.html?q=%E5%AE%89%E5%85%A8%E5%AE%A1%E8%AE%A1">#安全审计</a>
+      <a href="../../home/home.html?q=SEO">#SEO</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=Claude%20Code">#Claude Code</a>
+      <a href="../../home/home.html?q=%E6%A8%AA%E8%AF%84">#横评</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2026 · 本文依据 cloudflare/security-audit-skill 与 AgriciDaniel/claude-seo 两个仓库的 README、目录清单及 GitHub API 公开数据整理，文内数字核对时间为 2026-11-02。本站仅做学习归档，不做商用。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

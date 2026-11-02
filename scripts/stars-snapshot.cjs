@@ -132,10 +132,8 @@ function loadJson(file, fallback) {
 }
 
 function today() {
-  // 用本地时区日期，避免 UTC 与北京时间的跨天错位
-  const d = new Date();
-  const p = n => String(n).padStart(2, '0');
-  return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate());
+  // 统一用 UTC 日期，Actions 和本地不会因时区偏移导致 series 日期错位
+  return new Date().toISOString().slice(0, 10);
 }
 
 function prune(series, keepDays) {
@@ -229,12 +227,21 @@ async function main() {
   let done = 0;
 
   // 简单的并发池
+  var rateLimited = false;
   async function worker(queue) {
     while (queue.length) {
+      if (rateLimited) { queue.length = 0; break; }
       const item = queue.shift();
       const res = await fetchRepo(item.repo);
       done++;
       if (!res.ok) {
+        if (res.fatal) {
+          rateLimited = true;
+          failures.push({ repo: item.repo, error: res.error });
+          console.log('❌ ' + item.repo + ' — ' + res.error + '（停止剩余请求）');
+          queue.length = 0;
+          break;
+        }
         failures.push({ repo: item.repo, error: res.error });
         console.log('❌ ' + item.repo + ' — ' + res.error);
         continue;

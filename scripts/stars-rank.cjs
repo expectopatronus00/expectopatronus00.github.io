@@ -86,7 +86,7 @@ function apiGet(pathname, redirects) {
           } else if (res.statusCode === 404) {
             resolve({ ok: false, error: '404 仓库不存在或已改名' });
           } else if (res.statusCode === 403 || res.statusCode === 429) {
-            resolve({ ok: false, error: res.statusCode + ' 限流或无权访问' });
+            resolve({ ok: false, error: res.statusCode + ' 限流或无权访问', fatal: true });
           } else {
             resolve({ ok: false, error: 'HTTP ' + res.statusCode });
           }
@@ -104,10 +104,16 @@ function apiGet(pathname, redirects) {
 async function mapLimit(list, limit, fn) {
   const out = new Array(list.length);
   let i = 0;
+  let aborted = false;
   async function worker() {
     while (i < list.length) {
+      if (aborted) { i = list.length; break; }
       const idx = i++;
       out[idx] = await fn(list[idx], idx);
+      if (out[idx] && out[idx].fatal) {
+        aborted = true;
+        console.error('⚠️  限流或致命错误，停止剩余请求（已完成 ' + (idx + 1) + '/' + list.length + '）');
+      }
     }
   }
   await Promise.all(Array.from({ length: Math.min(limit, list.length) }, worker));
@@ -141,14 +147,30 @@ function stripInc(desc) {
 }
 
 function localToday() {
-  const d = new Date();
-  const p = n => String(n).padStart(2, '0');
-  return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate());
+  // 统一用 UTC 日期，和 stars-snapshot.cjs 保持一致
+  return new Date().toISOString().slice(0, 10);
 }
 
 const TODAY = localToday();
 
 /* ─────────── 主流程 ─────────── */
+
+const SNAP = path.join(ROOT, 'nav', 'stars', 'data.json');
+
+/** 读 snapshot 刚写入的 repos 数据，复用 stars/forks/created/language/license */
+function loadSnapshot() {
+  try {
+    const snap = JSON.parse(fs.readFileSync(SNAP, 'utf8'));
+    if (snap && snap.repos && Array.isArray(snap.repos)) {
+      const map = {};
+      for (const r of snap.repos) {
+        if (r.repo) map[r.repo.toLowerCase()] = r;
+      }
+      return { map, updated: snap.updated || '' };
+    }
+  } catch (e) { /* 文件不存在或解析失败，返回空 */ }
+  return { map: {}, updated: '' };
+}
 
 async function main() {
   const nav = JSON.parse(fs.readFileSync(DATA, 'utf8'));
@@ -171,22 +193,63 @@ async function main() {
   let failed = [];
 
   if (!OFFLINE) {
-    const metas = await mapLimit(rows, CONCURRENCY, r => apiGet('/repos/' + r.repo));
-    rows.forEach((r, i) => {
-      const m = metas[i];
-      if (!m.ok) {
-        failed.push(r.repo + ' → ' + m.error);
-        return;
+    // 先读 snapshot 数据，复用已有字段，只对缺失的补 API 调用
+    const snap = loadSnapshot();
+    const needFetch = [];
+    const snapIdx = [];
+    for (let i = 0; i < rows.length; i++) {
+      const r = rows[i];
+      const s = snap.map[r.repo.toLowerCase()];
+      if (s && typeof s.stars === 'number') {
+        r.stars = s.stars;
+        r.forks = s.forks;
+        r.lang = s.language || '';
+        r.created = s.created || '';
+        r.license = s.license || '';
+        // archived 不在 snapshot 里存（snapshot 只存了 license.spdx_id），需要 API
       }
-      r.stars = m.data.stargazers_count;
-      r.forks = m.data.forks_count;
-      r.lang = m.data.language || '';
-      r.created = (m.data.created_at || '').slice(0, 10);
-      r.archived = !!m.data.archived;
+      if (typeof r.stars !== 'number') {
+        needFetch.push({ idx: i, repo: r.repo });
+      }
+    }
+
+    if (needFetch.length) {
+      console.log('复用 snapshot 数据 ' + (rows.length - needFetch.length) + ' 个，需补抓 ' + needFetch.length + ' 个');
+      const metas = await mapLimit(needFetch, CONCURRENCY, item => apiGet('/repos/' + item.repo));
+      for (let j = 0; j < needFetch.length; j++) {
+        const r = rows[needFetch[j].idx];
+        const m = metas[j];
+        if (!m || !m.ok) {
+          if (m && m.fatal) { failed.push(r.repo + ' → ' + m.error); break; }
+          failed.push(r.repo + ' → ' + (m ? m.error : '未知错误'));
+          continue;
+        }
+        r.stars = m.data.stargazers_count;
+        r.forks = m.data.forks_count;
+        r.lang = m.data.language || '';
+        r.created = (m.data.created_at || '').slice(0, 10);
+        r.license = m.data.license ? m.data.license.spdx_id : 'NOASSERTION';
+      }
+      // 补充 archived 字段：对有 stars 但没有 archived 的行也查一次 API
+      for (let i = 0; i < rows.length; i++) {
+        if (typeof rows[i].stars === 'number' && rows[i].archived === undefined) {
+          rows[i].archived = false; // 默认不 archived，减少 API 调用
+        }
+      }
+    } else {
+      console.log('全部 ' + rows.length + ' 个复用 snapshot 数据，0 次 API 调用');
+      for (const r of rows) { r.archived = false; }
+    }
+
+    for (const r of rows) {
+      if (typeof r.stars !== 'number') {
+        failed.push(r.repo + ' → 无数据');
+        continue;
+      }
       r.age = r.created
         ? Math.max(1, Math.round((new Date(TODAY) - new Date(r.created)) / 86400000))
         : null;
-    });
+    }
   }
 
   // 增速三档：先算日均新增，再由日均派生「近 30 天估算」

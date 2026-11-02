@@ -89,6 +89,21 @@ function fetchUrl(url, depth) {
   });
 }
 
+/** 带重试的探活：GitHub Pages 偶发延迟，一次超时不该判死刑 */
+async function fetchUrlRetry(url, retries) {
+  const max = retries || 2;
+  let last = { ok: false, error: '未知错误' };
+  for (let i = 0; i <= max; i++) {
+    last = await fetchUrl(url);
+    if (last.ok) return last;
+    if (i < max) {
+      console.log('  探活失败（' + last.error + '），' + (3 * (i + 1)) + ' 秒后重试…');
+      await new Promise(r => setTimeout(r, 3000 * (i + 1)));
+    }
+  }
+  return last;
+}
+
 function parseFeed(xml) {
   const items = [];
   const re = /<item>([\s\S]*?)<\/item>/g;
@@ -153,11 +168,11 @@ async function main() {
       if (OFFLINE) {
         console.log('ℹ --offline，跳过线上探活');
       } else {
-        const home = await fetchUrl(SITE + '/');
+        const home = await fetchUrlRetry(SITE + '/');
         if (!home.ok) fail('线上首页', home.error || home.status);
         else pass('线上首页', '200');
 
-        const remoteFeed = await fetchUrl(SITE + '/feed.xml');
+        const remoteFeed = await fetchUrlRetry(SITE + '/feed.xml');
         if (!remoteFeed.ok) {
           fail('线上 feed.xml', remoteFeed.error || remoteFeed.status);
         } else {
@@ -172,7 +187,7 @@ async function main() {
         }
 
         if (newest.link) {
-          const page = await fetchUrl(newest.link);
+          const page = await fetchUrlRetry(newest.link);
           if (!page.ok) fail('最新文章页', (page.error || page.status) + ' ' + newest.link);
           else pass('最新文章页', '200');
         }

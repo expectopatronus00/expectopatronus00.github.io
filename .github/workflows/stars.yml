@@ -3,7 +3,7 @@ name: stars-snapshot
 # 每天抓一次 GitHub 星标，写进 nav/stars/data.json，并重算 nav/stars/rank.json 后提交。
 # UTC 16:10 = 北京时间次日 00:10，赶在当天所有活动结束后采样，日期不会和本地任务打架。
 #
-# 用 GITHUB_TOKEN 调 API，配额 1000 次/小时；100 个仓库的快照 + 增速榜合计约 200 次调用，够用。
+# 用 GITHUB_TOKEN 调 API，配额 1000 次/小时；rank 复用 snapshot 数据后合计约 100 次调用。
 # 这个工作流每天会产生一次提交，顺便把仓库的「60 天无活动」计时器清零。
 
 on:
@@ -34,11 +34,13 @@ jobs:
         run: node scripts/stars-snapshot.cjs
 
       - name: 更新星标增速榜
+        if: always()
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: node scripts/stars-rank.cjs
 
       - name: 提交变更
+        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -47,6 +49,7 @@ jobs:
             echo "星标无变化，跳过提交"
             exit 0
           fi
+          git pull --rebase origin main
           git commit -m "chore(stars): 每日星标快照 $(date -u +%F)"
           git push
 

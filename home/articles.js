@@ -3,6 +3,24 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'gh-tstack-vs-ruflo',
+            title: '2600 星对 8 万星：一份手册和一个运行时',
+            url: '../post/gh-tstack-vs-ruflo/gh-tstack-vs-ruflo.html',
+            summary: 't3dotgg/tstack 2,600 星、16 个文件、59,560 字节；ruvnet/ruflo 80,584 星、8,446 个文件、648 MB。两个都在管 agent 的仓库，插件数却有五套口径：32、33+21、35、48、49。',
+            category: 'AI 编程',
+            date: '2026-11-02',
+            tags: ["Agent","Skill","开源","GitHub","横评"],
+          },
+          {
+            id: 'gh-proskill-audit-vs-seo',
+            title: '56k 星对 25k 星：两个专业 skill，两种验收',
+            url: '../post/gh-proskill-audit-vs-seo/gh-proskill-audit-vs-seo.html',
+            summary: 'Cloudflare 的安全审计 skill 有 56,449 星，六阶段、三档结论、两个零依赖校验器，37.5% 的体积是校验代码；个人开发的 claude-seo 有 25,579 星，最多 17 个 agent 并行出方案。同是专业 skill，一个交可复核的记录，一个交能执行的清单。',
+            category: 'AI 编程',
+            date: '2026-11-02',
+            tags: ["Skill","安全审计","SEO","开源","Claude Code","横评"],
+          },
+          {
             id: 'gh-calesthio-openmontage',
             title: '7.4 万星的 OpenMontage：视频不靠生成，靠管线',
             url: '../post/gh-calesthio-openmontage/gh-calesthio-openmontage.html',
