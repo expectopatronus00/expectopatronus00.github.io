@@ -2,8 +2,8 @@
 /**
  * stars-snapshot.cjs · 每日星标快照
  * -----------------------------------------
- * 读 nav/stars/watchlist.json 里的仓库清单，逐个查 GitHub API，
- * 把当天的 star / fork 数追加进 nav/stars/data.json 的时间序列。
+ * 数据源是 nav/data.json 里 ai-oss 类目的 100 个仓库 —— 和星标增速榜同一套清单，
+ * 逐个查 GitHub API，把当天的 star / fork 数追加进 nav/stars/data.json 的时间序列。
  *
  * 用法：
  *   node scripts/stars-snapshot.cjs                 # 抓取并写入
@@ -12,7 +12,7 @@
  *   node scripts/stars-snapshot.cjs --only a/b,c/d  # 只更新指定仓库
  *
  * 令牌：优先用环境变量 GITHUB_TOKEN（Actions 里自动有），本地可用 `gh auth token`。
- * 无令牌时限流 60 次/小时 —— 25 个仓库一天跑一次够用，但重跑几次就会撞墙。
+ * 无令牌时限流 60 次/小时 —— 100 个仓库跑不完，会中途 403。
  *
  * 退出码：0 全部成功；1 有仓库抓取失败（其余仍然写入）
  */
@@ -22,10 +22,11 @@
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
+const { execFileSync } = require('child_process');
 
 const ROOT = path.resolve(__dirname, '..');
 const DIR = path.join(ROOT, 'nav', 'stars');
-const WATCHLIST = path.join(DIR, 'watchlist.json');
+const NAV = path.join(ROOT, 'nav', 'data.json');
 const DATA = path.join(DIR, 'data.json');
 
 const argv = process.argv.slice(2);
@@ -36,15 +37,26 @@ const argVal = name => {
 };
 const KEEP_DAYS = Number(argVal('--days') || 180);
 const ONLY = argVal('--only')
-  ? argVal('--only').split(',').map(s => s.trim()).filter(Boolean)
+  ? argVal('--only').split(',').map(s => s.trim().toLowerCase()).filter(Boolean)
   : null;
 
-const TOKEN = process.env.GITHUB_TOKEN || process.env.GH_TOKEN || '';
-const CONCURRENCY = 4;
+function resolveToken() {
+  if (process.env.GITHUB_TOKEN) return process.env.GITHUB_TOKEN;
+  if (process.env.GH_TOKEN) return process.env.GH_TOKEN;
+  try {
+    return execFileSync('gh', ['auth', 'token'], { encoding: 'utf8', timeout: 8000 }).trim();
+  } catch (e) {
+    return '';
+  }
+}
+
+const TOKEN = resolveToken();
+const CONCURRENCY = 5;
 
 /* ─────────── HTTP ─────────── */
 
-function apiGet(pathname) {
+function apiGet(pathname, redirects) {
+  const hops = redirects || 0;
   return new Promise(resolve => {
     const req = https.get(
       {
@@ -62,6 +74,17 @@ function apiGet(pathname) {
         let body = '';
         res.on('data', c => (body += c));
         res.on('end', () => {
+          // 301 代表仓库改名，Location 里是新的 api 路径
+          if (res.statusCode === 301 || res.statusCode === 307 || res.statusCode === 308) {
+            const loc = res.headers.location;
+            if (loc && hops < 3) {
+              const next = loc.startsWith('http') ? loc.replace(/^https?:\/\/[^/]+/, '') : loc;
+              resolve(apiGet(next, hops + 1));
+              return;
+            }
+            resolve({ ok: false, error: '重定向次数过多' });
+            return;
+          }
           if (res.statusCode === 200) {
             try {
               resolve({ ok: true, data: JSON.parse(body) });
@@ -125,12 +148,59 @@ function prune(series, keepDays) {
   return out;
 }
 
+/** 从 https://github.com/owner/repo 里抠出 owner/repo */
+function repoFromUrl(url) {
+  const m = /github\.com\/([^/?#]+)\/([^/?#]+)/i.exec(url || '');
+  if (!m) return null;
+  return (m[1] + '/' + m[2]).replace(/\.git$/i, '').replace(/\/+$/, '');
+}
+
+/** 读 nav/data.json 的 ai-oss 类目，映射成 [{repo, name, desc, badge}] */
+function loadTargets() {
+  const nav = loadJson(NAV, null);
+  const cats = (nav && nav.categories) || [];
+  const cat = cats.find(c => c && c.id === 'ai-oss');
+  if (!cat || !Array.isArray(cat.items)) return null;
+
+  const out = [];
+  const seen = new Set();
+  for (const it of cat.items) {
+    const repo = repoFromUrl(it.url);
+    if (!repo) continue;
+    const key = repo.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push({
+      repo,
+      name: it.name || repo.split('/')[1],
+      desc: it.desc || '',
+      badge: it.badge || '',
+    });
+  }
+  return out;
+}
+
+/**
+ * 按库龄分档 —— 这批仓库没有人工分类，库龄是最能解释「为什么它增速快」的维度：
+ * 刚建三个月的库天然冲得猛，一年的老库靠月度趋势才看得出。
+ */
+function ageBucket(created) {
+  if (!created) return '未知库龄';
+  const t = Date.parse(created + 'T00:00:00Z');
+  if (!isFinite(t)) return '未知库龄';
+  const days = Math.floor((Date.now() - t) / 86400000);
+  if (days <= 30) return '30 天内';
+  if (days <= 90) return '31–90 天';
+  if (days <= 365) return '1 年内';
+  return '1 年以上';
+}
+
 /* ─────────── 主流程 ─────────── */
 
 async function main() {
-  const watch = loadJson(WATCHLIST, null);
-  if (!watch || !Array.isArray(watch.repos)) {
-    console.error('读不到 ' + WATCHLIST + '，或 repos 不是数组');
+  const all = loadTargets();
+  if (!all || !all.length) {
+    console.error('读不到 ' + NAV + ' 的 ai-oss 类目，或 items 为空');
     process.exit(1);
   }
 
@@ -139,11 +209,20 @@ async function main() {
   data.repos = data.repos || [];
 
   const day = today();
-  const targets = watch.repos.filter(w => !ONLY || ONLY.indexOf(w.repo) >= 0);
+  const targets = ONLY ? all.filter(t => ONLY.indexOf(t.repo.toLowerCase()) >= 0) : all;
+  if (!targets.length) {
+    console.error('--only 过滤后没有剩余仓库');
+    process.exit(1);
+  }
 
   console.log('─────────────────────────────────────────');
-  console.log('  stars-snapshot · ' + day + ' · ' + targets.length + ' 个仓库');
+  console.log('  stars-snapshot · ' + day + ' · ' + targets.length + ' / ' + all.length + ' 个仓库');
+  console.log('  令牌：' + (TOKEN ? '有' : '无（限流 60 次/小时，100 个仓库跑不完）'));
   console.log('─────────────────────────────────────────');
+
+  if (!TOKEN && targets.length > 55) {
+    console.warn('⚠️  没有 GITHUB_TOKEN，本次大概率中途 403。本地请先 `gh auth login`。');
+  }
 
   const byRepo = new Map(data.repos.map(r => [r.repo, r]));
   const failures = [];
@@ -164,12 +243,14 @@ async function main() {
       const stars = d.stargazers_count;
       const prev = byRepo.get(item.repo) || {};
       byRepo.set(item.repo, {
-        repo: d.full_name,
-        name: d.name,
+        // repo 是稳定主键（来自 nav/data.json），仓库改名时 fullName 会变但序列不断
+        repo: item.repo,
+        fullName: d.full_name || item.repo,
+        name: d.name || item.name,
         owner: d.owner ? d.owner.login : item.repo.split('/')[0],
-        desc: (d.description || '').slice(0, 140),
-        category: item.category || '未分类',
-        note: item.note || '',
+        desc: item.desc || (d.description || '').slice(0, 140),
+        category: ageBucket((d.created_at || '').slice(0, 10)),
+        note: item.badge,
         license: d.license ? d.license.spdx_id : 'NOASSERTION',
         language: d.language || '',
         stars,
@@ -189,23 +270,26 @@ async function main() {
 
       const prevStars = rows.length >= 2 ? rows[rows.length - 2][1] : null;
       const delta = prevStars === null ? '' : ' (' + (stars - prevStars >= 0 ? '+' : '') + (stars - prevStars) + ')';
-      console.log('✅ ' + d.full_name.padEnd(42) + String(stars).padStart(8) + delta);
+      console.log('✅ ' + (d.full_name || item.repo).padEnd(42) + String(stars).padStart(8) + delta);
     }
   }
 
   const queue = targets.slice();
   await Promise.all(Array.from({ length: Math.min(CONCURRENCY, queue.length) }, () => worker(queue)));
 
-  // 只保留 watchlist 里仍在的仓库，避免删条目后数据残留
-  const keep = new Set(watch.repos.map(w => w.repo));
+  // 只保留 nav/data.json 里仍在的仓库，避免删条目后数据残留
+  const keep = new Set(all.map(t => t.repo));
   data.repos = [...byRepo.values()].filter(r => keep.has(r.repo));
   data.series = prune(data.series, KEEP_DAYS);
+  for (const k of Object.keys(data.series)) {
+    if (!keep.has(k)) delete data.series[k];
+  }
   data.updated = day;
 
   console.log('');
   console.log(
     '成功 ' + (targets.length - failures.length) + ' / ' + targets.length +
-      '，序列覆盖 ' + Object.keys(data.series).length + ' 个仓库'
+      '，序列覆盖 ' + Object.keys(data.series).length + ' / ' + all.length + ' 个仓库'
   );
 
   if (DRY_RUN) {

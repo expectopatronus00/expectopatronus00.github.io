@@ -1,556 +1,2314 @@
 {
-  "updated": "2026-11-01",
+  "updated": "2026-11-02",
   "repos": [
     {
-      "repo": "deepseek-ai/DeepSeek-R1",
-      "name": "DeepSeek-R1",
-      "owner": "deepseek-ai",
-      "desc": "",
-      "category": "模型",
-      "note": "推理模型",
-      "license": "MIT",
-      "language": "",
-      "stars": 91992,
-      "forks": 11669,
-      "openIssues": 45,
-      "created": "2025-01-20",
-      "first": "2026-11-01",
-      "last": "2026-11-01"
-    },
-    {
-      "repo": "ollama/ollama",
-      "name": "ollama",
-      "owner": "ollama",
-      "desc": "Get up and running with Kimi, GLM, MiniMax, DeepSeek, gpt-oss, Qwen, Gemma and other models.",
-      "category": "推理与部署",
-      "note": "本地跑模型的事实标准",
-      "license": "MIT",
-      "language": "Go",
-      "stars": 185585,
-      "forks": 18848,
-      "openIssues": 4532,
-      "created": "2023-06-26",
-      "first": "2026-11-01",
-      "last": "2026-11-01"
-    },
-    {
-      "repo": "QwenLM/Qwen3",
-      "name": "Qwen3",
-      "owner": "QwenLM",
-      "desc": "Qwen3 is the large language model series developed by Qwen team, Alibaba Cloud.",
-      "category": "模型",
-      "note": "通义千问开源系列",
-      "license": "NOASSERTION",
-      "language": "Python",
-      "stars": 27697,
-      "forks": 2091,
-      "openIssues": 69,
-      "created": "2024-02-05",
-      "first": "2026-11-01",
-      "last": "2026-11-01"
-    },
-    {
-      "repo": "huggingface/transformers",
-      "name": "transformers",
-      "owner": "huggingface",
-      "desc": "🤗 Transformers: the model-definition framework for state-of-the-art machine learning models in text, vision, audio, and multimodal models, ",
-      "category": "模型",
-      "note": "模型生态的地基",
-      "license": "Apache-2.0",
-      "language": "Python",
-      "stars": 168415,
-      "forks": 35075,
-      "openIssues": 1052,
-      "created": "2018-10-29",
-      "first": "2026-11-01",
-      "last": "2026-11-01"
-    },
-    {
-      "repo": "vllm-project/vllm",
-      "name": "vllm",
-      "owner": "vllm-project",
-      "desc": "A high-throughput and memory-efficient inference and serving engine for LLMs",
-      "category": "推理与部署",
-      "note": "高吞吐推理服务引擎",
-      "license": "Apache-2.0",
-      "language": "Python",
-      "stars": 96066,
-      "forks": 24258,
-      "openIssues": 9716,
-      "created": "2023-02-09",
-      "first": "2026-11-01",
-      "last": "2026-11-01"
-    },
-    {
-      "repo": "langchain-ai/langchain",
-      "name": "langchain",
-      "owner": "langchain-ai",
-      "desc": "The agent engineering platform.",
-      "category": "Agent 框架",
-      "note": "老牌编排框架",
-      "license": "MIT",
-      "language": "Python",
-      "stars": 148831,
-      "forks": 25016,
-      "openIssues": 712,
-      "created": "2022-10-17",
-      "first": "2026-11-01",
-      "last": "2026-11-01"
-    },
-    {
-      "repo": "deepseek-ai/DeepSeek-V3",
-      "name": "DeepSeek-V3",
-      "owner": "deepseek-ai",
-      "desc": "",
-      "category": "模型",
-      "note": "MoE 主力模型",
-      "license": "MIT",
-      "language": "Python",
-      "stars": 104707,
-      "forks": 16746,
-      "openIssues": 313,
-      "created": "2024-12-26",
-      "first": "2026-11-01",
-      "last": "2026-11-01"
-    },
-    {
-      "repo": "microsoft/autogen",
-      "name": "autogen",
-      "owner": "microsoft",
-      "desc": "A programming framework for agentic AI",
-      "category": "Agent 框架",
-      "note": "多智能体对话",
-      "license": "CC-BY-4.0",
-      "language": "Python",
-      "stars": 61662,
-      "forks": 9347,
-      "openIssues": 1127,
-      "created": "2023-08-18",
-      "first": "2026-11-01",
-      "last": "2026-11-01"
-    },
-    {
-      "repo": "browser-use/browser-use",
-      "name": "browser-use",
-      "owner": "browser-use",
-      "desc": "Open-source Python library for AI browser agents, plus Browser Use Cloud: stealth browsers and a hosted agent API.",
-      "category": "Agent 框架",
-      "note": "浏览器操作智能体",
-      "license": "MIT",
-      "language": "Python",
-      "stars": 119759,
-      "forks": 13342,
-      "openIssues": 619,
-      "created": "2024-10-31",
-      "first": "2026-11-01",
-      "last": "2026-11-01"
-    },
-    {
-      "repo": "crewAIInc/crewAI",
-      "name": "crewAI",
-      "owner": "crewAIInc",
-      "desc": "Framework for orchestrating role-playing, autonomous AI agents. By fostering collaborative intelligence, CrewAI empowers agents to work toge",
-      "category": "Agent 框架",
-      "note": "角色化多智能体",
-      "license": "MIT",
-      "language": "Python",
-      "stars": 60389,
-      "forks": 8992,
-      "openIssues": 984,
-      "created": "2023-10-27",
-      "first": "2026-11-01",
-      "last": "2026-11-01"
-    },
-    {
-      "repo": "openai/openai-agents-python",
-      "name": "openai-agents-python",
-      "owner": "openai",
-      "desc": "A lightweight, powerful framework for multi-agent workflows",
-      "category": "Agent 框架",
-      "note": "官方 Agent SDK",
-      "license": "MIT",
-      "language": "Python",
-      "stars": 30437,
-      "forks": 4970,
-      "openIssues": 28,
-      "created": "2025-03-11",
-      "first": "2026-11-01",
-      "last": "2026-11-01"
-    },
-    {
-      "repo": "modelcontextprotocol/servers",
-      "name": "servers",
-      "owner": "modelcontextprotocol",
-      "desc": "Model Context Protocol Servers",
-      "category": "Agent 框架",
-      "note": "MCP 官方服务集合",
-      "license": "NOASSERTION",
-      "language": "TypeScript",
-      "stars": 91735,
-      "forks": 11903,
-      "openIssues": 38,
-      "created": "2024-11-19",
-      "first": "2026-11-01",
-      "last": "2026-11-01"
-    },
-    {
-      "repo": "AstrBotDevs/AstrBot",
-      "name": "AstrBot",
-      "owner": "AstrBotDevs",
-      "desc": "AI Agent Assistant & development framework that integrates lots of IM platforms, LLMs, plugins and AI feature, and can be your openclaw alte",
-      "category": "Agent 框架",
-      "note": "多平台 IM 接同一个 agent",
-      "license": "AGPL-3.0",
-      "language": "Python",
-      "stars": 45501,
-      "forks": 3335,
-      "openIssues": 1139,
-      "created": "2022-12-08",
-      "first": "2026-11-01",
-      "last": "2026-11-01"
-    },
-    {
-      "repo": "Aider-AI/aider",
-      "name": "aider",
-      "owner": "Aider-AI",
-      "desc": "aider is AI pair programming in your terminal",
-      "category": "编码 Agent",
-      "note": "命令行结对编程",
-      "license": "Apache-2.0",
-      "language": "Python",
-      "stars": 49883,
-      "forks": 5123,
-      "openIssues": 1942,
-      "created": "2023-05-09",
-      "first": "2026-11-01",
-      "last": "2026-11-01"
-    },
-    {
-      "repo": "cline/cline",
-      "name": "cline",
-      "owner": "cline",
-      "desc": "Autonomous coding agent as an SDK, IDE extension, or CLI assistant.",
-      "category": "编码 Agent",
-      "note": "编辑器内自治 agent",
-      "license": "Apache-2.0",
-      "language": "TypeScript",
-      "stars": 71174,
-      "forks": 7823,
-      "openIssues": 1741,
-      "created": "2024-07-06",
-      "first": "2026-11-01",
-      "last": "2026-11-01"
-    },
-    {
-      "repo": "musistudio/claude-code-router",
-      "name": "claude-code-router",
-      "owner": "musistudio",
-      "desc": "One local control plane for every AI agent: route across models, fuse new capabilities, orchestrate tools, and stay fully in control.",
-      "category": "编码 Agent",
-      "note": "给编码 agent 换模型路由",
-      "license": "MIT",
-      "language": "TypeScript",
-      "stars": 37942,
-      "forks": 3186,
-      "openIssues": 1186,
-      "created": "2025-02-25",
-      "first": "2026-11-01",
-      "last": "2026-11-01"
-    },
-    {
-      "repo": "openai/codex",
-      "name": "codex",
-      "owner": "openai",
-      "desc": "Lightweight coding agent that runs in your terminal",
-      "category": "编码 Agent",
-      "note": "终端里的编码智能体",
-      "license": "Apache-2.0",
-      "language": "Rust",
-      "stars": 132715,
-      "forks": 20967,
-      "openIssues": 25975,
-      "created": "2025-04-13",
-      "first": "2026-11-01",
-      "last": "2026-11-01"
-    },
-    {
-      "repo": "Panniantong/Agent-Reach",
-      "name": "Agent-Reach",
-      "owner": "Panniantong",
-      "desc": "Give your AI agent eyes to see the entire internet. Read & search Twitter, Reddit, YouTube, GitHub, Bilibili, XiaoHongShu — one CLI, zero AP",
-      "category": "编码 Agent",
-      "note": "站内已写过",
-      "license": "MIT",
-      "language": "Python",
-      "stars": 107565,
-      "forks": 9590,
-      "openIssues": 265,
-      "created": "2026-02-24",
-      "first": "2026-11-01",
-      "last": "2026-11-01"
-    },
-    {
-      "repo": "deepseek-ai/dsh-superagent-prototype",
-      "name": "dsh-superagent-prototype",
-      "owner": "deepseek-ai",
-      "desc": "Towards a More Autonomous Agent System",
-      "category": "编码 Agent",
-      "note": "DeepSeek agent 原型",
-      "license": "MIT",
-      "language": "TypeScript",
-      "stars": 6862,
-      "forks": 685,
-      "openIssues": 0,
-      "created": "2026-10-31",
-      "first": "2026-11-01",
-      "last": "2026-11-01"
-    },
-    {
-      "repo": "openfilm/openfilm",
-      "name": "openfilm",
-      "owner": "openfilm",
-      "desc": "The open source AI video agent: turns any coding agent into a video agent, with an editor to change anything it makes.",
-      "category": "应用与多模态",
-      "note": "开源 AI 影像",
-      "license": "MIT",
-      "language": "TypeScript",
-      "stars": 4081,
-      "forks": 391,
-      "openIssues": 25,
-      "created": "2026-10-04",
-      "first": "2026-11-01",
-      "last": "2026-11-01"
-    },
-    {
-      "repo": "ccch1mneyyy/dsh-Go",
-      "name": "dsh-Go",
-      "owner": "ccch1mneyyy",
-      "desc": "dsh-go — DeepSeek Harness 装进口袋：手机本机运行，也能遥控你的电脑。",
-      "category": "编码 Agent",
-      "note": "手机端跑 Harness",
-      "license": "AGPL-3.0",
-      "language": "Dart",
-      "stars": 4566,
-      "forks": 216,
-      "openIssues": 199,
-      "created": "2026-10-25",
-      "first": "2026-11-01",
-      "last": "2026-11-01"
-    },
-    {
-      "repo": "patch-gg/pixelfx",
-      "name": "pixelfx",
-      "owner": "patch-gg",
-      "desc": "244 pixel art effects, every one a small piece of code. Plus a Claude Code skill to make your own.",
-      "category": "应用与多模态",
-      "note": "像素画特效",
-      "license": "MIT",
-      "language": "JavaScript",
-      "stars": 2455,
-      "forks": 314,
-      "openIssues": 1,
-      "created": "2026-10-30",
-      "first": "2026-11-01",
-      "last": "2026-11-01"
-    },
-    {
       "repo": "Comfy-Org/ComfyUI",
+      "fullName": "Comfy-Org/ComfyUI",
       "name": "ComfyUI",
       "owner": "Comfy-Org",
-      "desc": "The most powerful and modular diffusion model GUI, api and backend with a graph/nodes interface. The fastest local inference engine in the w",
-      "category": "应用与多模态",
-      "note": "节点式图像生成",
+      "desc": "模块化扩散模型 GUI 与后端，本地推理的事实标准；本周 +4.5 千星",
+      "category": "1 年以上",
+      "note": "热门",
       "license": "GPL-3.0",
       "language": "Python",
-      "stars": 144476,
-      "forks": 17209,
+      "stars": 144488,
+      "forks": 17214,
       "openIssues": 5413,
       "created": "2023-01-17",
       "first": "2026-11-01",
-      "last": "2026-11-01"
+      "last": "2026-11-02"
     },
     {
       "repo": "mksglu/context-mode",
+      "fullName": "mksglu/context-mode",
       "name": "context-mode",
       "owner": "mksglu",
-      "desc": "Context window optimization for AI coding agents. Sandboxes tool output (98% reduction), persists session memory, and   enforces routing acr",
-      "category": "应用与多模态",
-      "note": "工具输出沙箱化省上下文",
+      "desc": "上下文窗口优化：沙箱化工具输出（省 98%），经 MCP 路由 17 个平台",
+      "category": "1 年内",
+      "note": "",
       "license": "NOASSERTION",
       "language": "TypeScript",
-      "stars": 33142,
+      "stars": 33164,
       "forks": 2285,
       "openIssues": 354,
       "created": "2026-02-23",
       "first": "2026-11-01",
-      "last": "2026-11-01"
+      "last": "2026-11-02"
     },
     {
-      "repo": "calesthio/OpenMontage",
-      "name": "OpenMontage",
-      "owner": "calesthio",
-      "desc": "World's first open-source, agentic video production system. 12 production pipelines, 100+ tools, 700+ agent skill and production-knowledge f",
-      "category": "应用与多模态",
-      "note": "管线式视频制作",
+      "repo": "debpalash/VoiceStudio",
+      "fullName": "debpalash/VoiceStudio",
+      "name": "VoiceStudio",
+      "owner": "debpalash",
+      "desc": "完全本地的 ElevenLabs 开源替代：声音克隆、配音、转写覆盖 646 种语言，CUDA / Metal / CPU 都能跑；本月 +4.8 万星",
+      "category": "1 年内",
+      "note": "热门",
       "license": "AGPL-3.0",
       "language": "Python",
-      "stars": 74327,
-      "forks": 9770,
-      "openIssues": 423,
-      "created": "2026-03-29",
-      "first": "2026-11-01",
-      "last": "2026-11-01"
+      "stars": 97915,
+      "forks": 10875,
+      "openIssues": 116,
+      "created": "2026-04-09",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "vectorize-io/hindsight",
+      "fullName": "vectorize-io/hindsight",
+      "name": "hindsight",
+      "owner": "vectorize-io",
+      "desc": "「会学习」的 Agent 记忆层，为长期运行的 agent 做记忆检索与更新；本月 +2.8 万星",
+      "category": "1 年以上",
+      "note": "",
+      "license": "MIT",
+      "language": "Python",
+      "stars": 57691,
+      "forks": 7056,
+      "openIssues": 178,
+      "created": "2025-10-30",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "morluto/rea",
+      "fullName": "morluto/rea",
+      "name": "rea",
+      "owner": "morluto",
+      "desc": "用 agent 做逆向工程：从应用行为一路拆到原生二进制，经 MCP 接 Ghidra / IDA，分析全在本地；本周 +8.8 万星，当前全站最快",
+      "category": "1 年内",
+      "note": "热门",
+      "license": "MIT",
+      "language": "TypeScript",
+      "stars": 418752,
+      "forks": 104620,
+      "openIssues": 1612,
+      "created": "2026-04-14",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "paperclipai/paperclip",
+      "fullName": "paperclipai/paperclip",
+      "name": "paperclip",
+      "owner": "paperclipai",
+      "desc": "开源的工作 Agent 管理台：任务分配、进度与协作集中在一处；本月 +2.6 万星",
+      "category": "1 年内",
+      "note": "",
+      "license": "MIT",
+      "language": "TypeScript",
+      "stars": 109910,
+      "forks": 18221,
+      "openIssues": 6664,
+      "created": "2026-03-02",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "cloudflare/security-audit-skill",
+      "fullName": "cloudflare/security-audit-skill",
+      "name": "security-audit-skill",
+      "owner": "cloudflare",
+      "desc": "Cloudflare 出品的多阶段安全审计 skill，给编码 agent 用，产出机器可读报告；本月 +2.1 万星",
+      "category": "1 年内",
+      "note": "",
+      "license": "MIT",
+      "language": "JavaScript",
+      "stars": 56373,
+      "forks": 3675,
+      "openIssues": 110,
+      "created": "2026-06-18",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "heygen-com/hyperframes",
+      "fullName": "heygen-com/hyperframes",
+      "name": "hyperframes",
+      "owner": "heygen-com",
+      "desc": "「写 HTML，渲染视频」：为 agent 设计的程序化视频生成；本月 +1.8 万星",
+      "category": "1 年内",
+      "note": "",
+      "license": "Apache-2.0",
+      "language": "TypeScript",
+      "stars": 77112,
+      "forks": 7067,
+      "openIssues": 209,
+      "created": "2026-03-10",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "tashfeenahmed/freellmapi",
+      "fullName": "tashfeenahmed/freellmapi",
+      "name": "freellmapi",
+      "owner": "tashfeenahmed",
+      "desc": "34 家免费 LLM、635 个免费端点聚合成一个 /v1 接口，带智能路由；本月 +1.2 万星",
+      "category": "1 年内",
+      "note": "免费",
+      "license": "MIT",
+      "language": "TypeScript",
+      "stars": 45730,
+      "forks": 6243,
+      "openIssues": 44,
+      "created": "2026-04-21",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "stablyai/orca",
+      "fullName": "stablyai/orca",
+      "name": "orca",
+      "owner": "stablyai",
+      "desc": "用自己的订阅在桌面 / 移动 / 远程跑 Claude Code 等编码 agent；本周 +9.5 千星",
+      "category": "1 年内",
+      "note": "",
+      "license": "MIT",
+      "language": "TypeScript",
+      "stars": 112519,
+      "forks": 7121,
+      "openIssues": 7909,
+      "created": "2026-03-17",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "pbakaus/impeccable",
+      "fullName": "pbakaus/impeccable",
+      "name": "impeccable",
+      "owner": "pbakaus",
+      "desc": "一套喂给 AI agent 的设计语言，专治「能用但丑」的生成界面；本月 +1.6 万星",
+      "category": "1 年内",
+      "note": "",
+      "license": "Apache-2.0",
+      "language": "Rust",
+      "stars": 99326,
+      "forks": 5874,
+      "openIssues": 61,
+      "created": "2025-11-16",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "affaan-m/ECC",
+      "fullName": "affaan-m/ECC",
+      "name": "ECC",
+      "owner": "affaan-m",
+      "desc": "给 Claude Code / Codex / Cursor 做 skills、记忆与安全加固的 harness 优化层；本月 +2.3 万星，总量 28.7 万",
+      "category": "1 年内",
+      "note": "",
+      "license": "MIT",
+      "language": "JavaScript",
+      "stars": 294807,
+      "forks": 43639,
+      "openIssues": 199,
+      "created": "2026-01-18",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "NVIDIA/OpenShell",
+      "fullName": "NVIDIA/OpenShell",
+      "name": "OpenShell",
+      "owner": "NVIDIA",
+      "desc": "NVIDIA 出品的自主 Agent 安全运行时：沙箱、权限与隐私隔离；本月 +9.7 千星",
+      "category": "1 年内",
+      "note": "",
+      "license": "Apache-2.0",
+      "language": "Rust",
+      "stars": 20908,
+      "forks": 2047,
+      "openIssues": 565,
+      "created": "2026-02-24",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "anomalyco/opencode",
+      "fullName": "anomalyco/opencode",
+      "name": "opencode",
+      "owner": "anomalyco",
+      "desc": "开源编码 Agent，终端里的 Claude Code 平替；本周 +6.8 千星，总量 22 万",
+      "category": "1 年以上",
+      "note": "",
+      "license": "MIT",
+      "language": "TypeScript",
+      "stars": 223852,
+      "forks": 30101,
+      "openIssues": 3752,
+      "created": "2025-04-30",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "HKUDS/CLI-Anything",
+      "fullName": "HKUDS/CLI-Anything",
+      "name": "CLI-Anything",
+      "owner": "HKUDS",
+      "desc": "港大团队「让所有软件 Agent 原生化」的命令行改造计划；本周 +3.3 千星",
+      "category": "1 年内",
+      "note": "",
+      "license": "Apache-2.0",
+      "language": "Python",
+      "stars": 58038,
+      "forks": 5220,
+      "openIssues": 236,
+      "created": "2026-03-08",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "thedotmack/claude-mem",
+      "fullName": "thedotmack/claude-mem",
+      "name": "claude-mem",
+      "owner": "thedotmack",
+      "desc": "Agent 跨会话持久记忆：自动压缩历史会话并按需回注上下文；本月 +8.4 千星",
+      "category": "1 年以上",
+      "note": "",
+      "license": "Apache-2.0",
+      "language": "TypeScript",
+      "stars": 109270,
+      "forks": 9565,
+      "openIssues": 173,
+      "created": "2025-08-31",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "K-Dense-AI/scientific-agent-skills",
+      "fullName": "K-Dense-AI/scientific-agent-skills",
+      "name": "scientific-agent-skills",
+      "owner": "K-Dense-AI",
+      "desc": "科研 agent skills 库：177 个经过验证的技能接 100 多个科学数据库，本周 +3 千星",
+      "category": "1 年以上",
+      "note": "",
+      "license": "MIT",
+      "language": "Python",
+      "stars": 55668,
+      "forks": 4900,
+      "openIssues": 77,
+      "created": "2025-10-19",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "deepseek-ai/deepseek-harness",
+      "fullName": "deepseek-ai/deepseek-harness",
+      "name": "deepseek-harness",
+      "owner": "deepseek-ai",
+      "desc": "DeepSeek 官方 agent harness：Everything is a Plugin，插件化搭 agent 的底座；两个月 26 万星",
+      "category": "31–90 天",
+      "note": "热门",
+      "license": "MIT",
+      "language": "TypeScript",
+      "stars": 268348,
+      "forks": 32564,
+      "openIssues": 0,
+      "created": "2026-08-13",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "ruvnet/ruflo",
+      "fullName": "ruvnet/ruflo",
+      "name": "ruflo",
+      "owner": "ruvnet",
+      "desc": "多智能体蜂群 harness：自主工作流、记忆与 RAG，本周 +3.3 千星",
+      "category": "1 年以上",
+      "note": "",
+      "license": "MIT",
+      "language": "TypeScript",
+      "stars": 80544,
+      "forks": 9447,
+      "openIssues": 980,
+      "created": "2025-06-02",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "anthropics/claude-plugins-official",
+      "fullName": "anthropics/claude-plugins-official",
+      "name": "claude-plugins-official",
+      "owner": "anthropics",
+      "desc": "Anthropic 官方 Claude Code 插件目录，质量分层的官方收录",
+      "category": "1 年内",
+      "note": "",
+      "license": "Apache-2.0",
+      "language": "Python",
+      "stars": 45722,
+      "forks": 4760,
+      "openIssues": 1267,
+      "created": "2025-11-20",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "Ebony-Vinyl/dsh-our-free-model",
+      "fullName": "Ebony-Vinyl/dsh-our-free-model",
+      "name": "dsh-our-free-model",
+      "owner": "Ebony-Vinyl",
+      "desc": "免登录免 API Key 用上 DeepSeek V4.1 Flash、Kimi K3 等前沿模型",
+      "category": "31–90 天",
+      "note": "免费",
+      "license": "MIT",
+      "language": "JavaScript",
+      "stars": 55759,
+      "forks": 1531,
+      "openIssues": 106,
+      "created": "2026-09-24",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "earthtojake/text-to-cad",
+      "fullName": "earthtojake/text-to-cad",
+      "name": "text-to-cad",
+      "owner": "earthtojake",
+      "desc": "给你的 agent CAD 超能力：自然语言生成参数化 3D 模型",
+      "category": "1 年内",
+      "note": "",
+      "license": "MIT",
+      "language": "Python",
+      "stars": 24746,
+      "forks": 2363,
+      "openIssues": 39,
+      "created": "2026-04-22",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "anthropics/knowledge-work-plugins",
+      "fullName": "anthropics/knowledge-work-plugins",
+      "name": "knowledge-work-plugins",
+      "owner": "anthropics",
+      "desc": "Anthropic 开源的 Claude Cowork 知识工作插件集",
+      "category": "1 年内",
+      "note": "",
+      "license": "Apache-2.0",
+      "language": "Python",
+      "stars": 34364,
+      "forks": 3799,
+      "openIssues": 160,
+      "created": "2026-01-23",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "pingdotgg/t3code",
+      "fullName": "pingdotgg/t3code",
+      "name": "t3code",
+      "owner": "pingdotgg",
+      "desc": "Theo 出品的 T3 编码工具链，本月 +6.4 千星",
+      "category": "1 年内",
+      "note": "",
+      "license": "MIT",
+      "language": "TypeScript",
+      "stars": 37993,
+      "forks": 8916,
+      "openIssues": 3919,
+      "created": "2026-02-08",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "yetone/magpie",
+      "fullName": "yetone/magpie",
+      "name": "magpie",
+      "owner": "yetone",
+      "desc": "菜单栏统一接入各家模型：Codex 跑 DeepSeek、Claude Code 跑 Kimi",
+      "category": "31–90 天",
+      "note": "",
+      "license": "MIT",
+      "language": "Go",
+      "stars": 27584,
+      "forks": 2339,
+      "openIssues": 2726,
+      "created": "2026-09-23",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "lexmount/moli",
+      "fullName": "lexmount/moli",
+      "name": "moli",
+      "owner": "lexmount",
+      "desc": "为 AI agent 打造的 Rust headless 浏览器：轻、快、高兼容",
+      "category": "31–90 天",
+      "note": "",
+      "license": "Apache-2.0",
+      "language": "Rust",
+      "stars": 22005,
+      "forks": 595,
+      "openIssues": 520,
+      "created": "2026-08-10",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "img2threejs/img2threejs",
+      "fullName": "img2threejs/img2threejs",
+      "name": "img2threejs",
+      "owner": "img2threejs",
+      "desc": "参考图一键转程序化 Three.js 模型，可直接动画",
+      "category": "1 年内",
+      "note": "",
+      "license": "Apache-2.0",
+      "language": "Python",
+      "stars": 20036,
+      "forks": 1686,
+      "openIssues": 118,
+      "created": "2026-07-15",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "google/artemis",
+      "fullName": "google/artemis",
+      "name": "artemis",
+      "owner": "google",
+      "desc": "Google 出品：自然语言指令转可靠的 Android 自动化",
+      "category": "31–90 天",
+      "note": "",
+      "license": "Apache-2.0",
+      "language": "Python",
+      "stars": 16090,
+      "forks": 1759,
+      "openIssues": 180,
+      "created": "2026-08-13",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "Vincentwei1021/video-shotcraft",
+      "fullName": "Vincentwei1021/video-shotcraft",
+      "name": "video-shotcraft",
+      "owner": "Vincentwei1021",
+      "desc": "给 Claude Code / Codex 用的 AI 视频 skill，Remotion 产出产品级短片",
+      "category": "1 年内",
+      "note": "",
+      "license": "Apache-2.0",
+      "language": "TypeScript",
+      "stars": 15823,
+      "forks": 1502,
+      "openIssues": 4,
+      "created": "2026-07-19",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "akitaonrails/ai-memory",
+      "fullName": "akitaonrails/ai-memory",
+      "name": "ai-memory",
+      "owner": "akitaonrails",
+      "desc": "编码 agent 的长期记忆，跨厂商交接无痛",
+      "category": "1 年内",
+      "note": "",
+      "license": "MIT",
+      "language": "Rust",
+      "stars": 14829,
+      "forks": 1064,
+      "openIssues": 37,
+      "created": "2026-05-21",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "cursor/plugins",
+      "fullName": "cursor/plugins",
+      "name": "plugins",
+      "owner": "cursor",
+      "desc": "Cursor 插件规范与官方插件集",
+      "category": "1 年内",
+      "note": "",
+      "license": "NOASSERTION",
+      "language": "TypeScript",
+      "stars": 15016,
+      "forks": 1549,
+      "openIssues": 614,
+      "created": "2026-01-23",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "trailhq/Trail-Code",
+      "fullName": "trailhq/Trail-Code",
+      "name": "Trail-Code",
+      "owner": "trailhq",
+      "desc": "给 Claude Code / Cursor / Codex 提速：代码库级上下文理解",
+      "category": "1 年内",
+      "note": "",
+      "license": "MIT",
+      "language": "TypeScript",
+      "stars": 11011,
+      "forks": 981,
+      "openIssues": 280,
+      "created": "2026-07-03",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "TencentCloud/Octop",
+      "fullName": "TencentCloud/Octop",
+      "name": "Octop",
+      "owner": "TencentCloud",
+      "desc": "腾讯云出品：自托管多用户、多 agent AI 助手",
+      "category": "1 年内",
+      "note": "",
+      "license": "MIT",
+      "language": "Python",
+      "stars": 11423,
+      "forks": 1519,
+      "openIssues": 779,
+      "created": "2026-07-08",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "rehan-remade/universal-modder",
+      "fullName": "rehan-remade/universal-modder",
+      "name": "universal-modder",
+      "owner": "rehan-remade",
+      "desc": "指哪改哪：让 Claude Code 给几乎任何 PC 游戏写 mod",
+      "category": "31–90 天",
+      "note": "",
+      "license": "MIT",
+      "language": "Python",
+      "stars": 9319,
+      "forks": 1040,
+      "openIssues": 31,
+      "created": "2026-09-30",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "KKKKhazix/AIHOT",
+      "fullName": "KKKKhazix/AIHOT",
+      "name": "AIHOT",
+      "owner": "KKKKhazix",
+      "desc": "自己找热点、自己写日报的网站框架，换成你的信源就是你的行业站",
+      "category": "31–90 天",
+      "note": "",
+      "license": "MIT",
+      "language": "TypeScript",
+      "stars": 9032,
+      "forks": 2145,
+      "openIssues": 2,
+      "created": "2026-09-28",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "tangency-labs/solidcraft",
+      "fullName": "tangency-labs/solidcraft",
+      "name": "solidcraft",
+      "owner": "tangency-labs",
+      "desc": "纯 Rust 写的开源参数化 3D CAD，桌面 / Web / MCP 自动化",
+      "category": "30 天内",
+      "note": "",
+      "license": "Apache-2.0",
+      "language": "Rust",
+      "stars": 12902,
+      "forks": 1685,
+      "openIssues": 5092,
+      "created": "2026-10-07",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "Ryze-AI-Adgent/open-seo-mcp-skills",
+      "fullName": "Ryze-AI-Adgent/open-seo-mcp-skills",
+      "name": "open-seo-mcp-skills",
+      "owner": "Ryze-AI-Adgent",
+      "desc": "免费 SEO MCP + 开源 SEO/GEO skills：关键词、排名追踪、站审",
+      "category": "31–90 天",
+      "note": "",
+      "license": "MIT",
+      "language": "Shell",
+      "stars": 8556,
+      "forks": 390,
+      "openIssues": 4,
+      "created": "2026-08-29",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "XiaoDuoYa/codex-with-chatgpt",
+      "fullName": "XiaoDuoYa/codex-with-chatgpt",
+      "name": "codex-with-chatgpt",
+      "owner": "XiaoDuoYa",
+      "desc": "ChatGPT 负责想、Codex 负责干，规划脑与执行体分离",
+      "category": "31–90 天",
+      "note": "",
+      "license": "MIT",
+      "language": "TypeScript",
+      "stars": 7634,
+      "forks": 702,
+      "openIssues": 20,
+      "created": "2026-08-28",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "jev-chat/jev-chat-jarvis",
+      "fullName": "jev-chat/jev-chat-jarvis",
+      "name": "jev-chat-jarvis",
+      "owner": "jev-chat",
+      "desc": "聊天决策助手：回复前先读对话、判意图、估风险",
+      "category": "31–90 天",
+      "note": "",
+      "license": "MIT",
+      "language": "Kotlin",
+      "stars": 8207,
+      "forks": 1319,
+      "openIssues": 31,
+      "created": "2026-09-21",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "deeplethe/utopia",
+      "fullName": "deeplethe/utopia",
+      "name": "utopia",
+      "owner": "deeplethe",
+      "desc": "号称首个开源企业级世界模型",
+      "category": "31–90 天",
+      "note": "",
+      "license": "Apache-2.0",
+      "language": "Rust",
+      "stars": 8658,
+      "forks": 1186,
+      "openIssues": 76,
+      "created": "2026-08-07",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "bojieli/ai-infra-book",
+      "fullName": "bojieli/ai-infra-book",
+      "name": "ai-infra-book",
+      "owner": "bojieli",
+      "desc": "开源书稿《深入理解 AI Infra》：从硬件约束讲到系统设计",
+      "category": "31–90 天",
+      "note": "",
+      "license": "Apache-2.0",
+      "language": "Python",
+      "stars": 7220,
+      "forks": 571,
+      "openIssues": 9,
+      "created": "2026-08-22",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "Human-Agent-Society/reef",
+      "fullName": "Human-Agent-Society/reef",
+      "name": "reef",
+      "owner": "Human-Agent-Society",
+      "desc": "持续自我改进 agent 的基础设施，本周 +3.3 千星",
+      "category": "31–90 天",
+      "note": "",
+      "license": "Apache-2.0",
+      "language": "Python",
+      "stars": 7786,
+      "forks": 731,
+      "openIssues": 126,
+      "created": "2026-08-31",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "Jakeschincariol/replica-skill",
+      "fullName": "Jakeschincariol/replica-skill",
+      "name": "replica-skill",
+      "owner": "Jakeschincariol",
+      "desc": "11 个免费 Claude skills：逆向任意应用、重建、测 bug",
+      "category": "30 天内",
+      "note": "",
+      "license": "MIT",
+      "language": "Python",
+      "stars": 6995,
+      "forks": 1253,
+      "openIssues": 17,
+      "created": "2026-10-03",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "shader-effects-inc/shaders",
+      "fullName": "shader-effects-inc/shaders",
+      "name": "shaders",
+      "owner": "shader-effects-inc",
+      "desc": "WebGPU 特效组件，支持 React / Vue / Svelte / Framer",
+      "category": "31–90 天",
+      "note": "",
+      "license": "MIT",
+      "language": "TypeScript",
+      "stars": 5759,
+      "forks": 270,
+      "openIssues": 6,
+      "created": "2026-09-29",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "tigerless-labs/agent-memory",
+      "fullName": "tigerless-labs/agent-memory",
+      "name": "agent-memory",
+      "owner": "tigerless-labs",
+      "desc": "Agent 长期记忆运行时：纯 Markdown 为事实源，本地排序检索",
+      "category": "31–90 天",
+      "note": "",
+      "license": "MIT",
+      "language": "Python",
+      "stars": 4306,
+      "forks": 201,
+      "openIssues": 20,
+      "created": "2026-09-01",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "elie222/rakazo",
+      "fullName": "elie222/rakazo",
+      "name": "rakazo",
+      "owner": "elie222",
+      "desc": "开源 Grok Bot 替代：自带模型与沙箱",
+      "category": "31–90 天",
+      "note": "",
+      "license": "Apache-2.0",
+      "language": "TypeScript",
+      "stars": 6564,
+      "forks": 1162,
+      "openIssues": 97,
+      "created": "2026-08-13",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "ZJU-REAL/Easel",
+      "fullName": "ZJU-REAL/Easel",
+      "name": "Easel",
+      "owner": "ZJU-REAL",
+      "desc": "浙大出品：社媒全流程 agent，找热点、做内容、全平台发布",
+      "category": "31–90 天",
+      "note": "",
+      "license": "Apache-2.0",
+      "language": "Python",
+      "stars": 4294,
+      "forks": 701,
+      "openIssues": 25,
+      "created": "2026-08-28",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "QingYunA/answer-me-with-html",
+      "fullName": "QingYunA/answer-me-with-html",
+      "name": "answer-me-with-html",
+      "owner": "QingYunA",
+      "desc": "agent skill：难题用一页交互 HTML 回答",
+      "category": "31–90 天",
+      "note": "",
+      "license": "MIT",
+      "language": "JavaScript",
+      "stars": 5023,
+      "forks": 338,
+      "openIssues": 7,
+      "created": "2026-10-02",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "Leonxlnx/unlazy",
+      "fullName": "Leonxlnx/unlazy",
+      "name": "unlazy",
+      "owner": "Leonxlnx",
+      "desc": "治 AI 偷懒的 skill：Depth Tree 方法逼出深度",
+      "category": "31–90 天",
+      "note": "",
+      "license": "MIT",
+      "language": "JavaScript",
+      "stars": 4249,
+      "forks": 336,
+      "openIssues": 9,
+      "created": "2026-08-09",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "onehumanbeing/esp32-iphone-agent",
+      "fullName": "onehumanbeing/esp32-iphone-agent",
+      "name": "esp32-iphone-agent",
+      "owner": "onehumanbeing",
+      "desc": "7 美元的 ESP32 让 AI 模型操作真 iPhone",
+      "category": "30 天内",
+      "note": "",
+      "license": "MIT",
+      "language": "C",
+      "stars": 4199,
+      "forks": 560,
+      "openIssues": 16,
+      "created": "2026-10-11",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "Nanako0129/sepia",
+      "fullName": "Nanako0129/sepia",
+      "name": "sepia",
+      "owner": "Nanako0129",
+      "desc": "去 AI 味写作 skill，兼容 77+ 个 Agent Skills 平台",
+      "category": "31–90 天",
+      "note": "",
+      "license": "MIT",
+      "language": "Python",
+      "stars": 3572,
+      "forks": 219,
+      "openIssues": 7,
+      "created": "2026-08-28",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "HarnessRouter/harnessrouter",
+      "fullName": "HarnessRouter/harnessrouter",
+      "name": "harnessrouter",
+      "owner": "HarnessRouter",
+      "desc": "社区版自托管统一界面：一个入口调度多个 agent",
+      "category": "31–90 天",
+      "note": "",
+      "license": "Apache-2.0",
+      "language": "Python",
+      "stars": 3833,
+      "forks": 415,
+      "openIssues": 21,
+      "created": "2026-08-09",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "fuxicodex/Fuxi",
+      "fullName": "fuxicodex/Fuxi",
+      "name": "Fuxi",
+      "owner": "fuxicodex",
+      "desc": "住在终端里的快速自包含 AI 编码 agent",
+      "category": "31–90 天",
+      "note": "",
+      "license": "NOASSERTION",
+      "language": "Python",
+      "stars": 3203,
+      "forks": 221,
+      "openIssues": 1,
+      "created": "2026-08-04",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "Leonxlnx/earshot",
+      "fullName": "Leonxlnx/earshot",
+      "name": "earshot",
+      "owner": "Leonxlnx",
+      "desc": "让编码 agent 听见声音：审听、配音 CPU 可跑",
+      "category": "30 天内",
+      "note": "",
+      "license": "MIT",
+      "language": "Python",
+      "stars": 3449,
+      "forks": 217,
+      "openIssues": 14,
+      "created": "2026-10-15",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "xzf-thu/VoiceMem",
+      "fullName": "xzf-thu/VoiceMem",
+      "name": "VoiceMem",
+      "owner": "xzf-thu",
+      "desc": "下一代语音 agent 的通用记忆基础设施",
+      "category": "31–90 天",
+      "note": "",
+      "license": "Apache-2.0",
+      "language": "Python",
+      "stars": 2820,
+      "forks": 263,
+      "openIssues": 7,
+      "created": "2026-08-17",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "Folkbench/folkbench",
+      "fullName": "Folkbench/folkbench",
+      "name": "folkbench",
+      "owner": "Folkbench",
+      "desc": "AI API 中转站评测排行：实测可用率、延迟与价格",
+      "category": "31–90 天",
+      "note": "",
+      "license": "NOASSERTION",
+      "language": "Rust",
+      "stars": 4164,
+      "forks": 21,
+      "openIssues": 0,
+      "created": "2026-10-02",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "nano-muse/nanoMuse",
+      "fullName": "nano-muse/nanoMuse",
+      "name": "nanoMuse",
+      "owner": "nano-muse",
+      "desc": "开源个人 agent：跨你所有设备，有名字有形象",
+      "category": "31–90 天",
+      "note": "",
+      "license": "GPL-3.0",
+      "language": "Swift",
+      "stars": 2981,
+      "forks": 357,
+      "openIssues": 119,
+      "created": "2026-09-23",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "amontlabs/lcu",
+      "fullName": "amontlabs/lcu",
+      "name": "lcu",
+      "owner": "amontlabs",
+      "desc": "Codex computer use 与应用解耦，任意 harness 可用",
+      "category": "31–90 天",
+      "note": "",
+      "license": "MIT",
+      "language": "JavaScript",
+      "stars": 2350,
+      "forks": 155,
+      "openIssues": 0,
+      "created": "2026-09-22",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "kajisho5/ffmpeg-skill",
+      "fullName": "kajisho5/ffmpeg-skill",
+      "name": "ffmpeg-skill",
+      "owner": "kajisho5",
+      "desc": "编码 agent 的本地视频剪辑：42 个 FFmpeg 工具 + MCP",
+      "category": "31–90 天",
+      "note": "",
+      "license": "MIT",
+      "language": "Python",
+      "stars": 4285,
+      "forks": 340,
+      "openIssues": 5,
+      "created": "2026-09-03",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "deeplethe/solid-glass",
+      "fullName": "deeplethe/solid-glass",
+      "name": "solid-glass",
+      "owner": "deeplethe",
+      "desc": "为 AI 应用设计的「实体玻璃」视觉体系",
+      "category": "30 天内",
+      "note": "",
+      "license": "MIT",
+      "language": "TypeScript",
+      "stars": 2027,
+      "forks": 42,
+      "openIssues": 5,
+      "created": "2026-10-12",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "trhhubsd/ARTEX",
+      "fullName": "trhhubsd/ARTEX",
+      "name": "ARTEX",
+      "owner": "trhhubsd",
+      "desc": "AI 自主渗透测试系统：多 agent LLM，Go + Next.js",
+      "category": "30 天内",
+      "note": "",
+      "license": "AGPL-3.0",
+      "language": "Go",
+      "stars": 1255,
+      "forks": 600,
+      "openIssues": 3,
+      "created": "2026-10-08",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "cbrock84/headcount",
+      "fullName": "cbrock84/headcount",
+      "name": "headcount",
+      "owner": "cbrock84",
+      "desc": "公司式 agent 组织：15+ 部门、125+ 技能可独立安装",
+      "category": "31–90 天",
+      "note": "",
+      "license": "MIT",
+      "language": "Markdown",
+      "stars": 2556,
+      "forks": 423,
+      "openIssues": 5,
+      "created": "2026-08-28",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "punkpeye/awesome-remote-mcp-servers",
+      "fullName": "punkpeye/awesome-remote-mcp-servers",
+      "name": "awesome-remote-mcp-servers",
+      "owner": "punkpeye",
+      "desc": "远程 MCP 服务器精选目录",
+      "category": "31–90 天",
+      "note": "",
+      "license": "MIT",
+      "language": "",
+      "stars": 2389,
+      "forks": 2883,
+      "openIssues": 1620,
+      "created": "2026-09-08",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "zhuyansen/new-term-radar",
+      "fullName": "zhuyansen/new-term-radar",
+      "name": "new-term-radar",
+      "owner": "zhuyansen",
+      "desc": "新词雷达：从 X / Hugging Face / GitHub 抓新模型新产品的名字",
+      "category": "30 天内",
+      "note": "",
+      "license": "MIT",
+      "language": "Python",
+      "stars": 2019,
+      "forks": 621,
+      "openIssues": 2,
+      "created": "2026-10-12",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "youngyangyang04/llm-master",
+      "fullName": "youngyangyang04/llm-master",
+      "name": "llm-master",
+      "owner": "youngyangyang04",
+      "desc": "大模型全栈中文学习路线：Prompt、RAG、Agent、MCP、微调、部署",
+      "category": "31–90 天",
+      "note": "",
+      "license": "MIT",
+      "language": "",
+      "stars": 1530,
+      "forks": 154,
+      "openIssues": 5,
+      "created": "2026-09-12",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "Harvil1/codeAgent",
+      "fullName": "Harvil1/codeAgent",
+      "name": "codeAgent",
+      "owner": "Harvil1",
+      "desc": "开源终端编码 agent，理解你的仓库",
+      "category": "31–90 天",
+      "note": "",
+      "license": "MIT",
+      "language": "Python",
+      "stars": 1017,
+      "forks": 70,
+      "openIssues": 2,
+      "created": "2026-10-02",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "leemysw/yovoice",
+      "fullName": "leemysw/yovoice",
+      "name": "yovoice",
+      "owner": "leemysw",
+      "desc": "开源本地 AI 语音与音乐工作室：TTS、克隆、写歌",
+      "category": "31–90 天",
+      "note": "",
+      "license": "Apache-2.0",
+      "language": "TypeScript",
+      "stars": 2018,
+      "forks": 151,
+      "openIssues": 11,
+      "created": "2026-09-15",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "datalab-to/indra",
+      "fullName": "datalab-to/indra",
+      "name": "indra",
+      "owner": "datalab-to",
+      "desc": "100 万参数 OCR：CPU 可跑，比 tesseract 快 15 倍",
+      "category": "30 天内",
+      "note": "",
+      "license": "Apache-2.0",
+      "language": "Python",
+      "stars": 1578,
+      "forks": 163,
+      "openIssues": 18,
+      "created": "2026-10-13",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "Tejashmakwana/motionmaxxing",
+      "fullName": "Tejashmakwana/motionmaxxing",
+      "name": "motionmaxxing",
+      "owner": "Tejashmakwana",
+      "desc": "动效界的 looksmaxxing：把 AI 味视频修成电影感",
+      "category": "30 天内",
+      "note": "",
+      "license": "Apache-2.0",
+      "language": "JavaScript",
+      "stars": 1253,
+      "forks": 123,
+      "openIssues": 1,
+      "created": "2026-10-06",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "thesysdev/open-intelligent-ui",
+      "fullName": "thesysdev/open-intelligent-ui",
+      "name": "open-intelligent-ui",
+      "owner": "thesysdev",
+      "desc": "开源版 ChatGPT Intelligent UI：答案以交互组件流出",
+      "category": "30 天内",
+      "note": "",
+      "license": "MIT",
+      "language": "TypeScript",
+      "stars": 899,
+      "forks": 76,
+      "openIssues": 30,
+      "created": "2026-10-08",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "amitshekhariitbhu/ai-system-design",
+      "fullName": "amitshekhariitbhu/ai-system-design",
+      "name": "ai-system-design",
+      "owner": "amitshekhariitbhu",
+      "desc": "AI 系统设计分步教程：LLM、RAG、Agent 逐层搭",
+      "category": "31–90 天",
+      "note": "",
+      "license": "Apache-2.0",
+      "language": "Markdown",
+      "stars": 819,
+      "forks": 117,
+      "openIssues": 0,
+      "created": "2026-09-25",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "strands-labs/strands-decider",
+      "fullName": "strands-labs/strands-decider",
+      "name": "strands-decider",
+      "owner": "strands-labs",
+      "desc": "agent 工作流用的小而快决策模型",
+      "category": "31–90 天",
+      "note": "",
+      "license": "Apache-2.0",
+      "language": "Python",
+      "stars": 749,
+      "forks": 103,
+      "openIssues": 53,
+      "created": "2026-09-29",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "Ayzzz123/mcd-coupon-strategist",
+      "fullName": "Syenzzz/mcd-coupon-strategist",
+      "name": "mcd-coupon-strategist",
+      "owner": "Syenzzz",
+      "desc": "麦当劳 MCP 点餐省钱 skill：算最省组合、提示凑单陷阱",
+      "category": "30 天内",
+      "note": "",
+      "license": "MIT",
+      "language": "Python",
+      "stars": 991,
+      "forks": 21,
+      "openIssues": 0,
+      "created": "2026-10-10",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "jzjzzzzzzz/agent-me",
+      "fullName": "jzjzzzzzzz/agent-me",
+      "name": "agent-me",
+      "owner": "jzjzzzzzzz",
+      "desc": "把你的知识、记忆与决策蒸馏成可审查的 Agent Twin",
+      "category": "31–90 天",
+      "note": "",
+      "license": "MIT",
+      "language": "Python",
+      "stars": 632,
+      "forks": 53,
+      "openIssues": 1,
+      "created": "2026-08-27",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "xop01/ai_goodpractice",
+      "fullName": "xop01/ai_goodpractice",
+      "name": "ai_goodpractice",
+      "owner": "xop01",
+      "desc": "AI 工作流集成实践指南，新手老手都能用",
+      "category": "31–90 天",
+      "note": "",
+      "license": "NOASSERTION",
+      "language": "",
+      "stars": 841,
+      "forks": 0,
+      "openIssues": 0,
+      "created": "2026-10-02",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "whirlchat/whirl",
+      "fullName": "whirlchat/whirl",
+      "name": "whirl",
+      "owner": "whirlchat",
+      "desc": "细节控 AI 聊天应用：全家桶模型、真记忆、活文档",
+      "category": "31–90 天",
+      "note": "",
+      "license": "MIT",
+      "language": "TypeScript",
+      "stars": 512,
+      "forks": 50,
+      "openIssues": 1,
+      "created": "2026-10-02",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "SoMarkAI/OXR",
+      "fullName": "SoMarkAI/OXR",
+      "name": "OXR",
+      "owner": "SoMarkAI",
+      "desc": "开源文档解析模型：SOTA 精度与速度，后训练带 RSI 循环",
+      "category": "30 天内",
+      "note": "",
+      "license": "NOASSERTION",
+      "language": "Python",
+      "stars": 2832,
+      "forks": 213,
+      "openIssues": 21,
+      "created": "2026-10-05",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "strands-agents/box",
+      "fullName": "strands-agents/box",
+      "name": "box",
+      "owner": "strands-agents",
+      "desc": "在受限沙箱里跑 agent：执行、读写、网络全可约束",
+      "category": "31–90 天",
+      "note": "",
+      "license": "Apache-2.0",
+      "language": "Rust",
+      "stars": 490,
+      "forks": 38,
+      "openIssues": 97,
+      "created": "2026-10-02",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "pinganbbOvO/ai-companion-kit",
+      "fullName": "pinganbbOvO/ai-companion-kit",
+      "name": "ai-companion-kit",
+      "owner": "pinganbbOvO",
+      "desc": "会记事、会看场合的 QQ 陪聊 + 能控安卓手机的 MCP",
+      "category": "30 天内",
+      "note": "",
+      "license": "MIT",
+      "language": "JavaScript",
+      "stars": 538,
+      "forks": 39,
+      "openIssues": 5,
+      "created": "2026-10-08",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "modelscope/ms-cookbook",
+      "fullName": "modelscope/ms-cookbook",
+      "name": "ms-cookbook",
+      "owner": "modelscope",
+      "desc": "魔搭紫皮书：模型选型、推理、微调、评测、RAG 实战",
+      "category": "31–90 天",
+      "note": "",
+      "license": "Apache-2.0",
+      "language": "HTML",
+      "stars": 512,
+      "forks": 85,
+      "openIssues": 6,
+      "created": "2026-09-11",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "hanzohanzhe/Grandet",
+      "fullName": "hanzohanzhe/Grandet",
+      "name": "Grandet",
+      "owner": "hanzohanzhe",
+      "desc": "给 agent 找最便宜 API 的 skill，附匿名网关",
+      "category": "30 天内",
+      "note": "",
+      "license": "NOASSERTION",
+      "language": "JavaScript",
+      "stars": 1037,
+      "forks": 115,
+      "openIssues": 17,
+      "created": "2026-10-05",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "FengZhenfei/carrel",
+      "fullName": "FengZhenfei/carrel",
+      "name": "carrel",
+      "owner": "FengZhenfei",
+      "desc": "本体增强生成（Ontology-Augmented Generation）for agents",
+      "category": "31–90 天",
+      "note": "",
+      "license": "MIT",
+      "language": "Python",
+      "stars": 679,
+      "forks": 11,
+      "openIssues": 2,
+      "created": "2026-09-28",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "himovo/movo",
+      "fullName": "himovo/movo",
+      "name": "movo",
+      "owner": "himovo",
+      "desc": "把 DeepSeek Harness 变成自托管企业 Agent 平台",
+      "category": "31–90 天",
+      "note": "",
+      "license": "NOASSERTION",
+      "language": "Python",
+      "stars": 480,
+      "forks": 115,
+      "openIssues": 51,
+      "created": "2026-09-01",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "songshikang0111/awesome-REA-cases",
+      "fullName": "songshikang0111/awesome-REA-cases",
+      "name": "awesome-REA-cases",
+      "owner": "songshikang0111",
+      "desc": "REA 与 AI 辅助逆向工程案例集，持续更新",
+      "category": "30 天内",
+      "note": "",
+      "license": "MIT",
+      "language": "Python",
+      "stars": 375,
+      "forks": 60,
+      "openIssues": 2,
+      "created": "2026-10-12",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "lokicorvus/crosspet",
+      "fullName": "lokicorvus/crosspet",
+      "name": "crosspet",
+      "owner": "lokicorvus",
+      "desc": "跨 AI 桌宠：跟着你用的 AI 换形象、跟着工作状态做动作",
+      "category": "30 天内",
+      "note": "",
+      "license": "NOASSERTION",
+      "language": "C#",
+      "stars": 394,
+      "forks": 25,
+      "openIssues": 5,
+      "created": "2026-10-03",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "heaven999b/hello-agent-system",
+      "fullName": "heaven999b/hello-agent-system",
+      "name": "hello-agent-system",
+      "owner": "heaven999b",
+      "desc": "动手搭企业级 agent 系统：每一层生产件都自己写一遍",
+      "category": "31–90 天",
+      "note": "",
+      "license": "MIT",
+      "language": "Python",
+      "stars": 310,
+      "forks": 4,
+      "openIssues": 0,
+      "created": "2026-09-27",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "LosaLosSantos/aurelio-finance",
+      "fullName": "LosaLosSantos/aurelio-finance",
+      "name": "aurelio-finance",
+      "owner": "LosaLosSantos",
+      "desc": "开源个人理财 app：AI 财务顾问、净值与投资追踪",
+      "category": "30 天内",
+      "note": "",
+      "license": "MIT",
+      "language": "Python",
+      "stars": 344,
+      "forks": 118,
+      "openIssues": 0,
+      "created": "2026-10-06",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "rollroyces/py-idp",
+      "fullName": "rollroyces/py-idp",
+      "name": "py-idp",
+      "owner": "rollroyces",
+      "desc": "Python 智能文档处理：12+ LLM 后端、Pydantic 约束、自托管",
+      "category": "31–90 天",
+      "note": "",
+      "license": "NOASSERTION",
+      "language": "Python",
+      "stars": 297,
+      "forks": 41,
+      "openIssues": 0,
+      "created": "2026-08-31",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "shuyu-labs/transwork",
+      "fullName": "shuyu-labs/transwork",
+      "name": "transwork",
+      "owner": "shuyu-labs",
+      "desc": "企业级桌面 agent 工作台：技能、知识与任务同处协作",
+      "category": "30 天内",
+      "note": "",
+      "license": "NOASSERTION",
+      "language": "Shell",
+      "stars": 282,
+      "forks": 48,
+      "openIssues": 0,
+      "created": "2026-10-14",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "Kai-Jungsthoefel/SOMA",
+      "fullName": "Kai-Jungsthoefel/SOMA",
+      "name": "SOMA",
+      "owner": "Kai-Jungsthoefel",
+      "desc": "与编码 agent 协作设计参数化 3D 模型的桌面应用",
+      "category": "30 天内",
+      "note": "",
+      "license": "GPL-3.0",
+      "language": "TypeScript",
+      "stars": 440,
+      "forks": 37,
+      "openIssues": 4,
+      "created": "2026-10-10",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "AFK-surf/Comma",
+      "fullName": "AFK-surf/Comma",
+      "name": "Comma",
+      "owner": "AFK-surf",
+      "desc": "免费开源个人助手：常驻、主动、无会话概念",
+      "category": "31–90 天",
+      "note": "",
+      "license": "AGPL-3.0",
+      "language": "Elixir",
+      "stars": 405,
+      "forks": 26,
+      "openIssues": 1,
+      "created": "2026-09-30",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "longsurf-ai/openchart",
+      "fullName": "longsurf-ai/openchart",
+      "name": "openchart",
+      "owner": "longsurf-ai",
+      "desc": "开源交易工作台：接入你顺手的 agents",
+      "category": "30 天内",
+      "note": "",
+      "license": "MIT",
+      "language": "TypeScript",
+      "stars": 291,
+      "forks": 36,
+      "openIssues": 5,
+      "created": "2026-10-05",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "LSPosed/dexsql-release",
+      "fullName": "LSPosed/dexsql-release",
+      "name": "dexsql-release",
+      "owner": "LSPosed",
+      "desc": "用 SQL 查询 Android apk 与 dex 文件",
+      "category": "30 天内",
+      "note": "",
+      "license": "NOASSERTION",
+      "language": "Python",
+      "stars": 268,
+      "forks": 17,
+      "openIssues": 0,
+      "created": "2026-10-14",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "RoversX/ThinkTerm",
+      "fullName": "RoversX/ThinkTerm",
+      "name": "ThinkTerm",
+      "owner": "RoversX",
+      "desc": "会话保活的现代终端：关掉窗口任务照跑",
+      "category": "31–90 天",
+      "note": "",
+      "license": "GPL-3.0",
+      "language": "Rust",
+      "stars": 226,
+      "forks": 18,
+      "openIssues": 18,
+      "created": "2026-10-01",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "rohitg00/ai-engineering-from-scratch",
+      "fullName": "rohitg00/ai-engineering-from-scratch",
+      "name": "ai-engineering-from-scratch",
+      "owner": "rohitg00",
+      "desc": "AI 工程从零到一的学习仓库，本月 +1.7 万星",
+      "category": "1 年内",
+      "note": "",
+      "license": "MIT",
+      "language": "Python",
+      "stars": 76248,
+      "forks": 13489,
+      "openIssues": 91,
+      "created": "2026-03-18",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "hypit-ai/hypit",
+      "fullName": "hypit-ai/hypit",
+      "name": "hypit",
+      "owner": "hypit-ai",
+      "desc": "用 agent 克隆爆款视频：换脸、改写、批量出变体全流程",
+      "category": "1 年内",
+      "note": "",
+      "license": "NOASSERTION",
+      "language": "TypeScript",
+      "stars": 27344,
+      "forks": 3152,
+      "openIssues": 79,
+      "created": "2026-07-29",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "MirroS-Lab/AgentGarten",
+      "fullName": "MirroS-Lab/AgentGarten",
+      "name": "AgentGarten",
+      "owner": "MirroS-Lab",
+      "desc": "AgentGarten：给可进化 agent 准备的代码世界",
+      "category": "30 天内",
+      "note": "",
+      "license": "Apache-2.0",
+      "language": "Python",
+      "stars": 210,
+      "forks": 4,
+      "openIssues": 2,
+      "created": "2026-10-08",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "VectifyAI/PageIndex",
+      "fullName": "VectifyAI/PageIndex",
+      "name": "PageIndex",
+      "owner": "VectifyAI",
+      "desc": "无向量化、推理式 RAG 的文档索引",
+      "category": "1 年以上",
+      "note": "",
+      "license": "MIT",
+      "language": "Python",
+      "stars": 39941,
+      "forks": 3438,
+      "openIssues": 153,
+      "created": "2025-04-01",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "android/skills",
+      "fullName": "android/skills",
+      "name": "skills",
+      "owner": "android",
+      "desc": "Android 官方出的 agent skills 仓库",
+      "category": "1 年内",
+      "note": "免费",
+      "license": "Apache-2.0",
+      "language": "Kotlin",
+      "stars": 10227,
+      "forks": 666,
+      "openIssues": 36,
+      "created": "2026-03-16",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
+    },
+    {
+      "repo": "msitarzewski/agency-agents",
+      "fullName": "msitarzewski/agency-agents",
+      "name": "agency-agents",
+      "owner": "msitarzewski",
+      "desc": "一周 +2.3 万星：把一整个 AI 代理公司装进指尖的 agents 合集",
+      "category": "1 年以上",
+      "note": "热门",
+      "license": "MIT",
+      "language": "Shell",
+      "stars": 165904,
+      "forks": 26878,
+      "openIssues": 218,
+      "created": "2025-10-13",
+      "first": "2026-11-02",
+      "last": "2026-11-02"
     }
   ],
   "series": {
-    "deepseek-ai/DeepSeek-R1": [
-      [
-        "2026-11-01",
-        91992
-      ]
-    ],
-    "ollama/ollama": [
-      [
-        "2026-11-01",
-        185585
-      ]
-    ],
-    "QwenLM/Qwen3": [
-      [
-        "2026-11-01",
-        27697
-      ]
-    ],
-    "huggingface/transformers": [
-      [
-        "2026-11-01",
-        168415
-      ]
-    ],
-    "vllm-project/vllm": [
-      [
-        "2026-11-01",
-        96066
-      ]
-    ],
-    "langchain-ai/langchain": [
-      [
-        "2026-11-01",
-        148831
-      ]
-    ],
-    "deepseek-ai/DeepSeek-V3": [
-      [
-        "2026-11-01",
-        104707
-      ]
-    ],
-    "microsoft/autogen": [
-      [
-        "2026-11-01",
-        61662
-      ]
-    ],
-    "browser-use/browser-use": [
-      [
-        "2026-11-01",
-        119759
-      ]
-    ],
-    "crewAIInc/crewAI": [
-      [
-        "2026-11-01",
-        60389
-      ]
-    ],
-    "openai/openai-agents-python": [
-      [
-        "2026-11-01",
-        30437
-      ]
-    ],
-    "modelcontextprotocol/servers": [
-      [
-        "2026-11-01",
-        91735
-      ]
-    ],
-    "AstrBotDevs/AstrBot": [
-      [
-        "2026-11-01",
-        45501
-      ]
-    ],
-    "Aider-AI/aider": [
-      [
-        "2026-11-01",
-        49883
-      ]
-    ],
-    "cline/cline": [
-      [
-        "2026-11-01",
-        71174
-      ]
-    ],
-    "musistudio/claude-code-router": [
-      [
-        "2026-11-01",
-        37942
-      ]
-    ],
-    "openai/codex": [
-      [
-        "2026-11-01",
-        132715
-      ]
-    ],
-    "Panniantong/Agent-Reach": [
-      [
-        "2026-11-01",
-        107565
-      ]
-    ],
-    "deepseek-ai/dsh-superagent-prototype": [
-      [
-        "2026-11-01",
-        6862
-      ]
-    ],
-    "openfilm/openfilm": [
-      [
-        "2026-11-01",
-        4081
-      ]
-    ],
-    "ccch1mneyyy/dsh-Go": [
-      [
-        "2026-11-01",
-        4566
-      ]
-    ],
-    "patch-gg/pixelfx": [
-      [
-        "2026-11-01",
-        2455
-      ]
-    ],
     "Comfy-Org/ComfyUI": [
       [
         "2026-11-01",
-        144476
+        144440
+      ],
+      [
+        "2026-11-02",
+        144488
       ]
     ],
     "mksglu/context-mode": [
       [
         "2026-11-01",
-        33142
+        33096
+      ],
+      [
+        "2026-11-02",
+        33164
       ]
     ],
-    "calesthio/OpenMontage": [
+    "debpalash/VoiceStudio": [
       [
-        "2026-11-01",
-        74327
+        "2026-11-02",
+        97915
+      ]
+    ],
+    "vectorize-io/hindsight": [
+      [
+        "2026-11-02",
+        57691
+      ]
+    ],
+    "morluto/rea": [
+      [
+        "2026-11-02",
+        418752
+      ]
+    ],
+    "paperclipai/paperclip": [
+      [
+        "2026-11-02",
+        109910
+      ]
+    ],
+    "cloudflare/security-audit-skill": [
+      [
+        "2026-11-02",
+        56373
+      ]
+    ],
+    "heygen-com/hyperframes": [
+      [
+        "2026-11-02",
+        77112
+      ]
+    ],
+    "tashfeenahmed/freellmapi": [
+      [
+        "2026-11-02",
+        45730
+      ]
+    ],
+    "stablyai/orca": [
+      [
+        "2026-11-02",
+        112519
+      ]
+    ],
+    "pbakaus/impeccable": [
+      [
+        "2026-11-02",
+        99326
+      ]
+    ],
+    "affaan-m/ECC": [
+      [
+        "2026-11-02",
+        294807
+      ]
+    ],
+    "NVIDIA/OpenShell": [
+      [
+        "2026-11-02",
+        20908
+      ]
+    ],
+    "anomalyco/opencode": [
+      [
+        "2026-11-02",
+        223852
+      ]
+    ],
+    "HKUDS/CLI-Anything": [
+      [
+        "2026-11-02",
+        58038
+      ]
+    ],
+    "thedotmack/claude-mem": [
+      [
+        "2026-11-02",
+        109270
+      ]
+    ],
+    "K-Dense-AI/scientific-agent-skills": [
+      [
+        "2026-11-02",
+        55668
+      ]
+    ],
+    "deepseek-ai/deepseek-harness": [
+      [
+        "2026-11-02",
+        268348
+      ]
+    ],
+    "ruvnet/ruflo": [
+      [
+        "2026-11-02",
+        80544
+      ]
+    ],
+    "anthropics/claude-plugins-official": [
+      [
+        "2026-11-02",
+        45722
+      ]
+    ],
+    "Ebony-Vinyl/dsh-our-free-model": [
+      [
+        "2026-11-02",
+        55759
+      ]
+    ],
+    "earthtojake/text-to-cad": [
+      [
+        "2026-11-02",
+        24746
+      ]
+    ],
+    "anthropics/knowledge-work-plugins": [
+      [
+        "2026-11-02",
+        34364
+      ]
+    ],
+    "pingdotgg/t3code": [
+      [
+        "2026-11-02",
+        37993
+      ]
+    ],
+    "yetone/magpie": [
+      [
+        "2026-11-02",
+        27584
+      ]
+    ],
+    "lexmount/moli": [
+      [
+        "2026-11-02",
+        22005
+      ]
+    ],
+    "img2threejs/img2threejs": [
+      [
+        "2026-11-02",
+        20036
+      ]
+    ],
+    "google/artemis": [
+      [
+        "2026-11-02",
+        16090
+      ]
+    ],
+    "Vincentwei1021/video-shotcraft": [
+      [
+        "2026-11-02",
+        15823
+      ]
+    ],
+    "akitaonrails/ai-memory": [
+      [
+        "2026-11-02",
+        14829
+      ]
+    ],
+    "cursor/plugins": [
+      [
+        "2026-11-02",
+        15016
+      ]
+    ],
+    "trailhq/Trail-Code": [
+      [
+        "2026-11-02",
+        11011
+      ]
+    ],
+    "TencentCloud/Octop": [
+      [
+        "2026-11-02",
+        11423
+      ]
+    ],
+    "rehan-remade/universal-modder": [
+      [
+        "2026-11-02",
+        9319
+      ]
+    ],
+    "KKKKhazix/AIHOT": [
+      [
+        "2026-11-02",
+        9032
+      ]
+    ],
+    "tangency-labs/solidcraft": [
+      [
+        "2026-11-02",
+        12902
+      ]
+    ],
+    "Ryze-AI-Adgent/open-seo-mcp-skills": [
+      [
+        "2026-11-02",
+        8556
+      ]
+    ],
+    "XiaoDuoYa/codex-with-chatgpt": [
+      [
+        "2026-11-02",
+        7634
+      ]
+    ],
+    "jev-chat/jev-chat-jarvis": [
+      [
+        "2026-11-02",
+        8207
+      ]
+    ],
+    "deeplethe/utopia": [
+      [
+        "2026-11-02",
+        8658
+      ]
+    ],
+    "bojieli/ai-infra-book": [
+      [
+        "2026-11-02",
+        7220
+      ]
+    ],
+    "Human-Agent-Society/reef": [
+      [
+        "2026-11-02",
+        7786
+      ]
+    ],
+    "Jakeschincariol/replica-skill": [
+      [
+        "2026-11-02",
+        6995
+      ]
+    ],
+    "shader-effects-inc/shaders": [
+      [
+        "2026-11-02",
+        5759
+      ]
+    ],
+    "tigerless-labs/agent-memory": [
+      [
+        "2026-11-02",
+        4306
+      ]
+    ],
+    "elie222/rakazo": [
+      [
+        "2026-11-02",
+        6564
+      ]
+    ],
+    "ZJU-REAL/Easel": [
+      [
+        "2026-11-02",
+        4294
+      ]
+    ],
+    "QingYunA/answer-me-with-html": [
+      [
+        "2026-11-02",
+        5023
+      ]
+    ],
+    "Leonxlnx/unlazy": [
+      [
+        "2026-11-02",
+        4249
+      ]
+    ],
+    "onehumanbeing/esp32-iphone-agent": [
+      [
+        "2026-11-02",
+        4199
+      ]
+    ],
+    "Nanako0129/sepia": [
+      [
+        "2026-11-02",
+        3572
+      ]
+    ],
+    "HarnessRouter/harnessrouter": [
+      [
+        "2026-11-02",
+        3833
+      ]
+    ],
+    "fuxicodex/Fuxi": [
+      [
+        "2026-11-02",
+        3203
+      ]
+    ],
+    "Leonxlnx/earshot": [
+      [
+        "2026-11-02",
+        3449
+      ]
+    ],
+    "xzf-thu/VoiceMem": [
+      [
+        "2026-11-02",
+        2820
+      ]
+    ],
+    "Folkbench/folkbench": [
+      [
+        "2026-11-02",
+        4164
+      ]
+    ],
+    "nano-muse/nanoMuse": [
+      [
+        "2026-11-02",
+        2981
+      ]
+    ],
+    "amontlabs/lcu": [
+      [
+        "2026-11-02",
+        2350
+      ]
+    ],
+    "kajisho5/ffmpeg-skill": [
+      [
+        "2026-11-02",
+        4285
+      ]
+    ],
+    "deeplethe/solid-glass": [
+      [
+        "2026-11-02",
+        2027
+      ]
+    ],
+    "trhhubsd/ARTEX": [
+      [
+        "2026-11-02",
+        1255
+      ]
+    ],
+    "cbrock84/headcount": [
+      [
+        "2026-11-02",
+        2556
+      ]
+    ],
+    "punkpeye/awesome-remote-mcp-servers": [
+      [
+        "2026-11-02",
+        2389
+      ]
+    ],
+    "zhuyansen/new-term-radar": [
+      [
+        "2026-11-02",
+        2019
+      ]
+    ],
+    "youngyangyang04/llm-master": [
+      [
+        "2026-11-02",
+        1530
+      ]
+    ],
+    "Harvil1/codeAgent": [
+      [
+        "2026-11-02",
+        1017
+      ]
+    ],
+    "leemysw/yovoice": [
+      [
+        "2026-11-02",
+        2018
+      ]
+    ],
+    "datalab-to/indra": [
+      [
+        "2026-11-02",
+        1578
+      ]
+    ],
+    "Tejashmakwana/motionmaxxing": [
+      [
+        "2026-11-02",
+        1253
+      ]
+    ],
+    "thesysdev/open-intelligent-ui": [
+      [
+        "2026-11-02",
+        899
+      ]
+    ],
+    "amitshekhariitbhu/ai-system-design": [
+      [
+        "2026-11-02",
+        819
+      ]
+    ],
+    "strands-labs/strands-decider": [
+      [
+        "2026-11-02",
+        749
+      ]
+    ],
+    "Ayzzz123/mcd-coupon-strategist": [
+      [
+        "2026-11-02",
+        991
+      ]
+    ],
+    "jzjzzzzzzz/agent-me": [
+      [
+        "2026-11-02",
+        632
+      ]
+    ],
+    "xop01/ai_goodpractice": [
+      [
+        "2026-11-02",
+        841
+      ]
+    ],
+    "whirlchat/whirl": [
+      [
+        "2026-11-02",
+        512
+      ]
+    ],
+    "SoMarkAI/OXR": [
+      [
+        "2026-11-02",
+        2832
+      ]
+    ],
+    "strands-agents/box": [
+      [
+        "2026-11-02",
+        490
+      ]
+    ],
+    "pinganbbOvO/ai-companion-kit": [
+      [
+        "2026-11-02",
+        538
+      ]
+    ],
+    "modelscope/ms-cookbook": [
+      [
+        "2026-11-02",
+        512
+      ]
+    ],
+    "hanzohanzhe/Grandet": [
+      [
+        "2026-11-02",
+        1037
+      ]
+    ],
+    "FengZhenfei/carrel": [
+      [
+        "2026-11-02",
+        679
+      ]
+    ],
+    "himovo/movo": [
+      [
+        "2026-11-02",
+        480
+      ]
+    ],
+    "songshikang0111/awesome-REA-cases": [
+      [
+        "2026-11-02",
+        375
+      ]
+    ],
+    "lokicorvus/crosspet": [
+      [
+        "2026-11-02",
+        394
+      ]
+    ],
+    "heaven999b/hello-agent-system": [
+      [
+        "2026-11-02",
+        310
+      ]
+    ],
+    "LosaLosSantos/aurelio-finance": [
+      [
+        "2026-11-02",
+        344
+      ]
+    ],
+    "rollroyces/py-idp": [
+      [
+        "2026-11-02",
+        297
+      ]
+    ],
+    "shuyu-labs/transwork": [
+      [
+        "2026-11-02",
+        282
+      ]
+    ],
+    "Kai-Jungsthoefel/SOMA": [
+      [
+        "2026-11-02",
+        440
+      ]
+    ],
+    "AFK-surf/Comma": [
+      [
+        "2026-11-02",
+        405
+      ]
+    ],
+    "longsurf-ai/openchart": [
+      [
+        "2026-11-02",
+        291
+      ]
+    ],
+    "LSPosed/dexsql-release": [
+      [
+        "2026-11-02",
+        268
+      ]
+    ],
+    "RoversX/ThinkTerm": [
+      [
+        "2026-11-02",
+        226
+      ]
+    ],
+    "rohitg00/ai-engineering-from-scratch": [
+      [
+        "2026-11-02",
+        76248
+      ]
+    ],
+    "hypit-ai/hypit": [
+      [
+        "2026-11-02",
+        27344
+      ]
+    ],
+    "MirroS-Lab/AgentGarten": [
+      [
+        "2026-11-02",
+        210
+      ]
+    ],
+    "VectifyAI/PageIndex": [
+      [
+        "2026-11-02",
+        39941
+      ]
+    ],
+    "android/skills": [
+      [
+        "2026-11-02",
+        10227
+      ]
+    ],
+    "msitarzewski/agency-agents": [
+      [
+        "2026-11-02",
+        165904
       ]
     ]
   }

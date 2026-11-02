@@ -6,7 +6,9 @@
   'use strict';
 
   var WIN_LABEL = { p1: '1 日', p7: '7 日', p30: '30 日' };
+  var WIN_DAYS = { p1: 1, p7: 7, p30: 30 };
   var PALETTE = ['#d4692a', '#4a9e7f', '#b8915c', '#7f77dd', '#5a9bd4', '#d4537e', '#639922', '#8a8ea8'];
+  var BASIS_LABEL = { week: '本周', month: '本月', lifetime: '创建以来', none: '无' };
 
   var state = {
     view: 'heat',
@@ -16,6 +18,7 @@
     dir: -1,
     repos: [],
     days: [],
+    rank: {},
   };
 
   function el(id) { return document.getElementById(id); }
@@ -52,10 +55,22 @@
     return s + a.toFixed(a >= 10 ? 1 : 2) + '%';
   }
 
-  function deltaPair(abs, p) {
-    var d = deltaHtml(abs);
+  function deltaPair(abs, p, approx) {
+    var pre = approx ? '≈' : '';
+    var d = abs === null || abs === undefined
+      ? '<span class="delta-flat">—</span>'
+      : abs > 0
+        ? '<span class="delta-up">' + pre + '+' + fmt(abs) + '</span>'
+        : abs < 0
+          ? '<span class="delta-down">' + pre + fmt(abs) + '</span>'
+          : '<span class="delta-flat">0</span>';
     if (p === null || p === undefined) return d;
-    return d + ' <span class="tip-pct">' + pctText(p) + '</span>';
+    return d + ' <span class="tip-pct">' + pre + pctText(p) + '</span>';
+  }
+
+  /* 表格里的增量格：折算值前面加 ≈，跟实测值区分开 */
+  function deltaCell(row, days) {
+    return deltaPair(row['d' + days], null, row['p' + days + 'src'] === 'rank');
   }
 
   function daysAgo(n) {
@@ -87,14 +102,15 @@
       var s = data.series[r.repo] || [];
       if (!s.length) continue;
       var now = s[s.length - 1][1];
+      var span = spanDays(s);
       var v1 = valueAt(s, daysAgo(1));
       var v7 = valueAt(s, daysAgo(7));
       var v30 = valueAt(s, daysAgo(30));
-      var d1 = v1 === null ? null : now - v1;
-      var d7 = v7 === null ? null : now - v7;
-      var d30 = v30 === null ? null : now - v30;
-      rows.push({
+      var rk = state.rank[String(r.repo).toLowerCase()] || null;
+
+      var row = {
         repo: r.repo,
+        fullName: r.fullName || r.repo,
         name: r.name || r.repo.split('/')[1],
         owner: r.owner || r.repo.split('/')[0],
         desc: r.desc || '',
@@ -102,12 +118,54 @@
         category: r.category || '未分类',
         license: r.license || '',
         stars: now,
-        d1: d1, d7: d7, d30: d30,
-        p1: pct(d1, v1), p7: pct(d7, v7), p30: pct(d30, v30),
+        span: span,
         series: s,
-      });
+        basis: rk ? rk.basis : null,
+        basisLabel: rk ? (BASIS_LABEL[rk.basis] || '') : '',
+        daily: rk && rk.daily !== undefined ? rk.daily : null,
+      };
+
+      fillWin(row, 'p1', 1, now, v1, span, rk);
+      fillWin(row, 'p7', 7, now, v7, span, rk);
+      fillWin(row, 'p30', 30, now, v30, span, rk);
+      rows.push(row);
     }
     return rows;
+  }
+
+  /* 序列跨度（首末快照相差几天），不够长就不能算实测增速 */
+  function spanDays(series) {
+    if (!series.length) return 0;
+    var a = Date.parse(series[0][0] + 'T00:00:00Z');
+    var b = Date.parse(series[series.length - 1][0] + 'T00:00:00Z');
+    if (!isFinite(a) || !isFinite(b)) return 0;
+    return Math.max(0, Math.round((b - a) / 86400000));
+  }
+
+  /**
+   * 一个窗口的增速怎么来：
+   *   1. 快照跨度 >= 窗口天数 → 实测（series）
+   *   2. 否则用榜单的日均新增折算（rank）：dN = daily × N
+   *   3. 都没有 → 留空，热力图涂灰，不猜
+   * 这样页面今天就可用，快照满 30 天后自动全部切到实测。
+   */
+  function fillWin(row, key, days, now, base, span, rk) {
+    var dk = 'd' + days;
+    if (base !== null && base !== undefined && span >= days) {
+      row[dk] = now - base;
+      row[key] = pct(row[dk], base);
+      row[key + 'src'] = 'series';
+      return;
+    }
+    if (rk && rk.daily !== null && rk.daily !== undefined && rk.daily > 0) {
+      row[dk] = rk.daily * days;
+      row[key] = pct(row[dk], now);
+      row[key + 'src'] = 'rank';
+      return;
+    }
+    row[dk] = null;
+    row[key] = null;
+    row[key + 'src'] = null;
   }
 
   function sortRows(rows) {
@@ -124,10 +182,10 @@
   }
 
   /* ── 色阶：红涨绿跌（A 股习惯），中点取主题中性色 ── */
-  var UP = [212, 105, 42];
-  var DOWN = [74, 158, 127];
+  var UP = [214, 92, 40];
+  var DOWN = [46, 150, 112];
 
-  function midColor() { return isLight() ? [211, 202, 183] : [56, 61, 84]; }
+  function midColor() { return isLight() ? [213, 205, 188] : [58, 60, 74]; }
 
   function mix(a, b, t) {
     var c = [0, 0, 0];
@@ -154,8 +212,8 @@
     var mid = midColor();
     if (v === null || v === undefined) return mid;
     var t = Math.max(-1, Math.min(1, v / dom));
-    // 开方放大，让 0.02% 这种小增速也能看出差别
-    var k = Math.pow(Math.abs(t), 0.6);
+    // 开方放大，让 2% 这种小增速也能看出差别
+    var k = Math.pow(Math.abs(t), 0.55);
     return mix(mid, t >= 0 ? UP : DOWN, k);
   }
 
@@ -167,9 +225,9 @@
     }
     if (!vals.length) return 1;
     vals.sort(function (a, b) { return a - b; });
-    // 用 P90 而不是最大值，避免单个暴涨把其余全压成灰色
-    var p90 = vals[Math.min(vals.length - 1, Math.floor(vals.length * 0.9))];
-    return Math.max(p90 || vals[vals.length - 1], 0.05);
+    // 用 P85 而不是最大值，避免单个暴涨把其余全压成灰色
+    var p = vals[Math.min(vals.length - 1, Math.floor(vals.length * 0.85))];
+    return Math.max(p || vals[vals.length - 1], 0.05);
   }
 
   /* ── Squarified treemap ── */
@@ -251,7 +309,17 @@
     return out;
   }
 
-  /* ── 热力图：两级 treemap，外层按分类切板块，板块内铺项目 ── */
+  /* ── 热力图：两级 treemap，外层按库龄切板块，板块内铺项目 ── */
+
+  /**
+   * 面积权重。100 个仓库的星标跨 4 个数量级（最大 41.9 万，最小 210），
+   * 严格按星标画，后 50 名合计只占 2.7% 面积，34 个块小到点不中。
+   * 开 0.65 次幂压缩：大块仍然明显更大，最小的块也还有 ~18px 可点。
+   */
+  function wOf(stars) {
+    return Math.pow(Math.max(1, stars), 0.65);
+  }
+
   function buildGroups(rows, key) {
     var order = [], map = {};
     for (var i = 0; i < rows.length; i++) {
@@ -261,7 +329,7 @@
         order.push(map[name]);
       }
       map[name].rows.push(rows[i]);
-      map[name].total += rows[i].stars;
+      map[name].total += wOf(rows[i].stars);
     }
     for (var g = 0; g < order.length; g++) {
       var grp = order[g];
@@ -285,17 +353,46 @@
     if (!shell) return;
     var W = Math.max(320, Math.round(shell.clientWidth || 900));
     var narrow = W < 640;
-    var H = Math.round(narrow ? W * 1.15 : Math.min(560, W * 0.56));
+    // 100 个项目、星标跨 4 个数量级，画布矮了小项目就只剩一条线，所以给足高度
+    var H = Math.round(narrow ? W * 1.9 : Math.min(680, W * 0.62));
 
     var key = state.win;
     var dom = domainFor(rows, key);
-    var hasPct = false;
-    for (var q = 0; q < rows.length; q++) { if (rows[q][key] !== null) { hasPct = true; break; } }
+    var nSeries = 0, nRank = 0, nNone = 0;
+    for (var q = 0; q < rows.length; q++) {
+      var src = rows[q][key + 'src'];
+      if (src === 'series') nSeries++;
+      else if (src === 'rank') nRank++;
+      else nNone++;
+    }
+    var hasPct = nSeries + nRank > 0;
 
-    var groups = buildGroups(rows, key);
+    var totalW = 0;
+    for (var s = 0; s < rows.length; s++) totalW += wOf(rows[s].stars);
+
+    var groups;
+    if (narrow) {
+      // 手机端宽度不够分板块，最小组会被挤成一条竖缝；改成整块平铺，库龄看第 02 节
+      groups = [{
+        name: '',
+        rows: rows.slice().sort(function (a, b) { return b.stars - a.stars; }),
+        total: totalW,
+        pct: null,
+        flat: true,
+      }];
+    } else {
+      groups = buildGroups(rows, key);
+    }
+
     // 组间距明显大于组内块间距，否则看不出是分组
-    var GAP = narrow ? 6 : 9;
-    var gRects = squarify(groups.map(function (x) { return { value: x.total, g: x }; }), 0, 0, W, H);
+    var GAP = narrow ? 5 : 8;
+    // 「30 天内」那批星标只占 1.4%，按真实面积会挤成一条看不见的缝，
+    // 给每个板块一个最小面积保底（6%），组内相对面积仍然按权重
+    var FLOOR = totalW * 0.06;
+    var gRects = squarify(
+      groups.map(function (x) { return { value: Math.max(x.total, FLOOR), g: x }; }),
+      0, 0, W, H
+    );
 
     var svg = ['<svg class="heat-svg" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="开源项目星标热力图，面积代表星标量，颜色代表增速，按分类分块">'];
     var cells = [];
@@ -312,8 +409,10 @@
         '" height="' + gh.toFixed(1) + '" rx="3" fill="var(--bg-soft)" stroke="var(--line)" stroke-width="0.8"/>');
 
       var hh = 0;
-      if (gh >= 58 && gw >= 62) hh = 21;
-      else if (gh >= 42 && gw >= 46) hh = 17;
+      if (!gdef.flat) {
+        if (gh >= 58 && gw >= 62) hh = 21;
+        else if (gh >= 42 && gw >= 46) hh = 17;
+      }
 
       if (hh) {
         var nameFs = hh >= 21 ? 11.5 : 10;
@@ -333,12 +432,12 @@
         }
       }
 
-      var items = gdef.rows.map(function (x) { return { value: x.stars, r: x, pct: x[key] }; });
+      var items = gdef.rows.map(function (x) { return { value: wOf(x.stars), r: x, pct: x[key] }; });
       var inner = squarify(items, gx, gy + hh, gw, gh - hh);
 
       for (var i = 0; i < inner.length; i++) {
         var c = inner[i];
-        var pad = 1.5;
+        var pad = 1.2;
         var x = c.x + pad, y = c.y + pad;
         var w = c.w - pad * 2, h = c.h - pad * 2;
         if (w < 1 || h < 1) continue;
@@ -393,9 +492,14 @@
       lg.push('<span class="heat-scale-bar" style="background:linear-gradient(90deg,' + rgb(DOWN) + ',' + rgb(mid) + ',' + rgb(UP) + ')"></span>');
       lg.push('<span class="heat-scale-end">' + pctText(dom) + '</span>');
       lg.push('</span>');
-      lg.push('<span class="legend-item">颜色 = ' + WIN_LABEL[key] + '增速，红涨绿跌；面积 = 当前星标；板块按分类归并</span>');
+      var srcText;
+      if (nRank === 0) srcText = '颜色 = ' + WIN_LABEL[key] + '增速（逐日快照实测）';
+      else if (nSeries === 0) srcText = '颜色 = ' + WIN_LABEL[key] + '增速（按榜单日均新增折算）';
+      else srcText = '颜色 = ' + WIN_LABEL[key] + '增速（' + nSeries + ' 项实测 · ' + nRank + ' 项折算' + (nNone ? ' · ' + nNone + ' 项无数据' : '') + '）';
+      var groupNote = narrow ? '手机端平铺，库龄见第 02 节' : '板块按库龄分档';
+      lg.push('<span class="legend-item">' + srcText + '，红涨绿跌；面积 = 星标（0.65 次幂压缩）；' + groupNote + '</span>');
     } else {
-      lg.push('<span class="legend-item">只有 1 天快照：面积 = 当前星标，颜色要等下一次采样才有增速</span>');
+      lg.push('<span class="legend-item">面积 = 星标（0.65 次幂压缩）；颜色要等快照攒够天数，或等榜单补上增速</span>');
     }
     el('stars-legend').innerHTML = lg.join('');
 
@@ -440,12 +544,16 @@
       if (i < 0 || !cells[i]) { hide(); return; }
       paint(i);
       var r = cells[i].it.r;
-      var html = '<div class="tip-date">' + esc(r.repo) + '</div>';
+      var html = '<div class="tip-date">' + esc(r.fullName) + '</div>';
       html += '<div class="tip-row"><span class="tip-k">星标</span><span class="tip-val">' + fmt(r.stars) + '</span></div>';
-      html += '<div class="tip-row"><span class="tip-k">日增</span><span class="tip-val">' + deltaPair(r.d1, r.p1) + '</span></div>';
-      html += '<div class="tip-row"><span class="tip-k">7 日</span><span class="tip-val">' + deltaPair(r.d7, r.p7) + '</span></div>';
-      html += '<div class="tip-row"><span class="tip-k">30 日</span><span class="tip-val">' + deltaPair(r.d30, r.p30) + '</span></div>';
-      html += '<div class="tip-foot">' + esc(r.category) + (r.license && r.license !== 'NOASSERTION' ? ' · ' + esc(r.license) : '') + ' · 点击打开仓库</div>';
+      html += '<div class="tip-row"><span class="tip-k">日增</span><span class="tip-val">' + deltaPair(r.d1, r.p1, r.p1src === 'rank') + '</span></div>';
+      html += '<div class="tip-row"><span class="tip-k">7 日</span><span class="tip-val">' + deltaPair(r.d7, r.p7, r.p7src === 'rank') + '</span></div>';
+      html += '<div class="tip-row"><span class="tip-k">30 日</span><span class="tip-val">' + deltaPair(r.d30, r.p30, r.p30src === 'rank') + '</span></div>';
+      if (r.basisLabel && r.basisLabel !== '无') {
+        html += '<div class="tip-row"><span class="tip-k">增量口径</span><span class="tip-val">' + esc(r.basisLabel) + '</span></div>';
+      }
+      var srcNote = r[state.win + 'src'] === 'series' ? '实测' : r[state.win + 'src'] === 'rank' ? '折算' : '无数据';
+      html += '<div class="tip-foot">' + esc(r.category) + ' · ' + srcNote + ' · 点击打开仓库</div>';
       tip.innerHTML = html;
       tip.classList.add('is-on');
 
@@ -479,7 +587,7 @@
       if (i === lastTouch) {
         lastTouch = -1;
         hide();
-        window.open('https://github.com/' + cells[i].it.r.repo, '_blank', 'noopener');
+        window.open('https://github.com/' + cells[i].it.r.fullName, '_blank', 'noopener');
         return;
       }
       lastTouch = i;
@@ -490,7 +598,7 @@
       if (Date.now() - touchedAt < 700) return;
       var i = idxOf(ev.target);
       if (i < 0 || !cells[i]) return;
-      window.open('https://github.com/' + cells[i].it.r.repo, '_blank', 'noopener');
+      window.open('https://github.com/' + cells[i].it.r.fullName, '_blank', 'noopener');
     });
   }
 
@@ -643,13 +751,13 @@
       var r = sorted[i];
       html.push('<tr>');
       html.push(
-        '<td><div class="stars-name"><a href="https://github.com/' + r.repo + '" target="_blank" rel="noopener">' + esc(r.name) + '</a><span class="stars-sub-line">' + esc(r.owner) + (r.desc ? ' · ' + esc(r.desc.slice(0, 42)) : '') + '</span></div></td>'
+        '<td><div class="stars-name"><a href="https://github.com/' + r.fullName + '" target="_blank" rel="noopener">' + esc(r.name) + '</a><span class="stars-sub-line">' + esc(r.owner) + (r.desc ? ' · ' + esc(r.desc.slice(0, 42)) : '') + '</span></div></td>'
       );
       html.push('<td><span class="stars-tag">' + esc(r.category) + '</span></td>');
       html.push('<td class="stars-num stars-num-strong">' + fmt(r.stars) + '</td>');
-      html.push('<td class="stars-num">' + deltaHtml(r.d1) + '</td>');
-      html.push('<td class="stars-num">' + deltaHtml(r.d7) + '</td>');
-      html.push('<td class="stars-num">' + deltaHtml(r.d30) + '</td>');
+      html.push('<td class="stars-num">' + deltaCell(r, 1) + '</td>');
+      html.push('<td class="stars-num">' + deltaCell(r, 7) + '</td>');
+      html.push('<td class="stars-num">' + deltaCell(r, 30) + '</td>');
       html.push('<td>' + spark(r.series) + '</td>');
       html.push('<td class="stars-num">' + (r.license && r.license !== 'NOASSERTION' ? esc(r.license) : '—') + '</td>');
       html.push('</tr>');
@@ -657,6 +765,21 @@
     el('stars-rows').innerHTML = html.join('');
     var cnt = el('stars-count');
     if (cnt) cnt.textContent = rows.length;
+
+    var note = el('stars-note');
+    if (note) {
+      var ns = 0, nr = 0, nn = 0;
+      for (var q = 0; q < sorted.length; q++) {
+        var src = sorted[q][state.win + 'src'];
+        if (src === 'series') ns++;
+        else if (src === 'rank') nr++;
+        else nn++;
+      }
+      note.innerHTML = '按' + WIN_LABEL[state.win] + '增速口径：<b>' + ns + '</b> 项来自逐日快照实测，' +
+        '<b>' + nr + '</b> 项按榜单的日均新增折算（快照攒够 ' + WIN_DAYS[state.win] + ' 天后自动转为实测），' +
+        (nn ? '<b>' + nn + '</b> 项库龄超过 90 天又没有周期增量，不参与增速排序。' : '其余项无增速数据。') +
+        ' 星标会被刷，单看增速容易被营销活动带偏。';
+    }
   }
 
   function spark(series) {
@@ -693,12 +816,12 @@
     }
 
     var out = [];
-    out.push('<div class="pick-item"><span class="pick-k">体量最大</span><span class="pick-v"><a href="https://github.com/' + biggest.repo + '" target="_blank" rel="noopener">' + esc(biggest.name) + '</a> <b>' + fmt(biggest.stars) + '</b></span></div>');
+    out.push('<div class="pick-item"><span class="pick-k">体量最大</span><span class="pick-v"><a href="https://github.com/' + biggest.fullName + '" target="_blank" rel="noopener">' + esc(biggest.name) + '</a> <b>' + fmt(biggest.stars) + '</b></span></div>');
 
     if (fast) {
-      out.push('<div class="pick-item"><span class="pick-k">' + WIN_LABEL[state.win] + '最快</span><span class="pick-v"><a href="https://github.com/' + fast.repo + '" target="_blank" rel="noopener">' + esc(fast.name) + '</a> <b class="' + (fast[state.win] >= 0 ? 'delta-up' : 'delta-down') + '">' + pctText(fast[state.win]) + '</b></span></div>');
+      out.push('<div class="pick-item"><span class="pick-k">' + WIN_LABEL[state.win] + '最快</span><span class="pick-v"><a href="https://github.com/' + fast.fullName + '" target="_blank" rel="noopener">' + esc(fast.name) + '</a> <b class="' + (fast[state.win] >= 0 ? 'delta-up' : 'delta-down') + '">' + (fast[state.win + 'src'] === 'rank' ? '≈' : '') + pctText(fast[state.win]) + '</b></span></div>');
       if (slow && slow !== fast) {
-        out.push('<div class="pick-item"><span class="pick-k">' + WIN_LABEL[state.win] + '最慢</span><span class="pick-v"><a href="https://github.com/' + slow.repo + '" target="_blank" rel="noopener">' + esc(slow.name) + '</a> <b class="' + (slow[state.win] >= 0 ? 'delta-up' : 'delta-down') + '">' + pctText(slow[state.win]) + '</b></span></div>');
+        out.push('<div class="pick-item"><span class="pick-k">' + WIN_LABEL[state.win] + '最慢</span><span class="pick-v"><a href="https://github.com/' + slow.fullName + '" target="_blank" rel="noopener">' + esc(slow.name) + '</a> <b class="' + (slow[state.win] >= 0 ? 'delta-up' : 'delta-down') + '">' + (slow[state.win + 'src'] === 'rank' ? '≈' : '') + pctText(slow[state.win]) + '</b></span></div>');
       }
     } else {
       out.push('<div class="pick-item"><span class="pick-k">增速</span><span class="pick-v">等下一次采样</span></div>');
@@ -745,11 +868,18 @@
     }
   }
 
-  function boot(data) {
+  function boot(data, rank) {
+    state.rank = {};
+    if (rank && rank.items && rank.items.length) {
+      for (var i = 0; i < rank.items.length; i++) {
+        var it = rank.items[i];
+        if (it && it.repo) state.rank[String(it.repo).toLowerCase()] = it;
+      }
+    }
     state.repos = buildRows(data);
     var all = {};
-    for (var i = 0; i < state.repos.length; i++) {
-      for (var k = 0; k < state.repos[i].series.length; k++) all[state.repos[i].series[k][0]] = 1;
+    for (var j = 0; j < state.repos.length; j++) {
+      for (var k = 0; k < state.repos[j].series.length; k++) all[state.repos[j].series[k][0]] = 1;
     }
     state.days = Object.keys(all).sort();
 
@@ -783,9 +913,14 @@
 
   if (!el('stars-chart')) return;
 
-  fetch('stars/data.json', { cache: 'no-cache' })
-    .then(function (r) { return r.json(); })
-    .then(boot)
+  /* data.json 是每日快照，rank.json 是增速榜；两份都读，缺了 rank 就退回纯快照口径 */
+  Promise.all([
+    fetch('stars/data.json', { cache: 'no-cache' }).then(function (r) { return r.json(); }),
+    fetch('stars/rank.json', { cache: 'no-cache' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .catch(function () { return null; }),
+  ])
+    .then(function (res) { boot(res[0], res[1]); })
     .catch(function (e) {
       if (window.console && console.error) console.error('[stars] 渲染失败：', e);
       el('stars-chart').innerHTML = '<div class="stars-empty">读不到 stars/data.json。<br>先跑一次 <code>node scripts/stars-snapshot.cjs</code>。</div>';

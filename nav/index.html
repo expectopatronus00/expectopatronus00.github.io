@@ -467,7 +467,7 @@
         <div class="eyebrow">open source · star tracking · 每日快照</div>
         <h2>开源 AI，<em>涨得快不快</em>。</h2>
         <p class="stars-lede">
-          25 个仓库，每天抓一次 GitHub 星标，只存数字不做推测。<strong>星标是热度，不是质量</strong>——
+          <b>ai-oss 类目的 100 个开源项目</b>，和下面第 02 节是同一套清单。每天抓一次 GitHub 星标，只存数字不做推测。<strong>星标是热度，不是质量</strong>——
           这张图看的是体量与增速，选型判断还得回到仓库本身。
         </p>
         <div class="stars-byline">
@@ -498,8 +498,11 @@
           </div>
         </div>
         <p class="stars-deck">
-          色块<strong>面积 = 当前星标</strong>，<strong>颜色 = <span id="stars-win-note">7 日</span>增速</strong>，红涨绿跌。
+          色块<strong>面积 ≈ 当前星标</strong>，<strong>颜色 = <span id="stars-win-note">7 日</span>增速</strong>，红涨绿跌。
           块越大说明盘子越大，颜色越暖说明跑得越快——大盘股不动、小盘股暴涨，一眼能分出来。
+          100 个仓库的星标跨了四个数量级，后 50 名合计只占总量的 2.7%，照实画会挤成点不中的碎块，
+          所以面积按 <strong>0.65 次幂</strong>压缩；板块按库龄分四档，最年轻的「30 天内」只占 1.4%，
+          另给了 6% 的最小面积保底。
         </p>
         <div class="stars-panel">
           <div class="chart-shell" id="stars-shell">
@@ -517,7 +520,7 @@
           <span class="stars-sec-num">02</span>
           <h3>明细榜</h3>
           <div class="stars-tools">
-            <span class="stars-deck-inline">点表头排序，共 <span id="stars-count">25</span> 项</span>
+            <span class="stars-deck-inline">点表头排序，共 <span id="stars-count">100</span> 项</span>
           </div>
         </div>
         <div class="stars-table-shell">
@@ -525,7 +528,7 @@
             <thead>
               <tr>
                 <th scope="col">项目</th>
-                <th scope="col">分类</th>
+                <th scope="col">库龄</th>
                 <th scope="col" class="sortable" data-sort="stars" aria-sort="descending">星标</th>
                 <th scope="col" class="sortable" data-sort="d1">日增</th>
                 <th scope="col" class="sortable" data-sort="d7">7 日</th>
@@ -547,9 +550,9 @@
         </div>
         <ul class="stars-facts">
           <li><span class="k">采集</span><span class="v"><code>scripts/stars-snapshot.cjs</code> 每天 16:10 UTC 抓一次，写进 <code>nav/stars/data.json</code>，保留最近 180 天。</span></li>
-          <li><span class="k">清单</span><span class="v"><code>nav/stars/watchlist.json</code> 人工维护 25 个仓库，按推理与部署 / 模型 / Agent 框架 / 编码 Agent / 应用与多模态分五类。</span></li>
-          <li><span class="k">增量</span><span class="v">日增 / 7 日 / 30 日都拿当天星标减去「N 天前最近一次快照」，不足 N 天就留空，不插值不外推。</span></li>
-          <li><span class="k">局限</span><span class="v">GitHub 不提供公开的历史星标接口，历史从 2026-11-01 开始逐日累积，没法回填；星标会被刷，单看增速容易被营销活动带偏。</span></li>
+          <li><span class="k">清单</span><span class="v">与导航站 <code>nav/data.json</code> 的 <code>ai-oss</code> 类目共用同一份 100 个项目，不另维护白名单；热力图按<b>库龄</b>分四档（30 天内 / 31–90 天 / 1 年内 / 1 年以上），因为库越新天然冲得越猛。</span></li>
+          <li><span class="k">增量</span><span class="v">快照攒够 N 天就用实测（当天星标减 N 天前最近一次快照）；不够则退回榜单的<b>日均新增 × N</b> 折算，并在图例里标明哪几项是折算的。两项都没有就留空涂灰，不猜。</span></li>
+          <li><span class="k">局限</span><span class="v">GitHub 不提供公开的历史星标接口（<code>/stargazers</code> 需要 <code>contents=write</code> 权限），逐日序列从 2026-11-01 开始累积、没法回填，所以头一个月颜色靠榜单折算，满 30 天后自动全切实测。星标会被刷，单看增速容易被营销活动带偏。</span></li>
         </ul>
       </section>
     </section>
