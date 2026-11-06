@@ -294,19 +294,29 @@ async function main() {
   data.updated = day;
 
   console.log('');
+  const covered = Object.keys(data.series).length;
   console.log(
     '成功 ' + (targets.length - failures.length) + ' / ' + targets.length +
-      '，序列覆盖 ' + Object.keys(data.series).length + ' / ' + all.length + ' 个仓库'
+      '，序列覆盖 ' + covered + ' / ' + all.length + ' 个仓库'
   );
+
+  // 少量仓库 404 / 改名不影响整份快照：沿用它们上一次的数值即可。
+  // 只有触发限流、失败比例超 5%、或序列覆盖不全时才判失败，避免 Actions 天天红灯。
+  const tolerated = failures.length <= Math.max(3, Math.ceil(targets.length * 0.05));
+  const bad = rateLimited || !tolerated || covered < all.length;
+  if (!bad && failures.length) {
+    console.log('提示：' + failures.length + ' 个仓库本次未取到，沿用上次快照；序列覆盖完整，按降级成功处理');
+    failures.slice(0, 10).forEach(f => console.log('  · ' + f.repo + ' — ' + f.error));
+  }
 
   if (DRY_RUN) {
     console.log('(dry-run 未写入 ' + DATA + ')');
-    process.exit(failures.length ? 1 : 0);
+    process.exit(bad ? 1 : 0);
   }
 
   fs.writeFileSync(DATA, JSON.stringify(data, null, 2) + '\n', 'utf8');
   console.log('已写入 ' + path.relative(ROOT, DATA));
-  process.exit(failures.length ? 1 : 0);
+  process.exit(bad ? 1 : 0);
 }
 
 main().catch(e => {

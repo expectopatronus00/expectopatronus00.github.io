@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>6681星去广告、7320星代操作、2700星查隐私：按痛点选 · EXPECTOPATRONUS</title>
+    <meta name="description" content="rddmwmddr/android-ad-cleaner 6,681 星、MIT；wangzan101/Mika 7,320 星、Apache-2.0；Verlintas/NOIR 2,700 星、MIT。三者同在 10 月最后一周建库，分别去广告、代点 App、扫权限与数据流向。按痛点选，别按星标排。" />
+    <meta name="keywords" content="Agent, Android, 开源, GitHub, 横评" />
+    <meta property="og:title" content="6681星去广告、7320星代操作、2700星查隐私：按痛点选" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="rddmwmddr/android-ad-cleaner 6,681 星、MIT；wangzan101/Mika 7,320 星、Apache-2.0；Verlintas/NOIR 2,700 星、MIT。三者同在 10 月最后一周建库，分别去广告、代点 App、扫权限与数据流向。按痛点选，别按星标排。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>6681星去广告、7320星代操作、2700星查隐私：按痛点选</h1>
+      <p>7,320 星、1,685 fork——Mika 最热；android-ad-cleaner 6,681 星，NOIR 2,700 星。三个同周建库、11 月 6 日仍 push，却分管去广告、代点击、查权限：按痛点选。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-06</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 8 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="6681星去广告、7320星代操作、2700星查隐私：按痛点选 封面" src="cover.jpg" />
+    </div>
+
+    <article class="article-body">
+<div class="section-marker">01 · 这件事</div>
+<h2>三个都在管手机的仓库，两个写配方，一个只写审计</h2>
+<p><code>rddmwmddr/android-ad-cleaner</code> 2026 年 10 月 24 日建库，到 11 月 6 日是 6,681 星、600 个 fork，MIT 协议，Python。它的自我描述一句话说完了要干什么：关掉国产安卓手机系统里的广告、热搜、资讯推荐和营销推送，<code>不 root，可还原，支持 AI 智能体一键执行</code>。这是三者里最早的一个，也是唯一把中文写进 description 的。</p>
+<p><code>wangzan101/Mika</code> 的建库日期是 10 月 29 日，7,320 星、1,685 个 fork，Apache-2.0，Kotlin。描述用英文写：<code>An on-device AI agent for Android that operates apps and the web to get things done for you</code>——一个在设备本地跑、替你操作 App 和网页的 agent。它是三者里星最多、fork 也最多的一个。</p>
+<p>10 月 31 日，<code>Verlintas/NOIR</code> 建库，2,700 星、255 个 fork，MIT，同样是 Kotlin，但体量只有 1,821 KB。描述把范围收得很窄：用 adb 扫出 Android 应用的权限、上报端点与数据流向，并给出可回滚的处置。<span class="hl">三个仓库挤在 10 月最后一周里先后出现，11 月 6 日当天都还有 push</span>，却不是同一件事的三个版本。</p>
+<p>它们被归进同一族，是因为都沾了「手机 + agent + adb」这条线。但摊开看，一个在清系统广告，一个在替你点屏幕，一个在查谁把数据传了出去。这篇是横评，三个仓库的数字都各自核过一遍，一次消耗三条积压。</p>
+
+<div class="section-marker">02 · 核心机制</div>
+<h2>一个发 adb 配方，一个占住无障碍服务，一个只读不动手</h2>
+<p>android-ad-cleaner 的机制在目录名里就露了底。根目录 13 个文件、10 个目录，其中有 <code>recipes/</code>、<code>prompts/</code>、<code>tool/</code>、<code>android/</code>、<code>gui/</code>，还有一份 18,307 字节的 <code>AGENTS.md</code> 和 21,803 字节的 <code>README.md</code>。<span class="hl">它本质是一套「人写好的处置配方 + 让 agent 照着执行」的清单</span>，Python 只是把 adb 命令串起来的胶水；<code>requirements.txt</code> 只有 20 字节，几乎没有运行时依赖。所谓「AI 智能体一键执行」，执行的是这批配方，不是模型自己现场决策。</p>
+<p>Mika 走的是另一条路。它是正经的 Android 工程：<code>settings.gradle.kts</code>、<code>gradlew</code>、<code>app/</code>、<code>core/</code>、<code>eval/</code> 都在，根目录 11 个文件、8 个目录。它靠 <code>accessibility</code> 这个 topic 点明了自己的手——无障碍服务。on-device agent 要替你点 App，就得有一条能读屏幕、能模拟点击的常驻通道，无障碍权限正是安卓上不用 root 就能拿到这条通道的口子。LLM 负责决定点哪，通道负责真的点下去。</p>
+<p>NOIR 最克制。根目录 13 个文件、6 个目录，<code>cli/</code> 和 <code>core/</code> 两个目录加一份 <code>SECURITY.md</code>，size 1,821 KB，是三者里唯一把自己叫「审计」的。它的描述里有一个关键词：<code>可回滚的处置</code>。默认姿态是先看后报——扫权限、扫上报端点、扫数据流向，把结论摆出来，改不改由你决定。<span class="hl">它连 open_issues 都是 0</span>，这在下面会变成一个值得追问的点。</p>
+<p>把三个摆成一条链就清楚了：NOIR 负责「看清」，android-ad-cleaner 负责「清干净」，Mika 负责「之后替你操作」。前两个都绕着 adb，第三个绕着无障碍服务；前两个是 Python 与 Kotlin 的桌面侧脚本和工具，第三个是跑在手机里的 Kotlin 应用。它们互为上下游，不是竞品。</p>
+
+<div class="section-marker">03 · 关键细节与数据</div>
+<h2>星标最热的是 Mika，体积最轻的是 NOIR，两者不该放一起排</h2>
+<p>先把三个仓库的硬数字摊平。android-ad-cleaner：6,681 星、600 fork、197 个未关闭 issue、13 个订阅者、10 月 24 日建库、11 月 6 日仍有 push、MIT、Python、size 13,567 KB。Mika：7,320 星、1,685 fork、114 个未关闭 issue、11 个订阅者、10 月 29 日建库、11 月 6 日仍有 push、Apache-2.0、Kotlin、size 85,901 KB。NOIR：2,700 星、255 fork、0 个未关闭 issue、2 个订阅者、10 月 31 日建库、11 月 6 日仍有 push、MIT、Kotlin、size 1,821 KB。</p>
+<p>几处对比值得停一下。<span class="hl">Mika 的 1,685 个 fork 是另外两个加起来的近两倍</span>——600 加 255 是 855，它还多出一大截。fork 高通常意味着两件事之一：要么很多人拿它当底座改，要么默认配置跑不通、非自己拉一份不可。它的体积也是三者里最重的，85,901 KB，根目录 11 个文件却撑到这个数，重头在 <code>app/</code>、<code>core/</code> 这些目录里。</p>
+<p>反过来，NOIR 的 1,821 KB 是三者里最轻的，比 Mika 小了一个数量级还多，却挂了 20 个 topics——从 <code>adb</code>、<code>apk-analysis</code> 到 <code>jadx</code>、<code>static-analysis</code>、<code>telemetry</code>、<code>tui</code>，几乎把「审计」能沾的关键词都挂上了。另外两个各只挂 8 个。手机侧的两个是 Kotlin，去广告那个是 Python，语言差异也说明了分工：脚本侧发命令，应用侧跑在机器上。</p>
+<p>许可证也有分歧。android-ad-cleaner 和 NOIR 都是 <code>MIT</code>，Mika 是 <code>Apache-2.0</code>，并且根目录多了一份 11,358 字节的 <code>LICENSE</code>、一个 <code>NOTICE</code> 和一个 <code>licenses/</code> 目录——这是 Apache-2.0 的附带义务，不是作者多余的讲究。谁要把它塞进闭源产品里，这一层得先读明白。</p>
+<p>时间线其实是这三组数字里最异常的一列。三个仓库的 created_at 分别是 10 月 24 日、10 月 29 日、10 月 31 日，全挤在一周里；三个 pushed_at 都落在 11 月 6 日。<span class="hl">换句话说，这不是三个沉淀过的项目，是三个正在热度上的项目</span>，下面每一个星标数都还在动。</p>
+
+<div class="section-marker">04 · 怎么用</div>
+<h2>先确认你手上有没有 adb，再决定要不要交出无障碍权限</h2>
+<p>三者的前提完全不同，装之前先分清楚。android-ad-cleaner 和 NOIR 都要一台能连 adb 的机器：手机开 USB 调试，桌面上跑 <code>adb devices</code> 能看到设备，然后才谈得上扫包、改设置。前者给的是 <code>recipes/</code> 里现成的配方，后者给的是 <code>cli/</code> 里的扫描入口；共同点是它们都跑在电脑这一侧，手机只是被操作的对象。<span class="hl">没有 adb 环境，这两个仓库里的「agent」层就是一句空话</span>。</p>
+<p>Mika 不依赖桌面。它要的是你在系统设置里把无障碍服务打开，把一条能读屏、能点击的高权限通道交给一个 LLM 驱动的 agent。这是不用 root 的代价：root 拿的是整机权限，无障碍拿的是「看得见、点得动」的整机权限，两者在能力上其实很接近。装法是一个标准的 Gradle Android 工程，<code>./gradlew</code> 起手，<code>app/</code> 是应用，<code>eval/</code> 和 <code>tools/</code> 各占一个目录。</p>
+<p>我的判断表是这样的：</p>
+<ul>
+<li><b>只想关掉国产 ROM 的系统广告、热搜和营销推送，不 root、还要求能还原</b>——选 <code>rddmwmddr/android-ad-cleaner</code>。它的 topics 里直接列了 ColorOS、HyperOS、MagicOS、OriginOS，说明适配目标是这几家；代价是它背着 197 个未关闭 issue，是三者里最多的。</li>
+<li><b>想让 agent 真的替你在手机上跨 App 办事，而不仅仅是关广告</b>——选 <code>wangzan101/Mika</code>。这是三者里唯一提供通用操作能力的，另外两个根本没有对应物，硬凑凑不出来；代价是把无障碍权限长期交出去。</li>
+<li><b>动手之前想先看清手机里哪些 App 拿了什么权限、往哪些端点上报</b>——选 <code>Verlintas/NOIR</code>。它默认只读、给可回滚处置，是三者里唯一一句「先别改」的；体积 1,821 KB 也意味着你能把它整个读一遍再决定用不用。</li>
+</ul>
+<p>一个务实的顺序：如果三件都想要，别同时上。先用 NOIR 扫一遍看清现状，再用 android-ad-cleaner 把广告关掉，最后才考虑要不要让 Mika 常驻。<span class="hl">把审计放在最前面，是因为另外两个都会改手机状态</span>，而 NOIR 不改。</p>
+
+<div class="section-marker">05 · 冷思考</div>
+<h2>两周涨到七千星，这里头有多少是能留下来的</h2>
+<p>先质疑星标。三个仓库的 created_at 全在 10 月 24 日到 10 月 31 日之间，到核对日都还不满半个月，星标却是 6,681、7,320、2,700。<span class="hl">这种涨法里，话题红利占了多少、真实留存占了多少，API 一个字段都答不了</span>。「国产安卓去广告」「手机隐私」本来就是容易被转发的话题，星标是随手点的收藏，不是装完跑通的记录。三者 11 月 6 日都还在 push，热度是此刻的，不是沉淀下来的。</p>
+<p>再质疑那个 1,685 fork。它比另外两个加起来还多，听着像生态繁荣，但对一个建库才一周多的个人项目，更可能的解释是：仓库还太生，默认配置不够用，想跑起来的人干脆各拉一份自己改。Mika 的 114 个未关闭 issue、NOIR 的 0 个、android-ad-cleaner 的 197 个，三者摆一起看，0 反而最可疑——<span class="hl">一个 2,700 星的项目零 open issue，通常不是没问题，是还没人拿它跑完一整条流程</span>。</p>
+<p>然后质疑「不装配套工具会怎样」。android-ad-cleaner 的 description 里「AI 智能体一键执行」是最抓眼的一句，可它的依赖其实是一台开着 USB 调试的电脑；NOIR 同理，<code>adb devices</code> 认不到设备，那份 16,674 字节的 <code>README.md</code> 就只是文档。<span class="hl">把 adb 抽掉，这两个项目剩下的就是一堆配方和一张扫描报告模板</span>。Mika 看着省事——不用电脑——代价却是把无障碍服务这个能读全屏、能替你点任何按钮的开关，长期交给一个 LLM。</p>
+<p>还有许可证那一层容易被跳过。Mika 是 Apache-2.0，根目录专门放了 <code>NOTICE</code> 和 <code>licenses/</code>，这不是讲究，是义务；另外两个是 MIT，随手就能抄进别的项目。一个 85,901 KB 的 Kotlin 工程和一个 1,821 KB 的审计器，用同一套「开源随便用」的预期去对待，迟早会撞上条款差异。</p>
+<p>最后质疑品类本身。用星标给这三个排序，等于拿同一把尺子量一份配方集、一个运行时和一个审计器：android-ad-cleaner 交付的是写好的处置步骤，Mika 交付的是常驻的操作能力，NOIR 交付的是一份结论。它们解决的问题不重叠，谁也不替代谁，硬排出来的名次没有任何决策价值。</p>
+<div class="info-box">数据核对：2026-11-06 经 api.github.com/repos 与 /contents/ 读取。rddmwmddr/android-ad-cleaner：full_name rddmwmddr/android-ad-cleaner，stargazers_count 6681，forks_count 600，created_at 2026-10-24T05:35:47Z，license MIT，pushed_at 2026-11-06T14:09:21Z，language Python，size 13567 KB，open_issues_count 197，subscribers_count 13，topics 8 个，根目录 13 文件 / 10 目录。wangzan101/Mika：stargazers_count 7320，forks_count 1685，created_at 2026-10-29T14:34:07Z，license Apache-2.0，pushed_at 2026-11-06T13:53:48Z，language Kotlin，size 85901 KB，open_issues_count 114，subscribers_count 11，topics 8 个，根目录 11 文件 / 8 目录。Verlintas/NOIR：stargazers_count 2700，forks_count 255，created_at 2026-10-31T21:34:39Z，license MIT，pushed_at 2026-11-06T12:39:15Z，language Kotlin，size 1821 KB，open_issues_count 0，subscribers_count 2，topics 20 个，根目录 13 文件 / 6 目录。三者 default_branch 均为 main，homepage 分别为无、空、verlintas.dev/noir。核对时间 2026-11-06。</div>
+<p>所以判断不是「哪个更值得装」，而是「你卡在哪一段」：看不清就先 NOIR，被广告烦就 android-ad-cleaner，确认要长期把操作交出去再上 Mika。<span class="hl">按这个顺序走，前一步的结论刚好是后一步的前提</span>；反过来先开了无障碍权限再回头查权限，顺序就白折腾了。</p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看这三个仓库</h3>
+        <p>android-ad-cleaner 6,681 星去系统广告，Mika 7,320 星代操作 App，NOIR 2,700 星用 adb 扫权限与数据流向</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/wangzan101/Mika" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/rddmwmddr/android-ad-cleaner" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 6,681 星，600 fork，MIT，adb 去系统广告不 root</span>
+      </a>
+      <a class="plat-card" href="https://github.com/wangzan101/Mika" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 7,320 星，1,685 fork，Apache-2.0，无障碍 on-device agent</span>
+      </a>
+      <a class="plat-card" href="https://github.com/Verlintas/NOIR" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 2,700 星，255 fork，MIT，adb 扫权限与数据流向</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Agent">#Agent</a>
+      <a href="../../home/home.html?q=Android">#Android</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=GitHub">#GitHub</a>
+      <a href="../../home/home.html?q=%E6%A8%AA%E8%AF%84">#横评</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本文为转载整理，原视频来自抖音 @小龙（约 2026-10-21 发布，2459 赞）。原榜星标数据无法逐一与 GitHub 对账，本文已按「干什么、用在哪」重组并标注以仓库实时数据为准。本站仅做学习归档，不做商用。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

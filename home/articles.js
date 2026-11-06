@@ -3,6 +3,33 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'gh-agent-editor-duo',
+            title: '49096 星对 7831 星：控制面管调度，IDE 管落地',
+            url: '../post/gh-agent-editor-duo/gh-agent-editor-duo.html',
+            summary: 't3code 49096 星、9697 fork，MIT，自称 agent 编排控制面，纳管 7 家 CLI 覆盖四端；thinkrail 7831 星、477 fork，Apache-2.0，把 pi 焊进带 git worktree 与 SPEC.md 的 IDE。一个管调度，一个管落地。',
+            category: 'AI 编程',
+            date: '2026-11-06',
+            tags: ["Agent","IDE","开源","GitHub","横评"],
+          },
+          {
+            id: 'gh-context-memory-duo',
+            title: '113812 星对 33587 星：一个省历史，一个省回显',
+            url: '../post/gh-context-memory-duo/gh-context-memory-duo.html',
+            summary: 'thedotmack/claude-mem 113,812 星，会话压成摘要注回未来会话；mksglu/context-mode 33,587 星，工具输出截进本机 SQLite 索引。一个省跨会话历史，一个省单次会话回显，压缩不在同一层。「98%」是 Hacker News 帖子标题，仓库基准自述 99.4%。',
+            category: 'AI 编程',
+            date: '2026-11-06',
+            tags: ["Skill","开源","GitHub","横评","上下文"],
+          },
+          {
+            id: 'gh-mobile-agent-trio',
+            title: '6681星去广告、7320星代操作、2700星查隐私：按痛点选',
+            url: '../post/gh-mobile-agent-trio/gh-mobile-agent-trio.html',
+            summary: 'rddmwmddr/android-ad-cleaner 6,681 星、MIT；wangzan101/Mika 7,320 星、Apache-2.0；Verlintas/NOIR 2,700 星、MIT。三者同在 10 月最后一周建库，分别去广告、代点 App、扫权限与数据流向。按痛点选，别按星标排。',
+            category: 'AI 编程',
+            date: '2026-11-06',
+            tags: ["Agent","Android","开源","GitHub","横评"],
+          },
+          {
             id: 'gh-anthropics-knowledge-work-plugins',
             title: '3.4 万星插件仓：README 说 11 个，机器管 22 份',
             url: '../post/gh-anthropics-knowledge-work-plugins/gh-anthropics-knowledge-work-plugins.html',

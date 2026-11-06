@@ -49,8 +49,8 @@ jobs:
             echo "星标无变化，跳过提交"
             exit 0
           fi
-          git pull --rebase origin main
           git commit -m "chore(stars): 每日星标快照 $(date -u +%F)"
+          git pull --rebase origin main
           git push
 
       - name: 失败通知

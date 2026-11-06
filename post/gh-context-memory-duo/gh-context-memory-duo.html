@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>113812 星对 33587 星：一个省历史，一个省回显 · EXPECTOPATRONUS</title>
+    <meta name="description" content="thedotmack/claude-mem 113,812 星，会话压成摘要注回未来会话；mksglu/context-mode 33,587 星，工具输出截进本机 SQLite 索引。一个省跨会话历史，一个省单次会话回显，压缩不在同一层。「98%」是 Hacker News 帖子标题，仓库基准自述 99.4%。" />
+    <meta name="keywords" content="Skill, 开源, GitHub, 横评, 上下文" />
+    <meta property="og:title" content="113812 星对 33587 星：一个省历史，一个省回显" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="thedotmack/claude-mem 113,812 星，会话压成摘要注回未来会话；mksglu/context-mode 33,587 星，工具输出截进本机 SQLite 索引。一个省跨会话历史，一个省单次会话回显，压缩不在同一层。「98%」是 Hacker News 帖子标题，仓库基准自述 99.4%。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>113812 星对 33587 星：一个省历史，一个省回显</h1>
+      <p>113,812 星、9,873 fork，claude-mem 把旧会话压成摘要注回新会话；33,587 星的 context-mode 压的是工具回显字节。两者都号称省上下文，却压在不同层。传得最广的「98%」其实只是 HN 帖子标题。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-06</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 9 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="113812 星对 33587 星：一个省历史，一个省回显 封面" src="cover.jpg" />
+    </div>
+
+    <article class="article-body">
+<div class="section-marker">01 · 这件事</div>
+<h2>两个都在给 agent 省上下文，一个管「过去」，一个管「当下」</h2>
+<p><code>thedotmack/claude-mem</code> 于 2025 年 8 月 31 日建库，到 2026 年 11 月 6 日是 113,812 星、9,873 个 fork、358 个订阅者、127 个未关闭 issue，Apache-2.0 协议，TypeScript，仓库体积 784,595 KB，最后一次 push 停在当天 11 点 52 分。它的 description 写得很直白：捕获会话里 agent 做的一切，用 AI 压缩，再把相关上下文注入未来会话，支持 Claude Code、OpenClaw、Codex、Gemini、Copilot 等一长串宿主。</p>
+<p>另一个是 <code>mksglu/context-mode</code>，2026 年 2 月 23 日建库，33,587 星、2,305 个 fork、107 个订阅者、6 个未关闭 issue，JavaScript，53,235 KB，同日 13 点 11 分刚 push 过。description 是：一个免费的本地插件，把工具输出挡在 coding agent 的上下文窗口之外，用 sandbox 加 SQLite FTS5 搜索，让进上下文的字节少 99%。有一处口径要先记下：GitHub API 给它的 license 字段是 <code>Other / NOASSERTION</code>，而 README 的徽章写的是 ELv2。</p>
+<p>两个仓库差了 80,225 星，建库差了近半年，但真正要命的差别不在体量。<span class="hl">它们压缩的根本不是同一段上下文</span>：claude-mem 压的是「上一次会话留下的历史」，context-mode 压的是「这一次会话里工具刚吐出来的字节」。前者是时间维度，后者是 I/O 维度。把它们当成同类工具二选一，一开始就把问题问错了。</p>
+<p>它们在积压队列里同属 <code>context-memory</code> 一族，一条 87 分、一条 85 分，所以这篇是横评，一次消耗两条。下面先把「压缩发生在哪一层」拆开，最后给判断表。</p>
+
+<div class="section-marker">02 · 核心机制</div>
+<h2>一个在会话之间搬运记忆，一个在工具返回之前截住输出</h2>
+<p>claude-mem 的压缩发生在会话结束之后。README 把骨架列成六层：六类 lifecycle hook（<code>SessionStart</code>、<code>UserPromptSubmit</code>、<code>PreToolUse</code>、<code>PostToolUse</code>、<code>Stop</code>、<code>SessionEnd</code>，每条只是 <code>claude-mem hook claude-code &lt;event&gt;</code> 这样一条命令）、Smart Install、由 Bun 管理的 Worker Service 本地 HTTP 服务、存 sessions / observations / summaries 的 SQLite、mem-search skill，以及做混合检索的 Chroma 向量库。它捕获的是 README 里叫 <code>tool usage observations</code> 的东西——agent 用过什么工具、改了什么、下过什么判断——再用 AI 生成 semantic summaries 落库。</p>
+<p>注入发生在下一次会话的 <code>SessionStart</code>。新会话一开头，相关摘要被注回上下文，agent 于是「记得」上个会话做过什么。它管的是<b>跨会话的历史记忆</b>：为了让新会话接上旧会话，你本来得把整段历史重新贴进去，claude-mem 把这笔开销换成一小段摘要。<span class="hl">它完全不碰当前会话里正在产生的工具输出</span>——那些字节照样一条条进上下文。</p>
+<p>context-mode 反过来，压缩点在单次会话内、工具返回的那一刻。agent 读文件、跑命令、抓网页，结果不直接回上下文，而是先落进本机 <code>~/.context-mode</code> 下按项目分的 <code>context.db</code>（SQLite FTS5 索引）；agent 要哪一部分，用 <code>ctx_search</code> 检索，或者按 README 说的「Thinking in Code」写一段短脚本在 sandbox 里处理数据，只有脚本 print 出来的那几行进入上下文。</p>
+<p>所以它省下的是<b>工具回显的原始大块字节</b>：一次 <code>gh issue list --json</code> 的输出、一份 1,999 行 syslog、一页 Chrome DevTools 快照、5,000 条 JSON 记录。这些原本会一口气塞满窗口、把会话逼进 compaction。context-mode 不记「上周为什么选了这个方案」，不跨会话，也不做 AI 摘要，它是纯字节层面的拦截。<span class="hl">一个省「过去」，一个省「当下」，作用在不同层，理论上可以同时装</span>。</p>
+<p>还有一处容易混的账。claude-mem 的 README 也写 <code>~10x token savings</code>，但那是它 4 个 MCP 工具的三层检索策略：先 <code>search</code> 拿紧凑索引（约 50–100 tokens/条），筛完再 <code>get_observations</code> 取详情（约 500–1,000 tokens/条）。省的是「从已存记忆里取多少」，不是压缩率。两处的「省」根本不是同一个分母。</p>
+
+<div class="section-marker">03 · 关键细节与数据</div>
+<h2>「98%」是帖子标题，仓库自己的基准写的是 99.4%</h2>
+<p>先处理那个被传得最广的数字。context-mode 的 README 在 Adoption 一节收录了 2026 年 2 月 28 日 Hacker News 的一条：帖子标题是 <code>MCP server that reduces Claude Code context consumption by 98%</code>，570+ 分、107 条评论，上了首页。<span class="hl">「压掉 98%」是那条帖子的标题，不是仓库跑出来的基准</span>。仓库 description 的自述是 99% fewer bytes in context，README 里带日期、带 commit 的基准是 2026-11-01 那次（2.0.0-next.23，commit 16a4bcc5，median of 5 runs）：36 行原始输出 ≥10 KB 的样本，回复字节的中位数比原始输出小 99.4%。</p>
+<p>这些基准自述值得逐条看分母。同一次 bench 里，一次完整调试会话 281,261 B 原始输出压到 3,266 B 进上下文（约 70K → 817 tokens，按 4 B/token 估算）；压缩后接着跑的一段 442,893 B transcript 变成 2,019 B 的块（约 111K → 505 tokens）。README 另记了一次会话：1015.5 KB 变 3.7 KB，99.6% 的字节被挡在外面，约 259K tokens，相当于 1.3 个 200K 窗口。四行 bench 表里，<code>gh issue list</code> 列 40 条是 182,943 B → 850 B（99.5%），<code>gh pr list</code> 列 25 条是 195,471 B → 776 B（99.6%），Context7 查文档 6,917 B → 473 B（93.2%）。</p>
+<p>try-it 那组数更能说明口径。2026-11-02 的四次 live 运行里，5,000 条 JSON 记录那次是 1,039,898 B → 393 B、99.96%，README 自己补了一句 <code>this is the best case of the four</code>——答案只是两个短事实，所以这是最优情形。同一组里网页抓取是 96.5%，十条故事是 95.7%，1,999 行 syslog 是 99.7%。<span class="hl">分母始终是「工具原始输出字节」，不是整个上下文窗口</span>；把 98% 或 99.4% 读成「上下文整体省了这么多」，是把账记错了地方。以上全部是作者自述的 bench 或社区帖子标题，本文没有独立复现。</p>
+<p>再看两个仓库的热度面。claude-mem 113,812 星配 358 个订阅者、127 个未关闭 issue；context-mode 33,587 星配 107 个订阅者、6 个未关闭 issue。README 里还留着 2026-11-01 的自述快照：33K stars、683K npm downloads（<code>stats.json</code> 每天存一份，累计到 2026-10-29）。claude-mem 的 README 挂着 Vercel OSS Program、Greptile、SerpApi 三个徽章，列了三十多个语言版本的入口，版本徽章 15.10.1，要求 Node ≥ 20.0.0；context-mode 要求 Node 24.15.0+，声明支持 10 个 coding agent、9 个 MCP 工具。</p>
+<div class="info-box">数据核对：2026-11-06 经 api.github.com 与两仓库 README（raw）读取。thedotmack/claude-mem：full_name thedotmack/claude-mem，stargazers_count 113812，forks_count 9873，subscribers_count 358，open_issues_count 127，created_at 2025-08-31T20:50:03Z，pushed_at 2026-11-06T11:52:18Z，language TypeScript，size 784595KB，license Apache-2.0，homepage claude-mem.ai，default_branch main。mksglu/context-mode：full_name mksglu/context-mode，stargazers_count 33587，forks_count 2305，subscribers_count 107，open_issues_count 6，created_at 2026-02-23T05:56:28Z，pushed_at 2026-11-06T13:11:13Z，language JavaScript，size 53235KB，license 字段 Other / NOASSERTION（README 徽章标 ELv2），homepage contextmode.ai，default_branch main。以下均为仓库 README 自述、非本文实测：claude-mem 版本徽章 15.10.1、Node ≥20.0.0、六类 lifecycle hooks、六层架构（Hooks / Smart Install / Worker Service(Bun) / SQLite / mem-search / Chroma）、4 个 MCP 工具的三层检索（search 约 50–100 tokens/条、get_observations 约 500–1,000 tokens/条、~10x token savings）；context-mode 声明 10 个 agent / 9 个 MCP 工具、Node 24.15.0+、每项目一个 context.db、SQLite FTS5、2026-11-01 基准（2.0.0-next.23，commit 16a4bcc5，median of 5 runs）36 行 ≥10KB 样本中位 99.4%、2026-11-02 try-it 四例 96.5% / 99.96% / 99.7% / 95.7%、一次会话 1015.5KB→3.7KB（99.6%）、33K stars / 683K npm downloads（read 2026-11-01）。易误解点有三：一是「压掉 98%」出自 README Adoption 节引用的 2026-02-28 Hacker News 帖子标题（570+ 分、107 评论），属社区口径而非仓库基准，仓库 description 自述 99%、基准自述 99.4%，均为作者或社区自述，本文未独立复现；二是上述百分比分母为「工具原始输出字节」，tokens 换算按 4 B/token 估算，不等于整个上下文窗口的节省；三是 context-mode 的 GitHub API license 为 Other/NOASSERTION 而 README 徽章为 ELv2，二者口径不一，引用请注明取自哪个文件。星标实时变化，以仓库当前数据为准。（核对时间 2026-11-06）</div>
+
+<div class="section-marker">04 · 怎么用</div>
+<h2>按你被撑爆的是哪一段上下文来选</h2>
+<p>claude-mem 一条命令：<code>npx claude-mem install</code>；Claude Code 内也可以 <code>/plugin marketplace add thedotmack/claude-mem</code> 再 <code>/plugin install claude-mem</code>。README 特别提醒 <code>npm install -g claude-mem</code> 只装 SDK，不注册 hooks、不启 worker。装完重启 Claude Code，旧会话的上下文会自动出现在新会话里。安装器会引导浏览器登录（email magic link）、给 30 天 CMEM Pro 免费试用，memory provider 可选 observer、自己的 OpenRouter / Gemini key 或 Anthropic 套餐；不想登录可以传 <code>--provider</code>，或在 CI 里非交互跑完。</p>
+<p>context-mode 按 agent 分安装块，Claude Code 是 <code>claude plugin marketplace add mksglu/context-mode</code> 加 <code>claude plugin install context-mode@context-mode</code>；通用路径是 <code>npm i -g context-mode</code> 再 <code>context-mode setup --agents &lt;agent&gt;</code>，装完在 agent 里跑 <code>/ctx-doctor</code> 逐项 PASS。hooks、sandbox、FTS5 索引都是本地进程，索引落在 <code>~/.context-mode</code>，README 声明零遥测、装完可离线。<span class="hl">它不要账号，也不要常驻的托管内存</span>。</p>
+<p>判断表如下，A 是 claude-mem，B 是 context-mode：</p>
+<ul>
+<li><b>每次开新会话都要重新交代项目背景、上周改过什么、当初为什么这么设计</b>——选 A。要的是跨天、跨会话的决策沿革，只有它在会话之间搬运记忆。代价是接受登录、常驻 worker、SQLite 加 Chroma 这一整套。</li>
+<li><b>一次会话里跑几条命令就被日志、测试输出、大 JSON 撑爆，频繁触发 compaction</b>——选 B。痛点是当下这一轮的工具回显，本地 sandbox 加 FTS5 直接截住，零遥测、可离线，还覆盖 10 个 agent。</li>
+<li><b>数据不能出机器，或要给团队统一装同一套</b>——选 B。claude-mem 默认引导到 CMEM Pro 托管内存、安装末尾还会问使用分析；context-mode 把「数据留在本机」写成硬约束，并按 agent 把安装、更新、体检命令列全。</li>
+<li><b>长会话既被工具输出撑爆、又要跨会话记结论</b>——两个都装，不冲突。一个管当下 I/O，一个管历史，安装通道也不同（<code>npx claude-mem install</code> 对 <code>claude plugin install context-mode@context-mode</code>）。反过来，只想要方法论就都别装：读 context-mode 的 bench 表和 claude-mem 的 progressive-disclosure 文档，比养两个常驻服务便宜。</li>
+</ul>
+<p>一个务实提醒：两者都不轻。claude-mem 要 Node ≥ 20、Bun worker、Chroma 与 SQLite，context-mode 要 Node 24.15.0+，Windows 上还得装 Git for Windows——README 明说 shell 工具跑在 Git Bash，<code>/ctx-doctor</code> 会检查这一项。为一个「省上下文」的工具引入常驻进程和数据库，本身就把故障面变大了。</p>
+
+<div class="section-marker">05 · 冷思考</div>
+<h2>113,812 星对 33,587 星，量出来的不是同一个东西</h2>
+<p>先质疑星标。claude-mem 早建库近半年、多 80,225 星，但 README 里那三个赞助徽章、三十多个语言版本、Star History 徽章、30 天免费试用加浏览器登录，是一整套分发投入；context-mode 的首页也写着 Hacker News 570+ 分、GitHub Trending 14 天。<span class="hl">热度里有相当一部分是分发能力，不是机制优劣</span>。更该看的是订阅与星标之比：358 / 113,812 约 0.31%，107 / 33,587 约 0.32%，几乎一样，两边都是「先收藏」的量级。</p>
+<p>再质疑那个百分比。98% 来自 HN 帖子标题，99% 是 description 自述，99.4% 是 36 行样本中位数，99.96% 是 README 自己标注的 best case。<span class="hl">四个数字分母都是工具输出字节，没有一个是「整个上下文窗口省了多少」</span>。tokens 那两处还标着 estimate at 4 B per token。读者最容易犯的错，就是把「工具输出省了 99%」直接当成「上下文省了 99%」——真正被压掉的只是那部分回显，system prompt、历史对话、模型自己的输出一个字节没动。</p>
+<p>第三处质疑是压缩本身的成本没进账。claude-mem 要「用 AI 生成 semantic summaries」，这个动作得调模型：要么 CMEM Pro 托管，要么自己的 OpenRouter / Gemini / Anthropic key。省下的注入 token 有没有被「生成摘要」的调用抵掉，README 没给净账。context-mode 不做 AI 摘要、看着更省，却把成本换到了别处：每项目一个 <code>context.db</code>、9 个 MCP 工具、10 个 agent 的 hook 适配、Node 24.15.0+。<span class="hl">两边都在把一种开销换成另一种开销，只是换法不同</span>。</p>
+<p>第四处是「免费」和「开源」的边界要按字读。context-mode 的 GitHub API license 字段是 Other / NOASSERTION，README 徽章写 ELv2，是 source-available，不是 OSI 认可的开源；<code>free forever</code> 说的是本地插件，而真正做跨会话记忆的 Gateway Memory 是另一条独立订阅线。claude-mem 是干净的 Apache-2.0，却同样把 hosted memory 放进 30 天试用之后的付费档。<span class="hl">两个项目都把「跨会话」放在了要付钱或要账号的那一侧</span>，这不是巧合，是这门生意最自然的收费点。</p>
+<p>所以要选的不是哪个星多、哪个百分比大。我的判断是：先确认你的上下文是被「上一次会话」撑爆，还是被「这一条命令的回显」撑爆。是前者，claude-mem 那套 hook 加摘要加注入没有替代品，哪怕要养一个 worker；是后者，context-mode 的本地拦截更直接、也更诚实，它至少把分母写在了 README 里。<span class="hl">真正不该做的是拿这两个数字互相比，然后挑一个大的</span>：一个量的是字节，一个量的是记忆，它们根本不在同一把尺子上。</p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看这两个仓库</h3>
+        <p>thedotmack/claude-mem 113,812 星 / Apache-2.0 / 跨会话记忆压缩；mksglu/context-mode 33,587 星 / ELv2 / 工具输出不进上下文</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/thedotmack/claude-mem" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/thedotmack/claude-mem" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 113,812 星，Apache-2.0，六类 hook 把会话压成摘要</span>
+      </a>
+      <a class="plat-card" href="https://github.com/mksglu/context-mode" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 33,587 星，ELv2，工具输出落本机 SQLite FTS5</span>
+      </a>
+      <a class="plat-card" href="https://github.com/mksglu/context-mode/blob/main/README.md" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">file · 2026-11-01 基准与 10 个 agent 的安装命令</span>
+      </a>
+      <a class="plat-card" href="https://github.com/thedotmack/claude-mem/blob/main/README.md" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">file · 六层架构、4 个 MCP 工具与三层检索</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Skill">#Skill</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=GitHub">#GitHub</a>
+      <a href="../../home/home.html?q=%E6%A8%AA%E8%AF%84">#横评</a>
+      <a href="../../home/home.html?q=%E4%B8%8A%E4%B8%8B%E6%96%87">#上下文</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本文为转载整理，原视频来自抖音 @小龙（约 2026-10-21 发布，2459 赞）。原榜星标数据无法逐一与 GitHub 对账，本文已按「干什么、用在哪」重组并标注以仓库实时数据为准。本站仅做学习归档，不做商用。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

@@ -5,8 +5,32 @@
     <link>https://expectopatronus00.github.io/</link>
     <description>一个 AI 工具与实战的中文学习归档：原创踩坑记录 + 精选转载，每篇都标注来源。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 06 Nov 2026 13:21:31 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 06 Nov 2026 14:31:39 GMT</lastBuildDate>
     <atom:link href="https://expectopatronus00.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>49096 星对 7831 星：控制面管调度，IDE 管落地</title>
+      <link>https://expectopatronus00.github.io/post/gh-agent-editor-duo/gh-agent-editor-duo.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-agent-editor-duo/gh-agent-editor-duo.html</guid>
+      <pubDate>Thu, 05 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>t3code 49096 星、9697 fork，MIT，自称 agent 编排控制面，纳管 7 家 CLI 覆盖四端；thinkrail 7831 星、477 fork，Apache-2.0，把 pi 焊进带 git worktree 与 SPEC.md 的 IDE。一个管调度，一个管落地。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>113812 星对 33587 星：一个省历史，一个省回显</title>
+      <link>https://expectopatronus00.github.io/post/gh-context-memory-duo/gh-context-memory-duo.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-context-memory-duo/gh-context-memory-duo.html</guid>
+      <pubDate>Thu, 05 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>thedotmack/claude-mem 113,812 星，会话压成摘要注回未来会话；mksglu/context-mode 33,587 星，工具输出截进本机 SQLite 索引。一个省跨会话历史，一个省单次会话回显，压缩不在同一层。「98%」是 Hacker News 帖子标题，仓库基准自述 99.4%。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>6681星去广告、7320星代操作、2700星查隐私：按痛点选</title>
+      <link>https://expectopatronus00.github.io/post/gh-mobile-agent-trio/gh-mobile-agent-trio.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-mobile-agent-trio/gh-mobile-agent-trio.html</guid>
+      <pubDate>Thu, 05 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>rddmwmddr/android-ad-cleaner 6,681 星、MIT；wangzan101/Mika 7,320 星、Apache-2.0；Verlintas/NOIR 2,700 星、MIT。三者同在 10 月最后一周建库，分别去广告、代点 App、扫权限与数据流向。按痛点选，别按星标排。（转载 · 来源：微信）</description>
+    </item>
     <item>
       <title>3.4 万星插件仓：README 说 11 个，机器管 22 份</title>
       <link>https://expectopatronus00.github.io/post/gh-anthropics-knowledge-work-plugins/gh-anthropics-knowledge-work-plugins.html</link>
@@ -222,30 +246,6 @@
       <pubDate>Wed, 15 Jul 2026 16:00:00 GMT</pubDate>
       <category>AI 工具</category>
       <description>Orbital工作室分享——Kami，一款让AI生成文档不再丑陋的工具，支持精美排版、实时预览和多格式导出。（转载 · 来源：抖音）</description>
-    </item>
-    <item>
-      <title>无需穿戴设备，AI动作捕捉！</title>
-      <link>https://expectopatronus00.github.io/post/dy-7662683288191929627/dy-7662683288191929627.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7662683288191929627/dy-7662683288191929627.html</guid>
-      <pubDate>Wed, 15 Jul 2026 16:00:00 GMT</pubDate>
-      <category>AI 工具</category>
-      <description>成也2077分享——无需穿戴设备，纯AI驱动的动作捕捉方案，用摄像头即可实时捕捉人体动作，Vibe Coding 新玩法。（转载 · 来源：抖音）</description>
-    </item>
-    <item>
-      <title>傻瓜式Loop教程：一行命令开启AI自循环</title>
-      <link>https://expectopatronus00.github.io/post/xhs-6a5468250000000015027f67/xhs-6a5468250000000015027f67.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/xhs-6a5468250000000015027f67/xhs-6a5468250000000015027f67.html</guid>
-      <pubDate>Mon, 13 Jul 2026 16:00:00 GMT</pubDate>
-      <category>AI 编程</category>
-      <description>量子位分享——Loop Engineer 傻瓜式教程，一行命令让AI进入自循环模式，实现自动化任务迭代与优化。（转载 · 来源：小红书）</description>
-    </item>
-    <item>
-      <title>免费用6个月的CodeX Pro</title>
-      <link>https://expectopatronus00.github.io/post/xhs-6a51bf22000000001c027412/xhs-6a51bf22000000001c027412.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/xhs-6a51bf22000000001c027412/xhs-6a51bf22000000001c027412.html</guid>
-      <pubDate>Sun, 12 Jul 2026 16:00:00 GMT</pubDate>
-      <category>AI 工具</category>
-      <description>程序员晚枫分享——免费用6个月的CodeX Pro的获取方法和使用技巧，助力开发者提升编程效率。（转载 · 来源：小红书）</description>
     </item>
   </channel>
 </rss>

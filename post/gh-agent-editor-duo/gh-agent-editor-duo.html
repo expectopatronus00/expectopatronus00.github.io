@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>49096 星对 7831 星：控制面管调度，IDE 管落地 · EXPECTOPATRONUS</title>
+    <meta name="description" content="t3code 49096 星、9697 fork，MIT，自称 agent 编排控制面，纳管 7 家 CLI 覆盖四端；thinkrail 7831 星、477 fork，Apache-2.0，把 pi 焊进带 git worktree 与 SPEC.md 的 IDE。一个管调度，一个管落地。" />
+    <meta name="keywords" content="Agent, IDE, 开源, GitHub, 横评" />
+    <meta property="og:title" content="49096 星对 7831 星：控制面管调度，IDE 管落地" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="t3code 49096 星、9697 fork，MIT，自称 agent 编排控制面，纳管 7 家 CLI 覆盖四端；thinkrail 7831 星、477 fork，Apache-2.0，把 pi 焊进带 git worktree 与 SPEC.md 的 IDE。一个管调度，一个管落地。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>49096 星对 7831 星：控制面管调度，IDE 管落地</h1>
+      <p>49096 星、9697 fork 对 7831 星、477 fork。t3code 是纳管 7 家 agent 的控制面，thinkrail 把 agent 焊进 IDE、用 git worktree 隔离改动。一个管调度，一个管落地。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-06</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 10 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="49096 星对 7831 星：控制面管调度，IDE 管落地 封面" src="cover.jpg" />
+    </div>
+
+    <article class="article-body">
+<div class="section-marker">01 · 这件事</div>
+<h2>两个今天都还在推的仓库，一个 49096 星，一个 7831 星</h2>
+<p><code>pingdotgg/t3code</code>，2026 年 2 月 8 日建库，到 11 月 6 日是 49096 星、9697 个 fork、5398 个未关闭 issue、107 个订阅者，MIT 协议，TypeScript，最后一次 push 停在 11 月 6 日 14:10。仓库的 <code>description</code> 字段是 <code>null</code>——连一句自我介绍都没填，homepage 指向 <code>https://t3.codes</code>。README 第一句管它叫 <code>agent harness control surface</code>，agent 编排控制面。</p>
+<p>另一个是 <code>JetBrains/thinkrail</code>，2026 年 7 月 8 日建库，比前者晚整五个月，7831 星、477 个 fork、355 个未关闭 issue、23 个订阅者，Apache-2.0，同样 TypeScript，最后一次 push 在 11 月 6 日 13:57，只比 t3code 早十三分钟。它的 description 写满了：<code>Vibe code with pi in a lightweight, real IDE that customises itself around the way you work — The Vibe You Need</code>，homepage 是 <code>https://thinkrail.ai/</code>，还挂了 13 个 topics，从 <code>vibe-coding</code>、<code>spec-driven</code> 一直到 <code>pi-agent-extension</code>。</p>
+<p>GitHub 的 size 字段先给出一个反直觉的数：t3code 记 741154 KB，thinkrail 记 78608 KB，前者约是后者的 9.4 倍。一个自称"控制面"的东西，比一个自称"real IDE"的东西重了将近一个数量级。两个仓库今天都还在推，都在 agent 编辑器这一族里，进了同一条待办队列，所以这篇是横评，一次消耗两条。<span class="hl">但真正该分开的不是星标，是它们各自接住 agent 的哪一段</span>。</p>
+<p>t3code 不内嵌编辑器，也不自带 agent；thinkrail 把 agent 焊进了 IDE。一个补"人不在机器前"的空，一个补"agent 动了代码之后"的空。下面按这个次序拆。</p>
+
+<div class="section-marker">02 · 核心机制</div>
+<h2>一个接调度与在场，一个接隔离与落地</h2>
+<p>t3code 的机制写在 README 那句 <code>T3 Code can control them</code> 里：它不生产 agent，只控制你机器上已经装好的 agent。安装警告列了 7 家 provider——<code>Claude Code</code>、<code>Codex</code>、<code>Cursor</code>、<code>Grok Build</code>、<code>OpenCode</code>、<code>Google Antigravity</code>、<code>fx</code>，前提是至少装好一家并登录：<code>codex login</code>、<code>claude auth login</code>、<code>agent login</code>、<code>opencode auth login</code>、<code>fx login</code>；Antigravity 不用 CLI，在设置里点 <b>Install Antigravity</b> 再 <b>Sign in with Google</b>。控制面铺到四个端：iOS、Android、<code>https://app.t3.codes</code> 网页、Electron 桌面。</p>
+<p>所以它接住的是<span class="hl">agent 跑起来之后的「调度与在场」</span>：几个 CLI 在几台机器上并行，你要在手机上看见哪个卡住、切一次会话、排一个后续任务，而不必坐回那台机器前。它是横向的——跨 provider、跨设备、跨会话，把散落的 agent 收进一块玻璃后面。README 说灵感来自 Codex desktop app、Conductor、Claude Desktop 和 Cursor Glass，四者都不达标，它要的是远程可用、性能好、真开源，走错方向你能直接 fork。它不定义工作区、不管 diff、不碰你的 checkout。</p>
+<p>thinkrail 反过来。它围绕 <code>pi</code>（<code>@earendil-works/pi-coding-agent</code>）这个 coding agent 建了一整个工作台：可拆分的 Monaco 编辑器 tab、带实时 git 变更标记的 Files 树、Changed 视图、终端、文档，全部按当前 workspace 收窄；还能在文件和 diff 上留锚定审查评论，把评论当结构化上下文丢回对话。一个 workspace 里能并发跑几个 pi 会话，各有自己的模型和实时 token / 成本读数，共享一份 agent 会更新、你也能改的 plan，每一步做完单独 commit、单独 review。</p>
+<p>真正把它和"控制面"区分开的是两样东西。一是隔离工作区：把任意 git 仓库开成 project，再从中切出 <code>git worktree</code>，每条分支一个工作目录，agent 并行干活不碰你的 checkout；PR 合并或关闭、或者安静一周，workspace 自己 settle 到项目级 shelf，你一回去它又回来。二是<span class="hl">SPEC.md 规格图当 ground truth</span>：一堆互连的 <code>SPEC.md</code> 放在代码旁边，agent 通过 <code>spec_*</code> 工具读、搜、维护，意图不随会话结束而丢。再加 <code>⌘K</code> 命令面板跨项目找会话与工作区、MCP server 接进 pi 的 <code>mcp.json</code>、可移植 Agent Skills 原地读取。它接住的是纵向那一段：改动落在哪、怎么被审、怎么合回分支、意图怎么沉淀。</p>
+<p>换句话说，t3code 把 agent 当成需要被看管的外部进程，thinkrail 把 agent 当成 IDE 里的一等公民。前者替你解决"同时看好几个 agent"，后者替你解决"agent 写出来的一坨东西怎么算数"。</p>
+
+<div class="section-marker">03 · 关键细节与数据</div>
+<h2>轻的不轻，重的不重；还有一处署名得打折</h2>
+<p>把顶层 contents 拉下来数一遍，那个 9.4 倍就说得通了。t3code 顶层是 <code>apps/</code>、<code>native/</code>、<code>infra/</code>、<code>evals/</code>、<code>assets/</code>、<code>docs/</code> 这一串目录，加上 <code>AGENTS.md</code>（24670 字节）、<code>knip.jsonc</code>、<code>oxlint-plugin-t3code</code>、<code>.devcontainer</code>——四个端加 Electron 加七家 provider 适配都要自己打包，<code>README.md</code> 反而只有 5256 字节。thinkrail 顶层是 <code>apps/</code>、<code>packages/</code>、<code>pi-extensions/</code>、<code>thinkrail-extensions/</code>、<code>e2e/</code>，几份厚文档：<code>architecture.md</code> 44071 字节、<code>pi-compatibility.md</code> 26221 字节、<code>README.md</code> 19787 字节，还有 <code>bun.lock</code> 336825 字节。<span class="hl">「控制面」不轻，「完整 IDE」不重</span>，用仓库体积判断它处在哪一层会翻车。</p>
+<p>再看最诚实的两个数。t3code 5398 个未关闭 issue 配 107 个订阅者，订阅率约 0.22%；thinkrail 355 个配 23 个，约 0.29%。fork 比反过来：9697 除以 49096 是 19.8%，477 除以 7831 是 6.1%，前者是后者的三倍多。但 t3code 的 README 同时写着 <code>We are very very early in this project. Expect bugs.</code> 和 <code>We are (mostly) not accepting contributions yet</code>——高 fork、高 issue、不收贡献、自称极早期，这几件事摆在一起，那 9697 个 fork 里有多少是拿去自建控制面、多少只是先收藏，得打个问号。</p>
+<p>协议也分道。t3code 是 MIT，README 明说 truly open、让你 fork 去做自己想要的编辑器，配得上；thinkrail 是 Apache-2.0，<code>LICENSE</code> 11346 字节，带专利授权条款，想 fork 做商业发行的人得把这条算进去。还有一处小反差：t3code 的 <code>description</code> 是 <code>null</code>，49096 星没有一句仓库自述；thinkrail 写满 tagline 加 13 个 topics，7831 星。<span class="hl">热度显然不来自仓库自己那行简介</span>。</p>
+<p>归属要单独说清。API 里 thinkrail 的 <code>owner.login</code> 是 <code>JetBrains</code>、<code>type</code> 是 <code>Organization</code>，<code>organization.login</code> 同样是 <code>JetBrains</code>——能核到的只是<span class="hl">仓库署名在这个组织账号下</span>。README 顶部挂的是 JetBrains incubator project 徽章，链接指向 JetBrains on GitHub 的孵化器说明，不是某条正式产品线发布。所以本文按「仓库署名」处理，不把它当成 JetBrains 官方出品的产品认证；同理 t3code 的 owner 是 <code>pingdotgg</code>，也是组织账号，homepage 是 <code>t3.codes</code>，「谁做的」这件事 API 只给到账号这一层。</p>
+<p>README 里的细节也能对上各自定位。t3code 给了四套安装：<code>curl -fsSL https://t3.codes/install.sh | sh</code>、Windows 的 <code>irm https://t3.codes/install.ps1 | iex</code>、<code>winget install T3Tools.T3Code</code>、<code>brew install --cask t3-code</code>，不想装直接 <code>npx t3@latest</code>。thinkrail 是桌面安装包加 <code>curl -fsSL https://raw.githubusercontent.com/JetBrains/thinkrail/main/install.sh | bash</code>，装完 <code>thinkrail ~/code/my-repo</code> 直接把一个 git 仓库开成 project；README 还列了内置 5 种界面语言、两个可单独装进原生 pi 的扩展包 <code>@thinkrail/pi-ask-user-question</code> 与 <code>@thinkrail/pi-visualize</code>，以及 <code>ThinkRail has no accounts of its own</code>。一个把入口铺到四种包管理器和四个端，一个把入口收在一个 <code>thinkrail &lt;repo&gt;</code> 上。</p>
+<div class="info-box">数据核对：经 api.github.com/repos 及 /readme、/contents 读取，核对时间 2026-11-06 当天。pingdotgg/t3code：full_name pingdotgg/t3code，stargazers_count 49096，forks_count 9697，open_issues_count 5398，subscribers_count 107，created_at 2026-02-08T23:46:22Z，pushed_at 2026-11-06T14:10:50Z，license MIT，language TypeScript，size 741154KB，description 为 null，homepage https://t3.codes，owner.login pingdotgg（type Organization），README.md 5256 字节。JetBrains/thinkrail：full_name JetBrains/thinkrail，stargazers_count 7831，forks_count 477，open_issues_count 355，subscribers_count 23，created_at 2026-07-08T07:40:43Z，pushed_at 2026-11-06T13:57:29Z，license Apache-2.0，language TypeScript，size 78608KB，homepage https://thinkrail.ai/，topics 13 个，owner.login 与 organization.login 均为 JetBrains（type Organization），README.md 19787 字节、architecture.md 44071 字节。README 自述数字（7 家 provider、4 个端、5 种界面语言、2 个 pi 扩展包）取自各自 /readme，非 API 字段。易误解点有三：一是 thinkrail 的「JetBrains」只能核到组织账号署名，README 顶挂 JetBrains incubator project 徽章，本文按仓库署名处理，不作 JetBrains 官方产品认证，t3code 的「Theo 团队」同理只到 pingdotgg 账号；二是 t3code 的 description 字段为空，其「agent harness control surface」定位出自 README 而非 API；三是 size 字段 t3code 反为 thinkrail 的约 9.4 倍，「控制面轻、IDE 重」的直觉与仓库体积相反。星标实时变化，引用以仓库当前数据为准。（核对时间 2026-11-06）</div>
+
+<div class="section-marker">04 · 怎么用</div>
+<h2>按你要接住的那一段选，不按星标选</h2>
+<p>用 t3code 的前提不是装它，是先把它要控制的 agent 装好。README 的 WARNING 写得很直白：<code>Install and authenticate at least one provider before use</code>。也就是先 <code>codex login</code> 或 <code>claude auth login</code> 之类，再 <code>curl -fsSL https://t3.codes/install.sh | sh</code>，<code>t3</code> 起 server 打开本地 web app，<code>t3 service install</code> 挂后台，<code>t3 update</code> 升级。它不动你的仓库结构，装的是一个服务加四个端的壳。</p>
+<p>thinkrail 反过来，前提是一个 git 仓库和一个 model provider：<code>thinkrail</code> 需要 <code>git</code> 在 PATH 上，模型走 JetBrains AI 或自带凭证，第一次启动会带你接 provider。装完 <code>thinkrail ~/code/my-repo</code>，它自己按 <code>git worktree</code> 切隔离工作区、把 <code>SPEC.md</code> 建在代码旁边；桌面版与 CLI 共用同一套引擎，状态在 <code>~/.thinkrail</code>，pi 的配置读 <code>~/.pi/agent</code>。<span class="hl">你交给它的不是一次会话，是整个项目的变更生命周期</span>。</p>
+<p>判断表分三种情况：</p>
+<ul>
+<li><b>手上已经有一批在跑的 agent CLI，痛点是「人不在机器前」</b>——选 t3code。7 家 provider 里只要一家登录过就能纳管，iOS / Android / 网页 / 桌面四端看住、切换、排队，MIT、可 fork 自建控制面；它不替你管 diff，也不要求改工程习惯。</li>
+<li><b>从零起一个项目，要 agent 的改动被当成一次正式变更来管</b>——选 thinkrail。<code>git worktree</code> 隔离、Monaco 里逐条看 diff、锚定评论丢回对话、<code>SPEC.md</code> 跨会话留意图、逐步 commit 逐步 review，这些 t3code 里没有对应物。代价是接受它自带的 <code>pi</code> agent 和 Apache-2.0。</li>
+<li><b>想两个一起用</b>——先别急。t3code 列的 7 家 provider 里没有 <code>pi</code>，也没有 thinkrail；thinkrail 走自己的 <code>~/.pi/agent</code> 配置。<span class="hl">「控制面遥控 IDE」不是开箱即用的组合</span>，得等其中一边先认了对方。</li>
+</ul>
+<p>还有一笔不写在安装命令里的账。t3code 要 7 家里至少一家的订阅，thinkrail 要 JetBrains AI 或自带 provider 的 key，两边的 token 账单都落在你自己的账号上，不在「免费开源」四个字里。t3code 那句 <code>Nothing. We built T3 Code because we wanted the best possible development experience with agents</code> 说的是不卖你东西，不等于不花你订阅。</p>
+
+<div class="section-marker">05 · 冷思考</div>
+<h2>49096 星里有多少是品类红利，7831 星里有多少是署名光环</h2>
+<p>先质疑那个 6.27 倍。49096 除以 7831 是 6.27 倍；但 t3code 建库早五个月，做的是「跨 7 家 provider 的通用控制面」，受众天然是所有已经装了 CLI agent 的人；thinkrail 绑在一个具体的 <code>pi</code> agent 和一整套 IDE 习惯上，受众窄得多。<span class="hl">把这两个数直接当成「谁更好」的排序，等于拿装机量比一个插件和一个工作台</span>。t3code 连 <code>description</code> 都空着还拿到 49096 星，这本身就说明热度来自仓库之外的东西——品类、署名、发布节奏，而不是那份 5256 字节的 README。</p>
+<p>第二个质疑必须给到归属。把 <code>owner.login = JetBrains</code> 读成「JetBrains 官方下场做 IDE」，中间跳了一步：API 只证明仓库挂在这个组织账号下，README 顶上挂的是 JetBrains incubator project 孵化器徽章，<code>LICENSE</code> 是 Apache-2.0 而不是商业产品那套，还明说 <code>ThinkRail has no accounts of its own</code>。<span class="hl">孵化器项目不等于正式产品线，账号署名不等于产品认证</span>。7831 星、23 个订阅者、355 个 issue，这个量级配「官方下场」的叙事，本身就该让人多问一句。同理，「Theo 团队的编辑器」这句在 API 里也只能落到 <code>pingdotgg</code> 这个组织账号，再往上就不是这次能核到的了。</p>
+<p>第三个是 t3code 那 5398 个未关闭 issue 和 9697 个 fork。19.8% 的 fork 比看着像「真有人拿去改」，可 README 同时说 <code>Expect bugs</code>、<code>mostly not accepting contributions yet</code>、<code>Big features will not be</code>——一个不收大功能贡献、自称极早期的仓库攒下五千多个开放 issue，说明它被大量试用，也说明适配债全压在使用者自己身上；四端加 7 家 provider，任何一端掉链子都得等上游。反过来 thinkrail 有 <code>architecture.md</code>、<code>pi-compatibility.md</code>、<code>CODE_OF_CONDUCT.md</code>、<code>CONTRIBUTING.md</code>，文档像正经工程，但 23 个订阅者对 7831 星，日常盯着它的人少得可怜。</p>
+<p>最后一个质疑留给「编辑器层 vs IDE 层」这个分法。它好用，但别当成高低：t3code 741154 KB 比 thinkrail 78608 KB 大 9.4 倍，「轻控制面」一点都不轻；thinkrail 把 worktree、spec、diff 全做进 IDE，也没因此变重。<span class="hl">真正分层的不是界面厚薄，是它愿不愿意替你承担仓库语义</span>——t3code 明确不碰 checkout，thinkrail 明确要定义工作区、分支和规格图。</p>
+<p>所以我的判断落在这一句：先看你手上有没有一批已经在跑的 agent。有，装 t3code，把它们看住，别为一个遥控层去改工程习惯；没有、且你要从零把 agent 写的每一坨 diff 当成一次可审、可合、可追溯的变更，就上 thinkrail 那套 <code>git worktree</code> 加 <code>SPEC.md</code>。再往下一层，决定选型的其实不是「编辑器还是 IDE」，而是你承不承认 agent 的产出需要被当成变更来审——承认，IDE 层那套隔离和规格图就是必付的税；不承认、只要多地看住进程，控制面到头了，多一层都是负担。</p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看这两个仓库</h3>
+        <p>pingdotgg/t3code 49096 星 / MIT / README 自称 agent 编排控制面；JetBrains/thinkrail 7831 星 / Apache-2.0 / 带 git worktree 与 SPEC.md 的 agentic IDE</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/pingdotgg/t3code" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 49096 星，MIT，纳管 7 家 agent CLI 的远程控制面</span>
+      </a>
+      <a class="plat-card" href="https://github.com/JetBrains/thinkrail" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 7831 星，Apache-2.0，git worktree 加 SPEC.md 的 agentic IDE</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Agent">#Agent</a>
+      <a href="../../home/home.html?q=IDE">#IDE</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=GitHub">#GitHub</a>
+      <a href="../../home/home.html?q=%E6%A8%AA%E8%AF%84">#横评</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本文为转载整理，原视频来自抖音 @小龙（约 2026-10-21 发布，2459 赞）。原榜星标数据无法逐一与 GitHub 对账，本文已按「干什么、用在哪」重组并标注以仓库实时数据为准。本站仅做学习归档，不做商用。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
