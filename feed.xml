@@ -5,8 +5,16 @@
     <link>https://expectopatronus00.github.io/</link>
     <description>一个 AI 工具与实战的中文学习归档：原创踩坑记录 + 精选转载，每篇都标注来源。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Mon, 02 Nov 2026 14:31:26 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 06 Nov 2026 13:21:31 GMT</lastBuildDate>
     <atom:link href="https://expectopatronus00.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>3.4 万星插件仓：README 说 11 个，机器管 22 份</title>
+      <link>https://expectopatronus00.github.io/post/gh-anthropics-knowledge-work-plugins/gh-anthropics-knowledge-work-plugins.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-anthropics-knowledge-work-plugins/gh-anthropics-knowledge-work-plugins.html</guid>
+      <pubDate>Mon, 02 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>Anthropic 开源的岗位插件仓库，34,497 星、Apache-2.0。README 说 11 个插件，仓库实际 22 份清单、marketplace.json 123 条。252 个 SKILL.md 只配 15 个斜杠命令，186 条 MCP 连接里 30 条 url 是空的，71.6% 的提交来自机器人。（转载 · 来源：微信）</description>
+    </item>
     <item>
       <title>2600 星对 8 万星：一份手册和一个运行时</title>
       <link>https://expectopatronus00.github.io/post/gh-tstack-vs-ruflo/gh-tstack-vs-ruflo.html</link>
@@ -238,14 +246,6 @@
       <pubDate>Sun, 12 Jul 2026 16:00:00 GMT</pubDate>
       <category>AI 工具</category>
       <description>程序员晚枫分享——免费用6个月的CodeX Pro的获取方法和使用技巧，助力开发者提升编程效率。（转载 · 来源：小红书）</description>
-    </item>
-    <item>
-      <title>提升自媒体表达能力：两周实战心得分享</title>
-      <link>https://expectopatronus00.github.io/post/xhs-6a534d6d000000000f01f2ca/xhs-6a534d6d000000000f01f2ca.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/xhs-6a534d6d000000000f01f2ca/xhs-6a534d6d000000000f01f2ca.html</guid>
-      <pubDate>Sat, 11 Jul 2026 16:00:00 GMT</pubDate>
-      <category>效率与成长</category>
-      <description>橘斯斯sisi分享——提升自媒体表达能力的两周实战心得，三大核心方法：开口练习、内容结构化、反馈与迭代。（转载 · 来源：小红书）</description>
     </item>
   </channel>
 </rss>

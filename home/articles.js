@@ -3,6 +3,15 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'gh-anthropics-knowledge-work-plugins',
+            title: '3.4 万星插件仓：README 说 11 个，机器管 22 份',
+            url: '../post/gh-anthropics-knowledge-work-plugins/gh-anthropics-knowledge-work-plugins.html',
+            summary: 'Anthropic 开源的岗位插件仓库，34,497 星、Apache-2.0。README 说 11 个插件，仓库实际 22 份清单、marketplace.json 123 条。252 个 SKILL.md 只配 15 个斜杠命令，186 条 MCP 连接里 30 条 url 是空的，71.6% 的提交来自机器人。',
+            category: 'AI 编程',
+            date: '2026-11-03',
+            tags: ["插件市场","MCP","Claude Code","开源","Cowork","Skill"],
+          },
+          {
             id: 'gh-tstack-vs-ruflo',
             title: '2600 星对 8 万星：一份手册和一个运行时',
             url: '../post/gh-tstack-vs-ruflo/gh-tstack-vs-ruflo.html',

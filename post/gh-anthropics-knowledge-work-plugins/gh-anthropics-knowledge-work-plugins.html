@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3.4 万星插件仓：README 说 11 个，机器管 22 份 · EXPECTOPATRONUS</title>
+    <meta name="description" content="Anthropic 开源的岗位插件仓库，34,497 星、Apache-2.0。README 说 11 个插件，仓库实际 22 份清单、marketplace.json 123 条。252 个 SKILL.md 只配 15 个斜杠命令，186 条 MCP 连接里 30 条 url 是空的，71.6% 的提交来自机器人。" />
+    <meta name="keywords" content="插件市场, MCP, Claude Code, 开源, Cowork, Skill" />
+    <meta property="og:title" content="3.4 万星插件仓：README 说 11 个，机器管 22 份" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="Anthropic 开源的岗位插件仓库，34,497 星、Apache-2.0。README 说 11 个插件，仓库实际 22 份清单、marketplace.json 123 条。252 个 SKILL.md 只配 15 个斜杠命令，186 条 MCP 连接里 30 条 url 是空的，71.6% 的提交来自机器人。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head">
+      <div class="eyebrow">OPEN SOURCE · PLUGIN MARKETPLACE</div>
+      <h1>3.4 万星插件仓：README 说 11 个，机器管 22 份</h1>
+      <p>34,497 星、3,815 个 fork、Apache-2.0，Anthropic 把给知识工作者用的岗位插件整包开源了。但 README 说 11 个插件，仓库里躺着 22 份清单；说没有代码，里面有 26 个 Python 文件。真正值钱的不是插件本身，是那条每晚自动跑的去更新流水线。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-03</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 9 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="3.4 万星插件仓：README 说 11 个，机器管 22 份 封面" src="cover.jpg" />
+    </div>
+
+    <article class="article-body">
+<div class="section-marker">01 · 这件事</div>
+<h2>Anthropic 把岗位插件整包开源，34,497 星</h2>
+<p><code>anthropics/knowledge-work-plugins</code>，2026 年 1 月 23 日建库，到今天 34,497 星、3,815 个 fork、213 个订阅者、161 个未关闭 issue（其中 93 个 issue、68 个 PR），Apache-2.0 协议，最后一次 push 停在昨天（11 月 2 日）。仓库自己的描述很直白：<code>Open source repository of plugins primarily intended for knowledge workers to use in Claude Cowork</code>——给知识工作者用的插件仓库。</p>
+<p>它做的事不复杂：把销售、法务、财务、数据、产品这些岗位的工作方式拆成 Claude 能读的 Markdown 和 JSON，装进插件里，让 Claude 在 Cowork 或 Claude Code 里变成这个岗位的助手。每个插件一个目录，四件套：<code>.claude-plugin/plugin.json</code> 是清单，<code>.mcp.json</code> 是连接器，<code>commands/</code> 是你手动敲的斜杠命令，<code>skills/</code> 是它自己判断要不要读的知识。</p>
+<p>它在待办队列里躺了五天，10 月 29 日入池、评分 91，是积压最久的一条。但把整个仓库数完之后，真正值得写的不是 3.4 万星，<span class="hl">而是「官方开源的插件生态」这句话和仓库实际形状之间的落差</span>：README 说 11 个插件，仓库里躺着 22 份清单；README 说「没有代码」，里面有 26 个 Python 文件和 6 条 GitHub Actions。</p>
+
+<div class="section-marker">02 · 核心机制</div>
+<h2>四个文件件，和一条每晚自动跑的流水线</h2>
+<p>插件机制本身很薄。README 把结构写成四行，然后说 <code>no code, no infrastructure, no build steps</code>。技能是自动触发的领域知识：销售插件教你怎么准备一场客户会议，财务插件教你怎么对账。装法两条命令——<code>claude plugin marketplace add anthropics/knowledge-work-plugins</code> 把市场加进来，<code>claude plugin install sales@knowledge-work-plugins</code> 装具体那个。</p>
+<p>真正厚的是市场文件。<code>.claude-plugin/marketplace.json</code> 有 68,192 字节、123 个条目，名字互不重复。拆开：22 条指向本地路径（<code>./sales</code> 这种），101 条指向外部——59 条用 <code>url</code>，42 条用 <code>git-subdir</code>。<span class="hl">101 条远程条目每一条都钉着一个 sha，42 条还额外钉了 ref 和子目录 path</span>。这不是一张目录，是一份带版本锁的外部依赖清单。</p>
+<p>而这份清单怎么不腐烂，靠的是一条夜间流水线。<code>bump-plugin-shas.yml</code> 每天 UTC 07:23 跑：哪个外部条目的上游 HEAD 动过了，就在新 sha 上先跑 <code>claude plugin validate</code>，通过就开一个 <code>bump/&lt;slug&gt;</code> 分支的 PR，一个插件一个 PR，失败的那条隔离在自己分支上不拖累别人。单条 bump 成本约 2 秒，一晚上默认封顶 30 条。</p>
+<p>但 bump 只是搬砖，真正把关的是另一条。<code>scan-plugins.yml</code> 的 <code>scan</code> 是 main 分支的 required status check——它克隆外部仓库，用 <code>.github/policy/prompt.md</code> 那份 7,977 字节的审查提示词跑一遍 Claude，按 Anthropic 的目录政策和 AUP 判断这插件「是否负责任地处理用户数据」，通过才放行。</p>
+<p><span class="hl">也就是说，一个 Claude 写的插件，要先过另一个 Claude 的策略审查，才能进官方市场</span>。而这条审查的省法是缓存：判定按 <code>&lt;plugin&gt;@&lt;sha&gt;</code> 存，sha 不可变所以同一组合只烧一次约 90 秒的 Claude 时间，30 天后过期，策略提示词一改全部失效重扫。文件里写得很直白——<code>without a cache, the scan would re-burn ~90s of Claude time per entry per night</code>，有了缓存稳态每晚约 10 条。</p>
+<p>还有一条流水线是关门的。<code>close-external-prs.yml</code> 用 <code>pull_request_target</code> 监听所有 PR：作者不是 Anthropic 成员，且改动不属于「只新增市场条目、别的什么都不碰」这类范围，就留评论然后关掉。评论里给的通道是 <code>https://clau.de/plugin-directory-submission</code>。仓库 README 写的却是 <code>Fork the repo, make your changes, and submit a PR</code>——README 说的和 workflow 做的是两件事。</p>
+
+<div class="section-marker">03 · 关键细节与数据</div>
+<h2>三处对不上</h2>
+<p>第一处是插件数。README 原话 <code>open-sourcing 11 plugins</code>，下面的表格也正好 11 行。但仓库里 <code>.claude-plugin/plugin.json</code> 实际有 <span class="hl">22 份</span>。多出来的 11 份是 engineering、design、human-resources、operations、small-business、pdf-viewer，加上 <code>partner-built/</code> 下的 5 个合作方插件（Salesforce 的 Slack、Apollo.io、Common Room、Tribe AI 的 brand-voice、Zoom）。这 11 份一个都没进 README 表格，但每一个都进了市场文件的本地 22 条。</p>
+<p>第二处是「没有代码」。仓库里确实有 26 个 Python 文件（310,650 字节，其中 25 个在 <code>bio-research</code> 下）、1 个 Node 脚本（7,281 字节）、2 个 HTML（合计 108,341 字节，最大的一个 <code>productivity/skills/dashboard.html</code> 98,403 字节）。<span class="hl">「无构建步骤」是真的，「无代码」是假的</span>——README 描述的是一种可以照抄的最小结构，不是这个仓库现在的样子。</p>
+<p>第三处是连接器。README 表格给每个插件列了一栏 Connectors，11 个插件加起来 77 个名字；而对应的 11 份 <code>.mcp.json</code> 实际登记了 108 个 server 条目。<span class="hl">11 个插件里除 cowork-plugin-management（本来就没有连接器）外，每一个的 README 都比实际少</span>——sales 差得最多，表格写 9 个（Slack、HubSpot、Close、Clay、ZoomInfo、Notion、Jira、Fireflies、Microsoft 365），实际 23 个 server，多出 Gong、Otter、Calendly、Lusha、Crunchbase、Apollo、Outreach 一串；product-management 表格 11 个、实际 16；marketing 表格 9 个、实际 13。</p>
+<p>差距的来源之一是命名粒度：README 把 Jira 归成「Jira」一个名字，实际登记成 <code>atlassian</code> 一条；Microsoft 365 表格算一个，实际还分列 <code>microsoft-365</code>、<code>google calendar</code>、<code>gmail</code>。另一个来源是表格只写「常用几个」。</p>
+<p>再看数字分布。全仓库 1,285 个文件、8,116,474 字节，Markdown 占 7,292,925 字节（89.9%），加上 JSON 共 91.1%。<code>SKILL.md</code> 共 252 个（第一方 181、合作方 71），而 <code>commands/</code> 下的斜杠命令只有 15 个，且只有 3 个目录有：pdf-viewer 4 个、product-management 1 个、partner-built 10 个。17 个第一方插件里只有 2 个带显式命令。<span class="hl">官方给的默认入口是「让 Claude 自己判断」，不是「让你敲命令」</span>。</p>
+<p>技能最多的两个也最重：<code>small-business</code> 44 个技能、35 个 MCP server、版本 1.35.1；<code>sales</code> 36 个技能、23 个 server、版本 2.1.0。版本号还暴露了成熟度差：<code>productivity</code> 1.3.1、<code>finance</code> 1.3.0、<code>legal</code> 1.3.0，而 <code>cowork-plugin-management</code> 停在 0.2.2、<code>pdf-viewer</code> 0.2.0，合作方那边 apollo 是 0.1.0。合作方那一坨 765 个文件、4.4 MB，其中 Zoom 一家占掉 71 个合作方技能里的 57 个，还带两份 OAuth 权限参考文档，377,288 和 371,007 字节——全仓库最大的两个文件。</p>
+<div class="info-box">数据核对：2026-11-03 经 api.github.com 与 raw.githubusercontent.com 读取 anthropics/knowledge-work-plugins。仓库元数据：stargazers_count 34497，forks_count 3815，subscribers_count 213，open_issues_count 161（search 接口拆分：issue 93、PR 68），created_at 2026-01-23T20:11:54Z，pushed_at 2026-11-02T07:26:44Z，language Python，size 6711KB，license Apache-2.0，default_branch main。文件与字节数取自 git/trees?recursive=1（truncated 为 false，1864 项：1285 blob / 579 tree）。marketplace.json 为 68192 字节、123 条、123 个不重复名称，其中 22 条本地路径、101 条远程（59 url / 42 git-subdir），101 条远程全部带 sha、42 条另带 ref 与 path。SKILL.md 252 个（第一方 181、合作方 71），plugin.json 22 个（第一方 17、合作方 5），.mcp.json 21 个，commands/*.md 15 个，CONNECTORS.md 17 个。21 份 .mcp.json 合计 186 条 server、91 个不重复名字、30 条 url 为空字符串、14 条 oauth（全部 slack，clientId 与 callbackPort 均唯一）。贡献者 32 个、提交 1128 次（contributors 接口累计 1127 次），其中 github-actions[bot] 807 次。易误解点三处：一是 README 自述 11 个插件，仓库实际 22 份 plugin.json，多的 11 份未出现在 README 表格中；二是 README 说 no code，实际有 26 个 .py、1 个 .js、2 个 .html 与 6 条 workflow，「无构建步骤」成立，「无代码」不成立；三是 README 表格的 Connectors 一栏 11 个插件合计 77 个名字，对应 .mcp.json 实际 108 条 server，每个插件的表格都少于实际。</div>
+
+<div class="section-marker">04 · 怎么用</div>
+<h2>装一个、改一个、或者只读它</h2>
+<p>装法就两条命令，加市场再装插件。装完自动生效：技能在相关时自己触发，斜杠命令出现在会话里（README 举例 <code>/sales:call-prep</code>、<code>/data:write-query</code>、<code>/finance:reconciliation</code>、<code>/product-management:write-spec</code>）。想换成自己的工具栈，就改 <code>.mcp.json</code> 的 url；想加公司术语和流程，就写进 skills 文件；想新建插件，仓库自带 <code>cowork-plugin-management</code> 专门干这个。</p>
+<p>怎么选，三条：</p>
+<ul>
+<li>只想用一份现成岗位能力：装 <code>sales</code> 或 <code>finance</code>。skill 数最多、版本最高（sales 2.1.0），是官方维护最久的部分。</li>
+<li>想看这套东西到底怎么写的：先读 <code>sales/skills/</code>（36 个 SKILL.md）和 <code>product-management/commands/</code>（唯一带命令的第一方插件）。这是全仓库唯一能看清「显式命令怎么设计」的样本。</li>
+<li>想做自己的插件并上架：看市场文件里远程条目怎么写——带 sha、带 ref、带 path。但别指望走 PR 进官方市场，<code>close-external-prs.yml</code> 会关掉它，官方通道是 <code>clau.de/plugin-directory-submission</code>。</li>
+</ul>
+<p>一个务实的提醒：186 条 server 里 30 条 url 是空字符串，集中在 google calendar（12）、gmail（12）、snowflake（2）、databricks（2）、benchling（1）、google drive（1）；pdf-viewer 那条走的是 stdio 命令而不是 http 地址。装完先确认连接器状态，别把「技能已经就绪」当成「工具已经连上」。</p>
+
+<div class="section-marker">05 · 冷思考</div>
+<h2>3.4 万星里，最有价值的部分不是给人用的</h2>
+<p>先看两个比例。星标对订阅：34,497 星配 213 个订阅者，0.62%。fork 对星标：3,815 除以 34,497，11.1%。fork 比例不低，说明确实有人拿去改。但订阅率很低，因为插件和库不一样：装插件的人不需要 watch，只有等着它更新的人才会 watch。这更像一个「安装即消费」的市场，不是开发者社区。</p>
+<p>更该看的是那 71.6%。按 contributors 接口累计的 1,127 次提交算，<code>github-actions[bot]</code> 占 807 次，31 个人类合计 320 次，头部 jordanecker-ant 一个人 155 次，接近人类提交的一半，还有 14 个人只提交过 1 次。<span class="hl">这个仓库的「作者」其实是一套自动化加两个中心化的人</span>。这不一定是坏事——夜间扫 sha、逐条 validate、逐条开 PR、策略扫描缓存、失败自动回退，这套东西一个人手写不出来，bot 占比高恰恰说明它跑的是自动化而不是靠热情。但代价是：仓库的形状是「Anthropic 想要的市场」，不是「社区自然长出来的市场」。123 条里 22 条本地、101 条外部，外部全是 sha 锁定的别人仓库——市场的大小不反映生态健康度，只反映有多少上游动过。</p>
+<p>第二个质疑在审查本身。让 Claude 审 Claude 写的插件，判据是那份 7,977 字节的提示词加两份政策文档。提示词本身写得很细——要求读完整负载而不只是加载面，专门点名要翻 <code>.claude/</code>、<code>scripts/</code>、<code>tests/</code> 这些不加载、但会随插件克隆到用户磁盘的目录，还要求检查有没有跨服务外泄凭据的代码。这套防线是认真写的，但它的上限就是提示词的上限：<span class="hl">一个会读文件、会调工具的审稿模型，判断力和它的上下文窗口绑在一起</span>。而且它审的是已发布的快照，不是持续运行的行为。</p>
+<p>第三个质疑在凭据。14 个插件共用同一个 slack <code>clientId</code>（1601185624273.8899143856786）和同一个回调端口 3118。这在官方自用场景里合理，一个应用一套 OAuth。但如果这些插件被复制进你的团队、复制进别人的公司，拿到的是同一把钥匙。再叠加 30 条空地址——google calendar 和 gmail 这两个服务在十几个插件里重复出现空 url，看起来是「占位，等填」而不是「配好了」。<span class="hl">一个 186 条连接器的官方插件市场，凭据和地址这两件事都还没落到每个用户身上</span>。README 说的「swap connectors，指向你自己的工具栈」，本质上就是把官方替你填的地址换成你自己填的——市场给了骨架，地址和钥匙都得你来补。</p>
+<p>第四个是入口的收缩。README 教 <code>Fork the repo, make your changes, and submit a PR</code>，但 workflow 会把非成员的 PR 关掉，只放行「只加市场条目、什么都不改」的那一类，其余走另一个表单。<span class="hl">「开源」在这套设计里指的是代码可见、目录可读、fork 可用，而不是准入通道敞开</span>。这不违背 Apache-2.0——协议本来就不承诺合并——但对读者的预期是一次校准。</p>
+<p>我的判断是：这个仓库最值得抄的不是那 181 个第一方技能，也不是那 123 条市场条目，是那条夜间自动 bump + 逐条 validate + Claude 策略扫描 + 缓存判定 + 失败自动回退的流水线。它把「维护一份会腐烂的外部依赖清单」这件苦差做成了一个每晚跑一次的 cron。<span class="hl">Skills 是产物，那条流水线才是方法</span>。而对想用的人，现实的判断是：现在就能装、官方维护最久的那几个（sales 2.1.0、small-business 1.35.1、productivity 1.3.1）值得装；合作方插件和那 30 条空地址的连接器，装之前先自己确认一遍地址。</p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看这个插件仓库</h3>
+        <p>anthropics/knowledge-work-plugins，2026-01-23 创建，34,497 星 / 3,815 fork，Apache-2.0，123 条市场条目</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/anthropics/knowledge-work-plugins" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/anthropics/knowledge-work-plugins" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · Anthropic 官方开源的岗位插件仓库</span>
+      </a>
+      <a class="plat-card" href="https://github.com/anthropics/knowledge-work-plugins/blob/main/.claude-plugin/marketplace.json" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">file · 123 条市场条目，22 条本地 + 101 条远程</span>
+      </a>
+      <a class="plat-card" href="https://github.com/anthropics/knowledge-work-plugins/blob/main/.github/workflows/bump-plugin-shas.yml" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">file · 每晚自动 bump 外部插件 SHA 的流水线</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=%E6%8F%92%E4%BB%B6%E5%B8%82%E5%9C%BA">#插件市场</a>
+      <a href="../../home/home.html?q=MCP">#MCP</a>
+      <a href="../../home/home.html?q=Claude%20Code">#Claude Code</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=Cowork">#Cowork</a>
+      <a href="../../home/home.html?q=Skill">#Skill</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2026 · 本文依据 anthropics/knowledge-work-plugins 仓库的 README、marketplace.json、git tree 与 GitHub API 公开数据整理，文内数字核对时间为 2026-11-03。本站仅做学习归档，不做商用。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
