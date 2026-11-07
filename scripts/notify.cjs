@@ -426,10 +426,13 @@ function smtpSend(cfg, mail) {
     let buf = '';
     let waiter = null;
     let settled = false;
+    const pending = []; // 响应码比 expect() 先到时先缓存，避免 greeting 被丢掉后永久挂起
+    let guard = null;
 
     const finish = err => {
       if (settled) return;
       settled = true;
+      if (guard) clearTimeout(guard);
       try {
         if (sock) sock.end();
       } catch (e) {
@@ -449,6 +452,7 @@ function smtpSend(cfg, mail) {
         const cb = waiter;
         waiter = null;
         if (cb) cb(code);
+        else pending.push(code);
       }
     };
 
@@ -462,6 +466,10 @@ function smtpSend(cfg, mail) {
 
     const expect = codes =>
       new Promise((res, rej) => {
+        if (pending.length) {
+          const c = pending.shift();
+          return codes.indexOf(c) >= 0 ? res(c) : rej(new Error('SMTP 返回 ' + c));
+        }
         waiter = code => (codes.indexOf(code) >= 0 ? res(code) : rej(new Error('SMTP 返回 ' + code)));
       });
 
@@ -522,6 +530,8 @@ function smtpSend(cfg, mail) {
     };
 
     const onConnect = () => {
+      // 兜底：任何环节卡住都在 30s 内正常结束，不让进程挂死被外部 SIGTERM
+      guard = setTimeout(() => finish(new Error('SMTP 整体超时')), 30000);
       run().catch(e => finish(e));
     };
 

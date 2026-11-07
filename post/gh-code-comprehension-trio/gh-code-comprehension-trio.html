@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3115星画地图、19335星逆向、2017星一句话：读懂分三层 · EXPECTOPATRONUS</title>
+    <meta name="description" content="floorplan 3,115 星、MIT，读代码库画地图、产物不提交；craft-anything 19,335 星、Apache-2.0，Clean room 逆向后重写新项目；stack-diagram 2,017 星、MIT，一句话出架构图。三者都叫「先读懂再动手」，读懂对象与产物能否进版本库都不同。" />
+    <meta name="keywords" content="Agent, 代码理解, 可视化, 开源, GitHub, 横评" />
+    <meta property="og:title" content="3115星画地图、19335星逆向、2017星一句话：读懂分三层" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="floorplan 3,115 星、MIT，读代码库画地图、产物不提交；craft-anything 19,335 星、Apache-2.0，Clean room 逆向后重写新项目；stack-diagram 2,017 星、MIT，一句话出架构图。三者都叫「先读懂再动手」，读懂对象与产物能否进版本库都不同。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>3115星画地图、19335星逆向、2017星一句话：读懂分三层</h1>
+      <p>19,335 星、3,637 fork——craft-anything 最重；floorplan 3,115 星，stack-diagram 2,017 星。三个 10 月底扎堆建库，却分管读代码库、逆向复刻、一句话出图：按粒度选。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-07</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 10 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="3115星画地图、19335星逆向、2017星一句话：读懂分三层 封面" src="cover.jpg" />
+    </div>
+
+    <article class="article-body">
+<div class="section-marker">01 · 这件事</div>
+<h2>三个都在 10 月底扎堆建库，都叫「让 agent 先读懂再动手」</h2>
+<p><code>haydenschmitty/floorplan</code> 2026 年 10 月 27 日建库，11 月 7 日核对时 3,115 星、238 fork、7 个订阅者、56 个未关闭 issue，MIT，JavaScript，6,159 KB，最后 push 在 11 月 2 日。description 写：<code>See how your app actually fits together. An interactive, plain-English map of your codebase, drawn by Claude or Codex.</code>——让 Claude 或 Codex 读代码库，画一张能点开、用大白话标注的地图。</p>
+<p><code>storytold/craft-anything</code> 10 月 31 日建库，19,335 星、3,637 fork、92 个订阅者、213 个未关闭 issue，API 的 license 是 Apache-2.0，Rust，9,752 KB，<span class="hl">11 月 7 日核对当天还在 push</span>。description 是 <code>Craft Anything: understand how any software works, and craft your own.</code>，README 称它为纯 Rust 的 clean-room 引擎：先研究软件怎么工作，再让 AI 造一个你自己的版本。</p>
+<p><code>caru-ini/stack-diagram</code> 11 月 1 日建库，2,017 星、93 fork、3 个订阅者、0 个未关闭 issue，MIT，TypeScript，3,461 KB，最后 push 在 11 月 3 日。description 更短：<code>Agent skill: describe your stack in a sentence, get an architecture diagram with official logos</code>——一句话描述技术栈，换一张带官方 logo 的架构图，是三者里唯一在 description 里写明自己是 agent skill 的。</p>
+<p>三个仓库挤在 10 月 27 日到 11 月 1 日这六天里先后出现，都挂在「让 agent 先读懂代码库再动手」这条线上，同属一族，所以这篇横评三个仓库的数字各自独立核过。<span class="hl">但「读懂」在三个仓库里根本不是同一件事</span>：一个读你自己的整个代码库，一个读别人软件的外在行为，一个连代码库都不读、只解析一句话。下面按粒度拆，最后给判断表。</p>
+
+<div class="section-marker">02 · 核心机制</div>
+<h2>一个读实现，一个读行为并重建，一个只读一句话里的名词</h2>
+<p>floorplan 读的是你自己的仓库。装成 Claude Code 或 Codex 的 plugin 后，agent 用你已有的账号读文件、跟着 imports 走，把前端每条 web request 匹配到回答它的后端 endpoint，跨 repo 也追，再把每个 part、file、request 换成 plain-English 名字——README 的例子是「Takes card payments at checkout」而不是「Stripe API wrapper」。产物是一张能缩到某个文件、端点的地图，附带 Health check（代码里的密钥、敞开的 Supabase 表、Firebase 规则、可伪造的 Stripe webhook、无登录端点）和 Recent work。<span class="hl">它读懂的是「这个 app 此刻实际怎么拼起来」</span>，静态实现级。</p>
+<p>README 的 How it works 画得直白：agent 扫完 → build → <code>floorplan/index.html</code> 在浏览器打开。它只写自己的 <code>floorplan/</code> 文件夹（含 <code>architecture.json</code>、<code>descriptions/</code>，自己改的每次更新都保留），在 Claude Code 里若你同意再往 <code>CLAUDE.local.md</code> 加一小段。关键是那句「Neither is committed」：文件夹不提交，<span class="hl">它还明说不改变你的代码、.gitignore 或 CLAUDE.md</span>。作者把产物主动挡在了版本库外面。</p>
+<p>craft-anything 读的是「另一个软件」。它把网站、app、游戏或文件交给一套纯 Rust 逆向引擎，README 说有 320 个工具（300 个在引擎里，其余来自 AI 与 setup 层），每个同时是 CLI 子命令和 MCP 工具，研究这步甚至标着「No AI is needed to inspect」。四步 Study → Build → Check → Ready：先研究原作，再让本机已登录的 coding agent 按你点名的语言、框架或引擎 build 一个新项目，Check 拿结果和原作比（网页三档屏宽、游戏自检、app 运行），没对上的继续 refine。<span class="hl">它读懂的是「这个软件看起来、跑起来是什么样」</span>，行为级。</p>
+<p>Clean room 是默认模式：README 写明「nothing inside the original is read, not its code, files or page source」，工具只从可见的东西工作——截图、可见文本、量出来的布局、颜色、字体、间距、展开的菜单；会往里看的工具直接被拒。Deep 才读代码和 JS、装了 Ghidra 就一起上。<span class="hl">它「读懂」得最像逆向，却恰恰被规则禁止读源码</span>——为的是让产出算作你自己的实现。产物落在新项目文件夹：<code>craft.json</code>、<code>capture/</code>、<code>app/</code>（生成的项目）、<code>checks/</code>、<code>inbox/</code>，默认在 <code>Documents/Craft Anything</code> 下。</p>
+<p>stack-diagram 连「读」都省了。它吃一句自然语言——示例是 <code>Diagram our stack: Next.js and a Hono API on Vercel. Postgres on Neon, auth with Clerk, payments with Stripe. GitHub Actions deploys.</code>——把话里的技术栈名词拆成节点和连线，按 svgl、devicon、gilbarbara/logos 到品牌自己仓库的次序取官方 logo，AWS、Google Cloud、Azure 用各家图标包，渲染成 light / dark 两套主题。<span class="hl">它读懂的不是代码库，是那句话里的名词</span>。产物 README 写得很具体：「one HTML file with its fonts and logos inlined」，断网也能渲染，能发成 artifact、也能「drop it into a repo or wiki」。三者摆成一条轴：A 读实现、B 读行为、C 读名词；进版本库的分别是「不提交的地图」「要提交的新代码」「能提交的一张图」。</p>
+
+<div class="section-marker">03 · 关键细节与数据</div>
+<h2>19,335 星对 3,115 星对 2,017 星，量出来的不是同一把尺子</h2>
+<p>把三组硬数字摊平。floorplan：3,115 星、238 fork、56 个未关闭 issue、7 个订阅者、10 月 27 日建库、11 月 2 日最后 push、MIT、JavaScript、size 6,159 KB，README 20,731 字节，根目录带 <code>.claude-plugin/</code>、<code>.codex-plugin/</code>、<code>skills/</code>、<code>docs/</code>、<code>tools/</code>，一份 22,134 字节的 <code>CHANGELOG.md</code>；徽章写 version 0.6.3、Node 18+、zero dependencies。</p>
+<p>craft-anything：19,335 星、3,637 fork、213 个未关闭 issue、92 个订阅者、10 月 31 日建库、<span class="hl">11 月 7 日核对当天 11:13 还在 push</span>、Rust、size 9,752 KB，README 27,195 字节，另配 8 种语言版本（含 23,620 字节的 <code>README.zh.md</code>），根目录是 <code>Cargo.toml</code>、205,281 字节的 <code>Cargo.lock</code>、<code>crates/</code>、<code>apps/</code>、<code>vendor/</code> 这一套 Rust 工程，挂在组织账号 <code>storytold</code> 下，产品名 ArtCraft，README 自标 <code>Status: early alpha</code>。</p>
+<p>stack-diagram：2,017 星、93 fork、<span class="hl">0 个未关闭 issue</span>、3 个订阅者、11 月 1 日建库、11 月 3 日最后 push、MIT、TypeScript、size 3,461 KB，README 8,333 字节，根目录 <code>skills/</code>、<code>site/</code>、<code>docs/</code> 加一份 1,065 字节的 LICENSE。一个 19,335 星、带 20 万字节锁文件的 Rust 工程，对上一个 2,017 星、README 不到它三分之一的 skill。</p>
+<p>许可要单独拎出来：floorplan 和 stack-diagram 是干净 MIT；craft-anything 的 API <code>license</code> 给 Apache-2.0，README 徽章却写 <code>MIT OR Apache-2.0</code>，根目录并存放 10,174 字节的 <code>LICENSE-APACHE</code>、1,106 字节的 <code>LICENSE-MIT</code> 和 1,767 字节的 <code>NOTICE</code>，是双许可不是笔误，<span class="hl">引用得注明取自哪个文件</span>。三条在选题池里各带积压评分与榜单数字，但那些都不是 api.github.com 字段，正文里每个数值都只取自 2026-11-07 这次独立核对，星标实时变化，以仓库当前数据为准。</p>
+
+<div class="section-marker">04 · 怎么用</div>
+<h2>按你手上是有代码库、有产品要复刻，还是只有一句话来选</h2>
+<p>三者前提不同。floorplan 要 Node.js 18+ 加 Claude Code 或 Codex，装法 <code>claude plugin marketplace add haydenschmitty/floorplan</code> 再 <code>claude plugin install floorplan@floorplan</code>，Codex 侧是 <code>codex plugin marketplace add haydenschmitty/floorplan</code> 与 <code>codex plugin add floorplan@floorplan</code>；开新会话说 <code>Make me a floorplan of this app.</code> 或敲 <code>$floorplan</code>，改完代码用 <code>Update the floorplan.</code> 刷新。<span class="hl">它没有 hooks、没有 MCP server、零依赖、不下载也不跑网上的代码</span>，只多出一个本地文件夹。</p>
+<p>craft-anything 要 Rust 1.97+：<code>git clone https://github.com/storytold/craft-anything &amp;&amp; cd craft-anything</code>、<code>cargo run --release -p craft-anything</code> 起桌面 app，<code>cargo install --path apps/craft-anything-cli</code> 装 CLI，<code>craft-anything-cli doctor</code> 体检；复刻是 <code>craft-anything-cli rebuild https://example.com "Recreate this website"</code>，只给一句话也行：<code>craft-anything-cli rebuild - "A snake game in Rust" --rounds 1</code>。<span class="hl">它还得有一个已在本机登录的 coding agent</span>，Claude Code 首选，Codex 适配器 README 明说未在真实安装验证，安装包状态是 alpha。</p>
+<p>stack-diagram 最轻，一条 <code>npx skills add caru-ini/stack-diagram</code>，Claude 系应用也可从 Releases 下 <code>stack-diagram.zip</code> 当 skill 上传，支持 Claude Code、Codex、Cursor 等。<span class="hl">它不要你交出任何代码库</span>。判断表如下，A 是 floorplan，B 是 craft-anything，C 是 stack-diagram：</p>
+<ul>
+<li><b>要搞懂、交接或体检自己手里的代码库，看清 AI 改了哪几处、哪里有风险</b>——选 A。读 imports、把前端请求对到后端端点、跨 repo 也追，还带 Health check；代价是产物 <code>floorplan/</code> 被设计成不提交，换机器得重画。</li>
+<li><b>要照着别人的网站 / app / 游戏做出一份自己的可运行实现</b>——选 B。<code>app/</code> 就是生成的新项目，三者里唯一把代码当产物；代价是 Rust 1.97+、本机登录 agent、early alpha，以及提交前确认你有权检查那个目标。</li>
+<li><b>手边没有代码库，只给文档、汇报或 PR 配一张带官方 logo 的架构图</b>——选 C。一句话一个 <code>npx</code>，出字体与 logo 全内联的单文件 HTML，能直接丢进 repo 或 wiki；代价是它画的是「你声称的栈」，代码一改图就旧。</li>
+<li><b>三件都想要</b>——别按星标从大到小装。先用 C 把栈画成图对外说清，再用 A 摸清自己仓库，最后才轮到 B 重写别人产品的重活；顺序反了成本全压在最后一步。</li>
+</ul>
+<p>还有一笔不在安装命令里的账：A 的地图靠每次手动 <code>Update the floorplan.</code> 才跟得上代码，「keep up to date as you work」不是自动的；B 每张 Check 都要跑比对、还得养一个已登录 agent；C 的 logo 来自 svgl、devicon 等第三方包。<span class="hl">三者都把「读懂」的一部分成本挪到了安装命令之外</span>。</p>
+
+<div class="section-marker">05 · 冷思考</div>
+<h2>19,335 星里有多少是「能跑通」，三个「读懂」里又有多少是真读懂</h2>
+<p>先质疑那个 6.2 倍。19,335 对 3,115，但 craft-anything 是组织账号下的产品：官网 getartcraft.com、Discord、9 语言 README、四平台签名安装包、Releases 里的 SHA256SUMS，一整套分发投入；README 自标 <code>Status: early alpha</code>，还列了「Partly there」——用 API key 构建没跑通 live、app 与游戏行为检查、几个引擎工具只在替身上测过。<span class="hl">星标量的是话题和铺量，不是有人跑完一整条流程</span>。</p>
+<p>更要紧的是「读懂」被用得太宽。C 连代码库都不碰，只把一句话的名词解析成节点，叫读懂是修辞；A 读 imports 和 request → endpoint 这类静态实现，读不出运行时行为和当初为什么这么设计；B 最像理解，可 Clean room 默认恰恰禁止读源码。<span class="hl">三个没谁完整理解了一个软件，各自只切到一片</span>，当同类工具二选一，问题一开始就问错了。</p>
+<p>再质疑「产物能不能进版本库」这句干脆话。A 主动不 commit 是克制，也意味着地图绑在本地、换机器就没，「keep up to date」靠你每次敲一句；B 的产物确实是能提交的新代码，可 README 明说 Clean room「is not an operating-system sandbox」，管得住自己那 320 个工具，管不住以你本人权限读写的 coding agent，把「照别人产品生成的代码」提交进公司仓库前，先过的是法务那关，不是 <code>craft-anything-cli doctor</code>。<span class="hl">最想进版本库的那个，合规边界也最重</span>。</p>
+<p>第四处给那个 0：2,017 星配 0 个未关闭 issue、3 个订阅者，3,115 星配 56 issue、7 订阅者，19,335 星配 213 issue、92 订阅者。<span class="hl">两千星的 skill 零 open issue，通常不是没问题，是还没人拿它跑完整条工程流程</span>；C 那张图又全是「你声称的栈」，代码一改图就旧，没有任何工具会替你同步回去。</p>
+<div class="info-box">数据核对：2026-11-07 经 api.github.com/repos、/readme 与 /contents/ 读取。haydenschmitty/floorplan：full_name haydenschmitty/floorplan，stargazers_count 3115，forks_count 238，subscribers_count 7，open_issues_count 56，created_at 2026-10-27T12:03:01Z，pushed_at 2026-11-02T20:06:48Z，license MIT，language JavaScript，size 6159KB，default_branch main，homepage https://haydenschmitty.github.io/floorplan-demo/，owner.login haydenschmitty（type User），README.md 20731 字节、CHANGELOG.md 22134 字节。storytold/craft-anything：full_name storytold/craft-anything，stargazers_count 19335，forks_count 3637，subscribers_count 92，open_issues_count 213，created_at 2026-10-31T14:50:00Z，pushed_at 2026-11-07T11:13:53Z，license 字段 Apache-2.0，language Rust，size 9752KB，default_branch main，homepage 空，owner.login storytold（type Organization），README.md 27195 字节、Cargo.lock 205281 字节。caru-ini/stack-diagram：full_name caru-ini/stack-diagram，stargazers_count 2017，forks_count 93，subscribers_count 3，open_issues_count 0，created_at 2026-11-01T05:35:12Z，pushed_at 2026-11-03T03:42:46Z，license MIT，language TypeScript，size 3461KB，default_branch main，homepage stacks.caru.moe，owner.login caru-ini（type User），README.md 8333 字节。以下均为各仓库 README 自述、非 API 字段、非本文实测：floorplan 的 version 0.6.3 / Node 18+ / zero dependencies、安装命令与产物 <code>floorplan/</code>、「Neither is committed」；craft-anything 的 320 tools、四步流程、Clean room / Deep 之别、Rust 1.97+、early alpha、双许可徽章与两份 LICENSE、NOTICE、Documents/Craft Anything 项目结构、rebuild 命令；stack-diagram 的 <code>npx skills add caru-ini/stack-diagram</code>、官方 logo 取用次序、单 HTML 内联字体与 logo、可「drop it into a repo or wiki」、gallery 需两次确认。易误解点有三：一是选题池里的积压评分与榜单数字均非 API 字段，本文不采用，星标以本次核对的 3115 / 19335 / 2017 为准；二是 craft-anything 的 API license 为 Apache-2.0、README 徽章为 MIT OR Apache-2.0 且根目录并存两份 LICENSE 与 NOTICE，属双许可，引用须注明取自哪个文件；三是「产物能否进版本库」三者口径不同——floorplan 明确不提交、craft-anything 的 <code>app/</code> 是生成的新项目代码、stack-diagram 是可 drop into a repo or wiki 的单文件 HTML，不可混为一谈；上述 README 自述项本文未独立复现。星标实时变化，以仓库当前数据为准。（核对时间 2026-11-07）</div>
+<p>所以我的判断不落在哪个星多，落在你愿意交出什么、又想把什么留进版本库：A 要你把整个代码库交给 agent 读一遍，换回一张明确不提交的地图；B 要你先接受 clean-room 与许可边界，换回一份能提交却背着合规问题的新实现；C 连代码库都不用交，换回一张能提交、但只对你那句话负责的单文件图。<span class="hl">先说清手上是有代码库要读、有产品要复刻、还是只有一句话要画</span>——这一句决定装哪一个，而不是 19,335 比 3,115 大。</p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看这三个仓库</h3>
+        <p>floorplan 3,115 星画可点开的代码地图，craft-anything 19,335 星 clean-room 复刻，stack-diagram 2,017 星一句话出架构图</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/storytold/craft-anything" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/haydenschmitty/floorplan" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 3,115 星，238 fork，MIT，Claude/Codex 读代码库画交互平面地图</span>
+      </a>
+      <a class="plat-card" href="https://github.com/storytold/craft-anything" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 19,335 星，3,637 fork，Apache-2.0，纯 Rust clean-room 逆向复刻引擎</span>
+      </a>
+      <a class="plat-card" href="https://github.com/caru-ini/stack-diagram" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 2,017 星，93 fork，MIT，一句话出带官方 logo 的单文件架构图</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Agent">#Agent</a>
+      <a href="../../home/home.html?q=%E4%BB%A3%E7%A0%81%E7%90%86%E8%A7%A3">#代码理解</a>
+      <a href="../../home/home.html?q=%E5%8F%AF%E8%A7%86%E5%8C%96">#可视化</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=GitHub">#GitHub</a>
+      <a href="../../home/home.html?q=%E6%A8%AA%E8%AF%84">#横评</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本文为转载整理，原视频来自抖音 @小龙（约 2026-10-21 发布，2459 赞）。原榜星标数据无法逐一与 GitHub 对账，本文已按「干什么、用在哪」重组并标注以仓库实时数据为准。本站仅做学习归档，不做商用。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

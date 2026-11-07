@@ -5,8 +5,32 @@
     <link>https://expectopatronus00.github.io/</link>
     <description>一个 AI 工具与实战的中文学习归档：原创踩坑记录 + 精选转载，每篇都标注来源。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 06 Nov 2026 14:31:39 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 07 Nov 2026 12:16:39 GMT</lastBuildDate>
     <atom:link href="https://expectopatronus00.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>3115星画地图、19335星逆向、2017星一句话：读懂分三层</title>
+      <link>https://expectopatronus00.github.io/post/gh-code-comprehension-trio/gh-code-comprehension-trio.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-code-comprehension-trio/gh-code-comprehension-trio.html</guid>
+      <pubDate>Fri, 06 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>floorplan 3,115 星、MIT，读代码库画地图、产物不提交；craft-anything 19,335 星、Apache-2.0，Clean room 逆向后重写新项目；stack-diagram 2,017 星、MIT，一句话出架构图。三者都叫「先读懂再动手」，读懂对象与产物能否进版本库都不同。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>188344星最小规范、313835星完整方法论：按层选</title>
+      <link>https://expectopatronus00.github.io/post/gh-agent-skills-trio/gh-agent-skills-trio.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-agent-skills-trio/gh-agent-skills-trio.html</guid>
+      <pubDate>Fri, 06 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>三个 skills 仓，三种粒度：官方 anthropics/skills 188,344 星，spec 87 字节只定文件格式；superpowers 313,835 星，15 个流程 skill 加强制 hook；Game-Studios 36,301 星，49 agent 全套编排。按改写哪层选。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>49902/105105/11380 星：三段各卡一环，按缺口选</title>
+      <link>https://expectopatronus00.github.io/post/gh-design-skill-trio/gh-design-skill-trio.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-design-skill-trio/gh-design-skill-trio.html</guid>
+      <pubDate>Fri, 06 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>三个仓库都让编码 agent 把界面做好，却分卡三段：105,105 星 impeccable 发布前审查、49,902 星 hallmark 生成前压 AI 味、11,380 星 jakubkrehel/skills 给 15 个技能。数据经 API 核对，按缺口选 A/B/C。（转载 · 来源：微信）</description>
+    </item>
     <item>
       <title>49096 星对 7831 星：控制面管调度，IDE 管落地</title>
       <link>https://expectopatronus00.github.io/post/gh-agent-editor-duo/gh-agent-editor-duo.html</link>
@@ -222,30 +246,6 @@
       <pubDate>Wed, 15 Jul 2026 16:00:00 GMT</pubDate>
       <category>AI 编程</category>
       <description>AlunTalk分享——从简单到企业级，系统梳理7种主流Agent架构，帮助你理解智能体设计模式与选型思路。（转载 · 来源：小红书）</description>
-    </item>
-    <item>
-      <title>股票分析Skill开源了</title>
-      <link>https://expectopatronus00.github.io/post/dy-7662725504767646833/dy-7662725504767646833.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7662725504767646833/dy-7662725504767646833.html</guid>
-      <pubDate>Wed, 15 Jul 2026 16:00:00 GMT</pubDate>
-      <category>量化与投资</category>
-      <description>量化佬也玩摄影分享——开源股票分析Skill，项目名称page1，基于AI的股票分析与量化交易技能包。（转载 · 来源：抖音）</description>
-    </item>
-    <item>
-      <title>非科班转型大模型工程师需要达到的强度</title>
-      <link>https://expectopatronus00.github.io/post/dy-7662589088586861874/dy-7662589088586861874.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7662589088586861874/dy-7662589088586861874.html</guid>
-      <pubDate>Wed, 15 Jul 2026 16:00:00 GMT</pubDate>
-      <category>AI 基础设施</category>
-      <description>大语言模型分享——非科班转型大模型工程师需要达到的学习强度和路线规划，从基础到实战全面覆盖。（转载 · 来源：抖音）</description>
-    </item>
-    <item>
-      <title>AI做不出好看的文档？直到遇见Kami</title>
-      <link>https://expectopatronus00.github.io/post/dy-7662780489756921134/dy-7662780489756921134.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7662780489756921134/dy-7662780489756921134.html</guid>
-      <pubDate>Wed, 15 Jul 2026 16:00:00 GMT</pubDate>
-      <category>AI 工具</category>
-      <description>Orbital工作室分享——Kami，一款让AI生成文档不再丑陋的工具，支持精美排版、实时预览和多格式导出。（转载 · 来源：抖音）</description>
     </item>
   </channel>
 </rss>

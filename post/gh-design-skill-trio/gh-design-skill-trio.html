@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>49902/105105/11380 星：三段各卡一环，按缺口选 · EXPECTOPATRONUS</title>
+    <meta name="description" content="三个仓库都让编码 agent 把界面做好，却分卡三段：105,105 星 impeccable 发布前审查、49,902 星 hallmark 生成前压 AI 味、11,380 星 jakubkrehel/skills 给 15 个技能。数据经 API 核对，按缺口选 A/B/C。" />
+    <meta name="keywords" content="Skill, 开源, GitHub, 横评, 设计" />
+    <meta property="og:title" content="49902/105105/11380 星：三段各卡一环，按缺口选" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="三个仓库都让编码 agent 把界面做好，却分卡三段：105,105 星 impeccable 发布前审查、49,902 星 hallmark 生成前压 AI 味、11,380 星 jakubkrehel/skills 给 15 个技能。数据经 API 核对，按缺口选 A/B/C。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>49902/105105/11380 星：三段各卡一环，按缺口选</h1>
+      <p>105,105 星，impeccable 最老最大；另两个 49,902 与 11,380 星。三个都让编码 agent 把界面做好，却分卡生成前给约束、生成后做审查、直接给素材。按 GitHub API 实测，落到按缺口选 A/B/C。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-07</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 10 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="49902/105105/11380 星：三段各卡一环，按缺口选 封面" src="cover.jpg" />
+    </div>
+
+    <article class="article-body">
+<div class="section-marker">01 · 这件事</div>
+<h2>三个仓库都在治「AI 味界面」，下手的时刻不一样</h2>
+<p><code>Nutlope/hallmark</code> 2026 年 4 月 27 日建库，经 api.github.com 核对是 49,902 星、2,645 个 fork、98 个订阅者、44 个未关闭 issue，MIT 协议，主语言 CSS，仓库 233,716 KB，最后 push 停在 2026 年 11 月 5 日，主页 usehallmark.com。它的 description 一句话交代了立场：<code>Anti-AI-slop design skill for Claude Code, Cursor, and Codex.</code>——一个反 AI slop 的设计技能。</p>
+<p>体量最大的是 <code>pbakaus/impeccable</code>，2025 年 11 月 16 日建库，三者里最早，105,105 星、6,245 个 fork、222 个订阅者、71 个未关闭 issue，Apache-2.0，主语言 Rust，仓库 897,762 KB，2026 年 11 月 7 日当天还在 push，主页 impeccable.style，topics 里挂着 <code>agent-skills</code> / <code>anti-slop</code> / <code>design</code> / <code>slop</code>。description 把动作写全了：<code>Steer with polish and bolder, review with critique and audit, catch AI slop before it ships.</code></p>
+<p>最晚也最小的是 <code>jakubkrehel/skills</code>，2026 年 7 月 10 日建库，11,380 星、441 个 fork、41 个订阅者、11 个未关闭 issue，MIT，主语言 Markdown，仓库只有 747 KB，同样在 2026 年 11 月 7 日 push 过，主页 jakub.kr/skills。description 没有承诺流程：<code>A collection of agent skills that help you build great interfaces.</code></p>
+<p>三家解决的是同一件事——让编码 agent 把界面做好——但<span class="hl">下手的时刻根本不在一处</span>：hallmark 把规矩喂在生成之前，impeccable 把审查放在发布之前，jakubkrehel/skills 干脆不做时序，直接摊开一包可挑的技能。三者在积压队列里同属 <code>design-skill</code> 一族，所以这篇是横评，一次消耗三条。下面按「作用点落在哪一刻」把三段拆开，最后给什么情况下选 A / B / C 的判断表。</p>
+
+<div class="section-marker">02 · 核心机制</div>
+<h2>一个管生成前，一个管生成后，一个只管给工具</h2>
+<p>hallmark 卡在<span class="hl">生成前给约束</span>这一段。按 README 自述，它先从一个五十套材料的目录里发三套主题，围绕「访客来办什么事」搭页面，再用三级 gates 把结果按在机器味的 tells 上：标题上方千篇一律的 eyebrow、全大写的 tracked-caps 标签、标题里唯独一个上色的词、满屏空框或只有照片、hero 撑不满屏、每页末尾都挂邮件订阅、表单只道谢不真发。<code>Floor</code> 永不放行（对比度、焦点、reduced motion、编造事实、手机布局坏掉），<code>Reflex</code> 是模型默认会犯、有理由可以申辩覆盖的默认项，<code>Finish</code> 是不挡发布的工艺细节；末尾还有 real-browser lint 和一个 fresh-context reviewer 收口。README 另记了五十套主题、755 张开放许可照片、<code>/hallmark redesign &lt;path&gt;</code> 与 <code>/hallmark audit &lt;path&gt;</code>，并署明 Made by Together AI。这些是作者自述，不是仓库元数据；本次用 <code>/contents/skills</code> 只数到 1 个目录 <code>hallmark</code>。它的形状是「先把不许出现的东西钉死，再让 agent 生成」。</p>
+<p>impeccable 卡在<span class="hl">生成后做审查</span>。它也有 <code>polish</code> / <code>bolder</code> / <code>quieter</code> 这类生成前引导，但 README 自己把主战场写死了：<code>Impeccable is strongest on interfaces that already exist: point it at a page or a component and iterate.</code> 按自述，<code>critique</code> 按可用性启发式打分并把该改的排出来，<code>audit</code> 查无障碍、性能、主题与响应式并按 P0 到 P3 分级，62 条确定性规则做 slop 检测、<code>No LLM, no API key</code>，命令行侧还能 <code>npx impeccable detect src/</code>、<code>--json</code>、<code>--list-rules</code>。<code>/impeccable init</code> 先读代码写出 <code>PRODUCT.md</code>，<code>/impeccable document</code> 把既有视觉系统记进 <code>DESIGN.md</code>。它不轻：Rust、<code>Cargo.toml</code>、<code>crates/</code>、<code>cli/</code>，根目录二十多个点号开头的配置目录（<code>.claude</code> / <code>.cursor</code> / <code>.codex</code> / <code>.gemini</code> …），<code>/contents/skill</code> 下是 <code>SKILL.src.md</code> 加 agents / reference / scripts 等 5 项。审查要跑规则引擎，这份体积是代价。</p>
+<p>jakubkrehel/skills 卡在<span class="hl">直接给素材</span>。它不规定流程，只把 15 个技能目录摊开——本次 <code>/contents/skills</code> 数到 <code>better-interface</code>、<code>better-ui</code>、<code>better-typography</code>、<code>better-colors</code>、<code>better-accessibility</code>、<code>better-layout</code>、<code>better-writing</code>、<code>interface-review</code>、<code>explain-interface</code>、<code>break</code>、<code>build-design</code>、<code>teardown</code>、<code>state-machine</code>、<code>variant</code>、<code>away</code> 共 15 个。按 README 自述，<code>better-colors</code> 管生成色板与对比度，<code>better-typography</code> 管字号阶与换行，<code>interface-review</code> 按分支或 PR 审界面回归，<code>break</code> 把组件在所有场景下压测。纯 Markdown、747 KB，是三者里唯一没有编译产物的仓库：它给的是一把把随手可用的工具，不是一条流水线。</p>
+<p>按时序排：约束在生成之前，审查在生成之后，素材在两者之外、随时可取。但要先把话说在前面——这是<span class="hl">主战场的切分，不是能力的边界</span>，三个仓库都在往对方那一段伸手，这一点留到 05 节具体质疑。</p>
+
+<div class="section-marker">03 · 关键细节与数据</div>
+<h2>建库差约八个月，星差九倍，订阅比却几乎一样</h2>
+<p>把本次 api.github.com 核对的元数据并排看。建库时间依次是 2025-11-16（impeccable）、2026-04-27（hallmark）、2026-07-10（jakubkrehel/skills），最早与最晚差约八个月；星标 105,105 / 49,902 / 11,380，fork 6,245 / 2,645 / 441，最大与最小星标差约九倍。协议是两个 MIT（hallmark、jakubkrehel/skills）夹一个 Apache-2.0（impeccable），主语言分别是 CSS、Rust、Markdown，三者 <code>default_branch</code> 都是 <code>main</code>，<code>pushed_at</code> 分别停在 2026-11-05T13:16:31Z、2026-11-07T03:10:10Z、2026-11-07T05:39:03Z。</p>
+<p>更该看的是订阅与星标之比：222 / 105,105 约 0.21%，98 / 49,902 约 0.20%，41 / 11,380 约 0.36%。<span class="hl">三个都是「先收藏」的量级</span>，最轻的 jakubkrehel/skills 反而比例最高。换句话说，105,105 星描述的是分发广度，不是有多少人真把它装进了项目；用星数直接给三者排座次，量的其实是同一种东西。</p>
+<p>体量差反过来印证了三段。impeccable 897,762 KB 的 Rust 仓要装规则引擎、CLI、二十多种 agent 的 hook 适配；hallmark 233,716 KB 的 CSS 仓带 <code>site/</code>、<code>docs/</code>、<code>eval/</code>、<code>skills/</code>，按 README 自述还压着五十套主题和 755 张图；jakubkrehel/skills 747 KB 只有 <code>skills/</code> 加 <code>AGENTS.md</code>、<code>CLAUDE.md</code>。<span class="hl">要跑确定性审查就得背一个编译器，只发 Markdown 技能就几乎不占地方</span>——体积不是偶然，是各自那一段的成本结构。</p>
+<p>有一处口径必须挑明。选题里给 hallmark 的「本周 GitHub Trending 增 6,900 星」和给 jakubkrehel/skills 的「本周增 1,921 星」，本次<span class="hl">无法从 GitHub API 复核</span>：API 只返回累计 <code>stargazers_count</code>，不返回周增，所以这两个数只能写作「本周 Trending 标注」，不能当实测写进正文，impeccable 没有给周增数，本文也不替它编一个。同样，五十套主题、62 条规则、755 张照片都是 README 自述，本文只核到仓库元数据与 <code>/contents</code> 的目录条目数，没有逐个打开 SKILL.md 去数规则条数。</p>
+
+<div class="section-marker">04 · 怎么用</div>
+<h2>先定位你被卡住的那一刻，再挑安装通道</h2>
+<p>三条安装命令都取自各自 README（作者自述，非本次实测）。hallmark 是 <code>npx skills add nutlope/hallmark -g</code>，单装一个 harness 加 <code>--agent claude-code</code>；当 Claude Code 插件用是 <code>/plugin marketplace add nutlope/hallmark</code> 再 <code>/plugin install hallmark@hallmark</code>；从克隆装则跑 <code>node skills/hallmark/scripts/install.mjs</code>，它会先校验主题再拷贝，<code>install-hook.mjs</code> 给 Claude Code 加一个编辑期的 Floor 检查。改页面用 <code>/hallmark redesign &lt;path&gt;</code>，只出报告用 <code>/hallmark audit &lt;path&gt;</code>。</p>
+<p>impeccable 在项目根目录跑 <code>npx impeccable install</code>，重载编码工具后执行 <code>/impeccable init</code>（Codex 上是 <code>$impeccable init</code>）；命令行审查是 <code>npx impeccable detect src/</code>、<code>npx impeccable detect --json .</code>、<code>npx impeccable detect --list-rules</code>，还能 <code>--github</code> 出 GitHub Actions 注解。jakubkrehel/skills 最省事：<code>npx skills add jakubkrehel/skills</code>，插件通道是 <code>/plugin marketplace add jakubkrehel/skills</code> 再 <code>/plugin install interfaces@interfaces</code>。<span class="hl">注意最后这个 plugin 名是 interfaces@interfaces，不是仓库名 skills</span>，照仓库名敲会装不上；手动拷贝那类路径也各有讲究，impeccable 给的是 <code>mkdir -p your-project/.claude/skills &amp;&amp; cp -r .claude/skills/impeccable your-project/.claude/skills/</code>。</p>
+<p>判断表如下，A 是 hallmark，B 是 impeccable，C 是 jakubkrehel/skills：</p>
+<ul>
+<li><b>页面还没生成，你最怕一上来就是紫蓝渐变、卡片套卡片、每个标题顶一条 eyebrow</b>——选 A。先把 Floor 硬底线钉死再让 agent 动手，是它唯一在做的事；代价是接受五十套主题定死的风格、233,716 KB 体积和 Together AI 那条产品化路线。</li>
+<li><b>页面已经在了、要在合进去之前把 P0 挑出来，或团队想把「AI 味」变成机器可判定的规则</b>——选 B。62 条确定性规则、P0–P3 分级、<code>--github</code> 注解能直接进 CI，主战场就在发布前那道关；代价是 897,762 KB 的 Rust 仓和 <code>npx impeccable install</code> 铺开的整套 hook。</li>
+<li><b>你不想要一整套流程，只想做配色时调一把、改 PR 时调一把</b>——选 C。15 个纯 Markdown 技能按需取用，747 KB 最轻，判断权还在你手里；代价是「什么时候该调哪个」没人替你决定。</li>
+<li><b>只想要方法论，或要一条完整链路</b>——前者三份 SKILL.md 读一遍就够，一个都不装；后者可以 A 打底、B 验收，两者通道不同（<code>npx skills add nutlope/hallmark -g</code> 对 <code>npx impeccable install</code>），不冲突。</li>
+</ul>
+
+<div class="section-marker">05 · 冷思考</div>
+<h2>「卡在哪一段」是主战场，不是谁的能力边界</h2>
+<p>先质疑星标。105,105 对 11,380，差了约九倍，可订阅比是 0.21% 对 0.36%，反倒是小的那个更高；三个仓库 <code>pushed_at</code> 挤在最近两三天，<code>created_at</code> 却横跨约八个月。<span class="hl">这更像同一波 agent skill 风口的收藏，不是三次分层验收</span>。impeccable 建库早、README 里列了一长串支持的编码工具、官网有完整 docs，这些分发投入会放大星数；把星最多直接读成「三段里最好的一段」，量的其实是曝光。</p>
+<p>再质疑三段划分本身，这是最该拆的一处。hallmark 的 README 里明明写着 <code>/hallmark audit &lt;path&gt;</code>、real-browser lint 和「A fresh-context reviewer gets the last word」——它也做生成后审查；impeccable 的 description 头半句是 <code>Steer with polish and bolder</code>，README 还说能 build new pages，并不是只会审；jakubkrehel/skills 那 15 个目录里，<code>interface-review</code> 是审查、<code>build-design</code> 是生成、<code>break</code> 是压测。<span class="hl">所谓三段，是各自重心，不是互斥的能力清单</span>，三家都在往全链路长；拿「卡在哪段」当永久标签，过两个月就会贴错。</p>
+<p>第三处是成本的换法没进账。impeccable 的 62 条规则标着 <code>No LLM, no API key</code>，看着最省，换来的是 Rust 编译器、二十多个 agent 配置目录、每个工具一套 hook；hallmark 用五十套主题和 755 张图把审美打包给你，也把风格锁死；jakubkrehel/skills 747 KB 最轻，却把「何时该调哪个技能」的判断全留给人。<span class="hl">三者都在把一种开销换成另一种</span>：约束换自由度、审查换体积、素材换判断力。还有个更琐碎的现实——README 列「支持」和真装对是两件事，jakubkrehel 的插件叫 <code>interfaces@interfaces</code>，impeccable 每个工具的 skill 路径都不同，光是把 hook 指对就得照文档逐项核。</p>
+<p>第四处是数字的边界要按字读。除了仓库元数据，本文写进来的五十套主题、62 条规则、755 张照片、一长串支持工具，全部出自 README 自述；周增 6,900 与 1,921 只是「本周 Trending 标注」，API 复核不了；<code>/contents/skills</code> 数到的 15 个目录、hallmark 的 1 个目录、impeccable <code>/contents/skill</code> 下的 5 项，是本次唯一逐项数过的「文件数」，且数的是目录条目，不是 SKILL.md 里的规则数量。<span class="hl">把作者自述当实测、把周榜标注当增长曲线，是这类横评最容易滑出去的一步</span>。</p>
+<div class="info-box">数据核对：2026-11-07 经 api.github.com/repos 与 /contents、/readme 读取。Nutlope/hallmark：full_name Nutlope/hallmark，stargazers_count 49902，forks_count 2645，subscribers_count 98，open_issues_count 44，created_at 2026-04-27T20:47:10Z，pushed_at 2026-11-05T13:16:31Z，license MIT，language CSS，size 233716KB，default_branch main，description "Anti-AI-slop design skill for Claude Code, Cursor, and Codex."，homepage usehallmark.com，html_url https://github.com/Nutlope/hallmark；/contents/skills 数到 1 个目录 hallmark。pbakaus/impeccable：full_name pbakaus/impeccable，stargazers_count 105105，forks_count 6245，subscribers_count 222，open_issues_count 71，created_at 2025-11-16T01:52:04Z，pushed_at 2026-11-07T03:10:10Z，license Apache-2.0，language Rust，size 897762KB，description "Steer with polish and bolder, review with critique and audit, catch AI slop before it ships."，homepage impeccable.style，html_url https://github.com/pbakaus/impeccable；/contents/skill 数到 5 项。jakubkrehel/skills：full_name jakubkrehel/skills，stargazers_count 11380，forks_count 441，subscribers_count 41，open_issues_count 11，created_at 2026-07-10T08:58:36Z，pushed_at 2026-11-07T05:39:03Z，license MIT，language Markdown，size 747KB，description "A collection of agent skills that help you build great interfaces."，homepage jakub.kr/skills，html_url https://github.com/jakubkrehel/skills；/contents/skills 数到 15 个 skill 目录。以下均为 README 自述、非本文实测：hallmark 五十套主题、755 张开放许可照片、Floor/Reflex/Finish 三级 gates、/hallmark redesign 与 /hallmark audit、Made by Together AI、npx skills add nutlope/hallmark -g 等安装命令；impeccable polish/bolder/quieter/critique/audit 命令、62 条确定性规则（No LLM, no API key）、P0–P3、npx impeccable install、/impeccable init、npx impeccable detect 系列、PRODUCT.md / DESIGN.md、支持一长串编码工具（README 自述）；jakubkrehel/skills 15 个技能的功能描述、npx skills add jakubkrehel/skills、/plugin install interfaces@interfaces。易误解点有三：一是「本周增 6,900 星」（hallmark）与「本周增 1,921 星」（jakubkrehel/skills）出自选题里的本周 GitHub Trending 标注，GitHub API 只给累计 stargazers_count、不返回周增，本文未当作实测，impeccable 无周增数故不写；二是上述主题数、规则数、照片数、工具数均为作者自述，本文仅逐项数过 /contents 的目录条目，未逐个打开 SKILL.md 核验规则条数；三是订阅/星标之比 0.21% / 0.20% / 0.36% 系由实测 subscribers_count 与 stargazers_count 计算得出。星标实时变化，以仓库当前数据为准。（核对时间 2026-11-07）</div>
+<p>所以别按 105,105 星去挑，先定位你被卡住的那一刻：页面还没生成、怕它长成一张默认 AI 脸，是 A 的活；页面已经在了、要在合进去之前把 P0 挑出来，是 B 的活；只是想在某个具体维度上有个能随手叫来的行家，从 15 个 skill 里挑一个，比装一整套框架便宜。<span class="hl">真正不该做的是把星数当成「三段里最优」直接装上</span>——它量的是最早建库、最多收藏和一个 Rust 审查引擎，不是你现在缺的那一段。</p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看这三个仓库</h3>
+        <p>三个都让编码 agent 把界面做好，一个管生成前约束、一个管发布前审查、一个直接给 15 个可挑的 Markdown 技能</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/pbakaus/impeccable" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/pbakaus/impeccable" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 105,105 星 / Apache-2.0，critique 与 audit 做发布前审查</span>
+      </a>
+      <a class="plat-card" href="https://github.com/Nutlope/hallmark" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 49,902 星 / MIT，Floor 底线与五十套主题压住 AI 味</span>
+      </a>
+      <a class="plat-card" href="https://github.com/jakubkrehel/skills" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 11,380 星 / MIT，15 个按需取用的 Markdown 技能</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Skill">#Skill</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=GitHub">#GitHub</a>
+      <a href="../../home/home.html?q=%E6%A8%AA%E8%AF%84">#横评</a>
+      <a href="../../home/home.html?q=%E8%AE%BE%E8%AE%A1">#设计</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本文为转载整理，原视频来自抖音 @小龙（约 2026-10-21 发布，2459 赞）。原榜星标数据无法逐一与 GitHub 对账，本文已按「干什么、用在哪」重组并标注以仓库实时数据为准。本站仅做学习归档，不做商用。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

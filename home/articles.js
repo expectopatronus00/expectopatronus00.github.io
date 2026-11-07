@@ -3,6 +3,33 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'gh-code-comprehension-trio',
+            title: '3115星画地图、19335星逆向、2017星一句话：读懂分三层',
+            url: '../post/gh-code-comprehension-trio/gh-code-comprehension-trio.html',
+            summary: 'floorplan 3,115 星、MIT，读代码库画地图、产物不提交；craft-anything 19,335 星、Apache-2.0，Clean room 逆向后重写新项目；stack-diagram 2,017 星、MIT，一句话出架构图。三者都叫「先读懂再动手」，读懂对象与产物能否进版本库都不同。',
+            category: 'AI 编程',
+            date: '2026-11-07',
+            tags: ["Agent","代码理解","可视化","开源","GitHub","横评"],
+          },
+          {
+            id: 'gh-agent-skills-trio',
+            title: '188344星最小规范、313835星完整方法论：按层选',
+            url: '../post/gh-agent-skills-trio/gh-agent-skills-trio.html',
+            summary: '三个 skills 仓，三种粒度：官方 anthropics/skills 188,344 星，spec 87 字节只定文件格式；superpowers 313,835 星，15 个流程 skill 加强制 hook；Game-Studios 36,301 星，49 agent 全套编排。按改写哪层选。',
+            category: 'AI 编程',
+            date: '2026-11-07',
+            tags: ["Skill","Agent","开源","GitHub","横评"],
+          },
+          {
+            id: 'gh-design-skill-trio',
+            title: '49902/105105/11380 星：三段各卡一环，按缺口选',
+            url: '../post/gh-design-skill-trio/gh-design-skill-trio.html',
+            summary: '三个仓库都让编码 agent 把界面做好，却分卡三段：105,105 星 impeccable 发布前审查、49,902 星 hallmark 生成前压 AI 味、11,380 星 jakubkrehel/skills 给 15 个技能。数据经 API 核对，按缺口选 A/B/C。',
+            category: 'AI 编程',
+            date: '2026-11-07',
+            tags: ["Skill","开源","GitHub","横评","设计"],
+          },
+          {
             id: 'gh-agent-editor-duo',
             title: '49096 星对 7831 星：控制面管调度，IDE 管落地',
             url: '../post/gh-agent-editor-duo/gh-agent-editor-duo.html',
