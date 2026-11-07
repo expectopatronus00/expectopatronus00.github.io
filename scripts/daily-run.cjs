@@ -182,7 +182,17 @@ async function main() {
       }
     }
     if (!pushError) {
-      const push = sh('git push origin HEAD:main', true);
+      let push = sh('git push origin HEAD:main', true);
+      if (!push.ok) {
+        // 远端常被 stars.yml 定时快照抢先（2026-11-07 实测）。先 rebase 再重试一次；
+        // rebase 若冲突立即 abort 保留现场，交给人工取舍，绝不擅自覆盖星标数据。
+        const pull = sh('git pull --rebase origin main', true);
+        if (pull.ok) {
+          push = sh('git push origin HEAD:main', true);
+        } else {
+          sh('git rebase --abort', true);
+        }
+      }
       pushed = push.ok;
       if (!push.ok) {
         pushError = push.out.split('\n').filter(Boolean).slice(-2).join(' / ') || '推送失败';
