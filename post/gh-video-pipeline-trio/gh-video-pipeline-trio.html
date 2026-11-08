@@ -1,0 +1,542 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1476星推理层、2361星技能层、78485星编排层：按段选 · EXPECTOPATRONUS</title>
+    <meta name="description" content="三个让 agent 产出视频的仓库，站在三层：Pika-H3-Flex 1,476 星只出视频/音频素材，claude-animated-shorts 2,361 星用一份 SKILL.md 交一条动画短片，OpenMontage 78,485 星编排全流程。按你要素材、成片还是产线选。" />
+    <meta name="keywords" content="Skill, Agent, 视频生成, 开源, GitHub, 横评" />
+    <meta property="og:title" content="1476星推理层、2361星技能层、78485星编排层：按段选" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="三个让 agent 产出视频的仓库，站在三层：Pika-H3-Flex 1,476 星只出视频/音频素材，claude-animated-shorts 2,361 星用一份 SKILL.md 交一条动画短片，OpenMontage 78,485 星编排全流程。按你要素材、成片还是产线选。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>1476星推理层、2361星技能层、78485星编排层：按段选</h1>
+      <p>78,485 星、10,462 fork，OpenMontage 最热，未必该先装。Pika-H3-Flex 1,476 星出素材，animated-shorts 2,361 星交成片，OpenMontage 编排全流程；按要哪段产物选。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-08</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 10 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="1476星推理层、2361星技能层、78485星编排层：按段选 封面" src="cover.jpg" />
+    </div>
+
+    <article class="article-body">
+<div class="section-marker">01 · 这件事</div>
+<h2>三个仓库都让 agent 产出视频，接的却是三段不同的活</h2>
+<p><code>Pika-Labs/Pika-H3-Flex</code> 2026 年 10 月 29 日建库，11 月 8 日核对时 1,476 星、45 fork、27 个订阅者、1 个未关闭 issue，Python，837 KB，最后 push 在 11 月 2 日。description 只有一句：<code>Pika H3 Flex: video and audio generation inference</code>——视频与音频生成推理。API 的 license 字段给的是 <code>NOASSERTION</code>，不是某个标准协议。</p>
+<p><code>mromidev/claude-animated-shorts</code> 11 月 1 日建库，2,361 星、513 fork、38 个订阅者、10 个未关闭 issue，MIT，TypeScript，17,948 KB，最后 push 停在 11 月 1 日 05:57，也就是建库当天。description 写得具体：<code>Free Claude skill: viral animated story shorts (2D characters in a 3D world) with three.js + Remotion</code>。根目录只有 5 项，其中 <code>SKILL.md</code> 一份 15,131 字节。</p>
+<p><code>calesthio/OpenMontage</code> 这次核对先撞上一个 <code>301 Moved Permanently</code>：仓库已迁到 <code>OpenMontageInc/OpenMontage</code>，跟随重定向后才拿到数——78,485 星、10,462 fork、394 个订阅者、322 个未关闭 issue，AGPL-3.0，Python，78,486 KB，2026 年 3 月 29 日建库，<span class="hl">11 月 8 日 03:50 还在 push</span>。description 自述 <code>12 production pipelines, 100+ tools, 700+ agent skill and production-knowledge files</code>，要把 AI 编码助手变成一整个视频制作棚。</p>
+<p>三条同属「让 agent 产出视频」一族，数字各自独立核过。但把 README 翻开会发现，<span class="hl">它们分别站在模型推理层、单个 skill 层、全流程编排层</span>：A 只生成片段与音轨，B 交一条成片，C 交的是能反复出片的整条流水线。下面按「接住哪一段、产物是素材还是成片」拆，最后给判断表。</p>
+
+<div class="section-marker">02 · 核心机制</div>
+<h2>一个出素材，一个出一条片，一个出生产流程</h2>
+<p>A 是本地推理包，命令与 Python 发行包都叫 <code>pika-h3-pro</code>。README 的章节名就把边界写清楚了：<code>Input and output specifications</code>、<code>Generation modes and reference limits</code>，讲的是一次请求吃进什么参考、吐出多长的视频与音频；<code>Pika API extensions</code> 明说那些可选的托管服务「separate from the downloadable adapters and local inference package」。<span class="hl">它接住的是「生成一段像素和声音」，不碰剪辑、不碰时间线</span>——产物是能被别的工具再拿去用的素材。</p>
+<p>代价落在硬件和许可上。README 要求 Python 3.12、NVIDIA GPU，代表配置是每请求一张 H100 80GB，H200 与 B300 标着 untested，超出显存加 <code>--cpu-offload</code>；模型组件来自 MiniMax-H3、Diffusers、Transformers，适配器注入用 PEFT。许可也不是一个词：README 的 <code>License</code> 说 adapters 是 MiniMax H3 的 Model Derivatives、按 MiniMax H3 Community License Agreement 分发，<code>Code license</code> 才说推理与加载代码是 Apache-2.0（<code>LICENSE-CODE</code>）——<span class="hl">API 那个 <code>NOASSERTION</code> 正是代码与模型双许可的结果</span>，根目录也确实并排躺着 <code>LICENSE</code> 17,604 字节和 <code>LICENSE-CODE</code> 11,357 字节。</p>
+<p>B 把一份 SKILL.md 当全部运行时。装进 <code>~/.claude/skills/cartoon-3d-short/</code> 后，在 Claude Code 里说一句 <code>Use the cartoon short skill and make a short about …</code>，agent 就照 <code>SKILL.md</code> 走：topic and facts、script、voice、再把分镜写进 <code>story.ts</code>、出 stills、最后 renders，Agents 还会拿 reports 去对帧。它靠 Remotion 与 <code>@remotion/three</code> 把 2D 角色放进 3D 世界，<span class="hl">产物是一条能直接发出去的动画短片</span>，不是素材。但它锁定一种画风、一个宿主，README 34 行、2,275 字节就写完了。</p>
+<p>C 管的是编排。README 直说「OpenMontage is pipeline-driven」，真活走 <code>pipeline_defs/</code>、阶段导演 skill 放在 <code>skills/pipelines/</code>、工具靠 <code>tools.tool_registry</code> 发现；在 proposal time 先定 <code>render_runtime</code>，在 Remotion 与 HyperFrames 之间选一个，再用 <code>python -m backlot open</code> 打开从项目文件里长出来的动态分镜板。它接住的是从选题、脚本、素材、配音到渲染、发布的整条链，<span class="hl">产物是「一套能反复出片的流程」而不是某一个文件</span>。</p>
+<p>摆成一条轴：A 在最低层，只把提示词变成像素；B 在中间，把一次创作意图变成一条成片；C 在最上层，把成片这件事本身拆成可调度、可换 provider、可回溯的阶段。越往上，agent 被改写的默认行为越多，能单独搬到你别的项目里的部分反而越少。</p>
+
+<div class="section-marker">03 · 关键细节与数据</div>
+<h2>78,485 星对 2,361 星对 1,476 星，量出来的不是同一把尺子</h2>
+<p>把三组硬数字摊平。A：1,476 星、45 fork、27 订阅、1 个未关闭 issue、2026-10-29 建库、11-02 最后 push、license NOASSERTION、Python、837 KB。B：2,361 星、513 fork、38 订阅、10 个未关闭 issue、2026-11-01 建库、11-01 05:57 最后 push、MIT、TypeScript、17,948 KB。C：78,485 星、10,462 fork、394 订阅、322 个未关闭 issue、2026-03-29 建库、11-08 03:50 最后 push、AGPL-3.0、Python、78,486 KB。三者 default_branch 都是 main，星标以本次核对为准。</p>
+<p>厚度和星标完全不成正比。A 根目录 20 项，README 17,680 字节，配 <code>Dockerfile</code>、<code>pyproject.toml</code>、<code>requirements.txt</code>、<code>patches/</code>、<code>src/</code>、<code>tools/</code> 一套推理工程；B 根目录 5 项，README 只有 2,275 字节，全部逻辑压在 15,131 字节的 <code>SKILL.md</code> 里，另有 <code>references/</code> 与 <code>templates/</code>；C 根目录 47 项，README 44,055 字节，还并排 39,988 字节的 <code>README_zh-CN.md</code>、49,611 字节的 <code>AGENT_GUIDE.md</code>，以及 <code>.claude/</code>、<code>.codex/</code>、<code>.cursor/</code>、<code>.agents/</code> 一整排宿主适配目录。<span class="hl">837 KB 对 78,486 KB，体积差近百倍</span>。</p>
+<p>C 那串自述得单独挑明。description 写 <code>12 production pipelines, 100+ tools, 700+ agent skill and production-knowledge files</code>；本文用 <code>/contents/</code> 实测到的只有：<code>pipeline_defs/</code> 13 个 yaml（含一个 <code>framework-smoke.yaml</code>）、<code>skills/pipelines/</code> 12 个导演目录、<code>tools/</code> 顶层 27 项（14 文件 + 13 子目录）、<code>skills/</code> 顶层 5 项。<span class="hl">「12」勉强对得上 12 个导演目录，但定义文件是 13 个；100+ 工具与 700+ 文件要递归进子目录和 registry 才数得清，本文未逐一复核</span>——按作者自述处理，不当实测。</p>
+<p>还有两处口径。一是 Pika 的 license：API 给 <code>NOASSERTION</code>，README 却把模型 adapters 与代码分成两套许可，抄进产品前得分清拿的是哪一份。二是选题池里的积压评分、榜单数字都不是 api.github.com 的字段，本文不采用；<span class="hl">正文里每个数值只取自 2026-11-08 这次核对或标明的仓库自述</span>。</p>
+
+<div class="section-marker">04 · 怎么用</div>
+<h2>先决定要的是素材、一条片，还是一套能反复出片的流程</h2>
+<p>A 最重。README 的安装是 <code>git clone https://github.com/Pika-Labs/Pika-H3-Flex.git</code>，再 <code>python -m pip install -r requirements.txt</code>、<code>python tools/apply_diffusers_patches.py</code>、<code>python -m pip install --no-deps -e .</code>；Docker 走 <code>docker build -t pika-h3-pro .</code> 与 <code>docker run --rm --gpus 'device=0' pika-h3-pro --help</code>。前提是 Python 3.12、NVIDIA GPU 和一张 H100 80GB 级显卡，需要鉴权时运行时传 <code>HF_TOKEN</code>。<span class="hl">它不装 agent，装的是一个要 GPU 供着的推理包</span>。</p>
+<p>B 最轻，也最挑宿主。README 只有三步：把整个文件夹拷到 <code>~/.claude/skills/cartoon-3d-short/</code>（clone 过去或下 ZIP），备好 Remotion、<code>@remotion/three</code>、Node、Python 3 与 ffmpeg，然后在 Claude Code 里说那句触发语。<span class="hl">它没有 pip 包、没有插件市场，一份 SKILL.md 就是全部安装量</span>，但少装 Remotion 或 ffmpeg，renders 那一步直接断。</p>
+<p>C 是项目模板不是插件：<code>git clone https://github.com/calesthio/OpenMontage.git</code> 后 <code>make setup</code>，前提 Python 3.10+、FFmpeg，以及一个能读文件、能跑代码的编码助手（README 列了 Claude Code、Cursor、Copilot、Windsurf、Codex）；无 make 时手动建 venv，用 <code>python -m backlot open</code> 看板、<code>python scripts/backlot_simulate_run.py</code> 看模拟跑一遍。注意 README 里的 clone 地址还停在迁移前的 <code>calesthio</code>，<span class="hl">仓库已迁到 <code>OpenMontageInc</code>，旧地址靠 301 转发才不失效</span>。</p>
+<p>判断表如下，A 是 Pika-H3-Flex，B 是 claude-animated-shorts，C 是 OpenMontage：</p>
+<ul>
+<li><b>只要一段能反复取用的视频或音频素材，自己有剪辑与合成链路</b>——选 A。它按输入输出规格出片段，Pika API extensions 也是可选托管服务；代价是 H100 级 GPU、Python 3.12、diffusers 打补丁，以及 adapters 走 MiniMax H3 Community License 而非 Apache-2.0，商用前先读 NOTICE。</li>
+<li><b>要一条能直接发的动画短片，且就认 2D 角色 3D 世界这一种画风</b>——选 B。一份 SKILL.md 把 topic、script、voice、story.ts、stills、renders 串完，还带 agents 对帧；代价是锁死在 Claude Code + Remotion + ffmpeg，换画风得自己改 SKILL.md。</li>
+<li><b>要把「出片」变成可重复、可换 provider、可回溯的生产流程</b>——选 C。pipeline_defs、导演 skills、tool_registry、backlot 分镜板、可选 API key 一起给全，零 key 也能出片；代价是 AGPL-3.0、Python 3.10+ / FFmpeg / 一个 coding assistant，以及 78,486 KB 的工程。</li>
+<li><b>三件都想要</b>——别按星标从大到小装。先想清楚要交出去的是哪一段：只在末端缺素材就补 A，只缺一条成片就用 B，只有把整条链交出去才轮到 C；反过来先上 C，再发现其实只要一段 5 秒素材，成本全压在最重的那一步。</li>
+</ul>
+<p>还有一笔不在安装命令里的账：A 的每请求 H100 是硬门槛，H200 / B300 README 明说 untested；B 的 renders 依赖本机 Remotion 与 ffmpeg，且最后 push 停在 11 月 1 日建库当天；C 的零 key 路径和付费 provider 路径能力并不等价，README 自己按 <code>~$0.15–$1.50</code>、<code>~$1–$3</code> 分了档。<span class="hl">三者都把一部分成本挪到了安装命令之外</span>。</p>
+
+<div class="section-marker">05 · 冷思考</div>
+<h2>78,485 星里有多少是「跑完一整条流程」，三层的「出片」又有多少是真出片</h2>
+<p>先质疑那个 53 倍。78,485 对 1,476，可 C 是 2026 年 3 月 29 日建的库，比 A、B 早了七个月，有四种语言 README、49,611 字节的 AGENT_GUIDE.md、一整排 .claude / .codex / .cursor / .agents 宿主目录、34,523 字节的 LICENSE 和 322 个未关闭 issue；README 开口就是 <code>World's first open-source, agentic video production system</code>。<span class="hl">星标量的是铺量和分发，不是有人把 12 条 pipeline 从头跑到尾</span>。</p>
+<p>更要紧的是「让 agent 产出视频」被用得太宽。A 只交像素与音轨，连时间线都不管，叫出片是抬高；B 确实交一条成片，可锁死一种画风；C 交的是流程，最终渲染仍落回 Remotion 或 HyperFrames 和一堆可选 API key，agent 编排得再满，<span class="hl">片子不是它自己渲的</span>。当同类工具三选一，问题一开始就问错了。</p>
+<p>第三处在数字的可靠性。C 的 description 说 12 条 pipeline，<code>pipeline_defs/</code> 实测 13 个 yaml 里还夹着一个 framework-smoke；说 100+ 工具、700+ 文件，顶层目录却只有 27 项和 5 项，得递归才数得清，本文没核；README 的安装命令还指向已迁移的 <code>calesthio</code>。A 的 <code>NOASSERTION</code> 也不是笔误，是 adapters 与代码两套许可；B 2,275 字节的 README 里，除了安装和一句触发语，几乎没留下可核对的承诺。<span class="hl">把自述当实测排序，等于拿标注当测量</span>。</p>
+<p>第四处是「不装配套会怎样」。A 没 H100 级 GPU 就跑不起来，H200 / B300 还标着 untested；B 少 Remotion 或 ffmpeg，renders 直接断，而它最后一次 push 停在 2026-11-01 建库当天，之后没动；C 零 API key 能出片，可 README 自己把「零 key」「~$0.15–$1.50」「~$1–$3」分成三档，能力并不等价，AGPL-3.0 对把它接进商业产品的团队也不是一句 <code>make setup</code> 能带过的。<span class="hl">最想进生产流程的那个，合规与运维边界也最重</span>。</p>
+<div class="info-box">数据核对：2026-11-08 经 api.github.com/repos、/readme 与 /contents/ 读取。<strong>Pika-Labs/Pika-H3-Flex</strong>：full_name Pika-Labs/Pika-H3-Flex，html_url https://github.com/Pika-Labs/Pika-H3-Flex，stargazers_count 1476，forks_count 45，subscribers_count 27，open_issues_count 1，created_at 2026-10-29T17:08:59Z，pushed_at 2026-11-02T09:07:29Z，license 字段 NOASSERTION，language Python，size 837 KB，default_branch main，description「Pika H3 Flex: video and audio generation inference」；根目录 20 项，README.md 17680 字节、LICENSE 17604 字节、LICENSE-CODE 11357 字节、NOTICE 397 字节、THIRD_PARTY_NOTICES.md 1016 字节、Dockerfile 872 字节、requirements.txt 354 字节、pyproject.toml 875 字节。<strong>mromidev/claude-animated-shorts</strong>：full_name mromidev/claude-animated-shorts，html_url https://github.com/mromidev/claude-animated-shorts，stargazers_count 2361，forks_count 513，subscribers_count 38，open_issues_count 10，created_at 2026-11-01T05:50:38Z，pushed_at 2026-11-01T05:57:14Z，license MIT，language TypeScript，size 17948 KB，default_branch main，description「Free Claude skill: viral animated story shorts (2D characters in a 3D world) with three.js + Remotion」；根目录 5 项，README.md 2275 字节、SKILL.md 15131 字节、LICENSE 1063 字节，references/ 与 templates/ 目录。<strong>OpenMontageInc/OpenMontage</strong>（原 calesthio/OpenMontage 返回 301 Moved Permanently，Location 指向 repositories/1195360525，跟随重定向后得此 full_name）：html_url https://github.com/OpenMontageInc/OpenMontage，stargazers_count 78485，forks_count 10462，subscribers_count 394，open_issues_count 322，created_at 2026-03-29T15:23:22Z，pushed_at 2026-11-08T03:50:57Z，license AGPL-3.0，language Python，size 78486 KB，default_branch main，description「World's first open-source, agentic video production system. 12 production pipelines, 100+ tools, 700+ agent skill and production-knowledge files.」；根目录 47 项，README.md 44055 字节、README_zh-CN.md 39988 字节、README_es.md 50968 字节、README_pt-BR.md 50110 字节、AGENT_GUIDE.md 49611 字节、LICENSE 34523 字节、Makefile 7817 字节；/contents 实测 pipeline_defs/ 13 个 yaml、skills/pipelines/ 12 个目录、tools/ 顶层 27 项（14 文件 + 13 目录）、skills/ 顶层 5 项。以下均取自各仓 README 自述、非 API 字段、非本文实测：pika-h3-pro 发行包名、Python 3.12 / NVIDIA GPU / H100 80GB / H200 与 B300 untested、安装命令、--cpu-offload、HF_TOKEN、MiniMax H3 Community License 与 Apache-2.0 双许可、Pika API extensions 为可选托管服务；claude-animated-shorts 的 SKILL.md 流程、~/.claude/skills/cartoon-3d-short/ 路径、Remotion 与 @remotion/three 依赖、触发语；OpenMontage 的 make setup、git clone 旧地址、Python 3.10+ / FFmpeg、backlot 命令、render_runtime 在 Remotion 与 HyperFrames 间选择、零 key 与 ~$0.15–$1.50 / ~$1–$3 分档。易误解点有三：一是 description 自述的「12 production pipelines / 100+ tools / 700+ files」本文仅实测到 pipeline_defs/ 13 yaml、skills/pipelines/ 12 目录、tools/ 顶层 27 项、skills/ 顶层 5 项，100+ 与 700+ 未逐一递归复核，按作者自述处理；二是 Pika 的 API license 为 NOASSERTION，README 把模型 adapters（MiniMax H3 Community License）与代码（Apache-2.0）分开授权，不可笼统写成 Apache-2.0；三是 calesthio/OpenMontage 已迁至 OpenMontageInc/OpenMontage，正文与链接以迁移后 full_name / html_url 为准，README 内的 clone 地址仍为旧地址。另：选题池中的积压评分、榜单数字非 api.github.com 字段，本文未采用；今日新库 sarpstar/cinecode 亦经本次核对（1328 星、242 fork、created_at 2026-11-03、MIT、Python），因三库均已核到、未出现删空，故未补入以免硬凑。星标实时变化，以仓库当前数据为准。（核对时间 2026-11-08）</div>
+<p>所以判断不落在哪个星多，落在你手上要的是哪一段产物：要能反复取用的素材，就认 A 的 GPU 门槛和双许可；要一条能直接发的片，就认 B 那一种画风和一个宿主；要把出片变成可重复的产线，才认 C 的 78,486 KB 与 AGPL-3.0。<span class="hl">先说清要的是素材、一条片，还是一套流程</span>——这一句决定装哪一个，而不是 78,485 比 1,476 大。</p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看这三个仓库</h3>
+        <p>1,476 星出素材、2,361 星交成片、78,485 星编排全流程</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/OpenMontageInc/OpenMontage" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/Pika-Labs/Pika-H3-Flex" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 1,476 星，45 fork，license NOASSERTION，视频与音频生成推理包</span>
+      </a>
+      <a class="plat-card" href="https://github.com/mromidev/claude-animated-shorts" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 2,361 星，513 fork，MIT，three.js + Remotion 动画短片 Claude skill</span>
+      </a>
+      <a class="plat-card" href="https://github.com/OpenMontageInc/OpenMontage" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 78,485 星，10,462 fork，AGPL-3.0，agentic 视频制作系统</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Skill">#Skill</a>
+      <a href="../../home/home.html?q=Agent">#Agent</a>
+      <a href="../../home/home.html?q=%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90">#视频生成</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=GitHub">#GitHub</a>
+      <a href="../../home/home.html?q=%E6%A8%AA%E8%AF%84">#横评</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本文为转载整理，原视频来自抖音 @小龙（约 2026-10-21 发布，2459 赞）。原榜星标数据无法逐一与 GitHub 对账，本文已按「干什么、用在哪」重组并标注以仓库实时数据为准。本站仅做学习归档，不做商用。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

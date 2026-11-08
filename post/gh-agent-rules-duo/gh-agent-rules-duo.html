@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>230784星负面清单、148584星官方脚手架：约束不在一层 · EXPECTOPATRONUS</title>
+    <meta name="description" content="agent-rules 一族两仓：karpathy-skills 230,784 星，一份 2,357 字节的 CLAUDE.md 负面清单；spec-kit 148,584 星，GitHub 官方 SDD 脚手架，9 个命令模板把流程做成门禁。一个改脾气，一个改工序，按约束哪层选。" />
+    <meta name="keywords" content="Agent, 规则文件, SDD, 开源, 横评" />
+    <meta property="og:title" content="230784星负面清单、148584星官方脚手架：约束不在一层" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="agent-rules 一族两仓：karpathy-skills 230,784 星，一份 2,357 字节的 CLAUDE.md 负面清单；spec-kit 148,584 星，GitHub 官方 SDD 脚手架，9 个命令模板把流程做成门禁。一个改脾气，一个改工序，按约束哪层选。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>230784星负面清单、148584星官方脚手架：约束不在一层</h1>
+      <p>230,784 星，karpathy-skills 只交一份 2,357 字节的 CLAUDE.md 负面清单；spec-kit 148,584 星，是 GitHub 官方 SDD 脚手架，9 个命令模板把流程做成门禁。改脾气还是改工序。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-08</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 10 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="230784星负面清单、148584星官方脚手架：约束不在一层 封面" src="cover.jpg" />
+    </div>
+
+    <article class="article-body">
+<div class="section-marker">01 · 这件事</div>
+<h2>两个仓库都在给编码 agent 立规矩，一个交清单，一个交工序</h2>
+<p><code>multica-ai/andrej-karpathy-skills</code> 2026 年 1 月 27 日建库，核对时 230,784 星、22,965 个 fork、1,305 个订阅者、139 个未关闭 issue，API 的 size 字段只有 <code>20</code> KB，license 与 language 都是 null，最后一次 push 停在 2026 年 4 月 20 日。它的 description 一句话交代了来历：<code>A single CLAUDE.md file to improve Claude Code behavior, derived from Andrej Karpathy's observations on LLM coding pitfalls</code>——把 Karpathy 对大模型写代码那些毛病的观察，收成一份 CLAUDE.md。</p>
+<p>另一个是 <code>github/spec-kit</code>，GitHub 官方仓，2025 年 8 月 21 日建库，148,584 星、13,354 个 fork、737 个订阅者、209 个未关闭 issue，MIT，Python，size <code>22439</code> KB，最后 push 在 2026 年 11 月 7 日 04:09——核对当天它前一天还在动。description 写的是 <code>Toolkit to help you get started with SDD or any other process!</code>，homepage 指向 <code>github.github.io/spec-kit/</code>，挂了 7 个 topic：ai、copilot、development、engineering、prd、spec、spec-driven。</p>
+<p>两条都在积压队列的 <code>agent-rules</code> 一族，评分 97 和 82，所以这篇做横评，一次消耗两条。但把 README 和目录摊开就会发现，<span class="hl">它俩根本不在同一层上约束 agent</span>：一个交给模型一份人写的负面清单，靠它自觉少犯错；一个交给项目一套官方脚手架，把「先写清楚再动手」做成必须走完的流程。站内 11-07 的 <code>gh-agent-skills-trio</code> 讲 skills 规范与三方实现之争，本文不复述那场争论，只问一句：装完之后，agent 的具体行为到底哪里变了。</p>
+
+<div class="section-marker">02 · 核心机制</div>
+<h2>一份压进上下文的否定句，和一组生成产物的命令门禁</h2>
+<p>A 的全部机制就是那个 <code>2357</code> 字节的 <code>CLAUDE.md</code>。它分四节：Think Before Coding、Simplicity First、Surgical Changes、Goal-Driven Execution，通篇是 <code>Don't assume</code>、<code>No features beyond what was asked</code>、<code>Don't refactor things that aren't broken</code> 这类否定句，要求下笔前先陈述假设、不确定就问、只改该改的行、把任务翻成可验证的目标再循环。约束靠的是 <code>CLAUDE.md</code> 这个约定文件名本身——Claude Code 一开会话就把它读进上下文。<span class="hl">它不改变工作流程，只压住模型的默认倾向</span>：装完最直观的变化是 diff 更干净、澄清问题前移、少过度设计。</p>
+<p>更值得注意的是它给自己写的退路。文件开头就声明 <code>These guidelines bias toward caution over speed. For trivial tasks, use judgment.</code>，结尾又给了一条自检标准：更少的无关改动、更少的返工、澄清问题出现在动手之前而不是出错之后。<span class="hl">这是软约束，没有 hook、没有脚本、没有任何拦截</span>：模型不理它，什么都不会发生；换个不读 <code>CLAUDE.md</code> 的宿主，仓库另给一份 <code>CURSOR.md</code>（1955 字节），仍是同一份文本、同一种软约束。</p>
+<p>B 反过来，管的是工序。<code>specify init</code> 之后项目里多出 <code>.specify/</code>，<code>templates/</code> 下 7 个条目里有 <code>spec-template.md</code>、<code>plan-template.md</code>、<code>tasks-template.md</code>、<code>constitution-template.md</code>、<code>checklist-template.md</code>，<code>templates/commands/</code> 下 9 个命令模板：analyze、checklist、clarify、constitution、converge、implement、plan、specify、tasks。README 给的最小流程是 <code>/speckit-constitution</code> 立原则、<code>/speckit-specify</code> 写规格、<code>/speckit-plan</code> 定技术栈、<code>/speckit-tasks</code> 拆任务、<code>/speckit-implement</code> 执行、<code>/speckit-converge</code> 收口，每一步落一份可评审的产物。<span class="hl">它把「接活就写」改写成一条不能跳的流水线</span>。</p>
+<p>于是装 B 之后，agent 的活法变了：不再直接答你「做个相册」，而是先逼出一份章程和 spec，把「按日期分组、平铺预览」这类话固定成文档，再逐层往下推，产物留在 <code>.specify/</code> 里供下次续用。README 自己把定位写得很白：<code>gives AI coding agents structured processes, reusable templates, and documented outcomes</code>。<span class="hl">A 改的是脾气，B 改的是工序</span>——同样是立规矩，一个改模型下笔前的犹豫，一个改模型开工后的顺序。</p>
+
+<div class="section-marker">03 · 关键细节与数据</div>
+<h2>230,784 星的那个只报 20 KB，148,584 星的那个有 22,439 KB</h2>
+<p>先把两组的硬数字摊平。A：230,784 星、22,965 fork、1,305 订阅、139 未关闭 issue、2026-01-27 03:53 建库、2026-04-20 10:05 最后 push、license 为 null、language 为 null、size 20 KB、topics 0 个、default_branch main、homepage 空。B：148,584 星、13,354 fork、737 订阅、209 未关闭 issue、2025-08-21 22:54 建库、2026-11-07 04:09 最后 push、MIT、Python、size 22,439 KB、topics 7 个、default_branch main、homepage 指向官方站。<span class="hl">星更高的那个，size 只有 20 KB，另一个是 22,439 KB</span>。</p>
+<p>再看「厚度」完全不和星标成正比。A 的核心就一份 2,357 字节的 <code>CLAUDE.md</code>，加上另外 4 份 Markdown（<code>CURSOR.md</code> 1,955、<code>EXAMPLES.md</code> 14,838、<code>README.md</code> 6,198、<code>README.zh.md</code> 6,042 字节）和 1 个 <code>skills/</code> 目录；B 是 22,439 KB 的 Python 工程，<code>src/specify_cli</code>、<code>scripts/</code> 下 bash / powershell / python 三套脚本、<code>presets/</code> 7 个条目、<code>templates/commands/</code> 9 个命令模板，外加 <code>docs/</code>、<code>tests/</code>、<code>workflows/</code>，还带 <code>CHANGELOG.md</code> 149,562 字节和 <code>CONTRIBUTING.md</code> 30,235 字节。<span class="hl">一个把全部约束压进 2,357 字节，一个把约束摊成整套工程</span>。</p>
+<p>有两处口径必须挑明。第一处是 A 的体积：API 的 size 字段报 20 KB，可 <code>/contents/</code> 下根目录 5 个文件的字节相加是 31,390——size 是压缩后的 git 体积口径、且可能滞后，不是文件实数，别拿它当「全仓就这么大」。第二处是 description 的自述：它写 <code>A single CLAUDE.md file</code>，可仓库实际已经长出 <code>CURSOR.md</code>、<code>EXAMPLES.md</code>、两份 README、<code>skills/</code> 和 <code>.claude-plugin/</code>，<span class="hl">「单文件」是叙事，不是目录现状</span>；再加上 API 的 license 字段为 null，抄进闭源产品前得自己确认能不能用，而不是看一句 description。</p>
+<p>最后是热度口径。选题池给 <code>github/spec-kit</code> 挂了「本周 Trending 标注增 4,280 星」，karpathy-skills 那条只是 97 分积压、并没有这个标注，两者别混；但 GitHub API 根本没有「本周新增星」这个字段，4,280 无法从仓库或接口复核，本文只当作选题时的热度标注、不进任何实测结论。<span class="hl">把周榜标注当实测排序，等于拿标注当测量</span>。能站稳的只有 stars、forks、created_at、pushed_at 这类接口直接给的字段，和 <code>/contents/</code> 数出来的 9 个命令模板、7 个模板条目、5 个根目录文件。</p>
+
+<div class="section-marker">04 · 怎么用</div>
+<h2>先决定要约束的是脾气还是工序，再选安装命令</h2>
+<p>A 几乎不用装。把 <code>CLAUDE.md</code> 放进项目根目录（或按它开头那句 <code>Merge with project-specific instructions as needed</code> 并进你已有的规则文件），Claude Code 开会话自己会读；用 Cursor 就换 <code>CURSOR.md</code>；想按插件分发，<code>.claude-plugin/</code> 里已经有 <code>marketplace.json</code> 和 <code>plugin.json</code>。它的正确用法偏「读」：照四节否定句改自己的 <code>AGENTS.md</code>，或翻 <code>EXAMPLES.md</code> 看反例，而不是指望它替你管流程。零依赖、零配置、跨宿主，代价也在这：<span class="hl">全靠模型愿意照做</span>。</p>
+<p>B 要先装 CLI。README 要求 <code>Python 3.11+</code> 和 uv，命令是 <code>uv tool install specify-cli</code>，再 <code>specify init my-project --integration copilot</code> 生成项目；换别的 agent 要按 integration key 分别配。想加 bug 修复或点子评估，再 <code>specify extension add bug</code>、<code>specify extension add assess</code>，对应的 <code>/speckit-bug-assess</code>、<code>/speckit-assess-intake</code> 才会出现。装完按 <code>/speckit-specify</code> 到 <code>/speckit-implement</code> 的顺序走，产物落在 <code>.specify/</code>。<span class="hl">它给的是一套可复现的工序，代价是每次都得从模板起步</span>。</p>
+<p>判断表如下，A 是 <code>multica-ai/andrej-karpathy-skills</code>，B 是 <code>github/spec-kit</code>：</p>
+<ul>
+<li><b>只想压住过度设计、乱改相邻代码、不懂装懂这些常见毛病，且改的多是琐碎任务</b>——选 A。2,357 字节的负面清单放进根目录就生效，不绑架开工顺序，改一行 bug 也不用先写 spec；代价是纯靠模型自觉，且 license 为 null、最后一次 push 停在 2026-04-20。</li>
+<li><b>要从零起一个正经项目、团队要可评审的 spec/plan/tasks 文档、要把「先写清楚再动手」变成门禁</b>——选 B。9 个命令模板加 <code>specify</code> CLI 把流程固定成产物，官方维护、MIT、核对前一天还在 push；代价是 <code>Python 3.11+</code> 与 uv 的前置，以及改个小 typo 也得走流程（或另装 bug 扩展）。</li>
+<li><b>两者都想要</b>——可以叠：把 A 那四节否定句抄进 B 的 <code>constitution-template.md</code>，让「别过度设计」成为项目章程的一条，再交给 B 的命令门禁去执行。别指望 A 给流程、B 给否定清单，它俩管的是不同层，混着读会两头落空。</li>
+<li><b>两者都可以不装</b>——你若只需要「先报假设、只改该改的」这几条，直接把方法写进自己的 <code>AGENTS.md</code>，比养一个 CLI 和 9 个命令模板便宜；反过来，只想看看 SDD 长什么样，读 <code>spec-driven.md</code>（26,229 字节）也就够了，不必 <code>specify init</code>。</li>
+</ul>
+<p>一个务实提醒：两者都不改模型，改的是模型开机时读到的那摞文本、以及它按什么顺序被驱动。A 是 2,357 字节的清单，B 是 <code>uv</code> 装出来的 CLI 加 9 个命令模板。<span class="hl">装得越重，故障面越大</span>：B 少了 <code>Python 3.11+</code> 或 uv，<code>specify init</code> 根本跑不起来；A 更干脆，本来就只是几份能读的 Markdown。</p>
+
+<div class="section-marker">05 · 冷思考</div>
+<h2>230,784 星量的是谁的名字，不是装了之后改变多少</h2>
+<p>先质疑星标。A 230,784 星、B 148,584 星，差了八万多，可把时间摊开看很不对劲：A 的 created_at 是 2026-01-27，pushed_at 停在 2026-04-20，核对时已经超过半年没动，license 是 null，size 报 20 KB；B 2025-08-21 建库，2026-11-07 还在 push，MIT、22,439 KB、7 个 topic、一份 149,562 字节的 CHANGELOG。<span class="hl">星更高的那个，作者名气和「一份文件治好 AI 瞎写代码」的叙事占了大头</span>，机制上它只是 4 节否定句。订阅率也都不高：A 1,305 除以 230,784 约 0.57%，B 737 除以 148,584 约 0.50%，两边都是「先收藏」的量级。把 23 万星读成「更该先装」，正好读反了：持续投入的官方工程反而是星更少的那个。</p>
+<p>再质疑「装了行为变了」这件事本身。A 是纯文本、无 hook、无强制，连自己都写 <code>bias toward caution over speed</code>、<code>For trivial tasks, use judgment</code>，等于承认琐碎任务上这份规矩会自动让位；换一个不读 <code>CLAUDE.md</code> 的宿主，行为根本不变。B 把流程做成门禁，可反过来，偏不了流程也意味着临场改主意变难——官方后来把 bug fixing、idea assessment 拆成 <code>specify extension add</code> 才装的可选扩展，README 还专门声明 <code>These are independent entry points, not mandatory phases</code>，正是在给「改一行字也要走六步」松绑。<span class="hl">粒度越粗，agent 越听话，你越难绕开它</span>。两者交付的都是文本加命令，不是运行时；行为的改变全靠宿主愿不愿意在开机时读进去、愿不愿意按命令走。</p>
+<p>第三处质疑在自述的可靠性。description 说 <code>A single CLAUDE.md file</code>，目录里却已经摊着 5 份 Markdown 加插件壳；API 的 size 报 20 KB，<code>/contents/</code> 的根目录字节和却是 31,390；所谓「本周 Trending 标注增 4,280 星」只来自选题池周榜，GitHub API 根本没有周增字段，还被特意叮嘱别混到 karpathy-skills 头上。<span class="hl">这些对不齐的地方，恰恰是最容易被当成硬指标的那些</span>。唯一能站稳的，是 stars、forks、created_at、pushed_at，和 <code>/contents/</code> 数出来的 9、7、5 这些实数。</p>
+<p>第四处是「不装配套工具会怎样」。B 不装 <code>Python 3.11+</code> 和 uv，<code>uv tool install specify-cli</code> 就走不下去，脚手架进不了项目；A 更干脆，它本来就只是几份能读的 Markdown，不读就完全没装。<span class="hl">「立规矩」这件事的成本，几乎全在宿主这一侧</span>：清单要宿主开机读、脚手架要宿主认命令，换一个不认的环境，重装一遍是小事，规则根本不生效才是常态。</p>
+<div class="info-box">数据核对：2026-11-08 经 api.github.com/repos 与 /contents/ 读取，两者 default_branch 均为 main。multica-ai/andrej-karpathy-skills：stargazers_count 230784，forks_count 22965，subscribers_count 1305，open_issues_count 139，created_at 2026-01-27T03:53:13Z，pushed_at 2026-04-20T10:05:04Z，license 字段 null，language 字段 null，size 20 KB，topics 0 个，homepage 空，html_url https://github.com/multica-ai/andrej-karpathy-skills；根目录 5 个文件字节和 31390（CLAUDE.md 2357、CURSOR.md 1955、EXAMPLES.md 14838、README.md 6198、README.zh.md 6042），另有 .claude-plugin/（marketplace.json 758、plugin.json 390）、.cursor/、skills/（1 个目录 karpathy-guidelines）；CLAUDE.md 四节标题、否定句、Tradeoff 声明与自检标准取自该文件解码。github/spec-kit：stargazers_count 148584，forks_count 13354，subscribers_count 737，open_issues_count 209，created_at 2025-08-21T22:54:31Z，pushed_at 2026-11-07T04:09:22Z，license MIT，language Python，size 22439 KB，topics 7 个（ai/copilot/development/engineering/prd/spec/spec-driven），homepage https://github.github.com/spec-kit/，html_url https://github.com/github/spec-kit；templates/ 7 个条目、templates/commands/ 9 个命令模板（analyze/checklist/clarify/constitution/converge/implement/plan/specify/tasks）、scripts/ 下 bash/powershell/python 3 套、presets/ 7 个条目、spec-driven.md 26229 字节、CHANGELOG.md 149562 字节、CONTRIBUTING.md 30235 字节、README.md 14337 字节、AGENTS.md 3747 字节、LICENSE 1060 字节。安装命令（uv tool install specify-cli、specify init my-project --integration copilot、specify extension add bug/assess）、六步流程、Python 3.11+ 与 uv 前置、"independent entry points, not mandatory phases" 声明、SDD 定位均取自 spec-kit README 解码；CLAUDE.md 的 "Merge with project-specific instructions" 取自 A 文件解码。另：选题池给 github/spec-kit 标「本周 Trending 增 4,280 星」，该标注不属于 karpathy-skills；GitHub API 无周增字段，本文未复核、不作为实测，不进任何结论。size 为 git 压缩体积口径，不等于文件字节和。星标实时变化（复核瞬间 A 230786、B 148587），以仓库当前数据为准。（核对时间 2026-11-08）</div>
+<p>所以判断不是「哪个星多装哪个」，也不是「官方的就更该装」，而是「你要约束的是 agent 的脾气还是它的工序」。只想让它少过度设计、少乱改、不懂就问，选 A 那份 2,357 字节的负面清单，放进根目录就完事；要把它从「接活就写」改造成「先立原则、再写 spec、再拆任务、最后收口」，选 B 那套 9 个命令模板的官方脚手架，并接受 <code>Python 3.11+</code> 与 uv 的门票。<span class="hl">最该先做的不是装，是先写清楚你要改的是哪一层</span>：改脾气用文本，改工序才上 CLI——顺序反了，你会先花半小时配 uv，再发现要的只是一句「别自作主张加功能」。</p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看这两个仓库</h3>
+        <p>multica-ai/andrej-karpathy-skills 230,784 星 / 一份 CLAUDE.md 负面清单；github/spec-kit 148,584 星 / MIT / GitHub 官方 SDD 脚手架</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/multica-ai/andrej-karpathy-skills" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/multica-ai/andrej-karpathy-skills" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 230,784 星，2,357 字节 CLAUDE.md 负面清单，靠模型自觉压住过度设计</span>
+      </a>
+      <a class="plat-card" href="https://github.com/github/spec-kit" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 148,584 星，MIT，9 个命令模板把 SDD 流程做成门禁</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Agent">#Agent</a>
+      <a href="../../home/home.html?q=%E8%A7%84%E5%88%99%E6%96%87%E4%BB%B6">#规则文件</a>
+      <a href="../../home/home.html?q=SDD">#SDD</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=%E6%A8%AA%E8%AF%84">#横评</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本文为转载整理，原视频来自抖音 @小龙（约 2026-10-21 发布，2459 赞）。原榜星标数据无法逐一与 GitHub 对账，本文已按「干什么、用在哪」重组并标注以仓库实时数据为准。本站仅做学习归档，不做商用。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

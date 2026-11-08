@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>187 星对 201 星：一个记人设，一个记事实何时为真 · EXPECTOPATRONUS</title>
+    <meta name="description" content="tavern-labs-ai/persona-ai-sdk 187 星、MIT，用 8 张 persona 卡与关系状态存「人设与角色关系」；gh9ko8y/graphmemory 201 星、MIT，自述双时态、六变量衰减与时间分级召回，存「事实何时成立」。拆数据模型与失效场景，给选 A 选 B 的判断。" />
+    <meta name="keywords" content="Skill, Agent 记忆, 开源, GitHub, 横评" />
+    <meta property="og:title" content="187 星对 201 星：一个记人设，一个记事实何时为真" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="tavern-labs-ai/persona-ai-sdk 187 星、MIT，用 8 张 persona 卡与关系状态存「人设与角色关系」；gh9ko8y/graphmemory 201 星、MIT，自述双时态、六变量衰减与时间分级召回，存「事实何时成立」。拆数据模型与失效场景，给选 A 选 B 的判断。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>187 星对 201 星：一个记人设，一个记事实何时为真</h1>
+      <p>187 星、2 fork 与 201 星、5 fork，两个仓库都建于 10 月底：一个把人设与关系做成可替换人格卡，一个给每条事实挂有效时间与记录时间两条轴。一个记它是谁，一个记何时为真，数据模型与失效场景都不同，按星选就错了。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-08</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 10 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="187 星对 201 星：一个记人设，一个记事实何时为真 封面" src="cover.jpg" />
+    </div>
+
+    <article class="article-body">
+<div class="section-marker">01 · 这件事</div>
+<h2>两个都叫 agent memory，存进库的却是两种东西</h2>
+<p><code>tavern-labs-ai/persona-ai-sdk</code> 2026 年 10 月 31 日建库，到 2026 年 11 月 8 日是 187 星、2 个 fork，MIT，TypeScript，仓库 217 KB，最后一次 push 停在 11 月 2 日。description 只有一句：默认人格、持久角色记忆、Bedrock / OpenAI 适配打成一个包；npm 发布名 <code>ai-persona-sdk</code> 与仓库名不同。另一个是 <code>gh9ko8y/graphmemory</code>，早一天建库，10 月 30 日，201 星、5 个 fork，同样 MIT，Python，7480 KB，push 停在发布当天。description 长得多：双时态 AI 记忆系统，六变量衰减、时间分级召回、TTL 到期、去重、竞争检索，底下压着 Neo4j、PostgreSQL 与 Redis。</p>
+<p>两个仓库差 14 星，建库只差一天，体量差了三十多倍，但真正要命的差别不在这些数上。<span class="hl">它们要存的根本不是同一件东西</span>：一个存「这个角色是谁、和用户处到了哪一步」，一个存「某条事实在什么时间成立、后来被改成什么」。11 月 6 日那篇讲上下文压缩发生在哪一层，这篇不碰那个框架，只看记忆落库后的结构与时间语义。</p>
+<p>两条同属 <code>agent-memory</code> 一族，积压 78 分与 77 分，是一次消耗两条的横评。下面按数据模型、召回、失效三条线拆开，最后给选 A 还是选 B 的判断，README 里的变量与阈值只按作者自述引用。</p>
+
+<div class="section-marker">02 · 核心机制</div>
+<h2>人设是会被覆盖的记录，事实是带两条时间轴的账本</h2>
+<p>persona-ai-sdk 的最小单位是人设卡。<code>personas/</code> 目录下 8 个 json，atlas、sage、vera、scout、wren、ember、lumen、mica 各一张，字段按 README 是 <code>systemPrompt</code>、<code>traits</code>、<code>greeting</code>、<code>memorySeeds</code>。README 把 SDK 拆成 Personas / Memory / Model / Persistence / Interface 五层，五层可替换；卡是产品默认值，应用要把它映射成自己的 persona manifest，其中 relationships 写死 <code>stranger / acquaintance / trusted</code> 三段，默认从 stranger 起。<span class="hl">它存的是身份：一份提示词、一组特质、一句开场白，和随交互推进的关系刻度</span>。</p>
+<p>召回和写入的路径写在 ARCHITECTURE.md 里。写入是 normalize → provider extraction → 校验 schema 与源消息 provenance → 丢弃低置信候选 → consolidation，默认策略会合并语义重复、<code>supersede</code> 可变状态、把矛盾抛给调用方。召回反过来：可选 query embedding，先过 scope 与 identity 过滤，再按 semantic、lexical、importance、recency 四路打分，接着 expiry filtering，最后按 token 预算打包成一段「明确不可信」的上下文，渲染时标成 recollection 而不是 instruction。<span class="hl">也就是说，人设记忆的更新方式是覆盖</span>：关系推进到 trusted，旧的 stranger 就被顶掉，系统不承诺留一份旧版本。</p>
+<p>graphmemory 反过来，最小单位是一条挂了时间的事实。README 自述每条事实同时有 <code>valid_from / valid_until</code> 这条有效时间（事情在现实里何时为真）和 <code>tx time</code> 这条记录时间（系统何时写入），能分别回答「当时是什么」和「后来改了什么」；<code>episodes</code> 原文账本只追加不更新。事实状态放 PostgreSQL 的 fact_state，关系边放 Neo4j 的 <code>RELATES_TO</code> 与 <code>MENTIONS</code>，Redis 只做读路径缓存。<code>src/graphmemory/recall/</code> 目录里确有 11 个 py 与之对应：decay.py、validity.py、time_gradient.py、competitive.py、temporal_age.py 等——文件名对得上自述，公式是否生效是另一回事。</p>
+<p>它的召回围着时间设计。README 自述的竞争检索是「激活 × 匹配 × 资源适配 → <code>θ</code> 相对阈值 → <code>Top-K</code>」，命中反过来巩固记忆；时间梯度列了 1 天到 1 年十档，越久 D（细节）上限越低、R（检索难度）下限越高。<span class="hl">失效走的是降级而不是删除</span>：六变量 S / D / R / E / C / I 控制衰减，TTL 按内容分类（临时状态 1 天、事件 7 天、普通事实 14 天、偏好永久、身份 3 年），到期先隐藏、宽限 1 天再物理删，episodes 原文账本永久保留。以上出自 README 与 DESIGN_ZH.md，是作者自述，不是本文实测。</p>
+
+<div class="section-marker">03 · 关键细节与数据</div>
+<h2>差别最硬的一处：一个覆盖旧状态，一个给旧状态留原文</h2>
+<p>先把能对着目录数出来的东西摆齐。persona-ai-sdk 的 README 15239 字节、ARCHITECTURE.md 5614 字节，docs/ 下 7 篇、src/ 下 7 个子目录，personas/ 8 个 json 与 README 的「8 personas」徽章对得上。graphmemory 的 README 8106 字节、API.md 12336 字节、mcp_server.py 27734 字节、docs/DESIGN_ZH.md 28853 字节，scripts/ 6 个、docs/ 6 个，recall/ 下 11 个 py，其中 repository.py 18,818、competitive.py 11,961 字节等。<span class="hl">这些字节数是目录接口给出来的，机制描述则来自仓库自己的文档</span>，两件事要分开看。</p>
+<p>三条线对齐之后，差别就清楚了。数据模型上，A 存「角色属性 + 关系阶段 + 带来源的记忆记录」，B 存「事实 + 两个时间轴 + 只追加的原文」。召回上，A 是四路打分加 token 预算打包，取此刻最该塞进 prompt 的几段；B 是相对阈值加时间梯度，取在这个时间点仍成立且被激活的事实。失效上，A 靠 consolidation 覆盖可变状态，B 靠 TTL 隐藏、六变量降级、<code>memory_forget</code> 打墓碑，但原文账本不删。</p>
+<p>于是两者的失效场景几乎互补。用 A，你要担心的不是「记不记得」，而是「被改成了什么」：关系阶段一推进，旧阶段被 supersede；同一件事说两次，语义重复被合并；一轮对话太长，召回块被 token 预算裁掉。用 B，你要担心的是「现在还看不看得到」：一条事实 TTL 到期先隐藏，六变量衰减把 D 压低、把 R 抬高，它在当前视图里越来越难被激活，可 <code>get_timeline</code> 和 episodes 仍能把当时原话翻出来。<span class="hl">A 不承诺历史版本，B 不承诺当前可见</span>——这不是实现好坏，是两种记忆各自要保的东西不同。</p>
+<p>还有一处口径必须写明。六变量衰减、双时态、十档时间梯度、θ 竞争检索，在 README 和 DESIGN_ZH.md 里都有段落、在 recall/ 里都有对应文件，但仓库没给权重复现脚本、没给衰减曲线的数据集；scripts/ 那 6 个文件是 init_db.sql、verify_chat_memory.py 一类的建表与冒烟脚本。本文没有执行 <code>docker compose up -d</code>，没有跑 <code>pytest</code>，没有复现任何召回率。凡涉及「效果」的句子，一律按作者自述读。</p>
+<div class="info-box">数据核对：2026-11-08 经 api.github.com 仓库接口、/contents 目录列表及两仓 README、ARCHITECTURE.md、DESIGN_ZH.md 读取。tavern-labs-ai/persona-ai-sdk：stargazers_count 187，forks_count 2，created_at 2026-10-31T14:29:10Z，pushed_at 2026-11-02T21:51:15Z，license MIT，language TypeScript，size 217 KB，html_url https://github.com/tavern-labs-ai/persona-ai-sdk。gh9ko8y/graphmemory：stargazers_count 201，forks_count 5，created_at 2026-10-30T12:53:31Z，pushed_at 2026-10-30T14:00:35Z，license MIT，language Python，size 7,480 KB，html_url https://github.com/gh9ko8y/graphmemory。两仓 subscribers_count 与 open_issues_count 均为 0。以下均为仓库文档自述、非本文实测：8 张 persona 卡、五层架构、三段关系状态、三种 store、Bedrock / OpenAI 适配、Node ≥ 20；双时态（valid_from/until 与 tx time）、六变量衰减 S/D/R/E/C/I、十档时间梯度、九类 TTL、竞争检索 θ / Top-K、episodes 只追加、memory_dedupe / memory_forget 墓碑、Graphiti + Neo4j + PostgreSQL + Redis、Python ≥ 3.10、67 秒演示视频、DESIGN_ZH.md 里的「44 个测试」。易误解点：一是上述机制全为作者自述，本文未执行 docker compose、未跑 pytest、未复现任何衰减曲线；二是 DESIGN_ZH.md 自述为「原始开发记录」，其目录树中的 tests/、ball.py、start.ps1 在当前仓库 /contents 列表中并不存在，README「未包含」一节亦把桌面小组件、IM 适配（含每轮自动记忆注入钩子）、私有人设划在仓库外；三是 npm 发布名 ai-persona-sdk 与仓库名不同，README 版本徽章 alt 1.0.2 与徽章图 1.0.3 口径不一。星标实时变化，以仓库当前数据为准。（核对时间 2026-11-08）</div>
+
+<div class="section-marker">04 · 怎么用</div>
+<h2>一条 npm install 对三个容器，先算你要付的是哪种成本</h2>
+<p>A 的起步几乎零运维：<code>npm install ai-persona-sdk</code>，源码检出则是 <code>npm install</code> 加 <code>npm run build</code>，要求 Node.js ≥ 20，另需 OpenAI API key 或带 Bedrock 权限的 AWS 凭据；用 SQLite 适配器才要装 <code>better-sqlite3</code>。代码里先 <code>getPersona("atlas")</code>，再用 <code>createCharacterMemoryRuntime({ extractor, embeddings, store })</code> 装配记忆运行时，store 可选 InMemory、JsonFile 或 SQLite，然后 <code>createPersonaRuntime</code> 接上 <code>runtime.respond({ conversationId, message })</code>。一次 respond 顺带完成召回、生成、回合写入与关系状态推进，<code>response.trace</code> 里带着 recalled memory IDs。</p>
+<p>B 的起步是另一量级。README 要求 Python ≥ 3.10 与 Docker Compose，顺序是 <code>cp .env.example .env</code> 填好密码与 LLM key、<code>docker compose up -d</code> 起 Neo4j / PostgreSQL / Redis，再 <code>python -m venv .venv &amp;&amp; . .venv/bin/activate</code>、<code>pip install -e .</code>、<code>psql ... -f scripts/init_db.sql</code> 建表，最后 <code>uvicorn graphmemory.main:app --host 127.0.0.1 --port 8000</code>。写入与检索是 <code>curl -s -X POST localhost:8000/api/v1/memory/add</code> 和 <code>/search</code>，手动跑一轮衰减是 <code>/decay</code>；接 agent 走 <code>mcp_server.py</code> 的 stdio MCP，配 <code>GRAPHMEMORY_BASE_URL</code> 与 <code>GRAPHMEMORY_AGENT_ID</code>。</p>
+<p>成本差别里藏着最容易踩空的一处：graphmemory 的 README 有一节明确写「未包含」，把桌面小组件、QQ / NapCat 等 IM 适配（含「每轮自动记忆注入」钩子）、私有提示词 / 人设都划在仓库之外。<span class="hl">也就是说 B 根本不替你管人设，也不替你把记忆塞回每一轮对话</span>，那层胶水要自己写。A 恰好相反，人设卡和交付元数据是包里自带的，但记忆能不能跨会话留住，全看你选哪档 store、给不给 provider 凭据。</p>
+<p>判断表如下，A 是 <code>persona-ai-sdk</code>，B 是 <code>graphmemory</code>：</p>
+<ul>
+<li><b>要角色长期不崩人设、记住和用户处到哪一步</b>（客服、陪伴、游戏 NPC、固定品牌口吻）——选 A。人格卡、memorySeeds、三段关系状态就是为身份连续性做的；代价是接受「旧状态会被 supersede」这套覆盖语义。</li>
+<li><b>要回答「这条事实当时成立吗、后来改了没」</b>——选 B。双时态是这里唯一把有效时间与记录时间拆成两个字段的数据模型，episodes 只追加账本还能回溯原话；代价是那套衰减与召回只是作者自述。</li>
+<li><b>只能起一个进程、不想运维数据库</b>——选 A，In-memory 或 Atomic JSON 就够用。B 的 quick start 直接写进 Neo4j + PostgreSQL + Redis 三件套，还要填 LLM key 才抽得出事实。</li>
+<li><b>数据要按时间审计、要跨年级的「当时 / 现在」两套口径</b>——选 B。TTL 分级与十档时间梯度是为这种场景设计的；代价是 Python ≥ 3.10 与 Docker Compose。</li>
+<li><b>身份和事实都要记</b>——两个可以叠：A 写 character state、B 写 fact_state，不冲突。但别指望自动打通，B 明说人设与每轮注入钩子不在仓库里。只想要方法论就都别装，读 A 的 ARCHITECTURE.md 和 B 的 DESIGN_ZH.md 比养三容器便宜。</li>
+</ul>
+<p>一个务实提醒：两边都不承诺开箱即用。A 的 README 徽章 alt 写 1.0.2、徽章图却是 1.0.3；<code>getPersona</code> 遇到未知 ID 会回落到 Atlas 而不报错——写错角色 ID 不会失败，只会换一个角色继续聊。装之前先按 /contents 对一遍文件。</p>
+
+<div class="section-marker">05 · 冷思考</div>
+<h2>8 天攒 200 星、零 issue，量不出「记对没记对」</h2>
+<p>先质疑星标。两个仓库都建在 2026 年 10 月 30 / 31 日，到核对日不满两周，187 星配 0 订阅者、0 未关闭 issue，201 星也是 0 订阅、0 未关闭 issue，fork 分别只有 2 和 5。<span class="hl">这个分布更像发布期的一次曝光，不是生产环境跑出来的验证</span>。B 的 <code>pushed_at</code> 停在发布当天 14:00，比 <code>created_at</code> 只晚约一小时，<code>updated_at</code> 却到了 11 月 7 日——一个自称带后台衰减与 TTL 清理循环的系统，源码停在首次提交那一刻，此后动的是元数据。</p>
+<p>再质疑文档本身。DESIGN_ZH.md 有 28853 字节，写着五命题两坑、44 个测试、桌面悬浮球、start.ps1 与三容器架构图。可 api.github.com 列出来的根目录只有 11 项，tests/、ball.py、那份 ARCHITECTURE.md 都不在；文档开头自己注明「原始设计 / 开发记录，保留其推导过程供参考」，README 的「未包含」一节又把桌面小组件、IM 适配（含每轮自动记忆注入钩子）、私有人设划到仓库外。演示视频 67 秒里最像「有记忆」的那一下自动注入，恰恰是 clone 下来拿不到的。引用阈值前，先分清哪句写的是当前代码、哪句是当时的设想。</p>
+<p>第三处质疑是那些自述机制没有可复核的分母。六变量 S / D / R / E / C / I 各占多少权重、θ 怎么定、十档时间梯度的边界由谁校准，README 只给公式和档位，没给数据集、没给对照实验；「遗忘是降级不是删除」是设计选择，不是被测量过的效果。A 那边四路打分怎么加权、token 预算裁掉多少 recall 才不伤角色一致性，ARCHITECTURE.md 也没给数字。<span class="hl">两边都把机制写得比证据详细</span>。</p>
+<p>第四处是「二选一」这个问法本身。A 的 8 张卡被 README 定性为「product defaults rather than canonical memory records」，B 明说人设不在仓库里——一个把人设做成包内默认值，一个推给部署侧。硬问「哪个记忆更强」，等于拿角色一致性和时间可回溯性比大小，没有共同分母。</p>
+<p>所以判断不落在哪个星多。存身份，就接受 A 那套可覆盖、按预算打包、随时可能被 supersede 的记录，它不承诺历史版本，换来一条 npm install 就能起步的轻量；存命题，就接受 B 那套双时态账本、十档时间梯度和三个容器，换来「当时说了什么」随时可翻，代价是人设和每轮注入的胶水自己写。<span class="hl">最不该做的是把「它记得我是谁」和「它记得这件事哪天成立」并成一个指标去打分</span>。如果只做一件事，我会在写入事实那一刻强制带上「这条是什么时候知道的」——这个字段两边都替不了你判断，缺了它，再精巧的衰减模型也只是把一段没有时间的信息存得更久一点。</p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看这两个仓库</h3>
+        <p>persona-ai-sdk 187 星 / MIT / 人设与角色关系记忆；graphmemory 201 星 / MIT / 双时态事实台账，自述机制未实测</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/tavern-labs-ai/persona-ai-sdk" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/tavern-labs-ai/persona-ai-sdk" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 187 星，MIT，8 张 persona 卡与三段关系状态</span>
+      </a>
+      <a class="plat-card" href="https://github.com/gh9ko8y/graphmemory" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 201 星，MIT，双时态事实、六变量衰减与 TTL</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Skill">#Skill</a>
+      <a href="../../home/home.html?q=Agent%20%E8%AE%B0%E5%BF%86">#Agent 记忆</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=GitHub">#GitHub</a>
+      <a href="../../home/home.html?q=%E6%A8%AA%E8%AF%84">#横评</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2025 · 本文为转载整理，原视频来自抖音 @小龙（约 2026-10-21 发布，2459 赞）。原榜星标数据无法逐一与 GitHub 对账，本文已按「干什么、用在哪」重组并标注以仓库实时数据为准。本站仅做学习归档，不做商用。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

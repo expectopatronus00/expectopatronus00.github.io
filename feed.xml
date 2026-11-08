@@ -5,8 +5,32 @@
     <link>https://expectopatronus00.github.io/</link>
     <description>一个 AI 工具与实战的中文学习归档：原创踩坑记录 + 精选转载，每篇都标注来源。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 07 Nov 2026 12:16:39 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 08 Nov 2026 14:28:45 GMT</lastBuildDate>
     <atom:link href="https://expectopatronus00.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>187 星对 201 星：一个记人设，一个记事实何时为真</title>
+      <link>https://expectopatronus00.github.io/post/gh-agent-memory-duo/gh-agent-memory-duo.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-agent-memory-duo/gh-agent-memory-duo.html</guid>
+      <pubDate>Sat, 07 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>tavern-labs-ai/persona-ai-sdk 187 星、MIT，用 8 张 persona 卡与关系状态存「人设与角色关系」；gh9ko8y/graphmemory 201 星、MIT，自述双时态、六变量衰减与时间分级召回，存「事实何时成立」。拆数据模型与失效场景，给选 A 选 B 的判断。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>1476星推理层、2361星技能层、78485星编排层：按段选</title>
+      <link>https://expectopatronus00.github.io/post/gh-video-pipeline-trio/gh-video-pipeline-trio.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-video-pipeline-trio/gh-video-pipeline-trio.html</guid>
+      <pubDate>Sat, 07 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>三个让 agent 产出视频的仓库，站在三层：Pika-H3-Flex 1,476 星只出视频/音频素材，claude-animated-shorts 2,361 星用一份 SKILL.md 交一条动画短片，OpenMontage 78,485 星编排全流程。按你要素材、成片还是产线选。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>230784星负面清单、148584星官方脚手架：约束不在一层</title>
+      <link>https://expectopatronus00.github.io/post/gh-agent-rules-duo/gh-agent-rules-duo.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-agent-rules-duo/gh-agent-rules-duo.html</guid>
+      <pubDate>Sat, 07 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>agent-rules 一族两仓：karpathy-skills 230,784 星，一份 2,357 字节的 CLAUDE.md 负面清单；spec-kit 148,584 星，GitHub 官方 SDD 脚手架，9 个命令模板把流程做成门禁。一个改脾气，一个改工序，按约束哪层选。（转载 · 来源：微信）</description>
+    </item>
     <item>
       <title>3115星画地图、19335星逆向、2017星一句话：读懂分三层</title>
       <link>https://expectopatronus00.github.io/post/gh-code-comprehension-trio/gh-code-comprehension-trio.html</link>
@@ -222,30 +246,6 @@
       <pubDate>Wed, 15 Jul 2026 16:00:00 GMT</pubDate>
       <category>AI 编程</category>
       <description>青青王-AI分享——AI编程乱写代码的解决方案，通过Skill项目给AI立规矩，让Vibe Coding从&quot;瞎写&quot;变成&quot;规范写&quot;。（转载 · 来源：小红书）</description>
-    </item>
-    <item>
-      <title>小白组装电脑也不会翻车！这些神级网站帮你避坑</title>
-      <link>https://expectopatronus00.github.io/post/dy-7662303729881713929/dy-7662303729881713929.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7662303729881713929/dy-7662303729881713929.html</guid>
-      <pubDate>Wed, 15 Jul 2026 16:00:00 GMT</pubDate>
-      <category>AI 基础设施</category>
-      <description>大有乾坤分享——小白组装电脑不翻车的秘密武器，推荐装机配置查询、兼容性检测、价格比价等实用网站。（转载 · 来源：抖音）</description>
-    </item>
-    <item>
-      <title>AI数字员工页面开源了，免费拿走！</title>
-      <link>https://expectopatronus00.github.io/post/dy-7661986671767883014/dy-7661986671767883014.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7661986671767883014/dy-7661986671767883014.html</guid>
-      <pubDate>Wed, 15 Jul 2026 16:00:00 GMT</pubDate>
-      <category>AI 工具</category>
-      <description>赛文同学(AI版)分享——AI数字员工页面开源项目，包含聊天界面、任务管理、数据分析等完整功能，免费使用。（转载 · 来源：抖音）</description>
-    </item>
-    <item>
-      <title>Agent架构全景：7种主流架构从简单到企业级</title>
-      <link>https://expectopatronus00.github.io/post/xhs-6a4104f4000000001702d6f4/xhs-6a4104f4000000001702d6f4.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/xhs-6a4104f4000000001702d6f4/xhs-6a4104f4000000001702d6f4.html</guid>
-      <pubDate>Wed, 15 Jul 2026 16:00:00 GMT</pubDate>
-      <category>AI 编程</category>
-      <description>AlunTalk分享——从简单到企业级，系统梳理7种主流Agent架构，帮助你理解智能体设计模式与选型思路。（转载 · 来源：小红书）</description>
     </item>
   </channel>
 </rss>

@@ -3,6 +3,33 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'gh-agent-memory-duo',
+            title: '187 星对 201 星：一个记人设，一个记事实何时为真',
+            url: '../post/gh-agent-memory-duo/gh-agent-memory-duo.html',
+            summary: 'tavern-labs-ai/persona-ai-sdk 187 星、MIT，用 8 张 persona 卡与关系状态存「人设与角色关系」；gh9ko8y/graphmemory 201 星、MIT，自述双时态、六变量衰减与时间分级召回，存「事实何时成立」。拆数据模型与失效场景，给选 A 选 B 的判断。',
+            category: 'AI 编程',
+            date: '2026-11-08',
+            tags: ["Skill","Agent 记忆","开源","GitHub","横评"],
+          },
+          {
+            id: 'gh-video-pipeline-trio',
+            title: '1476星推理层、2361星技能层、78485星编排层：按段选',
+            url: '../post/gh-video-pipeline-trio/gh-video-pipeline-trio.html',
+            summary: '三个让 agent 产出视频的仓库，站在三层：Pika-H3-Flex 1,476 星只出视频/音频素材，claude-animated-shorts 2,361 星用一份 SKILL.md 交一条动画短片，OpenMontage 78,485 星编排全流程。按你要素材、成片还是产线选。',
+            category: 'AI 编程',
+            date: '2026-11-08',
+            tags: ["Skill","Agent","视频生成","开源","GitHub","横评"],
+          },
+          {
+            id: 'gh-agent-rules-duo',
+            title: '230784星负面清单、148584星官方脚手架：约束不在一层',
+            url: '../post/gh-agent-rules-duo/gh-agent-rules-duo.html',
+            summary: 'agent-rules 一族两仓：karpathy-skills 230,784 星，一份 2,357 字节的 CLAUDE.md 负面清单；spec-kit 148,584 星，GitHub 官方 SDD 脚手架，9 个命令模板把流程做成门禁。一个改脾气，一个改工序，按约束哪层选。',
+            category: 'AI 编程',
+            date: '2026-11-08',
+            tags: ["Agent","规则文件","SDD","开源","横评"],
+          },
+          {
             id: 'gh-code-comprehension-trio',
             title: '3115星画地图、19335星逆向、2017星一句话：读懂分三层',
             url: '../post/gh-code-comprehension-trio/gh-code-comprehension-trio.html',
