@@ -184,13 +184,41 @@ async function main() {
     if (!pushError) {
       let push = sh('git push origin HEAD:main', true);
       if (!push.ok) {
-        // 远端常被 stars.yml 定时快照抢先（2026-11-07 实测）。先 rebase 再重试一次；
-        // rebase 若冲突立即 abort 保留现场，交给人工取舍，绝不擅自覆盖星标数据。
+        // 远端常被 stars.yml 定时快照抢先（2026-11-07 / 11-08 实测）。先 rebase 再重试一次；
+        // 仅星标数据冲突且本地快照更新时自动解决，其余冲突 abort 保留现场交给人工。
         const pull = sh('git pull --rebase origin main', true);
         if (pull.ok) {
           push = sh('git push origin HEAD:main', true);
         } else {
-          sh('git rebase --abort', true);
+          // 只有「冲突全部落在星标数据文件」且「本次提交的快照日期不旧于远端」
+          // 才自动取本地版本；其余情况一律 abort 保留现场交给人工取舍。
+          // rebase 中 --theirs 指被重放的本地提交，--ours 才是远端。
+          const conflicts = sh('git diff --name-only --diff-filter=U', true);
+          const files = (conflicts.out || '').split('\n').map(s => s.trim()).filter(Boolean);
+          const starsOnly =
+            files.length > 0 && files.every(f => /^nav\/stars\/(data|rank)\.json$/.test(f));
+          let resolved = false;
+          if (starsOnly) {
+            const stamp = ref => {
+              const r = sh('git show ' + ref + ':nav/stars/data.json', true);
+              if (!r.ok) return '';
+              try { return JSON.parse(r.out).updated || ''; } catch (e) { return ''; }
+            };
+            const mine = stamp('REBASE_HEAD');
+            const theirs = stamp('HEAD');
+            if (mine && theirs && mine >= theirs) {
+              const co = sh('git checkout --theirs ' + files.join(' '), true);
+              if (co.ok) {
+                sh('git add ' + files.join(' '), true);
+                const cont = sh('git -c core.editor=true rebase --continue', true);
+                if (cont.ok) {
+                  resolved = true;
+                  push = sh('git push origin HEAD:main', true);
+                }
+              }
+            }
+          }
+          if (!resolved) sh('git rebase --abort', true);
         }
       }
       pushed = push.ok;
