@@ -3,6 +3,33 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'gh-deepseek-ai-dsh-superagent-prototype',
+            title: '21555 星只有 1 次提交：DeepSeek 原型先学会克制',
+            url: '../post/gh-deepseek-ai-dsh-superagent-prototype/gh-deepseek-ai-dsh-superagent-prototype.html',
+            summary: '21555 星、1 次提交、0 个 release，deepseek-ai/dsh-superagent-prototype 的 README 首句即声明不是官方产品、部分设计未实现。逐文件核对：216 个 blob 共 2.6 MB，测试与源码字节数近 1:1，9 篇文档全在规定「何时不许动」。',
+            category: 'AI 编程',
+            date: '2026-11-09',
+            tags: ["DeepSeek","Agent","Skill","开源","GitHub"],
+          },
+          {
+            id: 'gh-tauricresearch-tradingagents',
+            title: '121420 星交易 Agent 框架：分工齐整，收益不可复现',
+            url: '../post/gh-tauricresearch-tradingagents/gh-tauricresearch-tradingagents.html',
+            summary: 'TauricResearch/TradingAgents 12.1 万星、Apache-2.0，用 LangGraph 把交易公司拆成五层角色。逐层反查目录：12 个角色文件、88 个测试、19 个依赖都对得上，但默认只辩一轮，README 明说研究用途、回测结果不保证匹配任何已发布数字。',
+            category: 'AI 编程',
+            date: '2026-11-09',
+            tags: ["多智能体","LangGraph","量化","开源","GitHub"],
+          },
+          {
+            id: 'gh-debpalash-voicestudio',
+            title: '10.5 万星的本地语音工作台：646 种语言，570 种不足百小时',
+            url: '../post/gh-debpalash-voicestudio/gh-debpalash-voicestudio.html',
+            summary: 'debpalash/VoiceStudio 105071 星、AGPL-3.0，自称完全本地的 ElevenLabs 替代，标称 646 种语言。用仓库接口与语言表逐行反查：646 条、581489.36 小时两个自述数字都成立，但时长中位数仅 10.18 小时，570 种不足百小时，英中占 54.6%。',
+            category: 'AI 编程',
+            date: '2026-11-09',
+            tags: ["Skill","语音合成","本地部署","开源","GitHub"],
+          },
+          {
             id: 'gh-agent-memory-duo',
             title: '187 星对 201 星：一个记人设，一个记事实何时为真',
             url: '../post/gh-agent-memory-duo/gh-agent-memory-duo.html',

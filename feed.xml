@@ -5,8 +5,32 @@
     <link>https://expectopatronus00.github.io/</link>
     <description>一个 AI 工具与实战的中文学习归档：原创踩坑记录 + 精选转载，每篇都标注来源。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 08 Nov 2026 14:28:45 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 09 Nov 2026 14:31:55 GMT</lastBuildDate>
     <atom:link href="https://expectopatronus00.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>21555 星只有 1 次提交：DeepSeek 原型先学会克制</title>
+      <link>https://expectopatronus00.github.io/post/gh-deepseek-ai-dsh-superagent-prototype/gh-deepseek-ai-dsh-superagent-prototype.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-deepseek-ai-dsh-superagent-prototype/gh-deepseek-ai-dsh-superagent-prototype.html</guid>
+      <pubDate>Sun, 08 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>21555 星、1 次提交、0 个 release，deepseek-ai/dsh-superagent-prototype 的 README 首句即声明不是官方产品、部分设计未实现。逐文件核对：216 个 blob 共 2.6 MB，测试与源码字节数近 1:1，9 篇文档全在规定「何时不许动」。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>121420 星交易 Agent 框架：分工齐整，收益不可复现</title>
+      <link>https://expectopatronus00.github.io/post/gh-tauricresearch-tradingagents/gh-tauricresearch-tradingagents.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-tauricresearch-tradingagents/gh-tauricresearch-tradingagents.html</guid>
+      <pubDate>Sun, 08 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>TauricResearch/TradingAgents 12.1 万星、Apache-2.0，用 LangGraph 把交易公司拆成五层角色。逐层反查目录：12 个角色文件、88 个测试、19 个依赖都对得上，但默认只辩一轮，README 明说研究用途、回测结果不保证匹配任何已发布数字。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>10.5 万星的本地语音工作台：646 种语言，570 种不足百小时</title>
+      <link>https://expectopatronus00.github.io/post/gh-debpalash-voicestudio/gh-debpalash-voicestudio.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-debpalash-voicestudio/gh-debpalash-voicestudio.html</guid>
+      <pubDate>Sun, 08 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>debpalash/VoiceStudio 105071 星、AGPL-3.0，自称完全本地的 ElevenLabs 替代，标称 646 种语言。用仓库接口与语言表逐行反查：646 条、581489.36 小时两个自述数字都成立，但时长中位数仅 10.18 小时，570 种不足百小时，英中占 54.6%。（转载 · 来源：微信）</description>
+    </item>
     <item>
       <title>187 星对 201 星：一个记人设，一个记事实何时为真</title>
       <link>https://expectopatronus00.github.io/post/gh-agent-memory-duo/gh-agent-memory-duo.html</link>
@@ -222,30 +246,6 @@
       <pubDate>Thu, 16 Jul 2026 16:00:00 GMT</pubDate>
       <category>AI 编程</category>
       <description>上海交大张倬胜教授团队出品的《动手学大模型》开源教程，3万+GitHub星标，11章核心内容，PPT+代码+实验手册三位一体，从微调部署到智能体安全，完全免费。（转载 · 来源：抖音）</description>
-    </item>
-    <item>
-      <title>提升AI前端审美的开源项目：让AI设计不再土</title>
-      <link>https://expectopatronus00.github.io/post/xhs-6a59f9a2000000000f0309df/xhs-6a59f9a2000000000f0309df.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/xhs-6a59f9a2000000000f0309df/xhs-6a59f9a2000000000f0309df.html</guid>
-      <pubDate>Thu, 16 Jul 2026 16:00:00 GMT</pubDate>
-      <category>AI 工具</category>
-      <description>亚莱加德分享——一个可以提升AI前端审美的开源项目，让AI生成的UI不再土气，秒变专业设计师水平。（转载 · 来源：小红书）</description>
-    </item>
-    <item>
-      <title>代码现在能自己&quot;画出来&quot;，这个Skill让新人秒懂复杂代码</title>
-      <link>https://expectopatronus00.github.io/post/xhs-6a580c05000000000f02af00/xhs-6a580c05000000000f02af00.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/xhs-6a580c05000000000f02af00/xhs-6a580c05000000000f02af00.html</guid>
-      <pubDate>Thu, 16 Jul 2026 16:00:00 GMT</pubDate>
-      <category>AI 编程</category>
-      <description>青青王-AI分享——代码可视化Skill，自动生成代码架构图和调用关系，让新人秒懂复杂项目，老板再也不用担心新人看不懂代码了。（转载 · 来源：小红书）</description>
-    </item>
-    <item>
-      <title>AI瞎写代码终于有救了，这个项目直接给它立规矩</title>
-      <link>https://expectopatronus00.github.io/post/xhs-6a58dd8a000000001101d929/xhs-6a58dd8a000000001101d929.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/xhs-6a58dd8a000000001101d929/xhs-6a58dd8a000000001101d929.html</guid>
-      <pubDate>Wed, 15 Jul 2026 16:00:00 GMT</pubDate>
-      <category>AI 编程</category>
-      <description>青青王-AI分享——AI编程乱写代码的解决方案，通过Skill项目给AI立规矩，让Vibe Coding从&quot;瞎写&quot;变成&quot;规范写&quot;。（转载 · 来源：小红书）</description>
     </item>
   </channel>
 </rss>

@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>21555 星只有 1 次提交：DeepSeek 原型先学会克制 · EXPECTOPATRONUS</title>
+    <meta name="description" content="21555 星、1 次提交、0 个 release，deepseek-ai/dsh-superagent-prototype 的 README 首句即声明不是官方产品、部分设计未实现。逐文件核对：216 个 blob 共 2.6 MB，测试与源码字节数近 1:1，9 篇文档全在规定「何时不许动」。" />
+    <meta name="keywords" content="DeepSeek, Agent, Skill, 开源, GitHub" />
+    <meta property="og:title" content="21555 星只有 1 次提交：DeepSeek 原型先学会克制" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="21555 星、1 次提交、0 个 release，deepseek-ai/dsh-superagent-prototype 的 README 首句即声明不是官方产品、部分设计未实现。逐文件核对：216 个 blob 共 2.6 MB，测试与源码字节数近 1:1，9 篇文档全在规定「何时不许动」。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head">
+      <div class="eyebrow">OPEN SOURCE · AGENT PROTOTYPE</div>
+      <h1>21555 星只有 1 次提交：DeepSeek 原型先学会克制</h1>
+      <p>21555 星、2580 个 fork、只有 1 次提交——这个 DeepSeek 仓库的 README 首句不是介绍功能，而是「不是官方产品」。它用 111 个源码文件与 65 个测试文件，规定 agent 何时开工、何时必须闭嘴。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-09</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 11 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="21555 星只有 1 次提交：DeepSeek 原型先学会克制 封面" src="cover.jpg" />
+    </div>
+
+    <article class="article-body">
+<div class="section-marker">01 · 这件事</div>
+<h2>两万星、一次提交，README 先否认自己是产品</h2>
+<p><code>deepseek-ai/dsh-superagent-prototype</code> 2026 年 10 月 31 日 09:32 UTC 建库，11 月 9 日核对时是 21555 星、2580 个 fork、164 个订阅者；TypeScript，MIT，默认分支 main，未归档，主页为空，最后一次 push 是 11 月 3 日 09:29 UTC。仓库描述只有一行 <code>Towards a More Autonomous Agent System</code>。反差落在提交记录上：<code>commits</code> 接口只返回 1 条，<code>8c32a9dc5d</code>，2026-10-31T12:05:39Z，署名 <code>DeepSeek Harness Team</code>，消息是 <code>feat: add the dsh-superagent research prototype</code>；<code>releases</code> 与 <code>tags</code> 都是空数组，issue、discussion、wiki 三个入口全部关闭。<span class="hl">一个两万星仓库的全部历史，就是一次「把原型加进来」的提交</span>。</p>
+<p>这条在选题池里躺了 8 天，是积压最久的一条。按超期复核的规矩重新查过热度：星标仍在两万量级、11 月 9 日还有更新、11 月初刚 push 过，没有衰减，所以照写。但真正决定这篇怎么写的是 README 第一段：<code>Research prototype for reference only, not an official DeepSeek product.</code> 后面跟着三句更硬的——代码从团队日常开发里长出来，「much of the engineering done by coding agents」；把它当研究代码而不是生产可用软件，可能有 bug，编码风格与工程实践可能不一致；以及最要紧的一句：为发布做过改编，所以它既不等于内部版本，也不等于文章 <code>Exploring Super-agent Design: Towards a More Autonomous Agent System</code> 里描述的实现，「Some designs discussed in the article are directions for future development and are not implemented in this prototype」。<span class="hl">文章里讲的一部分能力，这个仓库里没有</span>。</p>
+<p>所以这不是一次产品发布。它是把一套「agent 该怎么自处」的规则公开出来：什么条件下它才允许开工、什么时候必须闭嘴、什么时候必须把话交回给人。<code>docs/000-philosophy.md</code> 把核心原则写成一句话——<code>Take as little human attention as possible, and give as much value as possible</code>。本文不测它能不能替你改代码，只把这套规则拆到文件级，看看「克制」到底落在哪些地方。</p>
+
+<div class="section-marker">02 · 核心机制</div>
+<h2>先判断「能不能开工」，再谈「怎么干」</h2>
+<p>定位写在 <code>package.json</code> 的 description 里：<code>A proactive agent for one GitHub repository, as a DSH (DeepSeek Harness) bundle</code>——它监听 GitHub，可选监听飞书；被允许的人派活后开一个工单，在自己的 agent session 与目录里干活，再回到原对话里交付，比如一个 PR；另有一个 web panel 只显示「需要人」的那些事。它不是聊天框里的助手，是常驻在一个仓库上的角色。</p>
+<p><code>docs/001-domain.md</code> 给了一条主链：<code>Source</code> 产生 <code>Trigger</code>，落到 <code>Thread</code>，交给 <code>Eval</code> 评估；Eval 接受才创建 <code>Ticket</code> 并附上一份 <code>Mandate</code>（授权），<code>Assignment</code> 把工单派给 <code>Executor</code>，结果经 <code>Channel</code> 写回原对话。文档附了中英对照术语表：来源、触发、线程、关联、渠道、策略、评估、准入、研判、决定、授权、工单、派工、订阅、扇出、执行器。值得注意的是 <code>Executor</code> 被明确划在领域之外，一个「人」也不是领域概念，只是 Trigger 上带的一个 actor 标识。<span class="hl">它宁可多造几个抽象，也不让「谁」和「怎么执行」混进授权判断</span>。</p>
+<p>授权规则集中在 <code>docs/002-authorization.md</code>。第一条就划清边界：主机强制执行允许名单、规则与 Mandate，消息、评论、被引用的文档都只是决策输入，改不了权限。消息走两条路——新请求进 <code>Eval</code>，已有工单订阅的 Thread 上的消息作为上下文直接扇出给工单，不经过准入、也不给新权限。强度分三档 <code>explicit</code> / <code>inferred</code> / <code>not admitted</code>：在名单上的人直接 @ 才算明确请求；名单外的人默认被忽略；机器人即使在 Source 的 bot 名单里，最多产生推断候选，永远不能提明确请求，也不能停掉工单。</p>
+<p>三档 <code>accept mode</code> 是整套设计的阀门：<code>off</code> 不收推断候选，<code>observe</code>（默认）会研判推断候选，但正面结论只记录成一条标了「would accept」的 ignore，什么都不接受，<code>auto</code> 才真的接单；明确请求在三种模式下都有效。文档给的次序是「Start in observe and switch to auto after reviewing the recorded Decisions」。连「停」都不交给执行器自己判断：<code>A person saying "stop" in a Thread is an ordinary Trigger, and Eval decides stop. An Executor cannot declare that a person asked it to stop.</code>；只有面板上的停止是一次命令。策略是有版本号的，改版本会丢弃运行中的 Eval、把触发重新排队，但不会立刻撤销已经开出去的 Mandate。</p>
+<p>001 里还有一张 <code>Rejected concepts</code> 表，列了十来条「明确不做」的设计：不把人建成实体、不跨 Source 映射身份、不给 Eval 加 waiting 状态、不允许「append to Ticket」这种决定、不让工单状态跟着 DSH Session 走、不让执行器从报告的自由文本里推断「在等人」。哲学文档里对应的设计原则也只有四条：少概念、少设置、面板只显示需要人的东西、文档按编号顺序读。<span class="hl">这套东西是做减法做出来的，不是把能力堆齐</span>。</p>
+
+<div class="section-marker">03 · 关键细节与数据</div>
+<h2>源码和测试几乎一样重，最严的闸门却写在提示词里</h2>
+<p>先用 <code>git/trees/main?recursive=1</code> 把整仓数一遍：<code>truncated: false</code>，236 个节点里 216 个 blob、20 个目录，逐字节累加 2,601,300 字节；根目录 18 项，10 个文件 8 个目录。分布很说明问题：<code>src/</code> 111 个文件 1,081,932 字节，<code>tests/</code> 65 个文件 1,066,322 字节——测试代码的字节数约等于源码的 98.6%。全仓最大的单文件是 <code>pnpm-lock.yaml</code> 172,084 字节，接着两个都是测试：<code>tests/runtime.spec.ts</code> 141,990 字节、<code>tests/core-engine.spec.ts</code> 106,908 字节；<code>docs/</code> 9 篇共 185,852 字节，其中 <code>007-architecture.md</code> 单篇就 70,507 字节，占掉三分之一还多。而 <code>README.md</code> 只有 2,571 字节。<span class="hl">一个自称「研究代码、非生产可用」的仓库，测试与源码几乎 1:1</span>。</p>
+<p>依赖口径更能说明它是什么。<code>package.json</code> 里 <code>version 0.1.0</code>、<code>private: true</code>，运行时 <code>dependencies</code> 只有 2 个（<code>proper-lockfile</code> 4.1.2、<code>zod</code> 4.4.3），但 <code>peerDependencies</code> 23 个、<code>devDependencies</code> 36 个，几乎全是 <code>@deepseek-ai/dsh-*</code> 的 <code>0.2.1-alpha.2</code>。<code>engines</code> 要求 <code>node ^22.19.0 || &gt;=24.0.0</code> 与 <code>dsh ^0.2.1-alpha.2</code>，包管理器锁在 <code>pnpm@11.7.0</code>；<code>dsh.bundle.patch</code> 指向 <code>cordis.patch.yml</code>。换句话说它不能独立跑，是挂在 DeepSeek Harness 上的一块 bundle，整套宿主依赖还停在 alpha。<code>prompts/</code> 15 个文件 49,853 字节、<code>skills/</code> 只有 2 个文件（github 与 feishu 各一）共 5,325 字节，也印证了「能力靠提示词与技能描述，不靠堆插件」。</p>
+<p><code>docs/003-execution.md</code> 把执行侧写得很细：每个 Ticket 一个名为 <code>worker-&lt;ticket id&gt;</code> 的 Executor Session 和一个以工单短名命名的目录，默认落在 <code>&lt;stateDir&gt;/work</code>；首次派工前若目录不存在，用 <code>sh</code> 跑一次 prepare 命令，超时 10 分钟，典型做法是用 <code>git worktree</code> 开一份检出，失败即工单失败且不自动重试。worker 与 router 两个 preset 都把前台 shell 命令在 5 秒后转后台，子 agent 用 <code>standard</code> preset 是 60 秒；每轮后台工作最多 30 分钟，到点杀掉并报 waiting。出站消息的重试从 5 秒起、按倍数递增到 300，Input 投递从 2 秒起、翻倍到一分钟；连续三次失败才上报为系统问题。</p>
+<p>最该停下来看的是合并规则。文档原话：<code>Auto-merge is governed by the Delivery requirements prompt. The host has no merge-specific decision logic.</code> 默认指令只允许在这个 PR 是为该工单开的、状态 ready、必需审批覆盖 head commit、且增删合计少于 <code>200</code> 行时启用 auto-merge；推新 revision 前要撤回；执行器默认不以 agent 账号启用 auto-merge，得另给一个有合并权限账号的 CLI。作者还补了一句：真要强制审批，请去 branch protection 里设，并勾掉过期审批。<span class="hl">决定能否自动合并的，是一段可编辑的自然语言，不是主机里的权限检查</span>。同一篇文档还写明 <code>Executor Sessions run commands without approval as the operator's OS user</code>，并自己承认 <code>These wrappers and directories establish defaults, not a security boundary. A worker can still execute a program by absolute path.</code></p>
+<div class="info-box">数据核对：2026-11-09 经 api.github.com 读取，full_name = deepseek-ai/dsh-superagent-prototype，description「Towards a More Autonomous Agent System」，stargazers_count 21555、forks_count 2580、subscribers_count 164、open_issues_count 0，created_at 2026-10-31T09:32:46Z，pushed_at 2026-11-03T09:29:14Z，updated_at 2026-11-09T11:03:49Z，language TypeScript，license MIT，default_branch main，archived false，homepage null，topics 为空，has_issues / has_discussions / has_wiki 均为 false，仓库接口 size 字段为 37（KB）。releases 与 tags 均为空数组；commits 仅 1 条（8c32a9dc5d，2026-10-31T12:05:39Z，DeepSeek Harness Team，「feat: add the dsh-superagent research prototype」）。git/trees/main?recursive=1 经 curl 取完整 JSON 后本地统计：truncated false，236 节点 = 216 blob + 20 tree，blob size 合计 2,601,300 字节；根目录 /contents 为 18 项（10 文件 / 8 目录，README.md 2571、SETUP.md 7894、package.json 4693、cordis.patch.yml 8398、pnpm-lock.yaml 172084 字节），docs/ 列 9 篇、skills/ 列 2 个子目录、prompts/ 列 13 项；按 tree 归集 src/ 111 文件 1,081,932 字节、tests/ 65 文件 1,066,322 字节、prompts/ 15 文件 49,853 字节、docs/ 9 文件 185,852 字节、skills/ 2 文件 5,325 字节。README.md、SETUP.md、package.json、docs/000-philosophy.md、001-domain.md、002-authorization.md、003-execution.md 经 raw.githubusercontent.com 读取：version 0.1.0、private true、dependencies 2 / peerDependencies 23 / devDependencies 36 / scripts 4、engines node ^22.19.0 || &gt;=24.0.0 与 dsh ^0.2.1-alpha.2、packageManager pnpm@11.7.0；三档 accept mode（off / observe 默认 / auto）、三档 strength（explicit / inferred / not admitted）、Decision 四类、Report 六类、auto-merge 增删合计少于 200 行、5 秒 / 60 秒 / 30 分钟 / 10 分钟等阈值均为文档自述。易误解点有四：一是仓库接口 size 37（KB）与逐 blob 累加的 2,601,300 字节差两个数量级，本文所有体量数字一律以 git tree 为准，不引用 size；二是 has_issues 为 false，open_issues_count 0 不代表无人遇到问题，而是 issue 区未开放；三是 README 明确声明「not an official DeepSeek product」「not production-ready software」「not identical to our internal version or the implementation described in Exploring Super-agent Design」，且文章里部分设计未在本原型实现；四是 <code>prompts/</code> 目录 /contents 列 13 项（含 1 个子目录 team/），tree 递归后为 15 个文件，两个口径不同。本文未安装运行、未验证任何机制或阈值，机制与平台状态均按项目文档自述引用。星标实时变化（本次核对中由 21554 增至 21555），以仓库当前数据为准。（核对时间 2026-11-09）</div>
+
+<div class="section-marker">04 · 怎么用</div>
+<h2>它不给你安装脚本，让你叫自己的 coding agent 读 SETUP.md</h2>
+<p>README 的 Setup 段落只有一句指令：对你的编码 agent 说 <code>Read SETUP.md in this repository and set up dsh-superagent with me.</code>。<code>SETUP.md</code> 本身是写给 agent 的操作规程，不是给人看的清单：第一条要求动手前只读这份文件和 <code>000-philosophy.md</code>、跑一次 probe，收齐答案前不许读别的；一次只问一个具体问题，每条消息少于 300 词，附一个能一个词接受的推荐答案和一句为什么要问；先把九个答案收齐，再发一条不超过 300 词的完整计划，等操作者确认才执行；绝不在聊天里要密钥——创建账号、CLI 登录、填 app secret 这类必须本人动手的事，打包成一条消息给出精确命令，让你在自己终端跑。<span class="hl">安装流程本身也在执行「少占注意力」这条原则</span>。</p>
+<p>前置条件不含糊：Node.js 22.19+ 或 24+、pnpm、git 2.32+、tmux、Python 3.8+、GitHub CLI 2.48+、版本落在 <code>engines.dsh</code> 范围内的 DeepSeek Harness，以及一个配好的模型 provider。probe 命令是 <code>node -v; pnpm -v; git --version; tmux -V; python3 --version; gh --version | head -1; dsh --version</code>，再加 <code>gh api user --jq .login</code> 拿操作者自己的 login 当推荐值。缺的东西列进计划，不拿来提问。</p>
+<p>九个问题分三组，顺序对应领域模型：Sources 从哪来（GitHub only 还是也接飞书、目标仓库 <code>owner/name</code>、专用 agent 账号、飞书哪些群）；Policy 谁能派活（GitHub 上哪些 login，默认只有操作者本人；飞书谁可以）；Execution 拿到工单后做什么（从哪个本地克隆检出、commit 署名是谁、要不要 auto-merge，默认否）。有合理默认值的一律不问，直接写进计划：profile <code>superagent</code>、端口 <code>3082</code>、状态目录 <code>&lt;home&gt;/.dsh/state/superagent</code>、每小时一次自检、分支前缀 <code>agent/</code>、accept mode <code>observe</code>、飞书只读 @ 且开私信。验证方式是从名单内账号在 issue 里评论 <code>@&lt;agent login&gt; &lt;request&gt;</code>，约一分钟后 overview 出现一个 Ticket；面板入口叫 Superagent。交接时给操作者三条规矩：start narrow、tune for less noise、own what it says。</p>
+<p>这里有个容易踩空的点：默认 <code>observe</code> 意味着装完之后，所有「主动」工作只被记录、不执行。想让它真动手，得先翻一遍记下来的 Decisions，确认它「本来会做什么」看着对，再把模式切到 <code>auto</code>。这跟多数 agent 工具装完就能跑的预期正好相反。</p>
+
+<div class="section-marker">05 · 冷思考</div>
+<h2>两万星是「DeepSeek」四个字的重量，不是这套规则的验收结果</h2>
+<p>先质疑最大的那个数字。21555 星配 2580 个 fork，可提交只有 1 次、release 与 tag 皆为 0，连 issue 区都没开——所以 <code>open_issues_count: 0</code> 不是「没人遇到问题」，是没地方提。README 把话说得比多数项目都绝：不是官方产品、不是生产可用、与内部版本不同、文章里一部分设计压根没实现。把它读成「DeepSeek 开源了超级智能体」，第一屏就是反证。<span class="hl">星标买的是对招牌和 super-agent 这个词的想象，不是这套东西被持续维护过的证据</span>。</p>
+<p>再算个人开发者的账。<code>0.1.0</code>、<code>private: true</code>、23 个 alpha 版本的 peer 依赖、必须挂在 DeepSeek Harness 上；再加 tmux、专用 GitHub 账号、可选的飞书机器人、一个模型 provider。不装这一整套配套工具，它就只是一个 2.6 MB 的源码快照，什么也跑不起来。而装上之后，为了「该说话时才说话」，你要维护 3 档 strength、3 档 accept mode、7 种 Ticket stage、5 类 resume 前的 revalidation，外加 9 篇编号文档里最厚的那篇 7 万字节架构说明。这套复杂度要有团队规模才摊得平：一个人一个仓库，光把 <code>002-authorization.md</code> 读完再配 Policy，就比自己动手改代码贵。</p>
+<p>第三处是真要接生产仓库的人才会在意的。作者自己写明执行器以操作者的 OS 用户身份无审批跑命令，并承认 wrapper 与目录「不是安全边界」，worker 仍可用绝对路径执行程序；auto-merge 的闸门写在 Delivery requirements 提示词里，主机「没有专门的合并决策逻辑」，连 <code>200</code> 行阈值也是提示词文本。也就是说「谁能开自动合并」最终取决于一段能被编辑、也可能被改写的自然语言，而不是代码里的权限校验。文档让你真要强制审批就去 branch protection 里设——这句建议本身，已经说明边界在哪。<span class="hl">这类项目最该被读的从来不是能力清单，是作者承认自己没做到什么</span>。</p>
+<p>所以值不值得看，不看两万星。如果你要研究的是怎么把「agent 什么时候不许动」写成可版本化、可复验的授权，而不是又一份提示词模板，那张 <code>Rejected concepts</code> 清单、默认 <code>observe</code> 的阀门、以及测试与源码几乎等量的 111 对 65 个文件，是一份边界写得比能力更清楚的样本；如果你要的是今天装上、明天替自己合并 PR 的工具，README 第一段已经替你回答了。<span class="hl">先把「它在什么条件下才允许开工」写清楚，再谈让它开工</span>——这句话比这个仓库本身更值得抄走。</p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>DeepSeek Harness 上一个仓库级常驻 agent 的研究原型，附 9 篇编号文档与完整授权模型</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/deepseek-ai/dsh-superagent-prototype" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/deepseek-ai/dsh-superagent-prototype" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 21555 星，TypeScript / MIT，0.1.0</span>
+      </a>
+      <a class="plat-card" href="https://github.com/deepseek-ai/dsh-superagent-prototype/tree/main/docs" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 12h17M12 3.5c2.4 2.3 3.6 5.2 3.6 8.5s-1.2 6.2-3.6 8.5c-2.4-2.3-3.6-5.2-3.6-8.5S9.6 5.8 12 3.5z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+        <span class="pn">编号文档</span>
+        <span class="pd">docs/ · 000–008 共 9 篇，从哲学到部署</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=DeepSeek">#DeepSeek</a>
+      <a href="../../home/home.html?q=Agent">#Agent</a>
+      <a href="../../home/home.html?q=Skill">#Skill</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=GitHub">#GitHub</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2026 · 本文数据来自 api.github.com 仓库接口、releases / tags / commits 与逐层 /contents 目录读取，git/trees 完整 JSON 经本地统计（truncated=false），以及 raw.githubusercontent.com 上的 README.md、SETUP.md、package.json 与 docs/000–003 四篇文档；目录条数、文件字节数与依赖数均经本地复核。仓库接口 size 字段与逐 blob 累加结果差两个数量级，本文一律以 git tree 为准。机制、阈值与默认值均为项目文档自述，本文未安装运行、未做任何验证。星标实时变化，以仓库当前数据为准。本站仅做学习归档，不做商用。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

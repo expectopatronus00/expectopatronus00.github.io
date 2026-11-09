@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>10.5 万星的本地语音工作台：646 种语言，570 种不足百小时 · EXPECTOPATRONUS</title>
+    <meta name="description" content="debpalash/VoiceStudio 105071 星、AGPL-3.0，自称完全本地的 ElevenLabs 替代，标称 646 种语言。用仓库接口与语言表逐行反查：646 条、581489.36 小时两个自述数字都成立，但时长中位数仅 10.18 小时，570 种不足百小时，英中占 54.6%。" />
+    <meta name="keywords" content="Skill, 语音合成, 本地部署, 开源, GitHub" />
+    <meta property="og:title" content="10.5 万星的本地语音工作台：646 种语言，570 种不足百小时" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="debpalash/VoiceStudio 105071 星、AGPL-3.0，自称完全本地的 ElevenLabs 替代，标称 646 种语言。用仓库接口与语言表逐行反查：646 条、581489.36 小时两个自述数字都成立，但时长中位数仅 10.18 小时，570 种不足百小时，英中占 54.6%。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>10.5 万星的本地语音工作台：646 种语言，570 种不足百小时</h1>
+      <p>105071 星、11678 个 fork、106 个未关闭 issue——VoiceStudio 把语音克隆、视频配音、听写转写收进一台机器，README 写着 646 种语言。逐行数完仓库里那张语言表，646 条一条不少，581k 小时也对得上，但中位数只有 10.18 小时。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-09</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 8 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="10.5 万星的本地语音工作台：646 种语言，570 种不足百小时 封面" src="cover.jpg" />
+    </div>
+
+    <article class="article-body">
+<div class="section-marker">01 · 这件事</div>
+<h2>十万星的语音工作台，把六件事收进一台机器</h2>
+<p><code>debpalash/VoiceStudio</code> 2026 年 4 月 9 日建库，到 11 月 9 日核对时是 105,071 星、11,678 个 fork、106 个未关闭 issue，订阅者 355；Python，AGPL-3.0，仓库 203,146 KB，主页 <code>voicestudio.sh</code>。最后一次 push 是 11 月 8 日 23:20 UTC，还在动。README 第一屏写着「AI voice studio. On your device.」，紧跟着一句「Clone, design, dub, dictate, transcribe and narrate in 646 languages.」——把语音克隆、声音设计、视频配音、听写、转写、有声书六件事，全放进一个跑在本机的应用里，还标了 646 种语言。<span class="hl">README 里那句「100,000 GitHub stars — thank you!」已经落后于实测值</span>，说明它刚跨过十万星不久。</p>
+<p>这类项目最容易被写成「ElevenLabs 的免费开源平替」，但那只是 description 里的定位。真正决定它能不能替代的，是「646 种语言」这个数字到底覆盖到什么程度——是六百多种语言都能正常出声，还是六百多个条目都挂在同一个模型目录里。<span class="hl">这次不数管线也不数 skill，只把仓库里那张语言表逐行数一遍</span>，顺带看看一个十万星项目的工程体量和授权边界撑不撑得起「本地免费」四个字。</p>
+
+<div class="section-marker">02 · 核心机制</div>
+<h2>模型在本机，646 只属于默认引擎</h2>
+<p>它不是一个调云 API 的客户端。默认引擎是 <code>k2-fsa/OmniVoice</code>，模型由 Model Manager 按需下载，README 明确写「The app asks before it downloads any model」——下任何模型前会先问。推理走四条硬件路径：Windows / Linux 上的 NVIDIA CUDA、AMD ROCm（Windows 为 opt-in）、GGUF 引擎的 Vulkan、Apple Silicon 的 Metal (MPS)；<code>No GPU? The app is fully usable on the CPU, just slower.</code><span class="hl">「本地」在这里是字面意思：没有 GPU 也能跑，只是慢</span>。</p>
+<p>应用形态是 Electron 桌面端，加移动预览。稳定档覆盖 macOS 13.3+（Apple Silicon）、Windows 10/11 x64、Linux x64 与 Docker 镜像；Android 10+ 和 iOS / iPadOS 17+ 标的是 Preview，描述为「On-device, offline after model download」；Intel Mac 只能跑 UI，要连另一台机器上的 backend，Windows on ARM 是 experimental。对外接口给了 Local API、MCP、可复用 recipes 和 watch folders，还能用 <code>npx skills add debpalash/VoiceStudio</code> 装两个 agent skill 给编码助手用。<span class="hl">换句话说，它同时是一个桌面应用和一套可被 agent 调用的本机语音服务</span>。</p>
+<p>关键的一句在 <code>docs/languages.md</code> 里：「This catalog describes the OmniVoice model. Other engines have their own language sets.」——646 这个目录描述的是默认引擎 OmniVoice，不是整个应用的通用能力。文档还写明，现在选到某个引擎不支持的语言会直接停止合成，并报出引擎名和可选语言，而不是偷偷用别的语言顶上。<span class="hl">先把归属搞清楚，再看数字才有意义</span>。</p>
+
+<div class="section-marker">03 · 关键细节与数据</div>
+<h2>646 条一条不少，中位数却只有 10.18 小时</h2>
+<p>仓库里 <code>docs/lang_id_name_map.tsv</code> 15,672 字节，四列：language_id、language_name、iso_639_3_id、train_data_duration。逐行统计是 647 行——1 行表头加 646 条语言，和 README 的「646 languages」严丝合缝。<code>docs/languages.md</code> 写「VoiceStudio supports 646 languages with a total of 581k hours of training data」，把 TSV 第四列求和得 581,489.36 小时，同样对得上。<span class="hl">这是少见的、自述数字两个都经得起反查的项目</span>——之前几篇里，README 说的插件数、管线数、子技能数都和目录对不齐。</p>
+<p>但分母长什么样，第一屏没讲。646 条按时长排序，中位数是 <code>10.18 小时</code>；不足 100 小时的有 570 种，占 88.2%；不足 10 小时的 265 种，不足 1 小时的 11 种；反过来，能上 10,000 小时的只有 10 种。头部是 English <code>206,061.1</code>、Chinese <code>111,343.3</code>、Japanese <code>36,914.4</code>、Spanish <code>27,559.74</code>、French <code>23,675.32</code>、German <code>21,927.13</code>；尾部是 Macedo-Romanian <code>0.02</code>、Haitian <code>0.04</code>、Ayacucho Quechua 与一种 Nahuatl 各 <code>0.05</code>。<span class="hl">0.02 小时是 1.2 分钟语料，它和英语的二十万小时共享同一个「支持」标签</span>。</p>
+<p>把前两名加起来：English + Chinese = 317,404.4 小时，占总时长 <code>54.6%</code>；英语一门就占 35.4%。<code>docs/languages.md</code> 没有给出 WER、MOS 或任何质量分层，也没有 Tier 1 / 2 这类档位，只逐行列出时长；它还写明葡萄牙语巴西 / 欧洲两个变体共用同一个 <code>pt</code> 模型，Uyghur 的支持是条件式的（Whisper 不能转录它，因此不作为配音源语言），RTL 文字靠 <code>dir="auto"</code> 处理。<span class="hl">「646」是目录条目数，不是 646 份等质的能力</span>。</p>
+<p>另外两处顺手核了。README 说 Model Manager 里有「dozens of other engines」，<code>docs/engines/</code> 下确有 32 个 <code>.md</code>；但其中 README.md、disk-usage.md 不是引擎，cosyvoice / cosyvoice-gguf、omnivoice 的三份文档、以及 faster-whisper、whisper-cpp、whisperx、pytorch-whisper、mlx-whisper 等属同族变体——按文档数说「几十」成立，按独立引擎数要打折。最新版是 <code>v0.5.7</code>，2026 年 10 月 26 日发布，31 个发布资产：桌面包从 2.1 亿到 2.9 亿字节不等（win-x64.exe 222,263,756 字节、mac-arm64.dmg 280,523,075 字节），Android APK 135,770,866 字节，另含 5 份 Electron 更新清单。<span class="hl">根目录 55 项、docs 106 项、CHANGELOG.md 589,613 字节、uv.lock 1,779,232 字节，这是个工程化仓库而不是演示原型</span>。</p>
+<div class="info-box">数据核对：2026-11-09 经 api.github.com 读取，full_name = debpalash/VoiceStudio，stargazers_count 105071，forks_count 11678，open_issues_count 106，subscribers_count 355，created_at 2026-04-09T21:40:26Z，pushed_at 2026-11-08T23:20:49Z，language Python，license AGPL-3.0，size 203146 KB，homepage https://voicestudio.sh，default_branch main，archived false。releases/latest 为 v0.5.7，published_at 2026-10-26T14:59:48Z，assets 31 个。目录经 /contents 读取：根目录 55 项（README.md 30227 字节、CHANGELOG.md 589613 字节、uv.lock 1779232 字节）、docs/ 106 项、docs/engines/ 32 个 .md、omnivoice/models/ 3 个 .py。README.md 与 docs/languages.md 经 raw.githubusercontent.com 读取；docs/lang_id_name_map.tsv 全文 15672 字节经 curl 下载后本地逐行统计：647 行（1 表头 + 646 条），train_data_duration 列合计 581489.36 小时，中位数 10.18 小时，不足 1 小时 11 种、不足 10 小时 265 种、不足 100 小时 570 种、达到 10000 小时 10 种，English 206061.1 + Chinese 111343.3 = 317404.4 小时（54.6%）。易误解点有三：一是「646 languages」在 docs/languages.md 里被明确限定为 OmniVoice 这一默认引擎的目录，其他引擎各有语言集，不是全应用通用覆盖数；二是 646 与 581k hours 这两个自述值本次均核对成立，但仓库未给出质量分层、WER 或 MOS，时长分布极不均；三是 README 的「needs no account」「no paid cloud」仅对应桌面单机路径，Pro 需账户且为闭源构建、Cloud 为 coming soon、Docker 部署需自签 OMNIVOICE_API_KEY，AGPL-3.0 只覆盖应用，模型权重 / 声音 / 生成输出各有许可证。本文未安装应用、未下载模型、未做任何语音质量实测，机制与平台状态均按 README 与 docs 自述引用。星标实时变化，以仓库当前数据为准。（核对时间 2026-11-09）</div>
+
+<div class="section-marker">04 · 怎么用</div>
+<h2>先查那门语言的时长，再决定下不下模型</h2>
+<p>安装路径按平台分得很细：macOS 用 <code>brew tap debpalash/tap</code> → <code>brew trust --cask debpalash/tap/voicestudio</code> → <code>brew install --cask debpalash/tap/voicestudio</code>；macOS / Linux 一键脚本 <code>curl -fsSL https://voicestudio.sh/install | sh</code>；Windows 是 <code>irm https://voicestudio.sh/install.ps1 | iex</code>；Linux 另有 <code>yay -S voicestudio-bin</code>、<code>sudo apt install ./VoiceStudio-*-linux-x64.deb</code>、<code>sudo snap install voicestudio</code>（记得 <code>sudo snap connect voicestudio:audio-record</code>）、AppImage 与 Nix；源码是 <code>git clone</code> 后 <code>bun run dev</code>。脚本还支持 <code>--version X.Y.Z</code>、<code>--main</code>、<code>--uninstall</code> 三个开关。<span class="hl">README 特别注明 0.5.3 及更旧的 Tauri 版要单独装新应用</span>，属于迁移而非覆盖升级。</p>
+<p>第一次打开，README 给的最短路径是：进 Voice cloning，挑一个声音或给一段干净参考录音，输入文字，生成；下载任何模型前应用会先询问。要自动化就走 Local API 或 MCP，也可以用 <code>npx skills add debpalash/VoiceStudio</code> 把 <code>voicestudio</code> / <code>voicestudio-maintainer</code> 两个 skill 交给编码助手。Docker 路线要额外设一个本机密钥：<code>export OMNIVOICE_API_KEY="$(openssl rand -hex 32)"</code>，然后 <code>docker run -d --name omnivoice -p 127.0.0.1:3900:3900 ghcr.io/debpalash/voicestudio:stable</code>，浏览器开 <code>http://localhost:3900</code>。<span class="hl">这个 API key 是自己签给本机服务用的，不是云账户凭据</span>，别和「needs no account」混为一谈。</p>
+<p>授权要单独算账。AGPL-3.0 覆盖应用本身且允许商用，但 README 写明「Model weights, voices and generated output have their own licences」，Model Manager 会逐个显示；Pro 是闭源构建、需要账户、单用户最多 3 台设备、7 天退款，卖的是商业许可；Cloud 是托管 API，标注 coming soon，尚未上线。声音克隆那句 <code>Clone a voice only with its owner's permission.</code> 把合规责任明确留给了使用者。<span class="hl">「免费、无需账户、无需付费云」在桌面单机这条路径上成立，不等于整个产品没有商业层</span>。</p>
+<p>所以装之前有一件比选安装方式更该做的事：打开 <code>docs/lang_id_name_map.tsv</code>，搜你要的语言，看 <code>train_data_duration</code> 那一列。做中英，111,343.3 与 206,061.1 小时摆在那儿，值得把模型下下来；做一门排在表尾、只有几小时语料的语言，先把期望调到「能出声」而不是「能商用」，或者换一个专做该语种的引擎——文档说得很清楚，选到不支持的语言会直接停，不会降级。<span class="hl">这一步花两分钟，比装完 200 多 MB 再发现不对便宜</span>。</p>
+
+<div class="section-marker">05 · 冷思考</div>
+<h2>数字没撒谎，口径替它说了话</h2>
+<p>先质疑那个最响的数字。646 条、581k 小时，逐行都对得上，仓库没虚报；但 README 把它放在第一屏和 description，<code>docs/languages.md</code> 才补上「这份目录只描述 OmniVoice 模型，其他引擎各有自己的语言集」，而且全文没有 WER、MOS 或质量分层。<span class="hl">把 1.2 分钟语料的语言和二十万小时的英语并成一个「支持」，是市场口径，不是工程口径</span>。十万星里有多少是被「646」吸引来的，仓库不会告诉你，但把中位数 10.18 小时写进第一屏显然不利于传播。</p>
+<p>再质疑热度与完成度的错位。105,071 星配 355 个订阅者、106 个未关闭 issue，版本还是 <code>0.5.7</code>；Android / iOS 是 Preview，Intel Mac 是 Limited（UI 跑本机、后端要外挂），Windows on ARM 是 experimental，Cloud 还没上线。同时根目录 55 项、docs 106 项、CHANGELOG 589,613 字节、uv.lock 1.78 MB、31 个发布资产覆盖五套桌面架构加两端移动包——<span class="hl">维护面已经铺得比版本号快</span>，星标涨得越猛，这条缝越容易被人忽略。</p>
+<p>第三处是硬件与合规这两笔隐性成本。CPU 能跑但 README 自己写「just slower」，CUDA / ROCm / Vulkan / Metal 四条加速路径分别卡在不同平台上；桌面包 200 MB 起步，模型还要另下。AGPL 只覆盖应用，模型权重、声音与生成输出各有许可证，做商业配音得逐个核；声音克隆的授权责任文档一句话推给了用户。<span class="hl">「本地」省掉的是调用费和上传，没省掉显存、磁盘和合规判断</span>。</p>
+<p>所以判断不该落在 10 万星上，也不该落在 646 上。如果你只做中英，或者就是不想把音频交给第三方，它给了一条能完全离线、无账户、AGPL 授权的完整路径，桌面端成熟度也够试；如果冲着小语种去，先读那张 TSV 的第四列，再决定要不要下载模型——<span class="hl">真正决定结果的是你要用的那一两门语言有多少小时，不是目录有多少行</span>。一个把数字写得这么经得起查的仓库，值得用同样的方式去读它。</p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>本地运行的语音工作台，默认引擎 OmniVoice，646 种语言目录与逐语言训练时长都公开在 docs 下</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/debpalash/VoiceStudio" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/debpalash/VoiceStudio" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 105071 星，AGPL-3.0，语言表可逐行反查</span>
+      </a>
+      <a class="plat-card" href="https://voicestudio.sh" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 12h17M12 3.5c2.4 2.3 3.6 5.2 3.6 8.5s-1.2 6.2-3.6 8.5c-2.4-2.3-3.6-5.2-3.6-8.5S9.6 5.8 12 3.5z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+        <span class="pn">官网</span>
+        <span class="pd">voicestudio.sh · 各平台安装包与文档入口</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Skill">#Skill</a>
+      <a href="../../home/home.html?q=%E8%AF%AD%E9%9F%B3%E5%90%88%E6%88%90">#语音合成</a>
+      <a href="../../home/home.html?q=%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2">#本地部署</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=GitHub">#GitHub</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2026 · 本文数据来自 api.github.com 仓库接口、raw.githubusercontent.com 上的 README.md / docs/languages.md，以及 docs/lang_id_name_map.tsv 的本地逐行统计；机制与平台状态为项目自述，未做实测。星标实时变化，以仓库当前数据为准。本站仅做学习归档，不做商用。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
