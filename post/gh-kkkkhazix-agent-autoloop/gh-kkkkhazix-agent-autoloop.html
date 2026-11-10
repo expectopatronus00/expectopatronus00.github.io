@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>4337 星、7 天 15 版：挂起零消耗，落地得自己验 · EXPECTOPATRONUS</title>
+    <meta name="description" content="KKKKhazix/agent-autoloop 4337 星、MIT，建库 7 天发 15 版。内核零运行时依赖，用事件溯源、指令数据分离、8 层熔断和「挂起零消耗」把等待做成可重放记录；但 README 自述四种 Webhook 只在本地模拟验证、8 套模板没在真实账号跑过完整业务。" />
+    <meta name="keywords" content="Skill, Agent, 自动化, 开源, GitHub" />
+    <meta property="og:title" content="4337 星、7 天 15 版：挂起零消耗，落地得自己验" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="KKKKhazix/agent-autoloop 4337 星、MIT，建库 7 天发 15 版。内核零运行时依赖，用事件溯源、指令数据分离、8 层熔断和「挂起零消耗」把等待做成可重放记录；但 README 自述四种 Webhook 只在本地模拟验证、8 套模板没在真实账号跑过完整业务。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>4337 星、7 天 15 版：挂起零消耗，落地得自己验</h1>
+      <p>4337 星，建库第 8 天已发到第 15 版。agent-autoloop 把「等人拍板」做成不占进程的状态，Agent 退出、不花 Token。但 README 也写清了哪些能力没在真实账号上跑过——这份清单比功能表更该先读。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-10</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 9 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="4337 星、7 天 15 版：挂起零消耗，落地得自己验 封面" src="cover.jpg" />
+    </div>
+
+    <article class="article-body">
+<div class="section-marker">01 · 这件事</div>
+<h2>建库第八天，第 15 个版本</h2>
+<p><code>KKKKhazix/agent-autoloop</code> 2026 年 11 月 3 日建库，11 月 10 日核对时是 4337 星、790 个 fork、5 个未关闭 issue、8 个订阅者；TypeScript，MIT，仓库 1170 KB，默认分支 main，未归档，最后一次 push 是 11 月 9 日 20:44 UTC，挂了 11 个 topic。README 第一屏的定位只有一句：让命令行 Agent 在后台自己接活、自己跟进到底，平时不烦你，遇到拿不准的事才发卡片找你拍板。<span class="hl">它不是又一个 Agent，是套在已有 Agent 外面的调度中台</span>。</p>
+<p>版本节奏比星标更说明阶段。<code>/releases</code> 返回 15 条，从 11 月 3 日的 v1.0.0 到 11 月 9 日的 v1.7.1，7 天发 15 版；11 月 9 日当天的 5 条提交里，PR 号已经排到 #224，最新一条是「按写代码的 Agent 配审查器或免审」，v1.6.0 的名字直接叫「原生 Windows 支持」。<span class="hl">这种密度说明功能还在长，也说明「稳定」暂时不是衡量它的合适尺子</span>。这条候选在选题池里压了六天，重新打过 api.github.com，热度没有衰减，照写。</p>
+
+<div class="section-marker">02 · 核心机制</div>
+<h2>把「等人拍板」做成不占进程的状态</h2>
+<p>一件事的流转是五步：新事件（定时规则、GitHub Issue、业务报错）进内核 → 按 <code>rules.json</code> 派给某个 Agent 和某个目录 → Agent 把结果写在最后一条回复里、进程退出 → 碰到删数据、重启服务、花钱、对外发消息这类事，内核推一张卡片给你 → 你选完，它接上原会话把剩下的活干完。能自己定的直接办完，或者约半小时后醒来复查，全程不打扰。中台对 Agent 的约定只有一条：最后一条回复交代结果；要请示，就在末尾附一段 <code>agent-autoloop</code> 代码块，用 <code>ask</code>、<code>notice</code>、<code>resolve</code>、<code>later</code> 或 <code>events</code> 说明意图。<span class="hl">接新 Agent 不需要 SDK，也不需要改 Agent 源码</span>。</p>
+<p>最值得拆的是「挂起零消耗」。等你回复期间，Agent 进程直接退出，等待状态写进事件日志和数据库，只有很轻的中台在后台；README 举的例子是你三天没回，这三天就没有 Agent 进程、也不花 Token，一回答就接回原来的对话继续干。<span class="hl">它把 human-in-the-loop 从「一个挂着的进程」改成了「一条可重放的记录」</span>，比把上下文和进程一起留在内存里等输入的循环要克制。代价是会话续接必须可靠——README 为此专门写了：会话接不上才开新的，接上了却干到一半断了就算没跑成，过几分钟回原会话重试，不重做业务。</p>
+<p>内核自称没有运行时依赖，并搬了四个计算机领域的成熟做法：事件溯源（状态全从只追加日志算出，日志与索引同一事务落盘，写完才应答）、指令数据分离（外部文字只作资料放进文件，不拼进提示词；事件里带 <code>cwd</code>、<code>agent</code>、<code>access</code> 字段直接拒收）、跳数熔断（像 IP 包的 TTL，Agent 交回的事件再派给 Agent 时层数累加，超过 <code>8</code> 层只记录、不再派活并通知你，经过人工提问和定时复查也不清零），以及确定性内核（不读系统时钟、不用随机数、不向外发请求，插件主动连进来，凭据留在各自插件里）。文件级反查能对上：<code>kernel/</code> 是 11 个 TypeScript 文件，最大的 <code>decide.ts</code> 40087 字节，另有 <code>evolve.ts</code>、<code>cron.ts</code>、<code>http.ts</code>；根 <code>package.json</code> 里没有 <code>dependencies</code> 字段，只有 3 个 devDependencies（@types/node 26.6.4、prettier 3.9.10、typescript 7.0.2），<code>engines.node</code> 要求 &gt;=24。<span class="hl">「零运行时依赖」在清单层面站得住</span>。</p>
+
+<div class="section-marker">03 · 关键细节与数据</div>
+<h2>功能表对得上目录，实测边界写得更细</h2>
+<p>先把工程体量摆出来。根目录 28 项，14 个文件 14 个目录：<code>README.md</code> 19256 字节、<code>README.en.md</code> 20698、<code>INSTALL.md</code> 10628、<code>AGENTS.md</code> 10530、<code>SECURITY.md</code> 8950；<code>plugins/</code> 是 11 个目录（acp、claude、codex、command、delivery、desktop、dsh、feishu、github、gitlab、webhook），<code>examples/recipes/</code> 是 8 个场景目录，<code>skills/</code> 下只有 1 个 <code>agent-autoloop</code>。README 表格列的 8 套模板（每日早报、跟进 Issue、线上告警、用户反馈、网站巡检、飞书摘要、收件箱分诊、PR 交付）与 recipes 目录基本对得上，插件表按「事件 / Agent / 通道 / 交付」四个方向列的名字也对得上 plugins 目录。<span class="hl">但「目录里有一份」和「它在真实服务上跑通过」是两件事</span>。</p>
+<p>性能数字 README 也给了，条件是 Apple M5 Pro、24 GB、Node 24.21.0，写入逐条提交、事务落盘后才应答，复现命令是 <code>npm run benchmark</code>：冷启动 88.78 ms、空闲内存 59.94 MB RSS、1000 个同时等待的长轮询 170.49 MB RSS、持久化写入 2394 条/秒、派活 p99 1.82 ms、110 万条事实时启动 99.8 ms、运行时依赖 0。同一节紧跟着写了代价：历史变大后状态汇总变慢、日志和索引继续占磁盘，格式变化后的首次启动要从日志全量重建，110 万条用时 43.1 秒。<span class="hl">这些是作者自报的基准，本文没有安装运行，也没有重跑 benchmark</span>。</p>
+<p>最该抄下来的是 README 自己那段「实测情况」。跑通的是 Claude Code、Codex、ACP 的多轮问答与跨进程会话续接，以及飞书的发送、按钮回调和卡片更新；四种 Webhook 模板只在本地模拟服务上验证过，GitLab Webhook 按官方文档格式测试、没连过真实 GitLab；Gemini CLI 0.67.0 与 OpenCode 1.1.2 只跑通了 ACP 握手，多轮问答和会话续接还没跑过；另外 6 个 Agent 的接入命令被明确标注「整理自各家官方文档，我们还没有逐个跑过」。场景模板那段更直白：样例数据都是虚构的，脚本和回执只用本地 HTTP 与假飞书 CLI 验证过，<code>没有在真实账号上跑过完整业务</code>；SECURITY.md 结尾也补了「本仓库测试只使用假 CLI」。<span class="hl">把「没验过」写到和功能表一样细的 README，比一份全是绿灯的清单更可信，也更该先读</span>。</p>
+<div class="info-box">数据核对：2026-11-10 经 WebFetch 打 api.github.com 读取，full_name = KKKKhazix/agent-autoloop，description「让你的命令行 Agent 在后台自己接活、自己跟进到底；平时不烦你，遇到拿不准的事才发卡片找你拍板。」，stargazers_count 4337，forks_count 790，open_issues_count 5，subscribers_count 8，created_at 2026-11-03T08:02:11Z，pushed_at 2026-11-09T20:44:09Z，language TypeScript，license MIT，size 1170 KB，default_branch main，archived false，11 个 topics。/releases 返回 15 条（v1.0.0 @ 2026-11-03T21:58:04Z → v1.7.1 @ 2026-11-09T08:29:55Z），/releases/latest 为 v1.7.1、published_at 2026-11-09T08:29:55Z；/commits?per_page=5 为 11-09 当天 5 条，最大 PR 号 #224。目录经 /contents 逐层读取：根 28 项（14 文件 / 14 目录，README.md 19256、README.en.md 20698、INSTALL.md 10628、AGENTS.md 10530、SECURITY.md 8950 字节）、kernel/ 11 个 .ts 文件（decide.ts 40087 字节最大）、plugins/ 11 个目录、examples/recipes/ 8 个目录、skills/ 1 个目录。README.md、SECURITY.md、package.json 经 raw.githubusercontent.com 读取：package.json 无 dependencies 字段、3 个 devDependencies、engines.node &gt;=24；README 自报性能表（Apple M5 Pro / 24 GB / Node 24.21.0）与「实测情况」段落按原文引用。易误解点有三：一是「零运行时依赖」指内核无 dependencies，不等于整个工具链零依赖，仍需 Node 24+ 与已登录的命令行 Agent；二是性能与模拟数字均为项目自述，本文未安装、未运行、未复现；三是 README 明确把四种 Webhook、GitLab、6 条第三方 Agent 接入命令、8 套场景模板标为「未在真实服务 / 真实账号上验证」，本文不把「插件齐全」写成「已跑通」。星标实时变化，以仓库当前数据为准。（核对时间 2026-11-10）</div>
+
+<div class="section-marker">04 · 怎么用</div>
+<h2>先验一遍，再接真实通道</h2>
+<p>安装门槛写得很直白：Node 24 或更新、Git、一个已经登录好的命令行 Agent，macOS / Linux 还需要 curl，不需要 GitHub 账号。Windows PowerShell 用 <code>irm .../install.ps1 | iex</code>，macOS / Linux 用 <code>curl -fsSL .../install.sh | sh</code>，安装和 <code>agent-autoloop update</code> 都取通过全部检查的最新 Release。装完先跑 <code>agent-autoloop try</code>，用本机 Agent 走一遍「提问 → 退出等回复 → 拍板 → 接着干完」；交互终端直接输数字回车，非交互终端用 <code>agent-autoloop answer 1 2</code>，再 <code>agent-autoloop status</code> 看它接回会话，以及今天和最近 7 天的轮数、Token 和费用。<span class="hl">这一步不连任何外部服务，是成本最低的一次验真</span>。</p>
+<p>日常配置只有一份 <code>~/.agent-autoloop/rules.json</code>：写清「什么事、交给谁、在哪个目录干」，比如 <code>"when": {"cron": "0 9 * * *"}</code> 配 <code>to</code>、<code>cwd</code>、<code>prompt</code> 就是每天 9 点写早报；外部事件换成 <code>"source": "github"</code> 加 <code>"types": ["issues.opened"]</code>、<code>"parallel": 3</code>。几个不碰中台就能用的校验值得记住：<code>agent-autoloop check</code> 查当前规则、<code>check &lt;文件&gt;</code> 查草稿、<code>rules explain [文件]</code> 看生效规则和下次定时、<code>emit &lt;类型&gt; --dry-run</code> 预演一条事件会派给谁；<code>pause</code> / <code>resume</code> / <code>run</code> 管控单条规则且只记日志、不改 rules.json；<code>why 1</code> 查某一轮从触发到回执的来龙去脉。规则改错、文件被删或读不到，系统继续按旧规则跑并发卡片提醒。<span class="hl">把「先验再放行」做成默认路径，是这套设计里最实用的一处</span>。</p>
+<p>接真实通道之前有两条必须先看。默认只开桌面通知；飞书 / 钉钉 / 企微 / Slack / Discord 要自己配，文字通道靠回答链接拍板，得把 <code>hub.publicUrl</code> 配成手机或电脑能打开的地址——而 SECURITY.md 写明卡片链接「持有即授权」、从创建起 7 天内有效，只发给配了 <code>"links": true</code> 的通道，不能发到公开位置。另一个坑是超时：OpenClaw 的 <code>agent exec</code> 每次默认最多跑 600 秒，到点就算失败，长任务要在命令里加 <code>--timeout &lt;秒&gt;</code>。</p>
+
+<div class="section-marker">05 · 冷思考</div>
+<h2>省下的是等待，不是账</h2>
+<p>先质疑那个最显眼的数字。4337 星配 8 个订阅者、5 个未关闭 issue，比例低得反常；7 天 15 版里相当一部分不是新功能，而是在把地基打对——v1.7.1 修的是 macOS 从图形界面拉起的终端 <code>umask</code> 为 0 时 LaunchAgent plist 变成所有人可写、launchd 只报 <code>Bootstrap failed: 5</code> 且重装修不好；Codex 中途 <code>Reconnecting...</code> 后换传输跑完，原来被判失败、整轮重做；收件箱模板被 <code>skipSenders</code> 跳过的邮件占掉读取名额，没读到时间窗尽头却报「没有需要看的邮件」。<span class="hl">星标衡量的是「Agent 自己上班」这件事的想象空间，不是它已经替谁干完了一个月</span>。</p>
+<p>再质疑「零消耗」的口径。挂起零消耗省的是等你拍板那段时间的进程和 Token，这个机制成立；但模型调用走的是你本机已安装并登录的订阅制命令行工具，中台不读取也不转存凭据。README 的「用量与合规说明」自己写得很清楚：高频自动化场景下各家厂商通常更建议使用 API Key，因为个人订阅额度主要是为日常人工交互设计的；如果用它对外提供服务，请使用 API Key；本项目是独立开源项目，与上述厂商无隶属或背书关系。<span class="hl">把「等待时不烧 Token」读成「自动化不花钱」，中间隔着一份服务条款</span>。</p>
+<p>第三处是「到底拦得住什么」。SECURITY.md 不绕弯子：<code>askFirst</code> 只是写进提示词的要求，Agent 不照做，中台也拦不住，真正挡得住的是 <code>access</code> 和 Agent 自己的沙箱；默认权限是 <code>edit</code>，给 <code>full</code> 之前要想清楚这个 Agent 能碰到什么；普通 Agent 的 <code>read</code> 不等于读不到这台电脑上的密钥；中台不隔离同一系统账号下的进程，Codex 的 Windows 沙箱还会给数据目录加读权限，直到中台启动才收回。指令数据分离能挡住把 Issue 标题拼进提示词，作者却也承认「这挡不住所有提示注入：Agent 还是会读到别人写的话」。日志与恢复那节同样留了边界：模拟和 SIGKILL 覆盖的是进程崩溃与有限场景，<code>不等同于断电恢复证明或完整安全审计</code>。<span class="hl">四个内核机制约束的是调度，不是 Agent 本身的行为</span>。</p>
+<p>所以判断不落在 4337 星上。如果你要的是「等人拍板时别让 Agent 一直挂着」，事件溯源、挂起零消耗、跳数熔断这三条可以直接抄进自己的调度器，<code>kernel/</code> 那 11 个文件和 <code>package.json</code> 里那个不存在的 <code>dependencies</code> 字段就是可核对的证据；如果你要的是接上真实飞书、真实 Webhook 就能跑生产，那 8 套模板、4 种 Webhook 和 6 条「整理自官方文档」的接入命令，目前都还停在作者自己标注的「没逐个跑过」。<span class="hl">这个项目最稀有的不是自主度，是把「哪些还没验」写到了和功能表一样细</span>——在一个所有人都在晒 Agent 替自己干活的窗口里，这种克制比星标更值得当样本留着。</p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>让命令行 Agent 在后台自己接活、拿不准才发卡片找你拍板的调度中台，内核机制、实测边界与安全说明都写在仓库里</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/KKKKhazix/agent-autoloop" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/KKKKhazix/agent-autoloop" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 4337 星，MIT，v1.7.1</span>
+      </a>
+      <a class="plat-card" href="https://github.com/KKKKhazix/agent-autoloop/blob/main/SECURITY.md" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 12h17M12 3.5c2.4 2.3 3.6 5.2 3.6 8.5s-1.2 6.2-3.6 8.5c-2.4-2.3-3.6-5.2-3.6-8.5S9.6 5.8 12 3.5z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+        <span class="pn">安全边界说明</span>
+        <span class="pd">SECURITY.md · 作者自己列出的未验证与不可拦边界</span>
+      </a>
+      <a class="plat-card" href="https://github.com/KKKKhazix/agent-autoloop/releases" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">Releases</span>
+        <span class="pd">15 个版本 · 7 天迭代记录</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Skill">#Skill</a>
+      <a href="../../home/home.html?q=Agent">#Agent</a>
+      <a href="../../home/home.html?q=%E8%87%AA%E5%8A%A8%E5%8C%96">#自动化</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=GitHub">#GitHub</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2026 · 本文数据来自 api.github.com 仓库接口 / releases / commits 与逐层 /contents 目录读取，以及 raw.githubusercontent.com 上的 README.md、SECURITY.md、package.json；目录条数经本地统计复核。机制、性能与「实测情况」均为项目自述，本文未安装运行、未复现 benchmark，也不构成任何使用或合规建议。星标实时变化，以核对时数值为准。本站仅做学习归档，不做商用。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

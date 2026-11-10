@@ -5,8 +5,32 @@
     <link>https://expectopatronus00.github.io/</link>
     <description>一个 AI 工具与实战的中文学习归档：原创踩坑记录 + 精选转载，每篇都标注来源。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Mon, 09 Nov 2026 14:31:55 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 10 Nov 2026 14:31:40 GMT</lastBuildDate>
     <atom:link href="https://expectopatronus00.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2870 星只有 2 次提交：演示换了，示例没换</title>
+      <link>https://expectopatronus00.github.io/post/gh-elvarofficial-teardown/gh-elvarofficial-teardown.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-elvarofficial-teardown/gh-elvarofficial-teardown.html</guid>
+      <pubDate>Mon, 09 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>2870 星、2 次提交、0 release，push 停在 10-31。核对：docs/ 三张 gif 14.4 MB，是 languages 代码 387,677 字节的 37 倍；首页三只机器不在 sims/，能跑的是 V8、Cessna、Strandbeest。SKILL.md 七条规则钉死机器怎么动。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>4337 星、7 天 15 版：挂起零消耗，落地得自己验</title>
+      <link>https://expectopatronus00.github.io/post/gh-kkkkhazix-agent-autoloop/gh-kkkkhazix-agent-autoloop.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-kkkkhazix-agent-autoloop/gh-kkkkhazix-agent-autoloop.html</guid>
+      <pubDate>Mon, 09 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>KKKKhazix/agent-autoloop 4337 星、MIT，建库 7 天发 15 版。内核零运行时依赖，用事件溯源、指令数据分离、8 层熔断和「挂起零消耗」把等待做成可重放记录；但 README 自述四种 Webhook 只在本地模拟验证、8 套模板没在真实账号跑过完整业务。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>46,542 星、1,329 插件：AstrBot 不担保第三方</title>
+      <link>https://expectopatronus00.github.io/post/gh-astrbotdevs-astrbot/gh-astrbotdevs-astrbot.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-astrbotdevs-astrbot/gh-astrbotdevs-astrbot.html</guid>
+      <pubDate>Mon, 09 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>AstrBot 46,542 星、3,447 fork、AGPL-3.0，2022 年建库。README 称「1000+ 插件一键安装」，市场接口返回 1,329；但主仓只有 2 组内置插件，EULA 第 3 条明说市场插件全为第三方、官方不审计不背书。平台表 18 行与代码 18 个适配器目录也不是同一份名单。（转载 · 来源：微信）</description>
+    </item>
     <item>
       <title>21555 星只有 1 次提交：DeepSeek 原型先学会克制</title>
       <link>https://expectopatronus00.github.io/post/gh-deepseek-ai-dsh-superagent-prototype/gh-deepseek-ai-dsh-superagent-prototype.html</link>
@@ -222,30 +246,6 @@
       <pubDate>Sat, 18 Jul 2026 16:00:00 GMT</pubDate>
       <category>AI 编程</category>
       <description>AI写前端最容易翻车的是「能用但丑」。这8个UI Skills把设计师的审美和规范喂给Claude Code/Codex，从UI生成、设计系统、Tailwind样式到动效、无障碍、转化，全流程打通。（转载 · 来源：抖音）</description>
-    </item>
-    <item>
-      <title>一个人就是一支团队：扣子工作流打造AI超级个体的完整指南</title>
-      <link>https://expectopatronus00.github.io/post/dy-7663695071040882383/dy-7663695071040882383.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7663695071040882383/dy-7663695071040882383.html</guid>
-      <pubDate>Fri, 17 Jul 2026 16:00:00 GMT</pubDate>
-      <category>AI 工具</category>
-      <description>用扣子(Coze)工作流打造AI超级个体，零代码搭建自动化流水线，让一个人拥有一个团队的战斗力。从智能体创建到工作流编排，从知识库到插件生态，完整指南。（转载 · 来源：抖音）</description>
-    </item>
-    <item>
-      <title>AI自己刷小红书？全流程自动化运营工具大盘点，以后做内容真不用一条条发了</title>
-      <link>https://expectopatronus00.github.io/post/xhs-6a4c61ba0000000011012352/xhs-6a4c61ba0000000011012352.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/xhs-6a4c61ba0000000011012352/xhs-6a4c61ba0000000011012352.html</guid>
-      <pubDate>Fri, 17 Jul 2026 16:00:00 GMT</pubDate>
-      <category>AI 工具</category>
-      <description>AI时代小红书运营新玩法！从选题采集、内容创作、智能排版到自动发布，全流程AI工具大盘点，日均释放6小时创作时间，让账号24小时不间断产出。（转载 · 来源：小红书）</description>
-    </item>
-    <item>
-      <title>上交大爆火开源教程：3万星《动手学大模型》，从入门到实战全搞定</title>
-      <link>https://expectopatronus00.github.io/post/dy-7663052798950444330/dy-7663052798950444330.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7663052798950444330/dy-7663052798950444330.html</guid>
-      <pubDate>Thu, 16 Jul 2026 16:00:00 GMT</pubDate>
-      <category>AI 编程</category>
-      <description>上海交大张倬胜教授团队出品的《动手学大模型》开源教程，3万+GitHub星标，11章核心内容，PPT+代码+实验手册三位一体，从微调部署到智能体安全，完全免费。（转载 · 来源：抖音）</description>
     </item>
   </channel>
 </rss>

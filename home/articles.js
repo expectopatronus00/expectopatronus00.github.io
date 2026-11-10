@@ -3,6 +3,33 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'gh-elvarofficial-teardown',
+            title: '2870 星只有 2 次提交：演示换了，示例没换',
+            url: '../post/gh-elvarofficial-teardown/gh-elvarofficial-teardown.html',
+            summary: '2870 星、2 次提交、0 release，push 停在 10-31。核对：docs/ 三张 gif 14.4 MB，是 languages 代码 387,677 字节的 37 倍；首页三只机器不在 sims/，能跑的是 V8、Cessna、Strandbeest。SKILL.md 七条规则钉死机器怎么动。',
+            category: 'AI 编程',
+            date: '2026-11-10',
+            tags: ["Skill","3D 模拟","Claude Code","开源","GitHub"],
+          },
+          {
+            id: 'gh-kkkkhazix-agent-autoloop',
+            title: '4337 星、7 天 15 版：挂起零消耗，落地得自己验',
+            url: '../post/gh-kkkkhazix-agent-autoloop/gh-kkkkhazix-agent-autoloop.html',
+            summary: 'KKKKhazix/agent-autoloop 4337 星、MIT，建库 7 天发 15 版。内核零运行时依赖，用事件溯源、指令数据分离、8 层熔断和「挂起零消耗」把等待做成可重放记录；但 README 自述四种 Webhook 只在本地模拟验证、8 套模板没在真实账号跑过完整业务。',
+            category: 'AI 编程',
+            date: '2026-11-10',
+            tags: ["Skill","Agent","自动化","开源","GitHub"],
+          },
+          {
+            id: 'gh-astrbotdevs-astrbot',
+            title: '46,542 星、1,329 插件：AstrBot 不担保第三方',
+            url: '../post/gh-astrbotdevs-astrbot/gh-astrbotdevs-astrbot.html',
+            summary: 'AstrBot 46,542 星、3,447 fork、AGPL-3.0，2022 年建库。README 称「1000+ 插件一键安装」，市场接口返回 1,329；但主仓只有 2 组内置插件，EULA 第 3 条明说市场插件全为第三方、官方不审计不背书。平台表 18 行与代码 18 个适配器目录也不是同一份名单。',
+            category: 'AI 编程',
+            date: '2026-11-10',
+            tags: ["Skill","Agent","多平台","开源","GitHub"],
+          },
+          {
             id: 'gh-deepseek-ai-dsh-superagent-prototype',
             title: '21555 星只有 1 次提交：DeepSeek 原型先学会克制',
             url: '../post/gh-deepseek-ai-dsh-superagent-prototype/gh-deepseek-ai-dsh-superagent-prototype.html',

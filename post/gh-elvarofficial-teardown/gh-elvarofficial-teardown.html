@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2870 星只有 2 次提交：演示换了，示例没换 · EXPECTOPATRONUS</title>
+    <meta name="description" content="2870 星、2 次提交、0 release，push 停在 10-31。核对：docs/ 三张 gif 14.4 MB，是 languages 代码 387,677 字节的 37 倍；首页三只机器不在 sims/，能跑的是 V8、Cessna、Strandbeest。SKILL.md 七条规则钉死机器怎么动。" />
+    <meta name="keywords" content="Skill, 3D 模拟, Claude Code, 开源, GitHub" />
+    <meta property="og:title" content="2870 星只有 2 次提交：演示换了，示例没换" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="2870 星、2 次提交、0 release，push 停在 10-31。核对：docs/ 三张 gif 14.4 MB，是 languages 代码 387,677 字节的 37 倍；首页三只机器不在 sims/，能跑的是 V8、Cessna、Strandbeest。SKILL.md 七条规则钉死机器怎么动。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head">
+      <div class="eyebrow">OPEN SOURCE · AGENT SKILL</div>
+      <h1>2870 星只有 2 次提交：演示换了，示例没换</h1>
+      <p>2870 星、440 fork，commits 2 条、releases 空，updated_at 是今天。teardown 把「任意机器拆成 3D 模拟器」写进描述，换了演示没换示例；值钱在 SKILL.md 里一个输入驱动一切的规则。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-10</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 10 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="2870 星只有 2 次提交：演示换了，示例没换 封面" src="cover.jpg" />
+    </div>
+
+    <article class="article-body">
+<div class="section-marker">01 · 这件事</div>
+<h2>2870 星、2 次提交，最后一次推代码停在 10 月 31 日</h2>
+<p><code>elvarofficial/teardown</code> 2026 年 10 月 30 日 09:29 UTC 建库，11 月 10 日核对时是 2870 星、440 个 fork、19 个订阅者，JavaScript，MIT，默认分支 main，未归档，主页为空。仓库描述只有一行：<code>A Claude Code skill that turns any machine into a 3D simulator you can take apart</code>。它做的事是：你用大白话问一台机器怎么工作，Claude Code 生成一个离线 HTML 页面——机器在中间转，四周面板读着驱动它的同一组数字，按一下按钮，正在干活的那个部件剖开；没人操作时页面自己巡览。反差落在提交记录上：<code>commits</code> 只返回 2 条，10 月 30 日一条初版、10 月 31 日一条改 README，<code>pushed_at</code> 从此停在 2026-10-31T14:01:06Z；<code>releases</code> 是空数组；而 <code>updated_at</code> 到了今天 11:01 UTC。<span class="hl">代码十天没动，星标还在涨，issue 区开着挂了 9 条</span>。</p>
+<p>这条在选题池里躺了 6 天。按超期复核的规矩重查过热度：星标仍在千级量级、11 月 10 日仍有更新，没有衰减，所以照写。真正决定这篇怎么写的是第二条提交的消息：<code>README: show the robotic bee, scorpion and octopus</code>，说明里写着 <code>Swap the V8, Cessna and Strandbeest previews for three robotic creatures built with the same kit</code>。作者把首页三张演示动图从 V8 发动机、Cessna 337 主起落架、Strandbeest 换成了机器蜂、机器蝎、机器章鱼——<span class="hl">换了演示，没换代码</span>。</p>
+<p>于是有个值得先问的问题：把仓库装回去，能跑的到底是哪三台？本文不测它生成的 3D 页面好不好看，只把 README、SKILL.md 与逐层目录对起来，看看一个「让 agent 造机器」的 Skill，自己把边界写在了哪里。</p>
+
+<div class="section-marker">02 · 核心机制</div>
+<h2>一个输入驱动一切，屏幕上的数字不许和运动打架</h2>
+<p>入口是 <code>SKILL.md</code>，frontmatter 把触发场景列得很宽：有人问 how a machine works，想要 visual explainer / simulator / cutaway / exploded view / interactive 3D lesson，或想看 3D 物件动起来而不是被描述。正文第一句就定形：<code>One machine, one page</code>。产物是一个离线 HTML 页面，同一套代码还能逐帧录成 60 fps 视频并配一条同步的程序化配乐。<span class="hl">它不是给 three.js 套模板，是先规定机器只能怎么动</span>。</p>
+<p>七条「决定它能不能成」的规则里，前四条是硬约束。第 1 条 <code>Start from a reference, never from imagination</code>：先找照片、手册里的剖视图或实拍片段，逐帧比对；原文写 <code>Machines invented from a sentence come out generic every time</code>。第 2 条 <code>Real numbers, one source</code>：先拿真实尺寸（缸径、行程、齿数、连杆长度），每一块表、每一张图、每一个标签都从摆放零件的同一个函数读，屏幕上不许和运动不一致，还要手算校核一条。第 3 条 <code>One input drives everything</code>：姿态只由曲轴角、行程或风速决定，不许手打关键帧，film、live 页面和配乐才不会漂移。第 4 条 <code>The part doing the work opens up</code>：isolate、cut、x-ray，用作者的话说，能进到内部的相机值十个环绕镜头。</p>
+<p>落到文件上是一台机器三个目录、按职责切文件：<code>-shared/</code> 放机器本身，<code>-live/</code> 放你能操作的页面，<code>-film/</code> 放录好的巡览。数学单独一层（<code>kin.js</code> / <code>gear.js</code> / <code>jansen.js</code>），真实单位、单一输入、不含 three.js；几何、影棚、控制台、脚本各自一个文件。最关键的是 <code>render(t)</code> 契约：<code>duration: 20</code>、<code>fps: 60</code>，函数必须纯——禁 <code>Math.random</code>、禁 <code>Date</code>、不许跨帧带状态，因为抓帧会在任意时刻调用它；第 0 帧就是缩略图，且必须已经显示机器；每个节拍写进 <code>timeline.json</code>（单位秒），配乐读同一份文件。<span class="hl">画面和声音共享一根时间轴，漂移在结构上就不可能发生</span>。</p>
+<p>剩下三条管观感：浅色影棚配单一强调色（暗背景会输掉第一秒）、按机构选机位（平面连杆正看会塌成网格）、穿透用参数块里的数字修而不许用镜头遮。后面还单列了 live 页面的性能规则、three.js 在 Windows 的 ANGLE/D3D 上踩过的五个坑、声音的 48 kHz 与 −14 LUFS，以及一张带数字的品味表。规则密度不像一份 SKILL.md，更像渲染车间的作业指导书。</p>
+
+<div class="section-marker">03 · 关键细节与数据</div>
+<h2>三张动图 14.4 MB，是全部代码的约 37 倍</h2>
+<p>先用逐层 <code>/contents</code> 把仓库数一遍。根目录 13 项，10 个文件 3 个目录：文档只有 <code>README.md</code> 2,283 字节与 <code>SKILL.md</code> 11,672 字节，其余是 <code>package.json</code> 520、<code>package-lock.json</code> 16,634、<code>LICENSE</code> 1,099，加四个工具脚本（<code>paths.mjs</code>、<code>run_sfx.py</code>、<code>sheet.mjs</code>、<code>wave.mjs</code>）。<code>sims/</code> 13 项 = 3 个脚本（<code>build.mjs</code> 5,806、<code>capture.mjs</code> 9,418、<code>beats.py</code> 7,155）+ 10 个目录：<code>kit/</code> 与 v8、cessna、strandbeest 三台机器各 3 份（shared / live / film）。<code>sfx/</code> 8 项 = 7 个 Python 文件共 41,476 字节 + <code>samples/</code>。而 <code>docs/</code> 只有 3 个文件，却占了 <code>bee.gif</code> 6,250,109、<code>octopus.gif</code> 4,691,465、<code>scorpion.gif</code> 3,485,023 字节，合计 14,426,597 字节。<span class="hl">对照 <code>languages</code> 接口的 JavaScript 325,287 / Python 55,512 / CSS 6,878，代码合计 387,677 字节——三张首页动图约是全部代码的 37 倍</span>。</p>
+<p>这个对比正好解释开头那个「演示换了，示例没换」。<code>sims/</code> 里没有任何 bee / scorpion / octopus 目录，README 给的三条构建命令仍是 <code>node sims/build.mjs v8-live</code>、<code>cessna-live</code>、<code>strandbeest-live</code>，SKILL.md 的示例表也仍是交叉平面 V8、Cessna 337 主起落架、Theo Jansen 的 20 腿 Strandbeest。10 月 31 日那次提交确实只改了 README 与 docs 里的图。<span class="hl">你被首页那三只机器生物吸引，装到手能跑的仍是另外三台</span>。</p>
+<p>自述数字大多能对上实物，少数要标口径。Cessna 那条手算校核写得很实：<code>32</code> 齿 × <code>4 mm</code> 模数 = <code>128 mm</code> 节圆直径，半周长正好是 <code>201 mm</code> 行程，齿轮转 180°；V8 的点火顺序是 <code>1-8-4-3-6-5-7-2</code>，8 个活塞由 slider-crank 精确驱动；Strandbeest 用 Jansen 的 11 个连杆长度按圆交点解算，作者标「67 行精确连杆解算器」。<code>package.json</code> 是 <code>version 1.0.0</code>、<code>private: true</code>，5 个依赖（three 0.186.1、esbuild 0.28.1、playwright 1.58.2 与两个字体包）、2 个 scripts；README 与 SKILL.md 都写「需要 Node.js 20 或更新」，但 <span class="hl">package.json 里没有 <code>engines</code> 字段</span>，这条要求只存在于文档。</p>
+<p>阈值密度是这份 SKILL.md 最特别的地方：单页保持在 <code>1 MB</code> 以下（原文理由是 X、Slack 的链接爬虫读分享卡，15 MB 的页面会直接放弃），构建出的 <code>v8-live.html</code> 自述约 <code>800 KB</code>；必须在集显上测，桌面卡能跑 60 fps 的页面到笔记本集显可能掉到 15 fps；<code>--size 1600x900 --dpr 1.2</code> 出 1920×1080；无操作 <code>25 s</code> 把控制权交还自动巡览；review 静帧取每个节拍后 <code>0.3 s</code>；重要元素离边缘至少 <code>60 px</code>、1080 canvas 上标签不小于 <code>34 px</code>、大表面 <code>roughness ≥ 0.45</code>、<code>envMapIntensity ≈ 0.5</code>、emissive 层压在 1.0 以下；声音 48 kHz、母带 −14 LUFS、true peak ≤ −2 dBFS。<span class="hl">几乎每一条审美判断都配了一个可核对的数</span>。</p>
+<div class="info-box">数据核对：2026-11-10 经 WebFetch 读取 api.github.com 仓库接口、/contents 逐层目录、commits?per_page=100、releases、languages，以及 raw.githubusercontent.com 上的 README.md、SKILL.md、package.json。仓库接口：full_name = elvarofficial/teardown，description「A Claude Code skill that turns any machine into a 3D simulator you can take apart」，stargazers_count 2870、forks_count 440、subscribers_count 19、open_issues_count 9，created_at 2026-10-30T09:29:01Z，pushed_at 2026-10-31T14:01:06Z，updated_at 2026-11-10T11:01:39Z，language JavaScript，license MIT，default_branch main，archived false，homepage null，topics 为空，size 字段 18266（KB），has_issues true、has_wiki / has_discussions / has_pages / has_downloads 均 false。commits 返回 2 条：e7e668cd（2026-10-30T09:28:29Z，「teardown: interactive 3D machine simulators for Claude Code」）与 a91262ac（2026-10-31T14:00:48Z，「README: show the robotic bee, scorpion and octopus」），两条均带 Co-Authored-By: Claude Opus 5.5；releases 为空数组。languages：JavaScript 325,287 / Python 55,512 / CSS 6,878 字节，合计 387,677。/contents 根目录 13 项（10 文件 / 3 目录，10 文件合计 41,573 字节）；docs/ 3 个 gif 合计 14,426,597 字节（13.76 MiB），为 languages 合计的 37.21 倍、占两者合计的 97.38%；sfx/ 8 项（7 个 .py 合计 41,476 字节 + samples/）；sims/ 13 项（3 个脚本合计 22,379 字节 + kit/ 与 v8 / cessna / strandbeest 各 3 个目录）。package.json：version 1.0.0、private true、dependencies 5、scripts 2、无 engines。易误解点有四：一是仓库接口 size 18266（KB）与逐文件字节累加口径不同，本文体量数字一律用 /contents 与 languages 的字节值，不引用 size；二是 languages 只统计 Linguist 认定的 JS / Python / CSS 文件，不含 Markdown、JSON 与 gif 等二进制，「37 倍」是同源字节对比而非仓库总量占比；三是 open_issues_count 9 为接口原值（GitHub 该字段含 PR），本文不据此判断问题性质，也不把它读成「无人反馈」；四是 README 的三张机器人动图与 sims/ 的三台可运行示例不是同一组，本文只陈述目录与命令不符，未验证动图内容是否由 kit 生成。SKILL.md 中 60 fps、1 MB、800 KB、1600×900、25 s、0.3 s、60 px、34 px、roughness 0.45、−14 LUFS、Node 20+ 等阈值与规则均为项目文档自述，本文未安装、未构建、未渲染、未做任何性能或画质验证。星标实时变化，以仓库当前数据为准。本站仅做学习归档，不做商用。</div>
+
+<div class="section-marker">04 · 怎么用</div>
+<h2>一句 npx 装 Skill，后面是一整套渲染工具链</h2>
+<p>安装分两步，README 写得很轻：<code>npx skills add elvarofficial/teardown -g -a claude-code</code>，然后「once, in the installed folder」跑 <code>npm install &amp;&amp; npx playwright install chromium</code>；SKILL.md 里对应的是 <code>cd "$SKILL_DIR" &amp;&amp; npm install &amp;&amp; npx playwright install chromium</code>。前置条件列在后面：Node.js 20 或更新，出视频还要 <code>ffmpeg</code> 在 PATH 上，出配乐要 Python 3（只用标准库）；SKILL.md 另外允许用 <code>FFMPEG</code>、<code>PYTHON</code>、<code>CHROMIUM</code> 指向别的二进制。<span class="hl">这个「once」背后是 npm 依赖、一个 Chromium 和一套能跑 GPU 渲染的环境</span>。</p>
+<p>用起来是三句大白话，README 给了原句：<code>Build me a simulator of a 4-stroke motorcycle engine I can take apart.</code>、<code>How does a mechanical watch keep time? Show me as a simulator.</code>、<code>Make a teardown of a hydraulic excavator arm and record a 20-second video of it.</code>。更稳的起点是先跑现成的三台：<code>node sims/build.mjs v8-live</code> 产出 <code>teardown-out/dist/v8-live.html</code>，一个约 800 KB 的离线页；不带参数跑 <code>build.mjs</code> 是 all 6。SKILL.md 建议「从最接近的那台复制」，因为三台已经把数学层、几何层、控制台层、film 脚本与配乐脚本的接口都示范了一遍；想在 SKILL_DIR 之外建机器，则给一个带 <code>main.js</code> 的目录，用 <code>import {runSim} from 'teardown-kit/runtime.js'</code> 引 kit。</p>
+<p>要出片就走完整条链：<code>capture.mjs</code> 按 <code>--stills beats</code> 出静帧表或按帧渲染静音 mp4，<code>run_sfx.py</code> 读 <code>timeline.json</code> 合成 wav，<code>ffmpeg</code> 把音视频合成，最后 <code>wave.mjs</code> 再对一遍时间轴。文档反复强调的验收是 review loop 五步：不能看视频，只能看帧；每个节拍后 0.3 秒取一张标了 <code>t=</code> 的图，逐张对清单（该碰的碰上、没有穿透、面板数字与姿态一致、标签不盖住被标注的部件），放大看过渡再修，直到一整轮找不到问题；最后用 <code>sheet.mjs</code> 把成片摊开再读一遍，看编码器实际写了什么。<span class="hl">它不给「通过了」的自动判定，给的是一套让人逐帧看的工序</span>。</p>
+
+<div class="section-marker">05 · 冷思考</div>
+<h2>项目自己写的第一条规则，否定了它的用法</h2>
+<p>先质疑最大的那个数字。2870 星、440 个 fork，配 2 次提交、0 个 release、10 天没推代码，issue 区开着挂 9 条；而仓库体积的大头是 3 张换过一次的演示 gif。把它读成「一个被持续维护的 3D 模拟器框架」没有依据。更具体的一击是：首页那三只机器生物不在 <code>sims/</code> 里，作者换的是首屏观感，不是可运行的东西。<span class="hl">星标买的是「把任意机器拆开给你看」这句话和那三张动图，不是这套代码被反复验证过</span>。</p>
+<p>第二处矛盾更该停下来。README 让你 <code>Ask Claude Code in plain words</code>，示例就是一句「给我做台能拆的四冲程摩托发动机」；SKILL.md 七条规则的第 1 条却写 <code>Start from a reference, never from imagination</code>，并直说 <code>Machines invented from a sentence come out generic every time</code>。两句话出自同一个仓库，指向相反的做法。按 README 那句去用，得到的正好是作者自己判定「每次都很泛」的那类结果；要按规则 1 用，你得先备好剖视图、真实尺寸和逐帧对照的参照物。<span class="hl">一句提示词就能出片是入口话术，不是这套规则承诺的效果</span>。</p>
+<p>第三处是门槛。它是个 Skill，却不只是一个 SKILL.md：Node 20+、npm 依赖、playwright 装 Chromium、three 与 esbuild，出片再加 ffmpeg 与 Python 3；规则里还默认你有集显可测、能调 shader（预热、质量分档、GTAO 与 bloom 的坑）、能读懂逐帧静图。1 MB 页面上限、集显 60 fps 实测、25 秒交还控制权这些数字都很讲究，但它们把成本放在「生成之后」——生成只是开始，验收要一个人对着静帧表跑完整轮。文档也承认这一点：<code>Never report a machine as done without reading sheets of the current render</code>。<span class="hl">整套流程里没有一步是替你判断「这机器对不对」</span>。</p>
+<p>所以值不值得看，不看 2870 星。如果你要的是「问一句话就得到能拆的 3D 机器」，README 与 SKILL.md 第 1 条已经互相把话说完了；如果你要研究的是怎么让 agent 产出的可视化不漂——一个输入驱动一切、面板与姿态读同一个函数、<code>render(t)</code> 保持纯、画面与配乐共用一根 timeline、每条审美判断配一个可核对的数——这套约束比任何「3D 模拟器模板」都值钱。<span class="hl">先把「屏幕上每个数字从哪来」钉死，再谈让它出图</span>；这句话比那三张 gif 更该被抄走。</p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>让 Claude Code 把真实机器做成可拆解的离线 3D 页面，附三台完整示例与逐帧验收流程</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/elvarofficial/teardown" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/elvarofficial/teardown" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 2870 星，JavaScript / MIT，2 次提交</span>
+      </a>
+      <a class="plat-card" href="https://github.com/elvarofficial/teardown/blob/main/SKILL.md" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 12h17M12 3.5c2.4 2.3 3.6 5.2 3.6 8.5s-1.2 6.2-3.6 8.5c-2.4-2.3-3.6-5.2-3.6-8.5S9.6 5.8 12 3.5z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+        <span class="pn">SKILL.md</span>
+        <span class="pd">11,672 字节 · 7 条规则与一整页阈值</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Skill">#Skill</a>
+      <a href="../../home/home.html?q=3D%20%E6%A8%A1%E6%8B%9F">#3D 模拟</a>
+      <a href="../../home/home.html?q=Claude%20Code">#Claude Code</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=GitHub">#GitHub</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2026 · 本文数据来自 api.github.com 仓库接口、逐层 /contents 目录、commits / releases / languages，以及 raw.githubusercontent.com 上的 README.md、SKILL.md 与 package.json；文件字节数、目录条数与倍数均经本地复核。仓库接口 size 字段与逐文件字节累加口径不同，本文一律以 /contents 与 languages 的字节值为准；languages 只统计 JS / Python / CSS，不含 Markdown、JSON 与 gif。机制、阈值、版本与默认值均为项目文档自述，本文未安装、未构建、未渲染，未做任何性能或画质验证。星标实时变化，以仓库当前数据为准。本站仅做学习归档，不做商用。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

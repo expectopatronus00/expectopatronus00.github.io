@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>46,542 星、1,329 插件：AstrBot 不担保第三方 · EXPECTOPATRONUS</title>
+    <meta name="description" content="AstrBot 46,542 星、3,447 fork、AGPL-3.0，2022 年建库。README 称「1000+ 插件一键安装」，市场接口返回 1,329；但主仓只有 2 组内置插件，EULA 第 3 条明说市场插件全为第三方、官方不审计不背书。平台表 18 行与代码 18 个适配器目录也不是同一份名单。" />
+    <meta name="keywords" content="Skill, Agent, 多平台, 开源, GitHub" />
+    <meta property="og:title" content="46,542 星、1,329 插件：AstrBot 不担保第三方" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="AstrBot 46,542 星、3,447 fork、AGPL-3.0，2022 年建库。README 称「1000+ 插件一键安装」，市场接口返回 1,329；但主仓只有 2 组内置插件，EULA 第 3 条明说市场插件全为第三方、官方不审计不背书。平台表 18 行与代码 18 个适配器目录也不是同一份名单。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>46,542 星、1,329 插件：AstrBot 不担保第三方</h1>
+      <p>46,542 星、3,447 个 fork。AstrBot 建于 2022 年 12 月 8 日，不是本周的新库。README 写「1000+ 插件一键安装」，市场接口此刻返回 1,329；主仓自带却只有 2 组，EULA 第 3 条写着：市场插件全是第三方，官方不审计、不背书、不担保。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-10</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 8 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="46,542 星、1,329 插件：AstrBot 不担保第三方 封面" src="cover.jpg" />
+    </div>
+
+    <article class="article-body">
+<div class="section-marker">01 · 这件事</div>
+<h2>一个 2022 年的老仓库，最近被写成了别人的替代</h2>
+<p><code>AstrBotDevs/AstrBot</code> 建于 2022 年 12 月 8 日，到 2026 年 11 月 10 日核对时是 46,542 星、3,447 个 fork、1,185 个开放条目，订阅者 96；Python，AGPL-3.0，仓库 82,901 KB，主页 <code>astrbot.app</code>，最后一次 push 是 11 月 9 日 16:15 UTC。当前版本 <code>v4.29.4</code>，10 月 31 日发布。<span class="hl">它不是本周冒出来的新星，而是快满四年的老项目</span>——11 月 1 日进候选池时是 45,333 星，九天涨了 1,209 星，属于稳步增长，不是突然爆红。</p>
+<p>仓库 description 里有一句挺新的话：「can be your openclaw alternative」。但 README 的功能清单讲的是另一件事：多平台 IM 接入、多模型服务、插件扩展、Agent 沙箱、WebUI、知识库、人格设定与自动上下文压缩。<span class="hl">「替代某某」是后加的定位，代码里长出来的却是一套 IM 侧的 Agent 运行时</span>，两件事不能混着读。</p>
+<p>这次不测模型也不比体验，只把可核对的数字过一遍：README 说「1000+ plugins available for one-click installation」，徽章背后的市场接口返回多少；平台表里列了几个平台，仓库里真有几个适配器；那 1,185 个开放条目到底是什么。<span class="hl">结论不在星数上，而在 EULA 的第 3 条</span>。</p>
+
+<div class="section-marker">02 · 核心机制</div>
+<h2>三层结构：入口适配、运行时、插件市场</h2>
+<p>从目录看，AstrBot 分三层。最底下是 <code>astrbot/core/platform/sources/</code>，每个子目录是一个 IM 平台的接入实现，负责把各家的消息格式、事件回调和登录态翻译成框架内部的统一事件；中间是 <code>astrbot/core/</code> 下的会话、模型供应商、配置、上下文压缩与 Agent 沙箱；最上面是插件与技能生态，以及 Vue 写的 <code>dashboard/</code> WebUI。<span class="hl">它卖的不是「聊天机器人」，是把十几个 IM 变成同一个 Agent 的入口层</span>。</p>
+<p>能力清单也很清楚。README 列了 MCP、Skills、Knowledge Base、Persona Settings、Auto Context Compression，以及可隔离执行代码与 shell 调用的 Agent Sandbox；还支持接 Dify、阿里云百炼、Coze 等 LLMOps 平台。<code>v4.29.4</code> 的更新日志里，新增项包括跨平台消息按钮、独立于聊天模型的 Decision Provider、SerpApi Google News 网络搜索、会话来源统一选择，修复项里有上下文压缩设置简化与 WebUI 卡死问题。<span class="hl">这些是运行时该管的事，不是一个转发 webhook 的脚本该管的事</span>。</p>
+<p>运行门槛写在 <code>pyproject.toml</code>：<code>version = "4.29.4"</code>、<code>requires-python = "&gt;=3.12"</code>、<code>license = { text = "AGPL-3.0-or-later" }</code>，运行时依赖 66 条，其中 3 条带条件（按 Python 版本或 Windows 平台）。<code>qq-botpy==1.2.1</code>、<code>dingtalk-stream</code>、<code>lark-oapi</code>、<code>slack-sdk</code>、<code>python-telegram-bot</code>、<code>wechatpy</code>、<code>py-cord</code> 这些平台 SDK 被直接编进主依赖，<span class="hl">多平台不是一句「支持」，是几十个 SDK 一起装进同一个进程</span>。</p>
+
+<div class="section-marker">03 · 关键细节与数据</div>
+<h2>1,329 个插件在主仓之外，18 对 18 也不是同一份名单</h2>
+<p>README 的插件数徽章指向 <code>api.soulter.top/astrbot/plugin-num</code>，核对时返回 <code>{"result":1329}</code>，所以「1000+」这句成立。但拉下完整 git tree（2,239 个条目、1,976 个文件、23,799,096 字节，未截断）后：<code>astrbot/builtin_stars/</code> 下只有 <code>astrbot</code> 和 <code>builtin_commands</code> 两组内置插件，41 个文件、177,373 字节，其中 4 个 <code>SKILL.md</code> 分属 documents / pdf / skill-creator / spreadsheets。<span class="hl">1,329 在主仓之外，仓库自带的只有 2 组</span>。</p>
+<p>更该读的是 <code>EULA.md</code>（13,427 字节，最后更新 2026-01-12）第 3 条：AstrBot 团队「不对任何第三方插件、扩展或服务进行审计、控制、背书或担保」，并且明确定义「插件市场中的插件都是第三方插件」，风险、数据泄露与法律后果由用户承担。<span class="hl">「一键安装」是分发便利，「不担保」是责任边界，两句话都出自项目自己</span>。同一份 EULA 还写明默认开启健康模式（在 <code>cmd_config.json</code> 里把 <code>provider_settings.llm_safety_mode</code> 设为 <code>False</code> 才关闭）、可用 <code>ASTRBOT_DISABLE_METRICS=1</code> 关掉匿名统计，并声明不收集对话内容与消息正文——这些是按自述引用，未做实测。</p>
+<p>平台数也有口径差。README 的 Supported Messaging Platforms 表是 18 行：15 行标 Official（其中 WhatsApp 写着 Coming Soon），3 行标 Community（Matrix / Rocket.Chat / VoceChat，都链到外部插件仓库）。代码里 <code>platform/sources/</code> 恰好也是 18 个一级目录，但两份 18 不是同一份：3 个社区平台的适配器不在主仓，只在 <code>docs/</code> 与 dashboard 的 logo 里留下痕迹；WhatsApp 没有任何源码，与 Coming Soon 一致；<code>webchat</code> 是自带 Web 聊天，不在表格里；反过来 QQ 有 <code>qqofficial</code> 与 <code>qqofficial_webhook</code>、企业微信有 <code>wecom</code> 与 <code>wecom_ai_bot</code>、微信侧有 <code>weixin_oc</code> 与 <code>weixin_official_account</code> 各两套实现。<span class="hl">表格数的是「平台」，目录数的是「接入实现」</span>。</p>
+<p>适配器共 74 个 Python 文件、1,195,948 字节，而整个仓库有 839 个 Python 文件、9,847,364 字节——按文件数占 8.8%，按字节占 12.1%。<code>wecom_ai_bot</code> 一个目录 12 个文件，<code>aiocqhttp</code>、<code>telegram</code>、<code>satori</code>、<code>weixin_official_account</code> 各只有 2 个。README 另一张 Supported Model Services 表 35 行：18 行 LLM 服务（含 2 个标注 API Gateway 的中转）、3 行 LLMOps 平台、3 行语音转写、11 行语音合成。<span class="hl">接得多的地方是模型入口和语音输出，不是每个 IM 都做到同等深度</span>。</p>
+<p>还有一处容易被误读：GitHub 接口的 <code>open_issues_count = 1185</code> 常被当成「1,185 个 bug」。用 search 接口拆开是 749 个 open issue 加 436 个 open PR，正好 1,185。<code>v4.29.4</code> 的日志里 PR 编号已到 #10902，而 11 月 10 日新开的 PR 是 #11070。仓库另有 297 个 docs 文件、279 个 tests 文件、214 份 changelogs、7 种语言的 README 和 4 份多语言首次启动提示。<span class="hl">这是一个工程化维护中的项目，不是一个只有 README 的展示仓</span>。</p>
+<div class="info-box">数据核对：2026-11-10 经 api.github.com 读取，full_name = AstrBotDevs/AstrBot，stargazers_count 46542，forks_count 3447，open_issues_count 1185，subscribers_count 96，created_at 2022-12-08T13:27:46Z，pushed_at 2026-11-09T16:15:07Z，language Python，license AGPL-3.0，size 82901 KB，homepage https://astrbot.app，default_branch master，archived false。releases/latest 为 v4.29.4，published_at 2026-10-31T11:59:34Z，1 个发布资产（dashboard zip 5,377,556 字节、20,384 次下载）。search/issues 独立统计：open issue 749、open PR 436，合计 1185，与 open_issues_count 一致。README.md / EULA.md / pyproject.toml 经 raw.githubusercontent.com 读取；插件数取自 README 徽章所指向的实时接口 api.soulter.top/astrbot/plugin-num，返回 {"result":1329}，该接口为项目自建服务、非 GitHub 数据源，会随时间变化。目录数据经 curl 拉取 git/trees/master?recursive=1 完整树后本地统计（truncated = false，2239 条目、1976 个 blob、合计 23,799,096 字节）：platform/sources/ 18 个一级目录 / 74 个 .py / 1,195,948 字节；全仓 839 个 .py / 9,847,364 字节；builtin_stars/ 2 组 / 41 文件 / 177,373 字节 / 4 个 SKILL.md；根目录 41 项，含 7 份 README 与 4 份 FIRST_NOTICE；docs 297、tests 279、changelogs 214 个文件；LICENSE 34,500 字节、EULA.md 13,427 字节。pyproject.toml 本地解析：version 4.29.4、requires-python &gt;=3.12、运行时依赖 66 条（3 条带条件）、dev 5 条；ruff target-version 与 pyright pythonVersion 仍写 3.10，属工具配置，不代表运行时版本。README 表格逐行计数：平台表 18 行（15 Official 含 1 个 Coming Soon + 3 Community），模型服务表 35 行（LLM 18 含 2 个 API Gateway、LLMOps 3、STT 3、TTS 11）。易误解点有四：一是「1000+ 插件」指外部插件市场，主仓内置仅 2 组，且 EULA 第 3 条声明市场插件全为第三方、官方不审计不背书；二是平台表按「平台」计、代码目录按「接入实现」计，两份 18 不是同一份名单，WhatsApp 标注 Coming Soon 且主仓无实现；三是 open_issues_count 含 PR，不代表 1,185 个未修复问题；四是 EULA 第 1 条声明项目未开展商业化服务，与 README 中 3 条带 ref / referral_code 的第三方推广链接并不矛盾（收费方是第三方）。本文未安装、未运行、未做任何功能或安全实测，机制、统计与隐私条款均按 README / EULA 自述引用。星标与插件数实时变化，以核对时数值为准。（核对时间 2026-11-10）</div>
+
+<div class="section-marker">04 · 怎么用</div>
+<h2>先选部署路径，再决定要不要开插件市场</h2>
+<p>README 给了五条路。最短的是 uv：<code>uv tool install astrbot --python 3.12</code> → 首次执行 <code>astrbot init</code> → <code>astrbot run</code>，升级用 <code>uv tool upgrade astrbot --python 3.12</code>；Docker / Docker Compose 走官方文档；桌面用户有 AstrBot App 与 Launcher；不想管服务器可用雨云一键部署；面板党还有宝塔、1Panel、CasaOS 与源码部署。<span class="hl">Python 3.12 是硬门槛，<code>pyproject.toml</code> 与 README 的安装命令一致</span>（顺带一提，ruff 与 pyright 的配置里仍写着 3.10，属于工具配置滞后，别拿它判断运行时版本）。</p>
+<p>接平台前先看清实现名。QQ 对应 <code>aiocqhttp</code>（OneBot v11 协议）与 <code>qqofficial</code> 两套，企业微信有普通机器人与 AI Bot 两套，微信公众号也是两套目录；社区平台 Matrix、Rocket.Chat、VoceChat 要额外装外部适配器，WhatsApp 还没实现。<span class="hl">照 README 表格勾平台，和照 <code>platform/sources/</code> 目录勾平台，得到的清单并不一样</span>。</p>
+<p>插件这一步值得多花两分钟。市场里的 1,329 个都是第三方插件，EULA 明说团队不审计、不背书；Agent Sandbox 提供代码与 shell 的隔离执行，但那是运行时的隔离，不等于插件来源可信。<span class="hl">「一键安装」省的是依赖操作，没省掉读权限、看仓库、看更新记录</span>。真要长期跑，优先用主仓内置的 2 组插件打底，第三方插件按最小必要装，并把 <code>ASTRBOT_DISABLE_METRICS=1</code> 之类的开关按自己的隐私口径设好。</p>
+<p>授权要单独算账。<code>LICENSE</code> 是 34,500 字节的 AGPL-3.0 全文，另有 13,427 字节的 <code>EULA.md</code> 单独成文，第 11 条在 AGPL 之外又约定了「非独占、不可转让、不可再许可」的使用许可，第 1 条强调项目未开展商业化服务。<span class="hl">做二次分发或对外提供服务前，两份文件都要读，不能只看 SPDX 那一行</span>。</p>
+
+<div class="section-marker">05 · 冷思考</div>
+<h2>把「能接多少」和「谁负责」分开算</h2>
+<p>先质疑那个最顺手的数字。1,329 个插件、18 个平台、35 行模型服务，都能核到，README 没虚报；但前两个数字的口径都需要补一句：插件在主仓外、平台表里混了 Coming Soon 与社区外置，而 EULA 第 3 条把第三方插件的责任完整留给了使用者。<span class="hl">便利被写进第一屏，边界被写进一份很少有人点开的 EULA</span>。这不是欺骗，但传播时天然不对称。</p>
+<p>再质疑「替代某某」这个标签。仓库建于 2022 年 12 月，AGPL-3.0，EULA 最后更新是 2026 年 1 月，版本已经走到 4.29.4，PR 编号过万，749 个未关闭 issue 配 436 个未合并 PR。<span class="hl">这是一个有四年历史包袱、维护面很宽的项目，不是为新范式从零写的轻量工具</span>；把它当成刚出现的平替，会低估部署和升级成本，也会高估它与新范式在架构上的相似度。</p>
+<p>还有一处口径值得说明。EULA 说团队未提供收费服务，而 README 里确实有 3 条带推广参数的第三方链接（雨云一键部署、CompShare 的 <code>referral_code</code>、302.AI 的邀请链接），模型服务表里也有多家 API 中转商。两者不矛盾——收费方是第三方，不是项目团队——但「免费开源」容易被读成整条链路都没有商业利益。<span class="hl">模型调用费、云主机费、中转服务费，一样都不会因为 AGPL 而消失</span>。</p>
+<p>所以判断落在用途上，不落在 46,542 星上。如果你要把 QQ、企业微信、飞书、Telegram 等多个 IM 收成同一个 Agent 入口，愿意维护 Python 3.12 环境、自己审第三方插件，它是少有的把 18 个接入实现、沙箱、上下文压缩和 WebUI 放在一个仓库里且持续迭代的选择；如果你只接一个平台、要的是开箱即审计的插件集，或者打算做闭源商用，66 条运行时依赖、AGPL 加 EULA 双文件、以及那句「不担保」都是多余的负担。<span class="hl">决定结果的是你愿意替多少个第三方组件负责，不是市场里有多少个插件</span>。</p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>把 QQ、企业微信、飞书、钉钉、Telegram 等接成同一个 Agent 入口的多平台框架，适配器目录、插件市场与 EULA 都在仓库里</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/AstrBotDevs/AstrBot" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/AstrBotDevs/AstrBot" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 46,542 星，AGPL-3.0，18 个平台适配器目录</span>
+      </a>
+      <a class="plat-card" href="https://astrbot.app" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 12h17M12 3.5c2.4 2.3 3.6 5.2 3.6 8.5s-1.2 6.2-3.6 8.5c-2.4-2.3-3.6-5.2-3.6-8.5S9.6 5.8 12 3.5z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+        <span class="pn">官网</span>
+        <span class="pd">astrbot.app · 文档与各平台部署方式入口</span>
+      </a>
+      <a class="plat-card" href="https://cloud.astrbot.app/market" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 12h17M12 3.5c2.4 2.3 3.6 5.2 3.6 8.5s-1.2 6.2-3.6 8.5c-2.4-2.3-3.6-5.2-3.6-8.5S9.6 5.8 12 3.5z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+        <span class="pn">插件市场</span>
+        <span class="pd">cloud.astrbot.app/market · 核对时 1,329 个第三方插件</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Skill">#Skill</a>
+      <a href="../../home/home.html?q=Agent">#Agent</a>
+      <a href="../../home/home.html?q=%E5%A4%9A%E5%B9%B3%E5%8F%B0">#多平台</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=GitHub">#GitHub</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2026 · 本文数据来自 api.github.com 仓库接口 / search/issues / releases、raw.githubusercontent.com 上的 README.md / EULA.md / pyproject.toml，以及完整 git tree 的本地逐项统计与项目自建插件市场接口；机制、统计与隐私条款为项目自述，未做实测。星标与插件数实时变化，以核对时数值为准。本站仅做学习归档，不做商用。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
