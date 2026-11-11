@@ -248,6 +248,23 @@ function checkFaviconConsistency() {
   return { usesOldPng, usesSvg, others };
 }
 
+/* ─────────── 检查 7: 易读性样式覆盖率 ───────────
+   共享样式 post/article-read.css 必须被每篇文章引用，否则新稿会退回
+   文字墙排版。build-article.cjs 会自动带上，存量由 apply-read-css.cjs 补。 */
+function checkReadCss() {
+  printSection('易读性样式覆盖率');
+  const files = walk(path.join(ROOT, 'post'), '.html');
+  const missing = [];
+  for (const f of files) {
+    if (!/article-read\.css/.test(fs.readFileSync(f, 'utf8'))) missing.push(rel(f));
+  }
+  printRow('已接入 article-read.css', `${files.length - missing.length}/${files.length}`, missing.length === 0);
+  for (const m of missing.slice(0, 10)) printRow('未接入', m, false);
+  if (missing.length > 10) console.log(`  ℹ  另有 ${missing.length - 10} 个未接入`);
+  if (missing.length === 0) console.log('  ✅  全部文章页已接入共享易读性样式');
+  return missing;
+}
+
 /* ─────────── 主流程 ─────────── */
 
 function main() {
@@ -265,10 +282,11 @@ function main() {
   const { dupIds, dupTitles } = checkDuplicates(articles);
   const heroStatus = checkIndexHero(postCount);
   const favStatus = checkFaviconConsistency();
+  const missingReadCss = checkReadCss();
 
   console.log('\n━━━━━ 总览 ━━━━━');
   const issueCount =
-    deadLinks.length + orphans.length + dupIds.length +
+    deadLinks.length + orphans.length + dupIds.length + missingReadCss.length +
     (displayNum !== null && displayNum !== postCount ? 1 : 0) +
     (postCount !== articles.length ? 1 : 0) +
     (heroStatus && heroStatus.actual !== heroStatus.shouldBe ? 1 : 0) +

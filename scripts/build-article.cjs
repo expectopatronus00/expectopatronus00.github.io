@@ -154,6 +154,15 @@ function render(spec, hasCover) {
   prefix = prefix.replace(/<meta property="og:title" content="[\s\S]*?" \/>/, '<meta property="og:title" content="' + attr(spec.title) + '" />');
   prefix = prefix.replace(/<meta property="og:description" content="[\s\S]*?" \/>/, '<meta property="og:description" content="' + attr(spec.desc) + '" />');
 
+  // 共享易读性样式：模板已带这一行；若换了模板或模板被改过，这里兜底补上，
+  // 保证新稿一律接入，repo-lint 的覆盖率检查才不会漏。
+  if (!/article-read\.css/.test(prefix)) {
+    prefix = prefix.replace(
+      /<\/head>/i,
+      '    <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />\n  </head>'
+    );
+  }
+
   const hero = hasCover
     ? `
     <div class="hero-image">
@@ -426,6 +435,18 @@ function logDraft(spec) {
   fs.writeFileSync(file, html, 'utf8');
 
   console.log('✓ HTML ' + path.relative(ROOT, file).replace(/\\/g, '/') + ' · ' + (Buffer.byteLength(html, 'utf8') / 1024).toFixed(1) + ' KB');
+
+  // 易读性体检：只提示不阻断（渲染与索引必须保持确定性），
+  // 真正的门槛在 SKILL.md 第七节，成稿前单独跑 readability.cjs --file。
+  try {
+    const { analyzeHtml } = require('./readability.cjs');
+    const r = analyzeHtml(html, path.relative(ROOT, file).replace(/\\/g, '/'));
+    if (!r.error) {
+      console.log('· 易读性 ' + r.score + '/100 ' + r.verdict + (r.suggestions.length ? ' · ' + r.suggestions[0] : ''));
+    }
+  } catch (e) {
+    /* 体检脚本异常不影响出稿 */
+  }
 
   if (flags.has('index') && !opts.out) {
     const total = insertEntry(spec);

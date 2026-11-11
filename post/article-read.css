@@ -1,0 +1,419 @@
+/* ══════════════════════════════════════════════════════════════════════════
+   article-read.css · 文章页共享「易读性层」
+   ──────────────────────────────────────────────────────────────────────────
+   为什么单独一层：144 篇文章的 HTML 各自内嵌了一份 <style>，逐篇改不现实、
+   也容易把老稿改坏。这里用「最后加载」的方式统一覆盖——<link> 由
+   scripts/apply-read-css.cjs 插在 </head> 前，排在所有内嵌 <style> 之后，
+   同特异性下本文件生效，不需要 !important，也不碰任何正文内容。
+
+   覆盖到：post 目录下所有 .html 文章页（含 post/deepseek 下的嵌套页），
+   以及 build-article.cjs 未来生成的所有新文章。
+   只针对 .article-body / .page-head 下的选择器，对首页、导航站无影响。
+
+   配套：
+     post/article.js        运行时折叠超长数据核对框、生成移动端目录
+     scripts/readability.cjs 成稿时的易读性体检
+     skills/daily-writer/SKILL.md 第七节 写作硬规则
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ── 1. 正文排版节奏 ────────────────────────────────────────────────────
+   原模板正文 16px / 1.85 行高，中文长文偏挤。这里提到 ~17.2px / 1.95，
+   段距改成随字号缩放的 em，缩放浏览器字号时节奏不会被固定 px 打乱。 */
+.article-body {
+  --read-fs: 1.075rem;
+  --read-lh: 1.95;
+}
+
+.article-body p {
+  font-size: var(--read-fs);
+  line-height: var(--read-lh);
+  letter-spacing: 0.012em;
+  margin: 0 0 1.35em;
+  overflow-wrap: break-word;
+  text-wrap: pretty; /* 支持时避免段末孤字成行 */
+}
+
+/* 这些容器里的 p 有自己的字号与间距，不能被上面的通用规则抹平 */
+.article-body .pull-quote p {
+  font-size: 1.1rem;
+  line-height: 1.9;
+  margin: 0;
+}
+.article-body .cta-box .content p {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  margin: 0 0 var(--sp-4);
+}
+.article-body .info-box p {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  margin: 0 0 0.8em;
+}
+.article-body .info-box p:last-child {
+  margin-bottom: 0;
+}
+
+/* 导语：第一屏要能一口气读完 */
+.page-head p {
+  font-size: 1.075rem;
+  line-height: 1.85;
+  max-width: 46em;
+}
+
+/* ── 2. 章节呼吸感 ──────────────────────────────────────────────────────
+   原来 5 节之间只靠空行分隔，滚起来分不清边界。给第 2 节起加细分隔线
+   与上方留白，marker 前补一个锈色圆点，扫读时能一眼找到下一节。 */
+.article-body > .section-marker {
+  display: flex;
+  align-items: center;
+  gap: 0.65em;
+  margin-bottom: var(--sp-3);
+}
+.article-body > .section-marker::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-rust);
+  flex: none;
+}
+.article-body > .section-marker:not(:first-child) {
+  margin-top: 3.1rem;
+  padding-top: 2.2rem;
+  border-top: 1px solid var(--line-soft);
+}
+.article-body h2 {
+  scroll-margin-top: calc(var(--nav-height) + 24px);
+  margin-bottom: var(--sp-5);
+}
+
+/* ── 3. 高亮收敛 ────────────────────────────────────────────────────────
+   原 .hl 同时改字色、加粗、铺整段渐变，一篇文章十几处反而没有重点。
+   改成半高马克笔下划线：仍是重点，但不再把句子割成色块。 */
+.article-body .hl {
+  background: linear-gradient(
+    to bottom,
+    transparent 58%,
+    rgba(201, 119, 47, 0.28) 58%,
+    rgba(201, 119, 47, 0.28) 92%,
+    transparent 92%
+  );
+  color: inherit;
+  font-weight: 600;
+  padding: 0 0.12em;
+  border-radius: 2px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+[data-theme='light'] .article-body .hl {
+  background: linear-gradient(
+    to bottom,
+    transparent 58%,
+    rgba(163, 77, 24, 0.18) 58%,
+    rgba(163, 77, 24, 0.18) 92%,
+    transparent 92%
+  );
+}
+
+/* ── 4. 行内代码 / 代码块 ──────────────────────────────────────────────
+   design-tokens.css 已有底色，这里用 em 让代码跟着正文字号缩放，
+   并允许长命令换行 —— 手机上一条 30 字符的 CLI 不该把整行撑破。 */
+.article-body p code,
+.article-body li code,
+.article-body td code,
+.article-body .info-box code {
+  font-size: 0.87em;
+  padding: 0.1em 0.38em;
+  border-radius: 5px;
+  background: var(--bg-soft);
+  border: 1px solid var(--line-soft);
+  color: var(--accent-jade-text);
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  white-space: normal;
+}
+.article-body pre {
+  margin: 0 0 1.5em;
+  padding: 1em 1.2em;
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--bg-soft);
+  overflow-x: auto;
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+.article-body pre code {
+  padding: 0;
+  border: 0;
+  background: none;
+  white-space: pre;
+  font-size: 1em;
+}
+
+/* ── 5. 列表与表格 ──────────────────────────────────────────────────────
+   新规范要求每节至少有一个结构化块，这里保证它们排得好看。 */
+.article-body > ul,
+.article-body > ol,
+.article-body .info-box ul,
+.article-body .info-box ol {
+  font-size: var(--read-fs);
+  line-height: var(--read-lh);
+  padding-left: 1.7em;
+  margin: 0 0 1.5em;
+}
+.article-body li {
+  font-size: var(--read-fs);
+  line-height: var(--read-lh);
+  margin-bottom: 0.55em;
+}
+.article-body li::marker {
+  color: var(--accent-rust);
+  font-variant-numeric: tabular-nums;
+}
+.article-body li > ul,
+.article-body li > ol {
+  font-size: 1em;
+  margin: 0.5em 0 0;
+}
+.article-body strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.article-body table,
+.article-body .api-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.94rem;
+  margin: 0 0 1.6em;
+}
+.article-body th,
+.article-body td {
+  padding: 0.65em 0.85em;
+  border-bottom: 1px solid var(--line-soft);
+  text-align: left;
+  vertical-align: top;
+  line-height: 1.7;
+}
+.article-body th {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  color: var(--text-dim);
+  font-weight: 600;
+  border-bottom: 1px solid var(--line);
+}
+
+/* ── 6. 超长数据核对框（由 article.js 运行时转成 <details>） ──────────
+   千字核对说明整块怼在正文中间，是这些技术长文最劝退的一屏。
+   默认只露一行摘要，想查的人自己展开，不打扰只想读结论的人。 */
+details.info-box {
+  padding-top: var(--sp-4);
+  padding-bottom: var(--sp-4);
+}
+details.info-box > summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text-soft);
+}
+details.info-box > summary::-webkit-details-marker {
+  display: none;
+}
+details.info-box > summary::marker {
+  content: '';
+}
+details.info-box > summary:focus-visible {
+  outline: 2px solid var(--accent-rust);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+details.info-box .ib-tag {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-rust-text);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.25em 0.7em;
+}
+details.info-box .ib-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+details.info-box .ib-hint {
+  flex: none;
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+details.info-box .ib-hint::after {
+  content: ' ↓';
+  color: var(--accent-rust);
+}
+details.info-box[open] .ib-hint::after {
+  content: ' ↑';
+}
+details.info-box .ib-body {
+  margin-top: 0.9em;
+  padding-top: 0.9em;
+  border-top: 1px dashed var(--line);
+  font-size: 0.94rem;
+  line-height: 1.85;
+}
+details.info-box .ib-body > ul,
+details.info-box .ib-body > ol {
+  font-size: 0.94rem;
+  line-height: 1.85;
+}
+details.info-box .ib-body code {
+  font-size: 0.86em;
+}
+
+/* ── 7. 移动端章节目录 ──────────────────────────────────────────────────
+   侧边目录只在 ≥1240px 出现，手机读者原本没有任何跳转手段。
+   article.js 在 <1240px 时把同一份章节清单折叠挂在正文开头。 */
+.article-toc-m {
+  display: none;
+}
+@media (max-width: 1239px) {
+  .article-toc-m {
+    display: block;
+    max-width: var(--container-narrow);
+    margin: 0 auto 1.8rem;
+    padding: 0.9rem 1.1rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    background: var(--bg-card);
+  }
+  .article-toc-m > summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    color: var(--text-soft);
+  }
+  .article-toc-m > summary::-webkit-details-marker {
+    display: none;
+  }
+  .article-toc-m > summary::after {
+    content: '＋';
+    margin-left: auto;
+    color: var(--accent-rust);
+    font-size: 1rem;
+  }
+  .article-toc-m[open] > summary::after {
+    content: '－';
+  }
+  .article-toc-m ol {
+    list-style: none;
+    counter-reset: mtoc;
+    margin: 0.9rem 0 0;
+    padding: 0.9rem 0 0;
+    border-top: 1px solid var(--line);
+  }
+  .article-toc-m li {
+    counter-increment: mtoc;
+    margin: 0 0 0.45em;
+    font-size: 0.88rem;
+    line-height: 1.6;
+    font-family: var(--font-sans);
+  }
+  .article-toc-m a {
+    display: block;
+    padding: 0.25em 0;
+    color: var(--text-soft);
+    text-decoration: none;
+  }
+  .article-toc-m a::before {
+    content: counter(mtoc, decimal-leading-zero) '  ';
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--text-dim);
+  }
+  .article-toc-m a:hover,
+  .article-toc-m a.is-current {
+    color: var(--accent-rust-text);
+  }
+}
+
+/* ── 8. 小屏与可访问性 ───────────────────────────────────────────────── */
+@media (max-width: 700px) {
+  .article-body {
+    --read-fs: 1.0625rem;
+    --read-lh: 1.88;
+    padding-left: 1.15rem;
+    padding-right: 1.15rem;
+  }
+  .page-head h1 {
+    font-size: clamp(1.65rem, 7vw, 2.1rem);
+    line-height: 1.22;
+  }
+  .page-head p {
+    font-size: 1rem;
+  }
+  .article-body h2 {
+    font-size: 1.35rem;
+  }
+  .article-body > .section-marker:not(:first-child) {
+    margin-top: 2.4rem;
+    padding-top: 1.7rem;
+  }
+  .article-body .info-box {
+    padding: 1rem 1.15rem;
+    font-size: 0.94rem;
+  }
+  .article-body .cta-box {
+    padding: 1.15rem;
+  }
+  .article-body .timeline .tl-item {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+  .article-body table {
+    display: block;
+    overflow-x: auto;
+  }
+  details.info-box > summary {
+    flex-wrap: wrap;
+  }
+  details.info-box .ib-title {
+    display: none; /* 小屏只留标签与展开提示，避免挤成两行 */
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .article-body *,
+  .article-toc-m * {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}
+
+@media print {
+  .article-toc-m,
+  .article-toc,
+  .read-progress,
+  .floating-top {
+    display: none !important;
+  }
+  details.info-box .ib-body {
+    border-top: 0;
+    margin-top: 0;
+    padding-top: 0;
+  }
+}

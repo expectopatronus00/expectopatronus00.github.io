@@ -3,6 +3,33 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'gh-nightly-labs-openbot',
+            title: '6,959 星、每天一版：OpenBot 开源止于 0.1.11',
+            url: '../post/gh-nightly-labs-openbot/gh-nightly-labs-openbot.html',
+            summary: '6,959 星的 OpenBot 把 12 个 agent CLI 收进一个本地优先桌面工作区，10 天发 11 版。LICENSE 却是 PolyForm Noncommercial 1.0.0，商用要另买，0.1.11 前才是 Apache-2.0；agent 默认全盘访问，README 说这不是安全边界。',
+            category: 'AI 编程',
+            date: '2026-11-11',
+            tags: ["Agent","桌面应用","许可证","本地优先","开源"],
+          },
+          {
+            id: 'gh-milind-soni-openmausbot',
+            title: '20,822 星、1,008 个未结 issue：开源只到编排层',
+            url: '../post/gh-milind-soni-openmausbot/gh-milind-soni-openmausbot.html',
+            summary: 'OpenMausBot 把一队 agent 做成聊天应用，每个 bot 配自己的模型、云电脑和审批卡片。20,822 星背后是 1,008 个未结 issue 与 v0.1.152；Apache-2.0 之外还有 enterprise/ 另证目录，云电脑与应用连接各自收费。',
+            category: 'AI 编程',
+            date: '2026-11-11',
+            tags: ["Agent","开源","Grok Bot","Electron","自托管"],
+          },
+          {
+            id: 'gh-max-sixty-worktrunk',
+            title: '12,405 星、三个命令：简洁的代价是七成测试',
+            url: '../post/gh-max-sixty-worktrunk/gh-max-sixty-worktrunk.html',
+            summary: 'max-sixty/worktrunk 把 git worktree 收成三个命令，让多个 AI agent 并行改代码。完整树里 1,829 个 blob 有 1,283 个在 tests/；README 说三个核心命令、同文档却列四个；API 许可证 NOASSERTION，LICENSE 实为双许可。',
+            category: 'AI 编程',
+            date: '2026-11-11',
+            tags: ["Git","Worktree","并行 Agent","Rust","开源"],
+          },
+          {
             id: 'gh-elvarofficial-teardown',
             title: '2870 星只有 2 次提交：演示换了，示例没换',
             url: '../post/gh-elvarofficial-teardown/gh-elvarofficial-teardown.html',

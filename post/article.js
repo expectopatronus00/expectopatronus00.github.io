@@ -13,6 +13,11 @@
      5. 缺失时补一条来源声明（仅转载文章）
      6. 移动端导航按钮（文章页模板没有 menu-toggle，≤900px 时
         导航链接整体隐藏，手机读者会被困在正文里）
+     7. 移动端折叠目录（<1240px，与侧边目录共用同一份章节清单）
+     8. 超长 .info-box 折叠（千字「数据核对」默认只露一行摘要）
+     9. 打印前自动展开所有折叠块
+
+   7 / 8 的样式在 post/article-read.css，两者配套使用。
 
    依赖：home/articles.js（提供 window.BLOG）。
    若 articles.js 加载失败，前三样里只有目录和进度条生效，
@@ -77,7 +82,14 @@
   function initToc(articleEl) {
     if (!articleEl) return;
 
-    var heads = articleEl.querySelectorAll('h2');
+    /* 只收正文的 h2：文末「相关平台」也有一个 h2，以前会被算成第 6 节 */
+    var allHeads = articleEl.querySelectorAll('h2');
+    var heads = [];
+    for (var h0 = 0; h0 < allHeads.length; h0++) {
+      var hh = allHeads[h0];
+      if (hh.closest && hh.closest('.platforms, .cta-box, .tags-row, .pull-quote')) continue;
+      heads.push(hh);
+    }
     if (heads.length < 3) return; // 太短的文章不值得放目录
 
     var layout = articleEl.parentNode;
@@ -112,6 +124,43 @@
     var links = toc.querySelectorAll('a');
     var tocInner = toc.querySelector('.toc-inner');
 
+    /* ── 7. 移动端折叠目录 ──
+       侧边目录只在 ≥1240px 出现，小屏读者原本没有任何章节跳转手段。
+       挂在 .article-layout 里（不是 article-body 内），避免影响
+       .article-body > .section-marker:first-child 的章节分隔判断。 */
+    var mobileToc = document.createElement('details');
+    mobileToc.className = 'article-toc-m';
+    var mSummary = document.createElement('summary');
+    mSummary.textContent = '目录 · ' + items.length + ' 节';
+    mobileToc.appendChild(mSummary);
+    var mOl = document.createElement('ol');
+    for (var q = 0; q < items.length; q++) {
+      var mLi = document.createElement('li');
+      var mA = document.createElement('a');
+      mA.href = '#' + items[q].id;
+      mA.textContent = items[q].text;
+      mLi.appendChild(mA);
+      mOl.appendChild(mLi);
+    }
+    mobileToc.appendChild(mOl);
+    layout.insertBefore(mobileToc, articleEl);
+    var mLinks = mobileToc.querySelectorAll('a');
+
+    /* 点击章节后自动收起，并把当前章同步高亮 */
+    for (var z = 0; z < mLinks.length; z++) {
+      mLinks[z].addEventListener('click', function (e) {
+        var target = document.getElementById(this.getAttribute('href').slice(1));
+        if (!target) return;
+        e.preventDefault();
+        window.scrollTo({
+          top: target.getBoundingClientRect().top + window.pageYOffset - 96,
+          behavior: 'smooth',
+        });
+        history.replaceState(null, '', this.getAttribute('href'));
+        mobileToc.removeAttribute('open');
+      });
+    }
+
     /* 点击时用平滑滚动，避开固定导航 */
     for (var k = 0; k < links.length; k++) {
       links[k].addEventListener('click', function (e) {
@@ -140,6 +189,9 @@
         current = active;
         for (var n = 0; n < links.length; n++) {
           links[n].classList.toggle('is-current', n === active);
+        }
+        for (var w = 0; w < mLinks.length; w++) {
+          mLinks[w].classList.toggle('is-current', w === active);
         }
       }
 
@@ -343,6 +395,79 @@
   }
 
   /* ══════════════════════════════════════════
+     8 & 9. 超长数据核对框折叠 + 打印展开
+     ──────────────────────────────────────────
+     技术长文的 <div class="info-box">「数据核对」常有一千多字，
+     整块横在正文中间，是读者最容易弃读的一屏。超过 280 字的转成
+     原生 <details>：默认只露一行摘要，想核数字的人自己展开。
+     原 class 全部保留，样式、来源声明检测都不受影响。 */
+  function initLongInfoBoxes(articleEl) {
+    var boxes = articleEl.querySelectorAll('.info-box');
+    var openedForPrint = [];
+
+    for (var i = 0; i < boxes.length; i++) {
+      var box = boxes[i];
+      if (box.tagName === 'DETAILS') continue; // 已经是折叠块
+      var text = (box.textContent || '').replace(/\s+/g, ' ').trim();
+      var len = text.replace(/\s/g, '').length;
+      if (len < 280) continue;
+
+      var details = document.createElement('details');
+      details.className = box.className + ' is-long';
+
+      var summary = document.createElement('summary');
+      var tag = document.createElement('span');
+      tag.className = 'ib-tag';
+      tag.textContent = /数据核对/.test(text.slice(0, 20)) ? '数据核对' : '补充说明';
+      var title = document.createElement('span');
+      title.className = 'ib-title';
+      // 摘要别和左侧标签重复成「数据核对 数据核对：…」
+      var teaser = text.replace(/^数据核对\s*[:：]?\s*/, '').replace(/^补充说明\s*[:：]?\s*/, '');
+      title.textContent = teaser.slice(0, 34) + '…';
+      var hint = document.createElement('span');
+      hint.className = 'ib-hint';
+      hint.textContent = '展开全文 · ' + len + ' 字';
+      summary.appendChild(tag);
+      summary.appendChild(title);
+      summary.appendChild(hint);
+      details.appendChild(summary);
+
+      var body = document.createElement('div');
+      body.className = 'ib-body';
+      while (box.firstChild) body.appendChild(box.firstChild);
+      details.appendChild(body);
+
+      box.parentNode.replaceChild(details, box);
+
+      (function (d, h, fullLen) {
+        d.addEventListener('toggle', function () {
+          h.textContent = d.open ? '收起' : '展开全文 · ' + fullLen + ' 字';
+        });
+      })(details, hint, len);
+
+      openedForPrint.push(details);
+    }
+
+    if (!openedForPrint.length) return;
+    window.addEventListener('beforeprint', function () {
+      for (var j = 0; j < openedForPrint.length; j++) {
+        if (!openedForPrint[j].open) {
+          openedForPrint[j].open = true;
+          openedForPrint[j].setAttribute('data-print-opened', '1');
+        }
+      }
+    });
+    window.addEventListener('afterprint', function () {
+      for (var j = 0; j < openedForPrint.length; j++) {
+        if (openedForPrint[j].getAttribute('data-print-opened') === '1') {
+          openedForPrint[j].open = false;
+          openedForPrint[j].removeAttribute('data-print-opened');
+        }
+      }
+    });
+  }
+
+  /* ══════════════════════════════════════════
      启动
      ══════════════════════════════════════════ */
   ready(function () {
@@ -358,6 +483,7 @@
     layout.appendChild(articleEl);
 
     initProgress();
+    initLongInfoBoxes(articleEl);
     initToc(articleEl);
 
     if (window.BLOG) {

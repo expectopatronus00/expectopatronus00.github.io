@@ -1353,3 +1353,192 @@ button:focus-visible,
   }
 }
 
+/* ============================================================
+   EDITORIAL REFINEMENT · 2026-11-11
+   依据 ui-design / web-design / design-system-patterns / accessibility-review
+   与 ui-design-optimizer 本地数据集（minimalism: Excellent + WCAG AAA；
+   editorial 方向推荐 Cormorant Garamond 做标题、中性无衬线做 UI ——
+   与本站既有字体体系一致，故保留字体栈，只调节奏与状态）。
+
+   方向：Editorial（字体主导、网格、克制留白）。
+   原则：排版 + 间距占观感 65%，配色只做收敛；不推翻现有 token。
+   实现：本文件在各页内联 <style> 之前加载，故统一用 html body 前缀
+        提升特异性，避免被页面级同名规则回收。全站 157 个 HTML 共用。
+   ============================================================ */
+
+:root {
+  /* 焦点环用「文字专用」强调色：装饰色 --accent-rust 在深底仅 4.11:1 */
+  --ring: var(--accent-rust-text);
+  /* 摘要/说明文字的最大行宽，避免中文一行拉到 60 字以上 */
+  --measure: 46rem;
+}
+
+/* 浅色卡片从纯白改为暖白，融进暖纸底而非浮在纸上 */
+[data-theme='light'] {
+  --bg-card: #fffdf8;
+}
+
+/* ── 1. 排印节奏：标题行距、小字层级、面板密度 ────────────── */
+html body .hero-title {
+  line-height: 1.14;
+  letter-spacing: -0.022em;
+}
+html body .hero-title .line-2 {
+  line-height: 1.24;
+  margin-top: 0.3em;
+}
+html body .hero-meta {
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+}
+html body .section-head .eyebrow,
+html body .hero-panel .panel-head .tag {
+  font-size: 0.75rem;
+  color: var(--accent-rust-text);
+}
+html body .section-head h2 {
+  line-height: 1.25;
+}
+html body .page-intro h1 {
+  line-height: 1.14;
+}
+html body .panel-list .p-item h4 {
+  font-size: 1.08rem;
+  line-height: 1.42;
+}
+html body .panel-list .p-item p {
+  font-size: 0.9rem;
+  line-height: 1.72;
+}
+html body .panel-list .p-item:hover h4 {
+  color: var(--accent-rust-text);
+}
+
+/* ── 2. 卡片：层级、状态与键盘可达性 ─────────────────────── */
+html body .series-card,
+html body .cat-card {
+  transition:
+    transform var(--dur-mid) var(--ease-out),
+    border-color var(--dur-fast),
+    box-shadow var(--dur-mid),
+    background var(--dur-fast);
+}
+html body .series-card h3,
+html body .cat-card h3 {
+  line-height: 1.28;
+}
+html body .series-card p,
+html body .cat-card p {
+  line-height: 1.75;
+}
+html body .series-card:hover,
+html body .cat-card:hover {
+  transform: translateY(-3px);
+}
+html body .series-card:focus-visible,
+html body .cat-card:focus-visible {
+  border-color: var(--accent-rust-text);
+}
+
+/* ── 3. 归档列表：标题/摘要分层，控制阅读行宽 ───────────── */
+html body .article-row {
+  padding-top: var(--sp-5);
+  padding-bottom: var(--sp-5);
+}
+html body .article-row h3 {
+  font-size: 1.36rem;
+  line-height: 1.35;
+}
+html body .article-row:hover h3 {
+  color: var(--accent-rust-text);
+}
+html body .article-row p {
+  max-width: var(--measure);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+html body .badge {
+  font-size: 0.7rem;
+  padding: 2px 8px;
+}
+
+/* ── 4. 导航站列表：修对比度缺陷 + 加大呼吸感 ─────────────
+   原 .tc-url 用 --ink-500（深底 3.06:1），低于 WCAG AA 4.5:1。 */
+html body .tc-url {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+}
+html body .tool-card {
+  padding-top: var(--sp-5);
+  padding-bottom: var(--sp-5);
+}
+html body .tc-name {
+  line-height: 1.35;
+}
+html body .tc-desc {
+  max-width: var(--measure);
+  line-height: 1.75;
+}
+html body .page-lede {
+  line-height: 1.85;
+}
+
+/* ── 5. 无障碍：焦点、锚点偏移、动效偏好 ────────────────── */
+html body a:focus-visible,
+html body button:focus-visible,
+html body [tabindex]:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+  border-radius: var(--r-sm);
+}
+html {
+  scroll-padding-top: calc(var(--nav-height) + 20px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── 6. 移动端：触摸目标 ≥44px、标题不挤 ────────────────── */
+@media (max-width: 700px) {
+  html body .filter-btn {
+    min-height: 44px;
+    padding: 10px 16px;
+    font-size: 0.85rem;
+  }
+  /* 44px 触摸目标不该把筛选栏堆成 4 行：改成单行横向滚动 chips */
+  html body .filter-bar {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    padding-bottom: var(--sp-5);
+  }
+  html body .filter-bar .bar-label,
+  html body .filter-btn {
+    flex: 0 0 auto;
+  }
+  html body .article-row h3 {
+    font-size: 1.18rem;
+    line-height: 1.4;
+  }
+  html body .hero-title {
+    line-height: 1.18;
+  }
+  html body .tool-card {
+    padding-top: var(--sp-4);
+    padding-bottom: var(--sp-4);
+  }
+}
+

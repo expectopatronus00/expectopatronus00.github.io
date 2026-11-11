@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>20,822 星、1,008 个未结 issue：开源只到编排层 · EXPECTOPATRONUS</title>
+    <meta name="description" content="OpenMausBot 把一队 agent 做成聊天应用，每个 bot 配自己的模型、云电脑和审批卡片。20,822 星背后是 1,008 个未结 issue 与 v0.1.152；Apache-2.0 之外还有 enterprise/ 另证目录，云电脑与应用连接各自收费。" />
+    <meta name="keywords" content="Agent, 开源, Grok Bot, Electron, 自托管" />
+    <meta property="og:title" content="20,822 星、1,008 个未结 issue：开源只到编排层" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="OpenMausBot 把一队 agent 做成聊天应用，每个 bot 配自己的模型、云电脑和审批卡片。20,822 星背后是 1,008 个未结 issue 与 v0.1.152；Apache-2.0 之外还有 enterprise/ 另证目录，云电脑与应用连接各自收费。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+</head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head">
+      <div class="eyebrow">OPEN SOURCE · AGENT APP</div>
+      <h1>20,822 星、1,008 个未结 issue：开源只到编排层</h1>
+      <p>20,822 星，1,008 个未结 issue。OpenMausBot 把 Claude、Codex、Grok 的本地命令行收进一个聊天应用，每个 bot 配自己的模型与云电脑。拆开账单看：开源的是编排层，模型和电脑各付各的。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-11</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 7 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="20,822 星、1,008 个未结 issue：开源只到编排层 封面" src="cover.jpg" />
+    </div>
+
+    <article class="article-body">
+<div class="section-marker">01 · 这件事</div>
+<h2>20,822 星，把一队 agent 收进联系人列表</h2>
+
+<p><strong>OpenMausBot 提供的不是新模型，是把几个本地 agent 命令行编排成一张联系人列表。</strong>仓库 2026-08-11 创建，2026-11-11 核对时 20,822 星、2,890 fork，主语言 TypeScript，最近一次推送就在当天。</p>
+
+<p>它的自述定位是「开源 Grok Bot 替代品」：侧边栏里每个 bot 是一个真 agent，有自己的性格、模型、云电脑和已连接的应用。用户像跟联系人聊天一样派活，再逐条审批它要做的动作。</p>
+
+<p>下面这份身份全部来自 api.github.com 的仓库接口，罗列成表，不塞进一句话。</p>
+
+<table>
+  <thead><tr><th>字段</th><th>核对值</th></tr></thead>
+  <tbody>
+    <tr><td>仓库</td><td>milind-soni/OpenMausBot</td></tr>
+    <tr><td>星标 / fork</td><td>20,822 / 2,890</td></tr>
+    <tr><td>open issue（含 PR）</td><td>1,008</td></tr>
+    <tr><td>创建 / 最近推送</td><td>2026-08-11 / 2026-11-11</td></tr>
+    <tr><td>主语言 / 默认分支</td><td>TypeScript / main</td></tr>
+    <tr><td>许可证（API）</td><td>Apache-2.0</td></tr>
+    <tr><td>订阅者 / 仓库体积</td><td>48 / 517,281 KB</td></tr>
+    <tr><td>主页（API）</td><td>www.mausbot.com</td></tr>
+  </tbody>
+</table>
+
+<p>有个小口径值得记下：接口里的 homepage 是 <code>www.mausbot.com</code>，README 顶部挂的却是 <code>openmausbot.com</code>。引用项目地址时按 README 走，按接口字段写也没错，但别把两者当成同一个字段。</p>
+
+<p>README 还列了五个闭源对照——Grok Bot、Meta Muse、OpenAI dots、Cue by Manus、Instinct，并逐一说明不同在哪。这些是作者自述的定位，仓库里没有第三方对比数据，读的时候当成产品说明，不要当成评测。</p>
+
+<p>同一份 README 用一行小字声明与 xAI、Meta、OpenAI、Manus 均无关联，另有一整段声明与任何加密货币无关。一个 2 万星项目要在开头写这两条，本身就是当下生态的注脚。</p>
+
+<div class="section-marker">02 · 核心机制</div>
+<h2>两个进程、一条事件流、一个审批点</h2>
+
+<p><strong>整套架构只有一个支点：界面不持有任何传输，所有 agent 进程归一个本地 harness server 管。</strong>app 把命令用 HTTP 发过去，服务端把各家 CLI 的原生协议归一成一条 SSE 事件流，前端折叠成状态。</p>
+
+<table>
+  <thead><tr><th>层</th><th>位置 / 端口</th><th>职责</th></tr></thead>
+  <tbody>
+    <tr><td>界面</td><td>React + Tailwind，5199</td><td>聊天、模型选择、电脑面板</td></tr>
+    <tr><td>Harness</td><td>127.0.0.1:8799</td><td>驱动注册表、事件总线、权限代理</td></tr>
+    <tr><td>驱动</td><td>server/drivers/</td><td>Claude、Codex、Grok 走本地 CLI</td></tr>
+    <tr><td>电脑</td><td>云端 / 本地 VM / 本机</td><td>给 bot 一台能操作的桌面</td></tr>
+    <tr><td>应用</td><td>Composio Session</td><td>Gmail、Slack、GitHub 等工具</td></tr>
+  </tbody>
+</table>
+
+<p>驱动层是它最省事的地方。<code>claude</code>、<code>codex</code>、<code>grok</code> 都是装在本机并已登录的命令行，bot 复用现有登录与订阅，不需要新账号，中间也没有代理转发。</p>
+
+<p>本地优先落在目录上：transcript、密钥与事件都写在 <code>~/.openmausbot</code>，harness 只监听回环地址。README 把这一点写进「Why」的第一段，而不是藏在部署文档里。</p>
+
+<p>真正决定体验的是权限代理。shell 命令、文件改动和提问会以卡片形式出现在聊天里，人点 Allow 或 Deny，云端电脑和本地电脑走同一套审批。</p>
+
+<ul>
+  <li>云电脑：Boat 提供的隔离 Linux 桌面，带实时预览</li>
+  <li>本地 VM：隔离的本机虚拟机，不走第三方</li>
+  <li>本机控制：macOS 与 Ubuntu Xorg 需显式开启</li>
+  <li>Wayland：因 issue #345 的安全边界未解决，保持禁用</li>
+</ul>
+
+<p>随仓库还带一个 stdio MCP server，给 Claude Desktop、Cursor 这类外部客户端用。它开放查 bot、读 transcript、派活、等完成、切模型、中断回合，<span class="hl">明确不开放审批授权、删除、凭据与电脑生命周期</span>。把危险动作留在人这一侧，是这份设计里最值得肯定的取舍。</p>
+
+<div class="section-marker">03 · 关键细节与数据</div>
+<h2>1,008 个未结 issue 与 0.1.152 是同一份事实的两面</h2>
+
+<p><strong>热闹的是版本号，不是完成度：仓库体量已经不小，版本号却还停在 0.1.x。</strong>根目录 61 个条目里有 23 个目录，docs/ 下 63 个条目，server/drivers/ 一个目录就 245 个 TypeScript 文件。</p>
+
+<table>
+  <thead><tr><th>目录</th><th>条目数</th><th>构成</th></tr></thead>
+  <tbody>
+    <tr><td>根目录</td><td>61</td><td>23 目录 / 38 文件</td></tr>
+    <tr><td>docs/</td><td>63</td><td>53 文件 / 10 目录</td></tr>
+    <tr><td>server/drivers/</td><td>247</td><td>245 个 .ts，其中 111 个测试</td></tr>
+    <tr><td>skills/</td><td>5</td><td>5 个技能目录</td></tr>
+    <tr><td>enterprise/</td><td>5</td><td>FEATURES、LICENSE、README、两个目录</td></tr>
+  </tbody>
+</table>
+
+<p>文件尺寸也能说明重心：README 34,499 字节，CONTRIBUTING 25,718 字节，pnpm-lock.yaml 370,369 字节。package.json 里 69 个 scripts、56 个 dependencies、23 个 devDependencies，要求 Node 24+ 与 pnpm 10.33.0。</p>
+
+<p>版本口径要分两层看，别从版本号倒推发布次数。</p>
+
+<table>
+  <thead><tr><th>口径</th><th>核对值</th></tr></thead>
+  <tbody>
+    <tr><td>最新 release</td><td>v0.1.152，2026-11-10 19:57 UTC</td></tr>
+    <tr><td>资产数</td><td>22 个</td></tr>
+    <tr><td>上一个 release</td><td>v0.1.151，2026-11-09 22:56 UTC</td></tr>
+    <tr><td>releases 接口</td><td>仅 2 条，均非草稿、非预发布</td></tr>
+    <tr><td>tags 接口</td><td>第一页 100 条，且存在下一页</td></tr>
+    <tr><td>package.json</td><td>version 0.1.152</td></tr>
+  </tbody>
+</table>
+
+<p>也就是说，tag 至少 101 个，但对外发布的 release 对象只有 2 个。中间那些版本没有独立发布页，<span class="hl">0.1.152 是内部版本号，不是 152 次公开发版</span>。</p>
+
+<p>许可边界比版本号更值得读。LICENSING.md 写明主体是 Apache 2.0，但 <code>enterprise/</code> 是 source-available：可阅读、可构建、可在开发测试里跑，生产运行需要按组织签发的 license key，托管给第三方或白标还要另签合作协议。</p>
+
+<ul>
+  <li>删掉 enterprise/：server 返回 {"edition":"oss"}，独立运行不变</li>
+  <li>商标：名称与吉祥物属 Supamaus Software，Apache 2.0 不授予商标权</li>
+  <li>贡献：核心走 Apache 2.0 且无需 CLA，enterprise/ 内改动要签 CLA</li>
+  <li>改名：基于它做产品需另起名字，除非有合作协议</li>
+</ul>
+
+<div class="info-box"><p>数据核对：以下字段均直接读取，未做二次推算。</p>
+<ul>
+  <li>身份：milind-soni/OpenMausBot，20,822 星 / 2,890 fork / 1,008 open issue，TypeScript / main，创建 2026-08-11。</li>
+  <li>版本：v0.1.152 发布于 2026-11-10，22 个资产；package.json 写 0.1.152 / Node ≥24 / pnpm 10.33.0。</li>
+  <li>目录：根 61、docs 63、server/drivers 247（245 个 .ts、111 个测试）、skills 5、enterprise 5。</li>
+  <li>边界：Apache 2.0 主体，enterprise/ 另证，商标不授予；Boat 试用后收费，Composio 为第三方服务。</li>
+  <li>口径：releases 仅 2 条，tags 首页 100 条且有下一页；未安装、未运行、未做性能实测。</li>
+</ul>
+<p>核对时间 2026-11-11。</p></div>
+
+<div class="section-marker">04 · 怎么用</div>
+<h2>装桌面包最快，但「不用配密钥」只成立于本地聊天</h2>
+
+<p><strong>最短路径是下发布包或全局装 CLI，前置条件是本机至少有一个已登录的 agent 命令行。</strong>README 给的平台包覆盖三套系统，源码运行另需 Node 24+ 与 pnpm。</p>
+
+<table>
+  <thead><tr><th>渠道</th><th>方式</th><th>备注</th></tr></thead>
+  <tbody>
+    <tr><td>macOS</td><td>Apple silicon / Intel 两个 dmg</td><td>已签名公证</td></tr>
+    <tr><td>Windows x64</td><td>setup.exe，免管理员</td><td>安装器未代码签名，SmartScreen 会提示</td></tr>
+    <tr><td>Ubuntu 24.04</td><td>.deb 或 AppImage</td><td>beta，仅 GNOME 受支持</td></tr>
+    <tr><td>源码</td><td><code>pnpm dev:server</code> + <code>pnpm dev</code></td><td>5199 与 8799 两个端口</td></tr>
+    <tr><td>命令行</td><td><code>npm install -g openmausbot</code></td><td>也可用 npx，无需全局装</td></tr>
+  </tbody>
+</table>
+
+<p>源码启动的三条命令在 README 里是并列的：先起 harness，再起界面，<code>pnpm dev:desktop</code> 另起 Electron 外壳。桌面发布包把 harness 内嵌了，不需要单独配服务端。</p>
+
+<ul>
+  <li>端口：界面 5199、harness 8799、webhook 接收器 8800</li>
+  <li>驱动：claude / codex / grok 任一 CLI 已安装并登录</li>
+  <li>脚本化：<code>openmausbot team apply</code> 与 <code>openmausbot run</code> 支持 <code>--json</code></li>
+  <li>触发：定时例程间隔 5–1,440 分钟，Gmail 每 15 分钟轮询一次</li>
+</ul>
+
+<p>密钥存放有个必须讲清的口径差。命令行模式下，API keys 以明文写进私有 <code>config.json</code>（Unix 权限 0600）；打包的桌面应用改用系统加密，但同一份 config.json 仍会保留部分明文项，如 OpenCode provider keys 与 MCP header 值。</p>
+
+<p>账单也要算在前面。README 明说 Composio 和 Boat 是各有账号与条款的第三方，<span class="hl">Boat 试用结束后是付费服务</span>，用云电脑可能产生费用；语音另需 ElevenLabs、Fish Audio 或 xAI 的密钥。</p>
+
+<table>
+  <thead><tr><th>省下的</th><th>仍要自己付的</th></tr></thead>
+  <tbody>
+    <tr><td>编排层与应用代码</td><td>模型订阅或 API 调用</td></tr>
+    <tr><td>新账号与中间代理</td><td>Boat 云电脑（试用后收费）</td></tr>
+    <tr><td>本地 transcript 存储</td><td>Composio 应用连接</td></tr>
+    <tr><td>逐条审批的交互</td><td>托管语音与 VPS</td></tr>
+  </tbody>
+</table>
+
+<p>README 有一句很实在的话：这些凭据都是可选的，本地聊天不配也能跑。把可选层按需打开，是这个项目比较克制的一面；但「开源」并不等于「零账单」，两者别混。</p>
+
+<div class="section-marker">05 · 冷思考</div>
+<h2>热度和可用之间，隔着 1,008 个未结 issue</h2>
+
+<p><strong>真正该问的不是它能不能替代 Grok Bot，而是替代发生在哪一层。</strong>README 的五方对照表是作者写的，没有第三方基准；换掉的是「一队 agent 在聊天列表里」这个形态，不是模型能力或托管服务。</p>
+
+<p>发布节奏也说明它仍在快速变形。11-09 与 11-10 连着两天发版，v0.1.152 的说明里还在把 Advanced 模式开关找回来，并放开 Starter 的 bot 数量上限——可以无限创建，但同一时刻 5 个保持唤醒、2 个同时工作。</p>
+
+<ul>
+  <li>成熟度：0.1.x 版本号、1,008 个未结 issue、Ubuntu 仍标 beta</li>
+  <li>套餐边界：Starter 并发 2 个，与「一队 bot」的宣传口径要分开读</li>
+  <li>终端体验：Windows 安装器未签名、CLI 模式明文存密钥、Wayland 禁用</li>
+  <li>维护结构：contributors 前 10 里作者 5,673 次提交，第二名 744 次</li>
+</ul>
+
+<p>贡献者分布还带着两个自动化账号：<code>claude</code> 107 次、<code>github-actions[bot]</code> 92 次。个人项目大多如此，不算缺陷；但要嵌进团队流程，就得接受作者一人的节奏决定你的升级节奏。</p>
+
+<p>open-core 那条边界同样不是问题，只是容易被工具误读。合规扫描若只认根目录 LICENSE 的 Apache-2.0，会漏掉 <code>enterprise/</code> 的另证；商标条款还要求基于它做产品时改名。删掉目录才是纯开源版这件事，得由人确认。</p>
+
+<p>还有口径上的小坑：接口 homepage 与 README 域名不同，tag 数与 release 数差着量级，Starter 的「不限 bot 数」后面跟着并发限制。这类数字单独看都对，连起来读才不会误判。</p>
+
+<p>所以我的判断是：想在一台机器上同时指挥几个已登录的 agent、并且保留逐条审批，它现在就值得试，因为省下的是编排与账号；要把它当团队基础设施或对外服务，先锁版本、确认 enterprise/ 授权、把云电脑与应用连接的账单算清楚。<span class="hl">20,822 星是关注度，不是验收报告。</span></p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>milind-soni/OpenMausBot：把一队 AI agent 做成聊天应用的开源实现，Apache-2.0，驱动走本地 claude / codex / grok 命令行。</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/milind-soni/OpenMausBot" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/milind-soni/OpenMausBot" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 20,822 星 / v0.1.152</span>
+      </a>
+      <a class="plat-card" href="https://github.com/milind-soni/OpenMausBot/tree/main/docs" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 12h17M12 3.5c2.4 2.3 3.6 5.2 3.6 8.5s-1.2 6.2-3.6 8.5c-2.4-2.3-3.6-5.2-3.6-8.5S9.6 5.8 12 3.5z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+        <span class="pn">项目文档</span>
+        <span class="pd">docs · 63 个条目的说明目录</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Agent">#Agent</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=Grok%20Bot">#Grok Bot</a>
+      <a href="../../home/home.html?q=Electron">#Electron</a>
+      <a href="../../home/home.html?q=%E8%87%AA%E6%89%98%E7%AE%A1">#自托管</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">数据来自 api.github.com 仓库接口、releases、tags、contents 与仓库内 README / LICENSING.md / package.json，核对时间 2026-11-11；本文未安装、未运行、未做性能实测。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

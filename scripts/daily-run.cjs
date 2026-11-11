@@ -10,6 +10,10 @@
  *   node scripts/daily-run.cjs --no-push      # 只检查与重建，不提交
  *   node scripts/daily-run.cjs --dry-run      # 全跑但不提交、不通知
  *   node scripts/daily-run.cjs --allow-lint-issues  # 一致性检查有遗留问题时仍推送
+ *   node scripts/daily-run.cjs --notify-even-if-empty  # 无更新时也发日报（默认不发）
+ *
+ * 收尾会给「今日新增文章」跑一次易读性体检（scripts/readability.cjs），
+ * 只汇报不阻断；真正的成稿门槛在 skills/daily-writer/SKILL.md 第七节。
  *
  * 退出码：
  *   0  正常（含「今日无变更」）
@@ -22,6 +26,7 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 const { notify } = require('./notify.cjs');
+const { analyzeFile, collectToday } = require('./readability.cjs');
 
 const ROOT = path.resolve(__dirname, '..');
 const POST_DIR = path.join(ROOT, 'post');
@@ -31,6 +36,7 @@ const argv = process.argv.slice(2);
 const NO_PUSH = argv.includes('--no-push');
 const DRY_RUN = argv.includes('--dry-run');
 const ALLOW_LINT = argv.includes('--allow-lint-issues');
+const FORCE_NOTIFY = argv.includes('--notify-even-if-empty');
 
 const steps = [];
 let newPosts = [];
@@ -257,6 +263,24 @@ async function finish(r) {
   }
   if (!r.lintOk) lines.push('一致性检查有遗留问题，建议人工看一眼。');
   if (!r.buildOk) lines.push('feed / sitemap 重建失败。');
+
+  // 今日新增文章的易读性体检：只汇报，不阻断推送
+  let readRows = [];
+  try {
+    readRows = collectToday(r.today).filter(x => !x.error);
+  } catch (e) { /* 台账读不到时退回 git 检测 */ }
+  if (!readRows.length && newPosts.length) {
+    readRows = newPosts
+      .map(id => analyzeFile(path.join(POST_DIR, id, id + '.html')))
+      .filter(x => !x.error);
+  }
+  if (readRows.length) {
+    const avg = Math.round(readRows.reduce((a, b) => a + b.score, 0) / readRows.length);
+    const low = readRows.slice().sort((a, b) => a.score - b.score)[0];
+    const lowId = path.basename(low.label, '.html');
+    lines.push(`易读性体检 ${readRows.length} 篇 · 平均 ${avg} 分 · 最低 ${low.score} 分（${lowId}）`);
+  }
+
   lines.push('耗时 ' + secs + 's');
 
   const title = r.noChange
@@ -282,10 +306,15 @@ async function finish(r) {
   }
 
   console.log('─────────────────────────────────────────');
-  if (!DRY_RUN) {
-    await notify({ title, body });
+  console.log(body);
+  // 无更新的日子不再发「无更新」邮件：每天一封空日报只会让人忽略真告警。
+  // 日志仍然落盘，需要强制发信时加 --notify-even-if-empty。
+  if (DRY_RUN) {
+    console.log('(dry-run 未发送通知)');
+  } else if (r.noChange && !FORCE_NOTIFY) {
+    console.log('(无更新，按配置跳过通知邮件)');
   } else {
-    console.log('(dry-run 未发送通知)\n' + title + '\n' + body);
+    await notify({ title, body });
   }
 
   process.exit(r.ok ? 0 : 1);

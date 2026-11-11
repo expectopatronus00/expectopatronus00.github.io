@@ -5,8 +5,32 @@
     <link>https://expectopatronus00.github.io/</link>
     <description>一个 AI 工具与实战的中文学习归档：原创踩坑记录 + 精选转载，每篇都标注来源。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Tue, 10 Nov 2026 14:31:40 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 11 Nov 2026 14:14:52 GMT</lastBuildDate>
     <atom:link href="https://expectopatronus00.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>6,959 星、每天一版：OpenBot 开源止于 0.1.11</title>
+      <link>https://expectopatronus00.github.io/post/gh-nightly-labs-openbot/gh-nightly-labs-openbot.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-nightly-labs-openbot/gh-nightly-labs-openbot.html</guid>
+      <pubDate>Tue, 10 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>6,959 星的 OpenBot 把 12 个 agent CLI 收进一个本地优先桌面工作区，10 天发 11 版。LICENSE 却是 PolyForm Noncommercial 1.0.0，商用要另买，0.1.11 前才是 Apache-2.0；agent 默认全盘访问，README 说这不是安全边界。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>20,822 星、1,008 个未结 issue：开源只到编排层</title>
+      <link>https://expectopatronus00.github.io/post/gh-milind-soni-openmausbot/gh-milind-soni-openmausbot.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-milind-soni-openmausbot/gh-milind-soni-openmausbot.html</guid>
+      <pubDate>Tue, 10 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>OpenMausBot 把一队 agent 做成聊天应用，每个 bot 配自己的模型、云电脑和审批卡片。20,822 星背后是 1,008 个未结 issue 与 v0.1.152；Apache-2.0 之外还有 enterprise/ 另证目录，云电脑与应用连接各自收费。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>12,405 星、三个命令：简洁的代价是七成测试</title>
+      <link>https://expectopatronus00.github.io/post/gh-max-sixty-worktrunk/gh-max-sixty-worktrunk.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-max-sixty-worktrunk/gh-max-sixty-worktrunk.html</guid>
+      <pubDate>Tue, 10 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>max-sixty/worktrunk 把 git worktree 收成三个命令，让多个 AI agent 并行改代码。完整树里 1,829 个 blob 有 1,283 个在 tests/；README 说三个核心命令、同文档却列四个；API 许可证 NOASSERTION，LICENSE 实为双许可。（转载 · 来源：微信）</description>
+    </item>
     <item>
       <title>2870 星只有 2 次提交：演示换了，示例没换</title>
       <link>https://expectopatronus00.github.io/post/gh-elvarofficial-teardown/gh-elvarofficial-teardown.html</link>
@@ -222,30 +246,6 @@
       <pubDate>Sat, 18 Jul 2026 16:00:00 GMT</pubDate>
       <category>AI 编程</category>
       <description>不用写一行代码，仅靠对话就能开发产品！从bolt.new到Cursor，Vibe Coding正在重塑软件开发的底层逻辑——你描述需求，AI生成代码，产品在对话中逐渐成形。一文了解对话式开发的原理、工具、案例和未来趋势。（转载 · 来源：抖音）</description>
-    </item>
-    <item>
-      <title>测试必备的8个Claude Skills：从需求澄清到缺陷复盘，搞定90%测试工作</title>
-      <link>https://expectopatronus00.github.io/post/dy-7660089275492847218/dy-7660089275492847218.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7660089275492847218/dy-7660089275492847218.html</guid>
-      <pubDate>Sat, 18 Jul 2026 16:00:00 GMT</pubDate>
-      <category>AI 编程</category>
-      <description>练完这8个Skills，搞定你90%的测试工作！从需求澄清、用例设计、场景模拟、优先级排序、缺陷报告、根因分析、回归验证到测试复盘，覆盖完整测试链路，附完整代码+md模板。（转载 · 来源：抖音）</description>
-    </item>
-    <item>
-      <title>超级工程师多任务全并行解决方案：1个人顶1个团队的AI编程工作流</title>
-      <link>https://expectopatronus00.github.io/post/dy-7662989219727461658/dy-7662989219727461658.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7662989219727461658/dy-7662989219727461658.html</guid>
-      <pubDate>Sat, 18 Jul 2026 16:00:00 GMT</pubDate>
-      <category>AI 编程</category>
-      <description>终端开5个Claude会话并行、网页端再挂5-10个任务、一个月产出100%由AI完成仅2个Bug。Claude Code创始人亲授的超级工程师多任务全并行解决方案，让你1个人顶1个团队。（转载 · 来源：抖音）</description>
-    </item>
-    <item>
-      <title>UI Skills集合：让AI写的前端从「能用」升级到「惊艳能卖」的8大技能包</title>
-      <link>https://expectopatronus00.github.io/post/dy-7663846136494752070/dy-7663846136494752070.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7663846136494752070/dy-7663846136494752070.html</guid>
-      <pubDate>Sat, 18 Jul 2026 16:00:00 GMT</pubDate>
-      <category>AI 编程</category>
-      <description>AI写前端最容易翻车的是「能用但丑」。这8个UI Skills把设计师的审美和规范喂给Claude Code/Codex，从UI生成、设计系统、Tailwind样式到动效、无障碍、转化，全流程打通。（转载 · 来源：抖音）</description>
     </item>
   </channel>
 </rss>
