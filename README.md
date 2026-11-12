@@ -13,6 +13,7 @@
 ## 目录结构
 
 ```
+DESIGN.md                   全站设计系统规范（配色 / 排版 / 组件 / 响应式，供 AI 编码 Agent 阅读）
 index.html                  首页（hero / 系列 / 主题 / 最近更新，全部由 JS 渲染）
 feed.xml                    全站 RSS，由 scripts/build-index.cjs 生成
 sitemap.xml                 站点地图，同上

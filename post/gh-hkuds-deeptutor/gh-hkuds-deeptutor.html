@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>58,437 星的 AI 家教：能验收检索，验收不了学会 · EXPECTOPATRONUS</title>
+    <meta name="description" content="HKUDS 开源的学习 Agent 工作台，58,437 星、90 个版本、11 种能力、三层记忆。但 bare 安装只给 Chat 和 Ask Questions，模型、embedding、搜索与密钥都得自己配；仓库能用 QA 集测检索，没有一条学习成效数据。" />
+    <meta name="keywords" content="AI 家教, 开源项目, Agent, DeepTutor, HKUDS" />
+    <meta property="og:title" content="58,437 星的 AI 家教：能验收检索，验收不了学会" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="HKUDS 开源的学习 Agent 工作台，58,437 星、90 个版本、11 种能力、三层记忆。但 bare 安装只给 Chat 和 Ask Questions，模型、embedding、搜索与密钥都得自己配；仓库能用 QA 集测检索，没有一条学习成效数据。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+</head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head">
+      <div class="eyebrow">OPEN SOURCE · AI TUTOR</div>
+      <h1>58,437 星的 AI 家教：能验收检索，验收不了学会</h1>
+      <p>58,437 星、90 个 tag、290 位贡献者，DeepTutor 把辅导、研究、创作接进同一个运行时。但 bare 安装只给 Chat，装完还得自己配模型与密钥。它能给知识库检索打分，却没有一条「学得更好」的数字。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-12</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 7 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="58,437 星的 AI 家教：能验收检索，验收不了学会 封面" src="cover.jpg" />
+    </div>
+
+    <article class="article-body">
+<div class="section-marker">01 · 这件事</div>
+<h2>58,437 星背后，是一套要自己部署的学习工作台</h2>
+
+<p><strong>DeepTutor 开源的不是一位能直接对话的家教，而是一整套需要自己装、自己配模型的学习工作台。</strong>58,437 星容易让人以为点开就能上课，但仓库首页给的是五条安装路径和一个 setup wizard，不是账号密码。</p>
+
+<p>2026-11-12 核对时，HKUDS/DeepTutor 有 58,437 星、7,103 fork，Apache-2.0 许可，主语言 Python，创建于 2025-12-28，仓库 pushed_at 为 2026-11-07。</p>
+
+<p>README 把它定义为 <span class="hl">agent-native learning workspace</span>：把辅导、研究、创作和练习接进同一个运行时。官网是 deeptutor.info，仓库 homepage 字段则指向 arXiv 预印本 2604.26962，说明它同时按研究项目对外呈现。</p>
+
+<p>默认分支最近一次提交是 11-06 的 <code>release: v1.7.2</code>，同一天发布的版本仍是最新一版。</p>
+
+<p>下面这组字段全部来自仓库接口，先把身份摆清楚，再谈这套工作台交付了什么、没交付什么。</p>
+
+<table>
+  <thead><tr><th>字段</th><th>核对值</th></tr></thead>
+  <tbody>
+    <tr><td>星标 / fork</td><td>58,437 / 7,103</td></tr>
+    <tr><td>未结条目</td><td>422（203 issue + 219 open PR）</td></tr>
+    <tr><td>许可证 / 主语言</td><td>Apache-2.0 / Python，默认分支 main</td></tr>
+    <tr><td>创建 / 最近推送</td><td>2025-12-28 / 2026-11-07</td></tr>
+    <tr><td>订阅者 / 仓库体积</td><td>237 / 258,519 KB</td></tr>
+    <tr><td>tag / release</td><td>90 / 90，v0.2.0 → v1.7.2</td></tr>
+    <tr><td>贡献者</td><td>290 人（接口分页合计）</td></tr>
+    <tr><td>主页 / 官网</td><td>arXiv 2604.26962 / deeptutor.info</td></tr>
+  </tbody>
+</table>
+
+<p>422 是 <code>open_issues_count</code>，含 PR。用搜索接口拆开是 203 个 open issue、219 个 open PR，写成「422 个待修 bug」就错了。11-12 当天仍有新 issue 开出来，仓库不是归档状态。</p>
+
+<div class="section-marker">02 · 核心机制</div>
+<h2>四层可替换，但每一层都要外部模型驱动</h2>
+
+<p><strong>它把「辅导」拆成能力、知识库、记忆和工作区四层，每层都能换，<span class="hl">没有一层自带模型</span>。</strong>所谓个性化，落点是配置、检索与历史记录，不是仓库里训练好的某个 tutoring model。</p>
+
+<p>能力是一组可单次调用的命令，共 11 种。知识库可以挂四种检索后端，记忆分三层，界面按作用域划成五个区。这些数字都写在同一份 README 与根目录 <code>SKILL.md</code> 里，不靠宣传语。</p>
+
+<p>最该留意的是边界：聊天工具里 <code>imagegen</code>、<code>videogen</code> 要先配好对应生成模型才会出现，知识库要配 embedding，网页检索要配搜索服务。连 <code>deeptutor init</code> 的向导顺序都是端口、LLM、embedding、搜索、复查。</p>
+
+<p>把可替换的部件摆成表，比读功能清单更清楚：右列是「你能换什么」，不是「开箱就有什么」。</p>
+
+<table>
+  <thead><tr><th>层</th><th>可替换项</th><th>数量</th></tr></thead>
+  <tbody>
+    <tr><td>能力</td><td>chat、ask_questions、deep_solve、deep_question、deep_research、visualize、math_animator、video_lesson、mastery_path、immersive_reading、audio_overview</td><td>11</td></tr>
+    <tr><td>知识库检索</td><td>LlamaIndex、PageIndex、GraphRAG、LightRAG</td><td>4</td></tr>
+    <tr><td>记忆</td><td>L1 traces、L2 facts、L3 synthesis</td><td>3</td></tr>
+    <tr><td>工作区</td><td>Home、Learning、Resources（按工作区）／Partners、Personalization（按账号）</td><td>5</td></tr>
+  </tbody>
+</table>
+
+<p>工具也分两档：<code>--tool</code> 能手动开的只有 8 个，其余按上下文自动挂载，手动开关绕不过这套规则。</p>
+
+<table>
+  <thead><tr><th>分类</th><th>工具名</th></tr></thead>
+  <tbody>
+    <tr><td>手动切换</td><td>brainstorm、web_search、paper_search、zotero_search、reason、geogebra_analysis、imagegen、videogen</td></tr>
+    <tr><td>上下文挂载</td><td>rag、exec、memory、notebook、knowledge_frontier、read_source 等</td></tr>
+  </tbody>
+</table>
+
+<p>这套设计的代价很直白：把模型、密钥、检索、生成全部外置之后，仓库里剩下的是编排层。<span class="hl">换模型容易，判断换得好不好却只能自己来</span>。</p>
+
+<div class="section-marker">03 · 关键细节与数据</div>
+<h2>90 个版本、45 个根目录条目，维护强度是真金白银</h2>
+
+<p><strong>仓库规模和迭代速度都能从文件级核到，两边指向同一件事：这是一个高强度维护中的产品级项目，不是一个轻量脚本。</strong>代价也写在同一批数字里。</p>
+
+<p>根目录 45 项，31 个文件、14 个目录；核心包 <code>deeptutor/</code> 下 31 项，其中 27 个是子目录；<code>packages/</code> 只有 chat-engine 一项。语言统计共 11 种，Python 21,407,953 字节、TypeScript 11,793,841 字节，前端不是附属品。</p>
+
+<p>文档比不少项目的整个源码还重：README.md 91,942 字节，根目录 <code>SKILL.md</code> 12,802 字节，README 另有 12 种语言版本。想完整读懂它，先得读完一份近 9 万字节的说明。</p>
+
+<p>版本侧同样是密集节奏：<span class="hl">90 个 tag、90 个 release</span>，从 v0.2.0 走到 v1.7.2。最近十条 release 的时间戳集中在 9-20 到 11-06 之间，间隔按天计。</p>
+
+<table>
+  <thead><tr><th>版本</th><th>发布时间</th><th>桌面资产数</th></tr></thead>
+  <tbody>
+    <tr><td>v1.7.2</td><td>2026-11-06</td><td>8</td></tr>
+    <tr><td>v1.7.1</td><td>2026-10-31</td><td>3</td></tr>
+    <tr><td>v1.7.0</td><td>2026-10-28</td><td>0</td></tr>
+    <tr><td>v1.6.15</td><td>2026-10-18</td><td>0</td></tr>
+    <tr><td>v1.6.14</td><td>2026-10-08</td><td>0</td></tr>
+    <tr><td>v1.6.13</td><td>2026-10-04</td><td>0</td></tr>
+    <tr><td>v1.6.12</td><td>2026-09-27</td><td>0</td></tr>
+    <tr><td>v1.6.11</td><td>2026-09-24</td><td>0</td></tr>
+    <tr><td>v1.6.10</td><td>2026-09-22</td><td>0</td></tr>
+    <tr><td>v1.6.9</td><td>2026-09-20</td><td>0</td></tr>
+  </tbody>
+</table>
+
+<p>v1.7.2 一次挂出 8 个桌面资产：Apple Silicon、Intel Mac、Windows 安装包、Windows 便携版各两份命名，单文件 445,311,197 到 524,198,378 字节。README 另注明 Windows 预览包未签名，会触发 SmartScreen 警告。</p>
+
+<p>贡献者接口分页合计 290 人，但提交量高度集中：<code>pancacake</code> 2,054 次，第二名 116 次，第三名是 github-actions[bot] 的 108 次。README 落款说项目由 HKUDS 组的 Bingxi Zhao 领导，并明确「目前没有任何形式的付费在线产品」。</p>
+
+<table>
+  <thead><tr><th>项目</th><th>核对值</th></tr></thead>
+  <tbody>
+    <tr><td>根目录</td><td>45 项 = 31 文件 + 14 目录</td></tr>
+    <tr><td>deeptutor/ 目录</td><td>31 项，其中 27 个子目录</td></tr>
+    <tr><td>packages/ 目录</td><td>1 项：chat-engine</td></tr>
+    <tr><td>代码语言</td><td>11 种；Python 21,407,953 / TypeScript 11,793,841 字节</td></tr>
+    <tr><td>文档</td><td>README.md 91,942 字节；SKILL.md 12,802 字节；12 种语言 README</td></tr>
+    <tr><td>贡献者</td><td>290 人；pancacake 2,054 次 / 第二名 116 次</td></tr>
+  </tbody>
+</table>
+
+<div class="info-box"><p>数据核对：以下字段均直接读取，未做二次推算。</p>
+<ul>
+  <li>身份：58,437 星 / 7,103 fork，Apache-2.0，Python，创建 2025-12-28。</li>
+  <li>版本：v1.7.2 发布于 2026-11-06，8 个桌面资产；90 tag / 90 releases。</li>
+  <li>目录：根目录 45 项（31 文件 / 14 目录）；deeptutor/ 27 个子目录。</li>
+  <li>规模：README.md 91,942 字节、SKILL.md 12,802 字节；11 种语言。</li>
+  <li>口径：422 未结 = 203 issue + 219 open PR；贡献者 290 人。</li>
+  <li>边界：未安装、未运行、未实测；arXiv 预印本内容未核对，不作断言。</li>
+</ul>
+<p>核对时间 2026-11-12。</p></div>
+
+<div class="section-marker">04 · 怎么用</div>
+<h2>五条安装路径，装到的不是同一套能力</h2>
+
+<p><strong>最实用的一条结论是：包名差一个方括号，拿到的东西就完全不同。</strong>README 给了五条路径，共用一份 <code>DEEPTUTOR_HOME</code> 配置目录，但 <span class="hl">bare 安装只给 Chat 和 Ask Questions</span>。</p>
+
+<table>
+  <thead><tr><th>路径</th><th>前置条件</th><th>得到什么</th></tr></thead>
+  <tbody>
+    <tr><td>桌面版</td><td>直接下载 DMG / EXE</td><td>内置 Python、Node.js 与完整 Web 应用</td></tr>
+    <tr><td>Docker</td><td>端口 3782 + 命名卷</td><td>完整 Web 应用，最快的全功能试用</td></tr>
+    <tr><td>PyPI full</td><td>Python 3.11–3.14、Node.js 20.9+</td><td>Web 应用 + CLI</td></tr>
+    <tr><td>源码（dev 分支）</td><td>Python 3.11–3.14、Node.js 22 LTS</td><td>当前开发版与全部模块</td></tr>
+    <tr><td>CLI core</td><td>Python 3.11–3.14，无需 Node</td><td>Chat、Ask Questions、CLI、SDK</td></tr>
+  </tbody>
+</table>
+
+<p>装完还没结束。向导会依次问端口、LLM、embedding、搜索和复查，之后仍要在 Settings → Providers 里配好 provider 和模型，再用 <code>deeptutor doctor</code> 验一次。</p>
+
+<p>README 明说没有任何付费在线产品，等于密钥与调用成本都由部署者承担。数据留在自己机器上，账单也是。</p>
+
+<p>1.7.0 起做了模块化拆分，其余能力按模块补装。README 举例的 11 类模块是：</p>
+
+<ul>
+  <li>solve、research、questions、knowledge、parsing、reading</li>
+  <li>mastery、books、memory、notebook、partners</li>
+</ul>
+
+<p>模块与核心包版本必须一致，卸载时还要检查依赖阻塞，不能只删目录了事。</p>
+
+<p>升级路径同样不轻。按 README 的迁移说明，从 1.6.15 及更早版本过来要按顺序做完这几步：</p>
+
+<ul>
+  <li>停掉运行中的 DeepTutor，备份 runtime home。</li>
+  <li>卸载旧的 <code>deeptutor-cli</code> 兼容包，保持 DEEPTUTOR_HOME 不变。</li>
+  <li>安装新包族后跑 <code>pip check</code> 与 <code>deeptutor module list</code> 核对模块状态。</li>
+</ul>
+
+<p>换句话说，它给的是一套可组装的骨架，不是一条 <code>pip install</code> 就能上课的捷径。选路径时先确认自己要的是 CLI 还是完整 Web 应用，比事后补模块省事。</p>
+
+<div class="section-marker">05 · 冷思考</div>
+<h2>能量化的是检索，不是「学会了没有」</h2>
+
+<p><strong>把 58,437 星当成教学效果的证据会读错对象：仓库提供的评测命令<span class="hl">测的是知识库检索，不是学习成效</span>。</strong>它叫 Tutoring，但仓库里没有一条可核对的「学得更好」的数字。</p>
+
+<p>我在 README 全文检索 accuracy、learning gain、effectiveness、benchmark 四类词，零命中。仓库自带的评测命令是 <code>deeptutor kb eval</code>。</p>
+
+<p>它输出的是一组检索指标，不是学习成效：</p>
+
+<ul>
+  <li>Recall@k、Precision@k、nDCG@k</li>
+  <li>MRR、MAP、Hit@k</li>
+</ul>
+
+<p>SKILL.md 那句「Scores retrieval quality against a QA set」说得很直白：被打分的只是 QA 集上的检索质量。</p>
+
+<p>这不算虚假宣传，README 从没承诺提分；但「Lifelong Personalized Tutoring」这个命名会替读者补上期待。把能测的和没测的分开摆，边界就清楚了。</p>
+
+<table>
+  <thead><tr><th>仓库给出</th><th>仓库未给出</th></tr></thead>
+  <tbody>
+    <tr><td>知识库检索的 Recall@k / nDCG@k / MRR</td><td>学习前后测、成绩变化</td></tr>
+    <tr><td>11 种能力、4 种检索后端、3 层记忆</td><td>能力是否带来掌握度提升的对照数据</td></tr>
+    <tr><td>90 个版本、290 位贡献者</td><td>任一版本的教学效果评估</td></tr>
+    <tr><td>arXiv 预印本编号 2604.26962</td><td>仓库内的可复现实验与结果表</td></tr>
+  </tbody>
+</table>
+
+<p>第二个质疑是维护结构。290 位贡献者里第一名 2,054 次提交、第二名 116 次；422 个未结条目中有 219 个是 open PR。11-12 当天新开的 issue #2638 报告 learner 账号在 mastery path 会话页被一串 403 卡住，报告者还注明在 v1.7.2 上仍可复现。</p>
+
+<p>第三个质疑是自部署成本。90 个版本配合 1.7.0 的破坏式模块化，意味着每次升级都要走一遍迁移清单；桌面包单文件最小 445,311,197 字节，Windows 预览版未签名。对个人使用者，跟随版本比安装本身更累。</p>
+
+<p>还有一个容易忽略的口径：仓库把模型、embedding、搜索、语音与图像生成全部外置，同时声明没有付费在线产品。这既意味着数据留在自己机器上，也意味着没人替你承担账单、可用性和效果验证。</p>
+
+<p>所以我的判断是：<span class="hl">把它当成一套可编排的学习工作台骨架，而不是已被验证的家教</span>。要判断它有没有让人学得更好，得自己设计前后测并留下数据；仓库不会替你给出这个数字，星标也不会。</p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>HKUDS/DeepTutor：面向终身个性化辅导的开源学习工作台，含 CLI、Web 应用、桌面包与技能市场，Apache-2.0 许可。</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/HKUDS/DeepTutor" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/HKUDS/DeepTutor" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 58,437 星 / v1.7.2</span>
+      </a>
+      <a class="plat-card" href="https://deeptutor.info/" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 12h17M12 3.5c2.4 2.3 3.6 5.2 3.6 8.5s-1.2 6.2-3.6 8.5c-2.4-2.3-3.6-5.2-3.6-8.5S9.6 5.8 12 3.5z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+        <span class="pn">官方文档</span>
+        <span class="pd">docs · 安装、能力与配置说明</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=AI%20%E5%AE%B6%E6%95%99">#AI 家教</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE">#开源项目</a>
+      <a href="../../home/home.html?q=Agent">#Agent</a>
+      <a href="../../home/home.html?q=DeepTutor">#DeepTutor</a>
+      <a href="../../home/home.html?q=HKUDS">#HKUDS</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">数据来自 api.github.com 仓库接口、README / SKILL.md / 发布说明与目录清单，核对时间 2026-11-12；本文未安装、未运行、未做性能或学习效果实测。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

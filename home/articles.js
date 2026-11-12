@@ -3,6 +3,33 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'gh-wquguru-cicada',
+            title: '2,187 星、10 天 13 版：知了免费只落在一块芯片',
+            url: '../post/gh-wquguru-cicada/gh-wquguru-cicada.html',
+            summary: '2,187 星、10 天 13 版的知了 Cicada 做实时字幕、同传与 AI 纪要。四平台是四套原生代码，免费只落在 Apple 芯片 Mac 的默认链路，实时纪要仍需自填 Ling key。README 说没有自己的服务器，仓库里却有 Worker、D1 与 R2 分享后端。719 次提交中 713 次出自一人。',
+            category: 'AI 编程',
+            date: '2026-11-12',
+            tags: ["开源项目","实时字幕","本地优先"],
+          },
+          {
+            id: 'gh-hkuds-deeptutor',
+            title: '58,437 星的 AI 家教：能验收检索，验收不了学会',
+            url: '../post/gh-hkuds-deeptutor/gh-hkuds-deeptutor.html',
+            summary: 'HKUDS 开源的学习 Agent 工作台，58,437 星、90 个版本、11 种能力、三层记忆。但 bare 安装只给 Chat 和 Ask Questions，模型、embedding、搜索与密钥都得自己配；仓库能用 QA 集测检索，没有一条学习成效数据。',
+            category: 'AI 编程',
+            date: '2026-11-12',
+            tags: ["AI 家教","开源项目","Agent","DeepTutor","HKUDS"],
+          },
+          {
+            id: 'gh-the-pr-agent-pr-agent',
+            title: '15,963 星的捐赠：README 已切割，配置仍双轨',
+            url: '../post/gh-the-pr-agent-pr-agent/gh-the-pr-agent-pr-agent.html',
+            summary: 'Qodo 把 PR-Agent 捐给社区，仓库 description 却要专门声明「不是 Qodo 免费层」。根目录 .pr_agent.toml 属于闭源托管 bot，审查 workflow 显式跳过它；v0.50.0 一版 262 条变更，维护强度未降。',
+            category: 'AI 编程',
+            date: '2026-11-12',
+            tags: ["PR 审查","开源治理","Agent","Python","开源"],
+          },
+          {
             id: 'gh-nightly-labs-openbot',
             title: '6,959 星、每天一版：OpenBot 开源止于 0.1.11',
             url: '../post/gh-nightly-labs-openbot/gh-nightly-labs-openbot.html',

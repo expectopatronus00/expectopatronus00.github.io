@@ -1,0 +1,692 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>15,963 星的捐赠：README 已切割，配置仍双轨 · EXPECTOPATRONUS</title>
+    <meta name="description" content="Qodo 把 PR-Agent 捐给社区，仓库 description 却要专门声明「不是 Qodo 免费层」。根目录 .pr_agent.toml 属于闭源托管 bot，审查 workflow 显式跳过它；v0.50.0 一版 262 条变更，维护强度未降。" />
+    <meta name="keywords" content="PR 审查, 开源治理, Agent, Python, 开源" />
+    <meta property="og:title" content="15,963 星的捐赠：README 已切割，配置仍双轨" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="Qodo 把 PR-Agent 捐给社区，仓库 description 却要专门声明「不是 Qodo 免费层」。根目录 .pr_agent.toml 属于闭源托管 bot，审查 workflow 显式跳过它；v0.50.0 一版 262 条变更，维护强度未降。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+</head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head">
+      <div class="eyebrow">OPEN SOURCE · CODE REVIEW</div>
+      <h1>15,963 星的捐赠：README 已切割，配置仍双轨</h1>
+      <p>15,963 星，仓库简介写着「不是 Qodo 免费层」。Qodo 把 PR-Agent 捐给了社区，README 说完全社区所有；但根目录那份配置仍标着托管 bot，仓库自己的审查流水线必须显式跳过它。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-12</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 7 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="15,963 星的捐赠：README 已切割，配置仍双轨 封面" src="cover.jpg" />
+    </div>
+
+    <article class="article-body">
+<div class="section-marker">01 · 这件事</div>
+<h2>15,963 星的仓库，把免责声明写进 description</h2>
+
+<p><strong>PR-Agent 最显眼的不是功能，是一句切割：仓库 description 写着「This project is not the Qodo free tier」。</strong>一个开源项目要把「我不是谁」写进简介，通常说明<span class="hl">有人一直在认错</span>。</p>
+
+<p>2026-11-12 核对时，The-PR-Agent/pr-agent 有 15,963 星、2,179 fork，MIT 许可，主语言 Python，当天仍有推送。它做的事是给 Pull Request 自动写描述、提审查意见。</p>
+
+<p>时间线有个错位：仓库创建于 2023-07-05，所属组织 The-PR-Agent 却注册于 2026-02-26。星标、提交和 issue 编号都跟着仓库转移，治理关系是后来才换的。</p>
+
+<p>README 的「Big News」段给出解释：Qodo 把 PR-Agent 捐给了开源社区，项目现在完全社区所有，并正在走捐给一家开源基金会的流程。</p>
+
+<p>下面这组字段全部来自仓库接口，先把身份摆清楚，再谈切割究竟走到了哪一步。</p>
+
+<table>
+  <thead><tr><th>字段</th><th>核对值</th></tr></thead>
+  <tbody>
+    <tr><td>星标 / fork</td><td>15,963 / 2,179</td></tr>
+    <tr><td>仓库创建 / 组织注册</td><td>2023-07-05 / 2026-02-26</td></tr>
+    <tr><td>最近推送</td><td>2026-11-12</td></tr>
+    <tr><td>许可证 / 主语言</td><td>MIT / Python，默认分支 main</td></tr>
+    <tr><td>open issue / PR</td><td>11 / 17</td></tr>
+    <tr><td>订阅者 / 仓库体积</td><td>64 / 187,489 KB</td></tr>
+    <tr><td>tag / release</td><td>43 / 42</td></tr>
+    <tr><td>主页</td><td>pr-agent.ai</td></tr>
+  </tbody>
+</table>
+
+<p>28 是 <code>open_issues_count</code>，含 PR。用搜索接口拆开是 11 个 open issue、17 个 open PR，写成「28 个待修 bug」就错了。</p>
+
+<p>11-11 开的 issue #4874 和 PR #4873 到核对时都还开着，项目不是归档状态，README 的 legacy 一词指的是归属，不是活跃度。</p>
+
+<div class="section-marker">02 · 核心机制</div>
+<h2>README 用四种口径切割，赞助栏仍挂着 Qodo</h2>
+
+<p><strong>切割不是一句 slogan，README 至少从四个角度把自己和商业版分开。</strong>这四处措辞各自回答一个不同的问题，值得逐条看。</p>
+
+<table>
+  <thead><tr><th>位置</th><th>原文口径</th><th>回答什么</th></tr></thead>
+  <tbody>
+    <tr><td>仓库 description</td><td>not the Qodo free tier</td><td>不是免费版</td></tr>
+    <tr><td>README 首段</td><td>not the Qodo offering for open-source projects</td><td>不是给开源项目的托管服务</td></tr>
+    <tr><td>项目定位</td><td>community-maintained legacy project of Qodo</td><td>承认历史归属，自称 legacy</td></tr>
+    <tr><td>对照说明</td><td>Qodo offers a free version for open-source projects</td><td>承认对方仍提供同类产品</td></tr>
+  </tbody>
+</table>
+
+<p>但同一页的 Sponsors 段落里，Qodo 是唯一的 Gold Sponsor，链接直接指向它对开源项目的免费版。切割与赞助写在同一屏里。</p>
+
+<p>「Big News」段另给了三条治理信息，措辞都比 description 谨慎，合起来才是完整状态。</p>
+
+<ul>
+  <li>归属：项目现居 PR-Agent 组织，fully community-owned</li>
+  <li>人选：首位外部维护者 Naor，账号 naorpeled</li>
+  <li>下一步：正在捐赠给开源基金会，in the process of</li>
+</ul>
+
+<p>文档站的维护者页比「首位」具体：列 4 人，1 位 Lead Maintainer、2 位 Maintainer、1 位 Community Manager。</p>
+
+<p>赞助入口 <code>.github/FUNDING.yml</code> 只有 <code>github: naorpeled</code> 一行，下一行注释还写着 <code>open_collective: TBD</code>。集体资助通道尚未落地。</p>
+
+<p>换句话说，README 已经把「不是 Qodo」讲透，却把「归谁」讲成了一个进行时。</p>
+
+<div class="section-marker">03 · 关键细节与数据</div>
+<h2>根目录那份配置，开源版自己都不读</h2>
+
+<p><strong>真正标出切割边界的不是 README，是根目录那份 763 字节的 <code>.pr_agent.toml</code>。</strong>它的注释比配置本身更值得读。</p>
+
+<p>文件首行写明：这份配置由 Qodo 的 <code>qodo-free-for-open-source-projects</code> bot 消费，那是一套独立、托管、闭源的服务；本仓库的开源版不读它，<code>[review_agent]</code> 段只存在于托管版。</p>
+
+<p>而这份被「另一个程序」读取的配置，恰好写着几项最敏感的动作。把它和 v0.50.0 的发布说明并排放：</p>
+
+<table>
+  <thead><tr><th>根目录配置</th><th>值</th><th>开源版 v0.50.0 口径</th></tr></thead>
+  <tbody>
+    <tr><td><code>enable_auto_approval</code></td><td>true</td><td>改为 host-only，自动批准路径仍禁用</td></tr>
+    <tr><td><code>approve_pr_on_self_review</code></td><td>true</td><td>作为 no-op 设置移除，残留会告警</td></tr>
+    <tr><td>push 命令含 <code>/agentic_review</code></td><td>托管版</td><td>开源版无此命令</td></tr>
+    <tr><td>PR 命令含 <code>/improve</code></td><td>托管版</td><td>issue #4874 说并入 /review 并将移除</td></tr>
+  </tbody>
+</table>
+
+<p>两套配置没有互相覆盖，因为本仓库的审查 workflow 主动绕开了根目录那份。注释原话是：合并它会导致作业失败，因为 push 命令指向开源版没有的 /agentic_review。</p>
+
+<p>于是 workflow 里设了 <code>CONFIG__USE_REPO_SETTINGS_FILE: 'false'</code>，跑的是 <code>docker://pragent/pr-agent:github_action</code>，模型密钥取自 <code>QODO_SPONSORSHIP_LLM_KEY</code>。</p>
+
+<p>11-11 的 PR #4873 下有两条评论来自 <code>the-pr-agent-bot[bot]</code>，一条审查指南、一条代码建议，说明开源版确实在这个仓库跑。</p>
+
+<p>这个 GitHub App 由 The-PR-Agent 组织持有，2026-10-10 创建，权限是 contents 读、issues 与 pull-requests 写，和 Qodo 托管 bot 不是同一个身份。</p>
+
+<p>再看体量。拉完整 git 树，<code>truncated=false</code>，826 条目、778 个 blob、15,905,202 字节，可以放心数。</p>
+
+<table>
+  <thead><tr><th>位置 / 类型</th><th>数量</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td>tests/</td><td>443 文件 / 7,038,893 字节</td><td>占 blob 56.9%、字节 44.2%</td></tr>
+    <tr><td>pr_agent/ 与 docs/</td><td>162 / 123 文件</td><td>源码与文档站</td></tr>
+    <tr><td>pr_agent/settings/</td><td>25 份 .toml</td><td>提示词与运行配置</td></tr>
+    <tr><td>pr_agent/commands/</td><td>15 个模块</td><td>含 help_docs、config 等</td></tr>
+    <tr><td>根目录指南</td><td>AGENTS.md 15,490 / CONTRIBUTING.md 2,073 字节</td><td>给 agent 的比给人的长 7 倍</td></tr>
+  </tbody>
+</table>
+
+<p>README 点名 5 个 git 平台：GitHub、GitLab、Bitbucket、Azure DevOps、Gitea。代码里 <code>git_providers/</code> 有 16 个 .py，去掉基类、客户端与工具文件后是 10 份实现。</p>
+
+<p>多出来的包括 Gerrit、CodeCommit、Bitbucket Server，以及本地 git 和纯 diff 模式。表格按「平台」计，目录按「接入实现」计，不是同一份名单。</p>
+
+<p>v0.50.0 发布于 2026-11-07，发布说明 25,598 字符、292 行、262 条列表项。一个自称 legacy 的项目，一版仍有这样的体量。</p>
+
+<table>
+  <thead><tr><th>章节</th><th>条数</th><th>章节</th><th>条数</th></tr></thead>
+  <tbody>
+    <tr><td>Breaking changes</td><td>5</td><td>Bug Fixes</td><td>146</td></tr>
+    <tr><td>Features</td><td>19</td><td>Performance</td><td>38</td></tr>
+    <tr><td>Documentation</td><td>13</td><td>Maintenance</td><td>30</td></tr>
+    <tr><td>Dependencies</td><td>11</td><td>合计</td><td>262</td></tr>
+  </tbody>
+</table>
+
+<p>146 条修 bug 加 38 条性能共 184 条，占 262 条的 70.2%。维护强度没降，降的是身份归属。</p>
+
+<p>同一版还把 pacing、retry、custom labels 和 <code>config.num_retries</code>（上限 10）收归 host-only，README 却仍写着 Highly Customizable。</p>
+
+<div class="info-box"><p>数据核对：以下字段均直接读取，未做二次推算。</p>
+<ul>
+  <li>身份：The-PR-Agent/pr-agent，15,963 星 / 2,179 fork，MIT，Python，创建 2023-07-05；组织注册 2026-02-26。</li>
+  <li>版本：v0.50.0 发布于 2026-11-07，说明 25,598 字符 / 262 条列表项；仓库 43 tag、42 releases。</li>
+  <li>目录：完整树 truncated=false，826 条目 / 778 blob / 15,905,202 字节；tests 443、settings 25 份 toml。</li>
+  <li>口径：open_issues_count 28 = 11 issue + 17 PR；6,500 次提交中 1,634 次在 2026-02-26 之后，贡献者 419 人。</li>
+  <li>边界：未安装、未运行、未做性能实测；Qodo 托管 bot 的当前活跃状态未核实，本文不作断言。</li>
+</ul>
+<p>核对时间 2026-11-12。</p></div>
+
+<div class="section-marker">04 · 怎么用</div>
+<h2>三种安装方式，两个不该照抄的配置</h2>
+
+<p><strong>对使用者来说，切割声明不影响安装，但升级与复制配置会踩坑。</strong>先把 README 给出的路径摆成表。</p>
+
+<table>
+  <thead><tr><th>渠道</th><th>命令 / 入口</th><th>注意</th></tr></thead>
+  <tbody>
+    <tr><td>pip</td><td><code>pip install "pr-agent[github]"</code></td><td>Git provider SDK 是可选 extras</td></tr>
+    <tr><td>CLI</td><td><code>pr-agent --pr_url &lt;PR_URL&gt; review</code></td><td>自行配置模型密钥</td></tr>
+    <tr><td>GitHub Action</td><td><code>uses: the-pr-agent/pr-agent@main</code></td><td>传 OPENAI_KEY 与 GITHUB_TOKEN</td></tr>
+    <tr><td>Docker</td><td><code>pragent/pr-agent</code></td><td>0.34.2 起的新命名空间</td></tr>
+  </tbody>
+</table>
+
+<p>README 的迁移提示很具体：0.34.2 起镜像发到 <code>pragent/pr-agent</code>，v0.31 及以前留在 <code>codiumai/pr-agent</code> 冻结归档，旧命名空间不再推新镜像。</p>
+
+<p>钉死过 image 引用的 CI 要改名，否则会一直停在旧版本上。这类迁移不会报错，只会安静地不再更新。</p>
+
+<p>升到 v0.50.0 之前，把仓库级 <code>.pr_agent.toml</code> 里的 pacing、retry、custom labels 搬到 host 配置，<code>num_retries</code> 不得超过 10。</p>
+
+<p>三个容易踩的坑，都来自仓库自己的文件，不是推测：</p>
+
+<ul>
+  <li>照抄根目录 .pr_agent.toml：[review_agent] 段只属于托管版，开源版不认</li>
+  <li>/help_docs：README 写自 v0.36.1 起暂时禁用，pr_help_docs.py 仍在树里</li>
+  <li>/improve：11-11 的 issue #4874 说并入 /review、下版移除，别写进长期脚本</li>
+</ul>
+
+<p>关于 <code>/help_docs</code> 还有一处时间差：README 写「pending a fix」，对应的 issue #2445 已在 2026-06-19 关闭，命令入口仍未恢复。</p>
+
+<p>想贡献代码，仓库给了两份指南。<code>AGENTS.md</code> 15,490 字节是给编码 agent 的共享规范，<code>CONTRIBUTING.md</code> 2,073 字节给人看。</p>
+
+<p>前者明确要求：未经维护者批准，不得删除或重命名配置、提示词、workflow 文件；新增依赖、改 workflow 也要先确认。</p>
+
+<p>本地验证只跑单测，命令是 <code>PYTHONPATH=. uv run pytest tests/unittest</code>；e2e 需要 provider 凭证，必须显式调用。</p>
+
+<div class="section-marker">05 · 冷思考</div>
+<h2>完全社区所有，是一个进行时</h2>
+
+<p><strong>「fully community-owned」描述的是方向，不是 2026-02-26 那天完成的状态。</strong>治理转移至少有四条线，逐条核比读一句 README 有用。</p>
+
+<table>
+  <thead><tr><th>治理线</th><th>已转移</th><th>尚未收口</th></tr></thead>
+  <tbody>
+    <tr><td>代码与仓库</td><td>新组织、新 App、新文档域</td><td>根目录仍留托管版配置</td></tr>
+    <tr><td>运行成本</td><td>社区 CI 跑开源版</td><td>模型密钥仍叫 QODO_SPONSORSHIP_LLM_KEY</td></tr>
+    <tr><td>维护者</td><td>维护者页列 4 人</td><td>首位外部维护者、基金会捐赠进行中</td></tr>
+    <tr><td>资金</td><td>个人赞助入口可用</td><td>FUNDING.yml 里 open_collective 仍是 TBD</td></tr>
+  </tbody>
+</table>
+
+<p>星标也不能当治理证据。15,963 星从 2023-07-05 起随仓库转移；6,500 次提交里，只有 1,634 次发生在组织注册之后。</p>
+
+<p>贡献者 419 人，提交最多的 mrT23 有 2,735 次，首位外部维护者 naorpeled 是 63 次。历史贡献与当前维护责任不是同一批人。</p>
+
+<p>这是捐赠型项目的常态，不算漏洞；但要把它写进团队流程，得接受维护梯队还在重组，升级节奏不由使用者决定。</p>
+
+<p>更实际的风险是配置误读：同一个 .pr_agent.toml 文件名，根目录那份给托管 bot 用，你自己仓库里那份才给开源版用。</p>
+
+<p>再补一处小反差：README 的演示区还挂着 /describe、/review、/improve 三张截图，而 /improve 已在 11-11 被排进移除清单。文档落后代码一个版本，是活跃仓库的代价。</p>
+
+<p>所以我的判断是：<span class="hl">判断一个开源项目归谁，别读 description</span>，去读 workflow 里的密钥名、配置文件的首行注释，以及 App 的权限范围。</p>
+
+<p>声明负责表态，这三者负责事实。PR-Agent 值得用的理由没变：10 份 provider 实现、一版 262 条变更、6,500 次提交都还在这里。</p>
+
+<p>变的是你必须知道 <span class="hl">哪一行配置会被哪套程序执行</span>。这一点，README 的一句话切割替不了。</p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>The-PR-Agent/pr-agent：Qodo 捐给社区的开源 PR 审查 agent，支持 GitHub、GitLab、Bitbucket、Azure DevOps、Gitea，MIT 许可。</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/The-PR-Agent/pr-agent" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/The-PR-Agent/pr-agent" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 15,963 星 / v0.50.0</span>
+      </a>
+      <a class="plat-card" href="https://docs.pr-agent.ai/" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 12h17M12 3.5c2.4 2.3 3.6 5.2 3.6 8.5s-1.2 6.2-3.6 8.5c-2.4-2.3-3.6-5.2-3.6-8.5S9.6 5.8 12 3.5z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+        <span class="pn">官方文档</span>
+        <span class="pd">docs · 安装、命令与配置说明</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=PR%20%E5%AE%A1%E6%9F%A5">#PR 审查</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90%E6%B2%BB%E7%90%86">#开源治理</a>
+      <a href="../../home/home.html?q=Agent">#Agent</a>
+      <a href="../../home/home.html?q=Python">#Python</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">数据来自 api.github.com 仓库接口、README / .pr_agent.toml / 审查 workflow / 发布说明与完整 git tree，核对时间 2026-11-12；本文未安装、未运行、未做性能实测。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

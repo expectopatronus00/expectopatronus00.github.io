@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2,187 星、10 天 13 版：知了免费只落在一块芯片 · EXPECTOPATRONUS</title>
+    <meta name="description" content="2,187 星、10 天 13 版的知了 Cicada 做实时字幕、同传与 AI 纪要。四平台是四套原生代码，免费只落在 Apple 芯片 Mac 的默认链路，实时纪要仍需自填 Ling key。README 说没有自己的服务器，仓库里却有 Worker、D1 与 R2 分享后端。719 次提交中 713 次出自一人。" />
+    <meta name="keywords" content="开源项目, 实时字幕, 本地优先" />
+    <meta property="og:title" content="2,187 星、10 天 13 版：知了免费只落在一块芯片" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="2,187 星、10 天 13 版的知了 Cicada 做实时字幕、同传与 AI 纪要。四平台是四套原生代码，免费只落在 Apple 芯片 Mac 的默认链路，实时纪要仍需自填 Ling key。README 说没有自己的服务器，仓库里却有 Worker、D1 与 R2 分享后端。719 次提交中 713 次出自一人。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <style>
+      .icon { display: inline-flex; align-items: center; justify-content: center; width: 1em; height: 1em; vertical-align: -0.125em; color: currentColor; flex-shrink: 0; }
+      .icon svg { width: 100%; height: 100%; }
+      .icon-sm { width: 0.82em; height: 0.82em; }
+      .icon-lg { width: 1.3em; height: 1.3em; }
+      .theme-icon { color: var(--accent-rust); }
+      /* 页面头部：eyebrow + h1 + 导语 + meta */
+      .page-head {
+        max-width: var(--container);
+        margin: 0 auto;
+        padding: var(--sp-10) var(--sp-6) var(--sp-6);
+        border-bottom: 1px solid var(--line);
+      }
+      .page-head .eyebrow {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--accent-rust);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: var(--sp-4);
+      }
+      .page-head h1 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: clamp(2rem, 4vw, 3.2rem);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: var(--text);
+        margin: 0 0 var(--sp-4);
+      }
+      .page-head h1 em {
+        font-style: italic;
+        color: var(--accent-rust);
+        font-weight: 400;
+      }
+      .page-head p {
+        font-family: var(--font-serif);
+        font-size: 1rem;
+        color: var(--text-soft);
+        max-width: 680px;
+        line-height: 1.8;
+      }
+      .page-head .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--sp-4);
+        margin-top: var(--sp-5);
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--text-dim);
+      }
+      .page-head .meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .page-head .meta i {
+        color: var(--accent-rust);
+      }
+
+      /* 封面大图 */
+      .hero-image {
+        max-width: var(--container);
+        margin: var(--sp-6) auto 0;
+        padding: 0 var(--sp-6);
+      }
+      .hero-image img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+
+      /* 正文区 */
+      .article-body {
+        max-width: var(--container-narrow);
+        margin: 0 auto;
+        padding: var(--sp-8) var(--sp-6) var(--sp-10);
+      }
+
+      /* 章节编号标签 */
+      .section-marker {
+        font-family: var(--font-mono);
+        font-size: 0.75rem;
+        color: var(--accent-rust);
+        text-transform: uppercase;
+        letter-spacing: 0.18em;
+        margin-bottom: var(--sp-3);
+      }
+
+      /* 正文标题 */
+      .article-body h2 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.55rem;
+        letter-spacing: -0.01em;
+        color: var(--text);
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.15rem;
+        color: var(--text);
+        margin: 0 0 var(--sp-3);
+      }
+
+      /* 正文段落 */
+      .article-body p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.85;
+        font-size: 1rem;
+        margin: 0 0 var(--sp-5);
+      }
+      .article-body strong {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      /* 关键词高亮（用于正文中需要突出的术语） */
+      .article-body .hl {
+        background: linear-gradient(120deg, transparent 0%, rgba(201, 119, 47, 0.15) 50%, transparent 100%);
+        padding: 0 4px;
+        border-radius: 4px;
+        color: var(--accent-rust);
+        font-weight: 600;
+      }
+
+      /* 信息提示框（左侧边线强调） */
+      .info-box {
+        padding: var(--sp-5) var(--sp-6);
+        border-left: 3px solid var(--accent-rust);
+        background: rgba(201, 119, 47, 0.06);
+        border-radius: 0 var(--r-lg) var(--r-lg) 0;
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: var(--sp-6);
+      }
+      .info-box strong {
+        color: var(--text);
+      }
+      .info-box-jade {
+        border-left-color: var(--accent-jade);
+        background: rgba(58, 141, 123, 0.08);
+      }
+
+      /* 时间线（横向流程 / 事件列表） */
+      .timeline {
+        margin: var(--sp-3) 0 var(--sp-7);
+        padding: var(--sp-5) var(--sp-6);
+        border: 1px solid var(--line);
+        border-radius: var(--r-lg);
+        background: var(--bg-card);
+      }
+      .timeline .tl-item {
+        display: grid;
+        grid-template-columns: 90px 1fr;
+        gap: var(--sp-4);
+        padding: var(--sp-3) 0;
+        border-bottom: 1px dashed var(--line);
+      }
+      .timeline .tl-item:last-child {
+        border-bottom: none;
+      }
+      .timeline .tl-time {
+        color: var(--accent-rust);
+        font-weight: 600;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        padding-top: 4px;
+      }
+      .timeline .tl-text {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: 0.95rem;
+        font-family: var(--font-serif);
+      }
+      .timeline .tl-text strong {
+        color: var(--text);
+      }
+
+      /* 重点引用块 */
+      .pull-quote {
+        margin: var(--sp-8) 0;
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        position: relative;
+      }
+      .pull-quote::before {
+        content: '\201C';
+        position: absolute;
+        top: -32px;
+        left: var(--sp-6);
+        font-size: 5rem;
+        color: var(--accent-rust);
+        font-family: Georgia, serif;
+        line-height: 1;
+        opacity: 0.5;
+      }
+      .pull-quote p {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--text);
+        line-height: 1.9;
+        font-size: 1.05rem;
+        margin: 0;
+      }
+
+      /* 平台/相关链接列表 */
+      .platform-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 10px;
+        margin-top: var(--sp-5);
+        margin-bottom: var(--sp-7);
+      }
+      .platform-list a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 16px;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        border-radius: var(--r-md);
+        text-decoration: none;
+        color: var(--text);
+        font-size: 0.88rem;
+        transition: all 0.2s;
+        font-family: var(--font-serif);
+      }
+      .platform-list a:hover {
+        border-color: var(--accent-rust);
+        transform: translateX(3px);
+      }
+      .platform-list i {
+        color: var(--accent-rust);
+      }
+
+      /* 标签行 */
+      .tags-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: var(--sp-4);
+      }
+      .tags-row a {
+        padding: 6px 14px;
+        border-radius: 999px;
+        font-size: 0.78rem;
+        font-family: var(--font-mono);
+        font-weight: 500;
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+      .tags-row a:hover {
+        color: var(--accent-rust);
+        border-color: var(--accent-rust);
+      }
+
+      /* CTA 跳转框（封面 + 按钮） */
+      .cta-box {
+        margin: var(--sp-6) 0;
+        display: grid;
+        grid-template-columns: 1fr 1.3fr;
+        gap: var(--sp-6);
+        padding: var(--sp-6);
+        border-radius: var(--r-xl);
+        background: var(--bg-card);
+        border: 1px solid var(--line);
+        align-items: center;
+      }
+      .cta-box .cover img {
+        width: 100%;
+        border-radius: var(--r-lg);
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-md);
+        display: block;
+      }
+      .cta-box .content h3 {
+        font-family: var(--font-display);
+        font-weight: 500;
+        font-size: 1.2rem;
+        margin: 0 0 var(--sp-3);
+      }
+      .cta-box .content p {
+        font-family: var(--font-serif);
+        color: var(--text-soft);
+        line-height: 1.7;
+        font-size: 0.9rem;
+        margin: 0 0 var(--sp-4);
+      }
+      .cta-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 22px;
+        border-radius: var(--r-md);
+        background: var(--accent-rust);
+        color: var(--text);
+        text-decoration: none;
+        font-family: var(--font-mono);
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.2s;
+        margin-right: var(--sp-3);
+      }
+      .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+      .cta-btn i {
+        color: var(--text);
+      }
+
+      /* 响应式 */
+      @media (max-width: 820px) {
+        .cta-box {
+          grid-template-columns: 1fr;
+        }
+        .timeline .tl-item {
+          grid-template-columns: 70px 1fr;
+          gap: var(--sp-3);
+        }
+        .page-head {
+          padding-top: var(--sp-8);
+        }
+      }
+    </style>
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+</head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>2,187 星、10 天 13 版：知了免费只落在一块芯片</h1>
+      <p>2,187 星、375 fork、10 天 13 版，知了把实时字幕、同传和纪要铺到四个平台。但只有 Apple 芯片 Mac 的默认链路不填 key；README 说没有自己的服务器，仓库里却有一套分享用的 Worker、D1 与 R2。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-12</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 8 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <img loading="lazy" alt="2,187 星、10 天 13 版：知了免费只落在一块芯片 封面" src="cover.jpg" />
+    </div>
+
+    <article class="article-body">
+<div class="section-marker">01 · 这件事</div>
+<h2>2,187 星，一句「免费开源」背后有四套不同的条件</h2>
+
+<p><strong>这个仓库把「免费开源」四个字拆成了至少三种条件，取决于你用的是哪台机器、填没填 key。</strong></p>
+
+<p>2026-11-01 建仓，11-12 核对时 2,187 星、375 fork、6 个未结 issue，Apache-2.0，主语言 Swift，最近一次推送就在 11-12。仓库描述写的是「Mac、Windows、Linux、Android 免费开源」。</p>
+
+<p>节奏比星标更显眼。v1.0.0 于 11-03 发布，v1.9.0 于 11-12 发布，10 天 13 个版本，四个平台共用一个版本号。CHANGELOG.md 有 88,026 字节，列了 14 个版本段。</p>
+
+<p>数字先摆成表。以下身份字段全部读自 api.github.com 的仓库接口，不引用仓库的 size 字段。</p>
+
+<table>
+  <thead><tr><th>字段</th><th>核对值</th></tr></thead>
+  <tbody>
+    <tr><td>星标 / fork</td><td>2,187 / 375</td></tr>
+    <tr><td>未结 issue</td><td>6</td></tr>
+    <tr><td>创建 / 最近推送</td><td>2026-11-01 / 2026-11-12</td></tr>
+    <tr><td>许可 / 主语言</td><td>Apache-2.0 / Swift</td></tr>
+    <tr><td>默认分支 / 主页</td><td>main / cicada.indaloop.app</td></tr>
+  </tbody>
+</table>
+
+<p>README 备了中、英、日、韩四份，中文版 15,357 字节，是四份里最短的。本文引用的中文表述都以它为准。</p>
+
+<p>但描述里那句「免费开源」，在 README 的平台表里被拆开了。<span class="hl">四个平台不是同一套条件</span>。</p>
+
+<div class="section-marker">02 · 核心机制</div>
+<h2>四平台不是一次编译，是四种语言各写一遍</h2>
+
+<p><strong>支撑四个平台的不是一套跨平台框架，而是 Swift、Python、C#、Kotlin 各写一份原生实现。</strong></p>
+
+<p>languages 接口合计 6,028,521 字节。四种主语言占比接近，正好对上四份平台目录，没有哪一种是「顺便编译出来的」。</p>
+
+<table>
+  <thead><tr><th>主语言</th><th>字节</th><th>占比</th><th>对应端</th></tr></thead>
+  <tbody>
+    <tr><td>Swift</td><td>2,032,898</td><td>33.7%</td><td>Mac</td></tr>
+    <tr><td>Python</td><td>1,365,198</td><td>22.6%</td><td>Linux</td></tr>
+    <tr><td>C#</td><td>1,253,370</td><td>20.8%</td><td>Windows</td></tr>
+    <tr><td>Kotlin</td><td>1,047,703</td><td>17.4%</td><td>Android</td></tr>
+    <tr><td>其余 7 种合计</td><td>329,352</td><td>5.5%</td><td>脚本与站点</td></tr>
+  </tbody>
+</table>
+
+<p>目录层面也印证。git tree 里 linux、windows、android、Sources、ios 各自独立，Resources 是 Mac 附带的 Core ML 资源。文件数与字节列成表。</p>
+
+<table>
+  <thead><tr><th>顶层目录</th><th>文件数</th><th>字节</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td>linux/</td><td>97</td><td>14,935,670</td><td>含 13.27 MiB 声纹模型</td></tr>
+    <tr><td>Resources/</td><td>15</td><td>13,784,490</td><td>Mac 的 Core ML 权重</td></tr>
+    <tr><td>windows/</td><td>101</td><td>8,602,345</td><td>含 6.67 MiB 声纹模型</td></tr>
+    <tr><td>docs/</td><td>15</td><td>6,960,013</td><td>演示动图与平台规划</td></tr>
+    <tr><td>android/</td><td>148</td><td>1,636,255</td><td>文件最多、体量很小</td></tr>
+    <tr><td>Sources/</td><td>82</td><td>1,598,955</td><td>Mac 应用源码</td></tr>
+    <tr><td>ios/</td><td>30</td><td>209,939</td><td>仅有骨架</td></tr>
+  </tbody>
+</table>
+
+<p>ios/ 只有 30 个文件、209,939 字节，另有 10,566 字节的 docs/ios-plan.md。路线图把 iPhone / iPad 放在「更远」一栏，第五端目前还在纸上。</p>
+
+<p>平台差异不是实现细节，而是使用前提。README 平台表逐条列了系统要求与 key 依赖，照搬成表。</p>
+
+<table>
+  <thead><tr><th>平台</th><th>系统要求</th><th>识别位置</th><th>是否需要 key</th></tr></thead>
+  <tbody>
+    <tr><td>Mac（Apple 芯片）</td><td>macOS 14.4+</td><td>本机</td><td>默认链路不填 key</td></tr>
+    <tr><td>Mac（Intel）</td><td>macOS 14.4+</td><td>云端 Ming</td><td>需 Ling key</td></tr>
+    <tr><td>Windows</td><td>10 2004+，x64 / ARM64</td><td>云端</td><td>需 AI 服务 key</td></tr>
+    <tr><td>Linux</td><td>Ubuntu 22.04 / 24.04</td><td>云端</td><td>需 AI 服务 key</td></tr>
+    <tr><td>Android</td><td>Android 10+</td><td>云端</td><td>需 AI 服务 key</td></tr>
+  </tbody>
+</table>
+
+<p>作者自己把这条边界写进了给编码 agent 的规则文件。AGENTS.md 第 16 行是：<span class="hl">「Only Apple silicon Macs recognize on the device: don't claim 声音不出本机 for Intel or the ports」</span>。</p>
+
+<p>后面括号里那句更直白：a cloud AI service hears the audio。也就是说，「声音不出电脑」是有主语的，只指 Apple 芯片 Mac 的本机识别。</p>
+
+<div class="section-marker">03 · 关键细节与数据</div>
+<h2>说「没有自己的服务器」，但 server/ 是一整套分享后端</h2>
+
+<p><strong>README 那句「无统计、无埋点，也没有我们自己的服务器」，只在默认听写链路里成立。</strong></p>
+
+<p>它出现在「联网透明」条目下，前面列举了四个联网对象：translate.googleapis.com、你配的 AI 服务、下载 BlackHole 驱动、每天查一次 GitHub 更新。语境是听写与翻译时往哪发数据。</p>
+
+<p>但同一个 README 又写着：点「分享…」能生成纪要链接，可选带上双语全文，设有效期和密码，<span class="hl">上传前会自动拦截密钥、未公开公司信息等敏感内容</span>。既然有「上传」，就有接收方。</p>
+
+<p>接收方就在仓库里。<code>server/</code> 有 13 个文件、59,370 字节，是一份可直接部署的 Cloudflare Worker 配置加源码。</p>
+
+<table>
+  <thead><tr><th>来源文件</th><th>实物内容</th></tr></thead>
+  <tbody>
+    <tr><td>index.js 首行注释</td><td>cicada.indaloop.app = 静态站点 + 分享服务，仅 /s/* 与 /api/* 走 Worker</td></tr>
+    <tr><td>wrangler.jsonc</td><td>name 为 cicada-site；D1 库与 R2 桶都叫 cicada-share；Durable Object 为 Gate</td></tr>
+    <tr><td>wrangler.jsonc</td><td>cron「17 3 * * *」每天清理；SHARING=on；observability 开启</td></tr>
+    <tr><td>0001_init.sql</td><td>devices 表用 Ed25519 公钥标识设备、无账号；shares 表存元数据</td></tr>
+    <tr><td>shares.js</td><td>纪要文档实体落到 R2 的 <code>shares/&lt;id&gt;.json</code></td></tr>
+    <tr><td>review.js</td><td>两个模型经 ZenMux 做上传前敏感审查</td></tr>
+  </tbody>
+</table>
+
+<p>这不是「作者隐瞒了服务器」。准确说法是两条链路：默认听写只在需要翻译时把文字发给你选的服务；一旦主动分享，纪要就进作者的 Worker，D1 记归属与状态，R2 存正文。</p>
+
+<p>分享链路的阈值写在代码里，都是硬数字，列成表比读句子清楚。</p>
+
+<table>
+  <thead><tr><th>项目</th><th>阈值</th></tr></thead>
+  <tbody>
+    <tr><td>单次请求体</td><td>2 MiB 上限</td></tr>
+    <tr><td>可选有效期</td><td>7 / 30 / 365 天，默认 7 天</td></tr>
+    <tr><td>每设备活跃分享</td><td>200</td></tr>
+    <tr><td>每日审查字符</td><td>400,000</td></tr>
+    <tr><td>创建限流</td><td>每设备每小时 20 次、每 IP 每天 100 次</td></tr>
+    <tr><td>阻断阈值</td><td>BLOCK 0.85；命中操纵检测时降到 TIGHT 0.6</td></tr>
+    <tr><td>审查规则</td><td>6 个问题 + 6 条固定格式密钥正则</td></tr>
+  </tbody>
+</table>
+
+<p>review.js 的注释还记了一次国内故障：ZenMux 上的 Jev 会对被 Cloudflare 判定来自中国大陆的请求返回 451，原文写「stopped every share there」，于是改成先试 Cloudflare Clef。</p>
+
+<p>这不算小问题。README 说分享链接能设密码和有效期，而该功能的审查链路一度对中国大陆请求整体不可用。<span class="hl">功能清单和可用性要分开读</span>。</p>
+
+<p>6 个未结 issue 也指向同一处摩擦，且没有一条是 PR。</p>
+
+<table>
+  <thead><tr><th>编号</th><th>诉求</th><th>类型</th></tr></thead>
+  <tbody>
+    <tr><td>#23</td><td>支持阿里云 / 腾讯云 ASR，预设国内常用语音识别模型</td><td>功能请求</td></tr>
+    <tr><td>#28</td><td>Win10 企业版 LTSC 无法安装</td><td>兼容问题</td></tr>
+    <tr><td>#27</td><td>Windows 增加「仅显示原文」字幕模式</td><td>功能请求</td></tr>
+    <tr><td>#25</td><td>翻译与纪要分别配置 LLM 模型</td><td>功能请求</td></tr>
+    <tr><td>#22</td><td>键盘没有右 Ctrl，希望自定义按键</td><td>功能请求</td></tr>
+    <tr><td>#11</td><td>希望支持 iOS（iPhone / iPad）</td><td>功能请求</td></tr>
+  </tbody>
+</table>
+
+<div class="info-box"><p>数据核对：字段均直接读取，两种体量口径不可相加。</p>
+<ul>
+  <li>身份：wquguru/cicada，2,187 星 / 375 fork / 6 个未结 issue，Swift，main，Apache-2.0，建于 11-01，推送 11-12。</li>
+  <li>版本：v1.0.0（11-03）到 v1.9.0（11-12）共 13 个 release、10 天；v1.9.0 挂 11 个资产；tag 有 14 个。</li>
+  <li>体量：git tree <code>truncated=false</code>，771 节点 / 642 blob / 49,995,976 字节；三个声纹模型合计 33,211,512 字节，占 66.4%。</li>
+  <li>口径：languages 只报 6,028,521 字节，不含 bin / png / md / gif；仓库 size 字段为 40952（KB），本文不引用。</li>
+  <li>边界：均取自仓库内文件；未安装、未运行、未做准确率实测。</li>
+</ul>
+<p>核对时间 2026-11-12。</p></div>
+
+<div class="section-marker">04 · 怎么用</div>
+<h2>先决定填不填 key，再决定用哪台机器</h2>
+
+<p><strong>最短路径是按平台下发行包，但「免费」的边界要到填 key 那一步才真正出现。</strong></p>
+
+<p>四个平台的包都挂在 Releases，可用 checksums.txt 核对 SHA-256。v1.9.0 共 11 个资产，主要发行包的大小与前置条件如下。</p>
+
+<table>
+  <thead><tr><th>发行包（v1.9.0）</th><th>大小</th><th>系统要求</th><th>前置条件</th></tr></thead>
+  <tbody>
+    <tr><td>macOS AppleSilicon dmg</td><td>18.57 MiB</td><td>macOS 14.4+</td><td>默认链路无需 key</td></tr>
+    <tr><td>macOS Intel dmg</td><td>18.74 MiB</td><td>macOS 14.4+</td><td>需 Ling key</td></tr>
+    <tr><td>Windows x64 exe</td><td>86.02 MiB</td><td>10 2004+</td><td>需 AI 服务 key</td></tr>
+    <tr><td>Windows ARM64 exe</td><td>81.95 MiB</td><td>骁龙 ARM64</td><td>需 AI 服务 key</td></tr>
+    <tr><td>Linux tar.gz</td><td>12.44 MiB</td><td>Ubuntu 22.04 / 24.04</td><td>需 AI 服务 key</td></tr>
+    <tr><td>Android apk</td><td>16.37 MiB</td><td>Android 10+</td><td>需 AI 服务 key</td></tr>
+  </tbody>
+</table>
+
+<p>README 中文版对费用写得很具体：不填 API key，实时字幕、翻译、会议记录和同传全部免费；实时纪要、一步语音翻译、声音克隆要填自己的 Ling key。</p>
+
+<p>成本口径是「开会一小时约 0.15 到 1 元」，Ling 每月送 10 元额度，够 10 到 50 小时。这句话只写在 Apple 芯片 Mac 的小节下，其他三平台识别本身就走云端。</p>
+
+<table>
+  <thead><tr><th>功能</th><th>填了 Ling key</th><th>不填 / 退回</th></tr></thead>
+  <tbody>
+    <tr><td>语音识别</td><td>Apple 本机模型</td><td>同左，仅 Apple 芯片 Mac</td></tr>
+    <tr><td>整句翻译</td><td>Ling-3.1-flash</td><td>Google 翻译或 Apple 本机</td></tr>
+    <tr><td>实时纪要</td><td>Ling-3.1-flash</td><td>不可用</td></tr>
+    <tr><td>同传听懂并翻译</td><td>Ming-3.0-audio-flash</td><td>本机识别 + 翻译链</td></tr>
+    <tr><td>同传发声与克隆</td><td>Ming-3.0-tts-0.5B</td><td>Mac 自带语音，无克隆</td></tr>
+    <tr><td>说话人区分</td><td>WeSpeaker ResNet34-LM（本机）</td><td>同左</td></tr>
+  </tbody>
+</table>
+
+<p>换句话说，<span class="hl">不填 key 拿到的是字幕与记录，不是纪要</span>。「AI 会议纪要」写在仓库描述里，却属于要 key 的那一档。</p>
+
+<p>装之前还有几条会立刻撞上的限制，按清单记更实用。</p>
+
+<ul>
+  <li>未签名：Mac 安装包目前没有苹果公证，首次打开要在「隐私与安全性」点「仍要打开」；Windows 会被 SmartScreen 拦。</li>
+  <li>四项权限：录制系统声音、麦克风、输入监控、管理员密码；拒任一项只影响对应功能。</li>
+  <li>虚拟麦克风：Mac 同传要装 BlackHole 2ch（GPL，用时下载、不打包）；Windows 是 VB-Cable。</li>
+  <li>屏幕共享：Linux 纪要窗无法避开共享，窗口会标注「共享屏幕时此窗口可见」。</li>
+  <li>数据落点：记录与录音在 <code>~/Library/Application Support/LiveSubs</code>，卸载不会自动删。</li>
+</ul>
+
+<p>路线图里「正式签名与公证」「不用 key 也有纪要」「iPhone / iPad」仍是待办。其中「自选 AI 服务」也在待办列表，但 README 正文已能填任何 OpenAI 兼容端点——路线图比实现慢了一拍。</p>
+
+<p>许可证也要分开看：代码是 Apache-2.0，随附声纹模型是 WeSpeaker 在 VoxCeleb 上训练的 ResNet34-LM、按 CC BY 4.0 使用，虚拟麦克风 BlackHole 是 GPL 且不打包进安装包。</p>
+
+<div class="section-marker">05 · 冷思考</div>
+<h2>10 天 13 版、四套原生代码，几乎全押在一个人身上</h2>
+
+<p><strong>这个节奏不是社区活跃，是单人高频交付；星标还没转成协作。</strong></p>
+
+<p>commits 接口的末页显示 719 次提交，contributors 接口 6 人合计也是 719，两个口径正好对上。其中 wquguru 一人 713 次，<span class="hl">占 99.2%</span>。</p>
+
+<table>
+  <thead><tr><th>贡献者</th><th>提交数</th><th>占比</th></tr></thead>
+  <tbody>
+    <tr><td>wquguru</td><td>713</td><td>99.2%</td></tr>
+    <tr><td>其余 5 人合计</td><td>6</td><td>0.8%</td></tr>
+    <tr><td>合计</td><td>719</td><td>100%</td></tr>
+  </tbody>
+</table>
+
+<p>最近 100 条提交集中在 11-08 到 11-12 约四天里。一个人同时维护四种语言的客户端、一套 Worker、官网和四语言文档，还要每版发 11 个安装包。</p>
+
+<p>6 个未结 issue 全是功能请求与兼容反馈，没有一条 PR；13 个 release 累计 7,488 次资产下载，最新一版 v1.9.0 只有 207 次。热度集中在「点一下」，不是「留下来」。</p>
+
+<p>体量也有代价。完整 git tree 的 <code>truncated</code> 为 false，771 个节点里 642 个是 blob，合计 49,995,976 字节，约 47.68 MiB。</p>
+
+<table>
+  <thead><tr><th>口径</th><th>对象</th><th>字节</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td>git tree 逐 blob</td><td>642 个文件</td><td>49,995,976</td><td>47.68 MiB，本文以此为准</td></tr>
+    <tr><td>三个声纹模型</td><td>3 个文件</td><td>33,211,512</td><td>占全仓 66.4%</td></tr>
+    <tr><td>languages 接口</td><td>只数源码</td><td>6,028,521</td><td>5.75 MiB</td></tr>
+    <tr><td>仓库 size 字段</td><td>40952（KB）</td><td>—</td><td>与 tree 不等，不引用</td></tr>
+  </tbody>
+</table>
+
+<p>languages 不统计 bin、png、md、gif，与 tree 差 8.3 倍，<span class="hl">两个口径不能相加</span>。真正占地方的是随包附带的三份声纹模型，不是代码。</p>
+
+<p>还有一处小口径差：tag 有 14 个、release 只有 13 个，v1.2.0 有 tag 没发版。版本数别按 tag 数算。</p>
+
+<p>三处自我描述都要打折读：免费只在 Apple 芯片 Mac 的默认链路，无服务器只在默认听写链路，「四平台」是四份独立实现而非一次编译。作者其实比 README 更清楚边界，AGENTS.md 那句约束就是证据。</p>
+
+<p>所以值不值得装，取决于手上是哪台机器。Apple 芯片 Mac、不填 key，能拿到一套完整的本机字幕；其余三种平台，换来的是一个要自备 key、把声音分段送出去的客户端。把「免费开源」当成需要读平台表的条件，而不是一句承诺。</p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>知了 Cicada：给会议与直播做实时字幕、同声传译和 AI 纪要，四个平台各一份原生实现。</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/wquguru/cicada" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/wquguru/cicada" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 2,187 星，Apache-2.0，10 天 13 版</span>
+      </a>
+      <a class="plat-card" href="https://cicada.indaloop.app" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 12h17M12 3.5c2.4 2.3 3.6 5.2 3.6 8.5s-1.2 6.2-3.6 8.5c-2.4-2.3-3.6-5.2-3.6-8.5S9.6 5.8 12 3.5z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+        <span class="pn">官网</span>
+        <span class="pd">site · 四平台下载页与更新日志</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE">#开源项目</a>
+      <a href="../../home/home.html?q=%E5%AE%9E%E6%97%B6%E5%AD%97%E5%B9%95">#实时字幕</a>
+      <a href="../../home/home.html?q=%E6%9C%AC%E5%9C%B0%E4%BC%98%E5%85%88">#本地优先</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2026 · 数据核对自 GitHub 仓库 wquguru/cicada 及其 README、AGENTS.md、server/ 源码，核对时间 2026-11-12。本文未安装、未运行、未做识别准确率实测，仅作学习归档。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

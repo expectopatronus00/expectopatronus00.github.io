@@ -5,8 +5,32 @@
     <link>https://expectopatronus00.github.io/</link>
     <description>一个 AI 工具与实战的中文学习归档：原创踩坑记录 + 精选转载，每篇都标注来源。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 11 Nov 2026 14:14:52 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 12 Nov 2026 14:31:54 GMT</lastBuildDate>
     <atom:link href="https://expectopatronus00.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2,187 星、10 天 13 版：知了免费只落在一块芯片</title>
+      <link>https://expectopatronus00.github.io/post/gh-wquguru-cicada/gh-wquguru-cicada.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-wquguru-cicada/gh-wquguru-cicada.html</guid>
+      <pubDate>Wed, 11 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>2,187 星、10 天 13 版的知了 Cicada 做实时字幕、同传与 AI 纪要。四平台是四套原生代码，免费只落在 Apple 芯片 Mac 的默认链路，实时纪要仍需自填 Ling key。README 说没有自己的服务器，仓库里却有 Worker、D1 与 R2 分享后端。719 次提交中 713 次出自一人。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>58,437 星的 AI 家教：能验收检索，验收不了学会</title>
+      <link>https://expectopatronus00.github.io/post/gh-hkuds-deeptutor/gh-hkuds-deeptutor.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-hkuds-deeptutor/gh-hkuds-deeptutor.html</guid>
+      <pubDate>Wed, 11 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>HKUDS 开源的学习 Agent 工作台，58,437 星、90 个版本、11 种能力、三层记忆。但 bare 安装只给 Chat 和 Ask Questions，模型、embedding、搜索与密钥都得自己配；仓库能用 QA 集测检索，没有一条学习成效数据。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>15,963 星的捐赠：README 已切割，配置仍双轨</title>
+      <link>https://expectopatronus00.github.io/post/gh-the-pr-agent-pr-agent/gh-the-pr-agent-pr-agent.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-the-pr-agent-pr-agent/gh-the-pr-agent-pr-agent.html</guid>
+      <pubDate>Wed, 11 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>Qodo 把 PR-Agent 捐给社区，仓库 description 却要专门声明「不是 Qodo 免费层」。根目录 .pr_agent.toml 属于闭源托管 bot，审查 workflow 显式跳过它；v0.50.0 一版 262 条变更，维护强度未降。（转载 · 来源：微信）</description>
+    </item>
     <item>
       <title>6,959 星、每天一版：OpenBot 开源止于 0.1.11</title>
       <link>https://expectopatronus00.github.io/post/gh-nightly-labs-openbot/gh-nightly-labs-openbot.html</link>
@@ -222,30 +246,6 @@
       <pubDate>Fri, 23 Oct 2026 16:00:00 GMT</pubDate>
       <category>量化与投资</category>
       <description>抖音 30 万赞的看盘神器：开源 A 股热力图 dapan.app，色块大小是市值、颜色是涨跌幅，板块轮动一眼可见。本文讲怎么读图、数据链路与自部署，顺带对比东财星图和大盘云图。（转载 · 来源：抖音）</description>
-    </item>
-    <item>
-      <title>SpaceX 开放 146 个 Grok Bot 智能体模板：免费拿之前，先看清这几点</title>
-      <link>https://expectopatronus00.github.io/post/dy-7700095546324749594/dy-7700095546324749594.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7700095546324749594/dy-7700095546324749594.html</guid>
-      <pubDate>Fri, 23 Oct 2026 16:00:00 GMT</pubDate>
-      <category>AI 编程</category>
-      <description>146 个 Grok Bot 智能体模板号称价值 29200 美元、现在免费——拆开看：免费的是模板，账单是你的。顺带理清 Agent Org Chart 组织架构怎么用，GitHub 上 700 多个智能体项目怎么挑。（转载 · 来源：抖音）</description>
-    </item>
-    <item>
-      <title>Harness²：权重冻结的自我改进，到底改了什么</title>
-      <link>https://expectopatronus00.github.io/post/dy-7699051728071948154/dy-7699051728071948154.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7699051728071948154/dy-7699051728071948154.html</guid>
-      <pubDate>Tue, 20 Oct 2026 16:00:00 GMT</pubDate>
-      <category>AI 编程</category>
-      <description>Google Research 开源的 Harness² 不微调、不做强化学习，权重一个字节不动，靠两层递归改模型外面那层壳。本文拆开它的八个可编辑组件、Propose-Probe-Compose 三步和真实 benchmark 数字，也说明它贵在哪、不适合谁。（转载 · 来源：抖音）</description>
-    </item>
-    <item>
-      <title>对话即开发：零代码时代来了？Vibe Coding重塑软件开发方式</title>
-      <link>https://expectopatronus00.github.io/post/dy-7661941275884637491/dy-7661941275884637491.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7661941275884637491/dy-7661941275884637491.html</guid>
-      <pubDate>Sat, 18 Jul 2026 16:00:00 GMT</pubDate>
-      <category>AI 编程</category>
-      <description>不用写一行代码，仅靠对话就能开发产品！从bolt.new到Cursor，Vibe Coding正在重塑软件开发的底层逻辑——你描述需求，AI生成代码，产品在对话中逐渐成形。一文了解对话式开发的原理、工具、案例和未来趋势。（转载 · 来源：抖音）</description>
     </item>
   </channel>
 </rss>
