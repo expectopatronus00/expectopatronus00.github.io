@@ -88,13 +88,18 @@ function countPosts() {
   }
 }
 
-/** git status 里新增的文章目录 */
+/**
+ * git status 里「真正新增的文章」。
+ * 只认 post/<id>/<id>.html 这个新建文件，不认同目录下新增的 cover.webp / cover.jpg，
+ * 也不认 post/_shared/ 这类生成物目录。早期版本按 post/<id>/ 前缀统计，
+ * 一次批量补 34 张 cover.webp 就把 3 篇新稿误报成 35 篇，commit message 与邮件都错了。
+ */
 function detectNewPosts() {
   const r = sh('git status --porcelain -uall', true);
   const ids = new Set();
   for (const line of r.out.split('\n')) {
-    const m = line.match(/^\?\?\s+post\/([^/]+)\//);
-    if (m) ids.add(m[1]);
+    const m = line.match(/^\?\?\s+post\/([^/]+)\/\1\.html$/);
+    if (m && !m[1].startsWith('_')) ids.add(m[1]);
   }
   return [...ids];
 }
