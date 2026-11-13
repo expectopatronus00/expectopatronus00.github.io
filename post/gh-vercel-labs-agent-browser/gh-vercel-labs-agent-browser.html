@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>50,413 星、69 个命令：agent 浏览器默认不设防 · EXPECTOPATRONUS</title>
+    <meta name="description" content="50,413 星的 Rust 浏览器 CLI，用可访问性树与 @eN 引用让 agent 一步一条命令。README 列 11 组 69 个命令，配置 schema 有 53 个属性。但安全文档写明：导航、动作、输出控制默认不设限，全靠 opt-in。v0.43.0 发布于 2026-11-12，附 7 个平台二进制。" />
+    <meta name="keywords" content="开源项目, 浏览器自动化, Agent 工具链" />
+    <meta property="og:title" content="50,413 星、69 个命令：agent 浏览器默认不设防" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="50,413 星的 Rust 浏览器 CLI，用可访问性树与 @eN 引用让 agent 一步一条命令。README 列 11 组 69 个命令，配置 schema 有 53 个属性。但安全文档写明：导航、动作、输出控制默认不设限，全靠 opt-in。v0.43.0 发布于 2026-11-12，附 7 个平台二进制。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <link rel="stylesheet" href="../article-common.css" data-shared-css="0d59321e71" />
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+    <!-- seo:begin -->
+    <link rel="canonical" href="https://expectopatronus00.github.io/post/gh-vercel-labs-agent-browser/gh-vercel-labs-agent-browser.html" />
+    <meta property="og:url" content="https://expectopatronus00.github.io/post/gh-vercel-labs-agent-browser/gh-vercel-labs-agent-browser.html" />
+    <meta property="og:site_name" content="EXPECTOPATRONUS" />
+    <meta property="og:image" content="https://expectopatronus00.github.io/post/gh-vercel-labs-agent-browser/cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"50,413 星、69 个命令：agent 浏览器默认不设防","description":"50,413 星的 Rust 浏览器 CLI，用可访问性树与 @eN 引用让 agent 一步一条命令。README 列 11 组 69 个命令，配置 schema 有 53 个属性。但安全文档写明：导航、动作、输出控制默认不设限，全靠 opt-in。v0.43.0 发布于 2026-11-12，附 7 个平台二进制。","image":"https://expectopatronus00.github.io/post/gh-vercel-labs-agent-browser/cover.jpg","inLanguage":"zh-CN","author":{"@type":"Person","name":"expectopatronus","url":"https://expectopatronus00.github.io"},"publisher":{"@type":"Organization","name":"EXPECTOPATRONUS","url":"https://expectopatronus00.github.io"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://expectopatronus00.github.io/post/gh-vercel-labs-agent-browser/gh-vercel-labs-agent-browser.html"},"datePublished":"2026-11-13","dateModified":"2026-11-13"}</script>
+    <!-- seo:end -->
+</head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>50,413 星、69 个命令：agent 浏览器默认不设防</h1>
+      <p>50,413 星、3,509 fork、570 个未结条目。这个 Rust CLI 让 agent 一步一条命令：snapshot 给出带 @e1 引用的可访问性树，按引用点击，再快照验结果。但安全文档写明，导航与动作限制全要自己开启。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-13</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 7 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <picture data-cover-picture="1">
+        <source srcset="cover.webp" type="image/webp" />
+        <img loading="lazy" alt="50,413 星、69 个命令：agent 浏览器默认不设防 封面" src="cover.jpg" width="2400" height="1260" decoding="async" data-cover-ready="1" />
+      </picture>
+    </div>
+
+    <article class="article-body">
+<div class="section-marker">01 · 这件事</div>
+<h2>50,413 星，一个把浏览器拆成命令的 Rust CLI</h2>
+
+<p><strong>它解决的是「agent 怎么操作浏览器」，没有顺手解决「agent 该被允许操作什么」。</strong></p>
+
+<p>vercel-labs/agent-browser 的仓库描述只有一句：Browser automation CLI for AI agents。它挂在 Vercel Labs 组织下，主页指向 agent-browser.dev，默认分支是 main。</p>
+
+<p>2026-11-13 用 api.github.com 核对：50,413 星、3,509 fork、570 个未结条目，Apache-2.0，主语言 Rust，建于 2026-01-11，最近一次推送就在核对当天。</p>
+
+<p>身份字段先列成表。下面所有数字都来自同一份仓库接口与仓库内文件，不引用第三方榜单给的估算值。</p>
+
+<table>
+  <thead><tr><th>字段</th><th>核对值</th></tr></thead>
+  <tbody>
+    <tr><td>仓库 / 描述</td><td>vercel-labs/agent-browser · Browser automation CLI for AI agents</td></tr>
+    <tr><td>星标 / fork</td><td>50,413 / 3,509</td></tr>
+    <tr><td>未结条目</td><td>570</td></tr>
+    <tr><td>创建 / 最近推送</td><td>2026-01-11 / 2026-11-13</td></tr>
+    <tr><td>许可 / 主语言</td><td>Apache-2.0 / Rust</td></tr>
+    <tr><td>默认分支 / 主页</td><td>main / agent-browser.dev</td></tr>
+  </tbody>
+</table>
+
+<p>当前版本是 v0.43.0，2026-11-12 发布，package.json 的 version 字段也是 0.43.0。这次 release 挂了 7 个平台二进制，从 darwin-arm64 到 win32-x64.exe 都在，最小的一个约 17.7 MB。</p>
+
+<p>但它还没到 1.0。CHANGELOG.md 里有 120 个版本标题，最上面是 0.43.0，最下面是 0.7.0；releases 首页 30 条覆盖 2026-07-13 到 11-12。四个月发 30 版，这不是一个功能冻结的仓库。</p>
+
+<p>先给结论：<span class="hl">星标量级和版本号成熟度是两件事</span>。读它该盯的是机制与边界，不是收藏数。</p>
+
+<div class="section-marker">02 · 核心机制</div>
+<h2>一步一条命令，页面用 ref 代替坐标</h2>
+
+<p><strong>它省的不是浏览器启动时间，是每一步要喂给模型的页面上下文。</strong></p>
+
+<p>README 把流程写得很短：snapshot 返回紧凑文本形式的可访问性树，每个元素带一个 <code>@e1</code> 这样的引用；agent 对引用下命令，再读一次页面确认结果，如此循环。浏览器在命令之间保持打开，每一步只是一次短 shell 调用。</p>
+
+<p>官方给的 example.com 快照只有一行 <code>- link "Learn more" [ref=e1]</code>。对模型来说，读一行文本与读一张截图再定位像素，是两种完全不同的负担。</p>
+
+<p>这条机制有个硬约束：<span class="hl">ref 只在生成它的那次快照里有效</span>。README 明确要求，导航或 DOM 变化之后必须重新 snapshot，不能沿用旧引用。</p>
+
+<p>动作也不假装成功。目标被隐藏、禁用、位于视口之外，或被同意横幅一类元素盖住时，click 会失败而不是回报成功。README 给的解法同样是先处理遮挡物，再取新快照重试。</p>
+
+<p>命令发给后台 daemon：首次命令时启动，通过 Chrome DevTools Protocol 控制浏览器。每个 <code>--session</code> 各有自己的 daemon 与浏览器；无命令一小时后，默认关掉 headless 浏览器并退出，配了会话持久化时先保存状态。</p>
+
+<p>官方 quick start 的五步可以原样列成表，每一步的输入输出都能单独打印出来。</p>
+
+<table>
+  <thead><tr><th>步骤</th><th>命令</th><th>作用</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>agent-browser open example.com</td><td>打开页面，浏览器保持存活</td></tr>
+    <tr><td>2</td><td>agent-browser snapshot -i</td><td>只列可交互元素，各带 ref</td></tr>
+    <tr><td>3</td><td>agent-browser click @e1</td><td>按快照里的引用交互</td></tr>
+    <tr><td>4</td><td>agent-browser get url</td><td>读结果，确认动作生效</td></tr>
+    <tr><td>5</td><td>agent-browser close</td><td>收掉本次会话</td></tr>
+  </tbody>
+</table>
+
+<p>把五步连起来看，它其实是把一次浏览器会话拆成了可重放的 shell 序列。<span class="hl">每一步都有可打印的输入输出</span>，排查时不必回放录像。</p>
+
+<div class="section-marker">03 · 关键细节与数据</div>
+<h2>四层规模都能数出来，7 个平台三处对齐</h2>
+
+<p><strong>命令、配置、文档、技能四层各自有清单，平台数量还在三处文件里完全对得上。</strong></p>
+
+<p>README 的命令表分 11 组，把反引号里的命令逐项数完是 69 个。最多的两组是 Interact 的 16 个、Debug and performance 的 9 个。这张表值得先看分组，再钻单个命令。</p>
+
+<table>
+  <thead><tr><th>命令组</th><th>命令数</th><th>命令组</th><th>命令数</th></tr></thead>
+  <tbody>
+    <tr><td>Navigate and read</td><td>8</td><td>Tabs, frames, dialogs</td><td>3</td></tr>
+    <tr><td>Interact</td><td>16</td><td>Debug and performance</td><td>9</td></tr>
+    <tr><td>Wait</td><td>1</td><td>Sessions and auth</td><td>6</td></tr>
+    <tr><td>Capture</td><td>5</td><td>Agents and integrations</td><td>7</td></tr>
+    <tr><td>Page and network state</td><td>7</td><td>Observe</td><td>2</td></tr>
+    <tr><td>Setup</td><td>5</td><td>合计</td><td>69</td></tr>
+  </tbody>
+</table>
+
+<p>配置文件 agent-browser.schema.json 定义了 53 个属性。文档站 docs/content/docs 下有 31 个 .mdx 页面；随 CLI 发货的技能参考在 skill-data/core/references，共 10 份 .md 文件。</p>
+
+<p>规模数字分散在几个目录里，集中列一张表，比在正文里连着报数清楚。</p>
+
+<table>
+  <thead><tr><th>对象</th><th>核对值</th></tr></thead>
+  <tbody>
+    <tr><td>README 命令表</td><td>11 组 / 69 个命令</td></tr>
+    <tr><td>配置 schema</td><td>53 个属性</td></tr>
+    <tr><td>文档站 docs/content/docs</td><td>31 个 .mdx 页面</td></tr>
+    <tr><td>技能参考 references</td><td>10 份 .md</td></tr>
+    <tr><td>core/SKILL.md</td><td>16,527 字节</td></tr>
+    <tr><td>references/commands.md</td><td>53,243 字节</td></tr>
+    <tr><td>CHANGELOG.md</td><td>94,959 字节 / 120 个版本标题</td></tr>
+    <tr><td>Rust / TypeScript 字节数</td><td>5,288,069 / 347,662</td></tr>
+    <tr><td>releases 首页</td><td>30 条，2026-07-13 至 11-12</td></tr>
+  </tbody>
+</table>
+
+<p>平台数字三处一致，是这次核对里最硬的一处：README 的 Platforms 段、package.json 的 7 条 optionalDependencies、v0.43.0 release 的 7 个 assets，都是 macOS 两种、Linux 四种、Windows 一种。</p>
+
+<p>v0.43.0 的发布说明里，两条改进都冲着同一处瓶颈：可访问名为空或与同快照里别的 ref 重名时，给 ref 补上图标、data-testid、name 或 id 提示；大页面快照改成只解析一次可访问性树。<span class="hl">引用不稳定，这套机制就跑不动</span>。</p>
+
+<p>仓库自己也留了量具。benchmarks 的 agent-loop 场景是 snapshot、click、snapshot 三步，full-workflow 是 7 条命令序列；evals 里单列了 context-footprint 类别，测 CLI 与 MCP 两种接法的上下文占用。</p>
+
+<p>这几处加起来说明，作者把「上下文究竟省了多少」当成可测量指标，而不只是 README 上的一句口号。</p>
+
+<div class="section-marker">04 · 怎么用</div>
+<h2>两条命令装完，配置却要写对文件才生效</h2>
+
+<p><strong>上手成本几乎全在安装，真正的坑在配置文件放在哪个路径。</strong></p>
+
+<p>安装路径不止一条：npm 全局装、Homebrew 装、Linux 加 --with-deps 补系统库，或者不装直接 npx。下面按用途列常用命令，命令本身都出自 README。</p>
+
+<table>
+  <thead><tr><th>命令</th><th>用途</th></tr></thead>
+  <tbody>
+    <tr><td>npm install -g agent-browser</td><td>全局安装 CLI</td></tr>
+    <tr><td>agent-browser install</td><td>首次下载 Chrome for Testing</td></tr>
+    <tr><td>agent-browser open example.com</td><td>打开页面</td></tr>
+    <tr><td>agent-browser snapshot -i</td><td>取可交互元素与 ref</td></tr>
+    <tr><td>agent-browser skills get core</td><td>取随版本的核心工作流</td></tr>
+    <tr><td>npx skills add vercel-labs/agent-browser</td><td>给 agent harness 装发现桩</td></tr>
+    <tr><td>agent-browser mcp</td><td>以 stdio 起 MCP 服务</td></tr>
+  </tbody>
+</table>
+
+<p>技能是跟着 CLI 版本走的。npx skills add 装进来的 skills/agent-browser/SKILL.md 只有 3,306 字节，是个发现桩；AGENTS.md 明确禁止往这个文件写功能内容，真正的工作流在 skill-data/core/SKILL.md，16,527 字节。</p>
+
+<p>桩文件只做一件事：让 agent 先跑 <code>agent-browser skills get core</code>。这样技能说明永远和已装 CLI 同版本，<span class="hl">不会教到还没发布的新命令</span>。</p>
+
+<p>配置有三条路：用户级 <code>~/.agent-browser/config.json</code>、用 <code>--config</code> 或环境变量显式指定的文件，以及自动发现的 <code>./agent-browser.json</code>。第三条只被信任 11 个展示类字段，其余键一律忽略并给出警告。</p>
+
+<p>引擎与浏览器也能换。<code>--engine</code> 可选 chrome、lightpanda、obscura；云浏览器 provider 列了 Browserbase、Browserless、Browser Use、Kernel、AgentCore。给 MCP 客户端用则是 <code>agent-browser mcp</code>。</p>
+
+<p>开源的是 CLI 与本地驱动，云浏览器是另一笔账。版本口径也要留意：npm 包的 engines.node 写的是 22 以上，README 却说从源码构建需要 Node.js 24 或更高、pnpm 11 和 Rust。</p>
+
+<div class="section-marker">05 · 冷思考</div>
+<h2>默认不设防，白名单写错地方等于没写</h2>
+
+<p><strong>这个仓库最该先读的不是 quick start，是安全文档的第一段。</strong></p>
+
+<p>docs/content/docs/security.mdx 原文写明：导航、动作与输出控制都是 opt-in，默认情况下 agent-browser 对导航、动作和输出不施加任何限制。</p>
+
+<p>allowedDomains、actionPolicy、confirmActions、contentBoundaries 都在那 53 个配置属性里，但默认都不开，需要逐项开启。</p>
+
+<p>更隐蔽的是配置发现规则。schema 与 security.mdx 都写了：自动发现的 <code>./agent-browser.json</code> 只接受 headed、json、debug 等 11 个字段。</p>
+
+<p>域名白名单、动作策略、扩展、初始化脚本这些统统忽略并警告。<span class="hl">把 allowedDomains 写进项目配置，等于没写</span>。</p>
+
+<p>要真正生效，得放进用户级 config，或用 <code>--config</code> 显式加载一个受信任文件。对把 agent 放进 CI 或生产任务的团队，这条路径差异比少记一个命令重要得多。</p>
+
+<p>还有几处默认值得单独记：实验性 WebMCP 对本地启动的 Chrome 默认开启，要用 noWebmcp 或对应环境变量关掉；schema 里同时存在 eval、ignoreHttpsErrors、allowFileAccess、initScripts 这类高权限开关。</p>
+
+<p>成熟度也别用星标代替。0.43.0 加 120 个版本段说明迭代极快，570 个未结条目说明收敛没完成；daemon 空闲一小时退出，长任务得自己把 idleTimeout 设为 0 或显式续期。Node 版本要求两处不一致，也说明文档同步仍有缝。</p>
+
+<p>它把「agent 能不能操作浏览器」做成了可验收的工程件，把「该不该让它操作」完整留给了使用者。<span class="hl">50,413 星买不来一条默认生效的白名单</span>；在打开第一个页面之前，先把那份用户级配置写好。</p>
+
+<div class="info-box">
+  <p>数据核对：全部走 api.github.com 的仓库接口、文件内容与目录清单，不引用短视频口播里的数字。</p>
+  <ul>
+    <li>仓库身份：vercel-labs/agent-browser，50,413 星 / 3,509 fork / 570 未结条目，Apache-2.0，主语言 Rust，建于 2026-01-11，推送 2026-11-13。</li>
+    <li>版本：v0.43.0 发布于 2026-11-12，7 个平台二进制；package.json 的 version 同为 0.43.0。</li>
+    <li>规模：README 命令表 11 组 69 个命令，配置 schema 53 个属性，文档 31 个 .mdx，技能参考 10 份，CHANGELOG 120 个版本标题。</li>
+    <li>边界：security.mdx 写明导航、动作、输出控制均为 opt-in，默认不施加任何限制。</li>
+  </ul>
+  <p>核对时间 2026-11-13；本文未安装、未运行该 CLI，仅作学习归档。</p>
+</div>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>vercel-labs/agent-browser：用可访问性树与 ref 把浏览器拆成一条条 shell 命令的 Rust CLI。</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/vercel-labs/agent-browser" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/vercel-labs/agent-browser" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 50,413 星，Apache-2.0，v0.43.0</span>
+      </a>
+      <a class="plat-card" href="https://agent-browser.dev" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 12h17M12 3.5c2.4 2.3 3.6 5.2 3.6 8.5s-1.2 6.2-3.6 8.5c-2.4-2.3-3.6-5.2-3.6-8.5S9.6 5.8 12 3.5z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+        <span class="pn">官方文档</span>
+        <span class="pd">docs · 31 个 .mdx 页面，含安全与配置</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE">#开源项目</a>
+      <a href="../../home/home.html?q=%E6%B5%8F%E8%A7%88%E5%99%A8%E8%87%AA%E5%8A%A8%E5%8C%96">#浏览器自动化</a>
+      <a href="../../home/home.html?q=Agent%20%E5%B7%A5%E5%85%B7%E9%93%BE">#Agent 工具链</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2026 · 数据核对自 GitHub 仓库 vercel-labs/agent-browser 的接口字段、README.md、package.json、agent-browser.schema.json、AGENTS.md、CHANGELOG.md、docs/content/docs/security.mdx、releases 与目录清单，核对时间 2026-11-13。本文未安装、未运行该 CLI，仅作学习归档。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

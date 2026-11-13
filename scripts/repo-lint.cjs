@@ -342,6 +342,133 @@ function checkInfra() {
   return issues;
 }
 
+/* ─────────── 检查 10: 共享样式层 ─────────── */
+const { hashOf, walkPosts, stylesOf, linksOf } = require('./shared-css.cjs');
+
+function checkSharedCss() {
+  printSection('共享样式层');
+  const issues = [];
+  const common = path.join(ROOT, 'post', 'article-common.css');
+  const commonOk = fs.existsSync(common);
+  if (!commonOk) issues.push('post/article-common.css 缺失');
+
+  /* 重复内联 CSS 分组必须为 0：出现就说明有新稿或存量页把大段样式又抄回来了 */
+  const groups = new Map();
+  let inlineBlocks = 0;
+  for (const f of walkPosts()) {
+    const html = fs.readFileSync(f, 'utf8');
+    for (const st of stylesOf(html)) {
+      inlineBlocks++;
+      groups.set(st.hash, (groups.get(st.hash) || 0) + 1);
+    }
+  }
+  const repeats = [...groups.values()].filter((n) => n >= 2).length;
+  if (repeats) issues.push('仍有 ' + repeats + ' 组重复内联 CSS，需跑 apply-shared-css.cjs');
+
+  /* 每处 link 必须指向存在的文件，且文件内容 hash 与 data-shared-css 一致 */
+  let links = 0, badLinks = 0;
+  for (const f of walkPosts()) {
+    const html = fs.readFileSync(f, 'utf8');
+    for (const l of linksOf(html)) {
+      links++;
+      const target = path.resolve(path.dirname(f), l.href);
+      if (!fs.existsSync(target)) {
+        issues.push(rel(f) + ' → 共享 CSS 缺失 ' + rel(target));
+        badLinks++;
+        continue;
+      }
+      if (hashOf(fs.readFileSync(target, 'utf8')) !== l.hash) {
+        issues.push(rel(f) + ' → ' + rel(target) + ' 内容 hash 不符');
+        badLinks++;
+      }
+    }
+  }
+  printRow('post/article-common.css', commonOk ? '存在' : '缺失', commonOk);
+  printRow('共享 CSS link（文件 + hash）', links + ' 处 · 异常 ' + badLinks, badLinks === 0);
+  printRow('重复内联 CSS 分组', repeats === 0 ? '0 组（独有内联 ' + inlineBlocks + ' 处）' : repeats + ' 组', repeats === 0);
+  if (repeats === 0 && badLinks === 0 && commonOk) console.log('  ✅  共享样式层完整，无重复内联 CSS');
+  return issues;
+}
+
+/* ─────────── 检查 11: 首页静态兜底 ─────────── */
+const { CONTAINERS, extractBlocks, renderBlocks, loadBlog } = require('./home-static.cjs');
+
+function checkIndexStatic() {
+  printSection('首页静态兜底');
+  const issues = [];
+  const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
+  const actual = extractBlocks(html);
+  let expected = null;
+  try {
+    expected = renderBlocks(loadBlog());
+  } catch (e) {
+    issues.push('无法从 articles.js 生成静态块：' + e.message);
+  }
+  let stale = 0, missing = 0;
+  for (const id of CONTAINERS) {
+    if (actual[id] === null) { missing++; issues.push('#' + id + ' 缺静态兜底标记'); }
+    else if (expected && actual[id] !== expected[id]) {
+      stale++;
+      issues.push('#' + id + ' 静态兜底已过期，需跑 node scripts/build-index.cjs');
+    }
+  }
+  const deferred = /<script src="home\/articles\.js" defer><\/script>/.test(html);
+  const wrapped = /document\.addEventListener\('DOMContentLoaded'/.test(html);
+  if (!deferred) issues.push('home/articles.js 未使用 defer');
+  if (!wrapped) issues.push('首页渲染脚本未包进 DOMContentLoaded（defer 后会拿不到 BLOG）');
+
+  printRow('四个容器静态兜底', (CONTAINERS.length - missing - stale) + '/' + CONTAINERS.length + ' 最新', missing + stale === 0);
+  printRow('defer + DOMContentLoaded', deferred && wrapped ? '已就位' : '缺失', deferred && wrapped);
+  if (issues.length === 0) console.log('  ✅  首页禁用 JS 也能看到最新内容');
+  return issues;
+}
+
+/* ─────────── 检查 12: 图片属性与封面双格式 ─────────── */
+const { walkCovers, pendingList } = require('./cover-webp.cjs');
+/* 与修复脚本共用「本地图片」判定，避免 lint 把空 src 解析出的目录误计成图片 */
+const { resolveLocal, EMPTY_SRC_IMG } = require('./apply-image-attrs.cjs');
+
+function checkImages() {
+  printSection('图片属性与封面双格式');
+  const issues = [];
+  const covers = walkCovers();
+  const missingWebp = pendingList();
+  for (const f of missingWebp) issues.push(rel(f) + ' 缺/过期 cover.webp');
+
+  let imgTotal = 0, localTotal = 0, sized = 0, decoded = 0, ready = 0, emptySrc = 0;
+  for (const f of walk(ROOT, '.html')) {
+    if (rel(f).startsWith('.tools/')) continue;
+    const html = fs.readFileSync(f, 'utf8');
+    for (const m of html.matchAll(/<img\b[^>]*>/gi)) {
+      const tag = m[0];
+      imgTotal++;
+      if (/\bdecoding\s*=/i.test(tag)) decoded++;
+      else issues.push(rel(f) + ' 有 img 缺 decoding');
+      const src = (tag.match(/\bsrc\s*=\s*["']([^"']*)["']/i) || [])[1] || '';
+      if (EMPTY_SRC_IMG.test(tag)) {
+        emptySrc++;
+        issues.push(rel(f) + ' 有 src 为空的 img（会渲染成破图）');
+        continue;
+      }
+      const local = resolveLocal(f, src);
+      if (local) {
+        localTotal++;
+        if (/\bwidth\s*=/i.test(tag) && /\bheight\s*=/i.test(tag)) sized++;
+        else issues.push(rel(f) + ' 本地图片 ' + src + ' 缺 width/height');
+      }
+      if (/cover\.jpg/i.test(src) && /data-cover-ready/i.test(tag)) ready++;
+    }
+  }
+  const coversReady = covers.length - missingWebp.length;
+  printRow('cover.webp 伴生', coversReady + '/' + covers.length, missingWebp.length === 0);
+  printRow('本地图片 width/height', sized + '/' + localTotal, sized === localTotal);
+  printRow('img decoding="async"', decoded + '/' + imgTotal, decoded === imgTotal);
+  printRow('封面 picture 升级', ready + '/' + covers.length, ready === covers.length);
+  printRow('无空 src 破图', emptySrc === 0 ? '0 处' : emptySrc + ' 处', emptySrc === 0);
+  if (issues.length === 0) console.log('  ✅  封面双格式与图片属性齐全');
+  return issues;
+}
+
 /* ─────────── 主流程 ─────────── */
 
 function main() {
@@ -362,11 +489,14 @@ function main() {
   const missingReadCss = checkReadCss();
   const seoIssues = checkSeoMeta();
   const infraIssues = checkInfra();
+  const sharedCssIssues = checkSharedCss();
+  const indexStaticIssues = checkIndexStatic();
+  const imageIssues = checkImages();
 
   console.log('\n━━━━━ 总览 ━━━━━');
   const issueCount =
     deadLinks.length + orphans.length + dupIds.length + missingReadCss.length +
-    seoIssues.length + infraIssues.length +
+    seoIssues.length + infraIssues.length + sharedCssIssues.length + indexStaticIssues.length + imageIssues.length +
     (displayNum !== null && displayNum !== postCount ? 1 : 0) +
     (postCount !== articles.length ? 1 : 0) +
     (heroStatus && heroStatus.actual !== heroStatus.shouldBe ? 1 : 0) +

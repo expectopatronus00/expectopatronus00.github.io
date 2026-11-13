@@ -14,7 +14,7 @@
 
 ```
 DESIGN.md                   全站设计系统规范（配色 / 排版 / 组件 / 响应式，供 AI 编码 Agent 阅读）
-index.html                  首页（hero / 系列 / 主题 / 最近更新，全部由 JS 渲染）
+index.html                  首页（hero / 系列 / 主题 / 最近更新；静态兜底 + defer 增强，禁用 JS 也可读）
 feed.xml                    全站 RSS，由 scripts/build-index.cjs 生成
 sitemap.xml                 站点地图，同上
 robots.txt                  爬虫规则与 Sitemap 声明
@@ -31,18 +31,31 @@ home/
 
 post/
   article.js                文章页增强脚本（目录 / 进度条 / 上下篇 / 相关阅读）
+  article-read.css          文章共享易读性层（正文排版 / 封面 picture / CTA 单列）
+  article-common.css        出现最多的共享内联 CSS（由 apply-shared-css.cjs 抽出）
+  _shared/<hash>.css        其余按内容哈希去重的共享 CSS
   <id>/<id>.html            每篇文章独立目录
+  <id>/cover.jpg            可选封面（og:image 与 picture fallback）
+  <id>/cover.webp           同上，现代浏览器实际加载的双格式伴生图
 
 nav/                        AI 工具导航站（读 data.json）
   stars/                    星标榜的数据与渲染模块（嵌在 nav/index.html 的 #stars 区块）
 
 scripts/
-  repo-lint.cjs             仓库一致性检查（文章数 / 死链 / 重复 / 样式与 SEO 覆盖率 / 基础设施）
-  build-index.cjs           生成 feed.xml 与 sitemap.xml
-  seo-meta.cjs              文章 SEO 元数据唯一实现（canonical / og:* / JSON-LD）
-  apply-seo-meta.cjs        存量文章幂等注入 SEO 元数据
-  enhance-articles.cjs      给文章页批量注入 post/article.js
+  repo-lint.cjs             仓库一致性门禁（文章数 / 死链 / 重复 / 样式 / SEO / 共享 CSS / 静态兜底 / 图片）
+  build-article.cjs         渲染新文章（SEO 元数据 / 封面 jpg+webp / 首页静态兜底同步）
+  build-index.cjs           生成 feed.xml 与 sitemap.xml，并同步首页静态兜底与图片属性
   daily-run.cjs             每日收尾：检查 → 重建索引 → 提交推送 → 通知
+  seo-meta.cjs              文章 SEO 元数据唯一实现（canonical / og:* / JSON-LD）
+  apply-seo-meta.cjs        存量文章幂等注入 SEO 元数据（--dry / --check / --revert）
+  apply-read-css.cjs        存量文章幂等注入 article-read.css
+  readability.cjs           文章易读性体检（≥75 才算成稿）
+  shared-css.cjs            共享样式层的哈希 / 扫描 / link 生成唯一实现
+  apply-shared-css.cjs      把重复内联 CSS 抽成共享文件（--dry / --check / --revert）
+  home-static.cjs           由 window.BLOG 生成首页四块静态兜底（--check / --show）
+  cover-webp.cjs            用 Chromium canvas 把 cover.jpg 转成 cover.webp
+  apply-image-attrs.cjs     幂等补齐 img 宽高 / decoding / picture，清理空 src 破图
+  enhance-articles.cjs      给文章页批量注入 post/article.js
   site-health.cjs           站点健康检查（feed 完整性 / 线上探活 / 断更）
   notify.cjs                统一通知出口，所有自动化环节都调它
   auto-publish.cjs          一条链接走完抓取 → 生成 → 发布

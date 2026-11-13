@@ -150,6 +150,23 @@
   font-size: 1em;
 }
 
+/* ── 4.5 封面 picture（P1-C） ──────────────────────────────────────────
+   cover.jpg 升级成双格式 <picture> 后，picture 默认是 inline，
+   包住 display:block 的 img 会产生匿名块盒并多出一行行高。这里显式块级对齐。 */
+.hero-image picture[data-cover-picture] {
+  display: block;
+}
+/* width/height 属性会被当成固定高度的 presentational hint；
+   CSS 只覆盖 width 时图片会被压扁，显式 height:auto 才能让浏览器按属性比例缩放。 */
+.hero-image picture[data-cover-picture] img {
+  height: auto;
+}
+/* CTA 框原本是「封面 + 内容」两列；清掉空封面后若还留着 1fr 1.3fr，
+   内容会被挤进窄的第一列。带 data-no-cover 的收成单列。 */
+.cta-box[data-no-cover] {
+  grid-template-columns: 1fr;
+}
+
 /* ── 5. 列表与表格 ──────────────────────────────────────────────────────
    新规范要求每节至少有一个结构化块，这里保证它们排得好看。 */
 .article-body > ul,

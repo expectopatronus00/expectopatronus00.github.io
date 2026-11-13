@@ -1,10 +1,10 @@
 ---
-version: 1.0
+version: 1.1
 name: EXPECTOPATRONUS Blog Design System
 description: 中文 AI 工具学习归档站的设计系统。编辑室 × 技术实验室，暗色为默认、暖纸为浅色，字体主导、网格规整、留白克制，配色只做收敛。供 AI 编码 Agent 在生成页面或改样式前阅读。
 source_of_truth: home/design-tokens.css
 scope: 全站（首页 index.html / 归档 home / 导航站 nav / 全部文章页 post）
-updated: 2026-11-11
+updated: 2026-11-13
 ---
 
 # DESIGN.md · EXPECTOPATRONUS
@@ -20,19 +20,21 @@ updated: 2026-11-11
 | 文件 | 职责 | 影响范围 |
 | --- | --- | --- |
 | `home/fonts.css` | 字体声明（拉丁自托管 woff2 + 中文 CDN 分片） | 全站 |
-| `home/design-tokens.css` | **唯一共享视觉规范**：token、reset、共享组件、响应式、精修层 | 全站 157 个 HTML |
+| `home/design-tokens.css` | **唯一共享视觉规范**：token、reset、共享组件、响应式、精修层 | 全站所有 HTML |
+| `post/article-common.css` / `post/_shared/<hash>.css` | 从重复内联样式抽出的共享 CSS，按内容哈希去重，由 `scripts/apply-shared-css.cjs` 管理 | 文章页 |
 | 各页内联 `<style>` | 页面专属结构（hero、归档列表、导航卡片…） | 单页 |
-| `post/article-read.css` | 文章易读性层（正文排版、章节呼吸、列表/表格、移动端目录） | 147 篇文章 |
+| `post/article-read.css` | 文章易读性层（正文排版、章节呼吸、列表/表格、封面 picture、移动端目录） | 全部文章页 |
 | `post/article.js` | 运行时注入：进度条、侧边/移动端目录、上下篇、相关文章、超长核对框折叠 | 文章页 |
-| `scripts/build-article.cjs` | 新文章 HTML 渲染（含 `article-read.css` 兜底注入） | 新稿 |
+| `scripts/build-article.cjs` | 新文章 HTML 渲染（SEO 元数据 / `article-read.css` / 封面 jpg+webp / 首页静态兜底同步） | 新稿 |
 
-**加载顺序**：`fonts.css` → `design-tokens.css` → 页面内联 `<style>` → `article-read.css`（由 `scripts/apply-read-css.cjs` 插在 `</head>` 前）。
+**加载顺序**：`fonts.css` → `design-tokens.css` → 页面内联 `<style>` 或它的等价格 `<link data-shared-css>` → `article-read.css`（由 `scripts/apply-read-css.cjs` 插在 `</head>` 前）。共享 CSS 是**原位替换**内联 `<style>`，内容与层叠顺序都不变，所以视觉零回归。
 
-三条由此产生的硬约束：
+四条由此产生的硬约束：
 
 1. `design-tokens.css` 在页面内联样式**之前**加载，同名规则会被页面级回收。因此精修层的覆盖规则统一写 `html body .xxx` 提升特异性（见该文件 `EDITORIAL REFINEMENT` 区块）。**新增全站规则一律沿用 `html body` 前缀。**
-2. `article-read.css` 在内联样式**之后**加载，同特异性下自然生效，**不需要 `!important`**，也绝不改 147 篇文章的正文。
-3. 新增通用组件样式请**追加到 `design-tokens.css`**，不要新建全站 CSS 文件、不要给文章页逐个加内联样式。
+2. `article-read.css` 在内联样式**之后**加载，同特异性下自然生效，**不需要 `!important`**；改呈现层只动这一个共享文件，不逐篇改文章 HTML。
+3. 新增通用组件样式请**追加到 `design-tokens.css`**；文章级共享规则追加到 `post/article-read.css`。不要新建全站 CSS 文件、不要给文章页逐个加内联样式。
+4. `post/article-common.css` 与 `post/_shared/` 是**生成物**，由 `apply-shared-css.cjs` 按内容哈希产出，不要手改；`repo-lint.cjs` 会校验每个 `data-shared-css` link 指向的文件存在且哈希一致。
 
 **主题机制**：`<html>` 上用 `data-theme="dark" | "light"` 切换，偏好存 `localStorage.theme`，默认 `dark`，只有值为 `light` 时才写入属性。首页与归档页 HTML 硬编码 `data-theme="dark"`，文章页由 `<head>` 内联脚本读取后设置。所有颜色必须走语义变量，才能双主题自动生效。
 
@@ -150,8 +152,12 @@ Cormorant Garamond 默认输出旧式数字（2 下沉、看起来像 1），所
 | 卡片组 | `.module-grid` / `.dim-card` / `.cmd-grid` / `.platform-list` | 3 列 / 2 列 / `auto-fit minmax(240px,1fr)`；`--bg-card` + 1px 边框 + `--r-lg` |
 | 文章增强 | `.read-progress` / `.article-toc` / `.source-note` / `.merged-note` / `.prev-next` / `.related` | 由 `article.js` 运行时注入，HTML 不必手写；目录只在 ≥1240px 显示，当前项左侧 2px 锈色线 |
 | 页脚 / 回顶 | `.site-footer` / `.floating-top` | `--sp-12` 上间距；回顶 46×46 圆形、fixed 右下 28px、`.visible` 才出现 |
+| 封面双格式 | `.hero-image picture[data-cover-picture]` | `display:block` 消除匿名块盒；`img { height:auto }` 保住比例。`cover.webp` 给现代浏览器，`cover.jpg` 留给 fallback 与 `og:image` |
+| CTA 单列变体 | `.cta-box[data-no-cover]` | 空封面清掉后从 `1fr 1.3fr` 收成 `1fr`，避免内容被挤进窄的第一列 |
 
 **文章增强的两个运行时阈值**（`post/article.js`）：`.info-box` 正文 ≥280 字自动折成 `<details>`；`<1240px` 生成折叠章节目录。侧边目录只收正文 `h2`，**排除文末「相关平台」那个 h2**。
+
+**图片的两条易错规则**：`<img>` 的 `width/height` 属性只是防 CLS 的比例提示，浏览器会当成 presentational hint；CSS 只写 `width:100%` 时不加 `height:auto` 会把封面压扁。站内不允许留 `src=""` 的占位图——没有脚本填充时它只会渲染成破图 + alt 文字，这类空 `.hero-image` 由 `scripts/apply-image-attrs.cjs` 整块清理。
 
 ---
 
@@ -198,7 +204,7 @@ z-index 层级：氛围层 `1`（渐变）/ `2`（噪点）→ 内容 `10` → �
 
 - 不要 `!important`；不要硬编码 `#fff` / `#000` / 任意 px 间距。
 - 不要改字体栈、不要引入新字体或前端框架/构建工具、不要整站换皮。
-- 不要给 147 篇文章逐个改内联 `<style>`；不要新建第二个全站 CSS 文件。
+- 不要逐篇改文章页的内联 `<style>`；不要新建第二个全站 CSS 文件。
 - 不要用 `--ink-500`（3.06:1）或 `--accent-rust`（4.11:1）当文字色；不要用 `--accent-*` 装饰色做小字。
 - 不要把 `.article-body` 行高压到 1.5 以下、把正文行宽放到 780px 以上；不要为「更现代」加渐变按钮、霓虹或大幅阴影。
 - 不要绕过 `repo-lint` 提交；不要改 `nav/stars/data.json` / `rank.json`（由每日快照任务维护）。
@@ -263,8 +269,11 @@ z-index 层级：氛围层 `1`（渐变）/ `2`（噪点）→ 内容 `10` → �
 
 ## 10. 验收清单
 
-- [ ] `node scripts/repo-lint.cjs` 输出「全部通过」，含「全部文章页已接入共享易读性样式 147/147」。
+- [ ] `node scripts/repo-lint.cjs` 输出「全部通过」；易读性样式 / canonical / og:image / twitter:card / JSON-LD 各项覆盖率**分子等于分母**。
+- [ ] 幂等脚本 `--check` 全部归零：`apply-read-css.cjs`、`apply-seo-meta.cjs`、`apply-shared-css.cjs`、`home-static.cjs`、`apply-image-attrs.cjs`、`cover-webp.cjs`。
 - [ ] 新文章 `node scripts/readability.cjs --file post/<id>/<id>.html` ≥75（三档：<60 重写、60–74 改写、≥75 通过）。
+- [ ] 首页在 `javaScriptEnabled:false` 下四块静态兜底仍有内容；`home/articles.js` 必须 `defer`，渲染脚本必须包 `DOMContentLoaded`。
+- [ ] 有封面的文章实测 `img.currentSrc` 结尾为 `.webp`，显示比例与图片原始比例一致；无封面的文章不得有空 `src` 破图或空 `.hero-image`。
 - [ ] 深色 + 浅色两套主题都截图核对；正文小字对比度 ≥4.5:1。
 - [ ] 桌面 1440 / 手机 390 均无横向溢出，触摸目标 ≥44px，键盘 Tab 焦点环可见。
 - [ ] 本文件与 `home/design-tokens.css` 的数值、断点、组件名一致。

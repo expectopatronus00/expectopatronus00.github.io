@@ -3,6 +3,33 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'gh-d4vinci-scrapling',
+            title: '102,361 星、55 版仍是 Beta：默认只装解析器',
+            url: '../post/gh-d4vinci-scrapling/gh-d4vinci-scrapling.html',
+            summary: '102,361 星、55 版全是 0.x，pyproject.toml 自标 Beta。README 首例 import 的 fetchers 不在默认安装里；docs 8.09 MB 是核心代码 640 KB 的 12.6 倍。基准表 1714.9 倍来自最慢的 BS4 组合，赞助区占 README 的 27%。',
+            category: 'AI 编程',
+            date: '2026-11-13',
+            tags: ["Scrapling","网页抓取","开源项目"],
+          },
+          {
+            id: 'gh-vercel-labs-agent-browser',
+            title: '50,413 星、69 个命令：agent 浏览器默认不设防',
+            url: '../post/gh-vercel-labs-agent-browser/gh-vercel-labs-agent-browser.html',
+            summary: '50,413 星的 Rust 浏览器 CLI，用可访问性树与 @eN 引用让 agent 一步一条命令。README 列 11 组 69 个命令，配置 schema 有 53 个属性。但安全文档写明：导航、动作、输出控制默认不设限，全靠 opt-in。v0.43.0 发布于 2026-11-12，附 7 个平台二进制。',
+            category: 'AI 编程',
+            date: '2026-11-13',
+            tags: ["开源项目","浏览器自动化","Agent 工具链"],
+          },
+          {
+            id: 'gh-mattpocock-skills',
+            title: '32 万星，README 只认 27 个技能：其余 12 份不发货',
+            url: '../post/gh-mattpocock-skills/gh-mattpocock-skills.html',
+            summary: '323,055 星的 mattpocock/skills，README 与插件清单只列 27 个技能，完整 git tree 却有 39 份 SKILL.md。CLAUDE.md 写明插件只发正式桶，两处桶清单没跟上规则。贡献者 4 个账号合计 539 次提交，作者占 94.1%。',
+            category: 'AI 编程',
+            date: '2026-11-13',
+            tags: ["开源项目","Agent Skills","仓库治理"],
+          },
+          {
             id: 'gh-wquguru-cicada',
             title: '2,187 星、10 天 13 版：知了免费只落在一块芯片',
             url: '../post/gh-wquguru-cicada/gh-wquguru-cicada.html',

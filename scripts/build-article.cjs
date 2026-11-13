@@ -28,6 +28,8 @@
 const fs = require('fs');
 const path = require('path');
 const { injectSeo, siteUrl } = require('./seo-meta.cjs');
+const { syncIndexStatic } = require('./home-static.cjs');
+const { encodeWebp } = require('./cover-webp.cjs');
 
 const ROOT = path.resolve(__dirname, '..');
 const TPL = path.join(ROOT, 'post', 'dy-20261021-skill-top20', 'dy-20261021-skill-top20.html');
@@ -316,7 +318,17 @@ ${bars ? '<div class="gates">\n' + bars + '\n</div>' : ''}
     await page.setContent(html, { waitUntil: 'load' });
     await page.waitForTimeout(900);
     await page.screenshot({ path: outFile, type: 'jpeg', quality: 92 });
-    return { ok: true, size: fs.statSync(outFile).size };
+
+    /* 同一张图顺带编码 webp：<picture> 用 webp，og:image 与 fallback 仍用 jpg */
+    let webpSize = 0;
+    try {
+      const webpBuf = await encodeWebp(page, fs.readFileSync(outFile), 'image/jpeg');
+      fs.writeFileSync(outFile.replace(/\.jpg$/, '.webp'), webpBuf);
+      webpSize = webpBuf.length;
+    } catch (e) {
+      console.warn('⚠ webp 伴生图生成失败（不影响 jpg 封面）：' + e.message.split('\n')[0]);
+    }
+    return { ok: true, size: fs.statSync(outFile).size, webpSize };
   } catch (e) {
     return { ok: false, reason: e.message.split('\n')[0] };
   } finally {
@@ -381,6 +393,9 @@ function insertEntry(spec) {
     idx = before + after;
     fs.writeFileSync(INDEX_HTML, idx);
   }
+
+  // 索引刚写入，首页静态兜底同步刷新，让当天新稿在禁用 JS 时也可见
+  syncIndexStatic();
 
   return total;
 }

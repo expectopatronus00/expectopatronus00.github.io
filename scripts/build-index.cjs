@@ -340,6 +340,32 @@ function main() {
     (sitemapState === 'written' ? '已写入    ' : '未变化    ') +
       'sitemap.xml（' + (articles.length - MERGED_IDS.length + 5) + ' 条 URL）'
   );
+
+  /* 首页四块内容是纯 JS 渲染的，静态 HTML 里也得有一份（无 JS / 爬虫可见）。
+     跟着索引一起重建，避免出现「索引已更新但兜底还是昨天」的漂移。 */
+  try {
+    const { syncIndexStatic } = require('./home-static.cjs');
+    const st = syncIndexStatic();
+    console.log((st.changed ? '已更新    ' : '未变化    ') + 'index.html 静态兜底');
+  } catch (e) {
+    console.error('首页静态兜底生成失败：' + e.message);
+    process.exit(1);
+  }
+
+  /* 图片属性同步（纯字符串，不需要 playwright）：新稿的封面在 build-article.cjs
+     生成 cover.webp 后，这里把 <img> 升级成 picture 并补齐 width/height。 */
+  try {
+    const { execFileSync } = require('child_process');
+    const out = execFileSync(
+      process.execPath,
+      [path.join(ROOT, 'scripts', 'apply-image-attrs.cjs')],
+      { cwd: ROOT, encoding: 'utf8' }
+    );
+    console.log(out.trim().split('\n').pop());
+  } catch (e) {
+    console.error('图片属性同步失败：' + (e.stdout || e.message).toString().trim());
+    process.exit(1);
+  }
 }
 
 /** 只在内容真的变了才写盘。keepBuildDate 为真时，只有时间戳不同视为「没变」。 */

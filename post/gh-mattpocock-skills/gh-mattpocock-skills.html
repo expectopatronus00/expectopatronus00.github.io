@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>32 万星，README 只认 27 个技能：其余 12 份不发货 · EXPECTOPATRONUS</title>
+    <meta name="description" content="323,055 星的 mattpocock/skills，README 与插件清单只列 27 个技能，完整 git tree 却有 39 份 SKILL.md。CLAUDE.md 写明插件只发正式桶，两处桶清单没跟上规则。贡献者 4 个账号合计 539 次提交，作者占 94.1%。" />
+    <meta name="keywords" content="开源项目, Agent Skills, 仓库治理" />
+    <meta property="og:title" content="32 万星，README 只认 27 个技能：其余 12 份不发货" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="323,055 星的 mattpocock/skills，README 与插件清单只列 27 个技能，完整 git tree 却有 39 份 SKILL.md。CLAUDE.md 写明插件只发正式桶，两处桶清单没跟上规则。贡献者 4 个账号合计 539 次提交，作者占 94.1%。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <link rel="stylesheet" href="../article-common.css" data-shared-css="0d59321e71" />
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+    <!-- seo:begin -->
+    <link rel="canonical" href="https://expectopatronus00.github.io/post/gh-mattpocock-skills/gh-mattpocock-skills.html" />
+    <meta property="og:url" content="https://expectopatronus00.github.io/post/gh-mattpocock-skills/gh-mattpocock-skills.html" />
+    <meta property="og:site_name" content="EXPECTOPATRONUS" />
+    <meta property="og:image" content="https://expectopatronus00.github.io/post/gh-mattpocock-skills/cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"32 万星，README 只认 27 个技能：其余 12 份不发货","description":"323,055 星的 mattpocock/skills，README 与插件清单只列 27 个技能，完整 git tree 却有 39 份 SKILL.md。CLAUDE.md 写明插件只发正式桶，两处桶清单没跟上规则。贡献者 4 个账号合计 539 次提交，作者占 94.1%。","image":"https://expectopatronus00.github.io/post/gh-mattpocock-skills/cover.jpg","inLanguage":"zh-CN","author":{"@type":"Person","name":"expectopatronus","url":"https://expectopatronus00.github.io"},"publisher":{"@type":"Organization","name":"EXPECTOPATRONUS","url":"https://expectopatronus00.github.io"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://expectopatronus00.github.io/post/gh-mattpocock-skills/gh-mattpocock-skills.html"},"datePublished":"2026-11-13","dateModified":"2026-11-13"}</script>
+    <!-- seo:end -->
+</head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>32 万星，README 只认 27 个技能：其余 12 份不发货</h1>
+      <p>323,055 星、27,100 fork、240 个未结条目。这个仓库的 README 与 plugin.json 都只列 27 个技能，完整 git tree 里却有 39 份 SKILL.md。差的 12 份不是漏数：CLAUDE.md 早把它写成一条打包规则，插件只发正式桶，in-progress、misc、deprecated 一律不进清单。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-13</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 6 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <picture data-cover-picture="1">
+        <source srcset="cover.webp" type="image/webp" />
+        <img loading="lazy" alt="32 万星，README 只认 27 个技能：其余 12 份不发货 封面" src="cover.jpg" width="2400" height="1260" decoding="async" data-cover-ready="1" />
+      </picture>
+    </div>
+
+    <article class="article-body">
+<div class="section-marker">01 · 这件事</div>
+<h2>32 万星，README 只认 27 个技能</h2>
+
+<p><strong>这个仓库最值得读的不是那 27 个技能，而是它把「哪些技能不发货」写成了一条硬规则。</strong></p>
+
+<p>mattpocock/skills 的作者是 Matt Pocock，plugin.json 的 author.name 写的就是这个名字。仓库描述是「Skills for Real Engineers. Straight from my .agents directory.」。</p>
+
+<p>它是一组给编码 agent 用的 Markdown 技能文件，不是运行时，也不是框架。</p>
+
+<p>2026-11-13 用 api.github.com 核对：323,055 星、27,100 fork、240 个未结条目，MIT，主语言 Shell，建于 2026-02-03，最近推送 2026-11-12。默认分支 main，主页指向 aihero.dev/skills。</p>
+
+<p>身份字段先列成表，下面所有数字都来自同一份仓库接口，不引用仓库的 size 字段。</p>
+
+<table>
+  <thead><tr><th>字段</th><th>核对值</th></tr></thead>
+  <tbody>
+    <tr><td>仓库 / 描述</td><td>mattpocock/skills · Skills for Real Engineers</td></tr>
+    <tr><td>星标 / fork</td><td>323,055 / 27,100</td></tr>
+    <tr><td>未结条目</td><td>240（拆开为 217 issue + 23 PR）</td></tr>
+    <tr><td>创建 / 最近推送</td><td>2026-02-03 / 2026-11-12</td></tr>
+    <tr><td>许可 / 主语言</td><td>MIT / Shell</td></tr>
+    <tr><td>默认分支 / 主页</td><td>main / aihero.dev/skills</td></tr>
+  </tbody>
+</table>
+
+<p>240 这个数含 PR。用 <code>search/issues</code> 拆开是 217 个未结 issue、23 个未结 PR，不能当成 240 个 bug 读。</p>
+
+<p>README 的 Reference 只列 27 个技能：Engineering 20 个、Productivity 7 个；按调用方式分是 16 个只能手打、11 个模型可自动触发。插件清单也正好 27 条。</p>
+
+<p>但完整 git tree 里有 39 份 <code>SKILL.md</code>。<span class="hl">差的 12 份，仓库自己给了答案</span>。</p>
+
+<div class="section-marker">02 · 核心机制</div>
+<h2>27 是发货单，39 是库存，规则写在 CLAUDE.md</h2>
+
+<p><strong>27 和 39 的差值不是漏数，是 CLAUDE.md 里写死的一条打包规则。</strong></p>
+
+<p>CLAUDE.md 原文规定：engineering/ 与 productivity/ 里的每个技能，都必须同时出现在顶层 README 和 .claude-plugin/plugin.json 的 skills 数组里；括号里补了一句，插件「只发这一组」。</p>
+
+<p>同一段还写明：misc/、in-progress/、deprecated/ 里的技能，两份清单都不许出现。换句话说，README 是发货单，不是库存清单，两个数字本来就不是一个口径。</p>
+
+<p>五个桶按这个口径列成表。20 + 7 + 8 + 4 + 0 得 39，其中被发货的恰好是前两行。</p>
+
+<table>
+  <thead><tr><th>桶目录</th><th>SKILL.md</th><th>进 README</th><th>进插件</th><th>状态</th></tr></thead>
+  <tbody>
+    <tr><td>skills/engineering</td><td>20</td><td>是</td><td>是</td><td>正式，日常代码工作</td></tr>
+    <tr><td>skills/productivity</td><td>7</td><td>是</td><td>是</td><td>正式，通用工作流</td></tr>
+    <tr><td>skills/in-progress</td><td>8</td><td>否</td><td>否</td><td>Beta，刻意公开求反馈</td></tr>
+    <tr><td>skills/misc</td><td>4</td><td>否</td><td>否</td><td>冻结且不再维护</td></tr>
+    <tr><td>skills/deprecated</td><td>0</td><td>否</td><td>否</td><td>空桶，退役即删除</td></tr>
+  </tbody>
+</table>
+
+<p>plugin.json 的 version 是 1.3.2，skills 数组 20 条 engineering 加 7 条 productivity，与 README 逐项对应。marketplace.json 只挂了 1 个插件，source 写的是 ./。</p>
+
+<p>plugin.json 的 author.name 写的是 Matt Pocock，license 为 MIT，和仓库接口的许可字段一致。两份清单里都找不到 in-progress 的路径，规则确实落在文件上，而不只是写在文档里。</p>
+
+<p>tag 共 10 个，最新 v1.3.2；CHANGELOG 从 1.0.0 到 1.3.2 列了 9 个版本段。规则、清单、版本号三处对得上，没有一处需要靠猜。</p>
+
+<p>所以 <span class="hl">把 39 写成「README 虚报」是误读</span>：这里真正在维护的是一套筛选规则，技能只是它的产物。</p>
+
+<div class="section-marker">03 · 关键细节与数据</div>
+<h2>规则写得越细，越容易露出两处没同步</h2>
+
+<p><strong>桶清单本身有两处没跟上 CLAUDE.md，第三处看着像漏删，其实是规则允许。</strong></p>
+
+<p>第一处在 in-progress/。桶 README 说这些是 Beta、刻意公开求反馈、不进插件也不进顶层 README，正文列了 7 个技能。目录里却有 8 份 <code>SKILL.md</code>。</p>
+
+<p>多出来的是 chief-of-staff。.changeset/ 里还有一份 chief-of-staff-shared-wiki-procedures.md，说明它正在改动中，只是桶 README 没跟上。CLAUDE.md 明确要求每个桶 README 列出桶内每一个技能。</p>
+
+<p>第二处在 .out-of-scope/。SCOPE.md 的「Already decided」列了 8 份否决记录，目录里实际有 9 份，多的是 lazy-load-writing-for-agents.md。该文件开头要求提 issue 前把这些全部读完。</p>
+
+<p>第三处看着像漏删，其实合规。docs/engineering 有 21 个页面，对应 20 个技能；多出的 resolving-merge-conflicts 首行标着 Archived，写明 v1.3.0 从插件移除、页面保留备查。</p>
+
+<p>CLAUDE.md 对此写了例外：被整体移除的正式技能，文档页留下并标 archived。所以 21 不是错，是留档。把三处并列看，才分得清哪些是漂移、哪些是设计。</p>
+
+<table>
+  <thead><tr><th>位置</th><th>应然</th><th>实然</th><th>判断</th></tr></thead>
+  <tbody>
+    <tr><td>in-progress/README.md</td><td>列全桶内技能</td><td>列 7，目录 8</td><td>少 chief-of-staff</td></tr>
+    <tr><td>SCOPE.md 已决清单</td><td>列全 .out-of-scope</td><td>列 8，目录 9</td><td>少 lazy-load 那份</td></tr>
+    <tr><td>docs/engineering</td><td>一技能一页</td><td>21 页 / 20 技能</td><td>多的是 archived 页</td></tr>
+  </tbody>
+</table>
+
+<p>体量也说明这是文档工程。完整 git tree <code>truncated=false</code>，282 个节点、184 个 blob、126 个 .md 文件，合计 794,314 字节；39 份 SKILL.md 共 177,615 字节，最小 157、最大 12,594。</p>
+
+<p>根目录 19 个条目，11 个文件、8 个目录。几个关键文件的字节数照 contents 接口列成表，比零散写更清楚。</p>
+
+<table>
+  <thead><tr><th>文件</th><th>字节</th><th>作用</th></tr></thead>
+  <tbody>
+    <tr><td>CHANGELOG.md</td><td>66,893</td><td>9 个版本段的变更记录</td></tr>
+    <tr><td>README.md</td><td>16,461</td><td>安装说明与 27 项 Reference</td></tr>
+    <tr><td>package-lock.json</td><td>49,290</td><td>构建脚本依赖锁</td></tr>
+    <tr><td>CLAUDE.md</td><td>4,206</td><td>桶规则与文档同步要求</td></tr>
+    <tr><td>SCOPE.md</td><td>2,348</td><td>issue 两道闸门与否决清单</td></tr>
+    <tr><td>AGENTS.md</td><td>9</td><td>指向 CLAUDE.md 的符号链接</td></tr>
+  </tbody>
+</table>
+
+<p>CHANGELOG.md 是 README.md 的 4.06 倍长。AGENTS.md 只有 9 字节，内容就是文件名 CLAUDE.md。更新记录比说明书长四倍，这仓库的重心在哪一眼可见。</p>
+
+<div class="info-box"><p>数据核对：字段均直接读取，三个计数口径不可混用。</p>
+<ul>
+  <li>身份：323,055 星 / 27,100 fork / 240 未结（217 issue + 23 PR），MIT，Shell，建于 02-03，推送 11-12。</li>
+  <li>计数：git tree truncated=false，282 节点 / 184 blob / 126 个 .md；39 份 SKILL.md = 20 + 7 + 8 + 4 + 0。</li>
+  <li>发货：plugin.json v1.3.2，skills 数组 27 条；tag 10 个，CHANGELOG 9 个版本段。</li>
+  <li>边界：贡献者接口合计 539 次提交，commits 分页末页为 555，两者差 16 次，本文按贡献者接口口径。</li>
+  <li>边界：未安装、未运行任何技能，只核仓库里写下来的文件与清单。</li>
+</ul>
+<p>核对时间 2026-11-13。</p></div>
+
+<div class="section-marker">04 · 怎么用</div>
+<h2>先选插件还是可编辑文件，两条路不能同时走</h2>
+
+<p><strong>装它之前要先决定走哪条分发路径，双装会让每个技能出现两次。</strong></p>
+
+<p>README 安装段第一句就是提醒：插件会自更新，skills.sh 拷的是可编辑副本、要手动更新；每个 agent 只挑一种。五条路径按原文列成表，命令不合并、不改写。</p>
+
+<table>
+  <thead><tr><th>目标</th><th>安装命令</th><th>更新方式</th></tr></thead>
+  <tbody>
+    <tr><td>Claude Code</td><td><code>claude plugin install mattpocock-skills@claude-plugins-official</code></td><td>默认自更新</td></tr>
+    <tr><td>Codex</td><td><code>codex plugin marketplace add mattpocock/skills</code></td><td>启动时自更新</td></tr>
+    <tr><td>GitHub Copilot</td><td><code>copilot plugin marketplace add mattpocock/skills</code></td><td>配置后每日更新</td></tr>
+    <tr><td>Gemini CLI</td><td><code>gemini skills install ... --path skills/engineering</code></td><td>手动重跑两条</td></tr>
+    <tr><td>其他 / 可编辑</td><td><code>npx skills@latest add mattpocock/skills -a &lt;agent&gt;</code></td><td>手动 update 与 add</td></tr>
+  </tbody>
+</table>
+
+<p>装完还要在每个仓库跑一次 <code>/setup-matt-pocock-skills</code>。这一步不是可选项，README 说它会问三件事。</p>
+
+<ul>
+  <li>用哪个 issue tracker：GitHub、GitLab、本地文件，或自己描述的其他系统</li>
+  <li>triage 时给票据贴什么标签：<code>/triage</code> 依赖这些标签</li>
+  <li>过程中产生的文档存到哪里</li>
+</ul>
+
+<p>CLAUDE.md 补了一条口径：Claude Code 走官方市场 claude-plugins-official，其余 agent 走仓库自带的 marketplace.json 拿自动更新；改过任一清单后要跑 <code>claude plugin validate . --strict</code>。</p>
+
+<p>要 Beta 技能得单独装，插件不给：命令是 <code>npx skills@latest add mattpocock/skills --skill=&lt;name&gt;</code>。in-progress/README.md 明说这些技能可能随时改动或消失。</p>
+
+<p><span class="hl">30 秒装完，不等于 30 秒能用</span>：选哪条路径、要不要 Beta、每个仓库的配置问答，都排在安装之后。</p>
+
+<div class="section-marker">05 · 冷思考</div>
+<h2>让你随意改，却基本关上了改完往回交的门</h2>
+
+<p><strong>README 鼓励你自己魔改，治理文件却把贡献通道收得很窄，这两句话得一起读。</strong></p>
+
+<p>README 写着「Hack around with them. Make them your own.」。SCOPE.md 却写明新技能提案与贡献一律关闭，misc/ 冻结且每个 issue 都关；配置选项、适配某个 harness、迁就个人流程，都该放进自己的 CLAUDE.md 或 fork。</p>
+
+<p>CONTRIBUTING.md 说 PR 只对 collaborators 开放，仓库接口的 pull_request_creation_policy 也正是 collaborators_only。</p>
+
+<p>issue 要同时过两道闸：有真实会话里的失败复现，且不撞 .out-of-scope/ 里已拒的概念。</p>
+
+<p>门槛还带时限：14 天没回复就关，拒绝按 not planned 结案。AI 代写的 issue 另有一套要求，一个问题一条、复现写在分析之前、不许贴完整规格或重写后的 SKILL.md。</p>
+
+<p>贡献者接口只有 4 个账号、合计 539 次提交，其中 mattpocock 本人 507 次，占 94.1%。其余三个账号的提交数列成表。</p>
+
+<table>
+  <thead><tr><th>贡献者</th><th>提交</th><th>占 539 次</th></tr></thead>
+  <tbody>
+    <tr><td>mattpocock</td><td>507</td><td>94.1%</td></tr>
+    <tr><td>claude</td><td>15</td><td>2.8%</td></tr>
+    <tr><td>github-actions[bot]</td><td>9</td><td>1.7%</td></tr>
+    <tr><td>TESTPERSONAL</td><td>8</td><td>1.5%</td></tr>
+  </tbody>
+</table>
+
+<p>这更像一份个人工作台的公开发布，而不是社区共建的技能库。<span class="hl">32 万星里有作者名气的分量</span>，也有「不 vibe coding」这句口号的传播力，两者很难从星标里拆开。</p>
+
+<p>对普通团队更实际的质疑是：某个技能不合你的项目时，规则明确指向 fork 或自己的 CLAUDE.md，而不是提 PR。那你接手的是一份要自己维护的分支，版本号、桶规则、文档页同步都得跟着走。</p>
+
+<p>把它当一份带版本号的产品说明读，比当插件装进项目更省事。</p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>mattpocock/skills：一组给编码 agent 用的 Markdown 技能文件，配一份写明「哪些不发货」的治理规则。</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/mattpocock/skills" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/mattpocock/skills" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 323,055 星，MIT，plugin v1.3.2</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE">#开源项目</a>
+      <a href="../../home/home.html?q=Agent%20Skills">#Agent Skills</a>
+      <a href="../../home/home.html?q=%E4%BB%93%E5%BA%93%E6%B2%BB%E7%90%86">#仓库治理</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2026 · 数据核对自 GitHub 仓库 mattpocock/skills 的接口字段、README.md、CLAUDE.md、SCOPE.md、CONTRIBUTING.md、.claude-plugin/plugin.json 与完整 git tree，核对时间 2026-11-13。本文未安装、未运行任何技能，仅作学习归档。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

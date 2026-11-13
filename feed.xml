@@ -5,8 +5,32 @@
     <link>https://expectopatronus00.github.io/</link>
     <description>一个 AI 工具与实战的中文学习归档：原创踩坑记录 + 精选转载，每篇都标注来源。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Thu, 12 Nov 2026 14:31:54 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 13 Nov 2026 13:32:10 GMT</lastBuildDate>
     <atom:link href="https://expectopatronus00.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>102,361 星、55 版仍是 Beta：默认只装解析器</title>
+      <link>https://expectopatronus00.github.io/post/gh-d4vinci-scrapling/gh-d4vinci-scrapling.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-d4vinci-scrapling/gh-d4vinci-scrapling.html</guid>
+      <pubDate>Thu, 12 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>102,361 星、55 版全是 0.x，pyproject.toml 自标 Beta。README 首例 import 的 fetchers 不在默认安装里；docs 8.09 MB 是核心代码 640 KB 的 12.6 倍。基准表 1714.9 倍来自最慢的 BS4 组合，赞助区占 README 的 27%。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>50,413 星、69 个命令：agent 浏览器默认不设防</title>
+      <link>https://expectopatronus00.github.io/post/gh-vercel-labs-agent-browser/gh-vercel-labs-agent-browser.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-vercel-labs-agent-browser/gh-vercel-labs-agent-browser.html</guid>
+      <pubDate>Thu, 12 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>50,413 星的 Rust 浏览器 CLI，用可访问性树与 @eN 引用让 agent 一步一条命令。README 列 11 组 69 个命令，配置 schema 有 53 个属性。但安全文档写明：导航、动作、输出控制默认不设限，全靠 opt-in。v0.43.0 发布于 2026-11-12，附 7 个平台二进制。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>32 万星，README 只认 27 个技能：其余 12 份不发货</title>
+      <link>https://expectopatronus00.github.io/post/gh-mattpocock-skills/gh-mattpocock-skills.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-mattpocock-skills/gh-mattpocock-skills.html</guid>
+      <pubDate>Thu, 12 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>323,055 星的 mattpocock/skills，README 与插件清单只列 27 个技能，完整 git tree 却有 39 份 SKILL.md。CLAUDE.md 写明插件只发正式桶，两处桶清单没跟上规则。贡献者 4 个账号合计 539 次提交，作者占 94.1%。（转载 · 来源：微信）</description>
+    </item>
     <item>
       <title>2,187 星、10 天 13 版：知了免费只落在一块芯片</title>
       <link>https://expectopatronus00.github.io/post/gh-wquguru-cicada/gh-wquguru-cicada.html</link>
@@ -222,30 +246,6 @@
       <pubDate>Thu, 29 Oct 2026 16:00:00 GMT</pubDate>
       <category>AI 编程</category>
       <description>Panniantong/Agent-Reach 用一条 CLI 打通 B站、V2EX、GitHub、YouTube、小红书、X 等 14 个渠道，GitHub 106317 星、MIT 协议。它把「首选 + 备选」的工具链藏在一个命令后面，代价是登录墙后的平台要复用你浏览器里的登录态。（转载 · 来源：微信）</description>
-    </item>
-    <item>
-      <title>Uncle Bob 把工程纪律写成了 Skill：ub-mode 的三道硬闸门</title>
-      <link>https://expectopatronus00.github.io/post/gh-unclebob-ub-mode/gh-unclebob-ub-mode.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-unclebob-ub-mode/gh-unclebob-ub-mode.html</guid>
-      <pubDate>Wed, 28 Oct 2026 16:00:00 GMT</pubDate>
-      <category>AI 编程</category>
-      <description>《Clean Code》作者 Uncle Bob 开源的 ub-mode，仓库只有一份 4KB 的 SKILL.md，四天 4374 星。它把工程纪律拆成先跑通、再改对、日常三段，并用 CRAP 分数、结构重复率、变异测试三道确定性闸门，逼 AI 拿数字证明代码干净。本文讲它规定了什么、怎么装，以及为什么只装 Skill 不够。（转载 · 来源：微信）</description>
-    </item>
-    <item>
-      <title>AI Agent Skill 必装榜 Top20：按场景选，别按星标选</title>
-      <link>https://expectopatronus00.github.io/post/dy-20261021-skill-top20/dy-20261021-skill-top20.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-20261021-skill-top20/dy-20261021-skill-top20.html</guid>
-      <pubDate>Sat, 24 Oct 2026 16:00:00 GMT</pubDate>
-      <category>AI 编程</category>
-      <description>抖音 2459 赞的 Skill 必装榜 Top20：从 superpowers 的四步开发流程到 caveman 的省 Token 哲学，20 个 Skill 按「干什么、用在哪」重新归组成场景清单，附正确用法与冷思考。（转载 · 来源：抖音）</description>
-    </item>
-    <item>
-      <title>一眼看清板块情绪：开源 A 股热力图 dapan.app</title>
-      <link>https://expectopatronus00.github.io/post/dy-7696073301038206248/dy-7696073301038206248.html</link>
-      <guid isPermaLink="true">https://expectopatronus00.github.io/post/dy-7696073301038206248/dy-7696073301038206248.html</guid>
-      <pubDate>Fri, 23 Oct 2026 16:00:00 GMT</pubDate>
-      <category>量化与投资</category>
-      <description>抖音 30 万赞的看盘神器：开源 A 股热力图 dapan.app，色块大小是市值、颜色是涨跌幅，板块轮动一眼可见。本文讲怎么读图、数据链路与自部署，顺带对比东财星图和大盘云图。（转载 · 来源：抖音）</description>
     </item>
   </channel>
 </rss>

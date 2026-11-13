@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>102,361 星、55 版仍是 Beta：默认只装解析器 · EXPECTOPATRONUS</title>
+    <meta name="description" content="102,361 星、55 版全是 0.x，pyproject.toml 自标 Beta。README 首例 import 的 fetchers 不在默认安装里；docs 8.09 MB 是核心代码 640 KB 的 12.6 倍。基准表 1714.9 倍来自最慢的 BS4 组合，赞助区占 README 的 27%。" />
+    <meta name="keywords" content="Scrapling, 网页抓取, 开源项目" />
+    <meta property="og:title" content="102,361 星、55 版仍是 Beta：默认只装解析器" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="102,361 星、55 版全是 0.x，pyproject.toml 自标 Beta。README 首例 import 的 fetchers 不在默认安装里；docs 8.09 MB 是核心代码 640 KB 的 12.6 倍。基准表 1714.9 倍来自最慢的 BS4 组合，赞助区占 README 的 27%。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <link rel="stylesheet" href="../article-common.css" data-shared-css="0d59321e71" />
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+    <!-- seo:begin -->
+    <link rel="canonical" href="https://expectopatronus00.github.io/post/gh-d4vinci-scrapling/gh-d4vinci-scrapling.html" />
+    <meta property="og:url" content="https://expectopatronus00.github.io/post/gh-d4vinci-scrapling/gh-d4vinci-scrapling.html" />
+    <meta property="og:site_name" content="EXPECTOPATRONUS" />
+    <meta property="og:image" content="https://expectopatronus00.github.io/post/gh-d4vinci-scrapling/cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"102,361 星、55 版仍是 Beta：默认只装解析器","description":"102,361 星、55 版全是 0.x，pyproject.toml 自标 Beta。README 首例 import 的 fetchers 不在默认安装里；docs 8.09 MB 是核心代码 640 KB 的 12.6 倍。基准表 1714.9 倍来自最慢的 BS4 组合，赞助区占 README 的 27%。","image":"https://expectopatronus00.github.io/post/gh-d4vinci-scrapling/cover.jpg","inLanguage":"zh-CN","author":{"@type":"Person","name":"expectopatronus","url":"https://expectopatronus00.github.io"},"publisher":{"@type":"Organization","name":"EXPECTOPATRONUS","url":"https://expectopatronus00.github.io"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://expectopatronus00.github.io/post/gh-d4vinci-scrapling/gh-d4vinci-scrapling.html"},"datePublished":"2026-11-13","dateModified":"2026-11-13"}</script>
+    <!-- seo:end -->
+</head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>102,361 星、55 版仍是 Beta：默认只装解析器</h1>
+      <p>102,361 星、10,652 fork、55 个 release 全是 0.x，Scrapling 在 pyproject.toml 里仍标 Beta。README 首例 import 的 fetchers，默认安装并不包含。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-13</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 6 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <picture data-cover-picture="1">
+        <source srcset="cover.webp" type="image/webp" />
+        <img loading="lazy" alt="102,361 星、55 版仍是 Beta：默认只装解析器 封面" src="cover.jpg" width="2400" height="1260" decoding="async" data-cover-ready="1" />
+      </picture>
+    </div>
+
+    <article class="article-body">
+<div class="section-marker">01 · 这件事</div>
+<h2>102,361 星、55 个版本，没有一个 1.0</h2>
+
+<p><strong>这个仓库在打包元数据里把自己标成 Beta，README 开头却写着 The BEST Web Scraping framework。</strong></p>
+
+<p>2026-11-13 核对时，D4Vinci/Scrapling 有 102,361 星、10,652 fork，BSD-3-Clause，主语言 Python，默认分支 main。建仓于 2024-10-13，最近一次推送是 11-11。身份字段全部读自 api.github.com 的仓库接口。</p>
+
+<table>
+  <thead><tr><th>字段</th><th>核对值</th></tr></thead>
+  <tbody>
+    <tr><td>星标 / fork</td><td>102,361 / 10,652</td></tr>
+    <tr><td>未结 issue 计数</td><td>28（含 PR，见第 05 节）</td></tr>
+    <tr><td>创建 / 最近推送</td><td>2024-10-13 / 2026-11-11</td></tr>
+    <tr><td>许可 / 主语言</td><td>BSD-3-Clause / Python</td></tr>
+    <tr><td>版本 / 开发状态</td><td>0.5.1 / 4 - Beta</td></tr>
+    <tr><td>release / tag</td><td>55 / 55</td></tr>
+  </tbody>
+</table>
+
+<p>55 个 release 从 2024-10-13 的 v0.1 排到 2026-11-04 的 v0.5.1，两年过去主版本号一次没动。55 个 tag 与 55 个 release 一一对应，没有单独的预发布标记。</p>
+
+<p>更硬的一句在 pyproject.toml 第 38 行：分类标签留的是 <code>Development Status :: 4 - Beta</code>，Production/Stable 与 Mature 两行被注释掉。<span class="hl">作者自己没有把它当稳定版</span>。</p>
+
+<p>v0.5.1 的发布说明里带了一条 WARNING：这个「小版本升级」对远程浏览器连接引入破坏性变更，连接前要换成新的 session 类并看迁移页。0.5 到 0.5.1 就断点，和 Beta 标注是对得上的。</p>
+
+<p>编号里还有一处小坑：tag 从 v0.2.9 直接排到 v0.2.91 至 v0.2.99 共九个，再跳 v0.3。补丁号被当成两位数用，读 release 数量时别按版本号推算。</p>
+
+<div class="section-marker">02 · 核心机制</div>
+<h2>三层能力靠四组可选依赖分发，默认只给解析器</h2>
+
+<p><strong>README 第一段示例要 import 的东西，不在默认安装里。</strong></p>
+
+<p>pyproject.toml 的必装依赖只有 6 个：lxml、cssselect、orjson、tld、w3lib、typing_extensions，全部服务于 HTML 解析。抓取、爬虫、MCP、命令行都在可选组里，要单独点名才装。</p>
+
+<table>
+  <thead><tr><th>安装档位</th><th>新增依赖数</th><th>能用到什么</th></tr></thead>
+  <tbody>
+    <tr><td>pip install scrapling</td><td>6（必装）</td><td>解析器、CSS / XPath / 文本检索</td></tr>
+    <tr><td>[fetchers]</td><td>9</td><td>HTTP 请求、浏览器、隐身会话、spider</td></tr>
+    <tr><td>[ai]</td><td>3（含 fetchers）</td><td>mcp、Markdown 转换、MCP server</td></tr>
+    <tr><td>[rag] / [shell]</td><td>各 3</td><td>Markdown 语料 / IPython 交互壳</td></tr>
+    <tr><td>[all]</td><td>ai + shell</td><td>全量</td></tr>
+  </tbody>
+</table>
+
+<p>落差就在同一份 README 里。第 81 行「Start with a single page」的第一例从 <code>scrapling.fetchers</code> 导入 Fetcher，第 91 行的 spider 例从 <code>scrapling.spiders</code> 导入 Spider。</p>
+
+<p>到第 546 行的 IMPORTANT 才写明：只跑 <code>pip install scrapling</code> 时，这两处都会抛 <code>ModuleNotFoundError</code>。作者自己承认了，不是读者猜的。</p>
+
+<ol>
+  <li>只解析本地 HTML：装默认包即可。</li>
+  <li>要发请求：先装 <code>scrapling[fetchers]</code>，再跑 <code>scrapling install</code> 下载浏览器与指纹依赖。</li>
+  <li>要给 agent 用：装 <code>scrapling[ai]</code>，入口是 <code>scrapling-mcp</code>。</li>
+  <li>要过反爬：还要自己配代理，见第 05 节。</li>
+</ol>
+
+<p>AI 侧是另一条分发线。根目录的 <code>server.json</code> 把 MCP server 注册成两个包：PyPI 走 uvx，OCI 走 ghcr 镜像，传输都是 stdio。</p>
+
+<p><code>agent-skill/</code> 目录另有 27 个文件；两个命令行入口 <code>scrapling</code> 与 <code>scrapling-mcp</code> 写在 project.scripts 里。这些都不在默认安装里。</p>
+
+<p>AI_POLICY.md 把贡献门槛写得很细：任何 AI 辅助都要在 PR 或 issue 里披露用途与程度，未披露的先打 <code>AI-Slop</code> 标签再关闭；只有空格与错字这类小改动豁免，适用范围连 agent skill 的翻译也算。</p>
+
+<div class="section-marker">03 · 关键细节与数据</div>
+<h2>文档 8.09 MB，核心代码只有 640 KB</h2>
+
+<p><strong>这个仓库的重量不在代码，在九种语言的文档和一份很长的赞助商名单。</strong></p>
+
+<p>git tree 递归接口返回 <code>truncated:false</code>，843 个节点 = 699 个 blob + 144 个 tree，逐 blob 累加 10,835,461 字节。本文所有体量数字都以此为准。</p>
+
+<table>
+  <thead><tr><th>顶层目录</th><th>文件数</th><th>字节</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td>docs/</td><td>439</td><td>8,092,202</td><td>占全仓 74.7%</td></tr>
+    <tr><td>tests/</td><td>104</td><td>1,127,255</td><td>比源码还大</td></tr>
+    <tr><td>scrapling/</td><td>63</td><td>640,234</td><td>62 个 .py 是核心库</td></tr>
+    <tr><td>images/</td><td>21</td><td>442,305</td><td>logo 与赞助图</td></tr>
+    <tr><td>agent-skill/</td><td>27</td><td>387,635</td><td>给 agent 用的技能包</td></tr>
+    <tr><td>README.md</td><td>1</td><td>38,479</td><td>630 行</td></tr>
+  </tbody>
+</table>
+
+<p>docs 是核心代码的 12.6 倍，大头是翻译。<code>docs/locales/</code> 有 360 个文件、4,988,827 字节，占 docs 的 61.7%。</p>
+
+<ul>
+  <li>九种语言：ar、de、es、fr、ja、ko、pt-BR、ru、zh。</li>
+  <li>每种正好 40 篇，docs 下共 389 个 Markdown 文件。</li>
+  <li>根目录另配 10 个 zensical 配置文件。</li>
+  <li>tests 有 104 文件 1,127,255 字节，是源码的 1.76 倍。</li>
+</ul>
+
+<p>口径要分开。languages 接口只统计代码文件，不认 md、json、yml、png；仓库 size 字段是又一套算法。<span class="hl">三者不能相加</span>。</p>
+
+<table>
+  <thead><tr><th>口径</th><th>数值</th><th>覆盖范围</th></tr></thead>
+  <tbody>
+    <tr><td>git tree 逐 blob</td><td>10,835,461 字节</td><td>全仓 699 个文件</td></tr>
+    <tr><td>languages 合计</td><td>1,782,535 字节</td><td>Python 1,777,539 / HTML 3,838 / Dockerfile 1,158</td></tr>
+    <tr><td>仓库 size</td><td>16,302 KB</td><td>接口自算，本文不引用</td></tr>
+  </tbody>
+</table>
+
+<p>README 的 38,479 字节里，从 <code># Platinum Sponsors</code> 到赞助区结束共 10,375 字节，占 27.0%；全文有 67 处 utm_ 追踪参数。</p>
+
+<table>
+  <thead><tr><th>赞助区结构</th><th>核对值</th></tr></thead>
+  <tbody>
+    <tr><td>Platinum Sponsors 表格行数</td><td>12 个赞助条目</td></tr>
+    <tr><td>其中付费服务商</td><td>11 家：代理 IP、反爬 token、验证码求解、数据 API</td></tr>
+    <tr><td>其余 1 个条目</td><td>The Web Scraping Club 的评测链接</td></tr>
+    <tr><td>赞助区字节</td><td>10,375 / 38,479（27.0%）</td></tr>
+  </tbody>
+</table>
+
+<p>换句话说，README 超过四分之一是广告位。这些厂商卖的东西，恰好是框架自己不提供的那一段：住宅代理、反爬 token、hCaptcha 求解。</p>
+
+<div class="info-box"><p>数据核对：字段均直接读取，体量与热度是两套口径。</p>
+<ul>
+  <li>身份：D4Vinci/Scrapling，102,361 星 / 10,652 fork，BSD-3-Clause，Python，main，建于 2024-10-13，推送 2026-11-11。</li>
+  <li>版本：55 个 release / 55 个 tag，v0.1 到 v0.5.1 全为 0.x；pyproject 标 4 - Beta。</li>
+  <li>体量：git tree truncated=false，843 节点 / 699 blob / 10,835,461 字节；docs 8,092,202，scrapling 640,234。</li>
+  <li>口径：languages 仅 1,782,535 字节，不含 md / json / png；仓库 size 为 16,302 KB，本文不引用。</li>
+  <li>边界：均来自仓库内文件与 GitHub 接口，未安装、未运行、未复现基准。</li>
+</ul>
+<p>核对时间 2026-11-13。</p></div>
+
+<div class="section-marker">04 · 怎么用</div>
+<h2>先定档位，再抄示例；基准表要连方法一起读</h2>
+
+<p><strong>把 README 第一段当入门示例照抄，会先撞上一次 ModuleNotFoundError。</strong></p>
+
+<p>环境门槛写在 pyproject.toml：Python 3.10 及以上，分类器列到 3.13。shell 组把 IPython 锁在 8.37，注释说明那是最后一个支持 3.10 的版本。</p>
+
+<p>再看 README 那句「blazing fast」的基准。八个库的耗时从 1.99 毫秒排到 3412.73 毫秒，倍数全部以 Scrapling 自己为分母，先摆成表：</p>
+
+<table>
+  <thead><tr><th>库</th><th>耗时 (ms)</th><th>相对 Scrapling</th></tr></thead>
+  <tbody>
+    <tr><td>Scrapling</td><td>1.99</td><td>1.0x</td></tr>
+    <tr><td>Parsel/Scrapy</td><td>2.06</td><td>1.035x</td></tr>
+    <tr><td>Raw Lxml</td><td>2.56</td><td>1.286x</td></tr>
+    <tr><td>PyQuery</td><td>23.98</td><td>~12x</td></tr>
+    <tr><td>Selectolax</td><td>197.02</td><td>~99x</td></tr>
+    <tr><td>MechanicalSoup</td><td>1545.15</td><td>~776.5x</td></tr>
+    <tr><td>BS4 with Lxml</td><td>1562.1</td><td>~785.0x</td></tr>
+    <tr><td>BS4 with html5lib</td><td>3412.73</td><td>~1714.9x</td></tr>
+  </tbody>
+</table>
+
+<p>倍数取决于挑谁来比。离得最近的 Parsel 只慢 0.07 毫秒，也就是 3.5%；那个 1714.9 倍来自全场最慢的 BS4 + html5lib。<span class="hl">同为解析库，差距不是三个数量级</span>。</p>
+
+<p>方法学也在仓库里，可以逐行核。benchmarks.py 用 <code>time.process_time</code>（CPU 时间，不是墙钟）、100 次 repeat 取平均值，却把变量命名为 <code>min_time</code>；解析测试还显式设了 <code>adaptive=False</code>，关掉 README 主推的自适应元素追踪。</p>
+
+<p>README 写「100+ 次运行的平均值」，与脚本的 repeat=100 对得上。第二张表只有 Scrapling 2.3 毫秒对 AutoScraper 12.58 毫秒，2 个样本。<span class="hl">基准是自测、自选对照物、自选计时器</span>，拿去做选型前最好自己跑一遍。</p>
+
+<p>升级还有一道手续。v0.5.1 起远程浏览器连接改用 <code>RemoteSession</code> 与 <code>AsyncRemoteSession</code>，旧 CDP 写法要按迁移页调整；<code>new_context=False</code> 才复用已登录的浏览器状态。</p>
+
+<div class="section-marker">05 · 冷思考</div>
+<h2>免费的是解析器，贵的是把请求送出去那一段</h2>
+
+<p><strong>10 万星里有多少是冲着「免费过反爬」来的，而这恰恰是仓库里最不免费的部分。</strong></p>
+
+<p>README 把 Anti-bot Bypass、Cloudflare Turnstile 绕行写在特性清单里，同一页又写着「For enterprise-grade protection」要接付费厂商。第 03 节那张表里，12 个赞助条目有 11 个是付费服务商，只有 1 个是媒体评测链接。</p>
+
+<p>更精确的原文是：「Scrapling handles Cloudflare Turnstile」，企业级防护则交给 Hyper Solutions 的付费 API，用来生成 Akamai、DataDome、Kasada、Incapsula 的合法反爬 token。免费与付费的分界线，作者自己画了。</p>
+
+<p>这不是「作者隐瞒」。准确说法是两条链路：本地解析和普通请求自己就能跑；一旦要规模化抓取、要过企业级防护，就要买代理、买打码、买指纹。<span class="hl">开源的是框架，不是反爬能力</span>。</p>
+
+<p>另一处不对称在 AI 政策。AI_POLICY.md 要求所有 AI 辅助贡献在 PR 或 issue 里披露，未披露的先打 <code>AI-Slop</code> 标签再关闭，连 agent skill 的翻译都在适用范围内。</p>
+
+<p>但同一仓库给 AI 用出去的那条路全铺开了：MCP server 注册、agent-skill 目录、v0.5.1 新增的「录一段页面动画给 agent 看」和拖拽控制。<span class="hl">对写进来的代码设门禁，对用出去的能力不设</span>——这个取舍本身值得抄。</p>
+
+<p>ROADMAP.md 还留着 5 项未勾选，恰好是「智能」二字最吃重的部分：</p>
+
+<table>
+  <thead><tr><th>未完成项</th><th>对应 README 的承诺</th></tr></thead>
+  <tbody>
+    <tr><td>替换 parsel 的 Scrapy 插件</td><td>与既有生态互操作</td></tr>
+    <tr><td>自动识别分页 URL</td><td>全规模爬取</td></tr>
+    <tr><td>自动检测页面 schema</td><td>自适应提取</td></tr>
+    <tr><td>analyzer 读 meta 元素</td><td>智能元素追踪</td></tr>
+    <tr><td>从一组元素生成正则</td><td>相似元素匹配</td></tr>
+  </tbody>
+</table>
+
+<p>维护面也比星标窄。commits 接口末页显示 1,827 次提交、53 位贡献者，其中 D4Vinci 一人 1,712 次，占 93.7%。v0.5.1 的修复清单里倒是出现了十几个不同名字，多为单点 bugfix。</p>
+
+<p>还有个容易读错的字段：<code>open_issues_count</code> 是 28，用 search 拆开是 6 个真 issue 加 22 个 PR。含 PR 的字段不能当成「只有 28 个待修问题」，也不能当成社区活跃度的证据。</p>
+
+<p>把它当成一个仍在 Beta、由一人主要维护的解析器库来用，比当成「能绕开一切反爬的平台」更接近实物。真要上规模，先算代理的钱，再算 0.x 版本的迁移成本。</p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>Scrapling：从单次请求到全规模爬取的 Python 抓取框架，默认安装仅含解析器。</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/D4Vinci/Scrapling" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/D4Vinci/Scrapling" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 102,361 星，BSD-3-Clause，55 个 release</span>
+      </a>
+      <a class="plat-card" href="https://scrapling.readthedocs.io/en/latest/" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 12h17M12 3.5c2.4 2.3 3.6 5.2 3.6 8.5s-1.2 6.2-3.6 8.5c-2.4-2.3-3.6-5.2-3.6-8.5S9.6 5.8 12 3.5z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+        <span class="pn">官方文档</span>
+        <span class="pd">docs · 九种语言，439 个文件</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Scrapling">#Scrapling</a>
+      <a href="../../home/home.html?q=%E7%BD%91%E9%A1%B5%E6%8A%93%E5%8F%96">#网页抓取</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE">#开源项目</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2026 · 数据核对自 GitHub 仓库 D4Vinci/Scrapling 及其 README.md、pyproject.toml、benchmarks.py、ROADMAP.md、AI_POLICY.md、server.json，核对时间 2026-11-13。本文未安装、未运行、未复现基准，仅作学习归档。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

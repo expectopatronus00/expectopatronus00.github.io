@@ -398,7 +398,7 @@
     </section>
 
     <div class="hero-image">
-      <img loading="lazy" alt="Harness² 官方 pipeline 图" src="https://cdn.jsdelivr.net/gh/google-research/harness2@main/assets/harness2_pipeline.png" />
+      <img loading="lazy" alt="Harness² 官方 pipeline 图" src="https://cdn.jsdelivr.net/gh/google-research/harness2@main/assets/harness2_pipeline.png" decoding="async" />
     </div>
 
     <article class="article-body">
@@ -413,7 +413,7 @@
 
       <div class="section-marker">03 · 外壳的八个部件</div><h2>八个可编辑组件，各自管什么</h2><p>Harness² 把模型外面那层壳拆成了八个可编辑组件。这是全文最实用的部分——就算你不用这个框架，这张清单也可以直接拿来审视自己手上的 agent 项目。</p>
       <figure>
-        <img loading="lazy" alt="Harness² 八个可编辑组件按运行时角色分组：上下文构建、工具接口、编排、中间件" src="https://cdn.jsdelivr.net/gh/google-research/harness2@main/assets/components.png" />
+        <img loading="lazy" alt="Harness² 八个可编辑组件按运行时角色分组：上下文构建、工具接口、编排、中间件" src="https://cdn.jsdelivr.net/gh/google-research/harness2@main/assets/components.png" decoding="async" />
         <figcaption>八个组件按运行时角色分四组。来源：<a href="https://github.com/google-research/harness2" target="_blank" rel="noopener">google-research/harness2</a></figcaption>
       </figure>
       <table class="api-table">
@@ -434,7 +434,7 @@
 
       <div class="section-marker">04 · 单个任务内怎么改</div><h2>Propose–Probe–Compose 三步</h2><p>第一层递归是<strong>任务级递归</strong>：针对当前这一个任务，把执行用的 harness 改好。它走的是一个叫 <span class="hl">Propose–Probe–Compose</span> 的对比流程——提议、探针、合成。</p><p>官方原文对这个流程的定义很精确：先提议改动，再探针这些改动在<em>同一个任务</em>上的效果，最后根据几次执行之间的<strong>行为对比</strong>把改好的 harness 合成出来，全程<strong>不需要 ground-truth 反馈</strong>。</p><p>关键在于「不看标准答案，只看行为差异」。视频里那两条曲线就是这个意思：改法 A 针对通用短板，改法 B 针对领域专用；两版都真跑一遍，谁的轨迹更顺就留谁。你不需要知道最终答案是什么，只需要能判断哪一版的执行过程更像样。</p>
       <figure>
-        <img loading="lazy" alt="Propose-Probe-Compose 流程：Agent Executor 跑初始 harness，Harness Editor 提出 invariant 与 domain 两类改法，Candidate Probes 各自执行，Harness Composer 合成最终 harness" src="https://cdn.jsdelivr.net/gh/google-research/harness2@main/assets/harness2_pipeline.png" />
+        <img loading="lazy" alt="Propose-Probe-Compose 流程：Agent Executor 跑初始 harness，Harness Editor 提出 invariant 与 domain 两类改法，Candidate Probes 各自执行，Harness Composer 合成最终 harness" src="https://cdn.jsdelivr.net/gh/google-research/harness2@main/assets/harness2_pipeline.png" decoding="async" />
         <figcaption>两层递归全景。左半是任务级递归（Task t 内），右半是跨任务的 harness 级递归。来源：<a href="https://github.com/google-research/harness2" target="_blank" rel="noopener">google-research/harness2</a></figcaption>
       </figure>
       <p>这里有一个设计上的取舍值得说：它把改法明确分成两类——<strong>invariant harness</strong>（不变量，即通用短板：规划、用工具、分工）和 <strong>domain harness</strong>（领域专用：流程约束、验收标准、术语）。两类分开探针，再在 Compose 阶段合成。好处是你能看清涨的分到底来自「通用能力补齐」还是「领域知识注入」；坏处是每一步都要跑两份，成本直接翻倍。</p><div class="info-box"><p><strong>并行还是串行：</strong>论文说任务级递归可以「scaled further via parallel or sequential recursion」——并行多跑几条探针分支，或者串行一轮轮加深。并行更贵但更快出结果，串行更省但轮次多。</p></div>
