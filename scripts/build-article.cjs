@@ -27,6 +27,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { injectSeo, siteUrl } = require('./seo-meta.cjs');
 
 const ROOT = path.resolve(__dirname, '..');
 const TPL = path.join(ROOT, 'post', 'dy-20261021-skill-top20', 'dy-20261021-skill-top20.html');
@@ -162,6 +163,19 @@ function render(spec, hasCover) {
       '    <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />\n  </head>'
     );
   }
+
+  // SEO 元数据：与 scripts/apply-seo-meta.cjs 共用 scripts/seo-meta.cjs，
+  // 保证新稿和存量文章产出的 canonical / og:* / JSON-LD 完全一致。
+  // 有封面用本篇 cover.jpg，没有就用全站兜底图。
+  prefix = injectSeo(prefix, {
+    pageUrl: siteUrl() + '/post/' + spec.id + '/' + spec.id + '.html',
+    title: spec.title,
+    description: spec.desc,
+    date: spec.date,
+    imageUrl: hasCover
+      ? siteUrl() + '/post/' + spec.id + '/cover.jpg'
+      : siteUrl() + '/home/og-default.jpg',
+  });
 
   const hero = hasCover
     ? `

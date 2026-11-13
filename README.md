@@ -17,6 +17,8 @@ DESIGN.md                   全站设计系统规范（配色 / 排版 / 组件 
 index.html                  首页（hero / 系列 / 主题 / 最近更新，全部由 JS 渲染）
 feed.xml                    全站 RSS，由 scripts/build-index.cjs 生成
 sitemap.xml                 站点地图，同上
+robots.txt                  爬虫规则与 Sitemap 声明
+404.html                    自定义 404 页（资源用站点绝对路径，任意路径下都能加载）
 
 home/
   home.html                 文章归档页（搜索 + 主题筛选 + 按月分组）
@@ -25,6 +27,7 @@ home/
   articles.js               文章数据源（window.articles）+ 派生层（window.BLOG）
   design-tokens.css         全站设计令牌与共享组件
   fonts.css                 字体加载（拉丁自托管 + 中文 CDN 分片）
+  og-default.jpg            全站默认分享图（无封面文章的 og:image）
 
 post/
   article.js                文章页增强脚本（目录 / 进度条 / 上下篇 / 相关阅读）
@@ -34,8 +37,10 @@ nav/                        AI 工具导航站（读 data.json）
   stars/                    星标榜的数据与渲染模块（嵌在 nav/index.html 的 #stars 区块）
 
 scripts/
-  repo-lint.cjs             仓库一致性检查（文章数 / 死链 / 孤儿页 / 重复）
+  repo-lint.cjs             仓库一致性检查（文章数 / 死链 / 重复 / 样式与 SEO 覆盖率 / 基础设施）
   build-index.cjs           生成 feed.xml 与 sitemap.xml
+  seo-meta.cjs              文章 SEO 元数据唯一实现（canonical / og:* / JSON-LD）
+  apply-seo-meta.cjs        存量文章幂等注入 SEO 元数据
   enhance-articles.cjs      给文章页批量注入 post/article.js
   daily-run.cjs             每日收尾：检查 → 重建索引 → 提交推送 → 通知
   site-health.cjs           站点健康检查（feed 完整性 / 线上探活 / 断更）

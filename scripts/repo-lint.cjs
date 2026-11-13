@@ -265,6 +265,83 @@ function checkReadCss() {
   return missing;
 }
 
+/* ─────────── 检查 8: SEO 元数据覆盖率 ───────────
+   canonical / og:image / twitter:card / JSON-LD 由 scripts/seo-meta.cjs 统一产出：
+   新稿由 build-article.cjs 注入，存量由 apply-seo-meta.cjs 幂等补齐。
+   顺带校验 JSON-LD 能解析、og:image 指向本站（防止带回退的站外签名图）。 */
+function checkSeoMeta() {
+  printSection('SEO 元数据覆盖率');
+  const files = walk(path.join(ROOT, 'post'), '.html');
+  const site = (process.env.SITE_URL || 'https://expectopatronus00.github.io').replace(/\/+$/, '');
+  const issues = [];
+  const ok = { canonical: 0, ogImage: 0, twitterCard: 0, jsonld: 0 };
+
+  for (const f of files) {
+    const src = fs.readFileSync(f, 'utf8');
+    const at = src.search(/<\/head>/i);
+    const head = at < 0 ? src : src.slice(0, at);
+    const name = rel(f);
+    const bad = (reason) => issues.push({ file: name, reason });
+
+    if (/rel=["']canonical["']/i.test(head)) ok.canonical++;
+    else bad('缺 canonical');
+
+    const img = head.match(/<meta[^>]*property=["']og:image["'][^>]*>/i);
+    if (img) {
+      ok.ogImage++;
+      const c = img[0].match(/content\s*=\s*["']([^"']+)["']/i);
+      if (!c || c[1].indexOf(site + '/') !== 0) bad('og:image 不是本站地址');
+    } else {
+      bad('缺 og:image');
+    }
+
+    if (/name=["']twitter:card["']/i.test(head)) ok.twitterCard++;
+    else bad('缺 twitter:card');
+
+    const ld = head.match(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/i);
+    if (!ld) {
+      bad('缺 JSON-LD');
+    } else {
+      try {
+        const obj = JSON.parse(ld[1]);
+        if (obj['@type'] !== 'BlogPosting' || !obj.headline || !obj.mainEntityOfPage ||
+            !/^\d{4}-\d{2}-\d{2}$/.test(obj.datePublished || '')) {
+          bad('JSON-LD 字段不全/缺日期');
+        } else {
+          ok.jsonld++;
+        }
+      } catch (e) {
+        bad('JSON-LD 不是合法 JSON');
+      }
+    }
+  }
+
+  printRow('canonical', `${ok.canonical}/${files.length}`, ok.canonical === files.length);
+  printRow('og:image（本站）', `${ok.ogImage}/${files.length}`, ok.ogImage === files.length);
+  printRow('twitter:card', `${ok.twitterCard}/${files.length}`, ok.twitterCard === files.length);
+  printRow('JSON-LD（可解析）', `${ok.jsonld}/${files.length}`, ok.jsonld === files.length);
+  for (const i of issues.slice(0, 10)) printRow(i.reason, i.file, false);
+  if (issues.length > 10) console.log(`  ℹ  另有 ${issues.length - 10} 项`);
+  if (issues.length === 0) console.log('  ✅  全部文章页 SEO 元数据齐全');
+  return issues;
+}
+
+/* ─────────── 检查 9: 站点基础设施 ─────────── */
+function checkInfra() {
+  printSection('站点基础设施');
+  const issues = [];
+  for (const name of ['robots.txt', '404.html', 'sitemap.xml', 'feed.xml']) {
+    if (!fs.existsSync(path.join(ROOT, name))) issues.push(name + ' 缺失');
+  }
+  const robots = path.join(ROOT, 'robots.txt');
+  if (fs.existsSync(robots) && !/^\s*Sitemap\s*:/im.test(fs.readFileSync(robots, 'utf8'))) {
+    issues.push('robots.txt 未声明 Sitemap');
+  }
+  printRow('robots / 404 / sitemap / feed', issues.length === 0 ? '4/4 齐全' : issues.join('; '), issues.length === 0);
+  for (const i of issues) printRow('基础设施', i, false);
+  return issues;
+}
+
 /* ─────────── 主流程 ─────────── */
 
 function main() {
@@ -283,10 +360,13 @@ function main() {
   const heroStatus = checkIndexHero(postCount);
   const favStatus = checkFaviconConsistency();
   const missingReadCss = checkReadCss();
+  const seoIssues = checkSeoMeta();
+  const infraIssues = checkInfra();
 
   console.log('\n━━━━━ 总览 ━━━━━');
   const issueCount =
     deadLinks.length + orphans.length + dupIds.length + missingReadCss.length +
+    seoIssues.length + infraIssues.length +
     (displayNum !== null && displayNum !== postCount ? 1 : 0) +
     (postCount !== articles.length ? 1 : 0) +
     (heroStatus && heroStatus.actual !== heroStatus.shouldBe ? 1 : 0) +

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>页面不存在 · EXPECTOPATRONUS</title>
+    <meta name="description" content="这一页不在归档里。回到首页、全部笔记或导航站继续浏览。" />
+    <meta name="robots" content="noindex" />
+    <link rel="shortcut icon" href="/home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <!-- 自定义 404 会在任意路径下返回，资源一律用站点绝对路径 -->
+    <link rel="stylesheet" href="/home/fonts.css" />
+    <link rel="stylesheet" href="/home/design-tokens.css" />
+    <style>
+      html, body { min-height: 100%; }
+      body {
+        margin: 0;
+        background: var(--bg, #0b0d16);
+        color: var(--text, #ede9df);
+        font-family: var(--font-serif, Georgia, serif);
+        display: flex;
+        flex-direction: column;
+      }
+      .bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 20px 6vw;
+        border-bottom: 1px solid var(--line, #2a2e44);
+      }
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-family: var(--font-display, Georgia, serif);
+        font-size: 0.95rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: var(--text, #ede9df);
+        text-decoration: none;
+      }
+      .brand img { width: 26px; height: 26px; }
+      .bar .hint {
+        font-family: var(--font-mono, ui-monospace, monospace);
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        color: var(--text-dim, #8a8ea8);
+      }
+      main {
+        flex: 1;
+        width: min(720px, 88vw);
+        margin: 0 auto;
+        padding: clamp(64px, 12vh, 130px) 0 90px;
+      }
+      .code {
+        font-family: var(--font-display, Georgia, serif);
+        font-size: clamp(96px, 18vw, 168px);
+        line-height: 0.9;
+        letter-spacing: -0.04em;
+        color: var(--accent-rust-text, #d4692a);
+        margin: 0 0 28px;
+      }
+      h1 {
+        font-family: var(--font-display, Georgia, serif);
+        font-weight: 500;
+        font-size: clamp(26px, 4vw, 38px);
+        line-height: 1.35;
+        margin: 0 0 18px;
+      }
+      p {
+        font-size: 1rem;
+        line-height: 1.9;
+        color: var(--text-soft, #b8bcd0);
+        margin: 0 0 40px;
+        max-width: 34rem;
+      }
+      .links { display: flex; flex-wrap: wrap; gap: 12px; }
+      .links a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        padding: 0 20px;
+        border: 1px solid var(--line, #2a2e44);
+        border-radius: var(--r-md, 8px);
+        color: var(--text, #ede9df);
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: border-color 0.2s, transform 0.2s;
+      }
+      .links a:hover, .links a:focus-visible {
+        border-color: var(--accent-rust, #b8581d);
+        transform: translateY(-2px);
+      }
+      .links a:focus-visible { outline: 2px solid var(--ring, #d4692a); outline-offset: 3px; }
+      footer {
+        padding: 24px 6vw;
+        border-top: 1px solid var(--line, #2a2e44);
+        font-family: var(--font-mono, ui-monospace, monospace);
+        font-size: 0.72rem;
+        color: var(--text-dim, #8a8ea8);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bar">
+      <a class="brand" href="/"><img src="/home/logo.svg" alt="" /> EXPECTOPATRONUS</a>
+      <span class="hint">404 / NOT FOUND</span>
+    </div>
+    <main>
+      <div class="code">404</div>
+      <h1>这一页不在归档里</h1>
+      <p>链接可能已经改动，或者文章被合并进了别的条目。下面三个入口能带你回到内容库。</p>
+      <div class="links">
+        <a href="/">返回首页</a>
+        <a href="/home/home.html">全部笔记</a>
+        <a href="/nav/index.html">导航站</a>
+        <a href="/feed.xml">RSS 订阅</a>
+      </div>
+    </main>
+    <footer>EXPECTOPATRONUS · AI 工具与实战的学习归档</footer>
+  </body>
+</html>
