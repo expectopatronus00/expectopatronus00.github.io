@@ -119,7 +119,7 @@ function currentBranch() {
 async function main() {
   const t0 = Date.now();
   const today = new Date().toISOString().slice(0, 10);
-  const before = countPosts();
+  /* 文章数只在最后展示用一次，不需要 before 快照（见下方 countLine 说明） */
 
   console.log('─────────────────────────────────────────');
   console.log('  daily-run · ' + today);
@@ -146,9 +146,12 @@ async function main() {
   newPosts = detectNewPosts();
   const after = countPosts();
 
+  /* before/after 都数的是磁盘上的物理文章文件，而成稿窗口早把新稿写进磁盘了，
+     所以有新增时两值相等。写「156 → 156（新增 3 篇）」会让人以为统计坏了，
+     直接说本次提交了几篇新稿更准确。 */
   const countLine =
     newPosts.length > 0
-      ? `文章 ${before} → ${after}（新增 ${newPosts.length} 篇）`
+      ? `文章 ${after} 篇（本次提交 ${newPosts.length} 篇新稿）`
       : `文章 ${after} 篇（无新增）`;
 
   if (!dirty && ahead === 0) {
