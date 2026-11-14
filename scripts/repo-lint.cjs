@@ -338,6 +338,22 @@ function checkInfra() {
     issues.push('robots.txt 未声明 Sitemap');
   }
   printRow('robots / 404 / sitemap / feed', issues.length === 0 ? '4/4 齐全' : issues.join('; '), issues.length === 0);
+
+  /* feed 必须全量：条目数与 sitemap 里的文章 URL 数相等，且明显超过历史 30 条上限。
+     两边同源，任一边被改回截断都会立刻对不上。 */
+  const feedPath = path.join(ROOT, 'feed.xml');
+  const sitemapPath = path.join(ROOT, 'sitemap.xml');
+  if (fs.existsSync(feedPath) && fs.existsSync(sitemapPath)) {
+    const feedItems = (fs.readFileSync(feedPath, 'utf8').match(/<item>/g) || []).length;
+    const sitemapPosts = (fs.readFileSync(sitemapPath, 'utf8').match(/<loc>[^<]*\/post\//g) || []).length;
+    const ok = feedItems === sitemapPosts && feedItems > 30;
+    printRow('feed.xml 全量条目', feedItems + ' 条 · sitemap 文章 ' + sitemapPosts + ' 条', ok);
+    if (!ok) {
+      issues.push('feed.xml 未全量输出（' + feedItems + ' 条 / sitemap ' + sitemapPosts + ' 条）');
+    }
+  } else {
+    issues.push('feed.xml 或 sitemap.xml 缺失，无法校验全量');
+  }
   for (const i of issues) printRow('基础设施', i, false);
   return issues;
 }
@@ -469,6 +485,72 @@ function checkImages() {
   return issues;
 }
 
+/* ─────────── 检查 13: head 提示层 ─────────── */
+const {
+  BEGIN: HH_BEGIN, FONT_ORIGIN, FA_ORIGIN, THEME_SCRIPT,
+  cssBg, walkPages, readHints, needsFa,
+} = require('./head-hints.cjs');
+
+function checkHeadHints() {
+  printSection('head 提示层（theme-color / preconnect）');
+  const issues = [];
+  const { dark, cssFound } = cssBg(ROOT);
+  if (!cssFound) issues.push('design-tokens.css 里解析不到 --ink-950 / --paper');
+  if (!fs.existsSync(path.join(ROOT, 'home', 'theme-color.js'))) {
+    issues.push('home/theme-color.js 缺失');
+  }
+
+  const pages = walkPages(ROOT);
+  let blocks = 0, metaOk = 0, preOk = 0, scriptOk = 0, faTotal = 0, faOk = 0;
+  for (const f of pages) {
+    const html = fs.readFileSync(f, 'utf8');
+    const block = readHints(html);
+    if (!block) {
+      issues.push(rel(f) + ' 缺 head hints 块');
+      continue;
+    }
+    blocks++;
+    const headEnd = html.toLowerCase().indexOf('</head>');
+    if (headEnd < 0 || html.indexOf(HH_BEGIN) > headEnd) {
+      issues.push(rel(f) + ' hints 块不在 head 内');
+    }
+    if (block.includes('<meta name="theme-color" content="' + dark + '"')) metaOk++;
+    else issues.push(rel(f) + ' theme-color 与 CSS 主题底色不一致');
+    if (block.includes('rel="preconnect" href="' + FONT_ORIGIN + '"')) preOk++;
+    else issues.push(rel(f) + ' 缺 font.emtech.cc preconnect');
+    if (block.includes('src="' + THEME_SCRIPT + '" defer')) scriptOk++;
+    else issues.push(rel(f) + ' 缺主题同步脚本');
+    if (needsFa(html)) {
+      faTotal++;
+      if (block.includes('rel="preconnect" href="' + FA_ORIGIN + '"')) faOk++;
+      else issues.push(rel(f) + ' 外链 FontAwesome 却缺 cdnjs preconnect');
+    }
+  }
+  const all = pages.length;
+  printRow('hints 块（head 内）', blocks + '/' + all, blocks === all);
+  printRow('theme-color 与 CSS 一致', metaOk + '/' + all, metaOk === all);
+  printRow('font CDN preconnect', preOk + '/' + all, preOk === all);
+  printRow('主题同步脚本', scriptOk + '/' + all, scriptOk === all);
+  printRow('FontAwesome preconnect', faOk + '/' + faTotal, faOk === faTotal);
+  return issues;
+}
+
+/* ─────────── 检查 14: 语义结构 ─────────── */
+function checkSemantics() {
+  printSection('语义结构');
+  const issues = [];
+  const pages = walkPages(ROOT);
+  let one = 0;
+  for (const f of pages) {
+    const html = fs.readFileSync(f, 'utf8');
+    const n = (html.match(/<h1\b/gi) || []).length;
+    if (n === 1) one++;
+    else issues.push(rel(f) + ' 有 ' + n + ' 个 h1（应为 1）');
+  }
+  printRow('每页恰好 1 个 h1', one + '/' + pages.length, one === pages.length);
+  return issues;
+}
+
 /* ─────────── 主流程 ─────────── */
 
 function main() {
@@ -492,11 +574,14 @@ function main() {
   const sharedCssIssues = checkSharedCss();
   const indexStaticIssues = checkIndexStatic();
   const imageIssues = checkImages();
+  const headHintsIssues = checkHeadHints();
+  const semanticIssues = checkSemantics();
 
   console.log('\n━━━━━ 总览 ━━━━━');
   const issueCount =
     deadLinks.length + orphans.length + dupIds.length + missingReadCss.length +
     seoIssues.length + infraIssues.length + sharedCssIssues.length + indexStaticIssues.length + imageIssues.length +
+    headHintsIssues.length + semanticIssues.length +
     (displayNum !== null && displayNum !== postCount ? 1 : 0) +
     (postCount !== articles.length ? 1 : 0) +
     (heroStatus && heroStatus.actual !== heroStatus.shouldBe ? 1 : 0) +

@@ -3,6 +3,33 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'gh-sarpstar-cinecode',
+            title: '2,462 星、9 次提交：出片的是说明书，付账的是对话',
+            url: '../post/gh-sarpstar-cinecode/gh-sarpstar-cinecode.html',
+            summary: 'sarpstar/cinecode 2,462 星、MIT，却只有 9 次提交、0 个 Release。它把拍片拆成给编码 agent 的规则集：三个 hook、六道确认门、58 份风格配方。仓库 73.63% 是一张演示动图；README 说无需付费服务，FAQ 却写着 30–60 秒短片要 100–250 步。',
+            category: 'AI 编程',
+            date: '2026-11-14',
+            tags: ["Skill","Claude Code","视频生成","开源"],
+          },
+          {
+            id: 'gh-nvidia-auto-ontology',
+            title: '12,629 星、0 个 Release：先认证定义再问答',
+            url: '../post/gh-nvidia-auto-ontology/gh-nvidia-auto-ontology.html',
+            summary: 'NVIDIA/auto-ontology 12,629 星、Apache-2.0，GitHub 上 0 个 Release，镜像发在 NGC。它用本体层让 agent 查数前先对齐定义：生成、人工认证、再回答。37 条依赖、6 组件、4 个模型角色，MCP 只读，不接受外部 PR。',
+            category: 'AI 编程',
+            date: '2026-11-14',
+            tags: ["Skill","NVIDIA","Agent","开源","语义层"],
+          },
+          {
+            id: 'gh-3d-agent-duo',
+            title: '1,961 星造几何、1,521 星出画面：别当竞品挑',
+            url: '../post/gh-3d-agent-duo/gh-3d-agent-duo.html',
+            summary: 'sand3d 1,961 星、Apache-2.0，把 Blender 包成给 LLM 的建模语言，导出 GLB 等六种格式；vork 1,521 星、许可证自述不是开源，是 Rust/Slang 的 GPU 渲染引擎，场景正好读 GLB。两者一个造几何一个出画面，附选 A 选 B 判断表。',
+            category: 'AI 编程',
+            date: '2026-11-14',
+            tags: ["Skill","3D","Agent","开源","横评"],
+          },
+          {
             id: 'gh-d4vinci-scrapling',
             title: '102,361 星、55 版仍是 Beta：默认只装解析器',
             url: '../post/gh-d4vinci-scrapling/gh-d4vinci-scrapling.html',

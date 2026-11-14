@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- head-hints:begin -->
+    <meta name="theme-color" content="#0b0d16" />
+    <link rel="preconnect" href="https://font.emtech.cc" crossorigin />
+    <link rel="dns-prefetch" href="https://font.emtech.cc" />
+    <script src="/home/theme-color.js" defer></script>
+    <!-- head-hints:end -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1,961 星造几何、1,521 星出画面：别当竞品挑 · EXPECTOPATRONUS</title>
+    <meta name="description" content="sand3d 1,961 星、Apache-2.0，把 Blender 包成给 LLM 的建模语言，导出 GLB 等六种格式；vork 1,521 星、许可证自述不是开源，是 Rust/Slang 的 GPU 渲染引擎，场景正好读 GLB。两者一个造几何一个出画面，附选 A 选 B 判断表。" />
+    <meta name="keywords" content="Skill, 3D, Agent, 开源, 横评" />
+    <meta property="og:title" content="1,961 星造几何、1,521 星出画面：别当竞品挑" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="sand3d 1,961 星、Apache-2.0，把 Blender 包成给 LLM 的建模语言，导出 GLB 等六种格式；vork 1,521 星、许可证自述不是开源，是 Rust/Slang 的 GPU 渲染引擎，场景正好读 GLB。两者一个造几何一个出画面，附选 A 选 B 判断表。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <link rel="stylesheet" href="../article-common.css" data-shared-css="0d59321e71" />
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+    <!-- seo:begin -->
+    <link rel="canonical" href="https://expectopatronus00.github.io/post/gh-3d-agent-duo/gh-3d-agent-duo.html" />
+    <meta property="og:url" content="https://expectopatronus00.github.io/post/gh-3d-agent-duo/gh-3d-agent-duo.html" />
+    <meta property="og:site_name" content="EXPECTOPATRONUS" />
+    <meta property="og:image" content="https://expectopatronus00.github.io/post/gh-3d-agent-duo/cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"1,961 星造几何、1,521 星出画面：别当竞品挑","description":"sand3d 1,961 星、Apache-2.0，把 Blender 包成给 LLM 的建模语言，导出 GLB 等六种格式；vork 1,521 星、许可证自述不是开源，是 Rust/Slang 的 GPU 渲染引擎，场景正好读 GLB。两者一个造几何一个出画面，附选 A 选 B 判断表。","image":"https://expectopatronus00.github.io/post/gh-3d-agent-duo/cover.jpg","inLanguage":"zh-CN","author":{"@type":"Person","name":"expectopatronus","url":"https://expectopatronus00.github.io"},"publisher":{"@type":"Organization","name":"EXPECTOPATRONUS","url":"https://expectopatronus00.github.io"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://expectopatronus00.github.io/post/gh-3d-agent-duo/gh-3d-agent-duo.html"},"datePublished":"2026-11-14","dateModified":"2026-11-14"}</script>
+    <!-- seo:end -->
+</head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>1,961 星造几何、1,521 星出画面：别当竞品挑</h1>
+      <p>1,961 星与 1,521 星，两个 11 月初新建的仓库都写着 built for agents。sand3d 把 Blender 包成建模语言，vork 用 Rust 做 GPU 渲染。一个造几何一个出画面，是上下游不是竞品。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-14</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 6 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <picture data-cover-picture="1">
+        <source srcset="cover.webp" type="image/webp" />
+        <img loading="lazy" alt="1,961 星造几何、1,521 星出画面：别当竞品挑 封面" src="cover.jpg" width="2400" height="1260" decoding="async" data-cover-ready="1" />
+      </picture>
+    </div>
+
+    <article class="article-body">
+<div class="section-marker">01 · 这件事</div>
+<h2>两个都写着 built for agents，交出的却不是同一样东西</h2>
+<p><strong>这两个项目不是竞品，是同一条流水线的上下游。</strong>2026-11-03 建库的 sand3d 有 1,961 星，11-05 建库的 vork 有 1,521 星。两个 description 分别写着 built for LLMs 和 for agents，看上去像同一赛道里的两个备选，实际一个造几何、一个出画面。</p>
+<p>先把身份摆齐。下表数字来自 api.github.com 的仓库接口、完整目录树与 search/issues，open 值已拆成 issue 与 PR 两部分，没有把 14 当成 14 个缺陷。</p>
+<table>
+  <thead><tr><th>字段</th><th>Sandflow-ai/sand3d</th><th>voyager-so/vork</th></tr></thead>
+  <tbody>
+    <tr><td>星标 / fork</td><td>1,961 / 218</td><td>1,521 / 128</td></tr>
+    <tr><td>建库 / 最近推送</td><td>11-03 / 11-13</td><td>11-05 / 11-13</td></tr>
+    <tr><td>许可证</td><td>Apache-2.0</td><td>NOASSERTION</td></tr>
+    <tr><td>GitHub 主语言</td><td>HTML</td><td>Rust</td></tr>
+    <tr><td>open issue / PR</td><td>11 / 3</td><td>7 / 5</td></tr>
+    <tr><td>订阅者 / 贡献者</td><td>11 / 7 人</td><td>8 / 1 人</td></tr>
+    <tr><td>仓库体积</td><td>7,648 KB</td><td>20,299 KB</td></tr>
+    <tr><td>tag / 最新版本</td><td>3 · v1.6.3（11-06）</td><td>7 · v0.5.1（11-11）</td></tr>
+  </tbody>
+</table>
+<p><span class="hl">一个交出的是可编辑的几何文件，一个交出的是渲染好的像素</span>。sand3d 的 export 按扩展名吐出 GLB、URDF、IFC 等格式；vork 的场景里有一个 asset 节点，示例正好读 model.glb。前者造零件，后者把零件放进光照和相机里出片。</p>
+<p>两条同属 3d-agent 一族，是积压第 7 天与第 6 天的候选，按同族合并一次消耗。下面按机制、数据、用法三条线拆，最后给选 A 还是选 B 的判断表。凡涉及效果的数字，一律按作者自述读，本文没有渲染任何一帧。</p>
+
+<div class="section-marker">02 · 核心机制</div>
+<h2>都在压缩给模型看的东西，压缩的却是两段不同的上下文</h2>
+<p><strong>一个把建模词汇压进提示词，一个把渲染接口压进提示词。</strong>sand3d 把 Blender 的 bpy 包成一层扁平动词，README 说整个 API 约 3,600 tokens，塞进 system prompt 就能用；vork 说核心 API 约 2,500 tokens，靠 <code>vork help</code> 按需展开 27 篇主题文档。</p>
+<p>sand3d 的最小单位是具名零件。程序用 rect、extrude、hole、fillet 一类动词写「一个形状怎么被做出来」，边和面按名字引用，不算坐标；joint 声明部件怎么动，README 的洗衣机示例 38 行、4 个关节。<code>docs/api.md</code> 实测 11,461 字节、70 个函数签名。</p>
+<table>
+  <thead><tr><th>扩展名</th><th>带什么</th><th>给谁用</th></tr></thead>
+  <tbody>
+    <tr><td>GLB</td><td>网格、材质、节点 extras 里的关节</td><td>Web、查看器、游戏引擎</td></tr>
+    <tr><td>URDF</td><td>每个活动部件一个 link，含限位</td><td>ROS、MuJoCo、Isaac</td></tr>
+    <tr><td>USDA</td><td>OpenUSD 的 UsdGeom 与 UsdPhysics</td><td>Omniverse、Isaac Sim</td></tr>
+    <tr><td>IFC</td><td>IFC4 项目树、三角面片</td><td>Revit、ArchiCAD、BIM</td></tr>
+    <tr><td>OBJ / STL</td><td>仅网格，当前姿态</td><td>任意 3D 工具、切片</td></tr>
+  </tbody>
+</table>
+<p>vork 反过来，场景是一份 JSON。它用 Rust 与 Slang 写，走 Vulkan 和 Metal，agent 写 scene.json、渲染、看图、再改，<span class="hl">README 直说没有编辑器可驱动</span>。默认渲染把光栅可见性与硬件光追照明合在一起，另留一个路径追踪档。</p>
+<ul>
+<li><b>四个画质档</b>：std/previs 迭代、std/draft 4 采样、std/final 8 采样、std/path 路径传输。</li>
+<li><b>三处 agent 接口</b>：<code>vork init</code> 起项目、<code>vork help</code> 查字段、skills/vork/SKILL.md 交给编码 agent。</li>
+<li><b>SDK 两种</b>：Python 的 vork、TypeScript 的 @voyager-so/vork；npm 上同名的 vork 包与本项目无关。</li>
+<li><b>27 篇 help</b>：docs/help/ 下共 101,884 字节，按主题查，不是一次灌进上下文。</li>
+</ul>
+<p>两个 token 数字不好直接比大小。3,600 指整份 API 文档，2,500 指核心 API；前者按文件字节反查是 11,461 字节，后者身后是 27 篇 help。一个是全量塞入，一个是按需检索，口径不同。</p>
+
+<div class="section-marker">03 · 关键细节与数据</div>
+<h2>对回目录树，两处口径比星标更值得写下来</h2>
+<p><strong>自述数字没有撒谎，是分母换了地方。</strong>这不是给项目挑错，是提醒引用这些数字时别用错口径。</p>
+<p>GitHub 把 sand3d 的主语言标成 HTML，源码却在 src/ 下 17 个 py 文件、734 KB。完整目录树给出答案：HTML 只有 6 个、5.28 MB，全在 site/ 里，quickstart.html 一个就 3.94 MB。<span class="hl">主语言按字节算，被文档站撑成了 HTML</span>。</p>
+<p>vork 最抓眼的数字是「一百万只鸟、192 帧 1080p、单张 L4 用 97 秒」，EEVEE 投影 13 到 18 分钟。但同一份 README 用整节注明：<span class="hl">这些是计时，不是等质量加速</span>。</p>
+<table>
+  <thead><tr><th>核对项</th><th>README 自己给的边界</th></tr></thead>
+  <tbody>
+    <tr><td>采样不对等</td><td>vork 8 采样加 OIDN，EEVEE 64 采样无降噪</td></tr>
+    <tr><td>影片是投影</td><td>EEVEE 值由 8 帧外推，projections, not measured movies</td></tr>
+    <tr><td>质量未过线</td><td>19 个早期对比未通过 FLIP no-worse 条件</td></tr>
+    <tr><td>未完成作业</td><td>583 / 585 张图；百万星场景两种档都显存不足</td></tr>
+    <tr><td>反向结果</td><td>路径追踪比 Cycles 慢 1.99 到 5.81 倍</td></tr>
+    <tr><td>冷启动</td><td>setup 250.792 秒；rack-focus 首帧 82.057 秒</td></tr>
+  </tbody>
+</table>
+<p>另两处反查也对得上。sand3d 的 README 把动词族标成 16 / 15 / 15，docs/api.md 逐行数正是 profiles 16、solids 15、edits 15。但 assembly 标 8，文件里数出 9 个签名，差在 empty_scene 这类辅助函数没被算作动词。</p>
+<p>vork 的 README 列 8 个成片示例，examples/ 下实际有 10 个子目录，多出的 assets 与 programs 是素材和程序片段，不算成片。两处都不是虚报，只是自述按展示口径数、目录按文件口径数。</p>
+<div class="info-box">数据核对：经 api.github.com 仓库接口、完整目录树、search/issues 与 git/blobs 原文读取，文件数与字节数均为完整树计数，两棵树都未截断。
+<ul>
+<li>身份：sand3d 1,961 星 / 218 fork / 11 issue + 3 PR / Apache-2.0；vork 1,521 星 / 128 fork / 7 issue + 5 PR / NOASSERTION。</li>
+<li>树：sand3d 152 文件 / 12,228,071 字节；vork 1,729 文件 / 54,404,605 字节。</li>
+<li>版本：sand3d 3 tag，最新 v1.6.3（11-06）；vork 7 tag，最新 v0.5.1（11-11）。</li>
+<li>边界：GLB 串联仅指格式可读，两家文档均未提对方；关节 extras 是否被读无说明。本文未安装、未渲染、未复现任何性能数字。</li>
+</ul>
+<p>核对时间 2026-11-14，星标与 issue 为实时值。</p>
+</div>
+
+<div class="section-marker">04 · 怎么用</div>
+<h2>先看显卡，再看要不要把它做成服务</h2>
+<p><strong>两个项目的门槛不在同一处：一个卡 Python 版本，一个卡硬件光追。</strong>装之前先照下表对一遍环境，比读十页 README 省事。</p>
+<table>
+  <thead><tr><th>项</th><th>sand3d</th><th>vork</th></tr></thead>
+  <tbody>
+    <tr><td>安装</td><td><code>pip install sand3d</code></td><td>平台安装包或 npm create vork；pip 仍写 Coming soon</td></tr>
+    <tr><td>Python</td><td>3.11 或 3.13，3.12 无 wheel</td><td>3.11 及以上，仅 SDK 需要</td></tr>
+    <tr><td>底层依赖</td><td>bpy 4.5（3.11）/ 5.2（3.13）</td><td>Slang、OIDN、Vulkan 或 Metal</td></tr>
+    <tr><td>GPU</td><td>不要求</td><td>Apple Silicon 或带硬件光追的 NVIDIA</td></tr>
+    <tr><td>明确不支持</td><td>Intel Mac 从 bpy 5.2 起</td><td>Intel Mac、A100 / H100 / H200 / B200 / B300</td></tr>
+    <tr><td>视频输出</td><td>不涉及</td><td>Linux 与 Windows 需 ffmpeg</td></tr>
+  </tbody>
+</table>
+<p>串联路径两边 README 都给了。sand3d 用 <code>s3d.export(machine, "washer.glb")</code> 导出，vork 的 glTF 示例在场景里放 <code>{"type":"asset","file":"model.glb"}</code>。</p>
+<p>再跑 <code>vork render model.json</code> 出 PNG，造几何的就把零件交给造画面的，中间不必手写转换器。</p>
+<p><span class="hl">但格式对得上，不等于两家联调过</span>。两边文档都没提对方：sand3d 的关节写进 GLB 节点的 extras，vork 读不读没有说明，材质能否保真也要自己验。</p>
+<p>单位还得手动对齐，sand3d 默认毫米，vork 用米。这条链路是照着两份 README 推出来的，不是实测结果，别默认无损。</p>
+<p>判断表如下，A 是 sand3d，B 是 vork：</p>
+<table>
+  <thead><tr><th>你的需求</th><th>选</th><th>理由</th></tr></thead>
+  <tbody>
+    <tr><td>要可改参数、按名字引用的零件</td><td>A</td><td>具名部件、70 个动词、确定性网格</td></tr>
+    <tr><td>要 URDF / IFC 交给仿真或 BIM</td><td>A</td><td>六种导出格式，IFC 走 ISO 16739</td></tr>
+    <tr><td>要最终成片、VFX、动画</td><td>B</td><td>Rust 与 Slang 引擎，四个画质档</td></tr>
+    <tr><td>要二次分发、改版、对外托管</td><td>A</td><td>Apache-2.0；B 的许可证明确禁止</td></tr>
+    <tr><td>只有 CPU 或老显卡</td><td>A</td><td>B 要求硬件光追，CPU 档仅 Linux 且很慢</td></tr>
+    <tr><td>两个都要</td><td>串联</td><td>先验 GLB 的关节与单位，别默认无损</td></tr>
+  </tbody>
+</table>
+
+<div class="section-marker">05 · 冷思考</div>
+<h2>差 440 星不重要，两份许可证划的线才重要</h2>
+<p><strong>最该先看的不是热度差，是「能不能用」被写在了两种完全不同的条款里。</strong></p>
+<p>两个仓库到核对日都不到两周：11-03 与 11-05 建库，1,961 星配 11 个订阅者、7 位贡献者，1,521 星配 8 个订阅者、1 位贡献者 12 次提交。54 MB 源码、1,729 个文件由单人推送，更像一次集中开源，不是长期协作。<span class="hl">星标是发布期曝光，不是生产验证</span>。</p>
+<p>sand3d 是 Apache-2.0，LICENSE、pyproject.toml 与徽章三处一致。vork 的 API 是 NOASSERTION，LICENSE 标题叫 vork Preview License。</p>
+<p>它开头就写 source-available 和「<span class="hl">It is not open source</span>」，还把「代表你行动的 AI agents」写进了「你」的定义——条款连调用方是人是模型都提前划了线。</p>
+<p>预览期可商用，但条款禁止出售、分发修改版、对外提供托管渲染，且只覆盖当前版本，后续版本可能改为付费。想把它包成一个按次收费的渲染服务，这一步就走不通；README 里那句 free during the research preview 也预留了变化。</p>
+<p>所以「给 agent 用的 3D」不该当一个品类比高低。<strong>先问产出物是文件还是像素，再问许可证允不允许你把它做成服务</strong>。要造零件，A 那 70 个动词就够；要出片，先验自己那张卡过不过 B 的硬件门槛。真正把两者分开的不是星标，也不是谁更省 token，是你要交付的东西落在流水线的哪一段。</p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看这两个仓库</h3>
+        <p>sand3d 1,961 星 / Apache-2.0 / 给 LLM 的 Python 建模语言；vork 1,521 星 / 研究预览许可 / Rust 与 Slang 的 GPU 渲染引擎</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/Sandflow-ai/sand3d" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/Sandflow-ai/sand3d" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 1,961 星，Apache-2.0，70 个建模动词与六种导出格式</span>
+      </a>
+      <a class="plat-card" href="https://github.com/voyager-so/vork" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 1,521 星，NOASSERTION，headless 3D/VFX 渲染引擎</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Skill">#Skill</a>
+      <a href="../../home/home.html?q=3D">#3D</a>
+      <a href="../../home/home.html?q=Agent">#Agent</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=%E6%A8%AA%E8%AF%84">#横评</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">数据来源：api.github.com 仓库接口、完整目录树与两仓 README / LICENSE / pyproject.toml 原文；核对时间 2026-11-14。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

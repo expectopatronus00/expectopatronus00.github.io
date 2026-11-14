@@ -28,6 +28,7 @@
 const fs = require('fs');
 const path = require('path');
 const { injectSeo, siteUrl } = require('./seo-meta.cjs');
+const { injectHints } = require('./head-hints.cjs');
 const { syncIndexStatic } = require('./home-static.cjs');
 const { encodeWebp } = require('./cover-webp.cjs');
 
@@ -178,6 +179,10 @@ function render(spec, hasCover) {
       ? siteUrl() + '/post/' + spec.id + '/cover.jpg'
       : siteUrl() + '/home/og-default.jpg',
   });
+
+  // head 提示层（theme-color / preconnect / 主题同步脚本）：与存量页共用
+  // scripts/head-hints.cjs，新稿不用等批量脚本补，repo-lint 覆盖率不会漏。
+  prefix = injectHints(prefix);
 
   const hero = hasCover
     ? `

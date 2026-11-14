@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- head-hints:begin -->
+    <meta name="theme-color" content="#0b0d16" />
+    <link rel="preconnect" href="https://font.emtech.cc" crossorigin />
+    <link rel="dns-prefetch" href="https://font.emtech.cc" />
+    <script src="/home/theme-color.js" defer></script>
+    <!-- head-hints:end -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2,462 星、9 次提交：出片的是说明书，付账的是对话 · EXPECTOPATRONUS</title>
+    <meta name="description" content="sarpstar/cinecode 2,462 星、MIT，却只有 9 次提交、0 个 Release。它把拍片拆成给编码 agent 的规则集：三个 hook、六道确认门、58 份风格配方。仓库 73.63% 是一张演示动图；README 说无需付费服务，FAQ 却写着 30–60 秒短片要 100–250 步。" />
+    <meta name="keywords" content="Skill, Claude Code, 视频生成, 开源" />
+    <meta property="og:title" content="2,462 星、9 次提交：出片的是说明书，付账的是对话" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="sarpstar/cinecode 2,462 星、MIT，却只有 9 次提交、0 个 Release。它把拍片拆成给编码 agent 的规则集：三个 hook、六道确认门、58 份风格配方。仓库 73.63% 是一张演示动图；README 说无需付费服务，FAQ 却写着 30–60 秒短片要 100–250 步。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <link rel="stylesheet" href="../article-common.css" data-shared-css="0d59321e71" />
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+    <!-- seo:begin -->
+    <link rel="canonical" href="https://expectopatronus00.github.io/post/gh-sarpstar-cinecode/gh-sarpstar-cinecode.html" />
+    <meta property="og:url" content="https://expectopatronus00.github.io/post/gh-sarpstar-cinecode/gh-sarpstar-cinecode.html" />
+    <meta property="og:site_name" content="EXPECTOPATRONUS" />
+    <meta property="og:image" content="https://expectopatronus00.github.io/post/gh-sarpstar-cinecode/cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"2,462 星、9 次提交：出片的是说明书，付账的是对话","description":"sarpstar/cinecode 2,462 星、MIT，却只有 9 次提交、0 个 Release。它把拍片拆成给编码 agent 的规则集：三个 hook、六道确认门、58 份风格配方。仓库 73.63% 是一张演示动图；README 说无需付费服务，FAQ 却写着 30–60 秒短片要 100–250 步。","image":"https://expectopatronus00.github.io/post/gh-sarpstar-cinecode/cover.jpg","inLanguage":"zh-CN","author":{"@type":"Person","name":"expectopatronus","url":"https://expectopatronus00.github.io"},"publisher":{"@type":"Organization","name":"EXPECTOPATRONUS","url":"https://expectopatronus00.github.io"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://expectopatronus00.github.io/post/gh-sarpstar-cinecode/gh-sarpstar-cinecode.html"},"datePublished":"2026-11-14","dateModified":"2026-11-14"}</script>
+    <!-- seo:end -->
+</head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>2,462 星、9 次提交：出片的是说明书，付账的是对话</h1>
+      <p>2,462 星、0 个 Release、9 次提交。cinecode 建于 2026-11-03，不是装上就出片的软件，而是一份 32 KB 的 SKILL.md：让编码 agent 写代码逐帧画图，再由 Chrome 截图合成 MP4。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-14</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 6 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <picture data-cover-picture="1">
+        <source srcset="cover.webp" type="image/webp" />
+        <img loading="lazy" alt="2,462 星、9 次提交：出片的是说明书，付账的是对话 封面" src="cover.jpg" width="2400" height="1260" decoding="async" data-cover-ready="1" />
+      </picture>
+    </div>
+
+    <article class="article-body">
+<div class="section-marker">01 · 这件事</div>
+<h2>2,462 星买的不是渲染器，是一份 32 KB 的说明书</h2>
+<p><strong>它不是一个装上运行就出片的软件，而是一份写给 AI 编码 agent 的规则集。</strong>sarpstar/cinecode 建于 2026-11-03，MIT，主语言 Python，仓库自述是「用代码做电影」。</p>
+<p>核对日 2026-11-14 有 2,462 星、424 fork、11 个未结 issue，pushed_at 停在 11-12，updated_at 是今天。created_at 与最近推送之间只隔了九天。</p>
+<p>releases 与 tags 两个接口都返回空数组，全仓只有 9 次提交、3 个贡献者。<span class="hl">没有版本号，安装就是 git clone 到 skills 目录</span>，更新靠 git pull。</p>
+<p>入口不是可执行程序，而是根目录的 SKILL.md 与 AGENTS.md。前者 32,786 字节，带 Claude Code 的 hook 配置；后者 1,004 字节，只交代「要拍片先读 SKILL.md」。</p>
+<table>
+  <thead><tr><th>字段</th><th>核对值</th></tr></thead>
+  <tbody>
+    <tr><td>仓库</td><td>sarpstar/cinecode · main 分支</td></tr>
+    <tr><td>星标 / fork / 未结 issue</td><td>2,462 / 424 / 11</td></tr>
+    <tr><td>建库 / 最近推送</td><td>2026-11-03 / 2026-11-12</td></tr>
+    <tr><td>许可证 / 主语言</td><td>MIT / Python</td></tr>
+    <tr><td>Release / tag / 提交</td><td>0 / 0 / 9</td></tr>
+    <tr><td>贡献者 / 订阅者</td><td>3 / 16</td></tr>
+  </tbody>
+</table>
+<p>所以「电影」是流程产物：agent 写代码生成每一帧，headless Chrome 逐帧截图，ffmpeg 合成 MP4。仓库自己不出图，也不带模型。</p>
+
+<div class="section-marker">02 · 核心机制</div>
+<h2>三个 Hook 盯住对话，六道门把人卡在每一次确认上</h2>
+<p><strong>机制的核心不是渲染，是把拍片拆成一道道必须被人批准的关卡。</strong>SKILL.md 的 frontmatter 注册了三个 hook，全部指向同一段 node 查找器，最终调用 scripts/hook.cjs 拉起 guard.py。</p>
+<table>
+  <thead><tr><th>Hook</th><th>触发点</th><th>作用</th></tr></thead>
+  <tbody>
+    <tr><td>UserPromptSubmit</td><td>用户发消息</td><td>提问前先查「用户有没有看过」</td></tr>
+    <tr><td>Stop</td><td>一轮结束</td><td>拦住交付了草稿却不给确认按钮的回合</td></tr>
+    <tr><td>PreToolUse（matcher *）</td><td>每次工具调用</td><td>对话过大、大图入聊、助手超过 25 步等</td></tr>
+  </tbody>
+</table>
+<p>三个 hook 的 onFailure 都是 continue，即 guard 自己出错也不拦用户。开工先问两件事：模式与用途；模式决定深度，用途决定片种，之后的默认提问、参考、关卡与检查都跟着用途走。</p>
+<table>
+  <thead><tr><th>维度</th><th>Quick 模式</th><th>Film 模式</th></tr></thead>
+  <tbody>
+    <tr><td>产物</td><td>一个自包含 film.html</td><td>three.js 分镜 + 分层声音</td></tr>
+    <tr><td>画面 / 声音</td><td>Canvas 2D 或 three.js / Web Audio</td><td>八套预设 / 分层 beds、拟音、旁白</td></tr>
+    <tr><td>确认次数</td><td>约 3 次</td><td>逐步 6–8 次，直出约 3 次</td></tr>
+    <tr><td>适用时长</td><td>约 3 分钟以内</td><td>十分钟以上的纪录片、叙事片</td></tr>
+  </tbody>
+</table>
+<p>内建规则写得像验收清单，SKILL.md 把它归成五条：</p>
+<ul>
+<li>前 2 秒从第 1 帧就要有运动，且经过测量</li>
+<li>每一帧都是时间的纯函数，重渲染结果一致</li>
+<li>每个外部文件下载时即登记一行许可</li>
+<li>长渲染后台运行并写状态文件，含预计剩余时间</li>
+<li>agent 只看小尺寸拼图，不把整图塞进对话</li>
+</ul>
+<p>有意思的是体量：guard.py 有 103,011 字节，是 SKILL.md 的 3.14 倍。<span class="hl">执行规则的代码比规则本身大三倍</span>，说明这套 kit 真正押注的是「别让 agent 偷步」。</p>
+
+<div class="section-marker">03 · 关键细节与数据</div>
+<h2>15.87 MB 的仓库里，一张演示动图占了 73.63%</h2>
+<p><strong>递归 git tree 显示，这个仓库的重量几乎全在展示素材，不在代码。</strong>truncated 为 false，180 个节点 = 168 个 blob + 12 个 tree，逐 blob 累加 15,870,968 字节。</p>
+<table>
+  <thead><tr><th>目录 / 文件</th><th>文件数</th><th>字节</th></tr></thead>
+  <tbody>
+    <tr><td>docs/ 合计</td><td>15</td><td>12,947,801</td></tr>
+    <tr><td>其中 docs/media/</td><td>14</td><td>12,897,807</td></tr>
+    <tr><td>其中 reel.gif 单个</td><td>1</td><td>11,686,272</td></tr>
+    <tr><td>scripts/</td><td>39</td><td>931,377</td></tr>
+    <tr><td>styles/</td><td>61</td><td>713,445</td></tr>
+    <tr><td>references/</td><td>24</td><td>493,604</td></tr>
+    <tr><td>tests/</td><td>3</td><td>305,750</td></tr>
+    <tr><td>templates/ 与 starter/</td><td>12 / 5</td><td>184,865 / 63,863</td></tr>
+    <tr><td>四份 README 合计</td><td>4</td><td>191,764</td></tr>
+  </tbody>
+</table>
+<p>docs/ 只有 15 个文件却占去八成体积，README 里 12 张静帧加这张 30 秒动图，是仓库唯一的「成片证据」。真正可执行的 scripts、starter、tests 合起来 47 个文件、1,300,990 字节。</p>
+<p>styles/ 有 58 份 .md 配方，styles/index.json 实测也是 58 条。其中 51 条来自 lemomo-ai/lemo-opuscar 的钉死提交 d33bdea，只有 7 条标了 source: cinecode。README 写的「51 外来、7 自有」与文件对得上，这点没水分。</p>
+<p>体量有三套互不相等的口径，混用就会算错。下表按来源分开列，正文只采信 git tree：</p>
+<table>
+  <thead><tr><th>口径</th><th>数值</th><th>统计范围</th></tr></thead>
+  <tbody>
+    <tr><td>git tree 逐 blob 累加</td><td>15,870,968 字节</td><td>全部 168 个文件</td></tr>
+    <tr><td>languages 接口</td><td>1,238,666 字节</td><td>Python 1,013,465 / HTML 150,017 / JS 75,184</td></tr>
+    <tr><td>仓库 size 字段</td><td>13,639 KB</td><td>GitHub 自有算法，不引用</td></tr>
+  </tbody>
+</table>
+<p>languages 不统计 md、json、gif、jpg，与 tree 差一个数量级；两者绝不能相加，也不能拿 size 字段反推文件体积。</p>
+<div class="info-box">数据核对：数字来自 api.github.com 的仓库、目录、releases、tags、languages、contributors、commits、search/issues 接口及仓库内文件原文。
+<ul>
+<li>身份：2,462 星 / 424 fork / 11 未结 / 建库 11-03 / pushed 11-12 / MIT。</li>
+<li>版本：releases 与 tags 均空，9 次提交、3 位贡献者，无版本号。</li>
+<li>体量：tree 180 节点、15,870,968 字节，reel.gif 占 73.63%。</li>
+<li>构成：styles 58 份（51 外来 / 7 自有）、scripts 39、四份 README 191,764 字节。</li>
+<li>边界：未安装、未渲染、未复现样片；11 个未结中 5 个 issue、6 个 PR。</li>
+</ul>
+<p>核对时间 2026-11-14，星标与 issue 为实时值。</p>
+</div>
+
+<div class="section-marker">04 · 怎么用</div>
+<h2>「不需要付费服务」这句，要连环境要求一起读</h2>
+<p><strong>工具包是 MIT 免费的，但跑通它要自备一整套本机环境与若干外部账号。</strong>README 首屏写 No paid service is required，紧接着的环境要求却列了一整排前置条件。</p>
+<table>
+  <thead><tr><th>前置条件</th><th>README 写的门槛</th></tr></thead>
+  <tbody>
+    <tr><td>运行时</td><td>Node.js 22+、Python 3.9+、ffmpeg</td></tr>
+    <tr><td>浏览器</td><td>Google Chrome / Chromium / Edge，需可用 GPU</td></tr>
+    <tr><td>宿主 agent</td><td>Claude Code 最佳，Cursor / Codex / Antigravity 亦可</td></tr>
+    <tr><td>guard 版本</td><td>Claude Code 2.1.295 及以上才注册 exec 形式 hook</td></tr>
+    <tr><td>磁盘</td><td>Quick 几百 MB，Film 每部几 GB</td></tr>
+  </tbody>
+</table>
+<p>安装是一行 git clone 到 ~/.claude/skills/cinecode，或在 Claude Code 里说「安装这个 skill」。Cursor、Codex、Antigravity 也能跑，但 guard 的三个 hook 只在 Claude Code 生效，其它宿主里工具检查照跑、实时拦截缺席。</p>
+<p>联网边界 README 自己讲清了。渲染、混音与检查可离线，Quick 起始模板也可离线；但参考检索、音乐、首次下载字体与风格、以及 three.js 场景取库都要联网。LICENSES.csv 里 three@0.186.1 与 postprocessing@6.39.5 从 jsDelivr 按版本加载，不打包进仓库。</p>
+<p>旁白可选，但要你自己的 Gemini key（有免费额度）或 ElevenLabs；图库素材要 Pixabay 的免费 key。<span class="hl">「零依赖」指的是脚本只用标准库与系统工具，不是整条链路零外部资源</span>。</p>
+<p>商用同样要自己兜底，README 把边界写得很细：</p>
+<ul>
+<li>逐项登记字体与素材许可到 LICENSES.csv，成片旁留 credits 文本</li>
+<li>仓库按 MIT「原样提供」，发布者对影片许可负责，并注明「这不是法律建议」</li>
+<li>CI 三作业：Windows、Ubuntu、以及「无 Git 无 bash 的 Windows」，都开真实 Chrome 与 ffmpeg 测试</li>
+<li>README 自承「还没在 Windows 上完整做过一部片子」，旧版客户端可能标 GUARD OFF</li>
+</ul>
+
+<div class="section-marker">05 · 冷思考</div>
+<h2>画面不花模型钱，但那段 100–250 步的长对话花</h2>
+<p><strong>最该打折读的是成本口径：代码出图不消耗模型，陪它走完流程的对话消耗。</strong>README 说画面由代码生成、不产生模型费用，同一份 FAQ 又给出 30–60 秒短片通常要 100–250 步，每一步都重读整段对话。</p>
+<table>
+  <thead><tr><th>成本项</th><th>README 自述</th></tr></thead>
+  <tbody>
+    <tr><td>单部短片步数</td><td>30–60 秒 Quick 片通常 100–250 步</td></tr>
+    <tr><td>每步开销</td><td>重读整段对话，对话越长每步越贵</td></tr>
+    <tr><td>缓解办法</td><td>对话变长就换新会话，靠 STATE.md 续上</td></tr>
+    <tr><td>额外建议</td><td>关掉用不到的 skill、插件与连接器，用 usage.py 查 token</td></tr>
+  </tbody>
+</table>
+<p>这些缓解办法本身就承认了账单在哪。<span class="hl">所谓免费，是把成本从 API 挪到了你的 agent 订阅与等待时间</span>；真要拍十分钟的长片，先算的是会话轮次，不是显卡。</p>
+<p>工程活动的密度更值得看。9 次提交里 sarpstar 占 7 次，claude 与 cursoragent 各 1 次，后两次都是 11-03 改 README；11-12 那两次也只是加 X 徽章、改一句推荐语。<span class="hl">2,462 星对 9 次提交，热度远跑在工程前面</span>。</p>
+<p>11 个未结也要拆开，否则容易误读成「11 个待修 bug」：</p>
+<table>
+  <thead><tr><th>类型</th><th>数量</th><th>内容</th></tr></thead>
+  <tbody>
+    <tr><td>真 issue</td><td>5</td><td>#12 ffmpeg 7.1 上 apad 无界、音频永不结束，仓库自带测试也挂住</td></tr>
+    <tr><td>PR</td><td>6</td><td>#11、#13、#15 都冲着同一个 master_audio.py 死循环</td></tr>
+    <tr><td>其它 PR 方向</td><td>3</td><td>本地页改用 127.0.0.1、免 Chromium 的 WebView 通道、Android app</td></tr>
+  </tbody>
+</table>
+<p>#12 从 11-12 开着、0 条评论，报告者连最小复现命令与四种组合的对照表都给了；PR #15 则说安装 Chromium 约 400 MB，在 iSH、Termux 上会直接崩。免费工具包的落地阻力，恰好集中在它不打包的那几样东西上。</p>
+<p>所以判断不是「能不能出片」，而是你愿意替它承担哪一段。这套 kit 值得读的，是把审美决策拆成可检查的关卡、把外部素材拆成可回溯的许可记录；不值得信的，是「零成本」三个字。真正被消耗的从来不是 GPU，是你陪 agent 走完 100–250 步的注意力——先看住它，再谈出片。</p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>sarpstar/cinecode：给编码 agent 的拍片规则集，MIT，靠 SKILL.md、guard 脚本与 58 份风格配方驱动出片</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/sarpstar/cinecode" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/sarpstar/cinecode" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 2,462 星，MIT，9 次提交，0 个 Release</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Skill">#Skill</a>
+      <a href="../../home/home.html?q=Claude%20Code">#Claude Code</a>
+      <a href="../../home/home.html?q=%E8%A7%86%E9%A2%91%E7%94%9F%E6%88%90">#视频生成</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">数据来源：api.github.com 仓库 / 目录 / releases / tags / languages / contributors / commits / search-issues 接口，及 README.en.md、README.zh-CN.md、SKILL.md、AGENTS.md、styles/index.json、.github/workflows/tests.yml、templates/LICENSES.csv 原文；核对时间 2026-11-14。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

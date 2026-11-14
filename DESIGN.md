@@ -1,10 +1,10 @@
 ---
-version: 1.1
+version: 1.2
 name: EXPECTOPATRONUS Blog Design System
 description: 中文 AI 工具学习归档站的设计系统。编辑室 × 技术实验室，暗色为默认、暖纸为浅色，字体主导、网格规整、留白克制，配色只做收敛。供 AI 编码 Agent 在生成页面或改样式前阅读。
 source_of_truth: home/design-tokens.css
 scope: 全站（首页 index.html / 归档 home / 导航站 nav / 全部文章页 post）
-updated: 2026-11-13
+updated: 2026-11-14
 ---
 
 # DESIGN.md · EXPECTOPATRONUS
@@ -21,13 +21,15 @@ updated: 2026-11-13
 | --- | --- | --- |
 | `home/fonts.css` | 字体声明（拉丁自托管 woff2 + 中文 CDN 分片） | 全站 |
 | `home/design-tokens.css` | **唯一共享视觉规范**：token、reset、共享组件、响应式、精修层 | 全站所有 HTML |
+| `home/theme-color.js` | 按 `data-theme` 同步 `meta[name=theme-color]`，颜色读 `--bg`，不在 JS 里另写色值 | 全站所有 HTML |
+| `scripts/head-hints.cjs` | head 提示层唯一实现（`theme-color` / CDN `preconnect` / 同步脚本），产出包在 `<!-- head-hints:begin … end -->` | 全站所有 HTML |
 | `post/article-common.css` / `post/_shared/<hash>.css` | 从重复内联样式抽出的共享 CSS，按内容哈希去重，由 `scripts/apply-shared-css.cjs` 管理 | 文章页 |
 | 各页内联 `<style>` | 页面专属结构（hero、归档列表、导航卡片…） | 单页 |
 | `post/article-read.css` | 文章易读性层（正文排版、章节呼吸、列表/表格、封面 picture、移动端目录） | 全部文章页 |
 | `post/article.js` | 运行时注入：进度条、侧边/移动端目录、上下篇、相关文章、超长核对框折叠 | 文章页 |
 | `scripts/build-article.cjs` | 新文章 HTML 渲染（SEO 元数据 / `article-read.css` / 封面 jpg+webp / 首页静态兜底同步） | 新稿 |
 
-**加载顺序**：`fonts.css` → `design-tokens.css` → 页面内联 `<style>` 或它的等价格 `<link data-shared-css>` → `article-read.css`（由 `scripts/apply-read-css.cjs` 插在 `</head>` 前）。共享 CSS 是**原位替换**内联 `<style>`，内容与层叠顺序都不变，所以视觉零回归。
+**加载顺序**：`<meta charset>` → **head hints 块**（`theme-color` / `preconnect` / `dns-prefetch` / `theme-color.js`）→ `fonts.css` → `design-tokens.css` → 页面内联 `<style>` 或它的等价格 `<link data-shared-css>` → `article-read.css`（由 `scripts/apply-read-css.cjs` 插在 `</head>` 前）。共享 CSS 是**原位替换**内联 `<style>`，内容与层叠顺序都不变，所以视觉零回归。hints 必须排在所有 CSS 之前，`preconnect` 才能在网络请求发出前建好连接；`theme-color.js` 用 `defer`，等 CSS 就位后再读 `--bg`。
 
 四条由此产生的硬约束：
 
@@ -35,8 +37,9 @@ updated: 2026-11-13
 2. `article-read.css` 在内联样式**之后**加载，同特异性下自然生效，**不需要 `!important`**；改呈现层只动这一个共享文件，不逐篇改文章 HTML。
 3. 新增通用组件样式请**追加到 `design-tokens.css`**；文章级共享规则追加到 `post/article-read.css`。不要新建全站 CSS 文件、不要给文章页逐个加内联样式。
 4. `post/article-common.css` 与 `post/_shared/` 是**生成物**，由 `apply-shared-css.cjs` 按内容哈希产出，不要手改；`repo-lint.cjs` 会校验每个 `data-shared-css` link 指向的文件存在且哈希一致。
+5. head hints 块是**生成物**，由 `scripts/apply-head-hints.cjs` 幂等注入，不要手改任何页面的 `<meta name="theme-color">`。静态默认值取自 `design-tokens.css` 的 `--ink-950`（深色）/`--paper`（浅色）；**改了这两个 token 后必须跑一次 `node scripts/apply-head-hints.cjs`**，否则 `repo-lint` 的「theme-color 与 CSS 一致」会失败。
 
-**主题机制**：`<html>` 上用 `data-theme="dark" | "light"` 切换，偏好存 `localStorage.theme`，默认 `dark`，只有值为 `light` 时才写入属性。首页与归档页 HTML 硬编码 `data-theme="dark"`，文章页由 `<head>` 内联脚本读取后设置。所有颜色必须走语义变量，才能双主题自动生效。
+**主题机制**：`<html>` 上用 `data-theme="dark" | "light"` 切换，偏好存 `localStorage.theme`，默认 `dark`，只有值为 `light` 时才写入属性。首页与归档页 HTML 硬编码 `data-theme="dark"`，文章页由 `<head>` 内联脚本读取后设置。所有颜色必须走语义变量，才能双主题自动生效。浏览器地址栏配色不由系统配色决定：静态给深色兜底，`home/theme-color.js` 用 `MutationObserver` 监听 `data-theme`、用 `storage` 事件跨标签同步，每次都从 `--bg` 读当前色值。
 
 ---
 
@@ -270,7 +273,10 @@ z-index 层级：氛围层 `1`（渐变）/ `2`（噪点）→ 内容 `10` → �
 ## 10. 验收清单
 
 - [ ] `node scripts/repo-lint.cjs` 输出「全部通过」；易读性样式 / canonical / og:image / twitter:card / JSON-LD 各项覆盖率**分子等于分母**。
-- [ ] 幂等脚本 `--check` 全部归零：`apply-read-css.cjs`、`apply-seo-meta.cjs`、`apply-shared-css.cjs`、`home-static.cjs`、`apply-image-attrs.cjs`、`cover-webp.cjs`。
+- [ ] 幂等脚本 `--check` 全部归零：`apply-read-css.cjs`、`apply-seo-meta.cjs`、`apply-shared-css.cjs`、`home-static.cjs`、`apply-image-attrs.cjs`、`cover-webp.cjs`、`apply-head-hints.cjs`。
+- [ ] head hints / 语义结构两节覆盖率分子等于分母；`feed.xml` 全量条目数与 `sitemap.xml` 里 `/post/` URL 数相等。
+- [ ] 点主题按钮后 `meta[name=theme-color]` 从 `#0b0d16` 变 `#f4efe4`，再点还原；禁用 JS 时静态值仍是 `#0b0d16`。
+- [ ] 每个生产 HTML 恰好 1 个 `<h1>`；`feed.xml` / `sitemap.xml` 能被 XML 解析器读通。
 - [ ] 新文章 `node scripts/readability.cjs --file post/<id>/<id>.html` ≥75（三档：<60 重写、60–74 改写、≥75 通过）。
 - [ ] 首页在 `javaScriptEnabled:false` 下四块静态兜底仍有内容；`home/articles.js` 必须 `defer`，渲染脚本必须包 `DOMContentLoaded`。
 - [ ] 有封面的文章实测 `img.currentSrc` 结尾为 `.webp`，显示比例与图片原始比例一致；无封面的文章不得有空 `src` 破图或空 `.hero-image`。

@@ -2,7 +2,7 @@
 /**
  * 从 home/articles.js 里的 window.articles 生成两份订阅产物：
  *
- *   feed.xml      全站 RSS 2.0（最近 30 篇）
+ *   feed.xml      全站 RSS 2.0（全部文章，不再截断 30 条）
  *   sitemap.xml   给搜索引擎的站点地图
  *
  * 用法：
@@ -212,10 +212,12 @@ function byDateDesc(x, y) {
 }
 
 function buildFeed(articles, site, categoryOf) {
+  /* 全量输出：RSS 阅读器第一次订阅时能拿到完整归档，而不是只有最近 30 篇。
+     每篇约 400 B，156 篇约 70 KB（gzip 后十几 KB），对静态站点没有压力；
+     writeIfChanged 会忽略只有 lastBuildDate 变化的情况，不会制造空提交。 */
   const items = articles
     .filter((a) => MERGED_IDS.indexOf(a.id) === -1)
-    .sort(byDateDesc)
-    .slice(0, 30);
+    .sort(byDateDesc);
 
   const out = [
     '<?xml version="1.0" encoding="UTF-8"?>',
@@ -330,15 +332,21 @@ function main() {
   const feedState = writeIfChanged(feedPath, buildFeed(articles, site, categoryOf), true);
   const sitemapState = writeIfChanged(sitemapPath, buildSitemap(articles, site), false);
 
+  /* 计数从产物实测，不再用 articles.length - MERGED_IDS.length 预估：
+     MERGED_IDS 里的 id 可能早已从 articles 数组移走，公式会少算 2 条。 */
+  const feedItems = (fs.readFileSync(feedPath, 'utf8').match(/<item>/g) || []).length;
+  const sitemapUrls = (fs.readFileSync(sitemapPath, 'utf8').match(/<url>/g) || []).length;
+
   console.log('站点地址  ' + site);
   console.log('文章总数  ' + articles.length);
   console.log('主题桶    ' + Object.keys(bucketNames).length + ' 个');
   console.log(
-    (feedState === 'written' ? '已写入    ' : '未变化    ') + 'feed.xml（最近 30 篇）'
+    (feedState === 'written' ? '已写入    ' : '未变化    ') +
+      'feed.xml（全部 ' + feedItems + ' 篇）'
   );
   console.log(
     (sitemapState === 'written' ? '已写入    ' : '未变化    ') +
-      'sitemap.xml（' + (articles.length - MERGED_IDS.length + 5) + ' 条 URL）'
+      'sitemap.xml（' + sitemapUrls + ' 条 URL）'
   );
 
   /* 首页四块内容是纯 JS 渲染的，静态 HTML 里也得有一份（无 JS / 爬虫可见）。
@@ -364,6 +372,21 @@ function main() {
     console.log(out.trim().split('\n').pop());
   } catch (e) {
     console.error('图片属性同步失败：' + (e.stdout || e.message).toString().trim());
+    process.exit(1);
+  }
+
+  /* head 提示层同步（同样是纯字符串）：任何新建页面在这里补齐 theme-color /
+     preconnect / 主题同步脚本，避免 lint 在收尾链路开头就报错。 */
+  try {
+    const { execFileSync } = require('child_process');
+    const out = execFileSync(
+      process.execPath,
+      [path.join(ROOT, 'scripts', 'apply-head-hints.cjs')],
+      { cwd: ROOT, encoding: 'utf8' }
+    );
+    console.log(out.trim().split('\n').slice(-2).join(' | '));
+  } catch (e) {
+    console.error('head 提示层同步失败：' + (e.stdout || e.message).toString().trim());
     process.exit(1);
   }
 }

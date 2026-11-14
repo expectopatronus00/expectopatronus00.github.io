@@ -15,7 +15,7 @@
 ```
 DESIGN.md                   全站设计系统规范（配色 / 排版 / 组件 / 响应式，供 AI 编码 Agent 阅读）
 index.html                  首页（hero / 系列 / 主题 / 最近更新；静态兜底 + defer 增强，禁用 JS 也可读）
-feed.xml                    全站 RSS，由 scripts/build-index.cjs 生成
+feed.xml                    全站 RSS（全量文章，不截断），由 scripts/build-index.cjs 生成
 sitemap.xml                 站点地图，同上
 robots.txt                  爬虫规则与 Sitemap 声明
 404.html                    自定义 404 页（资源用站点绝对路径，任意路径下都能加载）
@@ -27,6 +27,7 @@ home/
   articles.js               文章数据源（window.articles）+ 派生层（window.BLOG）
   design-tokens.css         全站设计令牌与共享组件
   fonts.css                 字体加载（拉丁自托管 + 中文 CDN 分片）
+  theme-color.js            按 data-theme 同步浏览器地址栏配色（颜色读 --bg token）
   og-default.jpg            全站默认分享图（无封面文章的 og:image）
 
 post/
@@ -42,9 +43,11 @@ nav/                        AI 工具导航站（读 data.json）
   stars/                    星标榜的数据与渲染模块（嵌在 nav/index.html 的 #stars 区块）
 
 scripts/
-  repo-lint.cjs             仓库一致性门禁（文章数 / 死链 / 重复 / 样式 / SEO / 共享 CSS / 静态兜底 / 图片）
-  build-article.cjs         渲染新文章（SEO 元数据 / 封面 jpg+webp / 首页静态兜底同步）
-  build-index.cjs           生成 feed.xml 与 sitemap.xml，并同步首页静态兜底与图片属性
+  repo-lint.cjs             仓库一致性门禁（文章数 / 死链 / 重复 / 样式 / SEO / 共享 CSS / 静态兜底 / 图片 / head 提示 / h1）
+  build-article.cjs         渲染新文章（SEO 元数据 / head 提示 / 封面 jpg+webp / 静态兜底同步）
+  build-index.cjs           生成全量 feed.xml 与 sitemap.xml，并同步首页静态兜底 / 图片属性 / head 提示
+  head-hints.cjs            head 提示层唯一实现（theme-color / preconnect / 同步脚本）
+  apply-head-hints.cjs      存量页面幂等注入 head 提示（--dry / --check / --show / --revert）
   daily-run.cjs             每日收尾：检查 → 重建索引 → 提交推送 → 通知
   seo-meta.cjs              文章 SEO 元数据唯一实现（canonical / og:* / JSON-LD）
   apply-seo-meta.cjs        存量文章幂等注入 SEO 元数据（--dry / --check / --revert）

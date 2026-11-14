@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- head-hints:begin -->
+    <meta name="theme-color" content="#0b0d16" />
+    <link rel="preconnect" href="https://font.emtech.cc" crossorigin />
+    <link rel="dns-prefetch" href="https://font.emtech.cc" />
+    <script src="/home/theme-color.js" defer></script>
+    <!-- head-hints:end -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>12,629 星、0 个 Release：先认证定义再问答 · EXPECTOPATRONUS</title>
+    <meta name="description" content="NVIDIA/auto-ontology 12,629 星、Apache-2.0，GitHub 上 0 个 Release，镜像发在 NGC。它用本体层让 agent 查数前先对齐定义：生成、人工认证、再回答。37 条依赖、6 组件、4 个模型角色，MCP 只读，不接受外部 PR。" />
+    <meta name="keywords" content="Skill, NVIDIA, Agent, 开源, 语义层" />
+    <meta property="og:title" content="12,629 星、0 个 Release：先认证定义再问答" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="NVIDIA/auto-ontology 12,629 星、Apache-2.0，GitHub 上 0 个 Release，镜像发在 NGC。它用本体层让 agent 查数前先对齐定义：生成、人工认证、再回答。37 条依赖、6 组件、4 个模型角色，MCP 只读，不接受外部 PR。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <link rel="stylesheet" href="../article-common.css" data-shared-css="0d59321e71" />
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+    <!-- seo:begin -->
+    <link rel="canonical" href="https://expectopatronus00.github.io/post/gh-nvidia-auto-ontology/gh-nvidia-auto-ontology.html" />
+    <meta property="og:url" content="https://expectopatronus00.github.io/post/gh-nvidia-auto-ontology/gh-nvidia-auto-ontology.html" />
+    <meta property="og:site_name" content="EXPECTOPATRONUS" />
+    <meta property="og:image" content="https://expectopatronus00.github.io/post/gh-nvidia-auto-ontology/cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"12,629 星、0 个 Release：先认证定义再问答","description":"NVIDIA/auto-ontology 12,629 星、Apache-2.0，GitHub 上 0 个 Release，镜像发在 NGC。它用本体层让 agent 查数前先对齐定义：生成、人工认证、再回答。37 条依赖、6 组件、4 个模型角色，MCP 只读，不接受外部 PR。","image":"https://expectopatronus00.github.io/post/gh-nvidia-auto-ontology/cover.jpg","inLanguage":"zh-CN","author":{"@type":"Person","name":"expectopatronus","url":"https://expectopatronus00.github.io"},"publisher":{"@type":"Organization","name":"EXPECTOPATRONUS","url":"https://expectopatronus00.github.io"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://expectopatronus00.github.io/post/gh-nvidia-auto-ontology/gh-nvidia-auto-ontology.html"},"datePublished":"2026-11-14","dateModified":"2026-11-14"}</script>
+    <!-- seo:end -->
+</head>
+  <body>
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>12,629 星、0 个 Release：先认证定义再问答</h1>
+      <p>12,629 星、1,038 fork，NVIDIA/auto-ontology 建于 2026-04-27，Apache-2.0，GitHub 上 0 个 Release。它解决的是数字算错而非算得慢，代价是人工先认证业务定义。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-14</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 7 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <picture data-cover-picture="1">
+        <source srcset="cover.webp" type="image/webp" />
+        <img loading="lazy" alt="12,629 星、0 个 Release：先认证定义再问答 封面" src="cover.jpg" width="2400" height="1260" decoding="async" data-cover-ready="1" />
+      </picture>
+    </div>
+
+    <article class="article-body">
+<div class="section-marker">01 · 这件事</div>
+<h2>12,629 星买的是一层「定义」，不是更快的问答</h2>
+<p><strong>GitHub 上 0 个 Release，12,629 星却仍在涨，这件事本身要先解释清楚。</strong>NVIDIA/auto-ontology 创建于 2026-04-27，Apache-2.0，主语言 Python。</p>
+<p>核对日 2026-11-14 有 12,629 星、1,038 fork、121 个未结 issue，pushed_at 就在今天，最近一次提交也落在今天。</p>
+<p>先说发布渠道，免得误读。仓库的 releases 接口返回空数组，latest 接口直接 404，tags 只有 1 个叫 pre-main-merge-backup 的备份标签。<span class="hl">正式产物不在 GitHub Releases，而在 NGC 镜像仓库</span>：三个容器镜像加一个 Helm chart。</p>
+<p>仓库 description 写的是「在数据之上构建 semantic、graph-based 推理层」。README 开篇那句更直白：收入指标答得再快，数字错了也一文不值。它瞄准的是 agent 查数算错，不是查得慢。</p>
+<table>
+  <thead><tr><th>字段</th><th>核对值</th></tr></thead>
+  <tbody>
+    <tr><td>仓库</td><td>NVIDIA/auto-ontology · main 分支</td></tr>
+    <tr><td>星标 / fork / 未结 issue</td><td>12,629 / 1,038 / 121</td></tr>
+    <tr><td>建库 / 最近推送</td><td>2026-04-27 / 2026-11-14</td></tr>
+    <tr><td>许可证 / 语言</td><td>Apache-2.0 / Python</td></tr>
+    <tr><td>Release / tag</td><td>0 个 / 1 个备份标签</td></tr>
+    <tr><td>包版本 / Python 要求</td><td>1.2.0 / &gt;=3.12,&lt;3.14</td></tr>
+    <tr><td>仓库体积 / 订阅者</td><td>22,303 KB / 54</td></tr>
+  </tbody>
+</table>
+<p>换句话说，这不是一个塞进 <code>~/.claude/skills</code> 就能用的技能包。它是一套要起数据库、后端、前端和 MCP 服务的语义层，仓库自带的三个 skill 只是教 agent 怎么操作这套服务。本文只做文件级反查，未部署、未跑任何基准。</p>
+
+<div class="section-marker">02 · 核心机制</div>
+<h2>生成、认证、回答三段流水线，人卡在中间那一段</h2>
+<p><strong>最关键的机制不是检索，是「人必须先认证定义」。</strong>README 把流程写成三阶段：机器从数据库生成一版本体草稿，人把它改对并认证，agent 才被允许据此回答。自动生成的草稿不算数。</p>
+<table>
+  <thead><tr><th>阶段</th><th>谁做</th><th>步骤</th><th>产物</th></tr></thead>
+  <tbody>
+    <tr><td>Generate</td><td>ingestion 服务</td><td>4 步</td><td>术语、关系、SQL 属性与 pgvector 向量</td></tr>
+    <tr><td>Certify</td><td>人</td><td>3 步</td><td>认证过的名称、描述与度量表达式</td></tr>
+    <tr><td>Answer</td><td>agent</td><td>5 步</td><td>答案、SQL、所用步骤</td></tr>
+  </tbody>
+</table>
+<p>本体里存三类定义。Terms 是 Customer、Invoice Line 这类业务概念，带描述、同义词和映射列；SQL attributes 是审过的度量表达式，比如毛利率，agent 复用它，保证每次算同一个指标口径一致。</p>
+<p>Relationships 是表怎么连，含桥表，由键和数据推断。Generate 阶段依次读 schema、逐表命名实体、推断 join、把三者写进 Postgres。README 给的示例里，一次编译 Wide World Importers 得到 31 个 terms。</p>
+<p>示例问题是 2015 年 6 月宾州某商品的收入，答案回来 588.80 美元、3 条 invoice line，同时附上六表 join 的 SQL 和「解析了哪些 term、怎么连的表」的步骤。<span class="hl">答案必须自带可回查的 SQL 和血缘</span>，这是它比纯向量检索更硬的地方。</p>
+<p>更值得写下来的是不回答的路径。README 演示问「广告支出回报率」，agent 先跑 <code>check_answerable</code> 得到 coverage 0.5，发现没有 term 覆盖 ad spend，于是反问是改问收入、还是去接另一个数据源。宁可承认不可答，也不硬编一个数字。</p>
+
+<div class="section-marker">03 · 关键细节与数据</div>
+<h2>37 条依赖、6 个组件、4 个模型角色，都不是一个 skill 的体积</h2>
+<p><strong>把 README 的软件组件表、模型表和 pyproject.toml 对起来，落地成本就藏不住了。</strong>它要同时起前端、后端、ingestion、MCP、Postgres 与可选的 Vault，还要一个 NVIDIA API key 供四个模型角色调用。</p>
+<table>
+  <thead><tr><th>组件</th><th>技术</th><th>默认端口</th></tr></thead>
+  <tbody>
+    <tr><td>Frontend</td><td>Next.js 16 / React 19 / Better Auth / Prisma</td><td>3000</td></tr>
+    <tr><td>Backend</td><td>FastAPI（Python 3.12+）/ LangChain</td><td>3001</td></tr>
+    <tr><td>Ingestion worker</td><td>FastAPI</td><td>3002</td></tr>
+    <tr><td>MCP server</td><td>FastMCP，只读</td><td>3003</td></tr>
+    <tr><td>Postgres + pgvector</td><td>PostgreSQL 17</td><td>5432</td></tr>
+    <tr><td>HashiCorp Vault</td><td>可选，存连接凭据</td><td>—</td></tr>
+  </tbody>
+</table>
+<table>
+  <thead><tr><th>模型角色</th><th>.env.example 默认值</th><th>干什么</th></tr></thead>
+  <tbody>
+    <tr><td>REASONING</td><td>nemotron-3.5-lightning-30b-a3b</td><td>建本体、写 SQL、判可答性</td></tr>
+    <tr><td>NON_REASONING</td><td>nemotron-3.5-lightning-30b-a3b</td><td>意图、实体抽取、SQL 校验修复</td></tr>
+    <tr><td>EMBED</td><td>nemotron-3.5-embed-1b</td><td>向量化列与术语</td></tr>
+    <tr><td>RERANK</td><td>nemotron-3.5-rerank-8b</td><td>给候选表排序</td></tr>
+  </tbody>
+</table>
+<p>端点可以换成自托管 NIM 或任意 OpenAI 兼容接口，但有一条不能省：<span class="hl">ingest 与 query 必须用同一个 embedding 模型</span>。四个角色各由一组 ENDPOINT / API_KEY / MODEL 三元组配置，未填的字段回落到 DEFAULT_MODELS。</p>
+<p>数据源 README 列了十个，其中 DuckDB 与 SQLite 只支持连接串方式接入。按类型分成三组：</p>
+<ul>
+<li>PostgreSQL、MySQL、DuckDB、SQLite</li>
+<li>Databricks、Snowflake、ClickHouse</li>
+<li>Trino、Apache Kyuubi、HeavyDB</li>
+</ul>
+<p>把规模数字拆开看，比一句「依赖不少」更有用：</p>
+<ul>
+<li>pyproject.toml：主依赖 37 条，requires-python &gt;=3.12,&lt;3.14，openai 钉在 2.44.0。</li>
+<li>两份 uv.lock：根目录 435,985 字节，mcp/ 目录 261,144 字节。</li>
+<li>.env.example：219 行，逐个模型角色给出三元组示例。</li>
+<li>Apache Ossie 转换器：以 git 依赖直接引用，用于 YAML 导入导出。</li>
+</ul>
+<table>
+  <thead><tr><th>目录</th><th>条目数</th><th>关键内容</th></tr></thead>
+  <tbody>
+    <tr><td>根目录</td><td>35</td><td>AGENTS.md / CLAUDE.md / Dockerfile / helm / vendor</td></tr>
+    <tr><td>auto_ontology/</td><td>15</td><td>catalog、connectors、semantic、vdb 等子包</td></tr>
+    <tr><td>skills/</td><td>3</td><td>setup / management / query 三个技能</td></tr>
+    <tr><td>mcp/</td><td>12</td><td>独立 pyproject、uv.lock、tools.py</td></tr>
+    <tr><td>docs/</td><td>6</td><td>4 篇 md 加 assets 与 openapi/</td></tr>
+    <tr><td>docs/openapi/</td><td>4</td><td>主 spec 437,217 字节</td></tr>
+  </tbody>
+</table>
+<div class="info-box">数据核对：全部数字来自 api.github.com 的仓库、目录、标签、提交接口与仓库内文件原文，文件数为单层目录接口计数，未用递归树。
+<ul>
+<li>身份：12,629 星 / 1,038 fork / 121 未结 / 建库 2026-04-27 / pushed 11-14 / Apache-2.0。</li>
+<li>版本：releases 空、latest 404、tag 1 个（pre-main-merge-backup）；pyproject 写 1.2.0；正式镜像发 NGC。</li>
+<li>规模：37 条主依赖、6 组件、4 模型角色、10 数据源、3 个 skill 各 7 个条目。</li>
+<li>边界：README 的 Benchmarks 指向外部仓库；本文未安装、未跑分、未复现任何示例答案。</li>
+</ul>
+<p>核对时间 2026-11-14，星标与 issue 为实时值。</p>
+</div>
+
+<div class="section-marker">04 · 怎么用</div>
+<h2>先把六个组件起起来，再让 agent 通过 MCP 只读地问</h2>
+<p><strong>agent 侧的接口是只读的，写操作一律走 Web 应用的 /api 路由。</strong>AGENTS.md 把这条写成硬规定：MCP 不能写，术语、关系与认证的修改由 management 技能走 Next.js 的 API 面，每个调用都带上登录用户的权限。</p>
+<table>
+  <thead><tr><th>用途</th><th>README 列出的 MCP 工具</th></tr></thead>
+  <tbody>
+    <tr><td>就绪</td><td>check_readiness</td></tr>
+    <tr><td>查术语与表</td><td>search_terms、get_term、get_term_columns、get_term_sql_attributes、get_sql_attribute、describe_table</td></tr>
+    <tr><td>可答性</td><td>check_answerable</td></tr>
+    <tr><td>提问</td><td>ask_question</td></tr>
+  </tbody>
+</table>
+<p>本地 quickstart 的顺序是固定的。先克隆仓库并复制 .env.example，填好 NVIDIA API key 与几个密码；再起 Postgres，用另一个仓库的 seed 脚本灌入 Wide World Importers 示例库，然后执行 <code>docker compose up -d --build</code>。</p>
+<p>接着要在 Settings → Semantic Compilation 里手动打开编译，等它报 ready，才能在 Chat 提问。这一步不是自动的，也意味着「开箱即用」并不准确：示例数据库、灌数脚本与管理动作都散在别处。</p>
+<p>仓库里三个 skill 各管一段，入口是根目录的 AGENTS.md：</p>
+<ul>
+<li>nvidia-ontology-setup：Helm 安装、Compose 本地栈、连接数据源、编译与排障。</li>
+<li>nvidia-ontology-management：检查、建模、认证、导入导出与发布，是唯一覆盖写路径的技能。</li>
+<li>nvidia-ontology-query：MCP 优先、REST 兜底，校验 SQL、结果行与答案。</li>
+</ul>
+<p>每个 skill 目录 7 个条目，含 SKILL.md、evals 与 references，还有 BENCHMARK.md 和 skill.oms.sig。AGENTS.md 特别注明后两份由 NVSkills CI 生成、禁止手改；三份技能还会同步到 nvidia/skills 目录仓库。</p>
+<p>不走 MCP 可以直接 POST <code>/api/chat/completions</code>，响应是 SSE 流，result 事件带答案，[DONE] 收尾。模型定义还能通过 Apache Ossie 的 YAML 导入导出，避免把语义层锁死在这一套实现里。</p>
+
+<div class="section-marker">05 · 冷思考</div>
+<h2>12,629 星里，能直接拿走的是流程，不是一套能跑的服务</h2>
+<p><strong>最该先读的不是功能列表，是 CONTRIBUTING.md 的第一行：本项目不接受外部 PR。</strong>代码由 NVIDIA 维护团队改，外部只能通过 issue 提集成请求和 bug。Apache-2.0 给了你可读、可改、可分发的权利，但没给参与协作的通道。</p>
+<p>版本口径也值得留意。GitHub 上 0 个 Release、1 个备份 tag，pyproject 却写着 1.2.0；version.py 优先读环境变量 APP_VERSION，值由 Helm chart 版本注入。</p>
+<p>想复现某个具体版本，得先找到 NGC 上对应的 chart version，而不是来 GitHub 找 tag。</p>
+<p>基准同样不在这个仓库。README 的 Benchmarks 一节只有一句：跑 BIRD 这类 text-to-SQL 评测请参考另一个仓库 ontology-sql-eval。<span class="hl">主仓库没有一个准确率数字</span>；三个 skill 里的 BENCHMARK.md 是技能签名流程的产物，不是查询效果。</p>
+<p>边界条款比功能表更该先读，下面几条都写在 README 或 SECURITY.md 里：</p>
+<ul>
+<li>网络边界：3001 与 3002 须置于私有网络，FastAPI 信任前端转发的 x-auto-ontology-user-id 头。</li>
+<li>无自身鉴权：ingestion 的 ingest / delete / reset / compile 四个端点没有独立认证。</li>
+<li>数据外发：开启 KumoRFM 后预测问题会上传连接的表，KUMO_MAX_TABLES 默认 20，每表行数默认不限。</li>
+<li>口径不齐：NIM 小节与 Models 表给出的 embed / rerank 默认模型名不一致，与 .env.example 对齐的是后者。</li>
+<li>漏洞披露：不走 GitHub issue，走 NVIDIA PSIRT 表单或 psirt@nvidia.com，目前无 bug bounty。</li>
+</ul>
+<p>还有一个容易被星标盖过去的成本：四个模型角色默认全部指向 NVIDIA NIM，需要 nvapi- key；六个组件、31 个 term 的人工认证，对一个人维护的小项目远超过它能省下的返工。<span class="hl">这 12,629 星衡量的是「企业数据语义层」这个议题的曝光，不是这套栈的可用性</span>。</p>
+<p>所以别把它当「给 agent 装个记忆插件」来比。真正可以白拿的是那条流程判断：先判问题可不可答，再把解析到的定义、连表路径和 SQL 一起交回来，让人能对着源数据复核。要不要为此起六个组件、交四个模型的 key，取决于你错一个数字的代价有多大——代价小，这套栈就是负债。</p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>NVIDIA 开源的语义 / 图谱推理层，Apache-2.0，Python 3.12+，通过 MCP、CLI 与 API 把业务定义交给 agent</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/NVIDIA/auto-ontology" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/NVIDIA/auto-ontology" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 12,629 星，Apache-2.0，0 个 Release，37 条主依赖</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Skill">#Skill</a>
+      <a href="../../home/home.html?q=NVIDIA">#NVIDIA</a>
+      <a href="../../home/home.html?q=Agent">#Agent</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=%E8%AF%AD%E4%B9%89%E5%B1%82">#语义层</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">数据来源：api.github.com 仓库 / 目录 / 标签 / 提交接口，及 README、DEPLOYMENT.md、CONTRIBUTING.md、SECURITY.md、AGENTS.md、pyproject.toml、.env.example 原文；核对时间 2026-11-14。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
