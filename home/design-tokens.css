@@ -1542,3 +1542,44 @@ html {
   }
 }
 
+/* ── A11Y · SKIP LINK（WCAG 2.4.1） ───────────────────────────────────────
+   本文件在页面内联 <style> 之前加载，全站级规则一律带 html body 前缀，
+   避免被页面级同名规则回收。平时用 transform 移出视口——不能用
+   display:none / visibility:hidden，那样键盘根本聚焦不到；聚焦时滑回来。
+   触摸目标 ≥44px，焦点环走 --ring，减少动效由文件末尾的
+   prefers-reduced-motion 规则统一接管。 */
+html body a.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 9999;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 18px;
+  border: 1px solid var(--accent-rust-text);
+  border-radius: 10px;
+  background: var(--bg-card);
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.4;
+  text-decoration: none;
+  box-shadow: var(--shadow-md);
+  transform: translateY(-160%);
+  transition: transform 0.18s ease;
+}
+
+html body a.skip-link:focus,
+html body a.skip-link:focus-visible {
+  transform: translateY(0);
+  outline: 2px solid var(--ring, var(--accent-rust-text));
+  outline-offset: 2px;
+}
+
+/* 跳转目标用 tabindex="-1"：能被脚本/锚点聚焦，但不进入正常 Tab 序列。
+   去掉默认焦点框，避免整块主内容被一个巨大的 outline 圈住。 */
+html body [data-skip-target="1"]:focus {
+  outline: none;
+}
+

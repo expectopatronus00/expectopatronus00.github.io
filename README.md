@@ -26,7 +26,7 @@ home/
   about.html                关于 / now / 转载规则 / 技术说明
   articles.js               文章数据源（window.articles）+ 派生层（window.BLOG）
   design-tokens.css         全站设计令牌与共享组件
-  fonts.css                 字体加载（拉丁自托管 + 中文 CDN 分片）
+  fonts.css                 字体加载（拉丁自托管 woff2；中文 CDN 分片 CSS 由 head hints 并行外链，本文件禁止 @import）
   theme-color.js            按 data-theme 同步浏览器地址栏配色（颜色读 --bg token）
   og-default.jpg            全站默认分享图（无封面文章的 og:image）
 
@@ -43,14 +43,18 @@ nav/                        AI 工具导航站（读 data.json）
   stars/                    星标榜的数据与渲染模块（嵌在 nav/index.html 的 #stars 区块）
 
 scripts/
-  repo-lint.cjs             仓库一致性门禁（文章数 / 死链 / 重复 / 样式 / SEO / 共享 CSS / 静态兜底 / 图片 / head 提示 / h1）
-  build-article.cjs         渲染新文章（SEO 元数据 / head 提示 / 封面 jpg+webp / 静态兜底同步）
-  build-index.cjs           生成全量 feed.xml 与 sitemap.xml，并同步首页静态兜底 / 图片属性 / head 提示
-  head-hints.cjs            head 提示层唯一实现（theme-color / preconnect / 同步脚本）
+  repo-lint.cjs             仓库一致性门禁（文章数 / 死链 / 重复 / 样式 / SEO / 共享 CSS / 静态兜底 / 图片 / head 提示 / h1 / 静态页 SEO / skip-link）
+  build-article.cjs         渲染新文章（SEO / head 提示 / skip-link / 封面 jpg+webp / 静态兜底同步）
+  build-index.cjs           生成全量 feed.xml 与 sitemap.xml，并同步首页静态兜底 / 图片属性 / head 提示 / 静态页 SEO / skip-link
+  head-hints.cjs            head 提示层唯一实现（theme-color / preconnect / 并行 emfont 样式表 / 同步脚本）
   apply-head-hints.cjs      存量页面幂等注入 head 提示（--dry / --check / --show / --revert）
   daily-run.cjs             每日收尾：检查 → 重建索引 → 提交推送 → 通知
-  seo-meta.cjs              文章 SEO 元数据唯一实现（canonical / og:* / JSON-LD）
+  seo-meta.cjs              全站页级 SEO 唯一实现（canonical / og:* / JSON-LD；文章 BlogPosting / 静态页 WebSite 等）
   apply-seo-meta.cjs        存量文章幂等注入 SEO 元数据（--dry / --check / --revert）
+  site-meta.cjs             5 个生产静态页的 canonical / schemaType 白名单（lint 与注入脚本共用）
+  apply-site-meta.cjs       静态页幂等注入 SEO 元数据（--dry / --check / --show / --revert）
+  skip-link.cjs             全站「跳到主要内容」唯一实现（WCAG 2.4.1，纯 HTML 不依赖 JS）
+  apply-skip-link.cjs       存量页面幂等注入 skip-link（--dry / --check / --show / --revert）
   apply-read-css.cjs        存量文章幂等注入 article-read.css
   readability.cjs           文章易读性体检（≥75 才算成稿）
   shared-css.cjs            共享样式层的哈希 / 扫描 / link 生成唯一实现
@@ -84,7 +88,9 @@ npm run dev          # http://localhost:5500
 ```bash
 node scripts/repo-lint.cjs        # 一致性检查，改了文章列表后跑一次
 node scripts/repo-lint.cjs --fix  # 顺手修正首页与归档页的显示数字
-node scripts/build-index.cjs      # 重新生成 feed.xml 与 sitemap.xml
+node scripts/build-index.cjs      # 重新生成 feed.xml / sitemap.xml，并同步 4 个呈现层脚本
+node scripts/apply-site-meta.cjs --check   # 5 个静态页 SEO 是否齐全（canonical 对齐 sitemap）
+node scripts/apply-skip-link.cjs --check   # 全站 skip-link 覆盖率
 node scripts/enhance-articles.cjs # 给新增的文章页注入文章增强脚本
 
 node scripts/daily-run.cjs        # 每日收尾：检查 → 重建索引 → 提交推送 → 通知

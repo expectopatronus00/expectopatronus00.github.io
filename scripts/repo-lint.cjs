@@ -487,8 +487,8 @@ function checkImages() {
 
 /* ─────────── 检查 13: head 提示层 ─────────── */
 const {
-  BEGIN: HH_BEGIN, FONT_ORIGIN, FA_ORIGIN, THEME_SCRIPT,
-  cssBg, walkPages, readHints, needsFa,
+  BEGIN: HH_BEGIN, FONT_ORIGIN, FONT_CSS, FA_ORIGIN, THEME_SCRIPT,
+  cssBg, walkPages, readHints, needsFa, needsFontCss, stripHints: stripHeadHints,
 } = require('./head-hints.cjs');
 
 function checkHeadHints() {
@@ -499,9 +499,17 @@ function checkHeadHints() {
   if (!fs.existsSync(path.join(ROOT, 'home', 'theme-color.js'))) {
     issues.push('home/theme-color.js 缺失');
   }
+  /* emfont CSS 必须是 head 里的独立 link：留在 fonts.css 的 @import
+     会重新引入「先下载 fonts.css 才能发起字体请求」的串行链。 */
+  const fontsCss = fs.readFileSync(path.join(ROOT, 'home', 'fonts.css'), 'utf8');
+  /* 先剥掉注释：说明文字里会提到 @import 这个词，全文匹配会误报。 */
+  const fontsCssCode = fontsCss.replace(/\/\*[\s\S]*?\*\//g, '');
+  const noImport = !/@import\b/i.test(fontsCssCode);
+  if (!noImport) issues.push('home/fonts.css 仍有 @import（字体请求会串行）');
 
   const pages = walkPages(ROOT);
   let blocks = 0, metaOk = 0, preOk = 0, scriptOk = 0, faTotal = 0, faOk = 0;
+  let fontTotal = 0, fontOk = 0;
   for (const f of pages) {
     const html = fs.readFileSync(f, 'utf8');
     const block = readHints(html);
@@ -525,6 +533,16 @@ function checkHeadHints() {
       if (block.includes('rel="preconnect" href="' + FA_ORIGIN + '"')) faOk++;
       else issues.push(rel(f) + ' 外链 FontAwesome 却缺 cdnjs preconnect');
     }
+    /* strip 掉 hints 再判断，避免用块内自己注入的 link 自证。 */
+    const wantsFont = needsFontCss(stripHeadHints(html));
+    const hasFontLink = block.includes('rel="stylesheet" href="' + FONT_CSS + '"');
+    if (wantsFont) {
+      fontTotal++;
+      if (hasFontLink) fontOk++;
+      else issues.push(rel(f) + ' 引用 fonts.css 却缺并行 emfont 样式表');
+    } else if (hasFontLink) {
+      issues.push(rel(f) + ' 不加载字体却外链了 emfont 样式表');
+    }
   }
   const all = pages.length;
   printRow('hints 块（head 内）', blocks + '/' + all, blocks === all);
@@ -532,6 +550,8 @@ function checkHeadHints() {
   printRow('font CDN preconnect', preOk + '/' + all, preOk === all);
   printRow('主题同步脚本', scriptOk + '/' + all, scriptOk === all);
   printRow('FontAwesome preconnect', faOk + '/' + faTotal, faOk === faTotal);
+  printRow('emfont CSS 并行加载', fontOk + '/' + fontTotal, fontOk === fontTotal && noImport);
+  printRow('fonts.css 无 @import', noImport ? '已移除' : '仍存在', noImport);
   return issues;
 }
 
@@ -548,6 +568,128 @@ function checkSemantics() {
     else issues.push(rel(f) + ' 有 ' + n + ' 个 h1（应为 1）');
   }
   printRow('每页恰好 1 个 h1', one + '/' + pages.length, one === pages.length);
+  return issues;
+}
+
+/* ─────────── 检查 15: 静态页 SEO ───────────
+   文章页按目录扫描，静态页按 site-meta.cjs 的白名单逐页校验。
+   额外做两件事：canonical 必须在 sitemap 的 <loc> 里（防止两处漂移），
+   noindex 页必须仍然 noindex（防止误注入把 404 变成可索引页面）。 */
+const { PAGES, NOINDEX_PAGES, fileOf, DEFAULT_IMAGE } = require('./site-meta.cjs');
+const { siteUrl, BEGIN: SEO_BEGIN, END: SEO_END } = require('./seo-meta.cjs');
+
+function checkSiteMeta() {
+  printSection('静态页 SEO 元数据');
+  const issues = [];
+  const site = siteUrl();
+  const sitemap = fs.existsSync(path.join(ROOT, 'sitemap.xml'))
+    ? fs.readFileSync(path.join(ROOT, 'sitemap.xml'), 'utf8')
+    : '';
+  const locs = new Set([...sitemap.matchAll(/<loc>\s*([^<]+?)\s*<\/loc>/g)].map((m) => m[1]));
+  let blockOk = 0, canonicalOk = 0, ogOk = 0, ldOk = 0;
+
+  for (const page of PAGES) {
+    const f = fileOf(page);
+    const name = page.file;
+    if (!fs.existsSync(f)) { issues.push(name + ' 缺失'); continue; }
+    const html = fs.readFileSync(f, 'utf8');
+    const at = html.search(/<\/head>/i);
+    const head = at < 0 ? html : html.slice(0, at);
+    const wantUrl = site + page.path;
+
+    if (head.includes(SEO_BEGIN) && head.includes(SEO_END)) blockOk++;
+    else issues.push(name + ' 缺 seo 块');
+
+    const cm = head.match(/<link[^>]*rel=["']canonical["'][^>]*href=["']([^"']+)["']/i);
+    if (cm && cm[1] === wantUrl && locs.has(wantUrl)) canonicalOk++;
+    else issues.push(name + ' canonical 与 sitemap 不一致：' + (cm ? cm[1] : '缺失'));
+
+    const type = (head.match(/<meta[^>]*property=["']og:type["'][^>]*content=["']([^"']+)["']/i) || [])[1];
+    const img = (head.match(/<meta[^>]*property=["']og:image["'][^>]*content=["']([^"']+)["']/i) || [])[1];
+    const tw = /<meta[^>]*name=["']twitter:card["']/i.test(head);
+    if (type === 'website' && img === site + DEFAULT_IMAGE && tw) ogOk++;
+    else issues.push(name + ' og:type / og:image / twitter:card 不齐');
+
+    const ld = head.match(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/i);
+    if (!ld) { issues.push(name + ' 缺 JSON-LD'); continue; }
+    try {
+      const o = JSON.parse(ld[1]);
+      if (o['@type'] === page.schemaType &&
+          o.mainEntityOfPage && o.mainEntityOfPage['@id'] === wantUrl &&
+          !o.datePublished && o.headline) ldOk++;
+      else issues.push(name + ' JSON-LD 类型/字段不对');
+    } catch (e) {
+      issues.push(name + ' JSON-LD 不是合法 JSON');
+    }
+  }
+
+  const n = PAGES.length;
+  printRow('seo 块', blockOk + '/' + n, blockOk === n);
+  printRow('canonical 对齐 sitemap', canonicalOk + '/' + n, canonicalOk === n);
+  printRow('og:type / og:image / twitter', ogOk + '/' + n, ogOk === n);
+  printRow('JSON-LD（静态页类型）', ldOk + '/' + n, ldOk === n);
+
+  let noindexOk = 0;
+  for (const name of NOINDEX_PAGES) {
+    const f = path.join(ROOT, name);
+    const src = fs.existsSync(f) ? fs.readFileSync(f, 'utf8') : '';
+    const at = src.search(/<\/head>/i);
+    const head = at < 0 ? src : src.slice(0, at);
+    if (/<meta[^>]*name=["']robots["'][^>]*noindex/i.test(head)) noindexOk++;
+    else issues.push(name + ' 丢了 noindex');
+  }
+  printRow('noindex 页保持不索引', noindexOk + '/' + NOINDEX_PAGES.length, noindexOk === NOINDEX_PAGES.length);
+  return issues;
+}
+
+/* ─────────── 检查 16: skip-link（WCAG 2.4.1） ───────────
+   不只看「有没有这个链接」：还要确认目标 id 唯一、锚点真的落在导航之后
+   的主内容容器上、目标可程序聚焦，以及共享样式层里有可见的聚焦态。 */
+const {
+  BEGIN: SKIP_BEGIN, TARGET_ID, MARK, readSkip, anchorTag,
+} = require('./skip-link.cjs');
+
+function checkSkipLink() {
+  printSection('跳到主要内容（WCAG 2.4.1）');
+  const issues = [];
+  const css = fs.readFileSync(path.join(ROOT, 'home', 'design-tokens.css'), 'utf8');
+  const cssOk = /html body a\.skip-link\s*\{/.test(css) &&
+    /html body a\.skip-link:focus/.test(css);
+  if (!cssOk) issues.push('design-tokens.css 缺 skip-link 聚焦样式');
+
+  const pages = walkPages(ROOT);
+  let blocks = 0, links = 0, ids = 0, targets = 0;
+  for (const f of pages) {
+    const html = fs.readFileSync(f, 'utf8');
+    const name = rel(f);
+    const block = readSkip(html);
+    if (!block) { issues.push(name + ' 缺 skip-link 块'); continue; }
+    blocks++;
+
+    const bodyAt = html.search(/<body\b[^>]*>/i);
+    if (bodyAt < 0 || html.indexOf(SKIP_BEGIN) < bodyAt) {
+      issues.push(name + ' skip-link 不在 body 开头');
+    }
+    if (block.includes('href="#' + TARGET_ID + '"')) links++;
+    else issues.push(name + ' skip-link 指向不对');
+
+    const idCount = (html.match(new RegExp('\\bid=["\']' + TARGET_ID + '["\']', 'gi')) || []).length;
+    if (idCount === 1) ids++;
+    else issues.push(name + ' 有 ' + idCount + ' 个 #' + TARGET_ID + '（应为 1）');
+
+    const a = anchorTag(html);
+    if (!a) { issues.push(name + ' 找不到主内容锚点'); continue; }
+    if (a.tag.includes(MARK) && a.tag.includes('tabindex="-1"') &&
+        new RegExp('\\bid=["\']' + TARGET_ID + '["\']', 'i').test(a.tag)) targets++;
+    else issues.push(name + ' 主内容容器缺 id / tabindex / 标记');
+  }
+
+  const n = pages.length;
+  printRow('skip-link 块', blocks + '/' + n, blocks === n);
+  printRow('指向 #' + TARGET_ID, links + '/' + n, links === n);
+  printRow('目标 id 唯一', ids + '/' + n, ids === n);
+  printRow('锚点落在主内容上', targets + '/' + n, targets === n);
+  printRow('聚焦可见样式', cssOk ? '已就位' : '缺失', cssOk);
   return issues;
 }
 
@@ -576,12 +718,14 @@ function main() {
   const imageIssues = checkImages();
   const headHintsIssues = checkHeadHints();
   const semanticIssues = checkSemantics();
+  const siteMetaIssues = checkSiteMeta();
+  const skipLinkIssues = checkSkipLink();
 
   console.log('\n━━━━━ 总览 ━━━━━');
   const issueCount =
     deadLinks.length + orphans.length + dupIds.length + missingReadCss.length +
     seoIssues.length + infraIssues.length + sharedCssIssues.length + indexStaticIssues.length + imageIssues.length +
-    headHintsIssues.length + semanticIssues.length +
+    headHintsIssues.length + semanticIssues.length + siteMetaIssues.length + skipLinkIssues.length +
     (displayNum !== null && displayNum !== postCount ? 1 : 0) +
     (postCount !== articles.length ? 1 : 0) +
     (heroStatus && heroStatus.actual !== heroStatus.shouldBe ? 1 : 0) +

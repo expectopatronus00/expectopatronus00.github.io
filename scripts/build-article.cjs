@@ -29,6 +29,7 @@ const fs = require('fs');
 const path = require('path');
 const { injectSeo, siteUrl } = require('./seo-meta.cjs');
 const { injectHints } = require('./head-hints.cjs');
+const { injectSkip } = require('./skip-link.cjs');
 const { syncIndexStatic } = require('./home-static.cjs');
 const { encodeWebp } = require('./cover-webp.cjs');
 
@@ -147,7 +148,10 @@ const ICONS = { github: ICON_GH, web: ICON_WEB, video: ICON_VIDEO, link: ICON_LI
 
 function render(spec, hasCover) {
   const tpl = fs.readFileSync(TPL, 'utf8');
-  const headEnd = tpl.indexOf('<section class="page-head">');
+  /* 只匹配标签前缀，不要带上结尾的 `>`：全站注入类脚本（skip-link / 图片属性
+     等）可能会给这个 section 追加 id、tabindex 等属性，整串匹配会突然失效，
+     让所有新稿渲染停摆。切点取标签起始处即可。 */
+  const headEnd = tpl.indexOf('<section class="page-head"');
   const articleEnd = tpl.indexOf('</article>');
   if (headEnd < 0 || articleEnd < 0) fail('模板结构变了：找不到 page-head 或 </article>');
 
@@ -256,7 +260,9 @@ ${spec.tags.map(t => '      <a href="../../home/home.html?q=' + encodeURICompone
     tail = tail.replace(/(<div class="footer-meta">)[\s\S]*?(<\/div>)/, '$1' + attr(spec.footer) + '$2');
   }
 
-  return prefix + pageHead + '\n' + body + '\n' + cta + platforms + tagsRow + tail;
+  /* skip-link 与 head hints / SEO 一样在渲染时直接带上：新稿不用等收尾链路
+     的批量脚本补，repo-lint 的覆盖率也不会出现「刚生成就报错」的窗口。 */
+  return injectSkip(prefix + pageHead + '\n' + body + '\n' + cta + platforms + tagsRow + tail);
 }
 
 /* ─────────── 封面 ─────────── */

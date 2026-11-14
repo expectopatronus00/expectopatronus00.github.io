@@ -360,34 +360,28 @@ function main() {
     process.exit(1);
   }
 
-  /* 图片属性同步（纯字符串，不需要 playwright）：新稿的封面在 build-article.cjs
-     生成 cover.webp 后，这里把 <img> 升级成 picture 并补齐 width/height。 */
-  try {
-    const { execFileSync } = require('child_process');
-    const out = execFileSync(
-      process.execPath,
-      [path.join(ROOT, 'scripts', 'apply-image-attrs.cjs')],
-      { cwd: ROOT, encoding: 'utf8' }
-    );
-    console.log(out.trim().split('\n').pop());
-  } catch (e) {
-    console.error('图片属性同步失败：' + (e.stdout || e.message).toString().trim());
-    process.exit(1);
-  }
-
-  /* head 提示层同步（同样是纯字符串）：任何新建页面在这里补齐 theme-color /
-     preconnect / 主题同步脚本，避免 lint 在收尾链路开头就报错。 */
-  try {
-    const { execFileSync } = require('child_process');
-    const out = execFileSync(
-      process.execPath,
-      [path.join(ROOT, 'scripts', 'apply-head-hints.cjs')],
-      { cwd: ROOT, encoding: 'utf8' }
-    );
-    console.log(out.trim().split('\n').slice(-2).join(' | '));
-  } catch (e) {
-    console.error('head 提示层同步失败：' + (e.stdout || e.message).toString().trim());
-    process.exit(1);
+  /* 呈现层同步：这些都是纯字符串改写，不需要 playwright。串在索引重建之后，
+     保证新建/改动过的页面在 lint 之前补齐图片属性、head 提示、静态页 SEO
+     与 skip-link；每个脚本自带幂等，重复执行不会制造 diff。 */
+  const { execFileSync } = require('child_process');
+  const syncSteps = [
+    { name: '图片属性', script: 'apply-image-attrs.cjs' },
+    { name: 'head 提示层', script: 'apply-head-hints.cjs' },
+    { name: '静态页 SEO', script: 'apply-site-meta.cjs' },
+    { name: 'skip-link', script: 'apply-skip-link.cjs' },
+  ];
+  for (const step of syncSteps) {
+    try {
+      const out = execFileSync(
+        process.execPath,
+        [path.join(ROOT, 'scripts', step.script)],
+        { cwd: ROOT, encoding: 'utf8' }
+      );
+      console.log(step.name + '    ' + out.trim().split('\n').pop());
+    } catch (e) {
+      console.error(step.name + '同步失败：' + (e.stdout || e.message).toString().trim());
+      process.exit(1);
+    }
   }
 }
 

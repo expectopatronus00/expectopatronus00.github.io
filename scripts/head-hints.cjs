@@ -4,8 +4,14 @@
  * 产出三样东西，包在 <!-- head-hints:begin --> … <!-- head-hints:end --> 里：
  *
  *   1. <meta name="theme-color">       浏览器 UI 跟随站点主题（不是跟随系统配色）
- *   2. preconnect / dns-prefetch       fonts.css 里 @import 的 emfont CDN
- *   3. <script src="/home/theme-color.js" defer>  主题切换时同步 theme-color
+ *   2. preconnect / dns-prefetch       emfont CDN，先建连接再取样式
+ *   3. <link rel="stylesheet">         直接外链 emfont CSS，和 fonts.css 并行下载
+ *   4. <script src="/home/theme-color.js" defer>  主题切换时同步 theme-color
+ *
+ * 第 3 项解决的是串行链：emfont CSS 原本写在 home/fonts.css 顶部的
+ * @import 里，浏览器必须先下载并解析完 fonts.css，才会发起这个跨域请求。
+ * 实测中间有约 310 ms 空档。改成 head 里的独立 link 后，两个样式表并行，
+ * preconnect 又排在 link 之前，连接可以提前建好。
  *
  * 为什么需要脚本：本站是 data-theme 手动切换的双主题站，纯 media 查询的
  * theme-color 只在系统配色变化时生效，用户点主题按钮时不会跟着变。
@@ -28,6 +34,7 @@ const BEGIN = '<!-- head-hints:begin -->';
 const END = '<!-- head-hints:end -->';
 
 const FONT_ORIGIN = 'https://font.emtech.cc';
+const FONT_CSS = FONT_ORIGIN + '/css/LXGWNeoZhiSong/400';
 const FA_ORIGIN = 'https://cdnjs.cloudflare.com';
 const THEME_SCRIPT = '/home/theme-color.js';
 
@@ -82,6 +89,20 @@ function needsFa(html) {
   return false;
 }
 
+/**
+ * 页面是否真的引用了 home/fonts.css。只有引用它的页面才需要并行外链
+ * emfont CSS；像 meta refresh 跳转页之类不加载字体，硬塞一个阻塞样式表
+ * 只会白白多一次请求。
+ */
+function needsFontCss(html) {
+  for (const m of html.matchAll(/<link\b[^>]*>/gi)) {
+    const tag = m[0];
+    if (!/\brel\s*=\s*["']stylesheet["']/i.test(tag)) continue;
+    if (/\bhref\s*=\s*["'][^"']*fonts\.css/i.test(tag)) return true;
+  }
+  return false;
+}
+
 function hintsBlock(html, darkBg) {
   const lines = [
     BEGIN,
@@ -91,6 +112,9 @@ function hintsBlock(html, darkBg) {
   ];
   if (needsFa(html)) {
     lines.push('<link rel="preconnect" href="' + FA_ORIGIN + '" crossorigin />');
+  }
+  if (needsFontCss(html)) {
+    lines.push('<link rel="stylesheet" href="' + FONT_CSS + '" />');
   }
   lines.push(
     '<script src="' + THEME_SCRIPT + '" defer></script>',
@@ -143,6 +167,6 @@ function injectHints(html, darkBg = cssBg().dark) {
 }
 
 module.exports = {
-  BEGIN, END, FONT_ORIGIN, FA_ORIGIN, THEME_SCRIPT,
-  cssBg, walkPages, needsFa, hintsBlock, stripHints, readHints, injectHints,
+  BEGIN, END, FONT_ORIGIN, FONT_CSS, FA_ORIGIN, THEME_SCRIPT,
+  cssBg, walkPages, needsFa, needsFontCss, hintsBlock, stripHints, readHints, injectHints,
 };

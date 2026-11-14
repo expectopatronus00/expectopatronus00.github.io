@@ -6,6 +6,7 @@
     <meta name="theme-color" content="#0b0d16" />
     <link rel="preconnect" href="https://font.emtech.cc" crossorigin />
     <link rel="dns-prefetch" href="https://font.emtech.cc" />
+    <link rel="stylesheet" href="https://font.emtech.cc/css/LXGWNeoZhiSong/400" />
     <script src="/home/theme-color.js" defer></script>
     <!-- head-hints:end -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -383,6 +384,9 @@
     <!-- seo:end -->
 </head>
   <body>
+    <!-- skip-link:begin -->
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <!-- skip-link:end -->
     <nav class="site-nav">
       <div class="nav-inner">
         <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
@@ -391,7 +395,7 @@
       </div>
     </nav>
 
-    <section class="page-head">
+    <section class="page-head" data-skip-target="1" tabindex="-1" id="main-content">
       <div class="eyebrow">Agent Harness · 转载</div>
       <h1>Harness²：权重冻结的自我改进，到底<em>改了什么</em></h1>
       <p>Google Research 上周开源了一个叫 Harness² 的框架，口号是「递归地改造 agent 的外壳」。它不微调、不做强化学习，模型的权重一个字节都不动——但官方说单步就能让 GLM-5 和 Gemini 3.5 Flash 涨最多 11.5 分。这篇文章拆开它的八个可编辑组件和两层递归，也说明它贵在哪、不适合谁。</p>

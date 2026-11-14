@@ -2,13 +2,18 @@
 /**
  * scripts/seo-meta.cjs
  * ─────────────────────────────────────────────────────────────────────────
- * 文章页 SEO 元数据的唯一实现。build-article.cjs（新稿）与
- * apply-seo-meta.cjs（存量）都 require 本文件，避免两边逻辑漂移。
+ * 全站页级 SEO 元数据的唯一实现。build-article.cjs（新稿）、
+ * apply-seo-meta.cjs（存量文章）与 apply-site-meta.cjs（静态页）都 require
+ * 本文件，避免三处逻辑漂移。
  *
  * 产出统一放在 <!-- seo:begin --> … <!-- seo:end --> 之间，便于幂等重跑、
  * --revert 和 repo-lint 校验。块内只写「可控项」：canonical、og:url、
  * og:site_name、og:image、twitter:card、JSON-LD；已有的 description /
  * og:title / og:description / og:type 保持原样，缺了才补。
+ *
+ * meta.type 默认 'article'（BlogPosting + og:type=article + datePublished）；
+ * 传 'website' 则按 meta.schemaType 生成 WebSite / CollectionPage /
+ * AboutPage 等结构化数据，且不写发布日期——静态页没有发布日期。
  *
  * 只依赖 node 内置模块，不引入构建步骤。站点根地址取 SITE_URL 环境变量。
  */
@@ -79,7 +84,7 @@ function stripSeo(html) {
 
 /**
  * 把 SEO 块注入 html 的 </head> 前。
- * meta: { pageUrl, title, description, date, imageUrl }
+ * meta: { pageUrl, title, description, date, imageUrl, type, schemaType }
  * 返回新 html；重复调用结果稳定（幂等）。
  */
 function injectSeo(html, meta) {
@@ -87,6 +92,8 @@ function injectSeo(html, meta) {
   const at = clean.search(/<\/head>/i);
   if (at < 0) return html;
 
+  const isArticle = (meta.type || 'article') !== 'website';
+  const schemaType = isArticle ? 'BlogPosting' : (meta.schemaType || 'WebPage');
   const pageUrl = meta.pageUrl;
   const title = meta.title || '';
   const description = meta.description || '';
@@ -109,7 +116,7 @@ function injectSeo(html, meta) {
     add('<meta property="og:title" content="' + escapeHtml(title) + '" />');
   }
   if (!/<meta[^>]*property=["']og:type["']/i.test(head)) {
-    add('<meta property="og:type" content="article" />');
+    add('<meta property="og:type" content="' + (isArticle ? 'article' : 'website') + '" />');
   }
   if (!/<meta[^>]*property=["']og:description["']/i.test(head) && description) {
     add('<meta property="og:description" content="' + escapeHtml(description) + '" />');
@@ -123,7 +130,7 @@ function injectSeo(html, meta) {
 
   const ld = {
     '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
+    '@type': schemaType,
     headline: title,
     description: description,
     image: imageUrl,
@@ -132,7 +139,7 @@ function injectSeo(html, meta) {
     publisher: { '@type': 'Organization', name: SITE_NAME, url: site },
     mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl },
   };
-  if (date) {
+  if (isArticle && date) {
     ld.datePublished = date;
     ld.dateModified = date;
   }

@@ -9,12 +9,13 @@
    中文：emfont CDN（unicode-range 分片，浏览器只下载用到的分片）
 
    引入顺序：fonts.css 必须在 design-tokens.css 之前。
-   ============================================================ */
 
-/* ── CJK · 霞鹜新致宋（emfont · 295 个 unicode-range 分片） ──
-   @import 必须位于所有规则之前，否则会被浏览器忽略。
-   选它而非思源宋体：更有印刷味，贴合「编辑室 × 技术实验室」定位。 */
-@import url('https://font.emtech.cc/css/LXGWNeoZhiSong/400');
+   CJK · 霞鹜新致宋（emfont · 295 个 unicode-range 分片）已移到各页 <head>：
+   由 scripts/head-hints.cjs 注入 <link rel="stylesheet">，与 fonts.css 并行下载。
+   原先写在顶部的 @import 会造成串行链——浏览器必须先拿到并解析完本文件，
+   才会发起跨域字体 CSS 请求，实测中间约 310 ms 空档。不要把它挪回来。
+   选它而非思源宋体：更有印刷味，贴合「编辑室 × 技术实验室」定位。
+   ============================================================ */
 
 /* ── Latin · Cormorant Garamond（展示标题 / 斜体强调） ── */
 @font-face {
