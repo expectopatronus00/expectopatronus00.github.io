@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-14",
+  "updated": "2026-11-15",
   "repos": [
     {
       "repo": "Comfy-Org/ComfyUI",
@@ -11,12 +11,12 @@
       "note": "热门",
       "license": "GPL-3.0",
       "language": "Python",
-      "stars": 146819,
-      "forks": 17517,
-      "openIssues": 5542,
+      "stars": 147011,
+      "forks": 17535,
+      "openIssues": 5544,
       "created": "2023-01-17",
       "first": "2026-11-01",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "mksglu/context-mode",
@@ -28,12 +28,12 @@
       "note": "",
       "license": "NOASSERTION",
       "language": "JavaScript",
-      "stars": 34090,
-      "forks": 2342,
-      "openIssues": 4,
+      "stars": 34135,
+      "forks": 2347,
+      "openIssues": 13,
       "created": "2026-02-23",
       "first": "2026-11-01",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "debpalash/VoiceStudio",
@@ -45,12 +45,12 @@
       "note": "热门",
       "license": "AGPL-3.0",
       "language": "Python",
-      "stars": 110581,
-      "forks": 12246,
-      "openIssues": 23,
+      "stars": 111267,
+      "forks": 12341,
+      "openIssues": 48,
       "created": "2026-04-09",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "vectorize-io/hindsight",
@@ -62,12 +62,12 @@
       "note": "",
       "license": "MIT",
       "language": "Python",
-      "stars": 61052,
-      "forks": 7365,
-      "openIssues": 233,
+      "stars": 61201,
+      "forks": 7368,
+      "openIssues": 240,
       "created": "2025-10-30",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "morluto/rea",
@@ -79,12 +79,12 @@
       "note": "热门",
       "license": "MIT",
       "language": "TypeScript",
-      "stars": 459570,
-      "forks": 112652,
-      "openIssues": 1561,
+      "stars": 461705,
+      "forks": 113073,
+      "openIssues": 1532,
       "created": "2026-04-14",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "paperclipai/paperclip",
@@ -96,12 +96,12 @@
       "note": "",
       "license": "MIT",
       "language": "TypeScript",
-      "stars": 113908,
-      "forks": 18901,
-      "openIssues": 6656,
+      "stars": 114122,
+      "forks": 18925,
+      "openIssues": 6724,
       "created": "2026-03-02",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "cloudflare/security-audit-skill",
@@ -113,12 +113,12 @@
       "note": "",
       "license": "MIT",
       "language": "JavaScript",
-      "stars": 72523,
-      "forks": 4848,
-      "openIssues": 127,
+      "stars": 73139,
+      "forks": 4899,
+      "openIssues": 128,
       "created": "2026-06-18",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "heygen-com/hyperframes",
@@ -130,12 +130,12 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "TypeScript",
-      "stars": 84289,
-      "forks": 7795,
-      "openIssues": 280,
+      "stars": 84691,
+      "forks": 7841,
+      "openIssues": 294,
       "created": "2026-03-10",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "tashfeenahmed/freellmapi",
@@ -147,12 +147,12 @@
       "note": "免费",
       "license": "MIT",
       "language": "TypeScript",
-      "stars": 52296,
-      "forks": 7318,
-      "openIssues": 50,
+      "stars": 52845,
+      "forks": 7403,
+      "openIssues": 39,
       "created": "2026-04-21",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "stablyai/orca",
@@ -164,12 +164,12 @@
       "note": "",
       "license": "MIT",
       "language": "TypeScript",
-      "stars": 124954,
-      "forks": 7919,
-      "openIssues": 8485,
+      "stars": 125671,
+      "forks": 7964,
+      "openIssues": 8507,
       "created": "2026-03-17",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "pbakaus/impeccable",
@@ -181,12 +181,12 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Rust",
-      "stars": 110136,
-      "forks": 6568,
-      "openIssues": 62,
+      "stars": 110680,
+      "forks": 6613,
+      "openIssues": 55,
       "created": "2025-11-16",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "affaan-m/ECC",
@@ -198,12 +198,12 @@
       "note": "",
       "license": "MIT",
       "language": "JavaScript",
-      "stars": 302940,
-      "forks": 44676,
-      "openIssues": 279,
+      "stars": 303755,
+      "forks": 44772,
+      "openIssues": 282,
       "created": "2026-01-18",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "NVIDIA/OpenShell",
@@ -215,12 +215,12 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Rust",
-      "stars": 21626,
-      "forks": 2109,
-      "openIssues": 679,
+      "stars": 21650,
+      "forks": 2116,
+      "openIssues": 700,
       "created": "2026-02-24",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "anomalyco/opencode",
@@ -232,12 +232,12 @@
       "note": "",
       "license": "MIT",
       "language": "TypeScript",
-      "stars": 226855,
-      "forks": 30731,
-      "openIssues": 4031,
+      "stars": 227026,
+      "forks": 30753,
+      "openIssues": 4056,
       "created": "2025-04-30",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "HKUDS/CLI-Anything",
@@ -249,12 +249,12 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Python",
-      "stars": 58734,
-      "forks": 5289,
-      "openIssues": 244,
+      "stars": 58762,
+      "forks": 5293,
+      "openIssues": 245,
       "created": "2026-03-08",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "thedotmack/claude-mem",
@@ -266,12 +266,12 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "TypeScript",
-      "stars": 117065,
-      "forks": 10162,
-      "openIssues": 160,
+      "stars": 117332,
+      "forks": 10193,
+      "openIssues": 70,
       "created": "2025-08-31",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "K-Dense-AI/scientific-agent-skills",
@@ -283,12 +283,12 @@
       "note": "",
       "license": "MIT",
       "language": "Python",
-      "stars": 57197,
-      "forks": 5018,
+      "stars": 57303,
+      "forks": 5034,
       "openIssues": 86,
       "created": "2025-10-19",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "deepseek-ai/deepseek-harness",
@@ -300,12 +300,12 @@
       "note": "热门",
       "license": "MIT",
       "language": "TypeScript",
-      "stars": 281064,
-      "forks": 34713,
+      "stars": 281580,
+      "forks": 34821,
       "openIssues": 0,
       "created": "2026-08-13",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "ruvnet/ruflo",
@@ -317,12 +317,12 @@
       "note": "",
       "license": "MIT",
       "language": "TypeScript",
-      "stars": 81699,
-      "forks": 9630,
-      "openIssues": 593,
+      "stars": 81808,
+      "forks": 9647,
+      "openIssues": 598,
       "created": "2025-06-02",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "anthropics/claude-plugins-official",
@@ -334,12 +334,12 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Python",
-      "stars": 47286,
-      "forks": 4911,
-      "openIssues": 1298,
+      "stars": 47388,
+      "forks": 4923,
+      "openIssues": 1300,
       "created": "2025-11-20",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "Ebony-Vinyl/dsh-our-free-model",
@@ -351,12 +351,12 @@
       "note": "免费",
       "license": "MIT",
       "language": "JavaScript",
-      "stars": 74278,
-      "forks": 2068,
-      "openIssues": 179,
+      "stars": 75694,
+      "forks": 2122,
+      "openIssues": 182,
       "created": "2026-09-24",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "earthtojake/text-to-cad",
@@ -368,12 +368,12 @@
       "note": "",
       "license": "MIT",
       "language": "Python",
-      "stars": 26319,
-      "forks": 2507,
-      "openIssues": 38,
+      "stars": 26379,
+      "forks": 2515,
+      "openIssues": 40,
       "created": "2026-04-22",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "anthropics/knowledge-work-plugins",
@@ -385,12 +385,12 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Python",
-      "stars": 35792,
-      "forks": 3962,
+      "stars": 36146,
+      "forks": 3997,
       "openIssues": 169,
       "created": "2026-01-23",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "pingdotgg/t3code",
@@ -402,12 +402,12 @@
       "note": "",
       "license": "MIT",
       "language": "TypeScript",
-      "stars": 60466,
-      "forks": 10892,
-      "openIssues": 3826,
+      "stars": 61422,
+      "forks": 11007,
+      "openIssues": 3431,
       "created": "2026-02-08",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "yetone/magpie",
@@ -419,12 +419,12 @@
       "note": "",
       "license": "MIT",
       "language": "Go",
-      "stars": 36527,
-      "forks": 3265,
-      "openIssues": 4233,
+      "stars": 36912,
+      "forks": 3316,
+      "openIssues": 4290,
       "created": "2026-09-23",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "lexmount/moli",
@@ -436,12 +436,12 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Rust",
-      "stars": 23746,
-      "forks": 674,
-      "openIssues": 662,
+      "stars": 23816,
+      "forks": 678,
+      "openIssues": 668,
       "created": "2026-08-10",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "img2threejs/img2threejs",
@@ -453,12 +453,12 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Python",
-      "stars": 21371,
-      "forks": 1812,
-      "openIssues": 121,
+      "stars": 21410,
+      "forks": 1820,
+      "openIssues": 122,
       "created": "2026-07-15",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "google/artemis",
@@ -470,12 +470,12 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Python",
-      "stars": 17447,
-      "forks": 1944,
+      "stars": 17479,
+      "forks": 1946,
       "openIssues": 191,
       "created": "2026-08-13",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "Vincentwei1021/video-shotcraft",
@@ -487,12 +487,12 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "TypeScript",
-      "stars": 19532,
-      "forks": 1835,
+      "stars": 19987,
+      "forks": 1872,
       "openIssues": 5,
       "created": "2026-07-19",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "akitaonrails/ai-memory",
@@ -504,12 +504,12 @@
       "note": "",
       "license": "MIT",
       "language": "Rust",
-      "stars": 15869,
-      "forks": 1174,
-      "openIssues": 37,
+      "stars": 15952,
+      "forks": 1189,
+      "openIssues": 27,
       "created": "2026-05-21",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "cursor/plugins",
@@ -521,12 +521,12 @@
       "note": "",
       "license": "NOASSERTION",
       "language": "TypeScript",
-      "stars": 16283,
-      "forks": 1723,
+      "stars": 16417,
+      "forks": 1742,
       "openIssues": 658,
       "created": "2026-01-23",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "trailhq/Trail-Code",
@@ -538,12 +538,12 @@
       "note": "",
       "license": "MIT",
       "language": "TypeScript",
-      "stars": 11273,
-      "forks": 1008,
-      "openIssues": 228,
+      "stars": 11293,
+      "forks": 1012,
+      "openIssues": 230,
       "created": "2026-07-03",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "TencentCloud/Octop",
@@ -555,12 +555,12 @@
       "note": "",
       "license": "MIT",
       "language": "Python",
-      "stars": 12043,
-      "forks": 1691,
-      "openIssues": 693,
+      "stars": 12057,
+      "forks": 1693,
+      "openIssues": 671,
       "created": "2026-07-08",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "rehan-remade/universal-modder",
@@ -572,12 +572,12 @@
       "note": "",
       "license": "MIT",
       "language": "Python",
-      "stars": 9688,
-      "forks": 1083,
-      "openIssues": 36,
+      "stars": 9712,
+      "forks": 1089,
+      "openIssues": 41,
       "created": "2026-09-30",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "KKKKhazix/AIHOT",
@@ -589,12 +589,12 @@
       "note": "",
       "license": "MIT",
       "language": "TypeScript",
-      "stars": 10686,
-      "forks": 2486,
-      "openIssues": 6,
+      "stars": 10734,
+      "forks": 2496,
+      "openIssues": 2,
       "created": "2026-09-28",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "tangency-labs/solidcraft",
@@ -606,12 +606,12 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Rust",
-      "stars": 16296,
-      "forks": 2235,
-      "openIssues": 6951,
+      "stars": 16477,
+      "forks": 2264,
+      "openIssues": 7235,
       "created": "2026-10-07",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "Ryze-AI-Adgent/open-seo-mcp-skills",
@@ -623,12 +623,12 @@
       "note": "",
       "license": "MIT",
       "language": "Shell",
-      "stars": 9768,
+      "stars": 9965,
       "forks": 399,
       "openIssues": 4,
       "created": "2026-08-29",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "XiaoDuoYa/codex-with-chatgpt",
@@ -640,12 +640,12 @@
       "note": "",
       "license": "MIT",
       "language": "TypeScript",
-      "stars": 7706,
+      "stars": 7711,
       "forks": 709,
       "openIssues": 21,
       "created": "2026-08-28",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "jev-chat/jev-chat-jarvis",
@@ -657,12 +657,12 @@
       "note": "",
       "license": "MIT",
       "language": "Kotlin",
-      "stars": 8379,
-      "forks": 1338,
+      "stars": 8394,
+      "forks": 1340,
       "openIssues": 33,
       "created": "2026-09-21",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "deeplethe/utopia",
@@ -674,12 +674,12 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Rust",
-      "stars": 8710,
-      "forks": 1190,
-      "openIssues": 77,
+      "stars": 8716,
+      "forks": 1191,
+      "openIssues": 78,
       "created": "2026-08-07",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "bojieli/ai-infra-book",
@@ -691,12 +691,12 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Python",
-      "stars": 7711,
-      "forks": 612,
+      "stars": 7818,
+      "forks": 629,
       "openIssues": 9,
       "created": "2026-08-22",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "Human-Agent-Society/reef",
@@ -708,12 +708,12 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Python",
-      "stars": 7820,
-      "forks": 736,
-      "openIssues": 156,
+      "stars": 7827,
+      "forks": 737,
+      "openIssues": 157,
       "created": "2026-08-31",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "Jakeschincariol/replica-skill",
@@ -725,12 +725,12 @@
       "note": "",
       "license": "MIT",
       "language": "Python",
-      "stars": 9343,
-      "forks": 1679,
-      "openIssues": 35,
+      "stars": 9432,
+      "forks": 1696,
+      "openIssues": 37,
       "created": "2026-10-03",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "shader-effects-inc/shaders",
@@ -742,12 +742,12 @@
       "note": "",
       "license": "MIT",
       "language": "TypeScript",
-      "stars": 5941,
-      "forks": 279,
+      "stars": 5950,
+      "forks": 280,
       "openIssues": 3,
       "created": "2026-09-29",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "tigerless-labs/agent-memory",
@@ -759,12 +759,12 @@
       "note": "",
       "license": "MIT",
       "language": "Python",
-      "stars": 4317,
+      "stars": 4320,
       "forks": 209,
       "openIssues": 10,
       "created": "2026-09-01",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "elie222/rakazo",
@@ -776,12 +776,12 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "TypeScript",
-      "stars": 8408,
-      "forks": 1520,
-      "openIssues": 269,
+      "stars": 8610,
+      "forks": 1550,
+      "openIssues": 220,
       "created": "2026-08-13",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "ZJU-REAL/Easel",
@@ -793,12 +793,12 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Python",
-      "stars": 4686,
-      "forks": 782,
-      "openIssues": 19,
+      "stars": 4704,
+      "forks": 785,
+      "openIssues": 12,
       "created": "2026-08-28",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "QingYunA/answer-me-with-html",
@@ -810,12 +810,12 @@
       "note": "",
       "license": "MIT",
       "language": "JavaScript",
-      "stars": 6322,
-      "forks": 425,
+      "stars": 6338,
+      "forks": 426,
       "openIssues": 13,
       "created": "2026-10-02",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "Leonxlnx/unlazy",
@@ -827,12 +827,12 @@
       "note": "",
       "license": "MIT",
       "language": "JavaScript",
-      "stars": 4398,
+      "stars": 4409,
       "forks": 350,
       "openIssues": 11,
       "created": "2026-08-09",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "onehumanbeing/esp32-iphone-agent",
@@ -844,12 +844,12 @@
       "note": "",
       "license": "MIT",
       "language": "Swift",
-      "stars": 4954,
-      "forks": 680,
-      "openIssues": 15,
+      "stars": 4990,
+      "forks": 683,
+      "openIssues": 16,
       "created": "2026-10-11",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "Nanako0129/sepia",
@@ -861,12 +861,12 @@
       "note": "",
       "license": "MIT",
       "language": "Python",
-      "stars": 3816,
+      "stars": 3821,
       "forks": 236,
-      "openIssues": 5,
+      "openIssues": 6,
       "created": "2026-08-28",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "HarnessRouter/harnessrouter",
@@ -878,12 +878,12 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Python",
-      "stars": 4360,
+      "stars": 4363,
       "forks": 486,
       "openIssues": 26,
       "created": "2026-08-09",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "fuxicodex/Fuxi",
@@ -900,7 +900,7 @@
       "openIssues": 1,
       "created": "2026-08-04",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "Leonxlnx/earshot",
@@ -908,16 +908,16 @@
       "name": "earshot",
       "owner": "Leonxlnx",
       "desc": "让编码 agent 听见声音：审听、配音 CPU 可跑",
-      "category": "30 天内",
+      "category": "31–90 天",
       "note": "",
       "license": "MIT",
       "language": "Python",
-      "stars": 4817,
-      "forks": 313,
-      "openIssues": 13,
+      "stars": 4912,
+      "forks": 324,
+      "openIssues": 5,
       "created": "2026-10-15",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "xzf-thu/VoiceMem",
@@ -934,7 +934,7 @@
       "openIssues": 8,
       "created": "2026-08-17",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "Folkbench/folkbench",
@@ -946,12 +946,12 @@
       "note": "",
       "license": "NOASSERTION",
       "language": "Rust",
-      "stars": 3766,
+      "stars": 3864,
       "forks": 18,
       "openIssues": 0,
       "created": "2026-10-02",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "nano-muse/nanoMuse",
@@ -963,12 +963,12 @@
       "note": "",
       "license": "GPL-3.0",
       "language": "Swift",
-      "stars": 3482,
-      "forks": 417,
+      "stars": 3511,
+      "forks": 419,
       "openIssues": 169,
       "created": "2026-09-23",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "amontlabs/lcu",
@@ -980,12 +980,12 @@
       "note": "",
       "license": "MIT",
       "language": "JavaScript",
-      "stars": 2426,
-      "forks": 165,
+      "stars": 2429,
+      "forks": 166,
       "openIssues": 0,
       "created": "2026-09-22",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "kajisho5/ffmpeg-skill",
@@ -997,12 +997,12 @@
       "note": "",
       "license": "MIT",
       "language": "Python",
-      "stars": 5562,
-      "forks": 481,
-      "openIssues": 26,
+      "stars": 5938,
+      "forks": 520,
+      "openIssues": 25,
       "created": "2026-09-03",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "deeplethe/solid-glass",
@@ -1014,12 +1014,12 @@
       "note": "",
       "license": "MIT",
       "language": "TypeScript",
-      "stars": 2071,
-      "forks": 43,
+      "stars": 2074,
+      "forks": 44,
       "openIssues": 5,
       "created": "2026-10-12",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "trhhubsd/ARTEX",
@@ -1065,12 +1065,12 @@
       "note": "",
       "license": "MIT",
       "language": "",
-      "stars": 3204,
-      "forks": 3855,
-      "openIssues": 2713,
+      "stars": 3264,
+      "forks": 3934,
+      "openIssues": 2797,
       "created": "2026-09-08",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "zhuyansen/new-term-radar",
@@ -1082,12 +1082,12 @@
       "note": "",
       "license": "MIT",
       "language": "Python",
-      "stars": 2173,
-      "forks": 648,
+      "stars": 2178,
+      "forks": 649,
       "openIssues": 4,
       "created": "2026-10-12",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "youngyangyang04/llm-master",
@@ -1099,12 +1099,12 @@
       "note": "",
       "license": "MIT",
       "language": "",
-      "stars": 1648,
+      "stars": 1655,
       "forks": 165,
       "openIssues": 5,
       "created": "2026-09-12",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "Harvil1/codeAgent",
@@ -1121,7 +1121,7 @@
       "openIssues": 2,
       "created": "2026-10-02",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "leemysw/yovoice",
@@ -1133,12 +1133,12 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "TypeScript",
-      "stars": 2193,
+      "stars": 2206,
       "forks": 167,
-      "openIssues": 6,
+      "openIssues": 5,
       "created": "2026-09-15",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "datalab-to/indra",
@@ -1150,12 +1150,12 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Python",
-      "stars": 1822,
-      "forks": 185,
+      "stars": 1839,
+      "forks": 186,
       "openIssues": 10,
       "created": "2026-10-13",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "Tejashmakwana/motionmaxxing",
@@ -1167,12 +1167,12 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "JavaScript",
-      "stars": 1604,
-      "forks": 161,
+      "stars": 1624,
+      "forks": 162,
       "openIssues": 1,
       "created": "2026-10-06",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "thesysdev/open-intelligent-ui",
@@ -1184,12 +1184,12 @@
       "note": "",
       "license": "MIT",
       "language": "TypeScript",
-      "stars": 997,
+      "stars": 1001,
       "forks": 92,
       "openIssues": 34,
       "created": "2026-10-08",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "amitshekhariitbhu/ai-system-design",
@@ -1201,12 +1201,12 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Markdown",
-      "stars": 869,
-      "forks": 133,
+      "stars": 882,
+      "forks": 137,
       "openIssues": 0,
       "created": "2026-09-25",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "strands-labs/strands-decider",
@@ -1218,12 +1218,12 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Python",
-      "stars": 1183,
-      "forks": 130,
-      "openIssues": 60,
+      "stars": 1197,
+      "forks": 131,
+      "openIssues": 61,
       "created": "2026-09-29",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "Ayzzz123/mcd-coupon-strategist",
@@ -1252,12 +1252,12 @@
       "note": "",
       "license": "MIT",
       "language": "Python",
-      "stars": 629,
+      "stars": 630,
       "forks": 54,
       "openIssues": 2,
       "created": "2026-08-27",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "xop01/ai_goodpractice",
@@ -1274,7 +1274,7 @@
       "openIssues": 0,
       "created": "2026-10-02",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "whirlchat/whirl",
@@ -1291,7 +1291,7 @@
       "openIssues": 4,
       "created": "2026-10-02",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "SoMarkAI/OXR",
@@ -1303,12 +1303,12 @@
       "note": "",
       "license": "NOASSERTION",
       "language": "Python",
-      "stars": 3830,
-      "forks": 258,
+      "stars": 3837,
+      "forks": 259,
       "openIssues": 28,
       "created": "2026-10-05",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "strands-agents/box",
@@ -1320,12 +1320,12 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Rust",
-      "stars": 545,
+      "stars": 547,
       "forks": 53,
       "openIssues": 131,
       "created": "2026-10-02",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "pinganbbOvO/ai-companion-kit",
@@ -1337,12 +1337,12 @@
       "note": "",
       "license": "MIT",
       "language": "JavaScript",
-      "stars": 569,
-      "forks": 42,
+      "stars": 572,
+      "forks": 43,
       "openIssues": 5,
       "created": "2026-10-08",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "modelscope/ms-cookbook",
@@ -1356,10 +1356,10 @@
       "language": "HTML",
       "stars": 526,
       "forks": 87,
-      "openIssues": 6,
+      "openIssues": 7,
       "created": "2026-09-11",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "hanzohanzhe/Grandet",
@@ -1371,12 +1371,12 @@
       "note": "",
       "license": "NOASSERTION",
       "language": "JavaScript",
-      "stars": 1372,
-      "forks": 143,
+      "stars": 1395,
+      "forks": 145,
       "openIssues": 47,
       "created": "2026-10-05",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "FengZhenfei/carrel",
@@ -1388,12 +1388,12 @@
       "note": "",
       "license": "MIT",
       "language": "Python",
-      "stars": 804,
+      "stars": 806,
       "forks": 18,
       "openIssues": 0,
       "created": "2026-09-28",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "himovo/movo",
@@ -1405,12 +1405,12 @@
       "note": "",
       "license": "NOASSERTION",
       "language": "Python",
-      "stars": 681,
+      "stars": 682,
       "forks": 148,
-      "openIssues": 57,
+      "openIssues": 59,
       "created": "2026-09-01",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "songshikang0111/awesome-REA-cases",
@@ -1422,12 +1422,12 @@
       "note": "",
       "license": "MIT",
       "language": "Python",
-      "stars": 435,
+      "stars": 440,
       "forks": 72,
       "openIssues": 2,
       "created": "2026-10-12",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "lokicorvus/crosspet",
@@ -1439,12 +1439,12 @@
       "note": "",
       "license": "NOASSERTION",
       "language": "JavaScript",
-      "stars": 472,
-      "forks": 38,
+      "stars": 480,
+      "forks": 39,
       "openIssues": 8,
       "created": "2026-10-03",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "LosaLosSantos/aurelio-finance",
@@ -1461,7 +1461,7 @@
       "openIssues": 0,
       "created": "2026-10-06",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "shuyu-labs/transwork",
@@ -1471,14 +1471,14 @@
       "desc": "企业级桌面 agent 工作台：技能、知识与任务同处协作",
       "category": "31–90 天",
       "note": "",
-      "license": "NOASSERTION",
+      "license": "AGPL-3.0",
       "language": "Shell",
       "stars": 287,
       "forks": 48,
       "openIssues": 0,
       "created": "2026-10-14",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "Kai-Jungsthoefel/SOMA",
@@ -1490,12 +1490,12 @@
       "note": "",
       "license": "GPL-3.0",
       "language": "TypeScript",
-      "stars": 480,
+      "stars": 482,
       "forks": 50,
       "openIssues": 3,
       "created": "2026-10-10",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "AFK-surf/Comma",
@@ -1507,12 +1507,12 @@
       "note": "",
       "license": "AGPL-3.0",
       "language": "Elixir",
-      "stars": 602,
+      "stars": 606,
       "forks": 51,
       "openIssues": 13,
       "created": "2026-09-30",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "RoversX/ThinkTerm",
@@ -1529,7 +1529,7 @@
       "openIssues": 27,
       "created": "2026-10-01",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "rohitg00/ai-engineering-from-scratch",
@@ -1541,12 +1541,12 @@
       "note": "",
       "license": "MIT",
       "language": "Python",
-      "stars": 78893,
-      "forks": 14056,
-      "openIssues": 71,
+      "stars": 79039,
+      "forks": 14093,
+      "openIssues": 70,
       "created": "2026-03-18",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "hypit-ai/hypit",
@@ -1558,12 +1558,12 @@
       "note": "",
       "license": "NOASSERTION",
       "language": "TypeScript",
-      "stars": 29830,
-      "forks": 3490,
-      "openIssues": 109,
+      "stars": 29991,
+      "forks": 3512,
+      "openIssues": 111,
       "created": "2026-07-29",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "VectifyAI/PageIndex",
@@ -1575,12 +1575,12 @@
       "note": "",
       "license": "MIT",
       "language": "Python",
-      "stars": 40432,
-      "forks": 3474,
+      "stars": 40446,
+      "forks": 3477,
       "openIssues": 171,
       "created": "2025-04-01",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "android/skills",
@@ -1592,12 +1592,12 @@
       "note": "免费",
       "license": "Apache-2.0",
       "language": "Kotlin",
-      "stars": 10507,
+      "stars": 10528,
       "forks": 695,
       "openIssues": 33,
       "created": "2026-03-16",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "msitarzewski/agency-agents",
@@ -1609,12 +1609,12 @@
       "note": "热门",
       "license": "MIT",
       "language": "Shell",
-      "stars": 168313,
-      "forks": 27293,
-      "openIssues": 251,
+      "stars": 168565,
+      "forks": 27354,
+      "openIssues": 253,
       "created": "2025-10-13",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "deepseek-ai/dsh-superagent-prototype",
@@ -1626,12 +1626,12 @@
       "note": "本周 +2.6万星",
       "license": "MIT",
       "language": "TypeScript",
-      "stars": 23138,
-      "forks": 2825,
+      "stars": 23284,
+      "forks": 2847,
       "openIssues": 0,
       "created": "2026-10-31",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "deepseek-ai/DeepInfer",
@@ -1643,12 +1643,12 @@
       "note": "本月 +4.4万星",
       "license": "Apache-2.0",
       "language": "Python",
-      "stars": 26026,
-      "forks": 3195,
-      "openIssues": 250,
+      "stars": 26072,
+      "forks": 3203,
+      "openIssues": 251,
       "created": "2026-10-16",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "browser-use/jev-ultrafast",
@@ -1660,12 +1660,12 @@
       "note": "创建以来 +2.4万",
       "license": "MIT",
       "language": "Python",
-      "stars": 24498,
-      "forks": 1887,
+      "stars": 24518,
+      "forks": 1888,
       "openIssues": 213,
       "created": "2026-09-16",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "Niko1221/Strata",
@@ -1677,12 +1677,12 @@
       "note": "创建以来 +3.8万",
       "license": "MIT",
       "language": "C++",
-      "stars": 44163,
-      "forks": 4855,
-      "openIssues": 1456,
+      "stars": 44491,
+      "forks": 4908,
+      "openIssues": 1505,
       "created": "2026-09-24",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     },
     {
       "repo": "NandhaKishorM/laya",
@@ -1694,12 +1694,12 @@
       "note": "创建以来 +3.5万",
       "license": "Apache-2.0",
       "language": "Python",
-      "stars": 35523,
-      "forks": 3185,
-      "openIssues": 97,
+      "stars": 35567,
+      "forks": 3189,
+      "openIssues": 98,
       "created": "2026-09-18",
       "first": "2026-11-02",
-      "last": "2026-11-14"
+      "last": "2026-11-15"
     }
   ],
   "series": {
@@ -1743,6 +1743,10 @@
       [
         "2026-11-14",
         146819
+      ],
+      [
+        "2026-11-15",
+        147011
       ]
     ],
     "mksglu/context-mode": [
@@ -1785,6 +1789,10 @@
       [
         "2026-11-14",
         34090
+      ],
+      [
+        "2026-11-15",
+        34135
       ]
     ],
     "debpalash/VoiceStudio": [
@@ -1823,6 +1831,10 @@
       [
         "2026-11-14",
         110581
+      ],
+      [
+        "2026-11-15",
+        111267
       ]
     ],
     "vectorize-io/hindsight": [
@@ -1861,6 +1873,10 @@
       [
         "2026-11-14",
         61052
+      ],
+      [
+        "2026-11-15",
+        61201
       ]
     ],
     "morluto/rea": [
@@ -1899,6 +1915,10 @@
       [
         "2026-11-14",
         459570
+      ],
+      [
+        "2026-11-15",
+        461705
       ]
     ],
     "paperclipai/paperclip": [
@@ -1937,6 +1957,10 @@
       [
         "2026-11-14",
         113908
+      ],
+      [
+        "2026-11-15",
+        114122
       ]
     ],
     "cloudflare/security-audit-skill": [
@@ -1975,6 +1999,10 @@
       [
         "2026-11-14",
         72523
+      ],
+      [
+        "2026-11-15",
+        73139
       ]
     ],
     "heygen-com/hyperframes": [
@@ -2013,6 +2041,10 @@
       [
         "2026-11-14",
         84289
+      ],
+      [
+        "2026-11-15",
+        84691
       ]
     ],
     "tashfeenahmed/freellmapi": [
@@ -2051,6 +2083,10 @@
       [
         "2026-11-14",
         52296
+      ],
+      [
+        "2026-11-15",
+        52845
       ]
     ],
     "stablyai/orca": [
@@ -2089,6 +2125,10 @@
       [
         "2026-11-14",
         124954
+      ],
+      [
+        "2026-11-15",
+        125671
       ]
     ],
     "pbakaus/impeccable": [
@@ -2127,6 +2167,10 @@
       [
         "2026-11-14",
         110136
+      ],
+      [
+        "2026-11-15",
+        110680
       ]
     ],
     "affaan-m/ECC": [
@@ -2165,6 +2209,10 @@
       [
         "2026-11-14",
         302940
+      ],
+      [
+        "2026-11-15",
+        303755
       ]
     ],
     "NVIDIA/OpenShell": [
@@ -2203,6 +2251,10 @@
       [
         "2026-11-14",
         21626
+      ],
+      [
+        "2026-11-15",
+        21650
       ]
     ],
     "anomalyco/opencode": [
@@ -2241,6 +2293,10 @@
       [
         "2026-11-14",
         226855
+      ],
+      [
+        "2026-11-15",
+        227026
       ]
     ],
     "HKUDS/CLI-Anything": [
@@ -2279,6 +2335,10 @@
       [
         "2026-11-14",
         58734
+      ],
+      [
+        "2026-11-15",
+        58762
       ]
     ],
     "thedotmack/claude-mem": [
@@ -2317,6 +2377,10 @@
       [
         "2026-11-14",
         117065
+      ],
+      [
+        "2026-11-15",
+        117332
       ]
     ],
     "K-Dense-AI/scientific-agent-skills": [
@@ -2355,6 +2419,10 @@
       [
         "2026-11-14",
         57197
+      ],
+      [
+        "2026-11-15",
+        57303
       ]
     ],
     "deepseek-ai/deepseek-harness": [
@@ -2393,6 +2461,10 @@
       [
         "2026-11-14",
         281064
+      ],
+      [
+        "2026-11-15",
+        281580
       ]
     ],
     "ruvnet/ruflo": [
@@ -2431,6 +2503,10 @@
       [
         "2026-11-14",
         81699
+      ],
+      [
+        "2026-11-15",
+        81808
       ]
     ],
     "anthropics/claude-plugins-official": [
@@ -2469,6 +2545,10 @@
       [
         "2026-11-14",
         47286
+      ],
+      [
+        "2026-11-15",
+        47388
       ]
     ],
     "Ebony-Vinyl/dsh-our-free-model": [
@@ -2507,6 +2587,10 @@
       [
         "2026-11-14",
         74278
+      ],
+      [
+        "2026-11-15",
+        75694
       ]
     ],
     "earthtojake/text-to-cad": [
@@ -2545,6 +2629,10 @@
       [
         "2026-11-14",
         26319
+      ],
+      [
+        "2026-11-15",
+        26379
       ]
     ],
     "anthropics/knowledge-work-plugins": [
@@ -2583,6 +2671,10 @@
       [
         "2026-11-14",
         35792
+      ],
+      [
+        "2026-11-15",
+        36146
       ]
     ],
     "pingdotgg/t3code": [
@@ -2621,6 +2713,10 @@
       [
         "2026-11-14",
         60466
+      ],
+      [
+        "2026-11-15",
+        61422
       ]
     ],
     "yetone/magpie": [
@@ -2659,6 +2755,10 @@
       [
         "2026-11-14",
         36527
+      ],
+      [
+        "2026-11-15",
+        36912
       ]
     ],
     "lexmount/moli": [
@@ -2697,6 +2797,10 @@
       [
         "2026-11-14",
         23746
+      ],
+      [
+        "2026-11-15",
+        23816
       ]
     ],
     "img2threejs/img2threejs": [
@@ -2735,6 +2839,10 @@
       [
         "2026-11-14",
         21371
+      ],
+      [
+        "2026-11-15",
+        21410
       ]
     ],
     "google/artemis": [
@@ -2773,6 +2881,10 @@
       [
         "2026-11-14",
         17447
+      ],
+      [
+        "2026-11-15",
+        17479
       ]
     ],
     "Vincentwei1021/video-shotcraft": [
@@ -2811,6 +2923,10 @@
       [
         "2026-11-14",
         19532
+      ],
+      [
+        "2026-11-15",
+        19987
       ]
     ],
     "akitaonrails/ai-memory": [
@@ -2849,6 +2965,10 @@
       [
         "2026-11-14",
         15869
+      ],
+      [
+        "2026-11-15",
+        15952
       ]
     ],
     "cursor/plugins": [
@@ -2887,6 +3007,10 @@
       [
         "2026-11-14",
         16283
+      ],
+      [
+        "2026-11-15",
+        16417
       ]
     ],
     "trailhq/Trail-Code": [
@@ -2925,6 +3049,10 @@
       [
         "2026-11-14",
         11273
+      ],
+      [
+        "2026-11-15",
+        11293
       ]
     ],
     "TencentCloud/Octop": [
@@ -2963,6 +3091,10 @@
       [
         "2026-11-14",
         12043
+      ],
+      [
+        "2026-11-15",
+        12057
       ]
     ],
     "rehan-remade/universal-modder": [
@@ -3001,6 +3133,10 @@
       [
         "2026-11-14",
         9688
+      ],
+      [
+        "2026-11-15",
+        9712
       ]
     ],
     "KKKKhazix/AIHOT": [
@@ -3039,6 +3175,10 @@
       [
         "2026-11-14",
         10686
+      ],
+      [
+        "2026-11-15",
+        10734
       ]
     ],
     "tangency-labs/solidcraft": [
@@ -3077,6 +3217,10 @@
       [
         "2026-11-14",
         16296
+      ],
+      [
+        "2026-11-15",
+        16477
       ]
     ],
     "Ryze-AI-Adgent/open-seo-mcp-skills": [
@@ -3115,6 +3259,10 @@
       [
         "2026-11-14",
         9768
+      ],
+      [
+        "2026-11-15",
+        9965
       ]
     ],
     "XiaoDuoYa/codex-with-chatgpt": [
@@ -3153,6 +3301,10 @@
       [
         "2026-11-14",
         7706
+      ],
+      [
+        "2026-11-15",
+        7711
       ]
     ],
     "jev-chat/jev-chat-jarvis": [
@@ -3191,6 +3343,10 @@
       [
         "2026-11-14",
         8379
+      ],
+      [
+        "2026-11-15",
+        8394
       ]
     ],
     "deeplethe/utopia": [
@@ -3229,6 +3385,10 @@
       [
         "2026-11-14",
         8710
+      ],
+      [
+        "2026-11-15",
+        8716
       ]
     ],
     "bojieli/ai-infra-book": [
@@ -3267,6 +3427,10 @@
       [
         "2026-11-14",
         7711
+      ],
+      [
+        "2026-11-15",
+        7818
       ]
     ],
     "Human-Agent-Society/reef": [
@@ -3305,6 +3469,10 @@
       [
         "2026-11-14",
         7820
+      ],
+      [
+        "2026-11-15",
+        7827
       ]
     ],
     "Jakeschincariol/replica-skill": [
@@ -3343,6 +3511,10 @@
       [
         "2026-11-14",
         9343
+      ],
+      [
+        "2026-11-15",
+        9432
       ]
     ],
     "shader-effects-inc/shaders": [
@@ -3381,6 +3553,10 @@
       [
         "2026-11-14",
         5941
+      ],
+      [
+        "2026-11-15",
+        5950
       ]
     ],
     "tigerless-labs/agent-memory": [
@@ -3419,6 +3595,10 @@
       [
         "2026-11-14",
         4317
+      ],
+      [
+        "2026-11-15",
+        4320
       ]
     ],
     "elie222/rakazo": [
@@ -3457,6 +3637,10 @@
       [
         "2026-11-14",
         8408
+      ],
+      [
+        "2026-11-15",
+        8610
       ]
     ],
     "ZJU-REAL/Easel": [
@@ -3495,6 +3679,10 @@
       [
         "2026-11-14",
         4686
+      ],
+      [
+        "2026-11-15",
+        4704
       ]
     ],
     "QingYunA/answer-me-with-html": [
@@ -3533,6 +3721,10 @@
       [
         "2026-11-14",
         6322
+      ],
+      [
+        "2026-11-15",
+        6338
       ]
     ],
     "Leonxlnx/unlazy": [
@@ -3571,6 +3763,10 @@
       [
         "2026-11-14",
         4398
+      ],
+      [
+        "2026-11-15",
+        4409
       ]
     ],
     "onehumanbeing/esp32-iphone-agent": [
@@ -3609,6 +3805,10 @@
       [
         "2026-11-14",
         4954
+      ],
+      [
+        "2026-11-15",
+        4990
       ]
     ],
     "Nanako0129/sepia": [
@@ -3647,6 +3847,10 @@
       [
         "2026-11-14",
         3816
+      ],
+      [
+        "2026-11-15",
+        3821
       ]
     ],
     "HarnessRouter/harnessrouter": [
@@ -3685,6 +3889,10 @@
       [
         "2026-11-14",
         4360
+      ],
+      [
+        "2026-11-15",
+        4363
       ]
     ],
     "fuxicodex/Fuxi": [
@@ -3722,6 +3930,10 @@
       ],
       [
         "2026-11-14",
+        3193
+      ],
+      [
+        "2026-11-15",
         3193
       ]
     ],
@@ -3761,6 +3973,10 @@
       [
         "2026-11-14",
         4817
+      ],
+      [
+        "2026-11-15",
+        4912
       ]
     ],
     "xzf-thu/VoiceMem": [
@@ -3798,6 +4014,10 @@
       ],
       [
         "2026-11-14",
+        2901
+      ],
+      [
+        "2026-11-15",
         2901
       ]
     ],
@@ -3837,6 +4057,10 @@
       [
         "2026-11-14",
         3766
+      ],
+      [
+        "2026-11-15",
+        3864
       ]
     ],
     "nano-muse/nanoMuse": [
@@ -3875,6 +4099,10 @@
       [
         "2026-11-14",
         3482
+      ],
+      [
+        "2026-11-15",
+        3511
       ]
     ],
     "amontlabs/lcu": [
@@ -3913,6 +4141,10 @@
       [
         "2026-11-14",
         2426
+      ],
+      [
+        "2026-11-15",
+        2429
       ]
     ],
     "kajisho5/ffmpeg-skill": [
@@ -3951,6 +4183,10 @@
       [
         "2026-11-14",
         5562
+      ],
+      [
+        "2026-11-15",
+        5938
       ]
     ],
     "deeplethe/solid-glass": [
@@ -3989,6 +4225,10 @@
       [
         "2026-11-14",
         2071
+      ],
+      [
+        "2026-11-15",
+        2074
       ]
     ],
     "trhhubsd/ARTEX": [
@@ -4039,6 +4279,10 @@
       [
         "2026-11-14",
         3204
+      ],
+      [
+        "2026-11-15",
+        3264
       ]
     ],
     "zhuyansen/new-term-radar": [
@@ -4077,6 +4321,10 @@
       [
         "2026-11-14",
         2173
+      ],
+      [
+        "2026-11-15",
+        2178
       ]
     ],
     "youngyangyang04/llm-master": [
@@ -4115,6 +4363,10 @@
       [
         "2026-11-14",
         1648
+      ],
+      [
+        "2026-11-15",
+        1655
       ]
     ],
     "Harvil1/codeAgent": [
@@ -4152,6 +4404,10 @@
       ],
       [
         "2026-11-14",
+        1012
+      ],
+      [
+        "2026-11-15",
         1012
       ]
     ],
@@ -4191,6 +4447,10 @@
       [
         "2026-11-14",
         2193
+      ],
+      [
+        "2026-11-15",
+        2206
       ]
     ],
     "datalab-to/indra": [
@@ -4229,6 +4489,10 @@
       [
         "2026-11-14",
         1822
+      ],
+      [
+        "2026-11-15",
+        1839
       ]
     ],
     "Tejashmakwana/motionmaxxing": [
@@ -4267,6 +4531,10 @@
       [
         "2026-11-14",
         1604
+      ],
+      [
+        "2026-11-15",
+        1624
       ]
     ],
     "thesysdev/open-intelligent-ui": [
@@ -4305,6 +4573,10 @@
       [
         "2026-11-14",
         997
+      ],
+      [
+        "2026-11-15",
+        1001
       ]
     ],
     "amitshekhariitbhu/ai-system-design": [
@@ -4343,6 +4615,10 @@
       [
         "2026-11-14",
         869
+      ],
+      [
+        "2026-11-15",
+        882
       ]
     ],
     "strands-labs/strands-decider": [
@@ -4381,6 +4657,10 @@
       [
         "2026-11-14",
         1183
+      ],
+      [
+        "2026-11-15",
+        1197
       ]
     ],
     "Ayzzz123/mcd-coupon-strategist": [
@@ -4425,6 +4705,10 @@
       [
         "2026-11-14",
         629
+      ],
+      [
+        "2026-11-15",
+        630
       ]
     ],
     "xop01/ai_goodpractice": [
@@ -4462,6 +4746,10 @@
       ],
       [
         "2026-11-14",
+        556
+      ],
+      [
+        "2026-11-15",
         556
       ]
     ],
@@ -4501,6 +4789,10 @@
       [
         "2026-11-14",
         514
+      ],
+      [
+        "2026-11-15",
+        514
       ]
     ],
     "SoMarkAI/OXR": [
@@ -4539,6 +4831,10 @@
       [
         "2026-11-14",
         3830
+      ],
+      [
+        "2026-11-15",
+        3837
       ]
     ],
     "strands-agents/box": [
@@ -4577,6 +4873,10 @@
       [
         "2026-11-14",
         545
+      ],
+      [
+        "2026-11-15",
+        547
       ]
     ],
     "pinganbbOvO/ai-companion-kit": [
@@ -4615,6 +4915,10 @@
       [
         "2026-11-14",
         569
+      ],
+      [
+        "2026-11-15",
+        572
       ]
     ],
     "modelscope/ms-cookbook": [
@@ -4652,6 +4956,10 @@
       ],
       [
         "2026-11-14",
+        526
+      ],
+      [
+        "2026-11-15",
         526
       ]
     ],
@@ -4691,6 +4999,10 @@
       [
         "2026-11-14",
         1372
+      ],
+      [
+        "2026-11-15",
+        1395
       ]
     ],
     "FengZhenfei/carrel": [
@@ -4729,6 +5041,10 @@
       [
         "2026-11-14",
         804
+      ],
+      [
+        "2026-11-15",
+        806
       ]
     ],
     "himovo/movo": [
@@ -4767,6 +5083,10 @@
       [
         "2026-11-14",
         681
+      ],
+      [
+        "2026-11-15",
+        682
       ]
     ],
     "songshikang0111/awesome-REA-cases": [
@@ -4805,6 +5125,10 @@
       [
         "2026-11-14",
         435
+      ],
+      [
+        "2026-11-15",
+        440
       ]
     ],
     "lokicorvus/crosspet": [
@@ -4843,6 +5167,10 @@
       [
         "2026-11-14",
         472
+      ],
+      [
+        "2026-11-15",
+        480
       ]
     ],
     "LosaLosSantos/aurelio-finance": [
@@ -4880,6 +5208,10 @@
       ],
       [
         "2026-11-14",
+        349
+      ],
+      [
+        "2026-11-15",
         349
       ]
     ],
@@ -4919,6 +5251,10 @@
       [
         "2026-11-14",
         287
+      ],
+      [
+        "2026-11-15",
+        287
       ]
     ],
     "Kai-Jungsthoefel/SOMA": [
@@ -4957,6 +5293,10 @@
       [
         "2026-11-14",
         480
+      ],
+      [
+        "2026-11-15",
+        482
       ]
     ],
     "AFK-surf/Comma": [
@@ -4995,6 +5335,10 @@
       [
         "2026-11-14",
         602
+      ],
+      [
+        "2026-11-15",
+        606
       ]
     ],
     "RoversX/ThinkTerm": [
@@ -5032,6 +5376,10 @@
       ],
       [
         "2026-11-14",
+        250
+      ],
+      [
+        "2026-11-15",
         250
       ]
     ],
@@ -5071,6 +5419,10 @@
       [
         "2026-11-14",
         78893
+      ],
+      [
+        "2026-11-15",
+        79039
       ]
     ],
     "hypit-ai/hypit": [
@@ -5109,6 +5461,10 @@
       [
         "2026-11-14",
         29830
+      ],
+      [
+        "2026-11-15",
+        29991
       ]
     ],
     "VectifyAI/PageIndex": [
@@ -5147,6 +5503,10 @@
       [
         "2026-11-14",
         40432
+      ],
+      [
+        "2026-11-15",
+        40446
       ]
     ],
     "android/skills": [
@@ -5185,6 +5545,10 @@
       [
         "2026-11-14",
         10507
+      ],
+      [
+        "2026-11-15",
+        10528
       ]
     ],
     "msitarzewski/agency-agents": [
@@ -5223,6 +5587,10 @@
       [
         "2026-11-14",
         168313
+      ],
+      [
+        "2026-11-15",
+        168565
       ]
     ],
     "deepseek-ai/dsh-superagent-prototype": [
@@ -5261,6 +5629,10 @@
       [
         "2026-11-14",
         23138
+      ],
+      [
+        "2026-11-15",
+        23284
       ]
     ],
     "deepseek-ai/DeepInfer": [
@@ -5299,6 +5671,10 @@
       [
         "2026-11-14",
         26026
+      ],
+      [
+        "2026-11-15",
+        26072
       ]
     ],
     "browser-use/jev-ultrafast": [
@@ -5337,6 +5713,10 @@
       [
         "2026-11-14",
         24498
+      ],
+      [
+        "2026-11-15",
+        24518
       ]
     ],
     "Niko1221/Strata": [
@@ -5375,6 +5755,10 @@
       [
         "2026-11-14",
         44163
+      ],
+      [
+        "2026-11-15",
+        44491
       ]
     ],
     "NandhaKishorM/laya": [
@@ -5413,6 +5797,10 @@
       [
         "2026-11-14",
         35523
+      ],
+      [
+        "2026-11-15",
+        35567
       ]
     ]
   }
