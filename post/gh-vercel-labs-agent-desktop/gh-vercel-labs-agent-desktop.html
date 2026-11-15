@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- head-hints:begin -->
+    <meta name="theme-color" content="#0b0d16" />
+    <link rel="preconnect" href="https://font.emtech.cc" crossorigin />
+    <link rel="dns-prefetch" href="https://font.emtech.cc" />
+    <link rel="stylesheet" href="https://font.emtech.cc/css/LXGWNeoZhiSong/400" />
+    <script src="/home/theme-color.js" defer></script>
+    <!-- head-hints:end -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>23,853 星、61 个命令：并行的是光标，不是输入 · EXPECTOPATRONUS</title>
+    <meta name="description" content="vercel-labs/agent-desktop 用系统可访问性树替代截图，把桌面应用读成带 ref 的 JSON。README 列 10 组 61 个命令，其中 57 个可运行、4 个要等守护进程；多 agent 光标可并行，物理输入仍被全机租约串行化。v1.3.1 发布于 2026-11-13。" />
+    <meta name="keywords" content="开源项目, 桌面自动化, Agent 工具链" />
+    <meta property="og:title" content="23,853 星、61 个命令：并行的是光标，不是输入" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="vercel-labs/agent-desktop 用系统可访问性树替代截图，把桌面应用读成带 ref 的 JSON。README 列 10 组 61 个命令，其中 57 个可运行、4 个要等守护进程；多 agent 光标可并行，物理输入仍被全机租约串行化。v1.3.1 发布于 2026-11-13。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <link rel="stylesheet" href="../article-common.css" data-shared-css="0d59321e71" />
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+    <!-- seo:begin -->
+    <link rel="canonical" href="https://expectopatronus00.github.io/post/gh-vercel-labs-agent-desktop/gh-vercel-labs-agent-desktop.html" />
+    <meta property="og:url" content="https://expectopatronus00.github.io/post/gh-vercel-labs-agent-desktop/gh-vercel-labs-agent-desktop.html" />
+    <meta property="og:site_name" content="EXPECTOPATRONUS" />
+    <meta property="og:image" content="https://expectopatronus00.github.io/post/gh-vercel-labs-agent-desktop/cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"23,853 星、61 个命令：并行的是光标，不是输入","description":"vercel-labs/agent-desktop 用系统可访问性树替代截图，把桌面应用读成带 ref 的 JSON。README 列 10 组 61 个命令，其中 57 个可运行、4 个要等守护进程；多 agent 光标可并行，物理输入仍被全机租约串行化。v1.3.1 发布于 2026-11-13。","image":"https://expectopatronus00.github.io/post/gh-vercel-labs-agent-desktop/cover.jpg","inLanguage":"zh-CN","author":{"@type":"Person","name":"expectopatronus","url":"https://expectopatronus00.github.io"},"publisher":{"@type":"Organization","name":"EXPECTOPATRONUS","url":"https://expectopatronus00.github.io"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://expectopatronus00.github.io/post/gh-vercel-labs-agent-desktop/gh-vercel-labs-agent-desktop.html"},"datePublished":"2026-11-15","dateModified":"2026-11-15"}</script>
+    <!-- seo:end -->
+</head>
+  <body>
+    <!-- skip-link:begin -->
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <!-- skip-link:end -->
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head" data-skip-target="1" tabindex="-1" id="main-content">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>23,853 星、61 个命令：并行的是光标，不是输入</h1>
+      <p>23,853 星、1,776 fork、241 个未结条目。这个 Rust CLI 不截图，把桌面应用可访问性树读成带 ref 的 JSON；61 个命令只有 57 个能跑。多 agent 光标可同时移动，物理输入却锁在一把全机租约上。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-15</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 8 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <picture data-cover-picture="1">
+        <source srcset="cover.webp" type="image/webp" />
+        <img loading="lazy" alt="23,853 星、61 个命令：并行的是光标，不是输入 封面" src="cover.jpg" width="2400" height="1260" decoding="async" data-cover-ready="1" />
+      </picture>
+    </div>
+
+    <article class="article-body">
+<div class="section-marker">01 · 这件事</div>
+<h2>23,853 星，一个不靠截图的桌面 Agent CLI</h2>
+
+<p><strong>它解决的是「agent 怎么看见桌面」，没有顺手解决「多个 agent 能不能同时动手」。</strong></p>
+
+<p>vercel-labs/agent-desktop 的仓库描述只有一句：Computer use for AI agents。它挂在 Vercel Labs 组织下，主页指向 agent-browser.dev/desktop，默认分支是 main。</p>
+
+<p>2026-11-15 用 api.github.com 核对：23,853 星、1,776 fork、241 个未结条目，Apache-2.0，主语言 Rust，建于 2026-02-19，最近一次推送就在核对当天。</p>
+
+<p>241 这个数要拆开看。单独查 search/issues 得到 87 个未结 issue 与 154 个未结 PR，相加正好。仓库接口的 open_issues_count 把两者合在一起，不等于 241 个 bug。</p>
+
+<p>同组织的 agent-browser 管网页，这个仓库管桌面应用。FAQ 直接写明它不自动化网页，网页请用 agent-browser；文档域名相同，取数对象却从浏览器 DOM 换成了操作系统可访问性树。</p>
+
+<p>身份字段先列成表。下面所有数字都来自同一份仓库接口与仓库内文件，不引用第三方榜单的估算值。</p>
+
+<table>
+  <thead><tr><th>字段</th><th>核对值</th></tr></thead>
+  <tbody>
+    <tr><td>仓库 / 描述</td><td>vercel-labs/agent-desktop · Computer use for AI agents</td></tr>
+    <tr><td>星标 / fork</td><td>23,853 / 1,776</td></tr>
+    <tr><td>未结条目</td><td>241（87 issue + 154 PR）</td></tr>
+    <tr><td>创建 / 最近推送</td><td>2026-02-19 / 2026-11-15</td></tr>
+    <tr><td>许可 / 主语言</td><td>Apache-2.0 / Rust</td></tr>
+    <tr><td>默认分支 / 主页</td><td>main / agent-browser.dev/desktop</td></tr>
+  </tbody>
+</table>
+
+<p>README 把能力收在一句话里：读应用的可访问性树、返回带 ref 的 JSON，循环留给调用方，仓库里没有模型。<span class="hl">星标说明有人在看，命令表才说明它做了什么</span>。</p>
+
+<div class="section-marker">02 · 核心机制</div>
+<h2>snapshot → ref → 动作 → 再读，模型不在仓库里</h2>
+
+<p><strong>它省的不是点击耗时，是每一轮观察要交给模型的画面。</strong></p>
+
+<p>README 写得直白：不截图、不做像素匹配，读应用的可访问性树并返回 JSON，每个可操作元素带一个 ref；agent 对 ref 点击或输入，再读一次界面确认结果，如此循环。</p>
+
+<p>循环跑在调用方。README 原句是 has no model inside，工具形态是 CLI 加 C 库；每条命令打印一个 JSON envelope，精简快照示例里 version 是 2.6、ref_count 是 59。</p>
+
+<p>CLI 与 C 库都走同一套 core，再经 PlatformAdapter 落到平台 crate。crates 目录下有 core、ffi、macos、windows、linux 五个，各自在编译期对应一个操作系统。</p>
+
+<p>三个平台的系统要求与授权条件不一样，先按表确认，再谈命令。</p>
+
+<table>
+  <thead><tr><th>平台</th><th>系统要求</th><th>无障碍 API</th><th>授权与限制</th></tr></thead>
+  <tbody>
+    <tr><td>macOS</td><td>13 以上，Intel / Apple Silicon</td><td>AX API</td><td>需 Accessibility，截图另需 Screen Recording</td></tr>
+    <tr><td>Windows</td><td>10 1809 以上，x64 / ARM64</td><td>UI Automation</td><td>同完整性级别免授权，二进制未签名</td></tr>
+    <tr><td>Linux</td><td>Ubuntu 24.04 以上，glibc 2.35</td><td>AT-SPI</td><td>需 at-spi2-core 与用户图形会话</td></tr>
+  </tbody>
+</table>
+
+<p><span class="hl">ref 属于生成它的那次快照</span>。裸写 @e8 会被 INVALID_ARGS 拒绝；界面变化后动作返回 STALE_REF 或 AMBIGUOUS_TARGET，必须重新 <code>snapshot</code> 取新 ref。</p>
+
+<p>ref 还有会话作用域。session 里生成的 ref 需要同一个 <code>--session</code> 或 <code>AGENT_DESKTOP_SESSION</code>；FAQ 列出 18 种能拿到 ref 的 role，静态文本与惰性容器拿不到。</p>
+
+<p>默认 headless：用语义无障碍调用，不抢焦点、不动光标、不合成按键；只有 <code>--headed</code> 才允许物理输入。Windows 的 <code>type</code> 没有 headless 语义路径，严格模式下会失败。</p>
+
+<p>这时要改用 <code>set-value</code>，它是 Windows 上的 headless 文本路径。最硬的边界在 FAQ：应用如果不发布可访问性树，对 agent-desktop 就不可见，<span class="hl">命令再多也救不了一个不吐树的窗口</span>。</p>
+
+<div class="section-marker">03 · 关键细节与数据</div>
+<h2>61 个命令 57 个能跑，4 个还锁在守护进程</h2>
+
+<p><strong>命令表、Release、CHANGELOG 三层规模都能数出来，但三处口径并不一致。</strong></p>
+
+<p>README 的命令表分 10 组，把反引号里的命令逐项数完是 61 个。它自己又写明：其中 57 个是 operational commands，另外 4 个拒绝执行。</p>
+
+<p>被挡住的 4 个是 key-down、key-up、mouse-down、mouse-up，都属于「按住再松开」的边沿动作。README 说，要等守护进程能释放被按住的键或按钮，它们才肯运行。</p>
+
+<p>10 组命令按数量列成表。密集数据先摆进表格，比在一段里连报十个数字清楚。</p>
+
+<table>
+  <thead><tr><th>命令组</th><th>数量</th><th>命令组</th><th>数量</th></tr></thead>
+  <tbody>
+    <tr><td>Observe</td><td>6</td><td>Act on a ref</td><td>16</td></tr>
+    <tr><td>Keyboard and mouse</td><td>10</td><td>Apps and windows</td><td>12</td></tr>
+    <tr><td>Notifications</td><td>4</td><td>Clipboard</td><td>3</td></tr>
+    <tr><td>Wait</td><td>1</td><td>Sessions</td><td>3</td></tr>
+    <tr><td>Sandboxes</td><td>1</td><td>System</td><td>5</td></tr>
+    <tr><td>合计 / 可运行</td><td>61 / 57</td><td>待守护进程</td><td>4</td></tr>
+  </tbody>
+</table>
+
+<p>版本口径更值得记。GitHub Releases 只有 4 条，全部集中在 11 月 3 日到 13 日；每版挂 13 个资产，即 12 个平台包加一份 checksums.txt。</p>
+
+<p>但 tags 接口返回 53 个标签，CHANGELOG.md 有 51 个版本标题，最早是 2026-02-23 的 0.1.1，最新是 11-13 的 1.3.1。仓库发过很多版，只是没都做成 Release。</p>
+
+<p>当前版本在三处对齐：最新 tag、npm/package.json、Cargo.toml 的 workspace.version 都是 1.3.1；rust-toolchain.toml 固定 1.89.0。</p>
+
+<table>
+  <thead><tr><th>对象</th><th>核对值</th></tr></thead>
+  <tbody>
+    <tr><td>GitHub Releases</td><td>4 条，v1.1.0 至 v1.3.1，各 13 个资产</td></tr>
+    <tr><td>tags 接口</td><td>53 个标签</td></tr>
+    <tr><td>CHANGELOG.md</td><td>51 个版本标题，0.1.1 至 1.3.1</td></tr>
+    <tr><td>当前版本</td><td>tag / npm / Cargo 均为 1.3.1</td></tr>
+    <tr><td>编译工具链</td><td>Rust 1.89.0，Node 18 以上</td></tr>
+  </tbody>
+</table>
+
+<p>多 agent 的部分要读 CONCEPTS.md。<code>session start --cursor --multi-agent</code> 给每个 (session-id, agent-id) 一条光标，CLI 在这种模式下要求 <code>--agent-id</code>；光标是纯呈现层，不改动作策略与响应语义。</p>
+
+<p><span class="hl">交互租约是全机独占的</span>：同一时刻只由一个进程持有，防止并发调用把合成输入交错进彼此的动作。等待不占租约，拿到租约后会二次解析目标。</p>
+
+<p>无头动作的光标位移发生在取租约之前，所以几条光标可以同时飞，动作却必须排队。Linux 的光标渲染还只支持 X11。短视频里「一队 agent 同时干活」是真的，并行的只是光标。</p>
+
+<p>仓库自带的性能量具只有 benchmarks/locator-resolution 一份说明：合成 Chromium 与 Electron 无障碍树、31 次测量的 p50 与 p95 wall-clock，并明确不报告原生 AX 调用绝对数。</p>
+
+<p>真机 Slack、Electron 的测量要另跑 <code>tests/e2e/electron-live.sh</code> 且先拿 Accessibility 权限。README、CHANGELOG 与 benchmarks 里都没有端到端点击耗时的实测值，这类传播数字本文不采用。</p>
+
+<div class="section-marker">04 · 怎么用</div>
+<h2>三条命令起步，权限与会话要按平台分别处理</h2>
+
+<p><strong>上手成本几乎全在授权和会话，不在命令本身。</strong></p>
+
+<p>安装路径有 npm 全局装、Homebrew、Release 压缩包和源码构建。npm/package.json 要求 Node 18 以上，os 与 cpu 字段列出三种系统、两种架构。</p>
+
+<p>一个容易忽略的坑：npm 12 默认拦 <code>postinstall</code>。拦下之后每次调用都走 Node launcher，docs/install.md 写每次多约 125 ms；放行脚本重装即可恢复原生二进制直连。</p>
+
+<p>README 的 quick start 是三步：取快照、按 ref 点击、再取快照验证。把常用命令集中列出来，按顺序跑就能复现。</p>
+
+<table>
+  <thead><tr><th>命令</th><th>用途</th></tr></thead>
+  <tbody>
+    <tr><td>agent-desktop status</td><td>查平台、权限与 supported_surfaces</td></tr>
+    <tr><td>agent-desktop permissions --guide</td><td>macOS 引导授予无障碍权限</td></tr>
+    <tr><td>agent-desktop snapshot --app Finder -i</td><td>取可交互元素与 ref</td></tr>
+    <tr><td>agent-desktop click @s8f3k2p9:e8</td><td>按快照里的 ref 动作</td></tr>
+    <tr><td>agent-desktop skills get desktop</td><td>取随版本的核心工作流</td></tr>
+    <tr><td>agent-desktop skills get platform</td><td>取当前系统的平台指南</td></tr>
+    <tr><td>agent-desktop mcp</td><td>以 stdio 暴露 desktop_* 工具</td></tr>
+  </tbody>
+</table>
+
+<p>技能跟着 CLI 版本发货：skills 目录下有 6 个子目录，主技能 skills/agent-desktop 下另有 4 份 references 文档。mcp 把每条命令包成同名工具，返回同一个 JSON 信封。</p>
+
+<p>会话默认留痕。CONCEPTS.md 写 session start 的 manifest 里 trace 默认为 on，要关得加 <code>--no-trace</code>；trace 只脱敏结构化字段，仍可能保留证据制品。</p>
+
+<p><span class="hl">把 trace 当公开日志是危险的</span>。<code>artifacts</code> 设为 full 会存未脱敏的前后截图；README 开头直接警告快照、剪贴板读取、截图与命令输出都可能含私密桌面内容。</p>
+
+<p>平台坑也各不一样：macOS 要 Accessibility 授权；Windows 二进制未签名，干净的 Win 11 上 Smart App Control 会拦，下载方式或启动模式都绕不开。</p>
+
+<p>Linux 要求 Ubuntu 24.04 以上、glibc 2.35、at-spi2-core 与用户图形会话，TTY、SSH 或容器看不到应用；Wayland 下应用指针输入返回 ACTION_NOT_SUPPORTED。</p>
+
+<p>FAQ 还提醒：CLI 本身不需要远端模型服务，但可选的 JEV helper 会把目标和屏幕描述发给你配置的模型提供商，用之前先确认那些数据对方能不能看。</p>
+
+<div class="section-marker">05 · 冷思考</div>
+<h2>没有无障碍树的应用，等于不存在</h2>
+
+<p><strong>该先验收的不是并发数，是目标应用肯不肯吐出可访问性树。</strong></p>
+
+<p>第一处质疑是覆盖面前提。FAQ 写死：不发布可访问性树的应用对 agent-desktop 不可见。自绘界面、游戏、加固过的客户端都不给树，61 个命令在这类窗口上无处下手。</p>
+
+<p>第二处是平台差异不是小修。技能文档写明，Windows 与 Linux 上同名按钮的 twin 不能用 ref 唯一定位，只能退到带坐标的 headed 点击；Linux Wayland 还会拒绝这种输入。macOS 靠元素自身地址区分。</p>
+
+<p>第三处是成熟度口径。23,853 星之外，还有 53 个 tag、51 个 CHANGELOG 版本段、4 个 Release，以及 87 个未结 issue 与 154 个未结 PR。CHANGELOG 的 1.3.1 段只有两条 bug fix，SUPPORT.md 写明 best-effort、没有 SLA。</p>
+
+<p>第四处是「并行」这个词。多 agent 光标能同时移动，物理输入却被全机租约串行；把它理解成吞吐翻倍，任务排期就会错。真正省下的是观察上下文，不是操作时间。</p>
+
+<p>按依赖顺序做三个检查，比先装 CLI 更能省时间。</p>
+
+<table>
+  <thead><tr><th>顺序</th><th>检查什么</th><th>失败信号</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>目标应用是否发布可访问性树</td><td>snapshot 无节点，或 status 的 supported_surfaces 为空</td></tr>
+    <tr><td>2</td><td>平台是否满足授权与会话条件</td><td>macOS 未授权、Linux 无图形会话、Windows 被 Smart App Control 拦</td></tr>
+    <tr><td>3</td><td>并发动作能否接受租约串行</td><td>光标并行但动作排队，输入互斥</td></tr>
+  </tbody>
+</table>
+
+<p>我的判断是：它更像一份严格的无障碍树适配层加 JSON 契约，而不是「让一堆 agent 同时用电脑」的开关。<span class="hl">23,853 星买不来一个不吐树的窗口</span>；先把前三行检查做完，再决定要不要把桌面交出去。</p>
+
+<div class="info-box">
+  <p>数据核对：全部走 api.github.com 的仓库接口、文件内容与目录清单，不引用短视频口播数字。</p>
+  <ul>
+    <li>仓库身份：vercel-labs/agent-desktop，23,853 星 / 1,776 fork / 241 未结条目（87 issue + 154 PR），Apache-2.0，Rust，建于 2026-02-19，推送 11-15。</li>
+    <li>版本：v1.3.1（11-13 发布），tag / npm / Cargo 三处一致；Releases 4 条、tags 53 个、CHANGELOG 51 个版本标题。</li>
+    <li>规模：README 命令表 10 组 61 个，57 个可运行、4 个待守护进程；crates 5 个、skills 6 个、主技能参考 4 份。</li>
+    <li>边界：FAQ 写明无可访问性树的应用不可见；CONCEPTS 写明交互租约全机独占，多 agent 光标只是呈现层。</li>
+  </ul>
+  <p>核对时间 2026-11-15；本文未安装、未运行该 CLI，仅作学习归档。</p>
+</div>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>vercel-labs/agent-desktop：用系统可访问性树与 ref 把桌面应用拆成一条条 JSON 命令的 Rust CLI。</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/vercel-labs/agent-desktop" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/vercel-labs/agent-desktop" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 23,853 星，Apache-2.0，v1.3.1</span>
+      </a>
+      <a class="plat-card" href="https://agent-browser.dev/desktop" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 12h17M12 3.5c2.4 2.3 3.6 5.2 3.6 8.5s-1.2 6.2-3.6 8.5c-2.4-2.3-3.6-5.2-3.6-8.5S9.6 5.8 12 3.5z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+        <span class="pn">官方文档</span>
+        <span class="pd">docs · 命令、快照与平台授权说明</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE">#开源项目</a>
+      <a href="../../home/home.html?q=%E6%A1%8C%E9%9D%A2%E8%87%AA%E5%8A%A8%E5%8C%96">#桌面自动化</a>
+      <a href="../../home/home.html?q=Agent%20%E5%B7%A5%E5%85%B7%E9%93%BE">#Agent 工具链</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">© 2026 · 数据核对自 GitHub 仓库 vercel-labs/agent-desktop 的接口字段、README.md、CONCEPTS.md、CHANGELOG.md、Cargo.toml、npm/package.json、docs/、skills/、benchmarks/ 与 releases / tags / contents 目录清单，核对时间 2026-11-15。本文未安装、未运行该 CLI，仅作学习归档。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

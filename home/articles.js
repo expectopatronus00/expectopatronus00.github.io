@@ -3,6 +3,33 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'gh-anti-slop-duo',
+            title: '69,283 星对 61,245 星：两份自测都没写通过',
+            url: '../post/gh-anti-slop-duo/gh-anti-slop-duo.html',
+            summary: '两个六万星级 Agent Skill 都是一份 Markdown：humanizer 用 26 条模式删 AI 腔，i-have-adhd 用 10 条规则把答案挪到第一行。前者盲测 16/16 却仍被检测器判为 AI，后者的发布门直接写 FAILED。递归 tree 差 9 倍，星数只差 13%。',
+            category: 'AI 编程',
+            date: '2026-11-15',
+            tags: ["Skill","开源","AI 写作","横评"],
+          },
+          {
+            id: 'gh-vercel-labs-agent-desktop',
+            title: '23,853 星、61 个命令：并行的是光标，不是输入',
+            url: '../post/gh-vercel-labs-agent-desktop/gh-vercel-labs-agent-desktop.html',
+            summary: 'vercel-labs/agent-desktop 用系统可访问性树替代截图，把桌面应用读成带 ref 的 JSON。README 列 10 组 61 个命令，其中 57 个可运行、4 个要等守护进程；多 agent 光标可并行，物理输入仍被全机租约串行化。v1.3.1 发布于 2026-11-13。',
+            category: 'AI 编程',
+            date: '2026-11-15',
+            tags: ["开源项目","桌面自动化","Agent 工具链"],
+          },
+          {
+            id: 'gh-morluto-rea',
+            title: '459,990 星、39 类目标：能读不等于能用',
+            url: '../post/gh-morluto-rea/gh-morluto-rea.html',
+            summary: '459,990 星的 REA 用 One MCP 概括自己，README 能力表列 39 类目标，按 Requirements 逐行分类有 14 行要自备外部工具。完整目录树 8,467 个文件，tests/boundary 占 1,555 个；同一仓库的免责声明用 10 节写明哪些事不能做。',
+            category: 'AI 编程',
+            date: '2026-11-15',
+            tags: ["Skill","Agent","逆向","开源"],
+          },
+          {
             id: 'gh-sarpstar-cinecode',
             title: '2,462 星、9 次提交：出片的是说明书，付账的是对话',
             url: '../post/gh-sarpstar-cinecode/gh-sarpstar-cinecode.html',

@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- head-hints:begin -->
+    <meta name="theme-color" content="#0b0d16" />
+    <link rel="preconnect" href="https://font.emtech.cc" crossorigin />
+    <link rel="dns-prefetch" href="https://font.emtech.cc" />
+    <link rel="stylesheet" href="https://font.emtech.cc/css/LXGWNeoZhiSong/400" />
+    <script src="/home/theme-color.js" defer></script>
+    <!-- head-hints:end -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>69,283 星对 61,245 星：两份自测都没写通过 · EXPECTOPATRONUS</title>
+    <meta name="description" content="两个六万星级 Agent Skill 都是一份 Markdown：humanizer 用 26 条模式删 AI 腔，i-have-adhd 用 10 条规则把答案挪到第一行。前者盲测 16/16 却仍被检测器判为 AI，后者的发布门直接写 FAILED。递归 tree 差 9 倍，星数只差 13%。" />
+    <meta name="keywords" content="Skill, 开源, AI 写作, 横评" />
+    <meta property="og:title" content="69,283 星对 61,245 星：两份自测都没写通过" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="两个六万星级 Agent Skill 都是一份 Markdown：humanizer 用 26 条模式删 AI 腔，i-have-adhd 用 10 条规则把答案挪到第一行。前者盲测 16/16 却仍被检测器判为 AI，后者的发布门直接写 FAILED。递归 tree 差 9 倍，星数只差 13%。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <link rel="stylesheet" href="../article-common.css" data-shared-css="0d59321e71" />
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+    <!-- seo:begin -->
+    <link rel="canonical" href="https://expectopatronus00.github.io/post/gh-anti-slop-duo/gh-anti-slop-duo.html" />
+    <meta property="og:url" content="https://expectopatronus00.github.io/post/gh-anti-slop-duo/gh-anti-slop-duo.html" />
+    <meta property="og:site_name" content="EXPECTOPATRONUS" />
+    <meta property="og:image" content="https://expectopatronus00.github.io/post/gh-anti-slop-duo/cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"69,283 星对 61,245 星：两份自测都没写通过","description":"两个六万星级 Agent Skill 都是一份 Markdown：humanizer 用 26 条模式删 AI 腔，i-have-adhd 用 10 条规则把答案挪到第一行。前者盲测 16/16 却仍被检测器判为 AI，后者的发布门直接写 FAILED。递归 tree 差 9 倍，星数只差 13%。","image":"https://expectopatronus00.github.io/post/gh-anti-slop-duo/cover.jpg","inLanguage":"zh-CN","author":{"@type":"Person","name":"expectopatronus","url":"https://expectopatronus00.github.io"},"publisher":{"@type":"Organization","name":"EXPECTOPATRONUS","url":"https://expectopatronus00.github.io"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://expectopatronus00.github.io/post/gh-anti-slop-duo/gh-anti-slop-duo.html"},"datePublished":"2026-11-15","dateModified":"2026-11-15"}</script>
+    <!-- seo:end -->
+</head>
+  <body>
+    <!-- skip-link:begin -->
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <!-- skip-link:end -->
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head" data-skip-target="1" tabindex="-1" id="main-content">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>69,283 星对 61,245 星：两份自测都没写通过</h1>
+      <p>69,283 星对 61,245 星，两个 MIT 仓库的核心产物各只有一份 SKILL.md。前者 32,394 字节列 26 条模式做文字减法，后者 7,201 字节用 10 条规则改回答顺序；两份自测都没写「通过」。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-15</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 6 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <picture data-cover-picture="1">
+        <source srcset="cover.webp" type="image/webp" />
+        <img loading="lazy" alt="69,283 星对 61,245 星：两份自测都没写通过 封面" src="cover.jpg" width="2400" height="1260" decoding="async" data-cover-ready="1" />
+      </picture>
+    </div>
+
+    <article class="article-body">
+<div class="section-marker">01 · 这件事</div>
+<h2>两个六万星仓库，卖的都是一份提示词</h2>
+<p><strong>两个六万星级的仓库，核心交付物都只是一份 Markdown 规则文件。</strong>blader/humanizer 与 ayghri/i-have-adhd 同为 MIT、主语言都标 Python，前者把 AI 腔从文字里删掉，后者把答案挪到回答第一行。</p>
+<p>核对日 2026-11-15，humanizer 有 69,283 星、5,447 fork、4 个未结，建于 2026-01-18，最近推送 11-10。i-have-adhd 有 61,245 星、3,590 fork、102 个未结，建于 2026-05-13，最近推送 10-19。</p>
+<p>两家的 updated_at 都是今天，星数仍在增长；但 pushed_at 分别停在 11-10 和 10-19，后者已近一个月没有新提交。<span class="hl">热度跑在工程前面，是这两个仓库的共同形状</span>。</p>
+<table>
+  <thead><tr><th>字段</th><th>blader/humanizer</th><th>ayghri/i-have-adhd</th></tr></thead>
+  <tbody>
+    <tr><td>星标 / fork</td><td>69,283 / 5,447</td><td>61,245 / 3,590</td></tr>
+    <tr><td>未结 / 订阅者</td><td>4 / 290</td><td>102 / 165</td></tr>
+    <tr><td>建库 / 最近推送</td><td>2026-01-18 / 11-10</td><td>2026-05-13 / 10-19</td></tr>
+    <tr><td>许可证 / 主语言</td><td>MIT / Python</td><td>MIT / Python</td></tr>
+    <tr><td>Release / tag</td><td>7 / 7</td><td>1 / 1</td></tr>
+    <tr><td>贡献者 / 提交合计</td><td>27 / 109</td><td>49 / 248</td></tr>
+    <tr><td>SKILL.md 体积</td><td>32,394 字节</td><td>7,201 字节</td></tr>
+  </tbody>
+</table>
+<p>所以这不是软件选型，是两套写作约定的选型。一个重 32 KB、一个只有 7 KB，星数却几乎持平，差距全在「规则之外还打包了什么」。</p>
+
+<div class="section-marker">02 · 核心机制</div>
+<h2>26 条模式做减法，10 条规则改顺序</h2>
+<p><strong>一个改文字的措辞，一个改回答的结构，两者根本不在同一层。</strong>humanizer 依据维基百科「Signs of AI writing」，把 AI 痕迹编成 26 条模式、分 A 到 F 六组，按强度与出现频率排序，前五条一见就改。</p>
+<p>模式从「不是 X 而是 Y」、单行收尾，到强行三连词、满篇破折号、加粗装饰，再到聊天残留和「复述读者已知的背景」。<code>/humanizer</code> 先标注痕迹、起草改写、核对事实，最后写定稿；文件模式下只改散文，不动代码、数据与链接。</p>
+<p>i-have-adhd 只有 10 条规则，全部指向「读者下一步做什么」：首行给动作、多步编号、结尾只留一个两分钟内能做的动作、每轮复述状态、列表最多五项、禁开场白与「Hope this helps」。</p>
+<table>
+  <thead><tr><th>维度</th><th>humanizer</th><th>i-have-adhd</th></tr></thead>
+  <tbody>
+    <tr><td>处理对象</td><td>已成形的文字</td><td>每轮回答的形状</td></tr>
+    <tr><td>规则数量</td><td>26 条模式 / 6 组</td><td>10 条规则 / 6 条例外</td></tr>
+    <tr><td>自述来源</td><td>Wikipedia 的 AI 写作痕迹指南</td><td>《The Adult ADHD Tool Kit》</td></tr>
+    <tr><td>触发方式</td><td><code>/humanizer</code> 或直接说「润色」</td><td><code>/i-have-adhd</code>，模型不自动调用</td></tr>
+    <tr><td>作用范围</td><td>本次文本或指定文件</td><td>整场会话，直到说 stop adhd mode</td></tr>
+    <tr><td>附加机制</td><td>语气样本匹配、事实核对</td><td>发送前自检、破坏性操作先确认</td></tr>
+  </tbody>
+</table>
+<p>后者还写了「何时破例」：调试三轮没进展就停手、规则与宿主系统提示冲突时让系统提示赢。<span class="hl">规则集自己承认会被上游覆盖</span>，比声称「装上就生效」诚实。</p>
+
+<div class="section-marker">03 · 关键细节与数据</div>
+<h2>623,445 字节的仓库里，规则只占 7,201 字节</h2>
+<p><strong>递归 git tree 显示，两个仓库的重量都不在规则本身，而在文档与适配层。</strong>两次请求的 truncated 都是 false，节点可以逐项累加。</p>
+<p>humanizer 22 个节点 = 15 blob + 7 tree，合计 68,262 字节；i-have-adhd 98 个节点 = 74 blob + 24 tree，合计 623,445 字节，是前者的 9.1 倍。</p>
+<table>
+  <thead><tr><th>口径</th><th>humanizer</th><th>i-have-adhd</th></tr></thead>
+  <tbody>
+    <tr><td>git tree 逐 blob 累加</td><td>68,262 字节</td><td>623,445 字节</td></tr>
+    <tr><td>节点（blob / tree）</td><td>15 / 7</td><td>74 / 24</td></tr>
+    <tr><td>languages 接口</td><td>Python 5,418 字节</td><td>五语言合计 147,526 字节</td></tr>
+    <tr><td>仓库 size 字段</td><td>351 KB</td><td>442 KB</td></tr>
+  </tbody>
+</table>
+<p>i-have-adhd 的 .github/ 有 24 个文件、291,481 字节，占全仓 46.75%：11 份 README 译文 51,650 字节、8 份 INSTALL 译文 232,536 字节。</p>
+<p>另有一张 95,884 字节的 logo，tests、scripts、evals 三处合计 20 个文件、151,216 字节，都比规则文件大得多。</p>
+<p>humanizer 反过来：SKILL.md 32,394 字节占全仓 47.5%，四份 Markdown 共 56,767 字节占 83.2%，唯一的 Python 脚本 5,418 字节只是包校验器。</p>
+<p><span class="hl">三套体量口径互不相加，正文只采信 git tree</span>：languages 不含 md、json、png，size 字段是 GitHub 自有算法。</p>
+<div class="info-box">数据核对：身份、体量、版本与验收数字来自 api.github.com 各接口及仓库内文件原文。
+<ul>
+<li>身份：69,283 / 61,245 星，均 MIT、Python、main 分支。</li>
+<li>版本：humanizer 7 Release / 7 tag、CHANGELOG 28 个版本号；i-have-adhd 1 Release / 1 tag。</li>
+<li>体量：tree 68,262 / 623,445 字节，truncated 均为 false；译文 19 份共 284,186 字节。</li>
+<li>验收：#229 盲测 16/16、检测率 100% → 97.8%；RESULTS.md 发布门判 FAILED。</li>
+<li>边界：未安装、未运行、未复现两组自测；未结数含 PR，不等于待修缺陷。</li>
+</ul>
+<p>核对时间 2026-11-15，星标与未结为实时值。</p>
+</div>
+
+<div class="section-marker">04 · 怎么用</div>
+<h2>装得上不等于生效，两个 skill 都要宿主主动调用</h2>
+<p><strong>安装路径铺到 15 个宿主，规则能不能落地却取决于 agent 会不会去读那份文件。</strong>humanizer 在 Claude Code 里要求 2.1.142 以上，用两条 <code>/plugin</code> 命令装。</p>
+<p>旧版本、Codex、pi、Copilot 走 npx skills 或 pi install，装完用 <code>/humanizer</code> 调用。两个仓库都没有可执行主程序，全靠宿主把 SKILL.md 塞进上下文。</p>
+<p>i-have-adhd 的 SKILL.md frontmatter 写着 <code>disable-model-invocation: true</code>，即模型不会自动触发，必须由人输入 <code>/i-have-adhd</code>。一旦开启，规则持续到整场会话结束，读者说「stop adhd mode」才关掉。</p>
+<table>
+  <thead><tr><th>环节</th><th>humanizer</th><th>i-have-adhd</th></tr></thead>
+  <tbody>
+    <tr><td>入口</td><td>根 SKILL.md（32,394 字节）</td><td>skills/i-have-adhd/SKILL.md（7,201 字节）</td></tr>
+    <tr><td>宿主门槛</td><td>Claude Code 2.1.142+</td><td>15 个宿主各有安装段</td></tr>
+    <tr><td>文档语言</td><td>英文 README 一份</td><td>12 种 README、8 份 INSTALL 译文</td></tr>
+    <tr><td>验收命令</td><td>validate-package.py 一个脚本</td><td>unittest、run_evals、context_compat 等四条</td></tr>
+    <tr><td>关闭方式</td><td>不调用即可</td><td>需显式说 stop adhd mode</td></tr>
+  </tbody>
+</table>
+<p>把体积摊开看更直观：i-have-adhd 的 INSTALL.md 单份 27,516 字节，是规则文件的 3.8 倍；.github/ 是规则文件的 40 倍。<span class="hl">让十几种宿主都认同一份规则，比写出这十条规则贵得多</span>。</p>
+<ul>
+<li>两个仓库都不含可执行主程序，规则靠宿主把 SKILL.md 塞进上下文</li>
+<li>humanizer 的文件模式只改散文，代码、frontmatter、链接目标保持原样</li>
+<li>i-have-adhd 另配 hooks 与 tests，是唯一带自动校验的一方</li>
+<li>README 顶部由 cfo.ai 赞助，humanizer 在 skills.sh 上另有安装量入口</li>
+</ul>
+
+<div class="section-marker">05 · 冷思考</div>
+<h2>两份自测，一份没过检测器，一份没过发布门</h2>
+<p><strong>最该打折读的是两份自述里的「已验证」：数字都成立，结论却被同一份文件否定。</strong>humanizer README 写「盲测 16 次全胜」，指向已关闭的 #229；原文同时给出检测率从 100% 到 98.6% 再到 97.8%，Pangram 4.0 对四个变体仍判 100% AI。</p>
+<table>
+  <thead><tr><th>#229 的实测项</th><th>结果</th></tr></thead>
+  <tbody>
+    <tr><td>盲评偏好改写（对比原始输出）</td><td>16 / 16</td></tr>
+    <tr><td>检测率：原始 / 改写 / 加检查器</td><td>100% → 98.6% → 97.8%</td></tr>
+    <tr><td>真人文本被判为人类</td><td>143 / 143</td></tr>
+    <tr><td>「写得更像人」提示词骗过评委</td><td>0 / 17</td></tr>
+    <tr><td>计划 144 场配对，实际完成</td><td>77 场</td></tr>
+  </tbody>
+</table>
+<p>更值得注意的是反向发现：改写后 AI 词汇与排版痕迹从 70、60 降到 0，节奏整齐度却从 60 升到 101，格言式收尾从 38 升到 61。<span class="hl">减法式改写把词汇痕迹换成了节奏痕迹</span>，报告者据此说「整齐本身就是一种痕迹」。</p>
+<p>版本口径也在动。CHANGELOG 列了 28 个版本号，tag 与 Release 各只有 7 个；模式数先从 33 涨到 35，3.0.0 合并成 25，3.1.0 又添回第 26 条。v4.0.0 更反转了 2.9.0 的「不许加事实」，允许补一个已知为真的细节。</p>
+<p>而 README 首句仍是「不改它说什么」。<span class="hl">「保持原意」的边界被版本悄悄挪过一次</span>；对要放进合同、文档或财报的文字，这不是措辞问题，是要先确认装的是哪一版。</p>
+<table>
+  <thead><tr><th>evals/RESULTS.md</th><th>基线</th><th>候选</th></tr></thead>
+  <tbody>
+    <tr><td>加权总分</td><td>4.045</td><td>4.473（+0.427）</td></tr>
+    <tr><td>简洁 / 可执行性</td><td>3.429 / 3.905</td><td>4.571 / 4.619</td></tr>
+    <tr><td>阻断项</td><td>7</td><td>3</td></tr>
+    <tr><td>14 例胜负</td><td colspan="2">10 胜 2 平 2 负</td></tr>
+    <tr><td>发布门结论</td><td colspan="2">FAILED（要求零阻断项）</td></tr>
+  </tbody>
+</table>
+<p>i-have-adhd 把结果写得更直白：文件里有一节标题就是 <code>Release gate: FAILED</code>。它承认一个用例因 runner 传 <code>--tools ""</code>，任何回答都过不了。</p>
+<p>另一例 partial-success 是唯一持续回归（−0.63）。报告猜是第 8 条「先报原因再报修法」逼模型在没证据时编了一个原因。</p>
+<ul>
+<li>三次试验、评委与生成同属一个模型家族，两者都写进了限制说明</li>
+<li>84 行结果里有 3 行把工具调用语法写成纯文本，基线与候选都受影响</li>
+<li>humanizer 的盲测评委也全是同一家族语言模型，人类对照未匹配主题</li>
+<li>102 个未结里 69 个是 PR，v0.4.1 发布说明一次致谢 50 位新贡献者</li>
+</ul>
+<p>AGENTS.md 还规定 agent 只能在带 AI Agora 标签的 issue 下评论，且不得评论别人的 PR。<span class="hl">一个规范 AI 输出的仓库，连 AI 的发言权都写成了规则</span>——这比评测分数更能说明它对「模型会自作主张」的预期。</p>
+<table>
+  <thead><tr><th>你的缺口</th><th>选哪个 / 怎么选</th></tr></thead>
+  <tbody>
+    <tr><td>要交出去的稿子、README、发布说明</td><td>humanizer：26 条模式过一遍措辞，先确认版本</td></tr>
+    <tr><td>长会话里 agent 总把结论埋在结尾</td><td>i-have-adhd：10 条规则定形状，手动开启</td></tr>
+    <tr><td>两种毛病都有</td><td>先用 i-have-adhd 定骨架，再用 humanizer 改文字</td></tr>
+    <tr><td>想绕过 AI 检测</td><td>都别选：改写前后检测率只从 100% 降到 97.8%</td></tr>
+    <tr><td>需要「已被验证有效」的凭据</td><td>都别当凭据：一份 77/144 场，一份发布门 FAILED</td></tr>
+  </tbody>
+</table>
+<p>判断落到用法上：这两个仓库值得抄的是把「什么算坏输出」写成可逐条检查的清单，不是 16/16 或 +0.427。它们各自把验收的漏洞一并留在仓库里，反倒比一个漂亮分数更可信。</p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看两个原始仓库</h3>
+        <p>blader/humanizer 与 ayghri/i-have-adhd：同为 MIT 的输出风格 skill，一个 26 条模式做减法，一个 10 条规则改顺序</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/blader/humanizer" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/blader/humanizer" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · blader/humanizer，69,283 星，26 条模式，MIT</span>
+      </a>
+      <a class="plat-card" href="https://github.com/ayghri/i-have-adhd" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · ayghri/i-have-adhd，61,245 星，10 条规则，MIT</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Skill">#Skill</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=AI%20%E5%86%99%E4%BD%9C">#AI 写作</a>
+      <a href="../../home/home.html?q=%E6%A8%AA%E8%AF%84">#横评</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">数据来源：api.github.com 的仓库 / 目录 / releases / tags / languages / contributors / git tree / search-issues 接口，及 README.md、SKILL.md、CHANGELOG.md、AGENTS.md、INSTALL.md、CONTRIBUTING.md、evals/RESULTS.md 与 issue #229 原文；核对时间 2026-11-15。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

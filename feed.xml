@@ -5,8 +5,32 @@
     <link>https://expectopatronus00.github.io/</link>
     <description>一个 AI 工具与实战的中文学习归档：原创踩坑记录 + 精选转载，每篇都标注来源。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 14 Nov 2026 13:43:23 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 15 Nov 2026 14:31:41 GMT</lastBuildDate>
     <atom:link href="https://expectopatronus00.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>69,283 星对 61,245 星：两份自测都没写通过</title>
+      <link>https://expectopatronus00.github.io/post/gh-anti-slop-duo/gh-anti-slop-duo.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-anti-slop-duo/gh-anti-slop-duo.html</guid>
+      <pubDate>Sat, 14 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>两个六万星级 Agent Skill 都是一份 Markdown：humanizer 用 26 条模式删 AI 腔，i-have-adhd 用 10 条规则把答案挪到第一行。前者盲测 16/16 却仍被检测器判为 AI，后者的发布门直接写 FAILED。递归 tree 差 9 倍，星数只差 13%。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>23,853 星、61 个命令：并行的是光标，不是输入</title>
+      <link>https://expectopatronus00.github.io/post/gh-vercel-labs-agent-desktop/gh-vercel-labs-agent-desktop.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-vercel-labs-agent-desktop/gh-vercel-labs-agent-desktop.html</guid>
+      <pubDate>Sat, 14 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>vercel-labs/agent-desktop 用系统可访问性树替代截图，把桌面应用读成带 ref 的 JSON。README 列 10 组 61 个命令，其中 57 个可运行、4 个要等守护进程；多 agent 光标可并行，物理输入仍被全机租约串行化。v1.3.1 发布于 2026-11-13。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>459,990 星、39 类目标：能读不等于能用</title>
+      <link>https://expectopatronus00.github.io/post/gh-morluto-rea/gh-morluto-rea.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-morluto-rea/gh-morluto-rea.html</guid>
+      <pubDate>Sat, 14 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>459,990 星的 REA 用 One MCP 概括自己，README 能力表列 39 类目标，按 Requirements 逐行分类有 14 行要自备外部工具。完整目录树 8,467 个文件，tests/boundary 占 1,555 个；同一仓库的免责声明用 10 节写明哪些事不能做。（转载 · 来源：微信）</description>
+    </item>
     <item>
       <title>2,462 星、9 次提交：出片的是说明书，付账的是对话</title>
       <link>https://expectopatronus00.github.io/post/gh-sarpstar-cinecode/gh-sarpstar-cinecode.html</link>
