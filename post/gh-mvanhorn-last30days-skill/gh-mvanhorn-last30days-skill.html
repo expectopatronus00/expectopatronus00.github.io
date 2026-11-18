@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- head-hints:begin -->
+    <meta name="theme-color" content="#0b0d16" />
+    <link rel="preconnect" href="https://font.emtech.cc" crossorigin />
+    <link rel="dns-prefetch" href="https://font.emtech.cc" />
+    <link rel="stylesheet" href="https://font.emtech.cc/css/LXGWNeoZhiSong/400" />
+    <script src="/home/theme-color.js" defer></script>
+    <!-- head-hints:end -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>67,855 星、30 个来源：免费层只覆盖五分之一 · EXPECTOPATRONUS</title>
+    <meta name="description" content="67,855 星的 last30days-skill 是 agent 搜索引擎，并行查 30 个来源按参与度排序。但 30 个来源里只有 5 个完全免费，SECURITY.md 补了 README 没提的 Wikidata 自动查询。" />
+    <meta name="keywords" content="Skill, 开源, Agent" />
+    <meta property="og:title" content="67,855 星、30 个来源：免费层只覆盖五分之一" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="67,855 星的 last30days-skill 是 agent 搜索引擎，并行查 30 个来源按参与度排序。但 30 个来源里只有 5 个完全免费，SECURITY.md 补了 README 没提的 Wikidata 自动查询。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <link rel="stylesheet" href="../article-common.css" data-shared-css="0d59321e71" />
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+    <!-- seo:begin -->
+    <link rel="canonical" href="https://expectopatronus00.github.io/post/gh-mvanhorn-last30days-skill/gh-mvanhorn-last30days-skill.html" />
+    <meta property="og:url" content="https://expectopatronus00.github.io/post/gh-mvanhorn-last30days-skill/gh-mvanhorn-last30days-skill.html" />
+    <meta property="og:site_name" content="EXPECTOPATRONUS" />
+    <meta property="og:image" content="https://expectopatronus00.github.io/post/gh-mvanhorn-last30days-skill/cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"67,855 星、30 个来源：免费层只覆盖五分之一","description":"67,855 星的 last30days-skill 是 agent 搜索引擎，并行查 30 个来源按参与度排序。但 30 个来源里只有 5 个完全免费，SECURITY.md 补了 README 没提的 Wikidata 自动查询。","image":"https://expectopatronus00.github.io/post/gh-mvanhorn-last30days-skill/cover.jpg","inLanguage":"zh-CN","author":{"@type":"Person","name":"expectopatronus","url":"https://expectopatronus00.github.io"},"publisher":{"@type":"Organization","name":"EXPECTOPATRONUS","url":"https://expectopatronus00.github.io"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://expectopatronus00.github.io/post/gh-mvanhorn-last30days-skill/gh-mvanhorn-last30days-skill.html"},"datePublished":"2026-11-16","dateModified":"2026-11-16"}</script>
+    <!-- seo:end -->
+</head>
+  <body>
+    <!-- skip-link:begin -->
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <!-- skip-link:end -->
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head" data-skip-target="1" tabindex="-1" id="main-content">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>67,855 星、30 个来源：免费层只覆盖五分之一</h1>
+      <p>67,855 星的 last30days-skill 把自己定位成「搜人不搜编辑」的 agent 搜索引擎，并行查 30 个来源按 upvotes 和预测市场体量排序。README 说 30+ 来源，表格精确 30 行；SECURITY.md 证实无 telemetry 但补了 Wikidata 自动查公司名且无开关。免费层只有 5 个来源，配齐 11 个付费 key 的时间远超宣称的 30 秒。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-16</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 4 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <picture data-cover-picture="1">
+        <source srcset="cover.webp" type="image/webp" />
+        <img loading="lazy" alt="67,855 星、30 个来源：免费层只覆盖五分之一 封面" src="cover.jpg" width="2400" height="1260" decoding="async" data-cover-ready="1" />
+      </picture>
+    </div>
+
+    <article class="article-body">
+<div class="section-marker" data-section="01">
+<h2>01 这件事</h2>
+<p><strong>67,855 星的 last30days-skill 把自己定位成「搜人，不搜编辑」的 agent 搜索引擎。</strong>它并行查 Reddit、X、YouTube、Hacker News、Polymarket 等 30 个来源，按 upvotes、likes 和真金白银的预测市场体量排序，再由 AI 合成带出处的简报。</p>
+<p>仓库 2026-01-23 创建，11 月 16 日仍在 push，MIT 许可证，Python 为主（95.8%），附一个 Go 写的 MCP server。79 个 release 跨 271 天，平均 3.4 天一版。</p>
+<p>README 头图写着 <span class="hl">"Google aggregates editors. /last30days searches people."</span>，GitHub Trending #1 Repository of the Day 徽章挂在页首。口号很漂亮，但 30 个来源里只有 5 个完全免费且无 key——剩下的要 token、要付费 API、要浏览器 cookie，或要第三方爬虫服务。</p>
+</div>
+
+<div class="section-marker" data-section="02">
+<h2>02 核心机制</h2>
+<p><strong>它的架构是「skill 指令 + Python 引擎 + Go MCP server」三层。</strong>skill 层是一份 31.2 KB 的 SKILL.md 加 17 份 references 文档（最大的一份 research-runbook.md 73.6 KB），告诉宿主 agent 怎么调用。引擎层在 <code>scripts/</code> 下 142 个 .py 文件，pipeline.py 一个就 335 KB。</p>
+<p>工作时 agent 收到查询后调引擎，引擎并行请求各来源，按参与度、相关性和新鲜度打分，合并同一故事跨平台线索，再合成简报。支持话题发现、趋势监控（SQLite 持久化）、本地研究库和结构化 JSON 输出。</p>
+<table>
+<thead><tr><th>层</th><th>位置</th><th>文件数</th><th>体量</th></tr></thead>
+<tbody>
+<tr><td>Skill 指令</td><td>skills/last30days/</td><td>187</td><td>含 SKILL.md + references + assets</td></tr>
+<tr><td>研究引擎</td><td>scripts/</td><td>142 .py</td><td>8.99 MB，pipeline.py 占 335 KB</td></tr>
+<tr><td>MCP Server</td><td>mcp/</td><td>14 .go + 9 test</td><td>Go 实现，manifest.json 5.9 KB</td></tr>
+<tr><td>测试</td><td>tests/</td><td>353 .py + fixtures</td><td>6.28 MB，占总 blob 53.9%</td></tr>
+</tbody>
+</table>
+<p>MCP server 用 Go 而非 Python 写，因为它要管理子进程生命周期、跨平台进程组和缓存锁——这些系统操作在 Go 里更可靠，SECURITY.md 把它列入安全报告范围。</p>
+</div>
+
+<div class="section-marker" data-section="03">
+<h2>03 关键细节与数据</h2>
+<p><strong>README 自称「30+ 来源」，表格精确 30 行，不多不少。</strong>这是第一个口径反差：数字成立，但「+」没有着落。真正的问题不在数量，在成本结构——30 个来源里免费且无 key 的只有 5 个。</p>
+<table>
+<thead><tr><th>分类</th><th>来源</th><th>需要什么</th></tr></thead>
+<tbody>
+<tr><td>完全免费</td><td>Reddit、Hacker News、Polymarket、GitHub、StockTwits</td><td>无 key</td></tr>
+<tr><td>免费 CLI 自动装</td><td>arXiv、Techmeme、Yahoo Finance、Digg</td><td>首次运行自动安装</td></tr>
+<tr><td>需 token / cookie</td><td>X / Twitter、Bluesky、Truth Social</td><td>各平台 token 或 cookie</td></tr>
+<tr><td>需 ScrapeCreators</td><td>TikTok、Instagram、Threads、Pinterest、LinkedIn</td><td>10,000 次免费后付费</td></tr>
+<tr><td>需其他付费服务</td><td>Amazon、Trustpilot、Telegram</td><td>Bright Data 或 ScrapeCreators</td></tr>
+<tr><td>需搜索引擎 key</td><td>Web 搜索、Perplexity</td><td>Brave（2,000 次/月免费）或 Perplexity key</td></tr>
+</tbody>
+</table>
+<p>第二个口径差在隐私层。README 说 <span class="hl">"no tracking, no analytics"</span>——这被 SECURITY.md 证实：引擎无 telemetry、无 update check。但 SECURITY.md 补了 README 没提的细节：</p>
+<ul>
+<li>研究主题会发给所有启用的来源和无 key 时的 DuckDuckGo / Startpage</li>
+<li>当主题像公司或人名时，自动查 Wikidata 获取股票代码、官网和子公司——<strong>无开关可关</strong></li>
+<li>Yahoo Finance 收到 ticker 符号；专利通道把公司名发给 USPTO（MCP server 默认关掉，CLI 不关）</li>
+<li>Reranking 是 opt-in：设了 reasoning provider key 后，研究主题和内容片段会发给 OpenAI / xAI / Google 等</li>
+</ul>
+<p>第三个差在 <span class="hl">"50+ Agent Skills hosts"</span> 这句话。它指 agentskills.io 生态支持的宿主数量，不是本仓库自己的功能。仓库实际支持 Claude Code、Codex、Cursor、Copilot、Gemini CLI、Grok、OpenClaw 和 Claude Desktop 共 8 种安装方式。</p>
+</div>
+
+<div class="section-marker" data-section="04">
+<h2>04 怎么用</h2>
+<p><strong>安装方式按宿主分，推荐 Claude Code 的插件市场。</strong>在 Claude Code 里两行命令搞定：<code>/plugin marketplace add mvanhorn/last30days-skill</code> 再 <code>/plugin install last30days</code>。其他宿主用 <code>npx skills add mvanhorn/last30days-skill -g</code>。</p>
+<p>Claude Desktop 拖入 <code>.mcpb</code> 文件，但 Windows 暂不支持。手动开发安装则是 <code>git clone</code> 后软链到 <code>~/.claude/skills/last30days</code>。</p>
+<table>
+<thead><tr><th>方式</th><th>前提</th><th>注意</th></tr></thead>
+<tbody>
+<tr><td>Claude Code 插件</td><td>Claude Code</td><td>自动更新，版本化缓存</td></tr>
+<tr><td>npx skills</td><td>Node.js</td><td>全局安装，跨项目可用</td></tr>
+<tr><td>Claude Desktop</td><td>Python 3.12+</td><td>Windows 不支持 .mcpb</td></tr>
+<tr><td>claude.ai Web</td><td>下载 .skill 文件</td><td>需启用 Code execution</td></tr>
+<tr><td>手动 clone</td><td>Git</td><td>需自己建软链</td></tr>
+</tbody>
+</table>
+<p>安装向导宣称 30 秒完成，但前提是已有 Python 3.12+ 且不配 API key。30 个来源里 11 个要 key 或付费服务，配齐至少半小时。</p>
+<p>两个已知坑：Claude Code 和 Claude Desktop 的 keys 不互通，需分别配置；原生插件和 <code>npx skills</code> 安装可共存但不去重，<code>/last30days</code> 会显示两个条目。</p>
+</div>
+
+<div class="section-marker" data-section="05">
+<h2>05 冷思考</h2>
+<p><strong>67,855 星的背后是 161 个贡献者和 1,489 次提交，top1 占 36.4%。</strong>这不是一人项目，但也不是社区共治——mvanhorn 542 次提交，dependabot 和 github-actions 两个 bot 合计 114 次，其余 159 人分 833 次。</p>
+<p>79 个 release 跨 271 天、平均 3.4 天一版，节奏极快。SKILL.md 31.2 KB、research-runbook.md 73.6 KB——指令体量比很多完整项目的 README 都大。tests/ 353 个测试文件占全仓 53.9%，说明质量保障投入不低。</p>
+<p>但核心问题在 <span class="hl">来源可用性的长尾</span>。5 个免费来源覆盖 Reddit、Hacker News、Polymarket、GitHub 和 StockTwits——后两个偏金融，通用话题主要靠前两个。</p>
+<p>想查 X 或 YouTube 就要配 token；想查 TikTok 或 Instagram 就要买 ScrapeCreators；想查 LinkedIn 要 Bright Data。30 个来源是理论最大值，不是开箱即用。</p>
+<p>README 宣称的「搜人不搜编辑」在免费层基本等于「搜 Reddit 和 HN」。30 个来源是理论最大值，不是开箱即用。</p>
+<p>Wikidata 自动查公司名这件事在 README 里没出现，只在 SECURITY.md 写明且无开关。搜一个不想暴露给第三方的人名，引擎会自动拿去查。<strong>这不是缺陷，是口径差：README 的隐私承诺管 telemetry，不管数据流向</strong>。</p>
+<p>对于想拿来就用的人：免费层够了解技术讨论和社区热度，但要覆盖 README 展示的全部场景，配 key 的时间成本远超 30 秒。对于关注隐私的人：SECURITY.md 比 README 诚实得多，装之前先读它。</p>
+</div>
+
+<div class="info-box">
+<p><strong>数据核对</strong>（核对时间 2026-11-16）</p>
+<ul>
+<li>仓库：mvanhorn/last30days-skill，MIT，Python 95.8%，创建 2026-01-23，pushed 11-16</li>
+<li>星标 / fork：67,855 / 5,978；完整树 714 blob / 37.8 MB（curl，truncated=false）</li>
+<li>来源表：README 表格精确 30 行，自称「30+」；「50+ hosts」指 agentskills.io 生态</li>
+<li>代码层：scripts/ 142 .py（8.99 MB），mcp/ 14 .go，tests/ 353 .py（占总 53.9%）</li>
+<li>Releases：79 个 / 85 tags，跨 271.5 天，均 3.4 天一版</li>
+<li>贡献者：161 人 / 1,489 提交，top1 36.4%；未结 40 = 15 issue + 25 PR</li>
+<li>SECURITY.md：13,891 字节，证实无 telemetry，补充 Wikidata 自动查询无开关</li>
+</ul>
+</div>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>AI agent skill that researches any topic across 30 sources</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/mvanhorn/last30days-skill" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/mvanhorn/last30days-skill" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 67,855 星 · MIT</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Skill">#Skill</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=Agent">#Agent</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">数据来源：GitHub API（api.github.com/repos/mvanhorn/last30days-skill）+ 完整 git tree + SECURITY.md + README.md。核对时间 2026-11-16。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

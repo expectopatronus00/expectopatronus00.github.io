@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- head-hints:begin -->
+    <meta name="theme-color" content="#0b0d16" />
+    <link rel="preconnect" href="https://font.emtech.cc" crossorigin />
+    <link rel="dns-prefetch" href="https://font.emtech.cc" />
+    <link rel="stylesheet" href="https://font.emtech.cc/css/LXGWNeoZhiSong/400" />
+    <script src="/home/theme-color.js" defer></script>
+    <!-- head-hints:end -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>30.6 万星、327 个技能：ECC 只有 Claude 全量 · EXPECTOPATRONUS</title>
+    <meta name="description" content="affaan-m/ECC 306,038 星、MIT，仓库实有 327 个技能、72 个 agent、98 条命令；README 的能力表却把 Claude 之外全标成 Partial。v2.2.3 停在 10 月 1 日，hook 要显式选择，跨 harness 还要隔离数据目录。" />
+    <meta name="keywords" content="Skill, 开源, Agent, Claude Code, Harness" />
+    <meta property="og:title" content="30.6 万星、327 个技能：ECC 只有 Claude 全量" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="affaan-m/ECC 306,038 星、MIT，仓库实有 327 个技能、72 个 agent、98 条命令；README 的能力表却把 Claude 之外全标成 Partial。v2.2.3 停在 10 月 1 日，hook 要显式选择，跨 harness 还要隔离数据目录。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <link rel="stylesheet" href="../article-common.css" data-shared-css="0d59321e71" />
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+    <!-- seo:begin -->
+    <link rel="canonical" href="https://expectopatronus00.github.io/post/gh-affaan-m-ecc/gh-affaan-m-ecc.html" />
+    <meta property="og:url" content="https://expectopatronus00.github.io/post/gh-affaan-m-ecc/gh-affaan-m-ecc.html" />
+    <meta property="og:site_name" content="EXPECTOPATRONUS" />
+    <meta property="og:image" content="https://expectopatronus00.github.io/post/gh-affaan-m-ecc/cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"30.6 万星、327 个技能：ECC 只有 Claude 全量","description":"affaan-m/ECC 306,038 星、MIT，仓库实有 327 个技能、72 个 agent、98 条命令；README 的能力表却把 Claude 之外全标成 Partial。v2.2.3 停在 10 月 1 日，hook 要显式选择，跨 harness 还要隔离数据目录。","image":"https://expectopatronus00.github.io/post/gh-affaan-m-ecc/cover.jpg","inLanguage":"zh-CN","author":{"@type":"Person","name":"expectopatronus","url":"https://expectopatronus00.github.io"},"publisher":{"@type":"Organization","name":"EXPECTOPATRONUS","url":"https://expectopatronus00.github.io"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://expectopatronus00.github.io/post/gh-affaan-m-ecc/gh-affaan-m-ecc.html"},"datePublished":"2026-11-18","dateModified":"2026-11-18"}</script>
+    <!-- seo:end -->
+</head>
+  <body>
+    <!-- skip-link:begin -->
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <!-- skip-link:end -->
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head" data-skip-target="1" tabindex="-1" id="main-content">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>30.6 万星、327 个技能：ECC 只有 Claude 全量</h1>
+      <p>306,038 星、327 个技能：affaan-m/ECC 是 MIT 的 agent harness 优化系统。最新 Release 停在 10 月 1 日，README 把 Claude 之外全标成 Partial。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-18</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 6 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <picture data-cover-picture="1">
+        <source srcset="cover.webp" type="image/webp" />
+        <img loading="lazy" alt="30.6 万星、327 个技能：ECC 只有 Claude 全量 封面" src="cover.jpg" width="2400" height="1260" decoding="async" data-cover-ready="1" />
+      </picture>
+    </div>
+
+    <article class="article-body">
+<div class="section-marker">01 · 这件事</div>
+<h2>30.6 万星、327 个技能：先读仓库，别先装插件</h2>
+<p><strong>ECC 的星标已经到 306,038，但最新 Release 停在 10 月 1 日，仓库本身在 11 月 17 日仍有推送。</strong>affaan-m/ECC 创建于 2026-01-18，MIT，主语言 JavaScript，自述是 agent harness 的性能优化系统。</p>
+<p>核对日 2026-11-18，它有 45,042 个 fork、163 个未结条目。未结不等于全是 bug：拆开看是 93 个 issue 与 70 个 PR，PR 数接近 issue 的四分之三。</p>
+<p>根目录还摊开了一排以点开头的适配目录：<code>.claude</code>、<code>.codex</code>、<code>.cursor</code>、<code>.gemini</code>、<code>.qwen</code>，以及 <code>.claude-plugin</code>、<code>.codex-plugin</code>、<code>.grok-plugin</code> 等插件清单。它不是一份编辑器配置，而是一张分发矩阵。</p>
+<p>README 首页还列了 17 种语言入口，中文版单独占一个 38,234 字节的文件。它同时声明根是唯一事实源，平台适配器只是打包或映射这套工作流，不另存副本。</p>
+<p>更值得写下来的是仓库体量。根目录 87 个条目，<code>skills/</code> 327 个子目录，<code>agents/</code> 72 个文件，<code>commands/</code> 98 个文件。这三个数与 README 首页的 327 / 72 / 98 逐项对得上。</p>
+<table>
+  <thead><tr><th>字段</th><th>核对值</th></tr></thead>
+  <tbody>
+    <tr><td>仓库</td><td>affaan-m/ECC · main 分支</td></tr>
+    <tr><td>星标 / fork / 未结</td><td>306,038 / 45,042 / 163（93 issue + 70 PR）</td></tr>
+    <tr><td>建库 / 最近推送</td><td>2026-01-18 / 2026-11-17</td></tr>
+    <tr><td>许可证 / 主语言</td><td>MIT / JavaScript</td></tr>
+    <tr><td>最新版本 / 发布日期</td><td>v2.2.3 / 2026-10-01</td></tr>
+    <tr><td>README 体积</td><td>117,671 字节，中文版 38,234 字节</td></tr>
+  </tbody>
+</table>
+<p>README 用一行概括目标：<span class="hl">把 plan、test、implement、review、verify、remember、improve 变成 agent 的默认工作流</span>。它要交付的不是某一个 skill，而是一条被反复复用的工程流程。</p>
+
+<div class="section-marker">02 · 核心机制</div>
+<h2>技能是主界面，命令只是迁移期的壳</h2>
+<p><strong>ECC 把能力分成四层：skills 承载流程，agents 负责委派，hooks 在工具事件上执行约束，rules 常驻上下文。</strong>README 明说新工作流先落在 skills，commands 只作兼容入口。</p>
+<ul>
+<li>Skills：327 个按需加载的工作流目录，覆盖 TDD、调研、安全、文档与前端。</li>
+<li>Agents：72 个限定作用域的子代理，按规划、评审、修构建等角色切分。</li>
+<li>Hooks：绑定工具事件，可在编辑后跑脚本，是运行时约束的执行点。</li>
+<li>Rules：common 与语言目录两类，选装后常驻，不占技能调用。</li>
+</ul>
+<p>README 给的 TDD 技能示例是五步：先定接口，再写失败测试，接着做最小实现，然后重构，最后验 80% 以上覆盖率。流程被写成可调用的步骤，而不是一句「记得写测试」。</p>
+<p>Agent 的定义写在 YAML frontmatter 里。README 举例的 code-reviewer 只拿 Read、Grep、Glob、Bash 四个工具，模型指定 opus。权限写在角色文件里，比在提示词里说一句「只审查」更硬。</p>
+<p>Hooks 能跑 shell，MCP 能持凭据，项目指令会进上下文。README 把三者并列为<span class="hl">必须按可执行配置审阅的对象</span>，而不是普通文本配置。</p>
+<p>持续学习会把会话摘要和学到的 instinct 写进 agent data home，默认落在 <code>~/.claude</code>。会话开始时可注入的 instinct 默认最多 6 条，置信度阈值 0.7，两者都能用环境变量改。</p>
+
+<div class="section-marker">03 · 关键细节与数据</div>
+<h2>327 是仓库总量，不是每个平台都拿得到的清单</h2>
+<p><strong>同一个仓库在五个 harness 上并不对等，README 自己把 parity 一栏写成 Primary 对 Partial。</strong>支持表把 Claude Code 列为 stable primary，其余四个都只给部分能力。</p>
+<table>
+  <thead><tr><th>能力</th><th>Claude Code</th><th>Codex</th><th>Cursor</th><th>OpenCode</th><th>Copilot</th></tr></thead>
+  <tbody>
+    <tr><td>Skills</td><td>原生安装集</td><td>原生插件集</td><td>随构建变化</td><td>内置子集</td><td>原生发现</td></tr>
+    <tr><td>Agents</td><td>原生 agents</td><td>多 agent 角色</td><td>项目级、随构建变化</td><td>插件 agents</td><td>CLI 自定义 agents</td></tr>
+    <tr><td>ECC hooks</td><td>原生插件钩子</td><td>需显式信任的子集</td><td>适配器分发</td><td>插件事件</td><td>未移植</td></tr>
+    <tr><td>MCP 配置</td><td>显式启用</td><td>原生 manifest</td><td>项目 / 用户配置</td><td>provider 配置</td><td>ECC 不提供</td></tr>
+    <tr><td>与 Claude 对齐</td><td>Primary</td><td>Partial</td><td>Partial</td><td>Partial</td><td>Partial</td></tr>
+  </tbody>
+</table>
+<p>各平台还有自己的硬数。<code>pi/core</code> 配置在 v2.2.3 里是 123 个精选 skill、24 条命令；Codex 的 <code>.agents/skills/</code> 写 32；Cursor 写 48 个 agent、34 条规则、15 个 hook 事件。</p>
+<p>把四组数字并列，「327」的口径就清楚了：<span class="hl">它数的是仓库源目录，不是某次安装后可见的技能数</span>。README 还提醒，插件会把已装目录广告给模型，上下文吃紧时要改用 selective profile。</p>
+<table>
+  <thead><tr><th>口径</th><th>数量</th><th>出处</th></tr></thead>
+  <tbody>
+    <tr><td>仓库 skills/ 子目录</td><td>327</td><td>目录接口实测</td></tr>
+    <tr><td>pi/core 精选配置</td><td>123 skills + 24 命令</td><td>v2.2.3 Release 正文</td></tr>
+    <tr><td>Codex .agents/skills/</td><td>32</td><td>README 平台说明</td></tr>
+    <tr><td>Cursor 项目适配</td><td>48 agents / 34 规则 / 15 hook 事件</td><td>README Cursor 小节</td></tr>
+  </tbody>
+</table>
+<p>渠道也要核。README 只认五个官方入口：GitHub 仓库、插件 slug <code>ecc@ecc</code>、两个 npm 包、GitHub App 与官网；第三方转载被明确标为可能带恶意软件。SECURITY.md 还点名两个借用仓库元数据的非官方包。</p>
+<div class="info-box">数据核对：全部数字来自 api.github.com 仓库、目录、releases 与 search 接口，以及仓库内 README、SECURITY.md、package.json、VERSION 原文。
+<ul>
+<li>身份：306,038 星 / 45,042 fork / 163 未结（93 issue + 70 PR）/ 建库 2026-01-18 / pushed 11-17 / MIT。</li>
+<li>规模：根目录 87 项；skills 327、agents 72、commands 98，均为单层目录接口计数。</li>
+<li>版本：VERSION 与 package.json 都是 2.2.3；latest Release 发布于 2026-10-01，assets 为 0；npm 包要求 Node ≥18。</li>
+<li>边界：能力数与平台数取自 README 自述，本文未安装、未跑基准、未验证第三方镜像。</li>
+</ul>
+<p>核对时间 2026-11-18，星标与 issue 为实时值。</p>
+</div>
+
+<div class="section-marker">04 · 怎么用</div>
+<h2>先选安装路径，再把 hook 的决策显式做完</h2>
+<p><strong>安装 ECC 的第一步不是敲命令，是选 profile 和 target；全量 manual 安装不要叠在 native plugin 上。</strong>README 写得很直接：两条路选一条。</p>
+<ul>
+<li><code>npx ecc-universal@2.2.3 setup</code>：引导式安装，覆盖 Claude、Codex 与 Kimi。</li>
+<li><code>npx ecc-universal@2.2.3 install --profile minimal --target claude</code>：低上下文路径，不装 hook runtime。</li>
+<li><code>./install.sh --profile core --no-hooks --target claude</code>：核心配置，关掉钩子。</li>
+<li><code>./install.sh --target claude --modules hooks-runtime --enable-hooks</code>：之后再补运行时。</li>
+</ul>
+<p>MCP 不是越多越好。README 写默认连接器只有一个 <code>chrome-devtools</code>，其余是包着 CLI / REST API 的技能，或需要主动勾选的目录项；2026 年 6 月的审计还下线了原先六个默认连接器。</p>
+<p>hook 必须显式决定。没有 <code>--enable-hooks</code> 或 <code>--no-hooks</code>，安装器会先打印钩子能做什么，然后停在写入前；引导安装则会交互询问。</p>
+<p>环境门槛不高但很硬：Node.js 18 以上，Claude Code 插件要 v2.1.0 以上。Claude Code v2.1+ 会自动加载 <code>hooks/hooks.json</code>，再往 plugin.json 写 hooks 字段会触发重复检测错误。</p>
+<p>跨工具混用先隔离数据目录：<code>ECC_AGENT_DATA_HOME="$HOME/.cursor/ecc"</code>。会话摘要、学到的技能、别名和成本指标都落在这个根下，不隔离就会互相覆盖。</p>
+<p>省 token 的调整照 README 自己的表来，别当成实测结论：<span class="hl">它建议 opus 换 sonnet、自动压缩阈值从 95 调到 50</span>，同时保持 MCP 少于 10 个、活跃工具少于 80 个。</p>
+
+<div class="section-marker">05 · 冷思考</div>
+<h2>30 万星里能直接拿走的是流程，不是全平台等价</h2>
+<p><strong>先别把 163 个未结条目读成 163 个 bug：其中 70 个是 PR，维护压力正写在 issue 里。</strong>#3997 记录了一次 PR 洪水，20 分钟内 23 个 PR 触发了「超过 5 个关闭、超过 10 个封禁」的策略。</p>
+<p>那条 issue 同时写明封禁令牌未配置，所以只关不封。另一条 #4017 是会话摘要含冒号，写出的 YAML frontmatter 解析失败。这些不是功能列表，是日常维护成本。</p>
+<p>版本节奏也值得问一句：README 说一个人每周跨 7 个 harness 发版，最新 Release 却是 10 月 1 日的 v2.2.3，没有资产，pushed 停在 11 月 17 日。<span class="hl">发布通道与开发节奏不是一条线</span>。</p>
+<p>平台差异是硬边界，下面几条都写在 README 或 SECURITY.md 里：</p>
+<ul>
+<li>Copilot Chat 只有指令层，不接 ECC hooks。</li>
+<li>Codex 原生 hook 要显式信任，且不沿用 Claude 的 hook profile。</li>
+<li>macOS 自带 Bash 3.2 跑不了 GAN shell 路径；Windows 原生模式的 observer 与 memory vault 仍有未结缺陷。</li>
+<li>免费承诺限定 MIT 仓库；私有仓库的托管 GitHub App 从 19 美元 / 席位 / 月起。</li>
+</ul>
+<p>成本建议也要留个问号。「换 sonnet 省约 60%、覆盖八成以上任务」是 README 的推荐表，不是仓库里跑出来的基准；正文没有给出评测链接。</p>
+<p>它同时提醒：Bedrock、Google Cloud 的 Agent Platform 与 Foundry 上的 sonnet 别名指向 Sonnet 4.5，不支持 effort 控制；要么换一个支持该控制的模型，要么把这个变量整个删掉。</p>
+<p>安全报告路径也要看清：SECURITY.md 说 <code>security@ecc.tools</code> 别名无人监控，要发到 <code>affaan@ecc.tools</code>；承诺 48 小时确认、7 天初评、14 天出关键修复目标，但旧版本回补补丁写明 best-effort。</p>
+<p>结论不是别装。ECC 值得抄走的是 plan → test → review → remember 这条闭环；如果你的 harness 在支持表里写着 Partial，就按 selective 装，把 hook 当代码审，别把 327 当成开箱即用的承诺。</p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>把规划、测试、评审、记忆做成 agent 默认流程的 MIT 开源项目，Node.js 18 以上即可安装</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/affaan-m/ECC" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/affaan-m/ECC" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 306,038 星，MIT，327 个技能与 72 个 agent</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Skill">#Skill</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=Agent">#Agent</a>
+      <a href="../../home/home.html?q=Claude%20Code">#Claude Code</a>
+      <a href="../../home/home.html?q=Harness">#Harness</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">数据来源：api.github.com 仓库 / 目录 / releases / search 接口，及 README、SECURITY.md、package.json、VERSION 原文；核对时间 2026-11-18。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

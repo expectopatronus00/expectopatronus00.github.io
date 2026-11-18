@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- head-hints:begin -->
+    <meta name="theme-color" content="#0b0d16" />
+    <link rel="preconnect" href="https://font.emtech.cc" crossorigin />
+    <link rel="dns-prefetch" href="https://font.emtech.cc" />
+    <link rel="stylesheet" href="https://font.emtech.cc/css/LXGWNeoZhiSong/400" />
+    <script src="/home/theme-color.js" defer></script>
+    <!-- head-hints:end -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>85,481 星的 DeerFlow：模型可换，权限不能换 · EXPECTOPATRONUS</title>
+    <meta name="description" content="85,481 星的 DeerFlow 在 2.0 推倒重来，用沙箱、记忆和 23 个技能包撑起长任务 harness。配置列了 29 个模型，只有 3 个指向火山；但网关管理员等于主机代码执行权，默认只绑回环。" />
+    <meta name="keywords" content="Agent, 开源, Harness" />
+    <meta property="og:title" content="85,481 星的 DeerFlow：模型可换，权限不能换" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="85,481 星的 DeerFlow 在 2.0 推倒重来，用沙箱、记忆和 23 个技能包撑起长任务 harness。配置列了 29 个模型，只有 3 个指向火山；但网关管理员等于主机代码执行权，默认只绑回环。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <link rel="stylesheet" href="../article-common.css" data-shared-css="0d59321e71" />
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+    <!-- seo:begin -->
+    <link rel="canonical" href="https://expectopatronus00.github.io/post/gh-bytedance-deer-flow/gh-bytedance-deer-flow.html" />
+    <meta property="og:url" content="https://expectopatronus00.github.io/post/gh-bytedance-deer-flow/gh-bytedance-deer-flow.html" />
+    <meta property="og:site_name" content="EXPECTOPATRONUS" />
+    <meta property="og:image" content="https://expectopatronus00.github.io/post/gh-bytedance-deer-flow/cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"85,481 星的 DeerFlow：模型可换，权限不能换","description":"85,481 星的 DeerFlow 在 2.0 推倒重来，用沙箱、记忆和 23 个技能包撑起长任务 harness。配置列了 29 个模型，只有 3 个指向火山；但网关管理员等于主机代码执行权，默认只绑回环。","image":"https://expectopatronus00.github.io/post/gh-bytedance-deer-flow/cover.jpg","inLanguage":"zh-CN","author":{"@type":"Person","name":"expectopatronus","url":"https://expectopatronus00.github.io"},"publisher":{"@type":"Organization","name":"EXPECTOPATRONUS","url":"https://expectopatronus00.github.io"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://expectopatronus00.github.io/post/gh-bytedance-deer-flow/gh-bytedance-deer-flow.html"},"datePublished":"2026-11-18","dateModified":"2026-11-18"}</script>
+    <!-- seo:end -->
+</head>
+  <body>
+    <!-- skip-link:begin -->
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <!-- skip-link:end -->
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head" data-skip-target="1" tabindex="-1" id="main-content">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>85,481 星的 DeerFlow：模型可换，权限不能换</h1>
+      <p>85,481 星的 DeerFlow 6 月换过内核：2.0 与 1.x 不共享代码。README 宣称模型无关，29 个配置示例只有 3 个指向火山；真正不能随便换的是权限——网关管理员等于主机代码执行权，默认只听 127.0.0.1。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-18</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 5 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <picture data-cover-picture="1">
+        <source srcset="cover.webp" type="image/webp" />
+        <img loading="lazy" alt="85,481 星的 DeerFlow：模型可换，权限不能换 封面" src="cover.jpg" width="2400" height="1260" decoding="async" data-cover-ready="1" />
+      </picture>
+    </div>
+
+    <article class="article-body">
+<div class="section-marker" data-section="01">
+<h2>01 这件事</h2>
+<p><strong>85,481 星的 DeerFlow 在 2.0 换过一次内核：新版与 1.x 不共享任何代码。</strong>README 明说这是一次 <span class="hl">ground-up rewrite</span>，旧的 Deep Research 框架留在 <code>main-1.x</code> 分支，活跃开发全在 2.0。</p>
+<p>仓库 2025-05-07 创建，11 月 18 日仍在 push，MIT 许可证，主语言 Python。1,124 个未结条目拆开是 596 个 issue 与 528 个 PR，PR 占了近一半。</p>
+<p>字节把它的定位从「研究框架」改成了 super agent harness：运行时替 agent 备好文件系统、记忆、技能、沙箱和子代理，不必自己逐个拼装。</p>
+<p>README 顶部挂着两个信号：2 月 28 日 2.0 上线时拿到 GitHub Trending 日榜第一，说明页有英、中、日、法、俄、葡、韩共 7 种语言。星标跨两代产品累积，不能直接当成 2.0 的用户量。</p>
+<ul>
+<li>公开技能包：<code>skills/public/</code> 下 23 个目录，每个都有 SKILL.md</li>
+<li>文档：20 份 <code>docs/guide/</code> 指南，从配置到安全各占一篇</li>
+<li>版本：3 个正式 release、12 个 tag，最新是 11-04 的 v2.2.0</li>
+</ul>
+</div>
+
+<div class="section-marker" data-section="02">
+<h2>02 核心机制</h2>
+<p><strong>它的核心不是「会聊」，而是把长任务拆给一组有边界的执行单元。</strong>底层用 LangGraph 与 LangChain 编排，agent 可以规划、派生 sub-agent，并在沙箱里读写文件、跑 bash。</p>
+<p><code>config.example.yaml</code> 有 3,815 行、200,091 字节，默认启用的工具只有 10 个：三个联网搜索抓取工具，加七个文件与 shell 工具。</p>
+<table>
+<thead><tr><th>层</th><th>位置</th><th>体量</th><th>职责</th></tr></thead>
+<tbody>
+<tr><td>配置</td><td>config.example.yaml</td><td>3,815 行</td><td>模型、工具、权限开关</td></tr>
+<tr><td>执行</td><td>backend/</td><td>2,805 文件 / 45.63 MB</td><td>网关、调度、沙箱调用</td></tr>
+<tr><td>界面</td><td>frontend/</td><td>1,429 文件 / 24.06 MB</td><td>工作区与 TUI</td></tr>
+<tr><td>扩展</td><td>skills/public/</td><td>23 包 / 0.65 MB</td><td>可插拔技能</td></tr>
+</tbody>
+</table>
+<p>模型层走 OpenAI 兼容接口，README 的原话是 <span class="hl">model-agnostic</span>。示例配置列了 29 个模型条目，覆盖 OpenAI、Claude、Gemini、DeepSeek、Kimi、本地 Ollama 等。</p>
+<p>但同一份 README 紧接着给出火山引擎的 Coding Plan，点名 Doubao-Seed-2.0-Code、DeepSeek v3.2 和 Kimi 2.5。<strong>这是推荐，不是硬锁定</strong>：29 个示例里只有 3 个 API 端点指向火山方舟。</p>
+<p>真正决定行为的是配置里的开关，很多默认关着。token_budget 要打开才拦 token；pii_redaction 默认不脱敏；知识库默认不启用。装完不等于全开。</p>
+<ul>
+<li>预算：上限 200,000 token，八成警告、满额停</li>
+<li>输出外置：超过 12,000 字符的内容搬到 .tool-results</li>
+<li>循环检测：警告 3 次、硬停 5 次</li>
+<li>写前读与 harness_guard：默认开，语法错误会阻断</li>
+</ul>
+</div>
+
+<div class="section-marker" data-section="03">
+<h2>03 关键细节与数据</h2>
+<p><strong>版本节奏快得像 CI：v2.1.0 到 v2.2.0 只隔 41 天，官方说其间合了 1,068 个 PR。</strong></p>
+<table>
+<thead><tr><th>版本</th><th>发布</th><th>可核对的说明</th></tr></thead>
+<tbody>
+<tr><td>v2.0.0</td><td>2026-06-25</td><td>推倒重来的首版</td></tr>
+<tr><td>v2.1.0</td><td>2026-09-24</td><td>2.x 第二代正式版</td></tr>
+<tr><td>v2.2.0</td><td>2026-11-04</td><td>37,335 字符 / 11 条破坏性变更 / 430 个不同 PR 引用</td></tr>
+</tbody>
+</table>
+<p>v2.2.0 的说明里还藏着运维门槛：多进程部署必须接 Redis，凭据加密后要多配一个环境变量，定时任务默认每人最多两个并发。这些写在 Breaking changes 里，不是可选优化。</p>
+<p>完整 git tree 有 5,524 条目、4,881 个 blob、84,199,279 字节。体积大头不在技能，在前后端：backend 与 frontend 合占约 83%。</p>
+<table>
+<thead><tr><th>目录</th><th>文件数</th><th>体量</th><th>占总 blob</th></tr></thead>
+<tbody>
+<tr><td>backend/</td><td>2,805</td><td>45.63 MB</td><td>54.2%</td></tr>
+<tr><td>frontend/</td><td>1,429</td><td>24.06 MB</td><td>28.6%</td></tr>
+<tr><td>examples/</td><td>188</td><td>3.03 MB</td><td>3.6%</td></tr>
+<tr><td>docs/</td><td>130</td><td>2.54 MB</td><td>3.0%</td></tr>
+<tr><td>skills/</td><td>107</td><td>0.65 MB</td><td>0.8%</td></tr>
+</tbody>
+</table>
+<p>安全文档把边界写得很直白。默认只绑 127.0.0.1；要跨机访问得自己设 <code>BIND_HOST=0.0.0.0</code>，且先做完防护。</p>
+<p>消息入口也做进了 harness：飞书、Slack、Telegram、Discord、钉钉都能接。20 份指南还覆盖浏览器控制、MCP、长期记忆、可观测性和定时任务，比研究框架的说明书厚得多。</p>
+<ul>
+<li>Gateway 管理员等于主机代码执行权，stdio MCP 的 npx / uvx 白名单只是<span class="hl">纵深防御</span></li>
+<li>外部请求里的 system / developer 角色被 HTTP 400 拒绝，旧 checkpoint 里已注入的内容不会被清掉</li>
+<li>暴露到网络前要配 IP 白名单、认证反向代理、独立 VLAN，并持续跟更新</li>
+</ul>
+</div>
+
+<div class="section-marker" data-section="04">
+<h2>04 怎么用</h2>
+<p><strong>最短路径是让 Docker 跑起来，再把模型 key 填进向导生成的文件。</strong>README 给的本地流程拆开是五个动作。</p>
+<ul>
+<li><code>git clone</code> 后 <code>cd deer-flow</code>：拉仓库并进入目录</li>
+<li><code>make setup</code>：交互式向导写 config.yaml 与 .env，官方说约两分钟</li>
+<li><code>make check</code>：检查 Node.js 22+、pnpm、uv、nginx</li>
+<li><code>make docker-init</code> 与 <code>make docker-start</code>：拉沙箱镜像并起服务</li>
+<li><code>make doctor</code>：填完 key 后检查占位符配置</li>
+</ul>
+<p>浏览器开 localhost:2026。不想用 Docker 可以走 <code>make install</code> 加 <code>make dev</code>，但对依赖版本更挑。</p>
+<p>配置分散在三处：向导写的 config.yaml 与 .env，Capability Center 里管理的 MCP server 和 Skills，以及可选的 RAGFlow 私有知识库。最后一项默认关，要自己打开。</p>
+<p>把服务搬出本机之前还有一道手续：新实例没有账号，先通过 /setup 建管理员，再谈 IP 白名单和反向代理。顺序反了，等于先开门再配锁。</p>
+<p>选模型时 README 给了四条硬指标，不是随便一个兼容端点都能跑顺复杂任务。</p>
+<ul>
+<li>长上下文：10 万 token 以上，供深度研究和多步任务使用</li>
+<li>推理能力：支撑自适应规划与复杂拆解</li>
+<li>多模态输入：要读图和看视频就得模型支持</li>
+<li>工具调用：function calling 与结构化输出要稳定</li>
+</ul>
+<p>Claude Code、Codex、Cursor 用户还有一句式安装：把提示词交给编码 agent，它自己判断要不要 clone、读 Install.md、选 Docker，并在缺配置时停下来。</p>
+</div>
+
+<div class="section-marker" data-section="05">
+<h2>05 冷思考</h2>
+<p><strong>真正要付的成本不是星标，是升级和安全边界。</strong>41 天合 1,068 个 PR 的另一面，是 v2.2.0 说明里的 11 条破坏性变更：本地开发默认绑回环、凭据静态加密、多进程必须接 Redis。</p>
+<p>456 位贡献者、4,876 次提交，看起来不像一人项目。贡献者接口合计 4,554 次归属，口径与提交分页不同；排在首位的 MagicCube 有 610 次，也没到一言堂。</p>
+<p>模型可换是真的：29 个示例只有 3 个指向火山，README 也承认任何 OpenAI 兼容 LLM 都能接。<span class="hl">但网关管理员权限不可换</span>，它等价于主机代码执行，白名单挡不住能拉远程包的启动器。</p>
+<p>还有一条容易漏掉：外部注入的 system 消息即使被 400 拒绝，旧 checkpoint 里的残留也要开新会话才能避开，重启不会清理。</p>
+<p>数据面的默认值同样保守：知识库、PII 脱敏、token 预算三项都默认关。batteries included 更像把零件都装上，是否上电由运维决定。</p>
+<p>这也解释了为什么安全文档把 Gateway 管理员写得那么重。它有注册 stdio MCP 的权力，而 npx 与 uvx 这类启动器本来就用来拉远程包运行；白名单能挡参数，挡不住包本身。</p>
+<p><strong>判断：把它当本机可信环境里的长任务工作台，别急着当可公开的 Agent 服务。</strong>换模型是改一行配置；把沙箱、网关和凭据的边界立住，才是部署这套 harness 的真实工作量。</p>
+</div>
+
+<div class="info-box">
+<p><strong>数据核对</strong>（核对时间 2026-11-18）</p>
+<ul>
+<li>仓库：bytedance/deer-flow，MIT，Python，创建 2025-05-07，pushed 11-18</li>
+<li>API：85,481 星 / 12,054 fork；未结 1,124 = 596 issue + 528 PR</li>
+<li>版本：3 release / 12 tag；v2.2.0 于 11-04 发布，说明 11 条 breaking</li>
+<li>完整树：5,524 条目 / 4,881 blob / 84,199,279 字节（truncated=false）</li>
+<li>配置：3,815 行，29 个模型示例 / 3 个火山端点 / 10 个默认工具</li>
+<li>技能：23 个公开包；456 贡献者 / 4,876 提交</li>
+</ul>
+</div>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>字节开源的长程 SuperAgent harness，沙箱 + 记忆 + 工具</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/bytedance/deer-flow" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/bytedance/deer-flow" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 85,481 星 · MIT</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Agent">#Agent</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=Harness">#Harness</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">数据来源：GitHub API（api.github.com/repos/bytedance/deer-flow）+ 完整 git tree + README.md + docs/guide/security.md + v2.2.0 release。核对时间 2026-11-18。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

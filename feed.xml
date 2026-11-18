@@ -5,8 +5,48 @@
     <link>https://expectopatronus00.github.io/</link>
     <description>一个 AI 工具与实战的中文学习归档：原创踩坑记录 + 精选转载，每篇都标注来源。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 15 Nov 2026 14:31:41 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 18 Nov 2026 14:30:57 GMT</lastBuildDate>
     <atom:link href="https://expectopatronus00.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>12.1 万星、65% 已弃用：caveman 省的是输出</title>
+      <link>https://expectopatronus00.github.io/post/gh-juliusbrussee-caveman/gh-juliusbrussee-caveman.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-juliusbrussee-caveman/gh-juliusbrussee-caveman.html</guid>
+      <pubDate>Tue, 17 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>JuliusBrussee/caveman 121,188 星、Apache-2.0；仓库自己撤掉了旧版 65% 输出比，说那只是没有核对结果的历史估算。33.2% 输入下降来自 18 对私有 harness，0.46 倍成本只完成 85/169 个任务；skill 减的是输出，账单主要落在输入与缓存。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>30.6 万星、327 个技能：ECC 只有 Claude 全量</title>
+      <link>https://expectopatronus00.github.io/post/gh-affaan-m-ecc/gh-affaan-m-ecc.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-affaan-m-ecc/gh-affaan-m-ecc.html</guid>
+      <pubDate>Tue, 17 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>affaan-m/ECC 306,038 星、MIT，仓库实有 327 个技能、72 个 agent、98 条命令；README 的能力表却把 Claude 之外全标成 Partial。v2.2.3 停在 10 月 1 日，hook 要显式选择，跨 harness 还要隔离数据目录。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>85,481 星的 DeerFlow：模型可换，权限不能换</title>
+      <link>https://expectopatronus00.github.io/post/gh-bytedance-deer-flow/gh-bytedance-deer-flow.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-bytedance-deer-flow/gh-bytedance-deer-flow.html</guid>
+      <pubDate>Tue, 17 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>85,481 星的 DeerFlow 在 2.0 推倒重来，用沙箱、记忆和 23 个技能包撑起长任务 harness。配置列了 29 个模型，只有 3 个指向火山；但网关管理员等于主机代码执行权，默认只绑回环。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>47,427 星、317 个条目：官方目录只管 55 个插件</title>
+      <link>https://expectopatronus00.github.io/post/gh-anthropics-claude-plugins-official/gh-anthropics-claude-plugins-official.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-anthropics-claude-plugins-official/gh-anthropics-claude-plugins-official.html</guid>
+      <pubDate>Sun, 15 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>Anthropic 官方 Claude Code 插件目录仓：47,427 星、marketplace.json 索引 317 个插件但目录只有 57 个物理文件夹，0 Release、7 条 CI、bot 贡献 3,440 次提交，README 明确说不验证插件安全。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>67,855 星、30 个来源：免费层只覆盖五分之一</title>
+      <link>https://expectopatronus00.github.io/post/gh-mvanhorn-last30days-skill/gh-mvanhorn-last30days-skill.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-mvanhorn-last30days-skill/gh-mvanhorn-last30days-skill.html</guid>
+      <pubDate>Sun, 15 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>67,855 星的 last30days-skill 是 agent 搜索引擎，并行查 30 个来源按参与度排序。但 30 个来源里只有 5 个完全免费，SECURITY.md 补了 README 没提的 Wikidata 自动查询。（转载 · 来源：微信）</description>
+    </item>
     <item>
       <title>69,283 星对 61,245 星：两份自测都没写通过</title>
       <link>https://expectopatronus00.github.io/post/gh-anti-slop-duo/gh-anti-slop-duo.html</link>

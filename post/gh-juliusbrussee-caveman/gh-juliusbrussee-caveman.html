@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- head-hints:begin -->
+    <meta name="theme-color" content="#0b0d16" />
+    <link rel="preconnect" href="https://font.emtech.cc" crossorigin />
+    <link rel="dns-prefetch" href="https://font.emtech.cc" />
+    <link rel="stylesheet" href="https://font.emtech.cc/css/LXGWNeoZhiSong/400" />
+    <script src="/home/theme-color.js" defer></script>
+    <!-- head-hints:end -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>12.1 万星、65% 已弃用：caveman 省的是输出 · EXPECTOPATRONUS</title>
+    <meta name="description" content="JuliusBrussee/caveman 121,188 星、Apache-2.0；仓库自己撤掉了旧版 65% 输出比，说那只是没有核对结果的历史估算。33.2% 输入下降来自 18 对私有 harness，0.46 倍成本只完成 85/169 个任务；skill 减的是输出，账单主要落在输入与缓存。" />
+    <meta name="keywords" content="Skill, 开源, Agent, Claude Code, Token" />
+    <meta property="og:title" content="12.1 万星、65% 已弃用：caveman 省的是输出" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="JuliusBrussee/caveman 121,188 星、Apache-2.0；仓库自己撤掉了旧版 65% 输出比，说那只是没有核对结果的历史估算。33.2% 输入下降来自 18 对私有 harness，0.46 倍成本只完成 85/169 个任务；skill 减的是输出，账单主要落在输入与缓存。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <link rel="stylesheet" href="../article-common.css" data-shared-css="0d59321e71" />
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+    <!-- seo:begin -->
+    <link rel="canonical" href="https://expectopatronus00.github.io/post/gh-juliusbrussee-caveman/gh-juliusbrussee-caveman.html" />
+    <meta property="og:url" content="https://expectopatronus00.github.io/post/gh-juliusbrussee-caveman/gh-juliusbrussee-caveman.html" />
+    <meta property="og:site_name" content="EXPECTOPATRONUS" />
+    <meta property="og:image" content="https://expectopatronus00.github.io/post/gh-juliusbrussee-caveman/cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"12.1 万星、65% 已弃用：caveman 省的是输出","description":"JuliusBrussee/caveman 121,188 星、Apache-2.0；仓库自己撤掉了旧版 65% 输出比，说那只是没有核对结果的历史估算。33.2% 输入下降来自 18 对私有 harness，0.46 倍成本只完成 85/169 个任务；skill 减的是输出，账单主要落在输入与缓存。","image":"https://expectopatronus00.github.io/post/gh-juliusbrussee-caveman/cover.jpg","inLanguage":"zh-CN","author":{"@type":"Person","name":"expectopatronus","url":"https://expectopatronus00.github.io"},"publisher":{"@type":"Organization","name":"EXPECTOPATRONUS","url":"https://expectopatronus00.github.io"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://expectopatronus00.github.io/post/gh-juliusbrussee-caveman/gh-juliusbrussee-caveman.html"},"datePublished":"2026-11-18","dateModified":"2026-11-18"}</script>
+    <!-- seo:end -->
+</head>
+  <body>
+    <!-- skip-link:begin -->
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <!-- skip-link:end -->
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head" data-skip-target="1" tabindex="-1" id="main-content">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>12.1 万星、65% 已弃用：caveman 省的是输出</h1>
+      <p>12.1 万星的项目把「65%」划掉了：JuliusBrussee/caveman 在 HONEST-NUMBERS.md 里承认，那是没有提交过核对结果的固定输出比。今天它给出的三个大数字，分属输入、路由、脚本三本账。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-18</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 6 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <picture data-cover-picture="1">
+        <source srcset="cover.webp" type="image/webp" />
+        <img loading="lazy" alt="12.1 万星、65% 已弃用：caveman 省的是输出 封面" src="cover.jpg" width="2400" height="1260" decoding="async" data-cover-ready="1" />
+      </picture>
+    </div>
+
+    <article class="article-body">
+<div class="section-marker">01 · 这件事</div>
+<h2>12.1 万星的项目，把「65%」从统计口径里划掉了</h2>
+<p><strong>caveman 不是新 agent，它插进你已有的 agent，改写回复的措辞，再可选地压缩它读到的内容。</strong> JuliusBrussee/caveman 创建于 2026-04-04，Apache-2.0，主语言 Go，文档站在 docs.caveman.so。</p>
+<p>核对日 2026-11-18，仓库 121,188 星、7,083 fork，当天 07:28 仍有推送。未结条目 100 个，搜索接口拆开是 66 个 issue 与 34 个 PR，不能读成 100 个缺陷。</p>
+<p>比星数更值得记的是它自己撤掉的数字。README 说项目从 2026 年 4 月的一个玩笑起步；HONEST-NUMBERS.md 却写：早期统计版本按固定 65% 输出比估算，没有提交过经过核对的结果。</p>
+<p>现在状态行不再显示那个节省后缀，历史估算字段也被排除在汇总之外。<span class="hl">选题池里流传的「省 65% token」属于旧账，仓库自己已不再认。</span></p>
+<table>
+  <thead><tr><th>字段</th><th>核对值</th></tr></thead>
+  <tbody>
+    <tr><td>仓库 / 分支</td><td>JuliusBrussee/caveman · main</td></tr>
+    <tr><td>星标 / fork / 未结</td><td>121,188 / 7,083 / 100（66 issue + 34 PR）</td></tr>
+    <tr><td>建库 / 最近推送</td><td>2026-04-04 / 2026-11-18</td></tr>
+    <tr><td>许可证 / 主语言</td><td>Apache-2.0 / Go</td></tr>
+    <tr><td>最新标签</td><td>v4.1.0 · 2026-11-08</td></tr>
+    <tr><td>社区信号</td><td>Hacker News 帖 904 分；GitHub Trending 日榜第一（README 自述）</td></tr>
+  </tbody>
+</table>
+
+<div class="section-marker">02 · 核心机制</div>
+<h2>说话和读文件是两块石头，可以只装一块</h2>
+<p><strong>skill 只改输出；要改输入，得另装本地 proxy 与 engine。</strong>product-model.md 把路径分成两层，本地使用都不需要账号，只有托管命令要登录。</p>
+<ul>
+<li>Skill / hooks / plugins：让回复少寒暄，代码与报错照原样输出。</li>
+<li>CLI：安装组件、启动 agent、提供本地命令，连接可选的托管功能。</li>
+<li>Engine：识别载荷形状、套用压缩变换、估算 token、存放可恢复原文。</li>
+<li>Local proxy：把 provider 请求过一遍 Engine，并在本地 SQLite 记用量。</li>
+<li>Connected commands：需要账号，才能访问托管项目与网关。</li>
+</ul>
+<p>输出规则取自航空维修手册的 ASD-STE100：一句一意、最多 20 词、主动语态。not、never、no、only 与数字单位不许丢，代码、命令、路径、报错逐字保留。</p>
+<p>有损压缩走固定四步：先把原文字节存进本地 CCR，再给模型一个短版本，附一个可取回原文的句柄；存储、解析或体积检查失败就原样透传。<span class="hl">原文始终留在磁盘上，agent 需要时能自己取回。</span></p>
+<p>它不重写你的提示词。README 引 Adobe 的结论：把用户提问也改成 caveman 风格会让答案变差，所以规则只作用于回复侧。</p>
+<p>文档还定义了四种证据标签：inferred 是本地估算，benchmark_counterfactual 是配对基准，verified 只能由托管侧产生，<span class="hl">本地工具不能自己发出「已验证」</span>。</p>
+<p>INSTALL.md 列了约 30 个 agent 的入口，但 auto-activate 一栏多数写着 No；Codex 用 <code>$caveman</code> 而不是 <code>/caveman</code>，脚本模式默认关闭。</p>
+
+<div class="section-marker">03 · 关键细节与数据</div>
+<h2>33.2%、0.46 倍、397→76：三本账不能相加</h2>
+<p><strong>README 首页的主推数字，测的分别是输入、路由和脚本复用，分母完全不同。</strong>逐个看方法，才知道哪条能被自己复现。</p>
+<table>
+  <thead><tr><th>数字</th><th>测的是什么</th><th>必须一起读的边界</th></tr></thead>
+  <tbody>
+    <tr><td>33.2% 更少输入</td><td>18 对配对运行，885,793 → 591,673 token</td><td>6 个合成大输出任务；私有 harness，仓库不可复现</td></tr>
+    <tr><td>0.46× 成本</td><td>85 对任务，43.7% 对 44.3% 解出率</td><td>只完成 85/169；目录价，区间约 ±7 个百分点</td></tr>
+    <tr><td>397 → 76 token</td><td>一次测试输出，Blocks 的 test-summary</td><td>blocks v0.1.0-rc.5，仅 Python，无沙箱</td></tr>
+    <tr><td>3% / 35%</td><td>对「Answer concisely.」再省的输出</td><td>n=10，3.1.0 规则，改版后未重跑；规则本身约 1,160 输入 token</td></tr>
+  </tbody>
+</table>
+<p>33.2% 那次共 54 次 agent 运行：直接版与 caveman 版各 18 次，18/18 答案正确。HTML 用例没有压缩器，反而多花 9.9%；区间是 14.6%–48.5%。</p>
+<p>Auto 的模型配比也写在基准里：基线 100% 的请求用 Opus xhigh，Auto 则有 87% 落到 Opus medium、8% 到 high、5% 到 Sonnet 5.5；agent 超时从 9 次降到 1 次。</p>
+<p>外部 A/B 更说明账单结构。JetBrains 86 个真实任务测出输出少 8.5%、质量无显著差异（p=0.82）；LemonCrow 每臂 300 次跑，输出少 44.1%，总成本却多 0.06%。</p>
+<table>
+  <thead><tr><th>来源</th><th>结果</th><th>口径</th></tr></thead>
+  <tbody>
+    <tr><td>JetBrains</td><td>输出 −8.5%，p=0.82</td><td>86 个真实编码任务，配对 A/B</td></tr>
+    <tr><td>Elastic Labs</td><td>响应 token −63.6%</td><td>8 个场景，为 Elasticsearch 改写过的模式</td></tr>
+    <tr><td>Adobe Research</td><td>成本降 1.4–2.4 倍</td><td>八个模型、五个数据集，改的是输出风格</td></tr>
+    <tr><td>edubraqd</td><td>净影响 ±0.2%</td><td>662 个会话，输出仅占总 token 的 0.3%</td></tr>
+  </tbody>
+</table>
+<p>README 顶部还有「比 Codex 每解一题便宜 21%」：90/192 次两边都解出，$1.21 对 $1.52。脚注写明那是开启三项基准专用设置的测量版，发货版本把三项关掉了。</p>
+<p>另一个头条数字来自 Terminal-Bench 4：GPT-6.1 Sol 对 Codex，两边都解出 90/192 题，每题 1.21 对 1.52 美元；Opus 5.5 对 Claude Code 是 97/180 对 83/177，95% 区间 0.70–1.02 倍，落在噪声内。</p>
+<div class="info-box">数据核对：数字来自 api.github.com 仓库与 search 接口，以及仓库 README、HONEST-NUMBERS.md、AUTO-BENCHMARK.md、WRAP-BENCHMARK.md、SECURITY.md、INSTALL.md 原文。
+<ul>
+<li>身份：121,188 星 / 7,083 fork / 100 未结（66 issue + 34 PR）/ 建库 2026-04-04 / pushed 11-18 / Apache-2.0。</li>
+<li>版本：最新 v4.1.0 于 11-08；同批还有 cli-v4.1.0、bin-v4.1.0、middleware-ts-v1.1.0 等并行标签。</li>
+<li>边界：33.2% 用私有 harness；0.46× 只配对 85/169；397→76 属 blocks rc.5。本文未安装、未跑基准。</li>
+</ul>
+<p>核对时间 2026-11-18；星标与 issue 为实时值，第三方数据取自仓库转述。</p>
+</div>
+
+<div class="section-marker">04 · 怎么用</div>
+<h2>从最小的一块开始，先量自己的账单</h2>
+<p><strong>六块石头都有独立开关，默认全开不是必须的。</strong><code>caveman status</code> 看当前状态，<code>caveman off browse</code> 只关网页压缩那一块。</p>
+<table>
+  <thead><tr><th>目标</th><th>最小路径</th></tr></thead>
+  <tbody>
+    <tr><td>只要回复短一些</td><td><code>npx skills add JuliusBrussee/caveman -g</code>，不装 proxy</td></tr>
+    <tr><td>可恢复的本地压缩</td><td><code>caveman &lt;agent&gt;</code>，原文留在本地 CCR 存储</td></tr>
+    <tr><td>只要原样计量</td><td><code>caveman wrap --off &lt;agent&gt;</code></td></tr>
+    <tr><td>接到自己的应用</td><td>改 provider SDK 的 base URL，用 <code>@caveman-ai/sdk</code></td></tr>
+  </tbody>
+</table>
+<p>完整安装是 <code>npx @caveman-ai/cli@latest</code>，CLI 要 Node.js 22.13+。npm 12 上直接跑 git 包得加 <code>--allow-git=root</code>，否则会报 EALLOWGIT。</p>
+<p>指令按宿主不同：Claude Code 用 <code>/caveman</code>，Codex 用 <code>$caveman</code>；<code>claude -p</code> 与 Agent SDK 默认关闭，要用 <code>CAVEMAN_DEFAULT_MODE</code> 打开。</p>
+<p>Blocks 与 browse 是可加可减的小石头。README 的例子里，200 行表格用 Browse 是 121 token，Playwright 快照是 15,704；但小表单反而差 2.3 倍。Blocks 公开的三个用例中两个赢，grep-defs 输给裸 grep。</p>
+<p>不要直接采用仓库估算。<code>caveman trial -- claude</code> 做同任务 A/B，再对照供应商账单页；HONEST-NUMBERS.md 给的判据只有一句：同任务更贵，就为这个负载关掉。</p>
+<ul>
+<li>只担心遥测：首次交互命令会打印告知，<code>caveman telemetry off</code> 或 <code>DO_NOT_TRACK=1</code> 可长期关闭。</li>
+<li>只不想路由：不登录就没有 Auto；已登录用 <code>caveman off routing</code>。</li>
+<li>网关模式不想过云：<code>caveman providers cloud off</code>，请求回到自己的 key。</li>
+</ul>
+
+<div class="section-marker">05 · 冷思考</div>
+<h2>能省输出不等于能省账单，更不等于能放心路由</h2>
+<p><strong>最硬的质疑是：agent 会话的钱主要花在输入与缓存重读，一句输出风格规则碰不到。</strong>LemonCrow 的原始数据里，初始缓存上下文每轮还多了 1,532 token。</p>
+<ul>
+<li>#145：简短编码问答出现净亏损，固定规则开销超过省下的输出。</li>
+<li>#506：按请求计费的 Copilot，答案再短也是同一次请求，省不了额度。</li>
+<li>#550：一次 Cursor A/B 是 430 万对 100 万 token、墙钟时间翻倍；作者写明不可复现。</li>
+<li>仓库承认 <code>evals/score_fidelity.py</code> 已存在，但没有提交经过评审的保真快照，所以不发布质量等价结论。</li>
+</ul>
+<p>Auto 也要单独算账。0.46 倍主要来自把 Opus xhigh 降到 medium，不是换了便宜模型；85 对任务只差 0.5 个百分点，区间约 ±7，原始轨迹不在仓库。</p>
+<p>隐私边界要读 SECURITY.md：<span class="hl">选 Auto 会把最近一次提问原文（最多 128 KiB）和上一问发给 Caveman Cloud</span>，免费层可能留存；托管网关模式下整条请求连系统提示与代码都过云。</p>
+<p>路由发往云端的还有 11 个 agent 头字段，Codex 的子代理与会话标识最长可到 16 KiB。托管网关会把仓库 owner/name 与分支名放进 x-cave-tags，分支名可能带客户名，可用 <code>CAVEMAN_WORK_TAGS=0</code> 关掉。</p>
+<p>CLI 遥测默认开启：命令名、token 增量、随机安装 ID、系统与 IP 都会上传，IP 90 天清除、事件 13 个月删除。项目说不含提示词与代码，但它是「假名」而非匿名。</p>
+<p>许可证也有边界：README 写明整个仓库是 Apache-2.0，但「Caveman」名称与石头 logo 属于 Julius Brussee 的商标，不在这份授权里。</p>
+<p>结论不是别装。把 skill 当一个可随时关掉的格式开关，用供应商账单验；proxy 只在你真有 60 KB 级工具输出时开；Auto 当独立实验，别和省 token 算成一笔账。</p>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>把「少说话、少读文件」拆成可单独开关的 agent skill 与本地压缩代理，Apache-2.0</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/JuliusBrussee/caveman" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/JuliusBrussee/caveman" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 121,188 星、Apache-2.0，skill + 本地 proxy 两层</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Skill">#Skill</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=Agent">#Agent</a>
+      <a href="../../home/home.html?q=Claude%20Code">#Claude Code</a>
+      <a href="../../home/home.html?q=Token">#Token</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">数据来源：api.github.com 仓库与 search 接口，及 README、HONEST-NUMBERS.md、AUTO-BENCHMARK.md、WRAP-BENCHMARK.md、SECURITY.md、INSTALL.md 原文；核对时间 2026-11-18。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
