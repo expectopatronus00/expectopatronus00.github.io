@@ -5,8 +5,32 @@
     <link>https://expectopatronus00.github.io/</link>
     <description>一个 AI 工具与实战的中文学习归档：原创踩坑记录 + 精选转载，每篇都标注来源。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 18 Nov 2026 14:30:57 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 21 Nov 2026 11:18:32 GMT</lastBuildDate>
     <atom:link href="https://expectopatronus00.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>1,686 星、15 天：poki 的 MCP 已停更</title>
+      <link>https://expectopatronus00.github.io/post/gh-josssphzhou-poki/gh-josssphzhou-poki.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-josssphzhou-poki/gh-josssphzhou-poki.html</guid>
+      <pubDate>Thu, 19 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>poki 建库 15 天拿到 1,686 星，能让 iPhone 读屏、点击、输入。但 README 已把早期 MCP 标为不再更新，主线换成装在手机上的 app；版本口径有 badge 0.4.4、CHANGELOG 0.4.2、release 0.4.6 三套。验证文档自曝真机点按 68/70、底部栏 0/4。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>13 万星、34 个 agent：Orca 开源的是调度台</title>
+      <link>https://expectopatronus00.github.io/post/gh-stablyai-orca/gh-stablyai-orca.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-stablyai-orca/gh-stablyai-orca.html</guid>
+      <pubDate>Thu, 19 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>stablyai/orca 用 MIT 许可把「一队 CLI agent 各占 worktree 并行跑」做成桌面应用，点名支持 34 个 agent。但仓库写明用的是「你自己的订阅」。未结条目 search 拆出 5,305、metadata 报 8,729，两个口径对不上。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>8,004 星压发送、42,517 星管记忆：基准不能直接相减</title>
+      <link>https://expectopatronus00.github.io/post/gh-context-compression-duo/gh-context-compression-duo.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-context-compression-duo/gh-context-compression-duo.html</guid>
+      <pubDate>Thu, 19 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>billion-context 用代理把发给模型的历史压到 30.5k，OpenViking 把记忆做成可浏览的 viking:// 文件系统。前者第三方评测里逐字检索从 69% 掉到 27%，后者明确警告记忆与 RAG 分数不能混用。一个管发送，一个管留存，不是同一道题。（转载 · 来源：微信）</description>
+    </item>
     <item>
       <title>12.1 万星、65% 已弃用：caveman 省的是输出</title>
       <link>https://expectopatronus00.github.io/post/gh-juliusbrussee-caveman/gh-juliusbrussee-caveman.html</link>

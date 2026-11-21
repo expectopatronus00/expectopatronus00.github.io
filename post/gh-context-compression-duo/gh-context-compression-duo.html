@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- head-hints:begin -->
+    <meta name="theme-color" content="#0b0d16" />
+    <link rel="preconnect" href="https://font.emtech.cc" crossorigin />
+    <link rel="dns-prefetch" href="https://font.emtech.cc" />
+    <link rel="stylesheet" href="https://font.emtech.cc/css/LXGWNeoZhiSong/400" />
+    <script src="/home/theme-color.js" defer></script>
+    <!-- head-hints:end -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>8,004 星压发送、42,517 星管记忆：基准不能直接相减 · EXPECTOPATRONUS</title>
+    <meta name="description" content="billion-context 用代理把发给模型的历史压到 30.5k，OpenViking 把记忆做成可浏览的 viking:// 文件系统。前者第三方评测里逐字检索从 69% 掉到 27%，后者明确警告记忆与 RAG 分数不能混用。一个管发送，一个管留存，不是同一道题。" />
+    <meta name="keywords" content="Agent, 上下文, 开源, 横评" />
+    <meta property="og:title" content="8,004 星压发送、42,517 星管记忆：基准不能直接相减" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="billion-context 用代理把发给模型的历史压到 30.5k，OpenViking 把记忆做成可浏览的 viking:// 文件系统。前者第三方评测里逐字检索从 69% 掉到 27%，后者明确警告记忆与 RAG 分数不能混用。一个管发送，一个管留存，不是同一道题。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <link rel="stylesheet" href="../article-common.css" data-shared-css="0d59321e71" />
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+    <!-- seo:begin -->
+    <link rel="canonical" href="https://expectopatronus00.github.io/post/gh-context-compression-duo/gh-context-compression-duo.html" />
+    <meta property="og:url" content="https://expectopatronus00.github.io/post/gh-context-compression-duo/gh-context-compression-duo.html" />
+    <meta property="og:site_name" content="EXPECTOPATRONUS" />
+    <meta property="og:image" content="https://expectopatronus00.github.io/post/gh-context-compression-duo/cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"8,004 星压发送、42,517 星管记忆：基准不能直接相减","description":"billion-context 用代理把发给模型的历史压到 30.5k，OpenViking 把记忆做成可浏览的 viking:// 文件系统。前者第三方评测里逐字检索从 69% 掉到 27%，后者明确警告记忆与 RAG 分数不能混用。一个管发送，一个管留存，不是同一道题。","image":"https://expectopatronus00.github.io/post/gh-context-compression-duo/cover.jpg","inLanguage":"zh-CN","author":{"@type":"Person","name":"expectopatronus","url":"https://expectopatronus00.github.io"},"publisher":{"@type":"Organization","name":"EXPECTOPATRONUS","url":"https://expectopatronus00.github.io"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://expectopatronus00.github.io/post/gh-context-compression-duo/gh-context-compression-duo.html"},"datePublished":"2026-11-20","dateModified":"2026-11-20"}</script>
+    <!-- seo:end -->
+</head>
+  <body>
+    <!-- skip-link:begin -->
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <!-- skip-link:end -->
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head" data-skip-target="1" tabindex="-1" id="main-content">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>8,004 星压发送、42,517 星管记忆：基准不能直接相减</h1>
+      <p>billion-context 8,004 星，OpenViking 42,517 星：一个压请求，一个建记忆库。两份 README 都亮出八成以上分数，但一套警告记忆与 RAG 不可混算，另一套自曝逐字检索 69%→27%。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-20</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 5 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <picture data-cover-picture="1">
+        <source srcset="cover.webp" type="image/webp" />
+        <img loading="lazy" alt="8,004 星压发送、42,517 星管记忆：基准不能直接相减 封面" src="cover.jpg" width="2400" height="1260" decoding="async" data-cover-ready="1" />
+      </picture>
+    </div>
+
+    <article class="article-body">
+<div class="section-marker" data-section="01">
+<h2>01 这件事</h2>
+<p><strong>两条同在 11 月 11 日进池的候选，其实不在同一层干活。</strong>billion-context 拦在客户端与模型 API 之间，OpenViking 落在 agent 的记忆与知识层。一个改的是发出去的请求，一个改的是留得下来的数据。</p>
+<p>billion-context 有 8,004 星、645 fork，2026-08-06 创建，11 月 20 日仍在推送。主语言 TypeScript，最新发布 v0.1.216。OpenViking 有 42,517 星、3,530 fork，1 月 5 日创建，同一天也在推送，主语言 Python。</p>
+<table>
+<thead><tr><th>仓库</th><th>星 / fork</th><th>创建</th><th>许可证</th><th>最新版本</th></tr></thead>
+<tbody>
+<tr><td>ranxianglei/billion-context</td><td>8,004 / 645</td><td>2026-08-06</td><td>MIT 加署名条款</td><td>v0.1.216 · 11-17</td></tr>
+<tr><td>volcengine/OpenViking</td><td>42,517 / 3,530</td><td>2026-01-05</td><td>AGPL-3.0</td><td>v0.5.5 · 11-13</td></tr>
+</tbody>
+</table>
+<p>未结条目的构成也不相同。billion-context 的 1,479 个拆成 880 个 issue 与 599 个 PR；OpenViking 的 1,555 个里，PR 有 1,051 个，超过三分之二。<strong>前者更像报告问题，后者更像贡献流程在排队。</strong></p>
+<p>完整文件树分别是 2,505 个 blob / 55.57 MB 与 7,965 个 blob / 137.81 MB，两棵树的 truncated 都是 false。体积差主要来自文档和前端：OpenViking 单是 <code>docs/</code> 就有 919 个文件、约 60 MB。</p>
+</div>
+
+<div class="section-marker" data-section="02">
+<h2>02 核心机制</h2>
+<p><strong>一个重写请求，一个重写存储，两条路并不互斥。</strong>billion-context 是夹在任意 agent 与模型 API 之间的代理，改写 Anthropic 与 OpenAI 流式响应；压缩由模型自己决定何时触发，不是硬性截断。</p>
+<p>代理向对话注入四个上下文工具，压缩动作在服务端执行，折叠过的区间留在历史里直到被恢复。</p>
+<ul>
+<li><code>compress</code>：把一段消息折成详细摘要</li>
+<li><code>decompress</code>：需要原细节时还原该段</li>
+<li><code>search_context</code>：在摘要与可见消息里检索</li>
+<li><code>acp_status</code>：查看用量与可压缩区间</li>
+</ul>
+<p>README 把健康会话的 prefix-cache 命中率定为 <span class="hl">96–99%</span>，压缩本身的额外成本 ≤2%。默认按增长量触发：初始内容之后每多约 50K token  nudging 一次，输入越过窗口时另有预检兜底。</p>
+<p>OpenViking 的做法是把 agent 知道的一切挂到 <code>viking://</code> 虚拟文件系统下。文档、记忆、技能各有 URI，代理可以像操作文件一样 <code>ls</code>、<code>tree</code>、<code>read</code>、<code>grep</code>，人也能直接打开目录改内容。</p>
+<table>
+<thead><tr><th>层级</th><th>内容</th><th>用途</th></tr></thead>
+<tbody>
+<tr><td>L0 Abstract</td><td>一句话摘要</td><td>快速判断相关性</td></tr>
+<tr><td>L1 Overview</td><td>核心信息与场景</td><td>规划要不要展开</td></tr>
+<tr><td>L2 Details</td><td>原始全文</td><td>确定要读时才加载</td></tr>
+</tbody>
+</table>
+<p>提交会话会把对话归档，并把抽出的记忆写成可编辑的 Markdown；开启 VikingBot 后，<code>ov compile</code> 还能把素材编成 wiki、知识图谱或报告。</p>
+</div>
+
+<div class="section-marker" data-section="03">
+<h2>03 关键细节与数据</h2>
+<p><strong>两份基准都亮出高分，也都在同一页写下了不成立的场合。</strong>billion-context 仓库内挂着一份自称独立第三方的 1,500 条评测，每项 500 条，测的是 v0.1.202，底座是 DeepSeek V4.1 Flash。</p>
+<table>
+<thead><tr><th>基准</th><th>billion-context</th><th>对照</th><th>边界</th></tr></thead>
+<tbody>
+<tr><td>LongMemEval-S</td><td>79.20%，输入 30.5k</td><td>full 83.20%，最佳 RAG 62.60%</td><td>独立会话成本 −71.1%</td></tr>
+<tr><td>ContextBench</td><td>Utilized F1 0.3097</td><td>full 0.2928</td><td>成本 $4.61 对 $11.05</td></tr>
+<tr><td>MemoryAgentBench</td><td>TTL 18.58%，全量存活</td><td>full 在 199/199 条溢出</td><td>宏平均 43.54%，低于 rerank 55.21%</td></tr>
+</tbody>
+</table>
+<p>第三项里还有一处反向数据：逐字 needle 问答从 full 的 69.00% 掉到 27.00%。<strong>语义压缩省下了窗口，也抹掉了原句。</strong>评测文档因此把静态逐字检索判给索引式 RAG。</p>
+<p>OpenViking 的 README 报的是 0.3.22 版的三组 LoCoMo 结果，而仓库最新发布已经是 v0.5.5。基准文档还把「官方报告」和日常评测脚本明确分成两条路径。</p>
+<table>
+<thead><tr><th>接入方式</th><th>原生记忆 → 加 OpenViking</th></tr></thead>
+<tbody>
+<tr><td>OpenClaw</td><td>24.20% → 82.08%</td></tr>
+<tr><td>Hermes</td><td>33.38% → 82.86%</td></tr>
+<tr><td>Claude Code</td><td>57.21% → 80.32%</td></tr>
+</tbody>
+</table>
+<p>README 同时给出输入 token 下降 34.3–91.0%、查询延迟下降 58.45–66.10%，以及 tau2-bench 零售 +6.87pp、航空 +11.87pp。这些数字来自火山引擎 5 月 29 日的报告，评测底座是 Doubao 2.0 Pro 加 Doubao-embedding-vision-251215。</p>
+<p>OpenViking 自己的 <code>benchmark/README.md</code> 开篇就写「别用 RAG 去评记忆」。它还提醒：mem0 对照用的判定标准更宽松，分数不可直接比；报告没有钉死每个运行参数；RAG 流程默认的 <code>all</code> 与 <code>del</code> 会递归删掉当前身份可访问的资源树。</p>
+<div class="info-box">
+<p><strong>数据核对</strong>（核对时间 2026-11-20）</p>
+<ul>
+<li>仓库：billion-context 8,004★ / 645 fork，NOASSERTION（LICENSE 为 MIT + 署名条款），pushed 11-20</li>
+<li>OpenViking 42,517★ / 3,530 fork，AGPL-3.0，pushed 11-20，官网 openviking.ai</li>
+<li>未结拆分：880 issue + 599 PR / 504 issue + 1,051 PR</li>
+<li>版本：214 tag / v0.1.216；151 tag / v0.5.5</li>
+<li>完整树：2,505 blob / 55.57 MB；7,965 blob / 137.81 MB</li>
+<li>目录：bili tests/ 1,451 文件；OV docs/ 919 文件约 60 MB，SKILL.md 69 份</li>
+<li>性能数字均来自两仓库 README 与其内链评测文档，未在本文环境复现</li>
+</ul>
+</div>
+</div>
+
+<div class="section-marker" data-section="04">
+<h2>04 怎么用</h2>
+<p><strong>压缩层可以十分钟接上，数据库层要先备好模型和服务器。</strong>billion-context 的通用安装只有一条命令：<code>npm install -g billion-context --prefix=~/.local</code>，之后得到 <code>bili</code> 命令。</p>
+<p>它给出三种接法，按侵入程度递减。</p>
+<ul>
+<li>原生插件：<code>bili plugin install pi</code> 等，代理住进客户端</li>
+<li>启动器：<code>bili codex</code> 之类，一条命令同时起代理和客户端</li>
+<li>改写 URL：把 baseURL 前缀改成 <code>http://localhost:8787/bili/</code></li>
+</ul>
+<p>三种模式都可逆。但原生插件与旧版独立扩展互斥，同时启用会双重压缩；Codex 的插件安装只暴露四个工具，不代理自身流量，必须先启动 bili。<span class="hl">README 还点名 Claude Desktop 的 Code 页会绕过代理。</span></p>
+<p>OpenViking 的最小自托管条件是 uv、Python 3.10+，以及能提供 embedding 模型与 VLM 的服务。向导会把模型配置写进 <code>~/.openviking/ov.conf</code>，服务在前台运行。</p>
+<ul>
+<li><code>uv tool install openviking --upgrade</code> 安装服务端</li>
+<li><code>openviking-server init</code> 选择模型提供方并写配置</li>
+<li><code>ov add-resource</code> 导入仓库，<code>ov find</code> 做检索</li>
+<li>或用 <code>curl -fsSL https://openviking.ai/install</code> 装记忆插件</li>
+</ul>
+<p>不想自建可以用官方托管，README 写明首批 50 个文件免费。安装脚本只支持 macOS 与 Linux，需要 Node.js 18+ 和 curl；Windows 目前给的是桌面应用测试版。</p>
+</div>
+
+<div class="section-marker" data-section="05">
+<h2>05 冷思考</h2>
+<p><strong>星标差五倍，不代表成熟度也差五倍。</strong>billion-context 有 214 个 tag、187 位贡献者，README 的 Status 一节仍写着 Early：协议与压缩只过了 500 多条 mock 测试，真实模型集成测试是下一阶段。</p>
+<p>许可证也不是一眼能看穿的。billion-context 的 LICENSE 主体是 MIT，但末尾追加了署名条款：用户可见的产品要在首页、文档或致谢页说明使用了它并给出链接。GitHub 接口因此把许可证标成 NOASSERTION。</p>
+<p>OpenViking 主项目是 AGPLv3，CLI、examples 是 Apache-2.0，Hermes 插件保留 MIT；README 另外禁止整体重写后重新开源，跨语言翻译需书面授权。<strong>「开源」在这两个仓库都不是单一答案。</strong></p>
+<p>信任边界同样要具体看。billion-context 的启动器可能装证书做 MITM，代理默认只听回环，但 <code>--host 0.0.0.0</code> 之后明确没有认证。OpenViking 要区分 root key 与用户 key，README 说 root key 读写不了记忆；自托管的 ACL 是可选开关，暴露到公网前要先配认证。</p>
+<p>两套分数不能直接相减：一边评的是多轮编码代理的证据利用率，一边评的是跨会话用户记忆准确率；底座模型、任务集和判定标准都不同。把它们排进同一张榜单，比星标排序更容易误导。</p>
+<table>
+<thead><tr><th>你的处境</th><th>选谁</th><th>理由</th></tr></thead>
+<tbody>
+<tr><td>单个超长会话被窗口打断</td><td>billion-context</td><td>压缩发生在发送前，不动客户端历史</td></tr>
+<tr><td>跨会话记忆要能查看和编辑</td><td>OpenViking</td><td>viking:// 可浏览，提交后落 Markdown</td></tr>
+<tr><td>要逐字检索固定原文</td><td>两者都不优先</td><td>压缩会抹掉原句，RAG 对照分数更高</td></tr>
+<tr><td>产品要二次分发</td><td>先读许可证</td><td>一个要署名，一个是 AGPL 加翻译限制</td></tr>
+</tbody>
+</table>
+<p><strong>判断：先用压缩层救当前的窗口，再按可审计性需求决定是否引入上下文数据库。</strong>它们解决的是发送与留存两端的问题，真正的成本不在安装，而在基准口径、凭据范围和许可证条款。</p>
+</div>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>一个压发送、一个管留存的两种上下文方案</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/ranxianglei/billion-context" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/ranxianglei/billion-context" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub · billion-context</span>
+        <span class="pd">repo · 8,004 星 · MIT 加署名条款</span>
+      </a>
+      <a class="plat-card" href="https://github.com/volcengine/OpenViking" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub · OpenViking</span>
+        <span class="pd">repo · 42,517 星 · AGPL-3.0</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Agent">#Agent</a>
+      <a href="../../home/home.html?q=%E4%B8%8A%E4%B8%8B%E6%96%87">#上下文</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=%E6%A8%AA%E8%AF%84">#横评</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">数据来源：GitHub API（api.github.com 仓库 / search/issues / tags / contributors / releases）+ 完整 git tree + 两份 README + benchmarks/third-party-1500/README.md + benchmark/README.md + LICENSE。核对时间 2026-11-20。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

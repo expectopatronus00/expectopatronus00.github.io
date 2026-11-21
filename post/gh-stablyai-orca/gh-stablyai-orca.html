@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- head-hints:begin -->
+    <meta name="theme-color" content="#0b0d16" />
+    <link rel="preconnect" href="https://font.emtech.cc" crossorigin />
+    <link rel="dns-prefetch" href="https://font.emtech.cc" />
+    <link rel="stylesheet" href="https://font.emtech.cc/css/LXGWNeoZhiSong/400" />
+    <script src="/home/theme-color.js" defer></script>
+    <!-- head-hints:end -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>13 万星、34 个 agent：Orca 开源的是调度台 · EXPECTOPATRONUS</title>
+    <meta name="description" content="stablyai/orca 用 MIT 许可把「一队 CLI agent 各占 worktree 并行跑」做成桌面应用，点名支持 34 个 agent。但仓库写明用的是「你自己的订阅」。未结条目 search 拆出 5,305、metadata 报 8,729，两个口径对不上。" />
+    <meta name="keywords" content="Agent, 编排, 开源, GitHub" />
+    <meta property="og:title" content="13 万星、34 个 agent：Orca 开源的是调度台" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="stablyai/orca 用 MIT 许可把「一队 CLI agent 各占 worktree 并行跑」做成桌面应用，点名支持 34 个 agent。但仓库写明用的是「你自己的订阅」。未结条目 search 拆出 5,305、metadata 报 8,729，两个口径对不上。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <link rel="stylesheet" href="../article-common.css" data-shared-css="0d59321e71" />
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+    <!-- seo:begin -->
+    <link rel="canonical" href="https://expectopatronus00.github.io/post/gh-stablyai-orca/gh-stablyai-orca.html" />
+    <meta property="og:url" content="https://expectopatronus00.github.io/post/gh-stablyai-orca/gh-stablyai-orca.html" />
+    <meta property="og:site_name" content="EXPECTOPATRONUS" />
+    <meta property="og:image" content="https://expectopatronus00.github.io/post/gh-stablyai-orca/cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"13 万星、34 个 agent：Orca 开源的是调度台","description":"stablyai/orca 用 MIT 许可把「一队 CLI agent 各占 worktree 并行跑」做成桌面应用，点名支持 34 个 agent。但仓库写明用的是「你自己的订阅」。未结条目 search 拆出 5,305、metadata 报 8,729，两个口径对不上。","image":"https://expectopatronus00.github.io/post/gh-stablyai-orca/cover.jpg","inLanguage":"zh-CN","author":{"@type":"Person","name":"expectopatronus","url":"https://expectopatronus00.github.io"},"publisher":{"@type":"Organization","name":"EXPECTOPATRONUS","url":"https://expectopatronus00.github.io"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://expectopatronus00.github.io/post/gh-stablyai-orca/gh-stablyai-orca.html"},"datePublished":"2026-11-20","dateModified":"2026-11-20"}</script>
+    <!-- seo:end -->
+</head>
+  <body>
+    <!-- skip-link:begin -->
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <!-- skip-link:end -->
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head" data-skip-target="1" tabindex="-1" id="main-content">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>13 万星、34 个 agent：Orca 开源的是调度台</h1>
+      <p>stablyai/orca 有 130,475 星、8,304 fork，MIT 许可，2026-03-17 建库，11 月 20 日仍在推送。它让一队 CLI agent 各占一个 worktree 并行跑，但模型订阅仍走你自己的账号。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-20</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 6 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <picture data-cover-picture="1">
+        <source srcset="cover.webp" type="image/webp" />
+        <img loading="lazy" alt="13 万星、34 个 agent：Orca 开源的是调度台 封面" src="cover.jpg" width="2400" height="1260" decoding="async" data-cover-ready="1" />
+      </picture>
+    </div>
+
+    <article class="article-body">
+<div class="section-marker" data-section="01">
+<h2>01 这件事</h2>
+<p><strong>13 万星的开源项目，把「并行跑一群 coding agent」做成了桌面应用。</strong>stablyai/orca 在 2026-03-17 建库，MIT 许可，主语言 TypeScript，官网 orca.dev。核对时有 130,475 星、8,304 fork，11 月 20 日仍在推送。</p>
+<p>它描述的能力很直接：把大任务交给一个协调 agent，由它拆活，在每个 worker 独立的 worktree 里并行执行，再把结果汇总回你面前。Chat 界面和原生 CLI 之间可以来回切，上下文不丢。</p>
+<table>
+<thead><tr><th>项目</th><th>核对值</th></tr></thead>
+<tbody>
+<tr><td>仓库 / 许可</td><td>stablyai/orca · MIT</td></tr>
+<tr><td>星标 / fork</td><td>130,475 / 8,304</td></tr>
+<tr><td>创建 / 推送</td><td>2026-03-17 / 2026-11-20</td></tr>
+<tr><td>主语言 / 类型</td><td>TypeScript · 桌面 + CLI + 移动端</td></tr>
+</tbody>
+</table>
+<p>README 自称「100x builders 的 AI 编排器」，列出 12 张功能卡，覆盖聊天与终端、agent 编排、异地运行、移动端、diff 审阅、Git 集成、分屏等。它还准备了 8 种语言的 README 与 star-history 曲线，社区入口挂在 Discord、X 和微信群。</p>
+<p>Windows 版的安装包签名由 SignPath.io 提供、证书来自 SignPath Foundation。<span class="hl">但仓库描述里藏着一句关键限定：用的是「你自己的订阅」。</span>开源的是调度台，不是模型账单。</p>
+</div>
+
+<div class="section-marker" data-section="02">
+<h2>02 核心机制</h2>
+<p><strong>它调度的是 worktree 和进程，不提供模型。</strong>Orca 本身是一个 Electron 桌面壳加 CLI：协调 agent 把任务拆开，worker 各自在隔离的 worktree 里跑 Claude Code、Codex 或其他终端 agent，避免互相改同一份文件。</p>
+<ul>
+<li><strong>Chat 或终端：</strong>同一个会话在图形界面和原始 CLI 之间迁移，不丢上下文</li>
+<li><strong>编排：</strong>协调 agent 拆任务、开 worker、汇总结果</li>
+<li><strong>异地运行：</strong>本机、SSH 远程主机，或给 worktree 单独开一台云 VM</li>
+<li><strong>移动端：</strong>手机收通知、回消息，电脑睡眠后 worker 继续跑</li>
+</ul>
+<p>README 用功能卡把能力分成几组，下面是其中与「并行」直接相关的几项。</p>
+<table>
+<thead><tr><th>能力</th><th>它做的事</th></tr></thead>
+<tbody>
+<tr><td>Orchestrate Agents</td><td>协调 agent 拆活、起 worker、收结果</td></tr>
+<tr><td>Parallel Worktrees</td><td>任务拆进隔离环境，多个 agent 并排跑</td></tr>
+<tr><td>Review AI Output</td><td>在 diff 的具体行留注，送回 agent</td></tr>
+<tr><td>Git Integration</td><td>从 diff 起草 commit 与 PR，回灌失败检查</td></tr>
+<tr><td>Orca CLI</td><td>命令行建 worktree、起 worker、驱动浏览器</td></tr>
+</tbody>
+</table>
+<p>README 写明支持「任何 CLI agent」——只要能在终端跑，就能在 Orca 里跑。它逐一点名 34 个 agent：Claude Code、Codex、Grok、Cursor、Copilot、DeepSeek Harness、Qwen Code、Kimi、Cline 等都在列，末尾还加了「任意 CLI agent」。</p>
+<p>审查环节能在 diff 的具体行留批注、送回给 agent；commit 和 PR 文案从 diff 起草，失败的 CI 检查与评审意见也能回灌。<span class="hl">这套闭环是它区别于普通终端复用器的地方。</span></p>
+<p>其余功能卡走的是「把 IDE 该有的东西搬进来」路线：Design Mode 在内置浏览器里点中元素就复制 HTML、样式和选择器，粘进 agent 对话；Split Anything 把 agent、终端、浏览器和 diff 拖成分屏。</p>
+<p>还有一批配套能力写在 README 的「Also in the box」里：拖文件到 agent 输入框、跨仓库跳转、图片与 PDF 预览、跑 iOS 模拟器和安卓模拟器让 agent 自己验收、语音听写，以及定时执行的 automations。</p>
+</div>
+
+<div class="section-marker" data-section="03">
+<h2>03 关键细节与数据</h2>
+<p><strong>发版节奏以小时计，未结条目却是一笔糊涂账。</strong>仓库 metadata 把未结条目报成 8,729，但用 search 接口按状态拆分，只剩 4,942 个 open issue 加 363 个 open PR，合计 5,305。两个口径相差 3,424，本文只采用可拆分的 search 值。</p>
+<table>
+<thead><tr><th>维度</th><th>核对值</th><th>来源</th></tr></thead>
+<tbody>
+<tr><td>未结 issue</td><td>4,942</td><td>search is:issue is:open</td></tr>
+<tr><td>未结 PR</td><td>363</td><td>search is:pr is:open</td></tr>
+<tr><td>最新 Release</td><td>v1.4.266 · 11-20 08:25 UTC</td><td>releases，24 个资产</td></tr>
+<tr><td>上一版</td><td>v1.4.265 · 11-19 23:41 UTC</td><td>releases，10+ 个资产</td></tr>
+<tr><td>包内版本</td><td>1.4.214</td><td>package.json</td></tr>
+</tbody>
+</table>
+<p><strong>版本字段对不上，是这类日更项目的常态。</strong>最新 tag 是 v1.4.266，仓库根目录 package.json 却写着 1.4.214。README 自己也说「我们每天发货，功能列表永远滞后」，并把 Releases 称作真正的功能清单。</p>
+<p>这种节奏有可观察的侧面：v1.4.266 在 11 月 20 日 08:25 UTC 发布、带 24 个资产；不到九小时前的 11 月 19 日 23:41 UTC 才是 v1.4.265。<strong>同一天连发两版，是「每天发货」的自证。</strong></p>
+<p>构建规模侧面印证活跃度：package.json 有 217 条 scripts，28 个运行时依赖、132 个开发依赖，根目录 33 个条目（17 文件、16 目录）。<code>skills/</code> 下 11 个子目录，覆盖 Jira、Linear、CLI、computer use、模拟器与编排。</p>
+<p><code>docs/</code> 有 16 个条目，其中一份 agent 技能共享检查清单约 11.9 万字节，另有 astra 设置评审约 3 万字节。<code>AGENTS.md</code> 规定收敛门禁是 <code>pnpm check:changed</code>，默认不加测试；UI 验证用 CDP 截图，禁止抢占桌面焦点。</p>
+<div class="info-box">
+<p><strong>数据核对</strong>（核对时间 2026-11-20）</p>
+<ul>
+<li>仓库：130,475★ / 8,304 fork / MIT / TypeScript，pushed 11-20</li>
+<li>未结：search 拆 4,942 issue + 363 PR；metadata 报 8,729，两者差 3,424，未合并采用</li>
+<li>版本：tag v1.4.266（11-20）/ v1.4.265（11-19），package.json 为 1.4.214</li>
+<li>README：34 个具名 agent，12 张功能卡，20 个独立文档链接</li>
+<li>目录：根目录 33 / skills 11 / docs 16；package.json 217 scripts、28+132 依赖</li>
+<li>数字均来自 api.github.com 与 README 原文，未在本文环境运行或复现</li>
+</ul>
+</div>
+</div>
+
+<div class="section-marker" data-section="04">
+<h2>04 怎么用</h2>
+<p><strong>桌面端开箱即用，模型账号得自己准备。</strong>安装走 orca.dev 下载页，或直接从 Release 拿安装包；macOS 用 Homebrew 时需要写全名，裸写 <code>orca</code> 会装到无关的 Plotly cask。下面是核对到的几条路径。</p>
+<table>
+<thead><tr><th>平台</th><th>安装方式</th></tr></thead>
+<tbody>
+<tr><td>macOS</td><td><code>brew install --cask stablyai/orca/orca</code> 或 dmg</td></tr>
+<tr><td>macOS RC</td><td><code>stablyai/orca/orca@rc</code>，与稳定版冲突需先卸载</td></tr>
+<tr><td>Windows</td><td>windows-setup.exe，签名由 SignPath 提供</td></tr>
+<tr><td>Linux</td><td>AppImage，或 AUR 的 <code>stably-orca-bin</code></td></tr>
+<tr><td>CLI / 移动端</td><td><code>orca</code> 命令；iOS App Store、Google Play 或 APK</td></tr>
+</tbody>
+</table>
+<p>仓库自带的 <code>opencode.json</code> 把绝大多数权限设为 allow，只对 <code>*.env</code>、外部目录和 doom loop 设为 ask，并把标准 TypeScript LSP 关掉、换成本仓的定制 LSP。想让 agent 用上 Orca 的命令行能力，可以装 <code>orca-cli</code> 技能。</p>
+<p>GitHub 与 Linear 任务原生接进侧栏，可以为每条 issue 直接开一个工作区；手机端配对后，agent 需要输入时会推送通知，你在手机上回复即可让它继续。定时任务还能做夜间依赖升级、每周 triage 和 flaky-test 清扫。</p>
+<p>README 准备了 8 种语言的版本：中文、日语、韩语、西班牙语、法语、葡萄牙语、土耳其语和俄语。官网按平台给出下载入口，Release 里能直接拿到 macOS 双架构 dmg、Windows 安装包和 Linux AppImage。</p>
+<p>它是 YC 背景的项目，README 的 topics 里带着 <code>yc-backed</code> 标签；社区支持除 Discord 与 X 外还提供微信群二维码，反馈走 GitHub issue，隐私与遥测说明放在 orca.dev 独立文档里，可选择退出匿名使用数据收集。</p>
+<p>真正的前提是订阅：README 的「Usage &amp; Accounts」用来看你自己的 agent 额度用掉多少、何时重置，并支持多账号切换。<span class="hl">Orca 收的是编排费，模型账单仍记在你的 Claude、Codex 或其他 CLI 账号上。</span></p>
+</div>
+
+<div class="section-marker" data-section="05">
+<h2>05 冷思考</h2>
+<p><strong>「支持任何 CLI agent」是企业愿景，「能当 bot 用」要一条条接。</strong>11 月 20 日新开的 issue 45532 写着：Kiro 的 Chat 支持还没进，bot 因此跑不起来；对应的 PR 45533 仍需补一套 ACP steering 文档机制，且是 draft。</p>
+<p>那条 PR 的细节很具体：要让 bot 在 Kiro 里带上常驻指令，得在 <code>session/new</code> 塞一份 <code>_meta.kiro.steering</code>，并依赖 kiro-cli 3.1.0 才有的字段；老版本 2.29.1 没有该字段，只能拒绝启动。作者还在 PR 里写明「用 Claude Opus 5.5 写成」。</p>
+<p>这类适配成本不写在 34 个 logo 里。README 把「能在终端跑」等同于「能在 Orca 里跑」，但移动端 bot 需要原生 chat 通道，缺一环就只桌面可用。换一个冷门 CLI，可能要等社区提 PR。</p>
+<p>另一笔账是规模。217 条 scripts、132 个开发依赖、一天两个 Release，意味着这个项目自己就是一支高速运转的工程队。普通团队把它当基础设施，就要接受跟版和 breaking change 的成本。</p>
+<p>更现实的问题是：未结条目两个口径差了 3,424，连「到底有多少 bug」都读不出唯一答案。星标增长说明关注度高，不说明 5,305 个条目里的处理速度。</p>
+<p>还有一个容易被忽略的依赖：项目自带 <code>.mcp.json</code> 只挂了一个本地组件夹具服务，而 <code>opencode.json</code> 默认对外部目录与环境变量读取设为「询问」。这些细节不是缺陷，但说明它默认按开发者工具而非普通消费者产品设计。</p>
+<p>所以判断很具体：如果你手上已有多个 CLI agent 订阅、痛点是「同时开几条、谁改了什么」，它值得装；如果你期待一个开箱即用、替你付模型钱的统一入口，README 第一行就写明了不这么做。</p>
+</div>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>把一队 CLI agent 装进独立 worktree 并行跑的编排台</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/stablyai/orca" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/stablyai/orca" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub · Orca</span>
+        <span class="pd">repo · 130,475 星 · MIT</span>
+      </a>
+      <a class="plat-card" href="https://orca.dev" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 12h17M12 3.5c2.4 2.3 3.6 5.2 3.6 8.5s-1.2 6.2-3.6 8.5c-2.4-2.3-3.6-5.2-3.6-8.5S9.6 5.8 12 3.5z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+        <span class="pn">官网 · orca.dev</span>
+        <span class="pd">下载 · 文档 · 插件目录</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Agent">#Agent</a>
+      <a href="../../home/home.html?q=%E7%BC%96%E6%8E%92">#编排</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=GitHub">#GitHub</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">数据来源：GitHub API（api.github.com 仓库 metadata / releases / tags / contents / search/issues）+ 仓库 README.md、AGENTS.md、package.json、opencode.json、issue 45532 与 PR 45533 原文。核对时间 2026-11-20。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

@@ -3,6 +3,33 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'gh-josssphzhou-poki',
+            title: '1,686 星、15 天：poki 的 MCP 已停更',
+            url: '../post/gh-josssphzhou-poki/gh-josssphzhou-poki.html',
+            summary: 'poki 建库 15 天拿到 1,686 星，能让 iPhone 读屏、点击、输入。但 README 已把早期 MCP 标为不再更新，主线换成装在手机上的 app；版本口径有 badge 0.4.4、CHANGELOG 0.4.2、release 0.4.6 三套。验证文档自曝真机点按 68/70、底部栏 0/4。',
+            category: 'AI 编程',
+            date: '2026-11-20',
+            tags: ["Agent","iOS","开源","GitHub"],
+          },
+          {
+            id: 'gh-stablyai-orca',
+            title: '13 万星、34 个 agent：Orca 开源的是调度台',
+            url: '../post/gh-stablyai-orca/gh-stablyai-orca.html',
+            summary: 'stablyai/orca 用 MIT 许可把「一队 CLI agent 各占 worktree 并行跑」做成桌面应用，点名支持 34 个 agent。但仓库写明用的是「你自己的订阅」。未结条目 search 拆出 5,305、metadata 报 8,729，两个口径对不上。',
+            category: 'AI 编程',
+            date: '2026-11-20',
+            tags: ["Agent","编排","开源","GitHub"],
+          },
+          {
+            id: 'gh-context-compression-duo',
+            title: '8,004 星压发送、42,517 星管记忆：基准不能直接相减',
+            url: '../post/gh-context-compression-duo/gh-context-compression-duo.html',
+            summary: 'billion-context 用代理把发给模型的历史压到 30.5k，OpenViking 把记忆做成可浏览的 viking:// 文件系统。前者第三方评测里逐字检索从 69% 掉到 27%，后者明确警告记忆与 RAG 分数不能混用。一个管发送，一个管留存，不是同一道题。',
+            category: 'AI 编程',
+            date: '2026-11-20',
+            tags: ["Agent","上下文","开源","横评"],
+          },
+          {
             id: 'gh-juliusbrussee-caveman',
             title: '12.1 万星、65% 已弃用：caveman 省的是输出',
             url: '../post/gh-juliusbrussee-caveman/gh-juliusbrussee-caveman.html',
