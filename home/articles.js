@@ -3,6 +3,33 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'gh-multica-ai-multica',
+            title: '56,998 星、自称开源：Multica 不许你对外托管',
+            url: '../post/gh-multica-ai-multica/gh-multica-ai-multica.html',
+            summary: 'Multica 让 31 个 agent CLI 像队友一样领 issue、交 PR，自托管看板确实好用。但仓库简介写着开源，README 改口 source-available，许可证不许对外托管或去品牌，ee 目录另走商业授权；自托管服务器每天还发一版匿名快照，端点写死不可改。要内部看板可以，当开源底座不行。',
+            category: 'AI 编程',
+            date: '2026-11-21',
+            tags: ["Agent","自托管","开源"],
+          },
+          {
+            id: 'gh-google-skills',
+            title: '24,497 星、219 个技能：16 个插件指向别家仓库',
+            url: '../post/gh-google-skills/gh-google-skills.html',
+            summary: 'Google 官方 Agent Skills 仓：219 个技能三处对齐，13 类覆盖全线产品。17 个插件里 16 个只是指向 GoogleCloudPlatform 外部仓库的版本指针，本仓几乎不存插件内容；README 说欢迎贡献，贡献指南却不收外部 PR。按领域索引用，别当通用集市。',
+            category: 'AI 编程',
+            date: '2026-11-21',
+            tags: ["Agent Skills","Google Cloud","开源"],
+          },
+          {
+            id: 'gh-ifixai-audit',
+            title: '46,574 星、61 项检查：独立评审不等于独立验证',
+            url: '../post/gh-ifixai-audit/gh-ifixai-audit.html',
+            summary: 'iFixAi 自称独立审计 agent，120 秒给出答案。仓库里 61 项检查核得到，四份案例却全部声明没测真系统；跨供应商评审可退化为自评，自检也不能叫认证。它能做回归闸门，别当第三方背书。',
+            category: 'AI 编程',
+            date: '2026-11-21',
+            tags: ["Agent","审计","开源"],
+          },
+          {
             id: 'gh-josssphzhou-poki',
             title: '1,686 星、15 天：poki 的 MCP 已停更',
             url: '../post/gh-josssphzhou-poki/gh-josssphzhou-poki.html',

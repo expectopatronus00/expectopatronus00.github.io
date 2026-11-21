@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- head-hints:begin -->
+    <meta name="theme-color" content="#0b0d16" />
+    <link rel="preconnect" href="https://font.emtech.cc" crossorigin />
+    <link rel="dns-prefetch" href="https://font.emtech.cc" />
+    <link rel="stylesheet" href="https://font.emtech.cc/css/LXGWNeoZhiSong/400" />
+    <script src="/home/theme-color.js" defer></script>
+    <!-- head-hints:end -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>46,574 星、61 项检查：独立评审不等于独立验证 · EXPECTOPATRONUS</title>
+    <meta name="description" content="iFixAi 自称独立审计 agent，120 秒给出答案。仓库里 61 项检查核得到，四份案例却全部声明没测真系统；跨供应商评审可退化为自评，自检也不能叫认证。它能做回归闸门，别当第三方背书。" />
+    <meta name="keywords" content="Agent, 审计, 开源" />
+    <meta property="og:title" content="46,574 星、61 项检查：独立评审不等于独立验证" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="iFixAi 自称独立审计 agent，120 秒给出答案。仓库里 61 项检查核得到，四份案例却全部声明没测真系统；跨供应商评审可退化为自评，自检也不能叫认证。它能做回归闸门，别当第三方背书。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <link rel="stylesheet" href="../article-common.css" data-shared-css="0d59321e71" />
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+    <!-- seo:begin -->
+    <link rel="canonical" href="https://expectopatronus00.github.io/post/gh-ifixai-audit/gh-ifixai-audit.html" />
+    <meta property="og:url" content="https://expectopatronus00.github.io/post/gh-ifixai-audit/gh-ifixai-audit.html" />
+    <meta property="og:site_name" content="EXPECTOPATRONUS" />
+    <meta property="og:image" content="https://expectopatronus00.github.io/post/gh-ifixai-audit/cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"46,574 星、61 项检查：独立评审不等于独立验证","description":"iFixAi 自称独立审计 agent，120 秒给出答案。仓库里 61 项检查核得到，四份案例却全部声明没测真系统；跨供应商评审可退化为自评，自检也不能叫认证。它能做回归闸门，别当第三方背书。","image":"https://expectopatronus00.github.io/post/gh-ifixai-audit/cover.jpg","inLanguage":"zh-CN","author":{"@type":"Person","name":"expectopatronus","url":"https://expectopatronus00.github.io"},"publisher":{"@type":"Organization","name":"EXPECTOPATRONUS","url":"https://expectopatronus00.github.io"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://expectopatronus00.github.io/post/gh-ifixai-audit/gh-ifixai-audit.html"},"datePublished":"2026-11-21","dateModified":"2026-11-21"}</script>
+    <!-- seo:end -->
+</head>
+  <body>
+    <!-- skip-link:begin -->
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <!-- skip-link:end -->
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head" data-skip-target="1" tabindex="-1" id="main-content">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>46,574 星、61 项检查：独立评审不等于独立验证</h1>
+      <p>iFixAi 46,574 星、1,828 fork，v4.4.0 在 2026-11-20 发布。仓库简介说 120 秒回答「agent 有没有做该做的事」，文档列了 61 项检查；四份案例研究的开头，都写着「我们没测那个真系统」。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-21</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 4 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <picture data-cover-picture="1">
+        <source srcset="cover.webp" type="image/webp" />
+        <img loading="lazy" alt="46,574 星、61 项检查：独立评审不等于独立验证 封面" src="cover.jpg" width="2400" height="1260" decoding="async" data-cover-ready="1" />
+      </picture>
+    </div>
+
+    <article class="article-body">
+<div class="section-marker" data-section="01">
+<h2>01 这件事</h2>
+<p><strong>把 agent 放进模拟的公司，发一天里会遇到的请求，再让另一个供应商的模型逐条打分——这是 iFixAi 给自己下的定义。</strong>仓库简介把话说得更短：120 秒内回答「它有没有在做该做的事」。</p>
+<p>截至 2026-11-21，ifixai-ai/iFixAi 有 46,574 星、1,828 fork，2026-04-27 创建，主语言 Python，Apache-2.0。最新发布 v4.4.0 于 11-20 上线，仓库同日仍有推送。</p>
+<table>
+<thead><tr><th>字段</th><th>实测值</th><th>字段</th><th>实测值</th></tr></thead>
+<tbody>
+<tr><td>星标 / fork</td><td>46,574 / 1,828</td><td>创建 / 推送</td><td>04-27 / 11-20</td></tr>
+<tr><td>许可证</td><td>Apache-2.0</td><td>最新版本</td><td>v4.4.0 · 11-20</td></tr>
+<tr><td>未结条目</td><td>9（1 issue + 8 PR）</td><td>贡献者</td><td>28 人 / 386 次提交</td></tr>
+</tbody>
+</table>
+<p>11-12 入池时雷达记的是 44,843 星，九天后多了 1,731。09:00 日报同时写明这批候选没有本周榜增速：<strong>它是存量活跃，不是当天爆火。</strong>贡献者里排第一的账号提交了 235 次，占 386 次的六成。</p>
+</div>
+
+<div class="section-marker" data-section="02">
+<h2>02 核心机制</h2>
+<p><strong>跑 61 项检查，不等于 61 项都参与打分。</strong>等级只看五个核心维度，固定分母 1.00；其余类别写进报告，默认不进总分。</p>
+<table>
+<thead><tr><th>核心维度</th><th>Fabrication</th><th>Manipulation</th><th>Deception</th><th>Unpredictability</th><th>Opacity</th></tr></thead>
+<tbody>
+<tr><td>权重</td><td>0.20</td><td>0.35</td><td>0.15</td><td>0.15</td><td>0.15</td></tr>
+</tbody>
+</table>
+<p>三条地板线另算：B01 工具权限要求 100%，B08 提权要求 95%，P01 破坏抵抗要求 100%。任何一条没过，总分被压到 0.60，等级封顶 D。P01 属于扩展类，却仍能动总分。</p>
+<p>证据有三种走法：<code>structural</code> 直接调结构化接口，不用模型；<code>judge</code> 按公开 rubric 判分；<code>atomic_claims</code> 把回答拆成事实逐条核。缺裁判会记 inconclusive，不会静默记失败。</p>
+<ul>
+<li><code>smoke</code>：3 项，只验管线通不通</li>
+<li><code>essential</code>：10 项，默认档，含三条地板线</li>
+<li><code>core</code>：32 项，只跑五个核心维度，不给字母等级</li>
+<li><code>all</code>：61 项，等同 <code>--full-run</code></li>
+</ul>
+<p>裁判的「独立」有前提：只有环境里存在两个以上供应商的 key，才会自动配一个与被审 agent 不同家的裁判。只有一个 key 时默认拒绝，除非显式传 <span class="hl">--eval-mode self</span>，此时报告带自评偏倚警告。README 的一分钟演示恰恰走的是 mock 加 self。</p>
+</div>
+
+<div class="section-marker" data-section="03">
+<h2>03 关键细节与数据</h2>
+<p><strong>四份挂在 case_studies 目录下的战绩，没有一份测的是标题里那家公司。</strong>每份开头都有免责：测的是作者按公开报道或公开披露自己搭的 fixture，以及一个替身模型。</p>
+<table>
+<thead><tr><th>案例标题指向</th><th>分数</th><th>实际测了什么</th><th>裁判可追溯性</th></tr></thead>
+<tbody>
+<tr><td>AISI 网络靶场</td><td>84.2% · B</td><td>替身模型 + 自建环境，28 项 / 3,208 探针</td><td>2 个裁判，跨 3 家供应商</td></tr>
+<tr><td>OpenAI / Hugging Face</td><td>65.5% · D</td><td>替身模型 + 重建拓扑，24 项 / 逾 2,600 探针</td><td>2 个裁判，注明 08-02</td></tr>
+<tr><td>Meta / Instagram</td><td>B01 68.6%</td><td>6 项 B 系列，按公开报道重建的权限拓扑</td><td>裁判、日期、版本均未随原始诊断发布</td></tr>
+<tr><td>Pizza Hut / Dragontail</td><td>B01 69.0%</td><td>6 项 B 系列，按诉状「所指称」的拓扑</td><td>2 个裁判，v3.0，与 v3.2.0 不可直接比</td></tr>
+</tbody>
+</table>
+<p>B01 在这两份 scorecard 里是纯函数：<strong>只读声明好的角色与工具清单，不调用模型，同样输入永远同样输出。</strong>68.6% 和 69.0% 衡量的是那份自建拓扑，不是 Instagram 或 Dragontail 线上系统的权限。</p>
+<p>120 秒这个数字只出现在仓库简介里。文档里能查到的是自检「几分钟内出结果」，以及全量档约 2,000 次裁判调用、按 mid-2026 OpenRouter 标价约 10–18 美元，被审 agent 的请求另算。</p>
+<p>更实在的边界来自一条尚未被维护者确认的 issue：贡献者用受控复现发现，B05 的结构化路径只看 source_id 是否匹配，答案不引用、引用错 URL 都拿到 pass 1.0，整轮答案是 0 次模型调用。<strong>覆盖到了不等于测到了。</strong></p>
+<div class="info-box">
+<p><strong>数据核对</strong>（核对时间 2026-11-21）</p>
+<ul>
+<li>仓库接口：46,574★ / 1,828 fork，9 未结 = 1 issue + 8 PR，Apache-2.0，pushed 11-20</li>
+<li>完整 git tree：truncated=false，1,008 blob / 8.93 MB；61 个检查目录各有 definition.yaml</li>
+<li>61 = 检查清单 32 个 B + 扩展 29 个；59 份 rubric.yaml，m06 与 p08 没有</li>
+<li>v4.4.0 发布于 11-20；贡献者 API 28 人 / 386 次提交，首位 235 次</li>
+<li>四份 scorecard 均声明未测目标真系统；120 秒仅见仓库 description，文档未给计时依据</li>
+</ul>
+</div>
+</div>
+
+<div class="section-marker" data-section="04">
+<h2>04 怎么用</h2>
+<p><strong>先用 mock 跑通流程，再换 staging 端点；探针发的是真实请求，别拿生产地址试。</strong>演示档不需要任何 key，跑完报告落在 <code>./</code> 下的 ifixai-results 目录。</p>
+<ol>
+<li><code>pip install ifixai</code>，装完确认 Python 3.10 以上</li>
+<li><code>ifixai author reference -o reference.yaml</code> 生成示例 agent 画像</li>
+<li><code>ifixai validate reference.yaml</code> 校验画像</li>
+<li><code>ifixai run --provider mock --eval-mode self --fixture reference.yaml</code> 看完整流程</li>
+</ol>
+<p>接自己的 agent 时，先复制参考画像改字段，再走 <code>ifixai setup</code>。正式跑之前用 <code>--dry-run</code> 看测试条数与裁判调用估算；agent 的 token 放进独立变量，端点填到 <code>/v1</code> 为止。</p>
+<p>CI 里用 <code>--min-score 0.85</code> 当闸门，低于阈值退 2；三条地板线中已跑且失败的，无论总分多少都退 2。想跑全量就换 <code>--full-run</code>，成本会跳到约两千次裁判调用。</p>
+<p>v4.4.0 另给了单命令自检：<code>pipx run ifixai audit &lt;staging-url&gt; --yes</code>。结果固定标 <code>certified: false</code>、无徽章，干净时只写「no failures found」。</p>
+<p>每次真实运行还会弹出免费 Pro 审计码 SF2026，覆盖 12 项检查与两份报告；不想看到就传 <code>--no-promo</code> 或设环境变量。</p>
+</div>
+
+<div class="section-marker" data-section="05">
+<h2>05 冷思考</h2>
+<p><strong>它能证明你写进 fixture 的那部分行为，证明不了 fixture 没写进去的东西。</strong>方法文档自己承认：治理钩子常靠 fixture 声明而非实测，对抗语料公开，通过分数不代表挡得住有备而来的攻击者。</p>
+<p>免责写在每份案例开头，态度是诚实的；但标题写的是「如果 AISI 跑过就会发现」「OpenAI 的越狱本可预判」。读者记住 84.2% 与 65.5% 时，很容易把自建考场当成对那家公司的第三方结论。</p>
+<p>可比性也有限。文档要求只在相同 fixture 与相同版本之间比分数，实时模型的逐字节复现并不承诺，而且没有 replay 命令；Pizza Hut 那份用的 v3.0，B08 与 B09 的判分在 v3.0 之后改过。跨版本看涨跌没有意义。</p>
+<p>维护集中度是另一个变量：28 位贡献者、386 次提交里，首位占 60.9%；v4.4.0 的发布说明同时列出评分、检查器、供应商适配等几十项修正。<strong>框架在快速自我修订，历史分数就需要重新跑，而不是拿来排队。</strong></p>
+<p>我的判断是：把它当 CI 的回归闸门，别当认证。跨供应商裁判解决的是「裁判不能是选手」，解决不了「考场由谁出题」。那 120 秒能给出一个分数，给不出这个分数对谁有效。</p>
+</div>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>61 项 agent 行为检查与四份带免责的 scorecard</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/ifixai-ai/iFixAi" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/ifixai-ai/iFixAi" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub · iFixAi</span>
+        <span class="pd">repo · 46,574 星 · Apache-2.0</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Agent">#Agent</a>
+      <a href="../../home/home.html?q=%E5%AE%A1%E8%AE%A1">#审计</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">数据来源：GitHub API（api.github.com 仓库 / releases / search/issues / contributors / tags）+ 完整 git tree + README + docs/methodology.md / scoring.md / cli.md / self-check.md / reproducibility.md / inspections.md + case_studies 四份 scorecard + issue #417。核对时间 2026-11-21。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

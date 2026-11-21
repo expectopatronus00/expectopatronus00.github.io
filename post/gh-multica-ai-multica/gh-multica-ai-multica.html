@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- head-hints:begin -->
+    <meta name="theme-color" content="#0b0d16" />
+    <link rel="preconnect" href="https://font.emtech.cc" crossorigin />
+    <link rel="dns-prefetch" href="https://font.emtech.cc" />
+    <link rel="stylesheet" href="https://font.emtech.cc/css/LXGWNeoZhiSong/400" />
+    <script src="/home/theme-color.js" defer></script>
+    <!-- head-hints:end -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>56,998 星、自称开源：Multica 不许你对外托管 · EXPECTOPATRONUS</title>
+    <meta name="description" content="Multica 让 31 个 agent CLI 像队友一样领 issue、交 PR，自托管看板确实好用。但仓库简介写着开源，README 改口 source-available，许可证不许对外托管或去品牌，ee 目录另走商业授权；自托管服务器每天还发一版匿名快照，端点写死不可改。要内部看板可以，当开源底座不行。" />
+    <meta name="keywords" content="Agent, 自托管, 开源" />
+    <meta property="og:title" content="56,998 星、自称开源：Multica 不许你对外托管" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="Multica 让 31 个 agent CLI 像队友一样领 issue、交 PR，自托管看板确实好用。但仓库简介写着开源，README 改口 source-available，许可证不许对外托管或去品牌，ee 目录另走商业授权；自托管服务器每天还发一版匿名快照，端点写死不可改。要内部看板可以，当开源底座不行。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <link rel="stylesheet" href="../article-common.css" data-shared-css="0d59321e71" />
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+    <!-- seo:begin -->
+    <link rel="canonical" href="https://expectopatronus00.github.io/post/gh-multica-ai-multica/gh-multica-ai-multica.html" />
+    <meta property="og:url" content="https://expectopatronus00.github.io/post/gh-multica-ai-multica/gh-multica-ai-multica.html" />
+    <meta property="og:site_name" content="EXPECTOPATRONUS" />
+    <meta property="og:image" content="https://expectopatronus00.github.io/post/gh-multica-ai-multica/cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"56,998 星、自称开源：Multica 不许你对外托管","description":"Multica 让 31 个 agent CLI 像队友一样领 issue、交 PR，自托管看板确实好用。但仓库简介写着开源，README 改口 source-available，许可证不许对外托管或去品牌，ee 目录另走商业授权；自托管服务器每天还发一版匿名快照，端点写死不可改。要内部看板可以，当开源底座不行。","image":"https://expectopatronus00.github.io/post/gh-multica-ai-multica/cover.jpg","inLanguage":"zh-CN","author":{"@type":"Person","name":"expectopatronus","url":"https://expectopatronus00.github.io"},"publisher":{"@type":"Organization","name":"EXPECTOPATRONUS","url":"https://expectopatronus00.github.io"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://expectopatronus00.github.io/post/gh-multica-ai-multica/gh-multica-ai-multica.html"},"datePublished":"2026-11-21","dateModified":"2026-11-21"}</script>
+    <!-- seo:end -->
+</head>
+  <body>
+    <!-- skip-link:begin -->
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <!-- skip-link:end -->
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head" data-skip-target="1" tabindex="-1" id="main-content">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>56,998 星、自称开源：Multica 不许你对外托管</h1>
+      <p>multica-ai/multica 有 56,998 星、7,505 fork，简介自称开源。README 却写 source-available：许可证是 Apache 2.0 加附加条件，不许对外托管，ee 目录另走商业授权。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-21</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 6 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <picture data-cover-picture="1">
+        <source srcset="cover.webp" type="image/webp" />
+        <img loading="lazy" alt="56,998 星、自称开源：Multica 不许你对外托管 封面" src="cover.jpg" width="2400" height="1260" decoding="async" data-cover-ready="1" />
+      </picture>
+    </div>
+
+    <article class="article-body">
+<div class="section-marker" data-section="01">
+<h2>01 这件事</h2>
+<p><strong>把 agent 当队友排进看板、让它在你自己的机器上领 issue 干活——Multica 把这件事做成了产品，但仓库简介里的「开源」二字要打折读。</strong>截至 2026-11-21，multica-ai/multica 有 56,998 星、7,505 fork，2026-01-13 创建，主语言 Go，当天仍有推送。</p>
+<p>仓库 description 写的是「Make humans and AI agents work as one team — open-source and self-hostable」。README 第一段却改口，称自己是 <span class="hl">source-available workspace</span>。</p>
+<p>两句话贴在同一个仓库门口，指向的是两种不同的东西。</p>
+<table>
+<thead><tr><th>字段</th><th>实测值</th><th>字段</th><th>实测值</th></tr></thead>
+<tbody>
+<tr><td>星标 / fork</td><td>56,998 / 7,505</td><td>创建 / 推送</td><td>01-13 / 11-21</td></tr>
+<tr><td>许可证字段</td><td>NOASSERTION</td><td>实际许可</td><td>Multica License（Apache-2.0 + 附加条件）</td></tr>
+<tr><td>未结条目</td><td>2,009（1,054 issue + 955 PR）</td><td>订阅者</td><td>184</td></tr>
+<tr><td>最新版本</td><td>v0.11.1 · 11-19</td><td>主语言</td><td>Go</td></tr>
+</tbody>
+</table>
+<p>11-12 入池时雷达给的是 81 分。今天是入池第 9 天，超过 7 天线，实时复核星数、推送日期与许可证口径后，热度未衰减，按 81 分成稿。</p>
+<p>未结条目里 PR 占 955 条，接近一半，<strong>不能把 2,009 读成「两千个待修问题」</strong>。</p>
+</div>
+
+<div class="section-marker" data-section="02">
+<h2>02 核心机制</h2>
+<p><strong>Multica 不发货模型，它把已经登录好的命令行 agent 变成看板上的「员工」，工作单元是 issue，交付物是 pull request。</strong>意图、运行记录、决策和 diff 都挂在同一个 issue 上，人只在 review 闸门点头。</p>
+<table>
+<thead><tr><th>层</th><th>技术栈</th><th>跑在哪</th></tr></thead>
+<tbody>
+<tr><td>Web</td><td>Next.js 16 App Router</td><td>浏览器</td></tr>
+<tr><td>Desktop / Mobile</td><td>Electron / Expo React Native</td><td>macOS、Windows、Linux；iPhone、iPad</td></tr>
+<tr><td>Backend</td><td>Go（Chi、sqlc、gorilla/websocket）</td><td>自托管服务器或云</td></tr>
+<tr><td>Database</td><td>PostgreSQL 17（pgcrypto + pg_trgm）</td><td>自托管服务器或云</td></tr>
+<tr><td>Agent runtime</td><td>本地 daemon，拉起 agent CLI</td><td>你的机器，贴着代码</td></tr>
+</tbody>
+</table>
+<p>它驱动的命令行工具按 README 表格数正好 31 个：15 行各两列，加最后一行 ZCode 一个。</p>
+<p>Claude Code、Codex、Cursor Agent、Copilot、Kimi、OpenCode 在列，DeepSeek Harness、Qwen Code、Grok、Devin CLI 也在列。切换供应商是一个下拉框，不是一次迁移。</p>
+<p>但「能上岗」不等于「能中途接话」。README 写明当前只有 6 家支持运行中改指令：<code>claude</code>、<code>codex</code>、<code>cursor-agent</code>、<code>grok</code>、<code>kiro-cli</code>、<code>pi</code>。其余二十多个 provider 领了任务就按自己的节奏跑，靠 retries 和 timeouts 兜底。</p>
+<p>看板之上还有四个概念：Squads 把人和 agent 编成一队、由 leader 派活；Skills 把解决过的问题固化成复用手册；Autopilots 用 cron 跑站会和审计；Review gates 让产物先落在评审、再进主分支。<strong>它管的是分工与留痕，不是模型能力。</strong></p>
+</div>
+
+<div class="section-marker" data-section="03">
+<h2>03 关键细节与数据</h2>
+<p><strong>许可证把「自己用」和「拿出去给别人用」切成两半，遥测又把「自托管」切成默认开启和显式关闭两半。</strong>这两处都不在仓库简介里，得翻到 LICENSE 和 SELF_HOSTING.md 才看得到。</p>
+<table>
+<thead><tr><th>文件 / 目录</th><th>适用条款</th><th>关键限制</th></tr></thead>
+<tbody>
+<tr><td>LICENSE Part I</td><td>Multica 附加条件</td><td>不得对外提供托管服务或商业嵌入；不得移除品牌</td></tr>
+<tr><td>LICENSE Part II</td><td>Apache License 2.0 全文</td><td>与 Part I 冲突时以 Part I 为准</td></tr>
+<tr><td><code>server/ee/</code> <code>packages/ee/</code></td><td>各目录内单独的商业许可证</td><td>不适用 Multica License，共 31 个文件、76,964 字节</td></tr>
+</tbody>
+</table>
+<p>附加条件 a 写得极具体：没有商业许可证，不得用这份源码向第三方提供托管服务，也不得作为商品组件分发；面向组织外部开放即算托管，<strong>即便免费、无广告、不卖付费层也一样</strong>。</p>
+<p>单一组织内部使用（含多个 workspace）不需要商业许可；公开 fork 源码本身不算托管，但每个运营方要各自取证。</p>
+<p>条件 b 管品牌：不得移除或改动 LOGO、产品名和界面上的版权信息，覆盖范围点名 <code>apps/web/</code>、<code>apps/desktop/</code>、<code>apps/mobile/</code>、<code>packages/views/</code>、<code>packages/ui/</code> 以及前端容器镜像。</p>
+<p>条件 1.d 再补一刀：商业许可不自动包含品牌豁免，两者要分别书面取得。</p>
+<p>体量按完整 git tree 算：<code>truncated:false</code>，9,622 个节点 = 9,043 blob + 579 tree，合计 81.89 MiB。server 占 47.7%，packages 30.1%，apps 17.8%。</p>
+<p>仓库 <code>size</code> 字段返回 220,652 KB，与逐 blob 累加差两个数量级，本文不引用。</p>
+<div class="info-box">
+<p><strong>数据核对</strong>（核对时间 2026-11-21）</p>
+<ul>
+<li>仓库接口：56,998★ / 7,505 fork，2,009 未结 = 1,054 issue + 955 PR，184 订阅，pushed 11-21</li>
+<li>许可证：API 报 NOASSERTION；LICENSE 为 Apache-2.0 全文 + Part I 附加条件，Part I 优先，署名 Index Labs (Hong Kong) Limited</li>
+<li>git tree：truncated=false，9,043 blob / 81.89 MiB；languages 为 Go 36,358,710 B + TS 27,692,114 B，不含 md/json，与 tree 不相加</li>
+<li>release 接口按每页 100 条拉取，返回满 100 条：v0.3.9（05-26）至 v0.11.1（11-19），全为正式版，0 个预发布</li>
+<li>贡献者接口返回前 100 人、合计 6,215 次提交，首位 1,639 次；遥测默认开启，端点硬编码不可重定向</li>
+</ul>
+</div>
+</div>
+
+<div class="section-marker" data-section="04">
+<h2>04 怎么用</h2>
+<p><strong>真要自托管，先算三笔账：Docker 环境、至少一个已登录的 agent CLI，以及许可证允不允许你的用法。</strong>README 把先验条件说在前面：Multica 驱动这些工具，但不随附它们，也不替你登录。</p>
+<ol>
+<li>装好 Docker 与 Docker Compose，这是脚本的硬前置</li>
+<li>运行 <code>curl -fsSL https://raw.githubusercontent.com/multica-ai/multica/main/scripts/install.sh | bash -s -- --with-server</code></li>
+<li>执行 <code>multica setup self-host</code>，脚本从 GHCR 拉官方镜像并按 localhost 配置</li>
+<li>Team → Runtimes 添加机器，把页面给的两条命令贴到目标机器终端</li>
+<li>Team → 新建 agent，选 runtime、provider 和名字，再建 issue 指派给它</li>
+</ol>
+<p>Windows 用 <code>$env:MULTICA_MODE="with-server"</code> 加 PowerShell 安装脚本。镜像 tag 尚未发布时，退回源码构建 <code>make selfhost-build</code>；要钉版本就设 <code>MULTICA_IMAGE_TAG</code>，例如 <code>v0.2.4</code>。</p>
+<p>有 K8s 集群可改用 GHCR 上的 OCI Helm chart。</p>
+<p>关遥测要在 API 服务器上设 <code>DO_NOT_TRACK=1</code> 或 <code>true</code>，再重建并重启后端。<strong><code>ANALYTICS_DISABLED</code> 管的是另一套 PostHog 集成，关不掉第一方遥测。</strong></p>
+<p>克隆生产库做 staging 时，先清掉 <code>instance_telemetry_state</code> 表，否则两套部署共用一个身份、当天快照会互相去重。</p>
+<p>接入面比想象中杂：Git 支持 GitHub、GitLab、Gitea、Forgejo；聊天通道列了 Slack、飞书、钉钉、企微、Telegram 和微信。</p>
+<p>微信只接受扫码账号的私聊，新飞书连接目前只开放中国大陆租户，钉钉、企微、Telegram 标注为社区维护。iOS 客户端今天仍需从源码构建，未上 App Store。</p>
+</div>
+
+<div class="section-marker" data-section="05">
+<h2>05 冷思考</h2>
+<p><strong>56,998 星买的是「把 agent 排进看板」的编排层，许可证保留的是「谁可以把它当服务卖」的那一层。</strong>这两层不矛盾，但把它们混成一句「开源替代」，就会在部署那天踩空。</p>
+<p>信息落差是真实存在的：搜索结果和星标只显示 description 里的 open-source；README 正文写的是 source-available；许可证接口返回 NOASSERTION；LICENSE 第一页就声明 Part I 优先于 Apache 2.0。</p>
+<p><strong>作者没有藏，只是藏得比标题深一层。</strong>对只想内部用的团队，这无关紧要；对打算基于它做托管产品的人，这是第一道门槛。</p>
+<p>免费对外托管也要授权这条尤其具体。公司内部开一百个 workspace 都行；给客户开账号、哪怕不收费、不放广告、不设付费层，就要商业许可证。</p>
+<p>公开 fork 源码不被算作托管服务，但源码分发不授予接收方运营权——每个接手的人得自己去找 producer 谈。</p>
+<p>贡献条款也值得先读：提交贡献即视为同意 producer 可以把这份许可证改得更严或更宽，且贡献代码可用于其云业务。</p>
+<p>这在 source-available 项目里是常见写法，不是陷阱；但它提醒你，这里的「社区」和「许可证」不是同一件事。</p>
+<p>31 个 provider 与 6 个可中途指挥的落差，是另一处要打折的地方。多一家供应商确实是下拉框，但下拉框背后是另一份订阅和另一次登录——agent CLI 的 token、额度与可用性都不归 Multica 管。</p>
+<p>看板把并发排得再整齐，账还是各自结。</p>
+<p>README 还强调 no lock-in。技术上确实如此：源码可 fork，Git host 可选 GitHub、GitLab、Gitea、Forgejo。但锁定换了地方——31 家 provider 各自要订阅、要登录、要管 token，Multica 只负责把它们排进看板，不承担任何一家的额度。</p>
+<p>遥测默认开启、端点硬编码不可重定向，文档写得细也算坦诚，但「自托管」在多数人心里等于数据不出内网。每天有一个匿名快照出网，直到你显式关掉它——<strong>匿名不等于没有</strong>。</p>
+<p>我的判断是：要内部团队的 agent 看板，它把编排、留痕和 review 闸门摆齐了；要能改名、能对外托管、能打包转售的开源底座，这份许可证从第一天起就没打算给。别看星标，翻到 Part I。</p>
+</div>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>把 31 个 agent CLI 排进看板的人机协作工作区</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/multica-ai/multica" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/multica-ai/multica" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub · Multica</span>
+        <span class="pd">repo · 56,998 星 · NOASSERTION</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Agent">#Agent</a>
+      <a href="../../home/home.html?q=%E8%87%AA%E6%89%98%E7%AE%A1">#自托管</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">数据来源：GitHub API（api.github.com 仓库 / releases / search/issues / contributors / languages）+ 完整 git tree + README / LICENSE / SELF_HOSTING.md。核对时间 2026-11-21。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

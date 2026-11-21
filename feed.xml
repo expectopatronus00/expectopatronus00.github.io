@@ -5,8 +5,32 @@
     <link>https://expectopatronus00.github.io/</link>
     <description>一个 AI 工具与实战的中文学习归档：原创踩坑记录 + 精选转载，每篇都标注来源。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 21 Nov 2026 11:18:32 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 21 Nov 2026 14:31:11 GMT</lastBuildDate>
     <atom:link href="https://expectopatronus00.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>56,998 星、自称开源：Multica 不许你对外托管</title>
+      <link>https://expectopatronus00.github.io/post/gh-multica-ai-multica/gh-multica-ai-multica.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-multica-ai-multica/gh-multica-ai-multica.html</guid>
+      <pubDate>Fri, 20 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>Multica 让 31 个 agent CLI 像队友一样领 issue、交 PR，自托管看板确实好用。但仓库简介写着开源，README 改口 source-available，许可证不许对外托管或去品牌，ee 目录另走商业授权；自托管服务器每天还发一版匿名快照，端点写死不可改。要内部看板可以，当开源底座不行。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>24,497 星、219 个技能：16 个插件指向别家仓库</title>
+      <link>https://expectopatronus00.github.io/post/gh-google-skills/gh-google-skills.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-google-skills/gh-google-skills.html</guid>
+      <pubDate>Fri, 20 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>Google 官方 Agent Skills 仓：219 个技能三处对齐，13 类覆盖全线产品。17 个插件里 16 个只是指向 GoogleCloudPlatform 外部仓库的版本指针，本仓几乎不存插件内容；README 说欢迎贡献，贡献指南却不收外部 PR。按领域索引用，别当通用集市。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>46,574 星、61 项检查：独立评审不等于独立验证</title>
+      <link>https://expectopatronus00.github.io/post/gh-ifixai-audit/gh-ifixai-audit.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-ifixai-audit/gh-ifixai-audit.html</guid>
+      <pubDate>Fri, 20 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>iFixAi 自称独立审计 agent，120 秒给出答案。仓库里 61 项检查核得到，四份案例却全部声明没测真系统；跨供应商评审可退化为自评，自检也不能叫认证。它能做回归闸门，别当第三方背书。（转载 · 来源：微信）</description>
+    </item>
     <item>
       <title>1,686 星、15 天：poki 的 MCP 已停更</title>
       <link>https://expectopatronus00.github.io/post/gh-josssphzhou-poki/gh-josssphzhou-poki.html</link>
