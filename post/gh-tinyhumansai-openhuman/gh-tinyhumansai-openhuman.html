@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- head-hints:begin -->
+    <meta name="theme-color" content="#0b0d16" />
+    <link rel="preconnect" href="https://font.emtech.cc" crossorigin />
+    <link rel="dns-prefetch" href="https://font.emtech.cc" />
+    <link rel="stylesheet" href="https://font.emtech.cc/css/LXGWNeoZhiSong/400" />
+    <script src="/home/theme-color.js" defer></script>
+    <!-- head-hints:end -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>42,802 星、7/10：OpenHuman 的快和省都有前提 · EXPECTOPATRONUS</title>
+    <meta name="description" content="tinyhumansai/openhuman 把 agent 压进一个 Rust 进程，README 主打 500 agents、19.8 秒、省 2.6 倍 token。公开基准只解出 7/10 道题，Jev 的 86.8% 是候选集召回，机群密度用 mock 推理测得。快与省都成立，但要按前提估算。" />
+    <meta name="keywords" content="Harness, 开源, Rust" />
+    <meta property="og:title" content="42,802 星、7/10：OpenHuman 的快和省都有前提" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="tinyhumansai/openhuman 把 agent 压进一个 Rust 进程，README 主打 500 agents、19.8 秒、省 2.6 倍 token。公开基准只解出 7/10 道题，Jev 的 86.8% 是候选集召回，机群密度用 mock 推理测得。快与省都成立，但要按前提估算。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <link rel="stylesheet" href="../article-common.css" data-shared-css="0d59321e71" />
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+    <!-- seo:begin -->
+    <link rel="canonical" href="https://expectopatronus00.github.io/post/gh-tinyhumansai-openhuman/gh-tinyhumansai-openhuman.html" />
+    <meta property="og:url" content="https://expectopatronus00.github.io/post/gh-tinyhumansai-openhuman/gh-tinyhumansai-openhuman.html" />
+    <meta property="og:site_name" content="EXPECTOPATRONUS" />
+    <meta property="og:image" content="https://expectopatronus00.github.io/post/gh-tinyhumansai-openhuman/cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"42,802 星、7/10：OpenHuman 的快和省都有前提","description":"tinyhumansai/openhuman 把 agent 压进一个 Rust 进程，README 主打 500 agents、19.8 秒、省 2.6 倍 token。公开基准只解出 7/10 道题，Jev 的 86.8% 是候选集召回，机群密度用 mock 推理测得。快与省都成立，但要按前提估算。","image":"https://expectopatronus00.github.io/post/gh-tinyhumansai-openhuman/cover.jpg","inLanguage":"zh-CN","author":{"@type":"Person","name":"expectopatronus","url":"https://expectopatronus00.github.io"},"publisher":{"@type":"Organization","name":"EXPECTOPATRONUS","url":"https://expectopatronus00.github.io"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://expectopatronus00.github.io/post/gh-tinyhumansai-openhuman/gh-tinyhumansai-openhuman.html"},"datePublished":"2026-11-22","dateModified":"2026-11-22"}</script>
+    <!-- seo:end -->
+</head>
+  <body>
+    <!-- skip-link:begin -->
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <!-- skip-link:end -->
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head" data-skip-target="1" tabindex="-1" id="main-content">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>42,802 星、7/10：OpenHuman 的快和省都有前提</h1>
+      <p>42,802 星的 OpenHuman 说 500 个 agent 能装进 10 美元 VPS，任务 19.8 秒完成，token 省 2.6 倍。公开基准里它只解出 7/10 道题，Jev 的 86.8% 是候选召回率。前提都写在文档里。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-22</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 6 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <picture data-cover-picture="1">
+        <source srcset="cover.webp" type="image/webp" />
+        <img loading="lazy" alt="42,802 星、7/10：OpenHuman 的快和省都有前提 封面" src="cover.jpg" width="2400" height="1260" decoding="async" data-cover-ready="1" />
+      </picture>
+    </div>
+
+    <article class="article-body">
+<div class="section-marker" data-section="01">
+<h2>01 这件事</h2>
+<p><strong>它把 agent 从「一人一进程」压进一个 Rust 进程，再把压缩后的数字放在 README 首页：19.8 秒、省 2.6 倍 token、500 个 agent 上 10 美元 VPS。</strong>三个数字都有出处，也都带前提。</p>
+<p>tinyhumansai/openhuman 在 2026-02-18 创建，截至 11-22 有 42,802 星、4,229 fork，许可证 GPL-3.0，主语言 Rust，最近推送停在 11-20。11-12 入池时是 78 分的 pending，第 10 天复核仍活跃，不标 stale。</p>
+<table>
+<thead><tr><th>字段</th><th>实测值</th><th>字段</th><th>实测值</th></tr></thead>
+<tbody>
+<tr><td>星标 / fork</td><td>42,802 / 4,229</td><td>创建 / 推送</td><td>02-18 / 11-20</td></tr>
+<tr><td>许可证 / 语言</td><td>GPL-3.0 / Rust</td><td>最新发布</td><td>v0.64.15 · 10-09</td></tr>
+<tr><td>未结条目</td><td>305（272 issue + 33 PR）</td><td>发布总数</td><td>63 个 Release</td></tr>
+</tbody>
+</table>
+<p>README 首页的三张牌排得很整齐：</p>
+<ul>
+<li>快：七种工具里任务耗时约 20 秒，冷启动十分之一秒</li>
+<li>省：token 用量为常见工具的四成，账单最低</li>
+<li>密：单进程跑 500 个 agent，10 美元服务器装得下</li>
+</ul>
+<p>README 同时挂着 early beta 徽章，正文写明「expect rough edges」。<strong>这是自述与实测混排的一页，分开读才不会把前提丢掉。</strong></p>
+</div>
+
+<div class="section-marker" data-section="02">
+<h2>02 核心机制</h2>
+<p><strong>它省的不是模型调用本身，而是每次调用前送进去的文本，以及每个 agent 都要付一遍的进程固定成本。</strong>架构围绕这两处做减法。</p>
+<table>
+<thead><tr><th>机制</th><th>做法</th><th>可核对的数字</th></tr></thead>
+<tbody>
+<tr><td>RLM 压缩</td><td>大工具结果先压缩，超大的给句柄供搜索</td><td>基于 arXiv 2512.24601</td></tr>
+<tr><td>Jev 工具检索</td><td>小模型从目录中挑工具，再直接调用</td><td>目录 1,215 个工具</td></tr>
+<tr><td>统一 Rust 总线</td><td>功能按需加载，一个卡住不影响其他</td><td>11 个可加载模块名</td></tr>
+<tr><td>内建记忆</td><td>每轮按预算挑内容，带引用交给模型</td><td>可换记忆引擎</td></tr>
+<tr><td>浏览器与桌面控制</td><td>用真实 Chrome 与桌面 App，付款前停顿</td><td>按屏幕按钮点选</td></tr>
+<tr><td>可嵌入核心</td><td>一个进程编译成库，无 sidecar</td><td>冷启动 102 ms（mock）</td></tr>
+</tbody>
+</table>
+<p>压缩这一环不是删结果。README 说大段工具输出先压缩，超大的给模型一个可搜索的句柄，「什么都没扔掉」，依据是 arXiv 2512.24601 的 Recursive Language Models。省的是送进上下文的 token，不是把证据丢了。</p>
+<p>记忆也不是外挂。每轮开始前，核心按 token 预算从文件、仓库和 App 里挑出相关片段，带引用交给模型；换引擎只需改配置。搜索、文档、语音挂在同一条总线上，按需加载，一个模块卡住不会拖死整个进程。</p>
+<p>Jev 的 1,215 不是凭空来的。<code>docs/plans/jev-tool-search-baseline.md</code> 写清了拆分：</p>
+<ul>
+<li>编排会话已注册的核心工具：215 个</li>
+<li>Composio 目录记录的延迟加载动作：1,000 个</li>
+<li>测试意图：160 条，其中 66 条标注 Composio 动作、63 条核心工具、31 条不该调工具</li>
+</ul>
+<p>仓库里 <code>crates/</code> 下有 8 个 crate 目录：app、cli、core、embed、modules-linked、rpc、tinyhumans、tui。桌面、终端和可嵌入库共用同一个 core。</p>
+<p><span class="hl">工具检索比关键词命中的提升，发生在「短名单」这一层。</span>产品默认是 embedding 先取 20 个候选，Jev 再决策一次，整条链只消耗一轮代理请求。</p>
+<table>
+<thead><tr><th>排序方式</th><th>top-1</th><th>top-3</th><th>召回@20</th></tr></thead>
+<tbody>
+<tr><td>BM25 关键词</td><td>22.5%</td><td>38.0%</td><td>70.5%</td></tr>
+<tr><td>Jev + embedding（产品默认）</td><td>62.0%</td><td>66.7%</td><td>86.8%</td></tr>
+</tbody>
+</table>
+<p><strong>1,215 个工具能被找到，不等于 86.8% 的请求一次选对。</strong>这两行的差别是后面冷思考的起点。</p>
+</div>
+
+<div class="section-marker" data-section="03">
+<h2>03 关键细节与数据</h2>
+<p><strong>公开基准 swe-x86-1 只有 10 道题，OpenHuman 解出 7 道；README 的耗时与 token 数只统计它自己解出的题。</strong>分母不同，结论就不同。</p>
+<table>
+<thead><tr><th>harness</th><th>解决 / 检查通过</th><th>harness 错误</th><th>每解一题耗时</th></tr></thead>
+<tbody>
+<tr><td>OpenHuman</td><td>7/10</td><td>0</td><td>19.8 s</td></tr>
+<tr><td>Claude Code</td><td>10/10</td><td>0</td><td>37.8 s</td></tr>
+<tr><td>Codex</td><td>7/10</td><td>3</td><td>36.1 s</td></tr>
+<tr><td>OpenCode</td><td>10/10</td><td>0</td><td>28.4 s</td></tr>
+<tr><td>OpenClaw</td><td>9/10</td><td>0</td><td>1 分 02 秒</td></tr>
+<tr><td>Hermes / DeepSeek Harness</td><td>10/10 / 10/10</td><td>0 / 0</td><td>58.5 s / 55.2 s</td></tr>
+</tbody>
+</table>
+<p>基准用同一个模型 <code>deepseek/deepseek-v4.1-flash</code>、同一套 10 道题，每题 4 vCPU / 8 GB。表格脚注写明小样本只能当参考，不构成排名。</p>
+<table>
+<thead><tr><th>每道解出的题</th><th>OpenHuman</th><th>其他六个中位数</th></tr></thead>
+<tbody>
+<tr><td>token</td><td>166.6k</td><td>约 435k</td></tr>
+<tr><td>费用</td><td>$0.0077</td><td>$0.012</td></tr>
+<tr><td>峰值进程内存</td><td>68 MB</td><td>523 MB</td></tr>
+<tr><td>CPU 时间</td><td>1.31 s</td><td>10.4 s</td></tr>
+<tr><td>静态提示</td><td>4,591 token</td><td>约 7.7k</td></tr>
+</tbody>
+</table>
+<p>成本口径也要看清：每解一题的费用是总花费除以解出的题数，失败尝试留在分子里。OpenHuman 全程发了 114 次模型调用，其中 6 次来自子 agent；缓存命中率 90.6%，不是全场最高，也不是最低。</p>
+<p>费用那一行还有个细节：OpenCode 也是 $0.0077，README 自己标成并列最好。<strong>「最低账单」成立，但不是独占第一。</strong></p>
+<p>公开基准仓 <code>openhuman-benchmarks</code> 只有 1 星、2 fork，最近推送 10-29，比主仓早三周多。结果可复跑，但没有第三方复核。</p>
+<div class="info-box">
+<p><strong>数据核对（2026-11-22）：</strong></p>
+<ul>
+<li>仓库：42,802 星 / 4,229 fork / 305 未结 = 272 issue + 33 PR</li>
+<li>身份：GPL-3.0 / Rust / 创建 02-18 / 推送 11-20 / 63 个 Release</li>
+<li>版本：最新 v0.64.15 发布于 10-09，21 个安装资产</li>
+<li>基准：swe-x86-1，10 题、7 题解出、同模型 deepseek-v4.1-flash</li>
+<li>检索：215 核心工具 + 1,000 Composio 动作，160 条测试意图</li>
+<li>边界：基准仓 1 星 / 2 fork / 推送 10-29，样本量偏小</li>
+</ul>
+<p>核对时间 2026-11-22。</p>
+</div>
+</div>
+
+<div class="section-marker" data-section="04">
+<h2>04 怎么用</h2>
+<p><strong>三种入口共用一份核心：桌面 App、终端 CLI、Rust 库；真正影响成本的是你开了哪些域、接了哪些外部服务。</strong></p>
+<ul>
+<li>桌面安装包：macOS 用 <code>.dmg</code>，Windows 用 <code>.msi</code> 或 <code>.exe</code>，Linux 用 <code>.deb</code> 或 <code>.AppImage</code></li>
+<li>安装脚本：macOS / Linux 用 <code>install.sh</code>，Windows 用 <code>install.ps1</code>，都带校验和检查</li>
+<li>嵌入方式：<code>openhuman_embed</code> 里构造 <code>Harness</code>，指定 provider 与 workspace，再 <code>run()</code></li>
+</ul>
+<p>模型侧支持本地 Ollama、LM Studio、MLX，也支持 26 家供应商的 BYOK 和自动路由。模型钱你自己付，仓库里的成本数字只覆盖那 10 道题的 API 调用。</p>
+<p>搜索默认带 Exa 与 Gemini，Brave、Tavily、Parallel 等要自己的 key；消息渠道包括 Telegram、Discord、iMessage 和邮件。工作流支持定时、事件或手动触发，允许插入审批步骤，暂停后从断点继续。</p>
+<p>集成面很宽：Composio 的 119 个 OAuth 应用、MCP 与技能包、14 个消息渠道。外部账号是否授权、按量计费多少，都要另算。</p>
+<table>
+<thead><tr><th>使用档位</th><th>配置</th><th>代价</th></tr></thead>
+<tbody>
+<tr><td>桌面日常</td><td>默认 features + 桌面 App</td><td>二进制最大，功能最全</td></tr>
+<tr><td>无头嵌入</td><td><code>skills,flows</code> 或纯 slim</td><td>最小二进制约 51 MB（strip 后）</td></tr>
+<tr><td>满负载机群</td><td>单进程 + 多 AgentSpec</td><td>需按真实 provider 重测容量</td></tr>
+</tbody>
+</table>
+<p>安全边界写在 SECURITY.md：密钥存系统钥匙串，消息内容不用于训练；只支持最新版与上一小版本，更早版本不保证补丁，漏洞走邮件而不是公开 issue。</p>
+<p><span class="hl">要复现 500 agent 那组数，得先按文档指定的 commit 构建。</span>当前树跑同一个 example 还需要 <code>storage-sqlite</code>，新旧配置的结果不可直接比较。</p>
+</div>
+
+<div class="section-marker" data-section="05">
+<h2>05 冷思考</h2>
+<p><strong>最长的短板不是速度，是 7/10 与 500 之间那段没有公开实测的距离。</strong>README 把三套前提条件压成了三行卖点。</p>
+<table>
+<thead><tr><th>README 的表述</th><th>原始文档里的口径</th></tr></thead>
+<tbody>
+<tr><td>「正确的工具在 Jev 首选里 86.8%，关键词 70.5%」</td><td>这两数是 embedding 与 BM25 的召回@20；产品默认 Jev 的 top-1 是 62.0%</td></tr>
+<tr><td>「500 个 agent 上 10 美元 VPS」</td><td>密度数据来自 mock 推理，不是真实 provider 加工具的压力测试</td></tr>
+<tr><td>「七种工具里最快」</td><td>按每道解出的题统计，OpenHuman 只解出 7/10</td></tr>
+</tbody>
+</table>
+<p>机群文档自己写得克制：macOS 那组 1,770 KiB / agent 用的是 200 ms 固定延迟的 mock provider，线程数随 agent 增长，「数千个 agent」只是目标，不是测过的结果。</p>
+<p>macOS 那组的规模梯度也值得看：50、100、500 个 agent 的边际内存分别是 1,985、1,866、1,770 KiB，空闲 CPU 都是每 10 秒 3 毫秒。线程数从 71 涨到 211，文件描述符从 420 涨到 3,220。</p>
+<p>Linux 那组更接近真实部署：2 GiB 与 2 CPU 配额下，500 个并发 agent 的边际内存是 3.355 MiB / agent，cgroup 峰值 1,760 MiB，整队耗时 20.8 秒。</p>
+<p>关掉 swap 后再跑一次，边际值升到 3.541 MiB，超过文档给的双倍目标 3.46 MiB。文档明确说，这些数不证明真实 provider、工具子进程或 1,000 个同时 active 的 turn 能活下来。</p>
+<p>工程成熟度也要跟上。<strong>305 个未结条目里 272 个是 issue，最新 Release 停在 10-09；</strong>issue #8759 报 <code>.deb</code> 在 Ubuntu 22.04 上要求 GLIBC_2.39，#8765 说策略描述默认 autonomy policy 已开启。</p>
+<p>安全响应写的是 5 个工作日内确认，漏洞走 security@tinyhumans.ai 并适用安全港条款。但它只承诺最新版与上一小版本的修复；最新 Release 已停在 10-09，实际补丁窗口要按自己的发布节奏判断。</p>
+<p><strong>它适合把单人或少量 agent 的开销压低，也适合当 Rust 库嵌进自己的服务；不适合只按 README 的 500 与 19.8 秒做容量和验收预算。</strong>先看你的任务在不在那 7 道里，再按自己的 provider 重跑一遍机群脚本。</p>
+</div>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>Rust 单进程 harness、10 题公开基准与 500 agent 机群实测文档</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/tinyhumansai/openhuman" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/tinyhumansai/openhuman" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub · openhuman</span>
+        <span class="pd">repo · 42,802 星 · GPL-3.0</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Harness">#Harness</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=Rust">#Rust</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">数据来源：GitHub API（仓库 / contents / releases / tags / search/issues）与 tinyhumansai/openhuman-benchmarks 的 swe-x86-1 摘要；并核对 README、Jev 基线、SECURITY.md 及官方 Performance 文档。核对时间 2026-11-22。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

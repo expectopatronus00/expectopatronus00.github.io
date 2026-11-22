@@ -3,6 +3,33 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'gh-earendil-works-pi',
+            title: '12.3 万星、278 人免审：pi 的极简有门槛',
+            url: '../post/gh-earendil-works-pi/gh-earendil-works-pi.html',
+            summary: 'pi 把统一 LLM API、agent loop、TUI 与编码 CLI 收进极简 harness；新人的 issue 与 PR 默认自动关闭，安全边界也明确交给使用者。',
+            category: 'AI 编程',
+            date: '2026-11-22',
+            tags: ["Harness","开源","TypeScript"],
+          },
+          {
+            id: 'gh-tinyhumansai-openhuman',
+            title: '42,802 星、7/10：OpenHuman 的快和省都有前提',
+            url: '../post/gh-tinyhumansai-openhuman/gh-tinyhumansai-openhuman.html',
+            summary: 'tinyhumansai/openhuman 把 agent 压进一个 Rust 进程，README 主打 500 agents、19.8 秒、省 2.6 倍 token。公开基准只解出 7/10 道题，Jev 的 86.8% 是候选集召回，机群密度用 mock 推理测得。快与省都成立，但要按前提估算。',
+            category: 'AI 编程',
+            date: '2026-11-22',
+            tags: ["Harness","开源","Rust"],
+          },
+          {
+            id: 'gh-codebase-memory-mcp',
+            title: '49,010 星代码图谱：token 省十倍，答案质量降九个点',
+            url: '../post/gh-codebase-memory-mcp/gh-codebase-memory-mcp.html',
+            summary: 'DeusData 的 codebase-memory-mcp 把代码做成可查的本地图。README 主打省十倍 token，论文同段却写答案质量 83% 对基线 92%。164 语言只有 35 种有质量分档，1.31 GB 语法编进二进制。它适合跨服务结构查询，不适合当源码级唯一裁判。',
+            category: 'AI 编程',
+            date: '2026-11-22',
+            tags: ["MCP","代码图谱","开源"],
+          },
+          {
             id: 'gh-multica-ai-multica',
             title: '56,998 星、自称开源：Multica 不许你对外托管',
             url: '../post/gh-multica-ai-multica/gh-multica-ai-multica.html',

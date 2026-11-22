@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- head-hints:begin -->
+    <meta name="theme-color" content="#0b0d16" />
+    <link rel="preconnect" href="https://font.emtech.cc" crossorigin />
+    <link rel="dns-prefetch" href="https://font.emtech.cc" />
+    <link rel="stylesheet" href="https://font.emtech.cc/css/LXGWNeoZhiSong/400" />
+    <script src="/home/theme-color.js" defer></script>
+    <!-- head-hints:end -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>49,010 星代码图谱：token 省十倍，答案质量降九个点 · EXPECTOPATRONUS</title>
+    <meta name="description" content="DeusData 的 codebase-memory-mcp 把代码做成可查的本地图。README 主打省十倍 token，论文同段却写答案质量 83% 对基线 92%。164 语言只有 35 种有质量分档，1.31 GB 语法编进二进制。它适合跨服务结构查询，不适合当源码级唯一裁判。" />
+    <meta name="keywords" content="MCP, 代码图谱, 开源" />
+    <meta property="og:title" content="49,010 星代码图谱：token 省十倍，答案质量降九个点" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="DeusData 的 codebase-memory-mcp 把代码做成可查的本地图。README 主打省十倍 token，论文同段却写答案质量 83% 对基线 92%。164 语言只有 35 种有质量分档，1.31 GB 语法编进二进制。它适合跨服务结构查询，不适合当源码级唯一裁判。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <link rel="stylesheet" href="../article-common.css" data-shared-css="0d59321e71" />
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+    <!-- seo:begin -->
+    <link rel="canonical" href="https://expectopatronus00.github.io/post/gh-codebase-memory-mcp/gh-codebase-memory-mcp.html" />
+    <meta property="og:url" content="https://expectopatronus00.github.io/post/gh-codebase-memory-mcp/gh-codebase-memory-mcp.html" />
+    <meta property="og:site_name" content="EXPECTOPATRONUS" />
+    <meta property="og:image" content="https://expectopatronus00.github.io/post/gh-codebase-memory-mcp/cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"49,010 星代码图谱：token 省十倍，答案质量降九个点","description":"DeusData 的 codebase-memory-mcp 把代码做成可查的本地图。README 主打省十倍 token，论文同段却写答案质量 83% 对基线 92%。164 语言只有 35 种有质量分档，1.31 GB 语法编进二进制。它适合跨服务结构查询，不适合当源码级唯一裁判。","image":"https://expectopatronus00.github.io/post/gh-codebase-memory-mcp/cover.jpg","inLanguage":"zh-CN","author":{"@type":"Person","name":"expectopatronus","url":"https://expectopatronus00.github.io"},"publisher":{"@type":"Organization","name":"EXPECTOPATRONUS","url":"https://expectopatronus00.github.io"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://expectopatronus00.github.io/post/gh-codebase-memory-mcp/gh-codebase-memory-mcp.html"},"datePublished":"2026-11-22","dateModified":"2026-11-22"}</script>
+    <!-- seo:end -->
+</head>
+  <body>
+    <!-- skip-link:begin -->
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <!-- skip-link:end -->
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head" data-skip-target="1" tabindex="-1" id="main-content">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>49,010 星代码图谱：token 省十倍，答案质量降九个点</h1>
+      <p>49,010 星的 codebase-memory-mcp 说能省十倍 token，论文同段却写答案质量 83%，对照的逐文件探索是 92%。README 只搬了前者。它把代码、文档和部署关系做成一棵本地图，判断仍交给 agent。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-22</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 6 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <picture data-cover-picture="1">
+        <source srcset="cover.webp" type="image/webp" />
+        <img loading="lazy" alt="49,010 星代码图谱：token 省十倍，答案质量降九个点 封面" src="cover.jpg" width="2400" height="1260" decoding="async" data-cover-ready="1" />
+      </picture>
+    </div>
+
+    <article class="article-body">
+<div class="section-marker" data-section="01">
+<h2>01 这件事</h2>
+<p><strong>它把代码库做成一台本地可查的图数据库，然后把「省了多少 token」写在 README 首页，把「答案质量掉了多少」留在论文里。</strong>两个数都公开，只是不在同一页。</p>
+<p>截至 2026-11-22，DeusData/codebase-memory-mcp 有 49,010 星、4,074 fork，2026-02-24 创建，MIT 许可，主语言标注为 C。最近一次推送是 11-21，最新发布 v0.12.1 停在 10-16。</p>
+<table>
+<thead><tr><th>字段</th><th>实测值</th><th>字段</th><th>实测值</th></tr></thead>
+<tbody>
+<tr><td>星标 / fork</td><td>49,010 / 4,074</td><td>创建 / 推送</td><td>02-24 / 11-21</td></tr>
+<tr><td>许可证 / 主语言</td><td>MIT / C</td><td>最新版本</td><td>v0.12.1 · 10-16</td></tr>
+<tr><td>未结条目</td><td>588（510 issue + 78 PR）</td><td>贡献者</td><td>228 人 / 5,658 次提交</td></tr>
+</tbody>
+</table>
+<p>11-12 入池时它就已是一个成熟仓库，第 10 天复核星标仍在涨、推送未停，热度够，不需要标 stale。<strong>这是存量活跃项目，不是当天冒出来的新库。</strong></p>
+<p>项目自己的定位很克制：它是结构分析后端，不生成答案，负责把函数、调用、路由、部署关系存成图；把问题翻译成工具调用、再把结构化结果讲成人话的是你的 MCP 客户端。</p>
+<p>打包这件事做得比一般研究型仓库重。README 的 Security 一节列了 SLSA Level 3 构建出处、Sigstore 无密钥签名、每个发布附 SHA-256 校验和，以及 8 个产品共 24 个候选二进制的 VirusTotal 扫描。</p>
+<ul>
+<li>选中打包的二进制 SHA-256 不变，发布说明链接对应的扫描结果</li>
+<li>CodeQL 有未关闭告警就阻断发布</li>
+<li>安装脚本在解压前校验校验和</li>
+</ul>
+</div>
+
+<div class="section-marker" data-section="02">
+<h2>02 核心机制</h2>
+<p><strong>真正发货的不是聊天界面，是 17 个 MCP 工具加一棵 28 类节点的图。</strong>图形前端 CBM Lens 还是 v0.0.1 公开测试版，README 明说后端才是核心。</p>
+<p>CBM Lens 有架构图、Galaxy 三维图、源码阅读器和本地代码聊天。README 注明录屏拍于 2026-10-20、静态图拍于 10-12 至 10-13，并附每份截图的构建与索引范围说明。它是可选伴侣，不参与后端索引。</p>
+<p>索引器把源码、文档、配置、基础设施一起塞进图里，节点 28 类、边 42 类。边不只是 <code>CALLS</code>，还包括 <code>DEPLOYS</code>、<code>CONFIGURES</code> 和跨仓库的 <code>CROSS_*</code>，所以能从服务一路走到容器镜像再到源码。</p>
+<table>
+<thead><tr><th>图元素</th><th>实测</th><th>代表项</th></tr></thead>
+<tbody>
+<tr><td>节点标签</td><td>28 类</td><td>Function / Route / Image / EnvVar / Chart</td></tr>
+<tr><td>边类型</td><td>42 类</td><td>CALLS / INFRA_MAPS / DEPLOYS / CROSS_*</td></tr>
+</tbody>
+</table>
+<table>
+<thead><tr><th>工具组</th><th>数量</th><th>代表工具</th><th>作用</th></tr></thead>
+<tbody>
+<tr><td>索引</td><td>5</td><td><code>index_repository</code></td><td>建库、删库、查状态、测覆盖</td></tr>
+<tr><td>查询</td><td>12</td><td><code>trace_path</code></td><td>结构搜索、调用链、Cypher 子集</td></tr>
+<tr><td>合计</td><td>17</td><td><code>manage_adr</code></td><td>与 README 徽章、架构图三处对齐</td></tr>
+</tbody>
+</table>
+<p><span class="hl">语义搜索不是一个独立工具</span>，而是 <code>search_graph</code> 的 <code>semantic_query</code> 参数：Nomic 嵌入被编进二进制，不需要 API key、Ollama 或 Docker。 Hybrid LSP 类型解析另算，只覆盖 12 种语言。</p>
+<ul>
+<li><code>full</code>：默认，完整索引加语义分析</li>
+<li><code>moderate</code>：过滤后索引，保留语义分析</li>
+<li><code>fast</code>：过滤后索引，不做语义分析</li>
+<li><code>cross-repo-intelligence</code>：跨仓库连线，可选择目标项目</li>
+</ul>
+<p><strong>它能查结构，不负责判断。</strong>README 用一段问答示例讲清分工：agent 决定调哪个工具，CBM 返回结构化结果，解释仍由 agent 完成。这不是一个「问了就答」的助手。</p>
+</div>
+
+<div class="section-marker" data-section="03">
+<h2>03 关键细节与数据</h2>
+<p><strong>164 种语言这个数字成立，但成立的意思是「有语法包」，不是「都测过」。</strong>README 自己给了四种口径，只是它们分散在徽章、正文和论文里。</p>
+<table>
+<thead><tr><th>口径</th><th>数字</th><th>来源</th></tr></thead>
+<tbody>
+<tr><td>vendored 语法目录</td><td>164</td><td>完整树实测 164 个目录、各一份 parser.c</td></tr>
+<tr><td>有质量分档</td><td>35</td><td>README 三档表：17 优 / 16 良 / 2 可用</td></tr>
+<tr><td>未做基准</td><td>129</td><td>README「Also supported (not yet benchmarked)」</td></tr>
+<tr><td>论文解析语言</td><td>66</td><td>arXiv 2603.27277 摘要，2026-03-28</td></tr>
+</tbody>
+</table>
+<p>有分档的那 35 种也不是同一水平。README 另写基准覆盖 64 个真实开源仓库，节点数从 78 到 49K；分档按抽取质量划分，不是按语言流行度。</p>
+<table>
+<thead><tr><th>档位</th><th>语言数</th><th>代表</th></tr></thead>
+<tbody>
+<tr><td>Excellent，≥90%</td><td>17</td><td>Lua / Kotlin / C++ / C / Bash</td></tr>
+<tr><td>Good，75–89%</td><td>16</td><td>Python / TypeScript / Go / Rust</td></tr>
+<tr><td>Functional，&lt;75%</td><td>2</td><td>OCaml / Haskell</td></tr>
+</tbody>
+</table>
+<p>旧版 README 写的是 162 种语言、15 个工具、45 个客户端接入面；现行版分别是 164、17、46。<strong>这些数字都能对上，问题是它们衡量的不是同一件事。</strong></p>
+<p>省 token 的说法也有两套。旧版 README 标题写「120× fewer tokens」，正文写 99.2% 降幅；现行版换成论文的 10×，把五查询那组降格为「earlier comparison」。</p>
+<table>
+<thead><tr><th>口径</th><th>实验设置</th><th>结果</th></tr></thead>
+<tbody>
+<tr><td>旧版 5 查询</td><td>结构查询 vs 逐文件 grep</td><td>约 3,400 / 约 412,000 token</td></tr>
+<tr><td>论文 31 仓库</td><td>31 语言、12 类标准问题</td><td>约 1,000 / 约 10,000 token</td></tr>
+<tr><td>工具调用</td><td>同一篇论文</td><td>2.3 次 / 4.8 次，少 2.1 倍</td></tr>
+</tbody>
+</table>
+<p>体量才是「零基础设施」的另一面。完整树有 4,339 个条目、3,726 个 blob、约 1.68 GB；语法文件占 1.31 GB，单个 <code>lean/parser.c</code> 就 99.6 MB。</p>
+<div class="info-box">
+<p><strong>数据核对（2026-11-22）：</strong></p>
+<ul>
+<li>仓库：49,010 星 / 4,074 fork / MIT / 创建 02-24 / 推送 11-21</li>
+<li>身份：588 未结 = 510 issue + 78 PR；228 贡献者 / 5,658 提交</li>
+<li>目录：4,339 条目 / 3,726 blob / 1.68 GB；语法 164 目录 / 1.31 GB</li>
+<li>自述：17 工具、164 语言、46 客户端；实测 5+12 工具、164 目录、46 表格行</li>
+<li>论文：arXiv 2603.27277，2026-03-28，31 语言 / 31 仓库 / 12 类问题</li>
+<li>边界：发布 v0.12.1 停在 10-16；性能实测为 Apple M3 Pro</li>
+</ul>
+<p>核对时间 2026-11-22。</p>
+</div>
+</div>
+
+<div class="section-marker" data-section="04">
+<h2>04 怎么用</h2>
+<p><strong>它不需要你装 Python 或 Docker，但安装器会改你的 agent 配置。</strong>README 把这点写在首页：这个工具读你的代码，也会写你的 agent 配置文件。</p>
+<ul>
+<li>安装脚本：Windows 用 <code>install.ps1</code>，macOS / Linux 用 <code>install.sh</code></li>
+<li>包渠道：npm、PyPI、Homebrew、Scoop、AUR、<code>go install</code></li>
+<li>源码构建：需要 C 工具链，产物在 <code>build/c/codebase-memory-mcp</code></li>
+</ul>
+<p>安装器识别 46 个客户端接入面，其中 40 个自动探测、6 个条件或显式启用。Claude Code、Codex CLI、Cursor 等会额外拿到 Scout / Verify / Auditor 三档 agent 定义。</p>
+<table>
+<thead><tr><th>接入类型</th><th>代表</th><th>写入内容</th></tr></thead>
+<tbody>
+<tr><td>三档 agent + hooks</td><td>Claude Code / Codex / Gemini CLI</td><td>技能、规则、会话钩子</td></tr>
+<tr><td>仅 MCP 配置</td><td>Continue / TRAE / Tabnine</td><td>只写连接，不改提示</td></tr>
+<tr><td>显式 opt-in</td><td>Sourcegraph Cody</td><td>需要已有配置路径</td></tr>
+</tbody>
+</table>
+<p>大仓库索引要小心客户端超时。README 建议先 <code>index_repository(async: true)</code>，再用 <code>status: true</code> 轮询，否则取消连接会连带取消索引，重跑永远赶不上 deadline。</p>
+<p>团队共享图谱另有笔账。<code>.codebase-memory/graph.db.zst</code> 默认不写，开启后每次索引都会重写；README 举的例子是一个 20 MB 文件在约 350 次提交里滚到约 6 GB 历史。</p>
+<p>快照分两档：Best 用 zstd -9、去索引加 <code>VACUUM INTO</code>，Fast 用 zstd -3 做后续刷新，README 给的典型压缩比是 8 到 13 比 1。队友检出时若没装 Git LFS，拿到的是指针文件，导入会被拒，只能全量重建。</p>
+<p><strong>Smart CI 的适用范围比宣传窄。</strong>它是实验特性，测试收窄目前只支持 C/C++ 系和本仓库自己的测试约定；证据缺失就返回 <code>run_all</code>，建议先跑 shadow 模式再上闸门。</p>
+</div>
+
+<div class="section-marker" data-section="05">
+<h2>05 冷思考</h2>
+<p><strong>省十倍 token 的同一篇论文里，答案质量是 83% 对 92%——低了九个百分点。</strong>README 的性能段搬走了 10× 和 2.1×，没搬这一行。</p>
+<table>
+<thead><tr><th>指标</th><th>CBM agent</th><th>逐文件探索</th></tr></thead>
+<tbody>
+<tr><td>答案质量</td><td>0.83</td><td>0.92</td></tr>
+<tr><td>每问 token</td><td>约 1,000</td><td>约 10,000</td></tr>
+<tr><td>每问工具调用</td><td>2.3</td><td>4.8</td></tr>
+</tbody>
+</table>
+<p>论文把话说得比 README 细：质量分由第一作者对照人工检查得出的参考答案打，阈值 0.80 / 0.40 是实用主义选的；只用了 Claude Opus 4.6 一个模型，每种语言只有一个仓库。</p>
+<p>评测用 31 个仓库、每种语言一个，覆盖 12 类标准问题，从索引、发现、模式匹配一直到调用链和图查询；两边收到相同问题、同一后端。延迟差更大：图查询远小于 1 毫秒，逐文件探索要 10 到 30 秒。</p>
+<p>分差也不是均匀的。图原生问题上，CBM 在 19/31 语言持平或超过对照；需要完整源码或穷举 grep 的问题，对照在 16/31 和 10/31 语言上占优。宏密集的 C 更是 0.58 对 1.00。</p>
+<p><span class="hl">作者自己的建议是混合架构</span>：图检索加文件探索回退，而不是用图替掉读文件。这与首页「一次图查询替代几十次 grep」的单句宣传并不完全同一件事。</p>
+<p>还有两处边界值得记：图只表示静态结构，不含运行时行为和动态分派；<code>query_graph</code> 默认 10 万行上限，在超大库上可能少算。性能测试只在一台 Apple M3 Pro 上做过。</p>
+<p><strong>它适合把跨服务、跨文件的结构问题从几十次读取压成几次查询；不适合当作源码级事实的唯一裁判。</strong>要拿它替代探索式阅读，先看你的问题落在 19/31 那一边，还是 16/31 那一边。</p>
+</div>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>17 个 MCP 工具、164 个语法包与那篇 31 仓库预印本</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/DeusData/codebase-memory-mcp" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/DeusData/codebase-memory-mcp" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub · codebase-memory-mcp</span>
+        <span class="pd">repo · 49,010 星 · MIT</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=MCP">#MCP</a>
+      <a href="../../home/home.html?q=%E4%BB%A3%E7%A0%81%E5%9B%BE%E8%B0%B1">#代码图谱</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">数据来源：GitHub API（仓库 / releases / search/issues / contributors / tags）+ 完整 git tree + README 现行版与 commit 4ff6fee 旧版 + arXiv 2603.27277 摘要与评测正文。核对时间 2026-11-22。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

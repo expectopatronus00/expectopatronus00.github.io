@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- head-hints:begin -->
+    <meta name="theme-color" content="#0b0d16" />
+    <link rel="preconnect" href="https://font.emtech.cc" crossorigin />
+    <link rel="dns-prefetch" href="https://font.emtech.cc" />
+    <link rel="stylesheet" href="https://font.emtech.cc/css/LXGWNeoZhiSong/400" />
+    <script src="/home/theme-color.js" defer></script>
+    <!-- head-hints:end -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>12.3 万星、278 人免审：pi 的极简有门槛 · EXPECTOPATRONUS</title>
+    <meta name="description" content="pi 把统一 LLM API、agent loop、TUI 与编码 CLI 收进极简 harness；新人的 issue 与 PR 默认自动关闭，安全边界也明确交给使用者。" />
+    <meta name="keywords" content="Harness, 开源, TypeScript" />
+    <meta property="og:title" content="12.3 万星、278 人免审：pi 的极简有门槛" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="pi 把统一 LLM API、agent loop、TUI 与编码 CLI 收进极简 harness；新人的 issue 与 PR 默认自动关闭，安全边界也明确交给使用者。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <link rel="stylesheet" href="../article-common.css" data-shared-css="0d59321e71" />
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+    <!-- seo:begin -->
+    <link rel="canonical" href="https://expectopatronus00.github.io/post/gh-earendil-works-pi/gh-earendil-works-pi.html" />
+    <meta property="og:url" content="https://expectopatronus00.github.io/post/gh-earendil-works-pi/gh-earendil-works-pi.html" />
+    <meta property="og:site_name" content="EXPECTOPATRONUS" />
+    <meta property="og:image" content="https://expectopatronus00.github.io/post/gh-earendil-works-pi/cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"12.3 万星、278 人免审：pi 的极简有门槛","description":"pi 把统一 LLM API、agent loop、TUI 与编码 CLI 收进极简 harness；新人的 issue 与 PR 默认自动关闭，安全边界也明确交给使用者。","image":"https://expectopatronus00.github.io/post/gh-earendil-works-pi/cover.jpg","inLanguage":"zh-CN","author":{"@type":"Person","name":"expectopatronus","url":"https://expectopatronus00.github.io"},"publisher":{"@type":"Organization","name":"EXPECTOPATRONUS","url":"https://expectopatronus00.github.io"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://expectopatronus00.github.io/post/gh-earendil-works-pi/gh-earendil-works-pi.html"},"datePublished":"2026-11-22","dateModified":"2026-11-22"}</script>
+    <!-- seo:end -->
+</head>
+  <body>
+    <!-- skip-link:begin -->
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <!-- skip-link:end -->
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head" data-skip-target="1" tabindex="-1" id="main-content">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>12.3 万星、278 人免审：pi 的极简有门槛</h1>
+      <p>earendil-works/pi 有 123,267 星、15,902 fork，MIT 许可，推送停在 11-22。README 说它默认不做 sub-agents 和 plan mode；贡献白名单只有 278 个账号。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-22</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 6 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <picture data-cover-picture="1">
+        <source srcset="cover.webp" type="image/webp" />
+        <img loading="lazy" alt="12.3 万星、278 人免审：pi 的极简有门槛 封面" src="cover.jpg" width="2400" height="1260" decoding="async" data-cover-ready="1" />
+      </picture>
+    </div>
+
+    <article class="article-body">
+<div class="section-marker" data-section="01">
+<h2>01 这件事</h2>
+<p><strong>12.3 万星的 pi，先把「谁能提问题」写成门禁，再把功能留在核心之外。</strong>它不靠堆特性证明自己，靠的是一套能被 workflow 执行的边界。</p>
+<p>earendil-works/pi 创建于 2025-08-09，截至 2026-11-22 有 123,267 星、15,902 fork、282 个未结条目，MIT 许可，主语言 TypeScript，最近推送 11-22。11-13 入池时是 86 分候选，第 9 天复核热度未衰减。</p>
+<table>
+<thead><tr><th>字段</th><th>实测值</th><th>字段</th><th>实测值</th></tr></thead>
+<tbody>
+<tr><td>星标 / fork</td><td>123,267 / 15,902</td><td>创建 / 推送</td><td>2025-08-09 / 11-22</td></tr>
+<tr><td>许可证 / 语言</td><td>MIT / TypeScript</td><td>最新发布</td><td>v1.6.0 · 11-20</td></tr>
+<tr><td>CLI 版本</td><td>@earendil-works/pi-coding-agent 1.6.0</td><td>Node 要求</td><td>≥ 22.19.0</td></tr>
+</tbody>
+</table>
+<p>README 把定位压缩成三句，句句都在做减法：</p>
+<ul>
+<li>极简、可扩展，让你按自己的工作流改它</li>
+<li>默认不做 sub-agents，也不做 plan mode</li>
+<li>没有内建权限系统，默认继承启动用户的权限</li>
+</ul>
+<p><strong>这三句决定了后面所有取舍：核心只留 agent loop 与工具调用，扩展、技能、主题和提示词模板都做成可打包分发的 Pi package。</strong></p>
+<p>仓库底部还有一行致谢：pi.dev 域名由 exe.dev 捐助。项目把品牌、安装入口和代码分发放在三个地方，这也是后面读数字时要分开的口径。</p>
+</div>
+
+<div class="section-marker" data-section="02">
+<h2>02 核心机制</h2>
+<p><strong>「极简」说的是运行时默认行为，不是仓库体积：12 份 package.json 里，README 表格只列了 7 份。</strong>没列出来的多在内层链路上。</p>
+<table>
+<thead><tr><th>README 表格（7）</th><th>作用</th><th>仓库里另有（5）</th><th>作用</th></tr></thead>
+<tbody>
+<tr><td>pi-coding-agent</td><td>交互式 CLI</td><td>pi-codemode</td><td>QuickJS 沙箱脚本调工具</td></tr>
+<tr><td>pi-agent-core / pi-ai</td><td>agent 运行时 / 统一 LLM API</td><td>pi-env</td><td>远端执行环境</td></tr>
+<tr><td>pi-durable / chord</td><td>持久会话 / 跨进程对象运行时</td><td>pi-mcp</td><td>独立 MCP 客户端</td></tr>
+<tr><td>pi-tui / pi-telemetry</td><td>差分渲染 TUI / 遥测契约</td><td>pi-schema / pi-evals</td><td>JSON Schema / 私有评测包</td></tr>
+</tbody>
+</table>
+<p>12 份清单里 11 份公开、1 份标了私有。这不是 README 漏写版本：所有包的版本号都是 1.6.0，与 11-20 发布的 release tag 对齐。</p>
+<p>版本口径还分两层：根仓库叫 pi-monorepo 0.0.3，对外发布的是 CLI 1.6.0。模型目录由 catalog 生成，AGENTS.md 明令不许直接改生成物。</p>
+<p>扩展点写在 README 第一段：扩展、技能、提示词模板、主题。它们可以打成 Pi package，用 npm 或 git 分发给别人。</p>
+<p>接入方式也被拆成四条，而不只有一个聊天框：</p>
+<table>
+<thead><tr><th>模式</th><th>入口</th><th>场景</th></tr></thead>
+<tbody>
+<tr><td>交互式</td><td>目录里直接运行 pi</td><td>人在终端里看 transcript 与开销</td></tr>
+<tr><td>print / JSON</td><td>--print、--mode json</td><td>脚本调用、事件流解析</td></tr>
+<tr><td>RPC</td><td>--mode rpc</td><td>stdin 读命令、stdout 写响应</td></tr>
+<tr><td>TypeScript SDK</td><td>packages/ai 等库</td><td>把运行时嵌进自己的应用</td></tr>
+</tbody>
+</table>
+<p><span class="hl">核心不做 sub-agents 与 plan mode，想要就自己装包或让 Pi 写。</span>这不是功能缺失的托词，而是 CONTRIBUTING.md 的硬约束：让核心变胖的 PR 很可能被拒。</p>
+</div>
+
+<div class="section-marker" data-section="03">
+<h2>03 关键细节与数据</h2>
+<p><strong>贡献门禁不是文档口号：三条 workflow 会自动关掉新人的 issue 和 PR，白名单里只有 278 个账号。</strong>这是全仓最硬的数字。</p>
+<table>
+<thead><tr><th>workflow</th><th>触发与判定</th><th>结果</th></tr></thead>
+<tbody>
+<tr><td>issue-gate</td><td>无写权限且不在名单</td><td>打 untriaged 标签后关闭</td></tr>
+<tr><td>pr-gate</td><td>未获 lgtm 批准</td><td>评论说明后关闭 PR</td></tr>
+<tr><td>approve-contributor</td><td>解析维护者评论开头或结尾的 lgtm / lgtmi</td><td>写入 .github/APPROVED_CONTRIBUTORS</td></tr>
+<tr><td>issue-analysis</td><td>打 pi-analyze 标签或 @issuron analyze</td><td>用仓库 /is 提示词分析，读 PI_AUTH_JSON</td></tr>
+</tbody>
+</table>
+<p>命令位置也有讲究：lgtmi 只豁免 issue，lgtm 才同时豁免 PR；必须放在评论开头（可先 @ 人）或结尾。CONTRIBUTING.md 还写明周五到周日的 issue 不保证被查看。</p>
+<p>名单文件 419 行，去掉注释后 278 条：275 个账号有 pr 权限，3 个只有 issue 权限。<span class="hl">AI 可以帮忙分组、摘要和找缺失信息，但最后的开关仍由人按下。</span></p>
+<p>模板口径也对不上：CONTRIBUTING.md 说「两个 issue 模板」，目录里实有三个表单——Bug Report、Contribution Proposal、Package Report，且关闭了空白 issue。</p>
+<p>规则写明两次无视文档、或用 agent 批量提 issue 会永久封号。周末提交不保证回复，急事被引导去 Discord；维护者每天回看自动关闭的条目。</p>
+<p>README 顶部把规则放在徽章下方，等于提醒：看到自动关闭，先别急着判定项目没人维护。</p>
+<p>发布节奏同样是数据，不是印象。最近 100 个 release 的分布如下，100 条本身是接口分页上限。</p>
+<table>
+<thead><tr><th>月份</th><th>2026-04</th><th>2026-05</th><th>2026-06</th><th>2026-07</th><th>2026-09 / 10</th><th>2026-11</th></tr></thead>
+<tbody>
+<tr><td>版本数</td><td>25</td><td>17</td><td>16</td><td>11</td><td>9 / 9</td><td>4</td></tr>
+</tbody>
+</table>
+<p>这 100 个 release 共挂 723 个资产，最新 v1.6.0 有 10 个：源码包、安装锁文件和六个平台的二进制包。11 月的 4 版停在 11-20，之后两天没有新版本。</p>
+<div class="info-box">
+<p><strong>数据核对（2026-11-22）：</strong></p>
+<ul>
+<li>仓库：123,267 星 / 15,902 fork / MIT / 创建 2025-08-09 / 推送 11-22</li>
+<li>版本：coding-agent 1.6.0，v1.6.0 发布于 11-20</li>
+<li>体量：tree 5,480 节点 = 4,831 blob / 54.05 MiB，packages/ 占 38.85 MB（68.5%）</li>
+<li>未结：仓库 282；搜索拆 241 issue + 37 PR = 278，口径差 4</li>
+<li>发布：最近 100 条从 v0.63.0（03-27）到 v1.6.0（11-20），100 是分页上限</li>
+<li>边界：languages 只算 TS 30.82 MB，与 tree、size 字段不相加</li>
+</ul>
+<p>核对时间 2026-11-22。</p>
+</div>
+</div>
+
+<div class="section-marker" data-section="04">
+<h2>04 怎么用</h2>
+<p><strong>上手最容易被忽略的不是命令，而是安装路径的锁依赖差异和默认放行的执行权限。</strong>先决定隔离，再决定怎么装。</p>
+<table>
+<thead><tr><th>安装路径</th><th>入口</th><th>依赖口径</th></tr></thead>
+<tbody>
+<tr><td>官方安装脚本</td><td>curl -fsSL https://pi.dev/install.sh | sh</td><td>固定全部依赖，pi update 更新</td></tr>
+<tr><td>npm 全局</td><td>npm install -g --ignore-scripts @earendil-works/pi-coding-agent</td><td>不锁传递依赖</td></tr>
+<tr><td>Nix</td><td>nix run github:earendil-works/pi/stable</td><td>从源码构建，模型目录用 pin 固定</td></tr>
+</tbody>
+</table>
+<p>Node.js 要求 22.19 或更新。进目录运行 pi，用 /login 接订阅或 API key；无人值守用 --print、--mode json 或 --mode rpc。</p>
+<ul>
+<li>.npmrc 设 save-exact=true 与 min-release-age=2，避开当天发布的依赖</li>
+<li>package-lock.json 是依赖事实源，提交改动要带 PI_ALLOW_LOCKFILE_CHANGE=1</li>
+<li>安装脚本从 install-lock/ 目录取包，npm 全局安装不锁传递依赖</li>
+<li>CI 用 npm ci --ignore-scripts，另有定时任务跑 npm audit --omit=dev</li>
+<li>npm 发布的是本地验证过的 tarball，不在发布时重新打包工作区</li>
+</ul>
+<p>可选能力默认也关着：tool_search 要显式写进 defaultTools，codemode 则在 QuickJS 沙箱里调其他工具，两者都要在配置里打开。</p>
+<p>从源码跑也不难：<code>npm install --ignore-scripts</code> 后执行 <code>npm run build</code>，<code>pi-test.sh</code> 可从任意目录启动；<code>test.sh</code> 在没有 API key 时跳过依赖 LLM 的用例。</p>
+<p>安全边界要自己搭。README 说没有内建权限系统，默认继承启动用户权限；usage 文档补了一句：它不会在每次工具调用前问你。</p>
+<table>
+<thead><tr><th>隔离方式</th><th>Pi 运行位置</th><th>凭据处理</th></tr></thead>
+<tbody>
+<tr><td>Plain Docker</td><td>容器内</td><td>凭据传进容器</td></tr>
+<tr><td>Docker Sandboxes</td><td>托管沙箱</td><td>真 key 留宿主机，代理替换</td></tr>
+<tr><td>OpenShell</td><td>本地或远端沙箱</td><td>策略控制凭据与推理路由</td></tr>
+<tr><td>Gondolin extension</td><td>宿主机</td><td>只把内置工具送进微 VM</td></tr>
+</tbody>
+</table>
+<p>README 只列三种隔离方式，文档表格是四种，多出来的正是 Docker Sandboxes：真 key 不进沙箱，由代理在出站时替换。</p>
+<p>还有一处容易漏：<code>/share</code> 会上传会话换取查看链接，默认走 Radius 组织可见或私有 GitHub gist；文档要求上传前先检查提示词、工具输出和凭据。</p>
+</div>
+
+<div class="section-marker" data-section="05">
+<h2>05 冷思考</h2>
+<p><strong>极简的代价是边界外移：SECURITY.md 直接把提示词注入和沙箱写成「不在范围内」。</strong>能不能用好，取决于你愿不愿意自己补这一层。</p>
+<p>原文说本地账户及可写文件都在同一信任边界内；本地已有写权限的攻击不算漏洞，除非能跨操作系统权限边界。它不承诺替你挡住本机恶意代码。</p>
+<ul>
+<li>提示词注入：AGENTS.md 与代码注释就能注入，文档写「无法防护」，工作流却鼓励 agent 读仓库指令</li>
+<li>不可信仓库、扩展、技能、沙箱行为、公开暴露实例，全部列在 out of scope</li>
+<li>供应链管得很细：精确版本、min-release-age=2、--ignore-scripts、CI 定时 npm audit，但只管安装不管运行</li>
+</ul>
+<p>有个微妙对照：产品默认没有 sub-agents，仓库自己的 AGENTS.md 却要求评审者用 subagent 或其他 session 并行看改动。它不反对多 agent，只是不替你预设一种编排。</p>
+<p>贡献门槛也能反过来看。12.3 万星的项目，只有 278 个账号免于自动关闭；质量筛选换来维护可持续，也可能把新用户的问题挡在讨论之外。</p>
+<p>仓库自己给了答案的一半：AI 能分重复、做摘要、找缺失信息，但不做最终判断；提交 issue 也不许用 LLM 代笔。它把人的责任留在入口和出口，中间才让机器帮忙。</p>
+<p>如果只想找个开箱即用、每次改动都先确认的编码 agent，pi 不是那个产品。<strong>愿意把隔离、扩展与审核规则自己拼起来，这 12.3 万星的大部分价值才真正可用。</strong></p>
+</div>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>统一 LLM API、agent loop、TUI 与可打包扩展的极简 harness</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/earendil-works/pi" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/earendil-works/pi" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub · pi</span>
+        <span class="pd">repo · 123,267 星 · MIT</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Harness">#Harness</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=TypeScript">#TypeScript</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">数据来源：GitHub API（仓库 / git tree / releases / tags / languages / search/issues）与 earendil-works/pi 的 README、CONTRIBUTING.md、SECURITY.md、AGENTS.md、package.json 及 .github/workflows、APPROVED_CONTRIBUTORS。核对时间 2026-11-22。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

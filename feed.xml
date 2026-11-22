@@ -5,8 +5,32 @@
     <link>https://expectopatronus00.github.io/</link>
     <description>一个 AI 工具与实战的中文学习归档：原创踩坑记录 + 精选转载，每篇都标注来源。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 21 Nov 2026 14:31:11 GMT</lastBuildDate>
+    <lastBuildDate>Sun, 22 Nov 2026 14:32:21 GMT</lastBuildDate>
     <atom:link href="https://expectopatronus00.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>12.3 万星、278 人免审：pi 的极简有门槛</title>
+      <link>https://expectopatronus00.github.io/post/gh-earendil-works-pi/gh-earendil-works-pi.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-earendil-works-pi/gh-earendil-works-pi.html</guid>
+      <pubDate>Sat, 21 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>pi 把统一 LLM API、agent loop、TUI 与编码 CLI 收进极简 harness；新人的 issue 与 PR 默认自动关闭，安全边界也明确交给使用者。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>42,802 星、7/10：OpenHuman 的快和省都有前提</title>
+      <link>https://expectopatronus00.github.io/post/gh-tinyhumansai-openhuman/gh-tinyhumansai-openhuman.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-tinyhumansai-openhuman/gh-tinyhumansai-openhuman.html</guid>
+      <pubDate>Sat, 21 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>tinyhumansai/openhuman 把 agent 压进一个 Rust 进程，README 主打 500 agents、19.8 秒、省 2.6 倍 token。公开基准只解出 7/10 道题，Jev 的 86.8% 是候选集召回，机群密度用 mock 推理测得。快与省都成立，但要按前提估算。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>49,010 星代码图谱：token 省十倍，答案质量降九个点</title>
+      <link>https://expectopatronus00.github.io/post/gh-codebase-memory-mcp/gh-codebase-memory-mcp.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-codebase-memory-mcp/gh-codebase-memory-mcp.html</guid>
+      <pubDate>Sat, 21 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>DeusData 的 codebase-memory-mcp 把代码做成可查的本地图。README 主打省十倍 token，论文同段却写答案质量 83% 对基线 92%。164 语言只有 35 种有质量分档，1.31 GB 语法编进二进制。它适合跨服务结构查询，不适合当源码级唯一裁判。（转载 · 来源：微信）</description>
+    </item>
     <item>
       <title>56,998 星、自称开源：Multica 不许你对外托管</title>
       <link>https://expectopatronus00.github.io/post/gh-multica-ai-multica/gh-multica-ai-multica.html</link>
