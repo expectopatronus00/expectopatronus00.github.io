@@ -3,6 +3,33 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'gh-niko1221-strata',
+            title: '4.7万星、74版：12G跑125B，仓库里查不到',
+            url: '../post/gh-niko1221-strata/gh-niko1221-strata.html',
+            summary: '47,392 星的 Strata 把 24,576 个专家摊到显卡、内存与 SSD，让消费显卡本地跑 MoE 大模型。抖音口播的「12G 跑 125B、96t/s」在仓库零命中：12G 只跑裁剪版 Coder，完整模型要 37.6–54.8 GB，基准协议仍是草稿。',
+            category: 'AI 编程',
+            date: '2026-11-24',
+            tags: ["本地推理","开源","MoE"],
+          },
+          {
+            id: 'gh-google-elephant-goldfish-model',
+            title: '2.2 万星、8 个技能：EGM 的「零上下文」有前提',
+            url: '../post/gh-google-elephant-goldfish-model/gh-google-elephant-goldfish-model.html',
+            summary: 'Google 名下的 EGM 把设计与评审拆给两个 agent：大象带上下文起草，金鱼在隔离上下文里挑错。8 个技能、五阶段评审都写得很完整，但宿主是否给得出「新会话且不含项目指令」决定它是否真能跑。',
+            category: 'AI 编程',
+            date: '2026-11-24',
+            tags: ["Agent","Skill","开源"],
+          },
+          {
+            id: 'gh-shareailab-learn-claude-code',
+            title: '8 万星、17 课：Bash 是口号，Python 是正文',
+            url: '../post/gh-shareailab-learn-claude-code/gh-shareailab-learn-claude-code.html',
+            summary: '中文团队把 Claude Code 拆成 17 个 harness 机制：一个 bash 工具加一个循环起步，s15 接回累计运行时。17 份代码全是 Python，s13 与 s15 占 42.3%；旧版 12 课并进 s13，「完成率翻倍」没有实验。适合学机制，不适合当产品。',
+            category: 'AI 编程',
+            date: '2026-11-24',
+            tags: ["Agent","Harness","开源"],
+          },
+          {
             id: 'gh-earendil-works-pi',
             title: '12.3 万星、278 人免审：pi 的极简有门槛',
             url: '../post/gh-earendil-works-pi/gh-earendil-works-pi.html',

@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- head-hints:begin -->
+    <meta name="theme-color" content="#0b0d16" />
+    <link rel="preconnect" href="https://font.emtech.cc" crossorigin />
+    <link rel="dns-prefetch" href="https://font.emtech.cc" />
+    <link rel="stylesheet" href="https://font.emtech.cc/css/LXGWNeoZhiSong/400" />
+    <script src="/home/theme-color.js" defer></script>
+    <!-- head-hints:end -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>8 万星、17 课：Bash 是口号，Python 是正文 · EXPECTOPATRONUS</title>
+    <meta name="description" content="中文团队把 Claude Code 拆成 17 个 harness 机制：一个 bash 工具加一个循环起步，s15 接回累计运行时。17 份代码全是 Python，s13 与 s15 占 42.3%；旧版 12 课并进 s13，「完成率翻倍」没有实验。适合学机制，不适合当产品。" />
+    <meta name="keywords" content="Agent, Harness, 开源" />
+    <meta property="og:title" content="8 万星、17 课：Bash 是口号，Python 是正文" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="中文团队把 Claude Code 拆成 17 个 harness 机制：一个 bash 工具加一个循环起步，s15 接回累计运行时。17 份代码全是 Python，s13 与 s15 占 42.3%；旧版 12 课并进 s13，「完成率翻倍」没有实验。适合学机制，不适合当产品。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <link rel="stylesheet" href="../article-common.css" data-shared-css="0d59321e71" />
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+    <!-- seo:begin -->
+    <link rel="canonical" href="https://expectopatronus00.github.io/post/gh-shareailab-learn-claude-code/gh-shareailab-learn-claude-code.html" />
+    <meta property="og:url" content="https://expectopatronus00.github.io/post/gh-shareailab-learn-claude-code/gh-shareailab-learn-claude-code.html" />
+    <meta property="og:site_name" content="EXPECTOPATRONUS" />
+    <meta property="og:image" content="https://expectopatronus00.github.io/post/gh-shareailab-learn-claude-code/cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"8 万星、17 课：Bash 是口号，Python 是正文","description":"中文团队把 Claude Code 拆成 17 个 harness 机制：一个 bash 工具加一个循环起步，s15 接回累计运行时。17 份代码全是 Python，s13 与 s15 占 42.3%；旧版 12 课并进 s13，「完成率翻倍」没有实验。适合学机制，不适合当产品。","image":"https://expectopatronus00.github.io/post/gh-shareailab-learn-claude-code/cover.jpg","inLanguage":"zh-CN","author":{"@type":"Person","name":"expectopatronus","url":"https://expectopatronus00.github.io"},"publisher":{"@type":"Organization","name":"EXPECTOPATRONUS","url":"https://expectopatronus00.github.io"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://expectopatronus00.github.io/post/gh-shareailab-learn-claude-code/gh-shareailab-learn-claude-code.html"},"datePublished":"2026-11-24","dateModified":"2026-11-24"}</script>
+    <!-- seo:end -->
+</head>
+  <body>
+    <!-- skip-link:begin -->
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <!-- skip-link:end -->
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head" data-skip-target="1" tabindex="-1" id="main-content">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>8 万星、17 课：Bash 是口号，Python 是正文</h1>
+      <p>80,796 星的 learn-claude-code 用 17 课教人手搓 harness，口号是「Bash 万能」。17 份可运行代码全是 Python，两章占 42.3%；「完成率翻倍」没有实验。它是机制地图，不是产品。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-24</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 5 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <picture data-cover-picture="1">
+        <source srcset="cover.webp" type="image/webp" />
+        <img loading="lazy" alt="8 万星、17 课：Bash 是口号，Python 是正文 封面" src="cover.jpg" width="2400" height="1260" decoding="async" data-cover-ready="1" />
+      </picture>
+    </div>
+
+    <article class="article-body">
+<div class="section-marker" data-section="01">
+<h2>01 这件事</h2>
+<p><strong>它不是又一个 agent 产品，而是一份把 harness 拆成 17 个机制的课程；八万星属于教程，仓库里的代码只负责教学。</strong></p>
+<p>截至 2026-11-24，shareAI-lab/learn-claude-code 有 80,796 星、12,889 fork，2025-06-29 创建，MIT 许可，主语言 Python。最近一次推送停在 11-15，最新提交是 448c75b。</p>
+<table>
+<thead><tr><th>字段</th><th>实测值</th><th>字段</th><th>实测值</th></tr></thead>
+<tbody>
+<tr><td>星标 / fork</td><td>80,796 / 12,889</td><td>创建 / 推送</td><td>2025-06-29 / 11-15</td></tr>
+<tr><td>许可证 / 主语言</td><td>MIT / Python</td><td>提交 / 贡献者</td><td>252 次 / 63 个账号</td></tr>
+<tr><td>未结条目</td><td>56（36 issue + 20 PR）</td><td>Release / tag</td><td>0 / 0</td></tr>
+</tbody>
+</table>
+<p>11-13 入池时是 80,338 星，11-21 复核为 80,693 星，今天 80,796 星。涨幅放缓但仍在涨，今日雷达也把它列为仍活跃，所以按积压最久照常成稿，不标 stale。<strong>这是存量活跃项目，不是当天爆火的新库。</strong></p>
+<p>它的立论写在 README 第一段：agent 的自主性来自模型训练，不来自外部编排代码；模型是司机，harness 是车。这个仓库只教你造车。</p>
+<ul>
+<li>Tools：文件读写、shell、网络、浏览器</li>
+<li>Knowledge：产品文档、领域参考、API 规格</li>
+<li>Observation：git diff、错误日志、浏览器状态</li>
+<li>Action：CLI 命令、API 调用、界面操作</li>
+<li>Permissions：沙箱隔离、审批流、信任边界</li>
+</ul>
+<p>完整树 417 个 blob、4.49 MB，其中 web/ 184 个文件占一半体量。这更像一份带网站的教学材料，而不是一个待部署的运行时。</p>
+</div>
+
+<div class="section-marker" data-section="02">
+<h2>02 核心机制</h2>
+<p><strong>第一节只给模型一个 bash 工具和一个 while 循环；「Bash is all you need」说的是工具面，不是实现语言。</strong></p>
+<p>s01_agent_loop/code.py 里 TOOLS 只有一个条目，名字叫 bash。它用 Python 的 subprocess.run 执行模型给的命令，把 stdout 与 stderr 拼起来塞回 tool_result，没有结果就退出循环。</p>
+<table>
+<thead><tr><th>环节</th><th>代码里的实际做法</th></tr></thead>
+<tbody>
+<tr><td>工具数量</td><td>1 个，名为 bash</td></tr>
+<tr><td>执行方式</td><td>Python <code>subprocess.run(shell=True)</code>；Windows 走 cmd.exe</td></tr>
+<tr><td>危险命令拦截</td><td>5 个固定子串：<code>rm -rf /</code>、<code>sudo</code>、<code>shutdown</code>、<code>reboot</code>、<code>&gt; /dev/</code></td></tr>
+<tr><td>超时与截断</td><td>120 秒超时；输出最多 50,000 字符</td></tr>
+<tr><td>默认模型</td><td>.env.example 写 <code>claude-sonnet-4-6</code></td></tr>
+</tbody>
+</table>
+<p>每轮循环做三件事：把 assistant 回复整段追加进消息列表、执行其中所有 tool_use、把结果作为一条 user 消息回灌。<strong>循环由模型驱动，代码只负责执行和搬运。</strong></p>
+<ul>
+<li>没有 tool_use 块：直接返回文本，结束本轮</li>
+<li>有多个工具调用：逐个执行，结果汇总成一条消息</li>
+<li>命令超时或不在白名单：返回错误字符串，仍作为工具结果回灌</li>
+</ul>
+<p>后面每一章只加一个机制，循环本身不改。README 划了边界：s15 把累积运行时接回完整循环，s16 加工作流编排，s17 用更小的工具池讲目标续跑，明确<strong>不是</strong>又一个累积运行时。</p>
+<p>这正是课程的价值：工具表、上下文压缩、任务图、权限边界被拆成可以单独读的 474.2 KB 代码，而不是藏在一个产品里。</p>
+</div>
+
+<div class="section-marker" data-section="03">
+<h2>03 关键细节与数据</h2>
+<p><strong>17 课不是 17 份等量代码：旧版四课并进 s13，两章拿走课程代码的 42.3%。</strong></p>
+<p>根目录 s01 到 s17 是现行主线，docs/ 与 agents/ 保留旧 12 课。README 的映射表把旧版最后四课全部指向新版同一章。</p>
+<table>
+<thead><tr><th>旧 12 课</th><th>新 17 课</th><th>主题</th></tr></thead>
+<tbody>
+<tr><td>旧 s09</td><td>新 s13</td><td>Agent Teams</td></tr>
+<tr><td>旧 s10</td><td>新 s13</td><td>Team Protocols</td></tr>
+<tr><td>旧 s11</td><td>新 s13</td><td>自主认领任务</td></tr>
+<tr><td>旧 s12</td><td>新 s13</td><td>任务绑定的 Worktree</td></tr>
+</tbody>
+</table>
+<p>按 git tree 的 size 字段统计，17 份 code.py 合计 474.2 KB，分布远不均匀。s15 与 s13 两章合计 200.4 KB，前五章占 61.6%。</p>
+<table>
+<thead><tr><th>章节</th><th>代码体量</th><th>占课程代码</th></tr></thead>
+<tbody>
+<tr><td>s15 Integrated Harness</td><td>128.8 KB</td><td>27.2%</td></tr>
+<tr><td>s13 Agent Teams</td><td>71.5 KB</td><td>15.1%</td></tr>
+<tr><td>s16 Workflow Runtime</td><td>33.4 KB</td><td>7.1%</td></tr>
+<tr><td>s17 Goal Loop</td><td>30.8 KB</td><td>6.5%</td></tr>
+<tr><td>s09 Memory</td><td>27.6 KB</td><td>5.8%</td></tr>
+</tbody>
+</table>
+<p>文档比代码厚：<span class="hl">每章都有英、中、日三份 README</span>，共 51 份章节译本，另有根目录三份；SVG 图 153 张。旧线仍留 14 个 agents/ Python 文件和 36 份 docs/ Markdown。</p>
+<p>仓库没有 release，也没有 tag。所谓「17 课」是课程编号，不是版本号；更新直接进 main，最新提交日期就是 11-15。</p>
+<div class="info-box">
+<p><strong>数据核对（2026-11-24）：</strong></p>
+<ul>
+<li>仓库：80,796 星 / 12,889 fork / MIT / 创建 2025-06-29 / 推送 11-15</li>
+<li>活动：252 提交 / 63 贡献者账号（含 7 匿名、1 机器人）/ 36 issue + 20 PR</li>
+<li>发布：release 与 tag 接口均返回空；最新提交 448c75b（11-15）</li>
+<li>目录：417 blob / 4.49 MB；17 code.py 共 474.2 KB；web 184 文件占 50.9%</li>
+<li>映射：旧 s09–s12 四课全部指向新 s13，官网 README 中英两版一致</li>
+<li>边界：s17 自述不是累积运行时；s01 危险命令拦截为 5 个固定子串</li>
+</ul>
+<p>核对时间 2026-11-24。</p>
+</div>
+</div>
+
+<div class="section-marker" data-section="04">
+<h2>04 怎么用</h2>
+<p><strong>照 README 跑主线只要四条命令，但默认路径要 API key，而且新旧两条线的章节号不能混用。</strong></p>
+<ul>
+<li><code>git clone</code> 仓库并 <code>cd learn-claude-code</code></li>
+<li><code>pip install -r requirements.txt</code>，只有 anthropic、python-dotenv、pyyaml 三个依赖</li>
+<li><code>cp .env.example .env</code>，填入 <code>ANTHROPIC_API_KEY</code></li>
+<li><code>python s01_agent_loop/code.py</code> 起步，再按缺口跳到 s08 或 s17</li>
+</ul>
+<table>
+<thead><tr><th>教程线</th><th>入口</th><th>范围</th><th>状态</th></tr></thead>
+<tbody>
+<tr><td>现行主线</td><td>根目录 s01–s17</td><td>17 章 + 三语 README + code.py</td><td>推荐新读者</td></tr>
+<tr><td>旧版过渡</td><td>agents/ + docs/</td><td>12 个可运行副本 + 12 课文档</td><td>仅为旧链接保留</td></tr>
+</tbody>
+</table>
+<p>不想用 Anthropic 的官方端点，可以改 <code>ANTHROPIC_BASE_URL</code> 与 MODEL_ID。.env.example 列了 MiniMax、GLM、Kimi、DeepSeek 的兼容地址，同时提醒<strong>兼容不等于行为一致</strong>，课程不会替你抹平各家差异。</p>
+<p>skills/ 只有 4 个技能目录、9 个文件共 54.6 KB，分别讲 agent 构建、代码审查、MCP 构建和 PDF；s07 拿它们演示按需加载。</p>
+<p>网站是可选的。web/ 用 Next.js 从根目录课程抽取内容，<code>npm run dev</code> 可看 s16、s17 的阅读、源码、模拟和架构视图；学机制不必先跑前端。</p>
+</div>
+
+<div class="section-marker" data-section="05">
+<h2>05 冷思考</h2>
+<p><strong>「完成率翻倍」写在课程格言里，s05 章节文档只说「更不容易漏步骤」，没有实验、样本或引用。</strong></p>
+<table>
+<thead><tr><th>位置</th><th>原文口径</th><th>能核到的证据</th></tr></thead>
+<tbody>
+<tr><td>README 课程列表</td><td>s05「完成率翻倍」</td><td>无基准、无样本量</td></tr>
+<tr><td>s05 章节 README</td><td>「复杂任务不太可能漏步骤」</td><td>只描述提醒计数器逻辑</td></tr>
+<tr><td>s05 代码</td><td>连续 3 轮不写 todo 就注入提醒</td><td>可以跑，但没有对照实验</td></tr>
+</tbody>
+</table>
+<p><span class="hl">数字式口号最容易脱离证据单独流传。</span>这句「翻倍」不影响理解 todo_write 的机制，但它不该被当成效果承诺。课程里其他格言是设计原则，不是测量结果。</p>
+<p>s01 的 5 个危险命令子串也不是沙箱：字符串匹配只挡固定写法，命令仍在宿主机 shell 里执行。它适合演示「工具接口长什么样」，不适合直接拿来跑不可信输入。</p>
+<p>README 结尾把读者引向同组织的 Kode-CLI（5,238 星，Apache-2.0）与 kode-agent-sdk（410 星，MIT），还提到姊妹教程 claw0。<strong>课程本身也是产品入口</strong>，这不影响教程质量，但读的时候要分清哪部分是知识、哪部分是导流。</p>
+<p>两条教程线并存也有成本：51 份章节译本要跟着英文改，开放 issue #611 就在指出 README-zh 有翻译不准和与英文不同步的行。新读者按主线读，旧链接迟早要迁。</p>
+<p><strong>把它当机制地图读最划算：先用 s01 看清循环，再按缺口挑 s08、s13、s17；别把 code.py 当生产 harness，也别把「17 课」当版本号。</strong></p>
+</div>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>17 章三语教程、可运行的 code.py 与旧版 12 课过渡线</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/shareAI-lab/learn-claude-code" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/shareAI-lab/learn-claude-code" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub · learn-claude-code</span>
+        <span class="pd">repo · 80,796 星 · MIT</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Agent">#Agent</a>
+      <a href="../../home/home.html?q=Harness">#Harness</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">数据来源：GitHub API（仓库 / search/issues / contributors / commits / tags / releases）与 README 英文及中文版、s01 与 s05 章节文档、.env.example、web/package.json；目录统计来自完整 git tree。核对时间 2026-11-24。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

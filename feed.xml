@@ -5,8 +5,32 @@
     <link>https://expectopatronus00.github.io/</link>
     <description>一个 AI 工具与实战的中文学习归档：原创踩坑记录 + 精选转载，每篇都标注来源。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Sun, 22 Nov 2026 14:32:21 GMT</lastBuildDate>
+    <lastBuildDate>Mon, 23 Nov 2026 17:29:20 GMT</lastBuildDate>
     <atom:link href="https://expectopatronus00.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>4.7万星、74版：12G跑125B，仓库里查不到</title>
+      <link>https://expectopatronus00.github.io/post/gh-niko1221-strata/gh-niko1221-strata.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-niko1221-strata/gh-niko1221-strata.html</guid>
+      <pubDate>Mon, 23 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>47,392 星的 Strata 把 24,576 个专家摊到显卡、内存与 SSD，让消费显卡本地跑 MoE 大模型。抖音口播的「12G 跑 125B、96t/s」在仓库零命中：12G 只跑裁剪版 Coder，完整模型要 37.6–54.8 GB，基准协议仍是草稿。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>2.2 万星、8 个技能：EGM 的「零上下文」有前提</title>
+      <link>https://expectopatronus00.github.io/post/gh-google-elephant-goldfish-model/gh-google-elephant-goldfish-model.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-google-elephant-goldfish-model/gh-google-elephant-goldfish-model.html</guid>
+      <pubDate>Mon, 23 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>Google 名下的 EGM 把设计与评审拆给两个 agent：大象带上下文起草，金鱼在隔离上下文里挑错。8 个技能、五阶段评审都写得很完整，但宿主是否给得出「新会话且不含项目指令」决定它是否真能跑。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>8 万星、17 课：Bash 是口号，Python 是正文</title>
+      <link>https://expectopatronus00.github.io/post/gh-shareailab-learn-claude-code/gh-shareailab-learn-claude-code.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-shareailab-learn-claude-code/gh-shareailab-learn-claude-code.html</guid>
+      <pubDate>Mon, 23 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>中文团队把 Claude Code 拆成 17 个 harness 机制：一个 bash 工具加一个循环起步，s15 接回累计运行时。17 份代码全是 Python，s13 与 s15 占 42.3%；旧版 12 课并进 s13，「完成率翻倍」没有实验。适合学机制，不适合当产品。（转载 · 来源：微信）</description>
+    </item>
     <item>
       <title>12.3 万星、278 人免审：pi 的极简有门槛</title>
       <link>https://expectopatronus00.github.io/post/gh-earendil-works-pi/gh-earendil-works-pi.html</link>

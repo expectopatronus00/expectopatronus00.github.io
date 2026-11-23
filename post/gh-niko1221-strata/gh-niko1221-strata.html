@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- head-hints:begin -->
+    <meta name="theme-color" content="#0b0d16" />
+    <link rel="preconnect" href="https://font.emtech.cc" crossorigin />
+    <link rel="dns-prefetch" href="https://font.emtech.cc" />
+    <link rel="stylesheet" href="https://font.emtech.cc/css/LXGWNeoZhiSong/400" />
+    <script src="/home/theme-color.js" defer></script>
+    <!-- head-hints:end -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>4.7万星、74版：12G跑125B，仓库里查不到 · EXPECTOPATRONUS</title>
+    <meta name="description" content="47,392 星的 Strata 把 24,576 个专家摊到显卡、内存与 SSD，让消费显卡本地跑 MoE 大模型。抖音口播的「12G 跑 125B、96t/s」在仓库零命中：12G 只跑裁剪版 Coder，完整模型要 37.6–54.8 GB，基准协议仍是草稿。" />
+    <meta name="keywords" content="本地推理, 开源, MoE" />
+    <meta property="og:title" content="4.7万星、74版：12G跑125B，仓库里查不到" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="47,392 星的 Strata 把 24,576 个专家摊到显卡、内存与 SSD，让消费显卡本地跑 MoE 大模型。抖音口播的「12G 跑 125B、96t/s」在仓库零命中：12G 只跑裁剪版 Coder，完整模型要 37.6–54.8 GB，基准协议仍是草稿。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <link rel="stylesheet" href="../article-common.css" data-shared-css="0d59321e71" />
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+    <!-- seo:begin -->
+    <link rel="canonical" href="https://expectopatronus00.github.io/post/gh-niko1221-strata/gh-niko1221-strata.html" />
+    <meta property="og:url" content="https://expectopatronus00.github.io/post/gh-niko1221-strata/gh-niko1221-strata.html" />
+    <meta property="og:site_name" content="EXPECTOPATRONUS" />
+    <meta property="og:image" content="https://expectopatronus00.github.io/post/gh-niko1221-strata/cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"4.7万星、74版：12G跑125B，仓库里查不到","description":"47,392 星的 Strata 把 24,576 个专家摊到显卡、内存与 SSD，让消费显卡本地跑 MoE 大模型。抖音口播的「12G 跑 125B、96t/s」在仓库零命中：12G 只跑裁剪版 Coder，完整模型要 37.6–54.8 GB，基准协议仍是草稿。","image":"https://expectopatronus00.github.io/post/gh-niko1221-strata/cover.jpg","inLanguage":"zh-CN","author":{"@type":"Person","name":"expectopatronus","url":"https://expectopatronus00.github.io"},"publisher":{"@type":"Organization","name":"EXPECTOPATRONUS","url":"https://expectopatronus00.github.io"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://expectopatronus00.github.io/post/gh-niko1221-strata/gh-niko1221-strata.html"},"datePublished":"2026-11-24","dateModified":"2026-11-24"}</script>
+    <!-- seo:end -->
+</head>
+  <body>
+    <!-- skip-link:begin -->
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <!-- skip-link:end -->
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head" data-skip-target="1" tabindex="-1" id="main-content">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>4.7万星、74版：12G跑125B，仓库里查不到</h1>
+      <p>47,392 星的 Strata 让消费显卡本地跑 Qwen3.8-Flash-Next。抖音推到「12G 跑 125B、96t/s」，但 README、模型文档与社区基准里，这两个数字一次都没出现。挪动的门槛是从显存到内存。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-24</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 5 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <picture data-cover-picture="1">
+        <source srcset="cover.webp" type="image/webp" />
+        <img loading="lazy" alt="4.7万星、74版：12G跑125B，仓库里查不到 封面" src="cover.jpg" width="2400" height="1260" decoding="async" data-cover-ready="1" />
+      </picture>
+    </div>
+
+    <article class="article-body">
+<div class="section-marker" data-section="01">
+<h2>01 这件事</h2>
+<p><strong>它是一个把 MoE 大模型摊到整台电脑上的本地推理引擎；4.7 万星属于「消费显卡跑大模型」这个承诺，不属于短视频里那个速度数字。</strong></p>
+<p>截至 2026-11-24，Niko1221/Strata 有 47,392 星、5,308 fork，2026-09-24 创建，MIT 许可，主语言 C++，最近一次推送停在 11-23。未结条目 1,376 个，其中 807 个 issue、569 个 PR。</p>
+<table>
+<thead><tr><th>字段</th><th>实测值</th><th>字段</th><th>实测值</th></tr></thead>
+<tbody>
+<tr><td>星标 / fork</td><td>47,392 / 5,308</td><td>创建 / 推送</td><td>2026-09-24 / 11-23</td></tr>
+<tr><td>许可证 / 主语言</td><td>MIT / C++</td><td>未结条目</td><td>1,376（807 issue + 569 PR）</td></tr>
+<tr><td>Release / 资产</td><td>74 版 / 最新 64 项</td><td>订阅者</td><td>222</td></tr>
+</tbody>
+</table>
+<p>11-14 入池时是 43,916 星，11-16 复核 44,762 星，今天 47,392 星。它来自 60 天新库探测，从未上周榜、月榜，也没有可核对的本周增速。</p>
+<p>抖音口播把它讲成「12G 显卡畅跑 125B 体量 Qwen3.8 Flash Next、速度 96t/s」。我按这三个数字回查仓库：12G 只在特定条件下成立，另两个在 README、模型文档与社区基准表里一次都没出现。</p>
+</div>
+
+<div class="section-marker" data-section="02">
+<h2>02 核心机制</h2>
+<p><strong>省显存不是靠压缩权重，是把一个模型拆到显卡、内存、SSD 三层，让 CPU 和 GPU 同时干活。</strong></p>
+<p>HOW_IT_WORKS.md 写得很直白：Qwen3.8-Flash-Next 有 <span class="hl">24,576 个专家</span>，每写一个词只用到其中 10 个。既然大多数专家这一轮用不上，就不必全压在显卡里。</p>
+<ul>
+<li><strong>显卡</strong>：注意力层、路由、共享专家与最热的数千个专家；每多 1 GB 显存约多放 700 个专家</li>
+<li><strong>内存</strong>：固定放全部 24,576 个专家，CPU 用 AVX-512/AVX2 就地算显卡没缓存的那部分</li>
+<li><strong>SSD</strong>：放 28.8 GB 的 n-gram 查找表，每个词只读几行</li>
+</ul>
+<p>另一层加速叫「先猜再验」：模型自带的 MTP 层一次起草最多 3 个词，再一遍扫过 48 层全部校验，平均每遍收下 2.4–3.2 个词，文档给的提速是 1.6–1.8 倍。重复上下文的代码改动另走 prompt lookup，最多起草 5 个词。</p>
+<p>README 底部留了 <code>#how-fast-is-it</code> 和 <code>#how-does-it-work</code> 两个锚点，正文却只把读者引向社区基准与协议文档。<strong>仓库把速度问题留给用户自己填，短视频替它填了。</strong></p>
+</div>
+
+<div class="section-marker" data-section="03">
+<h2>03 关键细节与数据</h2>
+<p><strong>真正的门槛写在内存一栏：完整模型要 37.6–54.8 GB，64 GB 内存才覆盖全部档位。</strong></p>
+<p>MODELS.md 的「Pick by memory」给的是权重占用（RAM 与 VRAM 合计），不是显存下限。八档四个尺寸，随精度递增：</p>
+<table>
+<thead><tr><th>档位</th><th>权重占用</th><th>档位</th><th>权重占用</th></tr></thead>
+<tbody>
+<tr><td>Q2_0</td><td>37.6 GB</td><td>IQ3_XXS</td><td>47.0 GB</td></tr>
+<tr><td>IQ2_XS</td><td>39.2 GB</td><td>IQ3_S</td><td>54.8 GB</td></tr>
+</tbody>
+</table>
+<p>文档另给一条判据：加载时 shard 1 的专家进内存，Q2_0 是 34 GB、IQ3_S 是 50 GB；模型要装得下，内存至少得是专家数再加约 10 GB。64 GB 内存全档能跑，48 GB 只能跑 Q2_0 和 IQ2_XS。</p>
+<p>这里有个反直觉的约束：文档原话是「更大的显卡更快，但除了低内存模式，不会降低所需内存」。32 GB 内存配 24 GB 显卡能跑 Q2_0、IQ2_XS 和 Coder；同样 32 GB 内存配 12–16 GB 显卡就只剩 Coder。内存不够时 setup 会改从 SSD 读专家，文档直说「能用，但慢得多」。</p>
+<div class="info-box">
+<p><strong>数据核对（核对时间 2026-11-24）</strong></p>
+<ul>
+<li>仓库身份：47,392★ / 5,308 fork；MIT / C++；created 2026-09-24、pushed 11-23</li>
+<li>体量：完整 git tree（truncated:false）8,253 文件、133.82 MiB；engine 45.4% / docs 27.9%</li>
+<li>版本：74 个 Release，v0.1.0（09-24）→ v0.2.20（11-22），最新版 64 项资产</li>
+<li>口径：内存表为权重占用；languages（C++ 26.41 MiB 等）与仓库 size 字段不与 tree 相加</li>
+<li>边界：125B / 96t/s 在仓库文档中零命中；社区数字均为自测，基准协议仍是 draft</li>
+</ul>
+</div>
+<p><strong>12G 显卡能启动，但启动的是裁剪版 Coder，不是完整 Flash-Next。</strong>模型文档只给了一个 12–16 GB GPU 的例子：32 GB 内存配 12–16 GB 显卡跑 Coder；它保留了每层 512 个专家中的 256 个，约 32 GB 内存。显卡再大只会更快，不会降低所需内存，低内存模式除外。</p>
+<p>社区基准表里没有统一跑分，只有用户自测。解码速度从 Radeon 780M 的 13.1 tok/s 到双 TITAN RTX 的 77.3 tok/s；文档明确写着协议还是草稿，早期报告「不是标准结果」。</p>
+<table>
+<thead><tr><th>硬件</th><th>内存</th><th>解码 tok/s</th></tr></thead>
+<tbody>
+<tr><td>Radeon 780M</td><td>60 GB</td><td>13.1 → 14.3</td></tr>
+<tr><td>Tesla V100 32GB</td><td>96 GB</td><td>28.16 → 32.94</td></tr>
+<tr><td>Strix Halo 128GB</td><td>统一内存</td><td>59.2 / 57.8 / 42.0</td></tr>
+<tr><td>RTX 5060 Ti 16GB</td><td>128 GB</td><td>48.2 / 47.7</td></tr>
+<tr><td>RX 9070 16GB</td><td>64 GB</td><td>58.7 / 57.9 / 57.9</td></tr>
+<tr><td>2× TITAN RTX 24GB</td><td>125 GiB</td><td>70.9 / 77.3 / 71.1</td></tr>
+</tbody>
+</table>
+<p>V100 那一行的提升来自可选的 Volta 内核开关；RTX 4070 12GB 报出的 48.23 tok/s 出自本地改过的引擎，不是官方发行版。96t/s 在整个仓库里查不到。</p>
+</div>
+
+<div class="section-marker" data-section="04">
+<h2>04 怎么用</h2>
+<p><strong>装起来很快，慢的是配内存和等模型下载：一条命令装终端，桌面端一键装，模型按显存分档选。</strong></p>
+<p>仓库给三条路：桌面端下 Windows 安装包、Linux AppImage 或 Mac dmg；终端一行脚本；或从源码编译。装完运行 <code>strata launch</code> 选模型，<code>strata connect</code> 看主流工具怎么接。</p>
+<table>
+<thead><tr><th>路径</th><th>入口</th><th>要点</th></tr></thead>
+<tbody>
+<tr><td>桌面端</td><td>v0.2.20 安装包</td><td>三系统各一个安装包，首次启动按显卡拉引擎</td></tr>
+<tr><td>终端</td><td>install.sh / install.ps1</td><td>装完运行 strata launch</td></tr>
+<tr><td>源码</td><td>SOURCE_INSTALL.md</td><td>可强制 --low-ram on|off</td></tr>
+</tbody>
+</table>
+<p>支持面列了七类：NVIDIA RTX 20/30/40/50 系、AMD RX 7000/9000 与 AI PRO、RX 6800/6900（实验）、Intel Arc（Linux）、Apple Silicon M1 起、Strix Halo、DGX Spark。README 同时列出 Tencent Hy4-Flash、Qwen3.6-35B-A3B、Inkling 2 Mini 三组可选模型。</p>
+<p>它对外提供 OpenAI 与 Anthropic 兼容的本地 API，接 Claude Code、Codex CLI、OpenCode 等工具。SAFETY.md 承诺无遥测、无账号、服务只听 127.0.0.1，模型文件带固定 SHA-256；API key 以明文保存在仅本用户可读的文件里。</p>
+<p>更新走另一套信任链：release 发布经 Ed25519 签名的 feed，客户端验签、查过期、防重放，再逐项校验 SHA-256。这套机制覆盖了升级，但首次 <code>curl | sh</code> 仍只靠 HTTPS 与仓库本身的可信度，文档把这条单列出来提醒。</p>
+</div>
+
+<div class="section-marker" data-section="05">
+<h2>05 冷思考</h2>
+<p><strong>短视频卖的是那个 96t/s，仓库交付的是一台要 64 GB 内存的机器，两者之间隔着三层口径。</strong></p>
+<p>第一层是协议。BENCHMARK_PROTOCOL.md 自己标着 draft、pilot 未跑；首批实测里 36 个 4K/16K 请求有 35 个在还在推理时撞上 512 词上限，文档因此要求报告带上 Capped 列，并禁止把不同 track 合并成一个 headline 数字。</p>
+<ul>
+<li>README 的 headline 性能表述不随社区报告更新，文档写明「加一份报告不需要改 README 的性能宣称」</li>
+<li>74 个版本里贡献者高度集中：前 100 名合计 8,080 次提交，作者本人占 7,242 次（89.6%）</li>
+<li>Windows 安装包尚未代码签名；首次 <code>curl | sh</code> 的信任链只有 HTTPS 与发布页本身</li>
+</ul>
+<p>第二层是权限。coding agent 默认 Manual，改动前逐条确认；Plan 模式只读，Bypass 则完全放行。文档提醒 Manual 并不把 agent 关在聊天目录里——你批准的那一步，能碰到你账号能碰到的一切。</p>
+<p>第三层是成本转移。它确实把 125B 级 MoE 塞进了消费显卡，代价是 24,576 个专家常驻内存、28.8 GB 表放 SSD，以及显卡每多 1 GB 才多缓存约 700 个专家。省下的显存变成内存条和电费。</p>
+<p>所以我的判断是：按「本地、无账号、离线可用」买它，承诺基本兑现；按「12G 畅跑满血、96t/s」买它，第一台机器就会卡在内存那一栏。<strong>它降低的是入场显卡，不是整机门槛。</strong></p>
+</div>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>README、模型内存表、社区基准与基准协议文档</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/Niko1221/Strata" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/Niko1221/Strata" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub · Strata</span>
+        <span class="pd">repo · 47,392 星 · MIT</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=%E6%9C%AC%E5%9C%B0%E6%8E%A8%E7%90%86">#本地推理</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=MoE">#MoE</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">数据来源：GitHub API（仓库 / search/issues / contributors / releases / git tree）与 README、HOW_IT_WORKS.md、MODELS.md、COMMUNITY_BENCHMARKS.md、BENCHMARK_PROTOCOL.md、SAFETY.md。核对时间 2026-11-24。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

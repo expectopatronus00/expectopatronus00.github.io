@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- head-hints:begin -->
+    <meta name="theme-color" content="#0b0d16" />
+    <link rel="preconnect" href="https://font.emtech.cc" crossorigin />
+    <link rel="dns-prefetch" href="https://font.emtech.cc" />
+    <link rel="stylesheet" href="https://font.emtech.cc/css/LXGWNeoZhiSong/400" />
+    <script src="/home/theme-color.js" defer></script>
+    <!-- head-hints:end -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2.2 万星、8 个技能：EGM 的「零上下文」有前提 · EXPECTOPATRONUS</title>
+    <meta name="description" content="Google 名下的 EGM 把设计与评审拆给两个 agent：大象带上下文起草，金鱼在隔离上下文里挑错。8 个技能、五阶段评审都写得很完整，但宿主是否给得出「新会话且不含项目指令」决定它是否真能跑。" />
+    <meta name="keywords" content="Agent, Skill, 开源" />
+    <meta property="og:title" content="2.2 万星、8 个技能：EGM 的「零上下文」有前提" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="Google 名下的 EGM 把设计与评审拆给两个 agent：大象带上下文起草，金鱼在隔离上下文里挑错。8 个技能、五阶段评审都写得很完整，但宿主是否给得出「新会话且不含项目指令」决定它是否真能跑。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <link rel="stylesheet" href="../article-common.css" data-shared-css="0d59321e71" />
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+    <!-- seo:begin -->
+    <link rel="canonical" href="https://expectopatronus00.github.io/post/gh-google-elephant-goldfish-model/gh-google-elephant-goldfish-model.html" />
+    <meta property="og:url" content="https://expectopatronus00.github.io/post/gh-google-elephant-goldfish-model/gh-google-elephant-goldfish-model.html" />
+    <meta property="og:site_name" content="EXPECTOPATRONUS" />
+    <meta property="og:image" content="https://expectopatronus00.github.io/post/gh-google-elephant-goldfish-model/cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"2.2 万星、8 个技能：EGM 的「零上下文」有前提","description":"Google 名下的 EGM 把设计与评审拆给两个 agent：大象带上下文起草，金鱼在隔离上下文里挑错。8 个技能、五阶段评审都写得很完整，但宿主是否给得出「新会话且不含项目指令」决定它是否真能跑。","image":"https://expectopatronus00.github.io/post/gh-google-elephant-goldfish-model/cover.jpg","inLanguage":"zh-CN","author":{"@type":"Person","name":"expectopatronus","url":"https://expectopatronus00.github.io"},"publisher":{"@type":"Organization","name":"EXPECTOPATRONUS","url":"https://expectopatronus00.github.io"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://expectopatronus00.github.io/post/gh-google-elephant-goldfish-model/gh-google-elephant-goldfish-model.html"},"datePublished":"2026-11-24","dateModified":"2026-11-24"}</script>
+    <!-- seo:end -->
+</head>
+  <body>
+    <!-- skip-link:begin -->
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <!-- skip-link:end -->
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head" data-skip-target="1" tabindex="-1" id="main-content">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>2.2 万星、8 个技能：EGM 的「零上下文」有前提</h1>
+      <p>22,357 星的 elephant-goldfish-model 要大象带上下文起草、金鱼不看对话独立评审，8 个技能覆盖从头脑风暴到漂移检查。README 把隔离说成硬规则，自己的文档却承认宿主指令仍会进场。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-24</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 6 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <picture data-cover-picture="1">
+        <source srcset="cover.webp" type="image/webp" />
+        <img loading="lazy" alt="2.2 万星、8 个技能：EGM 的「零上下文」有前提 封面" src="cover.jpg" width="2400" height="1260" decoding="async" data-cover-ready="1" />
+      </picture>
+    </div>
+
+    <article class="article-body">
+<div class="section-marker" data-section="01">
+<h2>01 这件事</h2>
+<p><strong>Google 名下的 elephant-goldfish-model 把「设计」和「评审」拆给两个 agent：一个带全量上下文起草，一个不带先前对话独立挑错。</strong>截至 11-24，仓库 22,357 星、1,649 fork，11-23 仍在推送。</p>
+<p>它 2026-09-13 建库，许可证 Apache-2.0，主语言 Python，未结条目 163 个。README 首行是一句口号：Design with an elephant, review with a goldfish。页尾却写着「这不是 Google 官方支持的产品」。</p>
+<table>
+<thead><tr><th>字段</th><th>实测值</th><th>字段</th><th>实测值</th></tr></thead>
+<tbody>
+<tr><td>星标 / fork</td><td>22,357 / 1,649</td><td>创建 / 推送</td><td>09-13 / 11-23</td></tr>
+<tr><td>许可证 / 语言</td><td>Apache-2.0 / Python</td><td>未结条目</td><td>163（97 issue + 66 PR）</td></tr>
+<tr><td>Release</td><td>2 个，最新 v0.1.1</td><td>官网</td><td>egm.dev</td></tr>
+</tbody>
+</table>
+<p>11-14 入池时它拿到 95 分，是 pending 里最高的一条。入池第 10 天已超 7 天线，复核时星标仍在增长、推送停在昨天，热度未衰减，按原分成稿。</p>
+<ul>
+<li>Elephant：拿着项目背景、需求和先前决定，探索问题并起草规格</li>
+<li>Goldfish：只看文档与其引用的源码，不看先前对话，找隐含假设与实现风险</li>
+<li>You：拍板取舍、批准设计，再决定要不要实现</li>
+</ul>
+<p><strong>三个角色里，只有「你」拥有决定权；两个 agent 一个只写、一个只挑。</strong></p>
+</div>
+
+<div class="section-marker" data-section="02">
+<h2>02 核心机制</h2>
+<p><strong>它解决的是「同一条推理链自己审自己」：起草者带上下文，评审者被强制隔离，最后把结论写进仓库里的设计文档。</strong>规格先落地，代码后写。</p>
+<table>
+<thead><tr><th>角色</th><th>拿到的上下文</th><th>职责</th></tr></thead>
+<tbody>
+<tr><td>Elephant</td><td>项目、需求、先前决定</td><td>探索问题、起草规格</td></tr>
+<tr><td>Goldfish</td><td>文档与引用源码，无先前对话</td><td>找缺失假设、含糊需求、实现风险</td></tr>
+<tr><td>You</td><td>真正要紧的目标与约束</td><td>解决取舍、批准设计、决定建什么</td></tr>
+</tbody>
+</table>
+<p>评审不是一个 prompt，而是一条五阶段流水线，步号从 5 起——前四步属于头脑风暴与起草：</p>
+<table>
+<thead><tr><th>步骤</th><th>评审动作</th><th>依据的规范文件</th></tr></thead>
+<tbody>
+<tr><td>Step 5</td><td>拉远看简单性、YAGNI、复用</td><td>zoom-out-standard.md</td></tr>
+<tr><td>Step 6</td><td> naive 读者测自洽与背景缺失</td><td>文档自身</td></tr>
+<tr><td>Step 7</td><td>挑系统设计、规模瓶颈、失效模式</td><td>feature-spec-standard.md</td></tr>
+<tr><td>Step 8</td><td>复审前两步新增内容</td><td>zoom-out-standard.md</td></tr>
+<tr><td>Step 9</td><td>核对路径、函数签名、测试用例</td><td>implementation-readiness-standard.md</td></tr>
+</tbody>
+</table>
+<p>更早的 brainstorm 会让 Elephant 访谈出核心假设，再派 7 组 Goldfish 去否决它，结果写进 <code>concepts_brief.md</code>。草稿 <code>design_draft.md</code> 逐节停顿，等人在对话里反馈。</p>
+<p>关键在于隔离是硬性的。README 明确写：评审需要新的子 agent 上下文，宿主若创建不了，EGM 就停在那里，<span class="hl">不会退化成同一个上下文里假装换人</span>。</p>
+<p>所有长文档写进侧栏或工作区文件，不往聊天流里倒；01 到 04 阶段约定只写规格与评审产物，不碰生产代码——但架构文档注明，这条只是约定，没有机制强制。</p>
+<p><strong>「先写规格、再评审、最后才准写代码」是这套流程的全部主张，也是它最容易被跳过的一步。</strong></p>
+</div>
+
+<div class="section-marker" data-section="03">
+<h2>03 关键细节与数据</h2>
+<p><strong>README 列 8 个技能、架构文档列 8 个评审人格，但目录里实际躺着 10 份 persona 文件——三处数字各有各的口径。</strong>按名字逐一比对才不会数错。</p>
+<p>README 的 Choose a skill 表给了 8 个可单独调用的技能：</p>
+<table>
+<thead><tr><th>技能</th><th>用途</th></tr></thead>
+<tbody>
+<tr><td>egm-brainstorm</td><td>验证想法，写概念简报</td></tr>
+<tr><td>egm-draft</td><td>把简报或笔记变成设计文档</td></tr>
+<tr><td>egm-resolve</td><td>逐条处理评审意见</td></tr>
+<tr><td>egm-bootstrap</td><td>为已有代码库建/补文档</td></tr>
+<tr><td>egm-lite</td><td>小改动、修订、重构的快速通道</td></tr>
+<tr><td>egm-review</td><td>五阶段评审</td></tr>
+<tr><td>egm-review-loop</td><td>按配置跑一组评审者</td></tr>
+<tr><td>egm-drift-report</td><td>比对文档与当前源码的漂移</td></tr>
+</tbody>
+</table>
+<p>但 <code>agents/</code> 目录里躺着 10 个 persona 文件，比架构文档列的角色多两个。</p>
+<ul>
+<li>评审者：comprehension、design_critic、implementation_readiness、inventive_catalyst</li>
+<li>视角与整合：structural、style、synthesizer、zoom_out</li>
+<li>另两个：bootstrap_orchestrator、codebase_details</li>
+</ul>
+<p>架构文档只列 8 个角色名，还把 codebase_details 写成 Codebase Auditor、structural 写成 Structural Validator，名字和文件名对不上。</p>
+<p>版本口径也对不齐。GitHub 只有 2 个 Release，包内清单走的却是另一套版本号：</p>
+<table>
+<thead><tr><th>版本</th><th>发布时间</th><th>资产 / 说明</th></tr></thead>
+<tbody>
+<tr><td>v0.1.1</td><td>11-06</td><td>3 个资产：Claude 包、OpenAI 包、SHA256SUMS</td></tr>
+<tr><td>v0.1.0</td><td>10-27</td><td>首个正式发布</td></tr>
+</tbody>
+</table>
+<p>v0.1.1 的 release 说明写得很直白：ZIP 的校验和与构建产物对得上，但「这些发布 ZIP 的原生端到端验证」仍挂在 issue #60 上没做完。</p>
+<p><strong>能下载、能校验、和「装上去真能跑完整流程」是三件事，这份 release note 自己把它们分开了。</strong></p>
+</div>
+
+<div class="section-marker" data-section="04">
+<h2>04 怎么用</h2>
+<p><strong>装整包，别只复制 skills 目录——技能在运行时会读 agents/ 和 resources/document_standards/，拆开装必然坏。</strong>三条主路径都是两行命令：</p>
+<ul>
+<li>Antigravity CLI：<code>agy plugin install https://github.com/google/elephant-goldfish-model</code></li>
+<li>Claude Code：<code>claude plugin marketplace add google/elephant-goldfish-model</code> 后 <code>claude plugin install egm@egm</code></li>
+<li>Codex CLI：<code>codex plugin marketplace add google/elephant-goldfish-model</code> 后 <code>codex plugin add egm@egm</code></li>
+</ul>
+<p>装完要开新会话。最省事的入口是拿现有文档试 60 秒评审，不必先写规格：</p>
+<ul>
+<li>审已有设计：<code>/egm:egm-review docs/designs/webhooks.md</code></li>
+<li>查文档漂移：<code>/egm:egm-drift-report docs/designs/</code></li>
+</ul>
+<p>Codex 没有 <code>/egm:</code> 前缀，要从技能选择器里选对应技能。Antigravity 1.4.10 会把不带前缀的名字补全，1.4.8 不会，所以 README 建议一律带前缀。</p>
+<p>不是每个宿主都跑得动。支持的判定标准只有一条：brainstorm、draft、review 三步能端到端跑通。</p>
+<table>
+<thead><tr><th>宿主</th><th>状态</th><th>边界</th></tr></thead>
+<tbody>
+<tr><td>Antigravity CLI / Claude Code / Codex</td><td>安装与端到端通过</td><td>评审者隔离证据更窄</td></tr>
+<tr><td>Claude Cowork / ChatGPT Work</td><td>安装可用</td><td>云端验证缺口，#105 / #106</td></tr>
+<tr><td>omp / Muse</td><td>安装可用</td><td>社区验证或非原生 persona</td></tr>
+<tr><td>Antigravity 独立 IDE</td><td>不支持</td><td>缺 invoke_subagent 工具</td></tr>
+</tbody>
+</table>
+<p>产物默认写在工作目录，也可以加一行 <code>EGM artifact directory: .dev/docs</code> 改到别处；路径指到工作目录外时，EGM 会先问一次，无人在场的 headless 运行则退回工作目录。</p>
+<p><strong>「装得上」只解决第一关，能不能真的隔离出评审者，要看当前会话暴露了什么工具。</strong></p>
+</div>
+
+<div class="section-marker" data-section="05">
+<h2>05 冷思考</h2>
+<p><strong>README 反复强调 Goldfish 看不到先前对话，但文档自己承认：新的会话上下文，不等于宿主把指令文件也一起藏起来。</strong>这正是「零上下文」最容易被误读的地方。</p>
+<p>harnesses.md 写得很清楚：Codex 的 <code>fork_context: false</code> 和 <code>fork_turns: "none"</code> 只隔离父轮次，不证明项目或用户指令被排除。</p>
+<p>issue #237 报告 Codex CLI 0.166.0 把项目和用户的 AGENTS.md、Antigravity CLI 把 AGENTS.md 与 GEMINI.md 送进了评审者上下文。</p>
+<p>仓库把这称为「宿主指令泄漏」，和父对话轮次泄漏分开记。TESTING.md 的测试记录也只有父轮隔离证据，指令文件排除这一项没测。</p>
+<ul>
+<li>Muse 1.4.14 无法按名字生成 persona，评审者全走通用 subagent 兜底</li>
+<li>omp 社区只验证 7 个技能、9 个 persona，端到端用例没跑</li>
+<li>Cowork 的评审跑到第 7 阶段被用量上限打断，最终产物未验证</li>
+</ul>
+<p>贡献门槛也不低。AI_POLICY.md 要求：超过 100 行非测试代码或改动 3 个以上核心文件，先开 Feature Inquiry Issue，再提一份用 EGM 自己写的设计文档 PR，最后才收实现 PR；纯自动生成的贡献不收。</p>
+<p>163 个未结条目里 66 个是 PR，占了四成——对一个两岁的仓库来说，这更像是贡献流程在自我消化。</p>
+<p>它真正值钱的不是八个小工具，而是把「让另一个 agent 重新读一遍」变成必须满足的前提：没有新上下文，就停下来。可宿主给得出的是新会话，不是真空。<strong>判断很简单：想要有人挑刺，先确认你的环境真能派出一个没被项目规则喂饱的评审者；否则这套流程只在纸面上换了双眼睛。</strong></p>
+<div class="info-box">
+<p><strong>数据核对</strong>（核对时间 2026-11-24，来源 api.github.com 与仓库原文）：</p>
+<ul>
+<li>仓库身份：google/elephant-goldfish-model，22,357★ / 1,649 fork，创建 09-13、推送 11-23，Apache-2.0</li>
+<li>未结：163，拆为 97 issue + 66 PR（search/issues 分接口计数）</li>
+<li>发布：2 个 Release，v0.1.1（11-06）3 个资产、v0.1.0（10-27）</li>
+<li>目录：skills 8 个技能、agents 10 份 persona、docs 17 项</li>
+<li>机制：5 阶段评审（Step 5–9）、brainstorm 7 组否决</li>
+<li>边界：#237 宿主指令注入、#60 发布 ZIP 端到端验证未完成、#105/#106 云端缺口</li>
+</ul>
+</div>
+</div>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>设计—评审双 agent 工作流，8 个技能与五阶段评审规范</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/google/elephant-goldfish-model" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/google/elephant-goldfish-model" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub · elephant-goldfish-model</span>
+        <span class="pd">repo · 22,357 星 · Apache-2.0</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Agent">#Agent</a>
+      <a href="../../home/home.html?q=Skill">#Skill</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">数据来源：GitHub API（仓库 / releases / search/issues / contents）与 README、docs/harnesses.md、docs/designs/architecture.md、TESTING.md、AI_POLICY.md 原文；目录计数来自 contents 接口。核对时间 2026-11-24。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
