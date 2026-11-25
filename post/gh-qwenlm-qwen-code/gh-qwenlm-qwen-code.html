@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- head-hints:begin -->
+    <meta name="theme-color" content="#0b0d16" />
+    <link rel="preconnect" href="https://font.emtech.cc" crossorigin />
+    <link rel="dns-prefetch" href="https://font.emtech.cc" />
+    <link rel="stylesheet" href="https://font.emtech.cc/css/LXGWNeoZhiSong/400" />
+    <script src="/home/theme-color.js" defer></script>
+    <!-- head-hints:end -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3.1万星、737个版本：qwen-code 的开源带着前提 · EXPECTOPATRONUS</title>
+    <meta name="description" content="30,934 星的 qwen-code 把多协议、多端和自迭代写进 README，npm 上 737 个版本里 394 个是 nightly。真正要读的是默认值：订阅登录、默认遥测、无鉴权 daemon 与预览分支暂停收 PR。" />
+    <meta name="keywords" content="Qwen, 开源, Agent, CLI" />
+    <meta property="og:title" content="3.1万星、737个版本：qwen-code 的开源带着前提" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="30,934 星的 qwen-code 把多协议、多端和自迭代写进 README，npm 上 737 个版本里 394 个是 nightly。真正要读的是默认值：订阅登录、默认遥测、无鉴权 daemon 与预览分支暂停收 PR。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <link rel="stylesheet" href="../article-common.css" data-shared-css="0d59321e71" />
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+    <!-- seo:begin -->
+    <link rel="canonical" href="https://expectopatronus00.github.io/post/gh-qwenlm-qwen-code/gh-qwenlm-qwen-code.html" />
+    <meta property="og:url" content="https://expectopatronus00.github.io/post/gh-qwenlm-qwen-code/gh-qwenlm-qwen-code.html" />
+    <meta property="og:site_name" content="EXPECTOPATRONUS" />
+    <meta property="og:image" content="https://expectopatronus00.github.io/post/gh-qwenlm-qwen-code/cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"3.1万星、737个版本：qwen-code 的开源带着前提","description":"30,934 星的 qwen-code 把多协议、多端和自迭代写进 README，npm 上 737 个版本里 394 个是 nightly。真正要读的是默认值：订阅登录、默认遥测、无鉴权 daemon 与预览分支暂停收 PR。","image":"https://expectopatronus00.github.io/post/gh-qwenlm-qwen-code/cover.jpg","inLanguage":"zh-CN","author":{"@type":"Person","name":"expectopatronus","url":"https://expectopatronus00.github.io"},"publisher":{"@type":"Organization","name":"EXPECTOPATRONUS","url":"https://expectopatronus00.github.io"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://expectopatronus00.github.io/post/gh-qwenlm-qwen-code/gh-qwenlm-qwen-code.html"},"datePublished":"2026-11-25","dateModified":"2026-11-25"}</script>
+    <!-- seo:end -->
+</head>
+  <body>
+    <!-- skip-link:begin -->
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <!-- skip-link:end -->
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head" data-skip-target="1" tabindex="-1" id="main-content">
+      <div class="eyebrow">开源项目 · AGENT CLI</div>
+      <h1>3.1万星、737个版本：qwen-code 的开源带着前提</h1>
+      <p>QwenLM/qwen-code 有 30,934 星、737 个 npm 版本，README 写「开源、无厂商锁定」。但起步先要 Plus/Pro 订阅或 API Key，遥测默认开启，daemon 默认无鉴权。开源与默认路径是两件事。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-25</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 5 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <picture data-cover-picture="1">
+        <source srcset="cover.webp" type="image/webp" />
+        <img loading="lazy" alt="3.1万星、737个版本：qwen-code 的开源带着前提 封面" src="cover.jpg" width="2400" height="1260" decoding="async" data-cover-ready="1" />
+      </picture>
+    </div>
+
+    <article class="article-body">
+<div class="section-marker" data-section="01">
+<h2>01 这件事</h2>
+<p><strong>Qwen Code 把多协议编码 agent 全盘开源，但 README 里最醒目的那条路通向订阅账号。</strong></p>
+<p>截至 2026-11-25，QwenLM/qwen-code 有 30,934 星、3,580 fork，2025-06-26 建库，当天仍在推送，Apache-2.0 许可。仓库描述只有一句：住在终端里的开源 AI 编码 agent。</p>
+<table>
+<thead><tr><th>字段</th><th>实测值</th><th>字段</th><th>实测值</th></tr></thead>
+<tbody>
+<tr><td>星标 / fork</td><td>30,934 / 3,580</td><td>创建 / 推送</td><td>06-26 / 11-25</td></tr>
+<tr><td>许可 / 主语言</td><td>Apache-2.0 / TypeScript</td><td>未结条目</td><td>2,606</td></tr>
+<tr><td>条目拆分</td><td>2,027 issue + 578 PR</td><td>npm 版本</td><td>737（394 个 nightly）</td></tr>
+<tr><td>最新包</td><td>0.28.4 / 11-22</td><td>工作区</td><td>27 个（根 package.json）</td></tr>
+</tbody>
+</table>
+<p>README 首屏挂的不是 main 分支，而是 Qwen Code 1.0 Preview：它把 Qoder 的 agent harness 能力并进 Qwen Code，单独放在 v1.0.0-preview 分支。安装段落明确写着，下面的说明只适用于主版本。</p>
+<p>这条 2026-11-16 入池时是 85 分，今天积压第九天。按规矩复核了热度：星标仍在 3.1 万级，推送日期就是当天，没有衰减，照原分写单篇。</p>
+</div>
+
+<div class="section-marker" data-section="02">
+<h2>02 核心机制</h2>
+<p><strong>协议层确实开放：四套认证通道、多家模型接口和六种界面都能换，推荐路径却写得很具体。</strong></p>
+<p>README 把「Open-source, inside and out」和「No vendor lock-in」并列，同时列出 OpenAI、Anthropic、Gemini、Qwen 四套 API，以及 Ollama、vLLM 等本地模型，声明可在运行时切换。</p>
+<table>
+<thead><tr><th>入口</th><th>起步方式</th><th>文档标注的边界</th></tr></thead>
+<tbody>
+<tr><td>终端</td><td><code>qwen</code>，会话内用 <code>/auth</code></td><td>订阅账号或 provider Key</td></tr>
+<tr><td>桌面</td><td>desktop-latest 标签下载</td><td>macOS / Windows / Linux</td></tr>
+<tr><td>Web</td><td><code>qwen serve --open</code></td><td>experimental</td></tr>
+<tr><td>编辑器</td><td>VS Code / Zed / JetBrains 插件</td><td>各走独立集成文档</td></tr>
+<tr><td>聊天</td><td><code>qwen channel start</code></td><td>Telegram / 钉钉 / 微信 / 飞书等</td></tr>
+<tr><td>脚本与 SDK</td><td><code>qwen -p</code>；TS / Python / Java SDK</td><td>无头调用与自建集成</td></tr>
+</tbody>
+</table>
+<p>认证文档列了四种方式：Qwen 账号订阅、阿里云 Coding Plan、自有 API Key、Vertex AI。旧的免费 Qwen OAuth 额度在 2026-04-15 停止；快速开始直接指向 Plus 或 Pro 订阅，或者自己配置 provider。</p>
+<p>这决定了怎么读「无锁定」。换 provider 的动作在配置层，clone 之后默认要做的第一件事仍是选账号或填 Key。<span class="hl">可换，不等于默认不挑。</span></p>
+</div>
+
+<div class="section-marker" data-section="03">
+<h2>03 关键细节与数据</h2>
+<p><strong>七版 SWE-bench 表格展示的是稳定性，不是一路变强：最早那版分数最高。</strong></p>
+<p>README 给出七个版本的平均分，同一模型 Qwen 3.7 Max，区间 76.40%–77.80%，相差 1.40 个百分点。评测文档特别注明，折线图的纵轴是标了标签的 70%–80%。</p>
+<table>
+<thead><tr><th>版本</th><th>平均分</th><th>pass@3</th><th>pass^3</th></tr></thead>
+<tbody>
+<tr><td>0.0.14</td><td>77.80%</td><td>84.6%</td><td>69.2%</td></tr>
+<tr><td>0.1.0</td><td>76.73%</td><td>84.6%</td><td>68.0%</td></tr>
+<tr><td>0.5.0</td><td>76.60%</td><td>83.0%</td><td>68.4%</td></tr>
+<tr><td>0.10.0</td><td>76.47%</td><td>84.4%</td><td>67.4%</td></tr>
+<tr><td>0.15.0</td><td>77.67%</td><td>84.6%</td><td>68.6%</td></tr>
+<tr><td>0.19.0</td><td>76.40%</td><td>85.0%</td><td>65.8%</td></tr>
+<tr><td>0.22.0</td><td>77.33%</td><td>84.4%</td><td>68.0%</td></tr>
+</tbody>
+</table>
+<p>表格停在 0.22.0，npm 的 latest 已经是 0.28.4。七行里 Pass Rate 与 pass@3 数值完全相同，评测文档自己点出了这件事，只保留原始口径供对照。</p>
+<table>
+<thead><tr><th>配置项</th><th>文档值</th><th>配置项</th><th>文档值</th></tr></thead>
+<tbody>
+<tr><td>数据集</td><td>SWE-bench Verified，500 题</td><td>运行量</td><td>每版 3 次，1,500 jobs</td></tr>
+<tr><td>模型</td><td>Qwen 3.7 Max</td><td>采样</td><td>温度 1 / top_p 0.95</td></tr>
+<tr><td>上下文</td><td>1,000,000 / 输出 64,000</td><td>思考</td><td>adaptive / high</td></tr>
+<tr><td>迭代上限</td><td>500 次</td><td>超时</td><td>7,200 秒 × 3</td></tr>
+</tbody>
+</table>
+<p>迭代速度是另一组数字。npm 上 737 个版本里 394 个带 nightly 后缀；12 个 dist-tag 只有 latest、preview、nightly 是常规通道，其余 9 个指向实验分支，例如 simplify-system-prompt 和四个 gdpval 系列标签。</p>
+<div class="info-box">
+<p><strong>数据核对（2026-11-25）：</strong></p>
+<ul>
+<li>仓库：30,934 星 / 3,580 fork / Apache-2.0 / 建库 06-26 / 推送 11-25</li>
+<li>未结：2,606 条，search 拆出 2,027 issue 与 578 PR，差 1 条不强行解释</li>
+<li>评测：7 版 × 500 题 × 3 次，每版 1,500 jobs，同一 Qwen 3.7 Max</li>
+<li>版本：npm 737 个版本，394 个 nightly，latest 0.28.4（11-22）</li>
+<li>边界：API 配额耗尽，未做 tree / release 体量统计，正文不引用体量数字</li>
+</ul>
+<p>来源：GitHub API、README、docs/evaluation.md、npm registry。</p>
+</div>
+<p>两条发布线也留了痕迹：main 的根 package.json 写 0.28.3，npm latest 是 0.28.4，一个是仓库内版本，一个是包仓库的发布标签。没有可核的 GitHub release 数，这里就不写发版总数。</p>
+</div>
+
+<div class="section-marker" data-section="04">
+<h2>04 怎么用</h2>
+<p><strong>按文档默认值用之前，先改三处：认证方式、遥测开关和 daemon 的鉴权。</strong></p>
+<ol>
+<li>认证：会话内运行 <code>/auth</code>，选订阅、阿里云 Coding Plan、自有 Key 或 Vertex AI。</li>
+<li>遥测：配置 <code>usageStatisticsEnabled: false</code>，或设 <code>QWEN_USAGE_STATISTICS_ENABLED=false</code>，后者优先。</li>
+<li>daemon：默认监听 <code>127.0.0.1:4170</code> 且无 bearer；共享主机要配 <code>QWEN_SERVER_TOKEN</code> 加 <code>--require-auth</code>。</li>
+<li>浏览器：Chrome 扩展可读标签 URL、页面文本、截图、cookie 与历史搜索，结果可能发给会话所选的 provider。</li>
+</ol>
+<p>隐私文档写明，用量统计对四种认证方式默认开启，事件发往阿里云 RUM 采集端点，和 provider 自己按隐私政策收集的数据是两条链路。它也明确列出不采集代码内容、prompt、回答与个人信息。</p>
+<p>daemon 文档把威胁模型写得更直白：回环端口上的任何本地进程都拿到完整 API 权限，包括以 daemon 用户身份执行代码。文档还标了一条已知限制，某条纯成本路由没有 per-route 限流，本地客户端可以刷 token。</p>
+<p>贡献路径要先看分支。main 的 CONTRIBUTING.md 收带 issue 链接的小 PR，超过约 1,200 行建议拆分；v1.0.0-preview 的 README 却写暂停接受社区 PR，预计 2026 年 12 月后开放。</p>
+</div>
+
+<div class="section-marker" data-section="05">
+<h2>05 冷思考</h2>
+<p><strong>开源的是代码和协议，默认指向的是订阅、阿里云遥测和一个信任本机的 daemon。</strong></p>
+<p>README 的提示说项目用自家 agent 和模型提 issue、交 PR、审代码、跑测试，并署名「Powered by the community, driven by AI」。预览分支却暂停社区 PR 到 12 月后。两句放一起看，社区更像反馈者，而不是合并者。</p>
+<table>
+<thead><tr><th>质疑点</th><th>能核到的事实</th><th>判断</th></tr></thead>
+<tbody>
+<tr><td>无厂商锁定</td><td>快速开始首选 Plus/Pro；自有 Key 仍默认遥测到阿里云 RUM</td><td>切换在配置层，默认成本在隐私层</td></tr>
+<tr><td>本地即安全</td><td>回环 4170 无 bearer，本地进程可用完整 API</td><td>共享开发机先加 token 再启动</td></tr>
+<tr><td>基准在进步</td><td>七版相差 1.40 个百分点，最早一版最高，表格止于 0.22.0</td><td>更像稳定性证据，不是升级曲线</td></tr>
+<tr><td>迭代快等于好用</td><td>737 个版本、394 个 nightly、9 个实验 dist-tag</td><td>复现问题必须钉住版本</td></tr>
+</tbody>
+</table>
+<p>这些都不否定它开源。Apache-2.0、四种认证、多协议切换和写出来的威胁模型都在仓库里，比只喊口号的项目更可查。<span class="hl">口号讲的是能力边界，默认值讲的是产品边界。</span></p>
+<p>只看那张 SWE-bench 表，容易把 1.40 个百分点当进步曲线。最早一版分数最高，末版不是最高，七版共用同一套配置，量的是同一模型下 harness 的波动。<strong>拿它当稳定性证据，比当「越新越强」更站得住。</strong></p>
+<p>要试就按上一节改完三处默认值：换到自己的 provider，关掉遥测，给 daemon 加 token。这个项目的价值，是把 27 个工作区、110 个脚本和实验分支都摊开给你看；<strong>开源给了你改默认值的权利，但在你真的改之前，实际使用的仍是它设定好的那条路径。</strong></p>
+</div>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>GitHub 上的 QwenLM/qwen-code：README、评测表与 daemon 威胁模型都在这里</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/QwenLM/qwen-code" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/QwenLM/qwen-code" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 30,934 星 / Apache-2.0 / 0.28.4</span>
+      </a>
+      <a class="plat-card" href="https://qwenlm.github.io/qwen-code-docs/en/users/overview" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 12h17M12 3.5c2.4 2.3 3.6 5.2 3.6 8.5s-1.2 6.2-3.6 8.5c-2.4-2.3-3.6-5.2-3.6-8.5S9.6 5.8 12 3.5z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+        <span class="pn">项目文档</span>
+        <span class="pd">Docs · 认证 / 配置 / 多端集成</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=Qwen">#Qwen</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=Agent">#Agent</a>
+      <a href="../../home/home.html?q=CLI">#CLI</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">数据来源：GitHub API（仓库字段 / search/issues）与 README、docs/evaluation.md、docs/users/support/tos-privacy.md、docs/users/qwen-serve.md、CONTRIBUTING.md、根 package.json 原文，以及 npm registry 版本与 dist-tag。核对时间 2026-11-25。本文未安装、未运行该 CLI，仅作学习归档。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

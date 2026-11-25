@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- head-hints:begin -->
+    <meta name="theme-color" content="#0b0d16" />
+    <link rel="preconnect" href="https://font.emtech.cc" crossorigin />
+    <link rel="dns-prefetch" href="https://font.emtech.cc" />
+    <link rel="stylesheet" href="https://font.emtech.cc/css/LXGWNeoZhiSong/400" />
+    <script src="/home/theme-color.js" defer></script>
+    <!-- head-hints:end -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>5.6万星对1.4万星：一个审差异，一个验漏洞 · EXPECTOPATRONUS</title>
+    <meta name="description" content="阿里 open-code-review 56,261 星、OpenAI codex-security 14,354 星，同为 Apache-2.0、同日推送。前者用确定性管线约束行级评论、主动压低召回，后者把裁定与修复验证拆成工作流；两家都把误差边界写在自家文档里。" />
+    <meta name="keywords" content="GitHub, 开源, 代码审查" />
+    <meta property="og:title" content="5.6万星对1.4万星：一个审差异，一个验漏洞" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="阿里 open-code-review 56,261 星、OpenAI codex-security 14,354 星，同为 Apache-2.0、同日推送。前者用确定性管线约束行级评论、主动压低召回，后者把裁定与修复验证拆成工作流；两家都把误差边界写在自家文档里。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <link rel="stylesheet" href="../article-common.css" data-shared-css="0d59321e71" />
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+    <!-- seo:begin -->
+    <link rel="canonical" href="https://expectopatronus00.github.io/post/gh-code-review-duo/gh-code-review-duo.html" />
+    <meta property="og:url" content="https://expectopatronus00.github.io/post/gh-code-review-duo/gh-code-review-duo.html" />
+    <meta property="og:site_name" content="EXPECTOPATRONUS" />
+    <meta property="og:image" content="https://expectopatronus00.github.io/post/gh-code-review-duo/cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"5.6万星对1.4万星：一个审差异，一个验漏洞","description":"阿里 open-code-review 56,261 星、OpenAI codex-security 14,354 星，同为 Apache-2.0、同日推送。前者用确定性管线约束行级评论、主动压低召回，后者把裁定与修复验证拆成工作流；两家都把误差边界写在自家文档里。","image":"https://expectopatronus00.github.io/post/gh-code-review-duo/cover.jpg","inLanguage":"zh-CN","author":{"@type":"Person","name":"expectopatronus","url":"https://expectopatronus00.github.io"},"publisher":{"@type":"Organization","name":"EXPECTOPATRONUS","url":"https://expectopatronus00.github.io"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://expectopatronus00.github.io/post/gh-code-review-duo/gh-code-review-duo.html"},"datePublished":"2026-11-25","dateModified":"2026-11-25"}</script>
+    <!-- seo:end -->
+</head>
+  <body>
+    <!-- skip-link:begin -->
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <!-- skip-link:end -->
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head" data-skip-target="1" tabindex="-1" id="main-content">
+      <div class="eyebrow">SKILL · 开源横评</div>
+      <h1>5.6万星对1.4万星：一个审差异，一个验漏洞</h1>
+      <p>56,261 星对 14,354 星，阿里与 OpenAI 的官方审查工具都在 11 月 25 日推送。前者把审哪些文件、评论放哪一行交给工程代码，后者把裁定、出补丁和验修复拆成独立工作流；两份文档都写明了误差边界，却没人替你签收结论。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-25</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 5 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <picture data-cover-picture="1">
+        <source srcset="cover.webp" type="image/webp" />
+        <img loading="lazy" alt="5.6万星对1.4万星：一个审差异，一个验漏洞 封面" src="cover.jpg" width="2400" height="1260" decoding="async" data-cover-ready="1" />
+      </picture>
+    </div>
+
+    <article class="article-body">
+<div class="section-marker" data-section="01">
+<h2>01 这件事</h2>
+<p><strong>两个大厂的官方审查工具在同一天活跃，却不在回答同一个问题：一个扫代码差异，一个验漏洞真伪。</strong></p>
+<p>截至 2026-11-25，alibaba/open-code-review 有 56,261 星、4,641 fork，2026-05-18 创建，主语言 Go，Apache-2.0，当天仍有推送；openai/codex-security 有 14,354 星、1,140 fork，2026-07-13 创建，主语言 TypeScript，同为 Apache-2.0，也在当天推送。</p>
+<table>
+<thead><tr><th>字段</th><th>open-code-review</th><th>codex-security</th></tr></thead>
+<tbody>
+<tr><td>星标 / fork</td><td>56,261 / 4,641</td><td>14,354 / 1,140</td></tr>
+<tr><td>创建 / 推送</td><td>05-18 / 11-25</td><td>07-13 / 11-25</td></tr>
+<tr><td>语言 / 许可</td><td>Go / Apache-2.0</td><td>TypeScript / Apache-2.0</td></tr>
+<tr><td>未结条目</td><td>342（135 issue + 207 PR）</td><td>216（46 issue + 170 PR）</td></tr>
+<tr><td>最新发布</td><td>v1.14.3（11-24）</td><td>npm-v0.11.0（11-24）</td></tr>
+</tbody>
+</table>
+<p>两条候选是 11-16 同批入池的 code-review 族，评分 89 与 87。入池超过七天后按规范复核热度，两家都仍在当天推送，星标未见衰减，因此保留原分，这篇横评一次消耗两条积压。</p>
+<p>接口形态也不同：阿里把审查做成一个可换模型端点的命令行工具，OpenAI 把命令行、SDK 和 Codex 插件做成同一套安全工作流。别按「谁替代谁」读这篇。</p>
+</div>
+
+<div class="section-marker" data-section="02">
+<h2>02 核心机制</h2>
+<p><strong>OCR 用确定性工程锁住「审哪些、评论放哪里」，Codex Security 用工作流锁住「从证据到结论」的每一步。</strong></p>
+<p>阿里的设计把不能出错的步骤交给工程代码：精确挑文件、把相关文件打包成独立上下文的子任务、按文件特征匹配规则，再用外置的定位与反思模块校正评论位置和内容。模型负责动态决策与读上下文。</p>
+<p>仓库里能看到这套机制的体量：规则文档目录有 70 份 Markdown，共 356,697 字节；根目录规则文件把「改供应商注册表必须同步四语文档、必须有回归测试」写成硬条件。README 的 10 种语言指基准覆盖，不是规则文档总数。</p>
+<table>
+<thead><tr><th>环节</th><th>open-code-review</th><th>codex-security</th></tr></thead>
+<tbody>
+<tr><td>入口</td><td>命令行 / Agent Skill / 插件</td><td>命令行 / TypeScript SDK / Codex 插件</td></tr>
+<tr><td>审查范围</td><td>工作区、分支区间、单提交、整文件</td><td>仓库、指定路径、提交差异、工作区改动</td></tr>
+<tr><td>结论颗粒度</td><td>行级审查评论，结构化输出</td><td>发现项加源码证据、覆盖限制</td></tr>
+<tr><td>后续动作</td><td>明确不做自动修复</td><td>生成补丁、验证既有修复</td></tr>
+</tbody>
+</table>
+<p>OpenAI 那条线把动作拆得更细：扫描、差异扫描、复扫、裁定既有发现、依赖告警调查、出补丁、验修复各是一步。修复验证只返回三种结果——已修复、仍有漏洞、证据不足。</p>
+<p>插件目录有 20 个技能，评测目录 7 套，扫描器导入指南 22 份。工作流文档特别说明三种接法不是一回事：装完整插件才有安全技能；命令行生成的只是操作指引；命令行的接口只暴露只读的查询工具。</p>
+</div>
+
+<div class="section-marker" data-section="03">
+<h2>03 关键细节与数据</h2>
+<p><strong>一个把低召回写进基准说明，一个把漏报划成普通缺陷；限制条件都写在自家文档里。</strong></p>
+<p>阿里的 README 给出一套自建基准：50 个开源仓库、200 个真实 PR、10 种语言、80 多位资深工程师标注出 1,505 个真问题。结论是同一模型下精度和 F1 更高，token 约为通用 agent 的九分之一，召回更低属于主动取舍。</p>
+<table>
+<thead><tr><th>基准指标</th><th>README 口径</th></tr></thead>
+<tbody>
+<tr><td>样本</td><td>50 仓库 / 200 PR / 10 语言</td></tr>
+<tr><td>标注量</td><td>1,505 个真问题 / 80+ 标注工程师</td></tr>
+<tr><td>精度与 F1</td><td>高于通用 agent，未给绝对数</td></tr>
+<tr><td>成本与召回</td><td>约九分之一 token，召回主动调低</td></tr>
+</tbody>
+</table>
+<p>这组数出自项目自述，数据集托管在第三方平台，仓库内没有可复跑的评分脚本，本文按自报数据处理。路线图又补了一刀：更高召回的 Ultra 模式仍列在 2026 下半年计划里，当前版本追求的是少误报。</p>
+<p>OpenAI 没有在 README 顶一个分数，而是把评测框架摊开：依赖可达性、发现裁定、密钥发现、时间预算、工作流路由等套件列在评测说明里，模型评测默认不跑且消耗配置账号的用量。</p>
+<p>文档也有自己的缺口：评测总览列出 6 套，目录里实际有 7 份套件说明；插件版本是 0.1.95，命令行与引用文件写 0.11.0。更实在的一条是旧插件 0.1.32 曾漏掉改动的 Perl 文件，命令行 0.3.0 才修。</p>
+</div>
+
+<div class="section-marker" data-section="04">
+<h2>04 怎么用</h2>
+<p><strong>先确定你要的是行级评论还是漏洞闭环，再选工具；两条路径的账号和成本结构完全不同。</strong></p>
+<p>OCR 有两种执行模式。原生模式由工具自己调模型，需要配好供应商与密钥；委托模式只做文件选择、规则解析和上下文打包，让宿主 agent 用自己的订阅跑分析，不需要单独的模型密钥，但订阅不是 API 凭证。</p>
+<table>
+<thead><tr><th>场景</th><th>选谁</th><th>理由</th></tr></thead>
+<tbody>
+<tr><td>常规 PR 行级评论</td><td>OCR</td><td>定位与规则匹配由工程代码约束</td></tr>
+<tr><td>只有订阅、没有 API 密钥</td><td>OCR 委托模式</td><td>用宿主 agent 的模型和额度</td></tr>
+<tr><td>判断一个发现是否成立</td><td>codex-security</td><td>有裁定、证据和修复验证步骤</td></tr>
+<tr><td>汇总第三方扫描器结果</td><td>codex-security</td><td>22 份导入指南与多种导出格式</td></tr>
+<tr><td>把扫描接进 CI 并控成本</td><td>codex-security</td><td>示例工作流给出每次 5 美元上限</td></tr>
+</tbody>
+</table>
+<p>上手命令不长，但两边各有三四个动作要记，按用途摆开更清楚：</p>
+<table>
+<thead><tr><th>动作</th><th>open-code-review</th><th>codex-security</th></tr></thead>
+<tbody>
+<tr><td>安装与登录</td><td>全局安装后配置供应商</td><td><code>cs login</code></td></tr>
+<tr><td>差异审查</td><td><code>ocr review --from main</code></td><td><code>cs scan . --diff origin/main</code></td></tr>
+<tr><td>整文件 / 整仓</td><td><code>ocr scan --path internal/agent</code></td><td><code>cs scan .</code></td></tr>
+<tr><td>裁定与修复</td><td>明确不做自动修复</td><td><code>cs patch</code> / <code>cs verify-fix</code></td></tr>
+</tbody>
+</table>
+<p>门槛要提前算清：OpenAI 的命令行要求 Node 22.13 以上且限定 22、24、26 版本，另需 Python 3.10 以上；示例 Action 设定每次约 5 美元上限，超出仍可能继续计费，且默认只报告发现、不让任务失败。</p>
+</div>
+
+<div class="section-marker" data-section="05">
+<h2>05 冷思考</h2>
+<p><strong>两家卖的都不是「审得准」，而是把误差边界写进文档，让你自己决定签收哪一份证据。</strong></p>
+<p>阿里的宣传口径里有一句「内部跑两年、发现几百万缺陷」，公开仓库 2026-05-18 才创建，这段内部历史无法从仓库复核；自建基准的标注质量也只能信项目自述。星标高不等于独立评测多。</p>
+<p>OpenAI 的边界更冷：安全政策明写漏报、误报和错误扫描结果算普通缺陷，提示注入或模型滥用已有权限不构成漏洞；深度扫描的 worker 只读，但不是离线隔离环境，继承的接口权限照样在。</p>
+<p>所以两家的输出都该当证据包，不该当判决书。OCR 的路线图把「无人复核的自动修复」列为明确不做；Codex 的验证结果可以是证据不足，扫描说明也提醒零发现仍可能带着排除项。</p>
+<div class="info-box">
+<p><strong>数据核对（2026-11-25）</strong></p>
+<ul>
+<li>仓库身份、星标、fork、创建与推送时间：两个仓库接口实时值。</li>
+<li>未结条目用分项检索拆分，数字与仓库接口的合计一致。</li>
+<li>发布版本取最新 release：v1.14.3 / npm-v0.11.0。</li>
+<li>文件数、字节数与版本分布：完整 git 树本地统计，未截断。</li>
+<li>基准数字、模式差异、费用上限：取自两份 README。</li>
+<li>缺失 Perl 文件、版本分裂、评测数量差：取自仓库自身文档。</li>
+<li>安全边界：分别取自安全保证案例与安全政策。</li>
+</ul>
+<p>核对于 2026-11-25。</p>
+</div>
+</div>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>两个官方审查工具：一个管行级评论，一个管漏洞闭环</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/alibaba/open-code-review" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/alibaba/open-code-review" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 56,261 星 / Go / v1.14.3</span>
+      </a>
+      <a class="plat-card" href="https://github.com/openai/codex-security" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 14,354 星 / TypeScript / v0.11.0</span>
+      </a>
+      <a class="plat-card" href="https://open-codereview.ai/docs" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 12h17M12 3.5c2.4 2.3 3.6 5.2 3.6 8.5s-1.2 6.2-3.6 8.5c-2.4-2.3-3.6-5.2-3.6-8.5S9.6 5.8 12 3.5z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+        <span class="pn">文档</span>
+        <span class="pd">OCR 的审查规则与 CLI 参考</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=GitHub">#GitHub</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=%E4%BB%A3%E7%A0%81%E5%AE%A1%E6%9F%A5">#代码审查</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">数据来源：GitHub API（仓库 / search/issues / releases）与两仓 README、路线图、安全政策、评测说明；完整 git 树用 curl 拉取后本地统计。核对时间 2026-11-25。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

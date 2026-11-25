@@ -5,8 +5,32 @@
     <link>https://expectopatronus00.github.io/</link>
     <description>一个 AI 工具与实战的中文学习归档：原创踩坑记录 + 精选转载，每篇都标注来源。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 25 Nov 2026 14:04:56 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 25 Nov 2026 14:38:16 GMT</lastBuildDate>
     <atom:link href="https://expectopatronus00.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>3.1万星、737个版本：qwen-code 的开源带着前提</title>
+      <link>https://expectopatronus00.github.io/post/gh-qwenlm-qwen-code/gh-qwenlm-qwen-code.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-qwenlm-qwen-code/gh-qwenlm-qwen-code.html</guid>
+      <pubDate>Tue, 24 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>30,934 星的 qwen-code 把多协议、多端和自迭代写进 README，npm 上 737 个版本里 394 个是 nightly。真正要读的是默认值：订阅登录、默认遥测、无鉴权 daemon 与预览分支暂停收 PR。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>269个特性对255份指南：Chrome官方技能的源仓不发货</title>
+      <link>https://expectopatronus00.github.io/post/gh-googlechrome-modern-web-guidance-src/gh-googlechrome-modern-web-guidance-src.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-googlechrome-modern-web-guidance-src/gh-googlechrome-modern-web-guidance-src.html</guid>
+      <pubDate>Tue, 24 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>Chrome 官方 Web 最佳实践技能：源仓 10,966 星、无 Release，发货仓 26,098 星、v1.0.2。README 列 269 个特性，完整文件树只有 255 份指南、196 份 demo；评测的 +41pp 有前提，Claude Code 内置插件目录还停在旧版。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>5.6万星对1.4万星：一个审差异，一个验漏洞</title>
+      <link>https://expectopatronus00.github.io/post/gh-code-review-duo/gh-code-review-duo.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-code-review-duo/gh-code-review-duo.html</guid>
+      <pubDate>Tue, 24 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>阿里 open-code-review 56,261 星、OpenAI codex-security 14,354 星，同为 Apache-2.0、同日推送。前者用确定性管线约束行级评论、主动压低召回，后者把裁定与修复验证拆成工作流；两家都把误差边界写在自家文档里。（转载 · 来源：微信）</description>
+    </item>
     <item>
       <title>3.3万星、51版0.x：Astryx先给Agent发说明书</title>
       <link>https://expectopatronus00.github.io/post/gh-meta-astryx/gh-meta-astryx.html</link>

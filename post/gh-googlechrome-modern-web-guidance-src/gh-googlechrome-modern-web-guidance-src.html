@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- head-hints:begin -->
+    <meta name="theme-color" content="#0b0d16" />
+    <link rel="preconnect" href="https://font.emtech.cc" crossorigin />
+    <link rel="dns-prefetch" href="https://font.emtech.cc" />
+    <link rel="stylesheet" href="https://font.emtech.cc/css/LXGWNeoZhiSong/400" />
+    <script src="/home/theme-color.js" defer></script>
+    <!-- head-hints:end -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>269个特性对255份指南：Chrome官方技能的源仓不发货 · EXPECTOPATRONUS</title>
+    <meta name="description" content="Chrome 官方 Web 最佳实践技能：源仓 10,966 星、无 Release，发货仓 26,098 星、v1.0.2。README 列 269 个特性，完整文件树只有 255 份指南、196 份 demo；评测的 +41pp 有前提，Claude Code 内置插件目录还停在旧版。" />
+    <meta name="keywords" content="GitHub, 开源, Agent Skill" />
+    <meta property="og:title" content="269个特性对255份指南：Chrome官方技能的源仓不发货" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="Chrome 官方 Web 最佳实践技能：源仓 10,966 星、无 Release，发货仓 26,098 星、v1.0.2。README 列 269 个特性，完整文件树只有 255 份指南、196 份 demo；评测的 +41pp 有前提，Claude Code 内置插件目录还停在旧版。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <link rel="stylesheet" href="../article-common.css" data-shared-css="0d59321e71" />
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+    <!-- seo:begin -->
+    <link rel="canonical" href="https://expectopatronus00.github.io/post/gh-googlechrome-modern-web-guidance-src/gh-googlechrome-modern-web-guidance-src.html" />
+    <meta property="og:url" content="https://expectopatronus00.github.io/post/gh-googlechrome-modern-web-guidance-src/gh-googlechrome-modern-web-guidance-src.html" />
+    <meta property="og:site_name" content="EXPECTOPATRONUS" />
+    <meta property="og:image" content="https://expectopatronus00.github.io/post/gh-googlechrome-modern-web-guidance-src/cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"269个特性对255份指南：Chrome官方技能的源仓不发货","description":"Chrome 官方 Web 最佳实践技能：源仓 10,966 星、无 Release，发货仓 26,098 星、v1.0.2。README 列 269 个特性，完整文件树只有 255 份指南、196 份 demo；评测的 +41pp 有前提，Claude Code 内置插件目录还停在旧版。","image":"https://expectopatronus00.github.io/post/gh-googlechrome-modern-web-guidance-src/cover.jpg","inLanguage":"zh-CN","author":{"@type":"Person","name":"expectopatronus","url":"https://expectopatronus00.github.io"},"publisher":{"@type":"Organization","name":"EXPECTOPATRONUS","url":"https://expectopatronus00.github.io"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://expectopatronus00.github.io/post/gh-googlechrome-modern-web-guidance-src/gh-googlechrome-modern-web-guidance-src.html"},"datePublished":"2026-11-25","dateModified":"2026-11-25"}</script>
+    <!-- seo:end -->
+</head>
+  <body>
+    <!-- skip-link:begin -->
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <!-- skip-link:end -->
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head" data-skip-target="1" tabindex="-1" id="main-content">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>269个特性对255份指南：Chrome官方技能的源仓不发货</h1>
+      <p>源仓 10,966 星只写不发，发货仓 26,098 星负责装。Chrome 官方 Web 技能列 269 个特性，文件树只有 255 份指南、196 份 demo；评测 +41pp 有前提，内置插件目录停在 v0.0.194。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-25</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 6 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <picture data-cover-picture="1">
+        <source srcset="cover.webp" type="image/webp" />
+        <img loading="lazy" alt="269个特性对255份指南：Chrome官方技能的源仓不发货 封面" src="cover.jpg" width="2400" height="1260" decoding="async" data-cover-ready="1" />
+      </picture>
+    </div>
+
+    <article class="article-body">
+<div class="section-marker" data-section="01">
+<h2>01 这件事</h2>
+<p><strong>Chrome 团队把 Web 最佳实践做成一套可检索的 agent 技能，但写代码的和给你装的，是两个仓库。</strong></p>
+<p>截至 2026-11-25，GoogleChrome/modern-web-guidance-src 有 10,966 星、831 fork，2026-01-27 建库，11-24 仍有推送，TypeScript，Apache-2.0，未结条目 398 个。这个仓库没有 Release：它只负责编写、校准与评测内容。</p>
+<p>真正被安装的是另一个仓库 GoogleChrome/modern-web-guidance，26,098 星、1,115 fork，3 月 23 日建库，最新 v1.0.2 于 11-23 发布。README 的每个安装命令都指向这个发货仓，源仓只收 issue 和 PR。</p>
+<table>
+<thead><tr><th>字段</th><th>源仓 modern-web-guidance-src</th><th>发货仓 modern-web-guidance</th></tr></thead>
+<tbody>
+<tr><td>星标 / fork</td><td>10,966 / 831</td><td>26,098 / 1,115</td></tr>
+<tr><td>创建 / 推送</td><td>01-27 / 11-24</td><td>03-23 / 11-23</td></tr>
+<tr><td>Release</td><td>无</td><td>v1.0.2（11-23）</td></tr>
+<tr><td>角色</td><td>编写、评测、治理</td><td>分发给各 agent 的安装包</td></tr>
+</tbody>
+</table>
+<p>这套技能叫 Modern Web Guidance，由 Chrome、Microsoft Edge、Mozilla Firefox 和 MDN 团队共同维护，目标是让编码 agent 少写旧模式，多用浏览器原生能力。它入池 11-16，是 pending 里最早一批；入池第 9 天复核，源仓仍在推送，星标未见衰减，按 88 分成稿。</p>
+</div>
+
+<div class="section-marker" data-section="02">
+<h2>02 核心机制</h2>
+<p><strong>coding agent 不是把整本规范背下来，而是在写 Web 代码时按需检索一条指南，再把它塞进上下文。</strong></p>
+<p>README 把流程写成三步：agent 识别到 Web 平台任务后激活技能，运行 <code>modern-web-guidance search "&lt;query&gt;"</code> 在本地匹配指南，再用 <code>modern-web-guidance retrieve &lt;guide-id&gt;</code> 取回代码模式与坑点。检索用离线 embedding 加 BM25，不调搜索 API，不需要 key。</p>
+<table>
+<thead><tr><th>步骤</th><th>命令 / 动作</th><th>产出</th></tr></thead>
+<tbody>
+<tr><td>激活</td><td>agent 判断任务相关</td><td>技能被载入</td></tr>
+<tr><td>本地检索</td><td><code>search "&lt;query&gt;"</code></td><td>候选指南 ID</td></tr>
+<tr><td>取回</td><td><code>retrieve &lt;guide-id&gt;</code></td><td>代码模式、gotcha、fallback</td></tr>
+<tr><td>扫描存量</td><td><code>legacy-scan .</code></td><td>仓库里的旧模式清单</td></tr>
+</tbody>
+</table>
+<p>覆盖清单分三类，README 列出的 269 个特性是这三行的合计：<span class="hl">144 个 CSS 与布局、38 个 HTML 与 DOM、87 个 JavaScript 与 API</span>。特性清单不是指南数，后面会看到两者对不齐。</p>
+<table>
+<thead><tr><th>覆盖门类</th><th>README 特性数</th><th>举例</th></tr></thead>
+<tbody>
+<tr><td>CSS &amp; Layout</td><td>144</td><td>锚点定位、容器查询、视图过渡</td></tr>
+<tr><td>HTML &amp; DOM</td><td>38</td><td>popover、dialog、自定义 select</td></tr>
+<tr><td>JavaScript &amp; APIs</td><td>87</td><td>Scheduler API、WebGPU、Temporal</td></tr>
+</tbody>
+</table>
+<p>指南按“token 效率”设计：评测会剪掉模型本来就会的低区分度内容。安装时可选技能包，主包 modern-web-guidance 的入口约 205 tokens，chrome-extensions 包约 175 tokens，两者可用 <code>--choose</code> 挑选。</p>
+<p>仓库里真正面向用户取用的技能只有一份：<code>skills-src/chrome-extensions/SKILL.md</code>。另外 13 份 SKILL.md 全在 <code>.agents/skills/</code> 下，从名字到内容都是给维护者用的——写用例、审稿、跑评测、查回归，不随安装包发给用户。</p>
+<p>发货是自动化的。RELEASING.md 写明每周一 14:50 UTC 触发工作流：收集评测摘要、解析版本号、编译指南、跑安装测试、推到发货仓 main、打 tag，再用 Gemini 生成发布说明并建 Release。对 Claude Code 而言，发货仓是单一 bundle，不是一个插件市场。</p>
+</div>
+
+<div class="section-marker" data-section="03">
+<h2>03 关键细节与数据</h2>
+<p><strong>README 的 269 是特性清单，文件树里的 255 才是指南数，连三件套都没凑齐。</strong></p>
+<p>用 curl 拉下完整 git 树（3,243 条记录、未截断）后本地统计：guides 下 255 份 guide.md、196 份 demo.html、217 份 expectations.md、224 份 task.md、224 份 grader.ts。贡献规范要求每个用例同时写指南、演示和期望清单，实际文件数并不相等。</p>
+<table>
+<thead><tr><th>计数口径</th><th>文件数</th><th>用途</th></tr></thead>
+<tbody>
+<tr><td>guide.md</td><td>255</td><td>agent 运行时检索的正文</td></tr>
+<tr><td>expectations.md</td><td>217</td><td>可观察、可测试的验收项</td></tr>
+<tr><td>demo.html</td><td>196</td><td>独立参考实现</td></tr>
+<tr><td>task.md / grader.ts</td><td>224 / 224</td><td>自动生成评测任务与评分器</td></tr>
+</tbody>
+</table>
+<p>255 份指南分布在 17 个领域目录，另一目录 modern-web-guidance 只放技能本体。数量最多的是 UI 行为 45 份，性能 32 份，UI 组件和表单各 28、27 份；可访问性只有 4 份，隐私和 WASM 各 1 份。</p>
+<table>
+<thead><tr><th>领域</th><th>指南数</th><th>领域</th><th>指南数</th></tr></thead>
+<tbody>
+<tr><td>ui-behaviors</td><td>45</td><td>performance</td><td>32</td></tr>
+<tr><td>ui-components</td><td>28</td><td>forms</td><td>27</td></tr>
+<tr><td>visual-design</td><td>27</td><td>css</td><td>20</td></tr>
+<tr><td>security</td><td>17</td><td>ui-atoms</td><td>14</td></tr>
+<tr><td>html / pwa</td><td>11 / 10</td><td>accessibility / wasm</td><td>4 / 1</td></tr>
+</tbody>
+</table>
+<p>实验性特性不是搜不到，而是取不回：Origin Trial 和 volatile 特性（单引擎、近三个月内上线或仍在稳定中）在 search 里可见，retrieve 会被门控。要放开得在项目根的 <code>.mwgrc</code> 里写 <code>allowOriginTrials</code> 或 <code>allowVolatileFeatures</code>。</p>
+<p>README 的评测快照给出 11-20 三行：codex_cli（gpt-6.1-sol）229 项任务、1,961 次检查，49% 到 85%；claude_code（opus-5-5）54% 到 94%；antigravity_cli（gemini-4-argon）56% 到 97%。提升幅度按 guided 减 unguided 计算，标成 +36pp 到 +41pp。</p>
+</div>
+
+<div class="section-marker" data-section="04">
+<h2>04 怎么用</h2>
+<p><strong>先按你用的 agent 选安装入口，再决定是否放开实验特性；离线可用，但默认会发遥测。</strong></p>
+<p>最快的一条是 <code>npx modern-web-guidance@latest install</code>，交互向导装完整包，要求 Node.js 22 以上（package.json 写的是 ≥22.18.0）。CLI 本身零依赖，缓存后可加 <code>npx --offline</code> 跑，不需要联网取指南。</p>
+<table>
+<thead><tr><th>动作</th><th>命令</th><th>前提</th></tr></thead>
+<tbody>
+<tr><td>安装</td><td><code>npx modern-web-guidance@latest install</code></td><td>Node ≥22.18.0</td></tr>
+<tr><td>检索</td><td><code>npx ... search "animate a dialog"</code></td><td>无需 key</td></tr>
+<tr><td>取回</td><td><code>npx ... retrieve &lt;guide-id&gt;</code></td><td>非门控指南</td></tr>
+<tr><td>放开实验特性</td><td><code>set-allow-volatile-features</code></td><td>写 <code>.mwgrc</code></td></tr>
+<tr><td>关闭遥测</td><td><code>DISABLE_TELEMETRY=1</code></td><td>环境变量</td></tr>
+</tbody>
+</table>
+<p>README 另列了九种插件式安装：Vercel Skills CLI、GitHub CLI、Antigravity、Copilot CLI、Claude Code 插件、Grok Build、Kimi Code、Pi 和 Codex，全部指向发货仓。Claude Code 用户要注意 marketplace 的名字，后面会讲坑。</p>
+<table>
+<thead><tr><th>场景</th><th>选什么</th><th>理由</th></tr></thead>
+<tbody>
+<tr><td>给现有 agent 补 Web 知识</td><td>npx 安装主包</td><td>检索与取回都离线</td></tr>
+<tr><td>只做 Chrome 扩展</td><td><code>--choose</code> 选 chrome-extensions</td><td>MV3 与后台 worker 专包</td></tr>
+<tr><td>排查老代码库</td><td><code>legacy-scan .</code></td><td>先扫旧模式再改</td></tr>
+<tr><td>内网 / 无外网</td><td>缓存后 <code>npx --offline</code></td><td>包自含、无搜索 API</td></tr>
+</tbody>
+</table>
+<p>遥测默认开启，收集安装次数、调用它的 agent 名、retrieve 的指南 ID 和 agent 生成的搜索词；README 明说不收原始 prompt，可在 shell 里设 <code>DISABLE_TELEMETRY=1</code> 关掉。代码是 Apache-2.0，guides 下的文档内容另用 CC-BY 4.0。</p>
+</div>
+
+<div class="section-marker" data-section="05">
+<h2>05 冷思考</h2>
+<p><strong>它承诺的是少写旧代码，不是让 agent 从此写对；更新路径和覆盖口径各有缺口。</strong></p>
+<p>最实在的坑在安装环节。issue #3533 记录：Claude Code 内置插件目录钉在 v0.0.194（10-12 发布），升级到 v0.0.195 的 PR 过了检查却一直待审，bot 因有在审 PR 跳过后续版本，v1.0.0 也就没被捡起来。该 issue 11-12 提出，截至核对仍开着，README 的解决法是改用 googlechrome marketplace。</p>
+<p>覆盖口径也要拆开读：269 是 web-features 清单里的特性数，255 是实际写出来的 guide.md。三件套规范写得很硬，demo 却只有 196 份、expectations 217 份，说明仍有指南没配齐演示或验收项。把一个特性算成一条现成指导，会高估它开箱即用的程度。</p>
+<p>评测数字同样有条件。README 自己说提升靠 opportunity（100% 减无引导通过率）和 uplift 定义，模型本来就会的内容会被剪掉，评分器还要先拿 golden solution 过 100%、拿未改动的基线应用过 0% 才校准完成。+41pp 是在挑出来的难题上量的，不是全站代码的平均提升。</p>
+<p>评测的入口也不是谁都能跑。EVALS.md 里 Claude Code 走 Vertex AI，Codex CLI 要内部申请例外，另两个命令行工具需各自登录；结果上传到 GCS 后才能真正发布。所谓“持续校准”由有云权限的团队维护，个人拿到的是校准后的产物。</p>
+<p>外部贡献的门槛也不低：AGENTS.md 要求先确认签了 Google CLA、有分配给本人或标 pr-welcome 的 issue、无竞争 PR，若本人零合并 PR 则不能有其他在开 PR，内容改动最多碰一个指南目录。对想补一条指南的人来说，这比点个 star 重得多。</p>
+<p>398 个未结条目里 84 个是 PR，而内置市场那条升级 PR 已经排了队。把星标当成“社区在共同维护”的证据会失真：真正能合并内容的是 Peers 与领域负责人，指南还必须先由他们署名或背书。<span class="hl">星标说明话题被看见，不说明贡献通道是敞开的。</span></p>
+<div class="info-box">
+<p><strong>数据核对（2026-11-25）</strong></p>
+<ul>
+<li>双仓库星标、fork、创建与推送时间、许可证：GitHub API 实时值。</li>
+<li>未结条目用分项检索拆分：314 issue + 84 PR = 398。</li>
+<li>Release：源仓 404，发货仓 v1.0.2 发布于 11-23。</li>
+<li>文件数与目录分布：curl 拉完整 git 树，未截断后本地计数。</li>
+<li>269 特性分类、三步流程、门控开关、遥测字段：取自源仓 README。</li>
+<li>三件套规范与贡献门槛：取自两份 CONTRIBUTING 与 AGENTS.md。</li>
+<li>评测数字与校准条件：取自 README 评测快照与评测说明。</li>
+<li>插件目录旧版问题：取自源仓 issue #3533 原文。</li>
+</ul>
+<p>核对于 2026-11-25。</p>
+</div>
+</div>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>编写、校准与评测 Modern Web Guidance 的源仓库</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/GoogleChrome/modern-web-guidance-src" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/GoogleChrome/modern-web-guidance-src" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">源仓 · 10,966 星 / TypeScript / 无 Release</span>
+      </a>
+      <a class="plat-card" href="https://github.com/GoogleChrome/modern-web-guidance" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">发货仓 · 26,098 星 / v1.0.2</span>
+      </a>
+      <a class="plat-card" href="https://developer.chrome.com/docs/modern-web-guidance" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 12h17M12 3.5c2.4 2.3 3.6 5.2 3.6 8.5s-1.2 6.2-3.6 8.5c-2.4-2.3-3.6-5.2-3.6-8.5S9.6 5.8 12 3.5z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+        <span class="pn">文档</span>
+        <span class="pd">官方使用文档与评测面板</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=GitHub">#GitHub</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=Agent%20Skill">#Agent Skill</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">数据来源：GitHub API（两仓 metadata / search/issues / releases）与源仓 README、CONTRIBUTING、AGENTS.md、docs/评测与发布说明、issue #3533；完整 git 树用 curl 拉取后本地统计。核对时间 2026-11-25。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
