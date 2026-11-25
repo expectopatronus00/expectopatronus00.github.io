@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- head-hints:begin -->
+    <meta name="theme-color" content="#0b0d16" />
+    <link rel="preconnect" href="https://font.emtech.cc" crossorigin />
+    <link rel="dns-prefetch" href="https://font.emtech.cc" />
+    <link rel="stylesheet" href="https://font.emtech.cc/css/LXGWNeoZhiSong/400" />
+    <script src="/home/theme-color.js" defer></script>
+    <!-- head-hints:end -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3.3万星、51版0.x：Astryx先给Agent发说明书 · EXPECTOPATRONUS</title>
+    <meta name="description" content="meta/astryx 有 32,740 星、MIT 许可，把 Meta 内部八年的设计系统、CLI 与 agent 说明书一起开源。core/src 下 110 个组件目录，51 个版本全是 0.x；init 会把规则写进 AGENTS.md 与 CLAUDE.md。" />
+    <meta name="keywords" content="GitHub, 开源, 设计系统" />
+    <meta property="og:title" content="3.3万星、51版0.x：Astryx先给Agent发说明书" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="meta/astryx 有 32,740 星、MIT 许可，把 Meta 内部八年的设计系统、CLI 与 agent 说明书一起开源。core/src 下 110 个组件目录，51 个版本全是 0.x；init 会把规则写进 AGENTS.md 与 CLAUDE.md。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <link rel="stylesheet" href="../article-common.css" data-shared-css="0d59321e71" />
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+    <!-- seo:begin -->
+    <link rel="canonical" href="https://expectopatronus00.github.io/post/gh-meta-astryx/gh-meta-astryx.html" />
+    <meta property="og:url" content="https://expectopatronus00.github.io/post/gh-meta-astryx/gh-meta-astryx.html" />
+    <meta property="og:site_name" content="EXPECTOPATRONUS" />
+    <meta property="og:image" content="https://expectopatronus00.github.io/post/gh-meta-astryx/cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"3.3万星、51版0.x：Astryx先给Agent发说明书","description":"meta/astryx 有 32,740 星、MIT 许可，把 Meta 内部八年的设计系统、CLI 与 agent 说明书一起开源。core/src 下 110 个组件目录，51 个版本全是 0.x；init 会把规则写进 AGENTS.md 与 CLAUDE.md。","image":"https://expectopatronus00.github.io/post/gh-meta-astryx/cover.jpg","inLanguage":"zh-CN","author":{"@type":"Person","name":"expectopatronus","url":"https://expectopatronus00.github.io"},"publisher":{"@type":"Organization","name":"EXPECTOPATRONUS","url":"https://expectopatronus00.github.io"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://expectopatronus00.github.io/post/gh-meta-astryx/gh-meta-astryx.html"},"datePublished":"2026-11-24","dateModified":"2026-11-24"}</script>
+    <!-- seo:end -->
+</head>
+  <body>
+    <!-- skip-link:begin -->
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <!-- skip-link:end -->
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head" data-skip-target="1" tabindex="-1" id="main-content">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>3.3万星、51版0.x：Astryx先给Agent发说明书</h1>
+      <p>32,740 星的 Astryx 把 Meta 内部八年的设计系统、CLI 与 agent 说明书开源。README 说 150+ 组件，仓库数到 110 个组件目录；51 版全是 0.x。成体系的不是组件，是让 agent 照着做的路径。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-24</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 6 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <picture data-cover-picture="1">
+        <source srcset="cover.webp" type="image/webp" />
+        <img loading="lazy" alt="3.3万星、51版0.x：Astryx先给Agent发说明书 封面" src="cover.jpg" width="2400" height="1260" decoding="async" data-cover-ready="1" />
+      </picture>
+    </div>
+
+    <article class="article-body">
+<div class="section-marker" data-section="01">
+<h2>01 这件事</h2>
+<p><strong>Meta 把内部长了八年的设计系统连同 CLI 和 agent 说明书一起开源，但版本还停在所有 0.x。</strong></p>
+<p>截至 2026-11-24，meta/astryx 有 32,740 星、2,569 fork，2026-01-09 建库，11-24 仍在推送，MIT 许可。README 首屏写着「Currently in Beta」，底座是 React 19+ 与 StyleX。</p>
+<table>
+<thead><tr><th>字段</th><th>实测值</th><th>字段</th><th>实测值</th></tr></thead>
+<tbody>
+<tr><td>星标 / fork</td><td>32,740 / 2,569</td><td>创建 / 推送</td><td>01-09 / 11-24</td></tr>
+<tr><td>许可 / 状态</td><td>MIT / Beta</td><td>主语言</td><td>TypeScript</td></tr>
+<tr><td>未结条目</td><td>777（353 issue + 424 PR）</td><td>Release</td><td>51 个，全为 0.x</td></tr>
+<tr><td>最新发布</td><td>v0.7.17 / 11-20</td><td>资产</td><td>0 个（包发在 npm）</td></tr>
+</tbody>
+</table>
+<p>README 自述这套系统在 Meta 内部用了八年，支撑 13,000+ 个应用，交付 150+ 个可访问组件、品牌级主题、黑暗模式和现成模板。七个对外发布的主题之外，还剩一个 probe，那是内部测试夹具。</p>
+<p>从建库到首个版本隔了近六个月：仓库 01-09 创建，v0.1.1 到 06-26 才发布。51 个版本一路排到 v0.7.17，没有跳号；每个 release 的资产都是 0 个，因为交付物是 npm 包，不是 GitHub 附件。</p>
+<p>它 2026-11-16 入池时 90 分，今天已积压八天。按规矩重新核了热度：星标仍在 3.2 万级，推送日期就是当天，没有衰减，照常成稿。777 个未结条目里 PR 比 issue 多 71 个，开放的不只是下载面。</p>
+</div>
+
+<div class="section-marker" data-section="02">
+<h2>02 核心机制</h2>
+<p><strong>CLI 才是真正的入口：安装只是把文件放进去，init 才把规则写进 agent 的上下文。</strong></p>
+<p>README 把起步拆成「install，然后 init」。前三条命令装运行时与样式，第四条把 CLI 放进开发依赖；init 一次运行，不提问，打印样式与主题步骤，并把 Astryx 指南写进项目的 AGENTS.md 或 CLAUDE.md。</p>
+<table>
+<thead><tr><th>步骤</th><th>命令</th><th>作用</th></tr></thead>
+<tbody>
+<tr><td>运行时</td><td><code>npm install @astryxdesign/core @astryxdesign/theme-neutral @stylexjs/stylex</code></td><td>组件、主题、样式依赖</td></tr>
+<tr><td>CLI</td><td><code>npm install -D @astryxdesign/cli</code></td><td>文档、模板、codemod</td></tr>
+<tr><td>初始化</td><td><code>npx @astryxdesign/cli init</code></td><td>写入 agent 指南</td></tr>
+<tr><td>全局可选</td><td><code>npm i -g @astryxdesign/cli</code></td><td>任意目录可用，项目内仍用本地版本</td></tr>
+</tbody>
+</table>
+<p>core README 把版本对齐写得更细：CLI 要跟已装的 Core 同版本，Core 精确钉住时也要带 -E，Core 用 ^ 或 ~ 时才去掉。文档要求先装再初始化，这一步在写 UI 之前只做一次。</p>
+<p>仓库没有把 agent 入口只做成一个 skill。两份 marketplace 清单分别面向 Claude 与 Codex，另一个插件目录里也各有一份声明，四份配置共用一个 2,673 字节的 SKILL.md。</p>
+<p>那份 skill 带<span class="hl">托管哈希标记</span>，并明确优先级：项目里若有自己的 Astryx 文本，先听项目的，因为它知道该项目装了哪个版本。全局 skill 只负责兜底，不覆盖项目上下文。</p>
+<p>还有一条容易踩的坑：不带 scope 的 astryx 是 npm 上的另一个包。README 与 core README 都要求用带 scope 的 CLI 名称或 npx 调用，直到 CLI 成为项目依赖为止。</p>
+</div>
+
+<div class="section-marker" data-section="03">
+<h2>03 关键细节与数据</h2>
+<p><strong>自述和实物大多对得上，差的是统计口径：七个主题是七个，组件按目录数只有 110。</strong></p>
+<p>用递归 tree 逐 blob 统计，仓库有 14,580 个节点，其中 13,093 个文件，合计 401,693,426 字节（约 383 MiB），truncated 为 false。apps 目录占 259,152,926 字节，packages 目录占 89,291,581 字节。</p>
+<table>
+<thead><tr><th>核对项</th><th>README 口径</th><th>仓库实测</th></tr></thead>
+<tbody>
+<tr><td>组件</td><td>150+</td><td>core/src 下 110 个大写开头组件目录</td></tr>
+<tr><td>主题</td><td>七个成品</td><td>七个发布主题 + probe 测试夹具</td></tr>
+<tr><td>版本</td><td>Beta</td><td>51 版从 v0.1.1 到 v0.7.17，全是 0.x</td></tr>
+<tr><td>文档</td><td>docs / Storybook / Sandbox</td><td>885 个 md，合计 17,294,309 字节</td></tr>
+<tr><td>包</td><td>core / cli / build / themes</td><td>lab 不发 npm，vega 与 charts 只有 canary</td></tr>
+</tbody>
+</table>
+<p>大文件几乎都在文档站：单张 Nature-1.mp4 有 8,763,721 字节，是仓库最大文件。CLI 的 README 462,760 字节，CLI 与 core 的 CHANGELOG 分别是 1,262,320 和 1,164,845 字节，三个文件加起来 2.89 MB。</p>
+<div class="info-box">
+<p><strong>数据核对（2026-11-24）：</strong></p>
+<ul>
+<li>仓库：32,740 星 / 2,569 fork / MIT / 建库 01-09 / 推送 11-24</li>
+<li>未结：777 = 353 issue + 424 PR（search 分项，与仓库字段一致）</li>
+<li>体量：tree 未截断，13,093 blob / 401,693,426 字节</li>
+<li>版本：51 个 release，v0.7.17（11-20），资产 0 个</li>
+<li>边界：110 个组件目录按 core/src 顶层大写目录计，与 150+ 口径不同</li>
+</ul>
+<p>来源：GitHub API 与 README、AGENTS.md、SKILL.md 原文。</p>
+</div>
+<p>probe 不是第八个主题。它自己的说明写得很直白：从主题目标枚举生成，给每个目标刷一种哈希出来的刺眼颜色，两个本该不同的子目标若落进同一个元素，就会显成同一种颜色。生成的主题文件有 198,073 字节，不许手改。</p>
+<p>校验也不是人工核对。生成脚本按目标枚举刷色，CI 的 check 命令在目标没被覆盖时直接失败，把「所有文档化的主题目标都能落到像素上」变成一条机器可判的门禁。这条恰好对应 README 的原则：earned by measurement。</p>
+</div>
+
+<div class="section-marker" data-section="04">
+<h2>04 怎么用</h2>
+<p><strong>最短路径是让 CLI 先选模板，再查 props，最后用 doctor 验收，而不是自己从 div 拼页面。</strong></p>
+<ol>
+<li><code>astryx build "&lt;要做什么&gt;"</code>：给出推荐模板和缺的部件。</li>
+<li><code>astryx template &lt;name&gt; &lt;path&gt;</code>：落骨架，保留间距与内边距，只换内容。</li>
+<li><code>astryx component &lt;Name&gt;</code>：读 props、变体和示例，再动手。</li>
+<li><code>astryx doctor --built .</code>：检查配置和写出来的代码。</li>
+</ol>
+<p>仓库自己的 AGENTS.md 要求每次开分支先跑一轮 bootstrap，依次看帮助、文档列表、token 与主题的精简版、组件清单、模板清单。理由是文档反映的是当前分支的真实 API，不是上次记住的版本。</p>
+<p>对接现有 Tailwind 项目要走专门的桥接文件，它把系统 token 映射成工具类：text-primary 对应正文色，bg-surface 对应表面色，rounded-lg 对应容器圆角，间距基准是 4 的倍数，p-4 等于 16 像素。</p>
+<p>已有项目可以保留自己的 Tailwind 导入，只要在它之前放好声明层的 @layer 行；放在后面会悄悄反过来层叠顺序。</p>
+<p>README 还给了无构建工具的 CDN 路线，同时列出六个容易踩空的地方。</p>
+<ul>
+<li>主题属性：挂在 html 元素上，否则主题样式不生效。</li>
+<li>esm.sh 链接：排除 react 与 react-dom，避免两套实例。</li>
+<li>import map：补上 jsx-runtime，否则模块解析失败。</li>
+<li>文档字体：body 自己声明，三份样式表都不会设。</li>
+<li>webfont：主题只写字体名，加载要自己做。</li>
+<li>语法：页面没有编译环节，只能用 createElement。</li>
+</ul>
+<p><span class="hl">每个链接都要钉版本</span>：README 的示例钉在 0.4.1，最新发布已是 v0.7.17。无版本号的 CDN 地址会指向最新版并被激进缓存，跨版本复制示例很容易拿到对不上的 API。</p>
+</div>
+
+<div class="section-marker" data-section="05">
+<h2>05 冷思考</h2>
+<p><strong>它承诺开放和少约束，但写给 agent 的路径比写给人更细、更硬。</strong></p>
+<p>README 的原则是「Guidance over enforcement」和「Open internals」：组件给能力而不是护栏，内部结构可以直接导出，必要时把源码 eject 出来自己改。但 SKILL.md 给 agent 的开工令是「start every page from a template, never from scratch」。</p>
+<p>交付前还要求逐个文件重读，把裸 div 与硬编码的颜色、像素值换成组件或 token，然后交付构建产物而不是描述。<strong>人可以绕开的设计意见，agent 被要求照单执行。</strong>这是速度换一致性，不是纯粹的自由度。</p>
+<table>
+<thead><tr><th>质疑点</th><th>能核到的事实</th><th>意味着什么</th></tr></thead>
+<tbody>
+<tr><td>13,000+ 应用</td><td>README 自述，仓库里无清单</td><td>外部无法复核，只当背景</td></tr>
+<tr><td>150+ 组件</td><td>110 个顶层组件目录</td><td>统计单位不同，别直接相减</td></tr>
+<tr><td>版本成熟度</td><td>51 版全 0.x，lab 不发布</td><td>升级要靠 codemod</td></tr>
+<tr><td>评审门槛</td><td>CONTRIBUTING.md 55,444 字节</td><td>改动要过 spec 与 preflight</td></tr>
+</tbody>
+</table>
+<p>贡献规则也偏重。AGENTS.md 写明只有标成 current 的知识记录才管实现与评审，不能从已合并的代码或沉默里推断批准；改路径前跑 specs 查询，提 PR 前跑 preflight。424 个开放 PR 与 353 个开放 issue 的比例，配上这套门槛，不奇怪。</p>
+<p>同一份文件还划了人工边界：只有稳定的公开 API、主题契约、归属边界、兼容策略或确实主观的视觉方向悬而未决时才问人，而且一次只问一个问题；代码、测试和浏览器证据能判的，不问人。</p>
+<p>这套门槛还配了量化手段。AGENTS.md 里的 vibe-test 支持跑 5 个分层抽样用例，或一次跑完 21 个；退化模式跑 10 轮，在第 0、6、8、10 轮探测上下文还够不够用。结果除成功与否，还记录用了哪些组件、有没有走逃生口。</p>
+<p>要接就按它的路径接，把 CLI 当唯一入口、钉死版本、让 agent 从模板起步；想要一套不干涉工程习惯的静态组件，等 1.0 或只取 core 的预构建样式更稳。<strong>现在的 Astryx，值得学的是它怎么把设计规则变成可执行检查，不是急着把 51 个 0.x 版本搬进生产。</strong></p>
+</div>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>Meta 开源的设计系统：组件、主题、CLI 与 agent 说明书</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/meta/astryx" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/meta/astryx" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 32,740 星 / MIT / v0.7.17</span>
+      </a>
+      <a class="plat-card" href="https://astryx.atmeta.com" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 12h17M12 3.5c2.4 2.3 3.6 5.2 3.6 8.5s-1.2 6.2-3.6 8.5c-2.4-2.3-3.6-5.2-3.6-8.5S9.6 5.8 12 3.5z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+        <span class="pn">项目文档</span>
+        <span class="pd">Docs · Storybook · Sandbox</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=GitHub">#GitHub</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=%E8%AE%BE%E8%AE%A1%E7%B3%BB%E7%BB%9F">#设计系统</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">数据来源：GitHub API（仓库 / git tree / releases / search/issues）与 README、AGENTS.md、SKILL.md、插件声明原文。核对时间 2026-11-24。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- head-hints:begin -->
+    <meta name="theme-color" content="#0b0d16" />
+    <link rel="preconnect" href="https://font.emtech.cc" crossorigin />
+    <link rel="dns-prefetch" href="https://font.emtech.cc" />
+    <link rel="stylesheet" href="https://font.emtech.cc/css/LXGWNeoZhiSong/400" />
+    <script src="/home/theme-color.js" defer></script>
+    <!-- head-hints:end -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>7.4 万星股票分析系统：零成本不含模型钱 · EXPECTOPATRONUS</title>
+    <meta name="description" content="ZhuLinsen/daily_stock_analysis 有 74,205 星、MIT 许可，把六个市场的行情、新闻与 LLM 决策仪表盘打包成 GitHub Actions 定时任务。README 的零成本只指免服务器；插件不自带运行时，v3.35.0 还不支持大盘复盘免推送参数。" />
+    <meta name="keywords" content="GitHub, 开源" />
+    <meta property="og:title" content="7.4 万星股票分析系统：零成本不含模型钱" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="ZhuLinsen/daily_stock_analysis 有 74,205 星、MIT 许可，把六个市场的行情、新闻与 LLM 决策仪表盘打包成 GitHub Actions 定时任务。README 的零成本只指免服务器；插件不自带运行时，v3.35.0 还不支持大盘复盘免推送参数。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <link rel="stylesheet" href="../article-common.css" data-shared-css="0d59321e71" />
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+    <!-- seo:begin -->
+    <link rel="canonical" href="https://expectopatronus00.github.io/post/gh-zhulinsen-daily-stock-analysis/gh-zhulinsen-daily-stock-analysis.html" />
+    <meta property="og:url" content="https://expectopatronus00.github.io/post/gh-zhulinsen-daily-stock-analysis/gh-zhulinsen-daily-stock-analysis.html" />
+    <meta property="og:site_name" content="EXPECTOPATRONUS" />
+    <meta property="og:image" content="https://expectopatronus00.github.io/post/gh-zhulinsen-daily-stock-analysis/cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"7.4 万星股票分析系统：零成本不含模型钱","description":"ZhuLinsen/daily_stock_analysis 有 74,205 星、MIT 许可，把六个市场的行情、新闻与 LLM 决策仪表盘打包成 GitHub Actions 定时任务。README 的零成本只指免服务器；插件不自带运行时，v3.35.0 还不支持大盘复盘免推送参数。","image":"https://expectopatronus00.github.io/post/gh-zhulinsen-daily-stock-analysis/cover.jpg","inLanguage":"zh-CN","author":{"@type":"Person","name":"expectopatronus","url":"https://expectopatronus00.github.io"},"publisher":{"@type":"Organization","name":"EXPECTOPATRONUS","url":"https://expectopatronus00.github.io"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://expectopatronus00.github.io/post/gh-zhulinsen-daily-stock-analysis/gh-zhulinsen-daily-stock-analysis.html"},"datePublished":"2026-11-24","dateModified":"2026-11-24"}</script>
+    <!-- seo:end -->
+</head>
+  <body>
+    <!-- skip-link:begin -->
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <!-- skip-link:end -->
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head" data-skip-target="1" tabindex="-1" id="main-content">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>7.4 万星股票分析系统：零成本不含模型钱</h1>
+      <p>74,205 星的 daily_stock_analysis 把行情、新闻和 LLM 决策仪表盘打包成工作日 18:00 的定时任务。README 说五分钟零成本部署，但文档写明免费行情源不保证稳定、要配模型 Key，插件不自带运行时。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-24</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 5 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <picture data-cover-picture="1">
+        <source srcset="cover.webp" type="image/webp" />
+        <img loading="lazy" alt="7.4 万星股票分析系统：零成本不含模型钱 封面" src="cover.jpg" width="2400" height="1260" decoding="async" data-cover-ready="1" />
+      </picture>
+    </div>
+
+    <article class="article-body">
+<div class="section-marker" data-section="01">
+<h2>01 这件事</h2>
+<p><strong>它把「拉行情、喂模型、推报告」打包成定时任务，卖点是工程省事，不是选股更准。</strong></p>
+<p>截至 2026-11-24，ZhuLinsen/daily_stock_analysis 有 74,205 星、58,357 fork，2026-01-10 建库、11-24 仍在推送，MIT 许可。最新发布 v3.35.0 停在 11-16，带 6 个资产；44 个未结条目拆成 31 个 issue 和 13 个 PR。</p>
+<table>
+<thead><tr><th>字段</th><th>实测值</th><th>字段</th><th>实测值</th></tr></thead>
+<tbody>
+<tr><td>星标 / fork</td><td>74,205 / 58,357</td><td>创建 / 推送</td><td>01-10 / 11-24</td></tr>
+<tr><td>许可 / 语言</td><td>MIT / Python</td><td>未结条目</td><td>44（31 issue + 13 PR）</td></tr>
+<tr><td>最新 release</td><td>v3.35.0 / 11-16</td><td>发布资产</td><td>6 个</td></tr>
+</tbody>
+</table>
+<p>README 把它定义成 A 股、港股、美股、日股、韩股、台股与 ETF 的自选股分析系统：抓行情、新闻、公告与基本面，输出带评分、买卖点位和风险警报的决策仪表盘，再推到企业微信、飞书、Telegram、Discord、Slack 或邮箱。</p>
+<p>今日 09:00 的雷达复核没有把它标成 stale：11-14 入池时 80 分，今天星标仍在 7.4 万级，推送日期就是当天。积压超过 7 天，热度没有衰减，按积压最久照常成稿。</p>
+</div>
+
+<div class="section-marker" data-section="02">
+<h2>02 核心机制</h2>
+<p><strong>四层都能换供应商，但「零成本」只覆盖了其中不租服务器这一层。</strong></p>
+<p>第一层是行情。<code>data_provider/</code> 有 24 个 fetcher 文件，默认用 AkShare、Baostock、YFinance 等免费源，也能切到 Tushare、Longbridge、TickPlus。README 明说免费源受上游限流、接口变动和网络波动影响，稳定性不保证。</p>
+<table>
+<thead><tr><th>流水线层</th><th>仓库里可换的实现</th><th>要不要自己配</th></tr></thead>
+<tbody>
+<tr><td>行情</td><td>24 个 fetcher：AkShare / Tushare / YFinance / Longbridge 等</td><td>免费源免配，稳定源要 token</td></tr>
+<tr><td>新闻舆情</td><td>SerpAPI / Tavily / Bocha / Brave / MiniMax / SearXNG</td><td>推荐至少配一个</td></tr>
+<tr><td>模型</td><td>Gemini / OpenAI 兼容 / DeepSeek / 通义千问 / Claude / Ollama</td><td>至少一个 Key</td></tr>
+<tr><td>推送</td><td>企业微信 / 飞书 / Telegram / Discord / Slack / 邮件</td><td>至少一个渠道</td></tr>
+</tbody>
+</table>
+<p>第二层是新闻与舆情：六种搜索服务可配，Stock Sentiment API 只覆盖美股的 Reddit、X 与 Polymarket。README 把搜索源标成「推荐」，因为它直接决定舆情、公告与催化因素的质量，不配不等于没有新闻，只是原始材料更薄。</p>
+<p>第三层是模型，第四层是推送，两边都要求至少配置一个服务商。<span class="hl">服务器可以省，模型与新闻的账单省不掉</span>；README 首屏的「零成本」说的是借用 GitHub Actions 的 runner，不是所有调用都免费。</p>
+<p>策略层是 15 个 YAML 文件，对应均线金叉、缠论、波浪、龙头、情绪周期等，和 README 的「15 种内置策略」正好对齐。Agent 问股可用 <code>AGENT_MODE=false</code> 关掉，多 Agent 编排仍标着实验性。</p>
+<p>技能的 dashboard 输出分成四块：core_conclusion 给一句话结论与仓位建议，data_perspective 给趋势、量能和筹码结构，intelligence 汇总新闻与风险催化，battle_plan 落到狙击点和检查清单。<strong>仪表盘是四段有字段的契约，不是一段自由文本。</strong></p>
+</div>
+
+<div class="section-marker" data-section="03">
+<h2>03 关键细节与数据</h2>
+<p><strong>目录体量说明这是完整应用，插件只带入口；把两者当成同一个东西装，会踩空。</strong></p>
+<p>根目录 34 个条目，tests/ 单层就有 328 个条目，其中 321 个以 test_ 开头；src/ 有 32 个文件与 12 个子目录，data_provider/ 24 个 fetcher，strategies/ 15 个 YAML 加一份说明，docs/ 55 份 Markdown，工作流 8 个。</p>
+<table>
+<thead><tr><th>位置</th><th>实测数量</th><th>能说明什么</th></tr></thead>
+<tbody>
+<tr><td>tests/</td><td>328 条目 / 321 个测试文件</td><td>测试面比多数同类项目宽</td></tr>
+<tr><td>src/</td><td>32 文件 + 12 子目录</td><td>运行时确实在主仓</td></tr>
+<tr><td>data_provider/</td><td>24 个 fetcher</td><td>行情源可替换不是口号</td></tr>
+<tr><td>strategies/</td><td>15 个 YAML + 1 份 README</td><td>策略是配置文件</td></tr>
+<tr><td>.env.example</td><td>1,115 行 / 69 个顶层键</td><td>可调项远超快速开始</td></tr>
+</tbody>
+</table>
+<div class="info-box">
+<p><strong>数据核对（2026-11-24）：</strong></p>
+<ul>
+<li>仓库：74,205 星 / 58,357 fork / MIT / 创建 01-10 / 推送 11-24</li>
+<li>未结：44 = 31 issue + 13 PR（两次 search 分项相加）</li>
+<li>发布：v3.35.0 于 11-16 发布，6 个资产，非 draft 非预发布</li>
+<li>目录：根 34 项 / tests 328 项（321 测试）/ src 44 项 / docs 60 项</li>
+<li>环境：.env.example 1,115 行、69 个未注释顶层键</li>
+<li>定时：cron 0 10 * * 1-5，UTC 10:00 即北京时间 18:00</li>
+<li>边界：插件不含 src/ 运行时；v3.35.0 不支持 send_notification</li>
+</ul>
+<p>核对时间 2026-11-24。</p>
+</div>
+<p>环境模板从 STOCK_LIST、模型 Key、搜索 Key 一直排到 SQLite 重试、回测窗口、调度与 WebUI 认证。它更像一张功能地图：快速开始只要求少数几项，真正能拧的旋钮远多于此。</p>
+<p>主仓还带三个应用入口：dsa-web、dsa-site 和 dsa-desktop，分别对应网页、站点与桌面端。八个工作流除每日分析外，还有 CI、镜像发布、网络冒烟、PR 审查、自动打标与过期 issue 清理，<strong>它是按产品而不是按脚本维护的。</strong></p>
+<p>定时动作写在 00-daily-analysis.yml：<code>cron: 0 10 * * 1-5</code>，即 UTC 10:00、北京时间工作日 18:00。非交易日默认不跑；强制运行与断点续传另有开关。</p>
+<p>插件这一层的口径更硬。README 说<span class="hl">插件缓存通常只有 plugin/</span>，不自带 src/ 运行时；技能正文要求先定位 DSA 检出、设置 DSA_REPO_ROOT，再 <code>os.chdir</code> 到根目录，否则数据库路径与大盘复盘锁会指向不同文件。</p>
+<p>还有一个版本陷阱：技能文档写明 v3.35.0 尚不支持大盘复盘的 <code>send_notification</code> 参数，而它正是当前最新 release。HTTP 接口里个股默认 notify 为 true、复盘默认 send_notification 为 true，省略字段就会真的推送。</p>
+</div>
+
+<div class="section-marker" data-section="04">
+<h2>04 怎么用</h2>
+<p><strong>省事的是 Fork 加 Secrets 那条路，插件路线更适合已经跑过 DSA 的人。</strong></p>
+<ol>
+<li><strong>Fork 仓库</strong>：把分析流程与定时任务一起复制过去。</li>
+<li><strong>填 Secrets</strong>：模型 Key、通知渠道、STOCK_LIST 三项必备，新闻源按质量再补。</li>
+<li><strong>启用 Actions</strong>：到 Actions 页确认工作流，手动 Run workflow 先验参数。</li>
+<li><strong>看结果</strong>：默认工作日 18:00 自动跑，报告进通知渠道，Web 工作台可回看。</li>
+</ol>
+<p>本地运行走另一条路：安装 requirements.txt 的依赖，把 .env.example 复制成 .env，再执行 <code>python main.py</code>。调试、空跑与指定股票各有开关，Web 工作台用 <code>--webui</code> 启动，大盘复盘用 <code>--market-review</code>。</p>
+<table>
+<thead><tr><th>入口</th><th>适合谁</th><th>前置条件</th></tr></thead>
+<tbody>
+<tr><td>GitHub Actions</td><td>不想管服务器的人</td><td>Fork 仓库 + 三类 Secrets</td></tr>
+<tr><td>本地 / Docker</td><td>要改代码或接本地模型的人</td><td>Python 3.10+ 与 .env 配置</td></tr>
+<tr><td>Agent 插件</td><td>已有 DSA 检出的人</td><td>DSA_REPO_ROOT 指向完整仓库</td></tr>
+</tbody>
+</table>
+<p>插件安装只要两行：Codex 用 <code>codex plugin marketplace add ZhuLinsen/daily_stock_analysis</code> 再添加插件，Claude Code 用 <code>/plugin marketplace add</code> 再 install。装完不等于能分析，技能会先找已部署的检出，找不到就停下报错。</p>
+</div>
+
+<div class="section-marker" data-section="05">
+<h2>05 冷思考</h2>
+<p><strong>项目把工程门槛压低了，但数据、模型与判断的成本一分没少。</strong></p>
+<p>第一处是「零成本」的口径。README 同时写着「5 分钟零成本部署」和「至少配置一个模型服务商 API Key」，首屏还挂着两家带专属注册链接的赞助商。准确读法是：Actions 免服务器，模型调用、新闻搜索与更稳的行情源按用量付费。</p>
+<p>第二处是市场覆盖。README 说支持六个市场，docs/market-support.md 把日韩个股写成 suffix-only MVP：要手输 <code>7203.T</code>、<code>005930.KS</code> 这类后缀，裸码未命中股票池就按 A 股语义处理；文档明说<span class="hl">不承诺实时行情</span>，自动补全种子各约 30 只头部标的。</p>
+<p>第三处是推送默认值。对话里只想看报告时，HTTP 个股接口要显式传 notify false，复盘接口要显式传 send_notification false；插件文档还提醒旧检出别回退成不带参数的调用，因为旧签名默认会推送。错一次，报告就发到群里了。</p>
+<ul>
+<li>44 个未结条目里 31 个是 issue，功能面仍在快速扩张。</li>
+<li>15 种策略是配置模板，仓库没有统一的收益归因承诺。</li>
+<li>README 免责声明写明仅供学习研究，不构成投资建议。</li>
+</ul>
+<p>如果已经有模型 Key、愿意维护行情源，它是一套省事的定时流水线；如果想找免费又准确的买卖信号，README 自己已经否掉了这个前提。<strong>判断点不在星标，而在你能否接受工具只负责把信息摆齐，结论仍由自己承担。</strong></p>
+</div>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>多市场行情加 LLM 决策仪表盘的定时任务系统</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/ZhuLinsen/daily_stock_analysis" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/ZhuLinsen/daily_stock_analysis" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 74,205 星 / MIT / v3.35.0</span>
+      </a>
+      <a class="plat-card" href="https://dsa.zhulinsen.tech" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 12h17M12 3.5c2.4 2.3 3.6 5.2 3.6 8.5s-1.2 6.2-3.6 8.5c-2.4-2.3-3.6-5.2-3.6-8.5S9.6 5.8 12 3.5z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+        <span class="pn">项目官网</span>
+        <span class="pd">文档入口与产品预览</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=GitHub">#GitHub</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">数据来源：GitHub API（仓库 / releases/latest / search/issues / contents）与 README、插件 SKILL.md、市场支持文档原文。核对时间 2026-11-24。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

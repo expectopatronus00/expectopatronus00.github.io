@@ -5,8 +5,32 @@
     <link>https://expectopatronus00.github.io/</link>
     <description>一个 AI 工具与实战的中文学习归档：原创踩坑记录 + 精选转载，每篇都标注来源。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Mon, 23 Nov 2026 17:29:20 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 25 Nov 2026 14:04:56 GMT</lastBuildDate>
     <atom:link href="https://expectopatronus00.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>3.3万星、51版0.x：Astryx先给Agent发说明书</title>
+      <link>https://expectopatronus00.github.io/post/gh-meta-astryx/gh-meta-astryx.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-meta-astryx/gh-meta-astryx.html</guid>
+      <pubDate>Mon, 23 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>meta/astryx 有 32,740 星、MIT 许可，把 Meta 内部八年的设计系统、CLI 与 agent 说明书一起开源。core/src 下 110 个组件目录，51 个版本全是 0.x；init 会把规则写进 AGENTS.md 与 CLAUDE.md。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>7.4 万星股票分析系统：零成本不含模型钱</title>
+      <link>https://expectopatronus00.github.io/post/gh-zhulinsen-daily-stock-analysis/gh-zhulinsen-daily-stock-analysis.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-zhulinsen-daily-stock-analysis/gh-zhulinsen-daily-stock-analysis.html</guid>
+      <pubDate>Mon, 23 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>ZhuLinsen/daily_stock_analysis 有 74,205 星、MIT 许可，把六个市场的行情、新闻与 LLM 决策仪表盘打包成 GitHub Actions 定时任务。README 的零成本只指免服务器；插件不自带运行时，v3.35.0 还不支持大盘复盘免推送参数。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>4 万星、90 个 agent：magpie 开源但不收 PR</title>
+      <link>https://expectopatronus00.github.io/post/gh-yetone-magpie/gh-yetone-magpie.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-yetone-magpie/gh-yetone-magpie.html</guid>
+      <pubDate>Mon, 23 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>magpie 把 90 种 agent 的模型选择收进本地网关，支持 32 家预设、五种路由与隐私遮罩；40,865 星、MIT 许可，却写明不接受外部 PR，5,044 个 issue 与 Discord 构成主要反馈通道。（转载 · 来源：微信）</description>
+    </item>
     <item>
       <title>4.7万星、74版：12G跑125B，仓库里查不到</title>
       <link>https://expectopatronus00.github.io/post/gh-niko1221-strata/gh-niko1221-strata.html</link>

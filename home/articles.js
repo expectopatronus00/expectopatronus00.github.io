@@ -3,6 +3,33 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'gh-meta-astryx',
+            title: '3.3万星、51版0.x：Astryx先给Agent发说明书',
+            url: '../post/gh-meta-astryx/gh-meta-astryx.html',
+            summary: 'meta/astryx 有 32,740 星、MIT 许可，把 Meta 内部八年的设计系统、CLI 与 agent 说明书一起开源。core/src 下 110 个组件目录，51 个版本全是 0.x；init 会把规则写进 AGENTS.md 与 CLAUDE.md。',
+            category: 'AI 编程',
+            date: '2026-11-24',
+            tags: ["GitHub","开源","设计系统"],
+          },
+          {
+            id: 'gh-zhulinsen-daily-stock-analysis',
+            title: '7.4 万星股票分析系统：零成本不含模型钱',
+            url: '../post/gh-zhulinsen-daily-stock-analysis/gh-zhulinsen-daily-stock-analysis.html',
+            summary: 'ZhuLinsen/daily_stock_analysis 有 74,205 星、MIT 许可，把六个市场的行情、新闻与 LLM 决策仪表盘打包成 GitHub Actions 定时任务。README 的零成本只指免服务器；插件不自带运行时，v3.35.0 还不支持大盘复盘免推送参数。',
+            category: 'AI 编程',
+            date: '2026-11-24',
+            tags: ["GitHub","开源"],
+          },
+          {
+            id: 'gh-yetone-magpie',
+            title: '4 万星、90 个 agent：magpie 开源但不收 PR',
+            url: '../post/gh-yetone-magpie/gh-yetone-magpie.html',
+            summary: 'magpie 把 90 种 agent 的模型选择收进本地网关，支持 32 家预设、五种路由与隐私遮罩；40,865 星、MIT 许可，却写明不接受外部 PR，5,044 个 issue 与 Discord 构成主要反馈通道。',
+            category: 'AI 编程',
+            date: '2026-11-24',
+            tags: ["GitHub","开源"],
+          },
+          {
             id: 'gh-niko1221-strata',
             title: '4.7万星、74版：12G跑125B，仓库里查不到',
             url: '../post/gh-niko1221-strata/gh-niko1221-strata.html',

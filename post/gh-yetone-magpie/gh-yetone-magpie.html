@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- head-hints:begin -->
+    <meta name="theme-color" content="#0b0d16" />
+    <link rel="preconnect" href="https://font.emtech.cc" crossorigin />
+    <link rel="dns-prefetch" href="https://font.emtech.cc" />
+    <link rel="stylesheet" href="https://font.emtech.cc/css/LXGWNeoZhiSong/400" />
+    <script src="/home/theme-color.js" defer></script>
+    <!-- head-hints:end -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>4 万星、90 个 agent：magpie 开源但不收 PR · EXPECTOPATRONUS</title>
+    <meta name="description" content="magpie 把 90 种 agent 的模型选择收进本地网关，支持 32 家预设、五种路由与隐私遮罩；40,865 星、MIT 许可，却写明不接受外部 PR，5,044 个 issue 与 Discord 构成主要反馈通道。" />
+    <meta name="keywords" content="GitHub, 开源" />
+    <meta property="og:title" content="4 万星、90 个 agent：magpie 开源但不收 PR" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="magpie 把 90 种 agent 的模型选择收进本地网关，支持 32 家预设、五种路由与隐私遮罩；40,865 星、MIT 许可，却写明不接受外部 PR，5,044 个 issue 与 Discord 构成主要反馈通道。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <link rel="stylesheet" href="../article-common.css" data-shared-css="0d59321e71" />
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+    <!-- seo:begin -->
+    <link rel="canonical" href="https://expectopatronus00.github.io/post/gh-yetone-magpie/gh-yetone-magpie.html" />
+    <meta property="og:url" content="https://expectopatronus00.github.io/post/gh-yetone-magpie/gh-yetone-magpie.html" />
+    <meta property="og:site_name" content="EXPECTOPATRONUS" />
+    <meta property="og:image" content="https://expectopatronus00.github.io/post/gh-yetone-magpie/cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"4 万星、90 个 agent：magpie 开源但不收 PR","description":"magpie 把 90 种 agent 的模型选择收进本地网关，支持 32 家预设、五种路由与隐私遮罩；40,865 星、MIT 许可，却写明不接受外部 PR，5,044 个 issue 与 Discord 构成主要反馈通道。","image":"https://expectopatronus00.github.io/post/gh-yetone-magpie/cover.jpg","inLanguage":"zh-CN","author":{"@type":"Person","name":"expectopatronus","url":"https://expectopatronus00.github.io"},"publisher":{"@type":"Organization","name":"EXPECTOPATRONUS","url":"https://expectopatronus00.github.io"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://expectopatronus00.github.io/post/gh-yetone-magpie/gh-yetone-magpie.html"},"datePublished":"2026-11-24","dateModified":"2026-11-24"}</script>
+    <!-- seo:end -->
+</head>
+  <body>
+    <!-- skip-link:begin -->
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <!-- skip-link:end -->
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head" data-skip-target="1" tabindex="-1" id="main-content">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>4 万星、90 个 agent：magpie 开源但不收 PR</h1>
+      <p>40,865 星的 magpie 用本地网关接管九十种编程工具的模型选择，三十二家预设、五种路由。说明文档写明：仓库不收外部投稿，反馈去社区，五千零四十四个问题还开着。它不是新客户端，是把账号与配额切换下沉到网络层。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-24</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 6 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <picture data-cover-picture="1">
+        <source srcset="cover.webp" type="image/webp" />
+        <img loading="lazy" alt="4 万星、90 个 agent：magpie 开源但不收 PR 封面" src="cover.jpg" width="2400" height="1260" decoding="async" data-cover-ready="1" />
+      </picture>
+    </div>
+
+    <article class="article-body">
+<div class="section-marker" data-section="01">
+<h2>01 这件事</h2>
+<p><strong>它把「换模型」做成了网络层，而不是再做一个 agent；四万星买的是这一个入口。</strong></p>
+<p>截至 2026-11-24，yetone/magpie 有 40,865 星、3,736 fork，2026-09-23 创建，主语言 Go，MIT 许可，最近推送 11-24。两个月出头的项目，已经是本地网关类目里最抢眼的一个。</p>
+<table>
+<thead><tr><th>字段</th><th>实测值</th><th>字段</th><th>实测值</th></tr></thead>
+<tbody>
+<tr><td>星标 / fork</td><td>40,865 / 3,736</td><td>创建 / 推送</td><td>2026-09-23 / 11-24</td></tr>
+<tr><td>许可 / 语言</td><td>MIT / Go</td><td>未结条目</td><td>5,060（5,044 issue + 16 PR）</td></tr>
+<tr><td>支持 agent</td><td>README 列 90 种</td><td>供应商预设</td><td>README 列 32 家</td></tr>
+</tbody>
+</table>
+<p>README 的写作很直接：每个 agent 把模型配置写在自己的文件里，订阅只在一个客户端里生效。magpie 把这些差异收进一个菜单栏应用和一个本地网关，让 Claude Code 用 Kimi、Codex 用 DeepSeek、Gemini CLI 用 GLM。</p>
+<p>它给出的切换单位很细：<span class="hl">不只是模型，还包括账号与配额</span>。一个供应商的额度用完，先换同供应商的下一个账号，再换路由组里的下一个模型；没有备用账号也没有组，错误才会回到 agent。</p>
+<p>今日 09:00 的雷达复核没有把它标成 stale：11-14 入池时 85 分，今天星标仍在涨，推送就在当日。积压虽超过 7 天，热度没有衰减，按积压最久照常成稿。</p>
+</div>
+
+<div class="section-marker" data-section="02">
+<h2>02 核心机制</h2>
+<p><strong>配置归 agent，流量归网关；magpie 改的是 agent 自己的配置文件，不是把它们圈进一套新客户端。</strong></p>
+<p>网关绑在 127.0.0.1 的 3425 端口，同时说 OpenAI Chat、OpenAI Responses、Anthropic Messages 和 Gemini 四种协议，并在它们之间翻译，流式输出、工具调用和推理内容都在转发范围内。</p>
+<p>选模型时，应用按 provider/model 列出所有已添加供应商的模型，原子改写 agent 配置，保留注释、顺序和格式。Profiles 把一组 agent 的选择存成一个名字，一次切回「Budget」或「Focus」。</p>
+<table>
+<thead><tr><th>路由模式</th><th>README 给出的选择规则</th></tr></thead>
+<tbody>
+<tr><td><code>smart</code></td><td>在有额度的订阅里挑最先到期的那个，减少重置时浪费</td></tr>
+<tr><td><code>order</code></td><td>第一个模型答不了再走下一个</td></tr>
+<tr><td><code>rotate</code></td><td>每轮换下一个成员</td></tr>
+<tr><td><code>usage</code></td><td>优先用得最少的成员</td></tr>
+<tr><td><code>pace</code></td><td>按每小时剩余额度最多的账号走，直到重置</td></tr>
+</tbody>
+</table>
+<p>路由组可以套路由组，会话在供应商提示缓存还值时继续留在原账号。意图路由再挂一个小模型读每轮对话，把测试导向强模型、把短问句导向便宜模型，决策过程在 Routing 页里可见。</p>
+<p>订阅被当成一种 provider：Claude 走本机真实的 claude 二进制并用 MCP 桥接工具，ChatGPT 计划里的模型给其他 agent 用，Copilot、Gemini、Grok 也在列。多个账号可加入同一订阅做故障转移。</p>
+<p>隐私遮罩是另一层：密钥、私钥、令牌、邮箱和校验和正确的卡号命中规则后，在请求离开本机前换成占位符，回复里再换回。<span class="hl">它默认关闭</span>，需要在 Settings → Privacy 打开；自定义名称、地址、密码可选本机模型识别，模型包约 1.6 GB。</p>
+</div>
+
+<div class="section-marker" data-section="03">
+<h2>03 关键细节与数据</h2>
+<p><strong>参与面看着很大，维护权却很集中：165 个贡献者里，一个人的提交占 91.0%。</strong></p>
+<p>API 的 contributors 分两页，合计 165 个账号、9,065 次提交；yetone 一人 8,251 次。这个比例解释了发版速度，也解释了为什么仓库写得下「不收 PR」这样的规则。</p>
+<table>
+<thead><tr><th>参与指标</th><th>实测值</th><th>口径</th></tr></thead>
+<tbody>
+<tr><td>PR 总数 / 已合并</td><td>567 / 397</td><td>search/issues 分项计数</td></tr>
+<tr><td>开放 / 未合并关闭</td><td>16 / 154</td><td>16 个开放 PR 创建于 9-28 至 10-08</td></tr>
+<tr><td>贡献者 / 提交</td><td>165 / 9,065</td><td>contributors 接口两页合计</td></tr>
+<tr><td>release</td><td>4,561</td><td>magpie-releases 的 Link 头末页编号</td></tr>
+</tbody>
+</table>
+<p>README 现在写着：仓库不接受 pull request，只有维护者能开；要改东西去 Discord 说。历史并不一直如此——按创建时间倒序取前 100 个关闭 PR，最后一批外部合并在 10 月 14 日，涉及 20 多个外部账号。</p>
+<p>11 月 16 日维护者自己开的 #6795 标题就带着「not for merge」，是一次 EBADF 实验。今天还开着的 16 个 PR 全部停在 10 月 8 日之前，和 README 的现行口径一致。</p>
+<p>完整 git tree 有 11,601 个条目、10,980 个 blob、175.3 MB。internal/ 占 9,547 个文件与 91.8 MB，site/ 另有 1,260 个文件与 77.6 MB；.go 文件 6,971 个，占 52.9 MB。</p>
+<table>
+<thead><tr><th>目录 / 文件</th><th>数量</th><th>体量</th></tr></thead>
+<tbody>
+<tr><td>internal/</td><td>9,547 文件</td><td>91.8 MB</td></tr>
+<tr><td>site/</td><td>1,260 文件</td><td>77.6 MB</td></tr>
+<tr><td>docs/reference.md</td><td>1 文件</td><td>316 KB</td></tr>
+<tr><td>LESSONS.md</td><td>1 文件</td><td>111 KB</td></tr>
+</tbody>
+</table>
+<p>发版仓库是另一个仓库：yetone/magpie-releases，描述为「Signed builds of magpie」，362 星、无许可证字段。主仓 README 的 release 徽章指向它，最新 v0.1.4759 在 11 月 24 日发出，带 17 个安装资产。</p>
+<div class="info-box">
+<p><strong>数据核对（2026-11-24）：</strong></p>
+<ul>
+<li>仓库：40,865 星 / 3,736 fork / MIT / 创建 09-23 / 推送 11-24</li>
+<li>未结：5,060 = 5,044 issue + 16 PR（两次 search 分项相加）</li>
+<li>PR：567 总数 / 397 已合并 / 154 未合并关闭 / 16 开放</li>
+<li>贡献：165 账号 / 9,065 提交 / yetone 8,251 次（91.0%）</li>
+<li>发布：magpie-releases 4,561 个 release，最新 v0.1.4759 / 17 资产</li>
+<li>目录：11,601 条目 / 10,980 blob / 175.3 MB；6,971 个 .go 文件</li>
+<li>边界：README 明写不收 PR；release 接口仅开放前 1,000 页，总数取自 Link 头</li>
+</ul>
+<p>核对时间 2026-11-24。</p>
+</div>
+</div>
+
+<div class="section-marker" data-section="04">
+<h2>04 怎么用</h2>
+<p><strong>安装只要一条命令，真正要想清楚的是订阅账号的读取范围和遮罩开关。</strong></p>
+<ul>
+<li>从官网下载安装包，或运行 <code>curl -fsSL https://usemagpie.ai/install.sh | sh</code></li>
+<li>在 Providers → Add provider 里选预设填 key，或登录已有订阅</li>
+<li>在 Agents 页为每个 agent 选 provider/model，新开会话生效</li>
+<li>需要多账号容错时先建路由组，再让 agent 指向 <code>group/...</code></li>
+</ul>
+<p>终端可以走完整流程：<code>magpie provider add deepseek sk-…</code>、<code>magpie claude deepseek/deepseek-v4-pro</code>、<code>magpie quota</code> 看剩余额度，<code>magpie tui</code> 打开终端界面。</p>
+<table>
+<thead><tr><th>开关</th><th>默认值</th><th>实际影响</th></tr></thead>
+<tbody>
+<tr><td>隐私遮罩</td><td>关闭</td><td>打开后密钥等只在本地替换；模型看不到真实值</td></tr>
+<tr><td>订阅账号发现</td><td>开启</td><td>读取 Claude Code、Codex 登录文件和钥匙串；可关闭</td></tr>
+<tr><td>本地网络共享</td><td>关闭</td><td>打开后每个客户端单独发 gateway key 和限额</td></tr>
+<tr><td>每日使用上报</td><td>默认开</td><td>设置里可关，或用 <code>DO_NOT_TRACK=1</code></td></tr>
+</tbody>
+</table>
+<p>不想被改动的 agent 可以直接用环境变量接网关：把 OPENAI_BASE_URL 指到 127.0.0.1 的 3425 端口，key 填 magpie；Anthropic 与 Gemini 的对应变量也在 README 里列出。</p>
+<p>遮罩有代价：模型看到的是占位符，拿一个令牌问「为什么被拒绝」这类任务做不了，得放进 Never mask。规则误判的现场在 Insights → Masking 里逐条可查，占位符在流式文本和工具参数里都会还原。</p>
+<p>卸载命令会把 agent 配置还原再删除安装内容，<code>~/.config/magpie</code> 里的设置默认保留，加 purge 才清。<strong>这套可逆性是它比手工改配置文件更值得试的地方。</strong></p>
+</div>
+
+<div class="section-marker" data-section="05">
+<h2>05 冷思考</h2>
+<p><strong>MIT 给的是代码使用权，不是参与权；四千多次发版的速度来自一个人，也依赖一个人。</strong></p>
+<p>README 一边开放全部源码，一边把反馈引到 Discord，并写明只有维护者能开 PR。5,044 个开放 issue 和 16 个停在十月的 PR 放在一起看，更像一条单向反馈管道，而不是共同维护的社区。</p>
+<table>
+<thead><tr><th>核对位置</th><th>口径</th><th>需要自己确认的事</th></tr></thead>
+<tbody>
+<tr><td>订阅章节</td><td>把已登录的订阅供其他 agent 使用</td><td>各平台条款是否允许这种跨客户端调用，README 未讨论</td></tr>
+<tr><td>隐私章节</td><td>无姓名、URL、账号、提示词</td><td>合作链接点击计数明确「无论设置如何」都会发生</td></tr>
+<tr><td>支持列表</td><td>README 列 90 种 agent</td><td>应用只显示本机已安装的那些</td></tr>
+</tbody>
+</table>
+<p>每日上报的内容列得很细：随机 id、版本、系统、用了哪些 agent 与模型、装了哪些插件，可以用设置或环境变量关掉。但 partner 链接经过 usemagpie.ai 跳转的点击计数，原文写着不受这些设置影响，属于两套口径。</p>
+<p>32 家预设和 90 种 agent 是覆盖面，不是兼容承诺。README 自己也说模型名和推理等级来自 models.dev 补全，兼容任意 OpenAI 或 Anthropic 端点只是协议层说法，工具调用差异仍要实测。</p>
+<p>发版放在另一个无许可证字段的仓库，主仓徽章指向那里；想审计签名或固定版本，得同时盯两个仓库。4,561 个 release 的粒度也意味着升级很碎，稳定性需求高的环境应先锁定版本再试。</p>
+<p><strong>把它当一台可编排的本地网关用，价值很实在；把它当社区项目参与，门槛不在代码而在规则。订阅共享的条款风险和单维护者的节奏，是上车前该自己核完的两件事。</strong></p>
+</div>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>本地网关统一管理 agent 的模型、账号与路由</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/yetone/magpie" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/yetone/magpie" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 40,865 星 / MIT / 90 种 agent</span>
+      </a>
+      <a class="plat-card" href="https://usemagpie.ai" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 12h17M12 3.5c2.4 2.3 3.6 5.2 3.6 8.5s-1.2 6.2-3.6 8.5c-2.4-2.3-3.6-5.2-3.6-8.5S9.6 5.8 12 3.5z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+        <span class="pn">官网</span>
+        <span class="pd">下载安装包与文档入口</span>
+      </a>
+      <a class="plat-card" href="https://github.com/yetone/magpie-releases" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">发布仓库</span>
+        <span class="pd">签名构建 · 最新 v0.1.4759</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=GitHub">#GitHub</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">数据来源：GitHub API（仓库 / search/issues / contributors / releases）与 README 英文版；完整 git tree 用 curl 拉取后本地统计。核对时间 2026-11-24。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
