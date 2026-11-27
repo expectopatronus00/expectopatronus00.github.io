@@ -5,8 +5,24 @@
     <link>https://expectopatronus00.github.io/</link>
     <description>一个 AI 工具与实战的中文学习归档：原创踩坑记录 + 精选转载，每篇都标注来源。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Wed, 25 Nov 2026 14:38:16 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 27 Nov 2026 11:44:05 GMT</lastBuildDate>
     <atom:link href="https://expectopatronus00.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>1.5 万星、11 个 agent：审批权交回浏览器</title>
+      <link>https://expectopatronus00.github.io/post/gh-backnotprop-plannotator/gh-backnotprop-plannotator.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-backnotprop-plannotator/gh-backnotprop-plannotator.html</guid>
+      <pubDate>Thu, 26 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>Plannotator 是一层本地浏览器审查面：agent 交出计划或 diff，你标注后一键送回。15,216 星、v0.29.4，但源码已到 0.29.5；安装表 11 个 agent，apps 目录 28 项；远程监听 0.0.0.0 无登录，分享链接任何人可读。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>8.2万星、664个菜单全通：45%能干活</title>
+      <link>https://expectopatronus00.github.io/post/gh-storytold-photocraft/gh-storytold-photocraft.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-storytold-photocraft/gh-storytold-photocraft.html</guid>
+      <pubDate>Thu, 26 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>PhotoCraft 用纯 Rust 重写 Photoshop 的形状：81,647 星、16,643 次提交，664/664 菜单项接通命令，项目自评「可用于真实工作」约 45%。菜单连通率是生成表，可用率是 2026-10-10 v0.6.0 的估算，两者不能互换。（转载 · 来源：微信）</description>
+    </item>
     <item>
       <title>3.1万星、737个版本：qwen-code 的开源带着前提</title>
       <link>https://expectopatronus00.github.io/post/gh-qwenlm-qwen-code/gh-qwenlm-qwen-code.html</link>

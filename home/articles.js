@@ -3,6 +3,24 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'gh-backnotprop-plannotator',
+            title: '1.5 万星、11 个 agent：审批权交回浏览器',
+            url: '../post/gh-backnotprop-plannotator/gh-backnotprop-plannotator.html',
+            summary: 'Plannotator 是一层本地浏览器审查面：agent 交出计划或 diff，你标注后一键送回。15,216 星、v0.29.4，但源码已到 0.29.5；安装表 11 个 agent，apps 目录 28 项；远程监听 0.0.0.0 无登录，分享链接任何人可读。',
+            category: 'AI 编程',
+            date: '2026-11-27',
+            tags: ["GitHub","开源","Agent Skill","Code Review"],
+          },
+          {
+            id: 'gh-storytold-photocraft',
+            title: '8.2万星、664个菜单全通：45%能干活',
+            url: '../post/gh-storytold-photocraft/gh-storytold-photocraft.html',
+            summary: 'PhotoCraft 用纯 Rust 重写 Photoshop 的形状：81,647 星、16,643 次提交，664/664 菜单项接通命令，项目自评「可用于真实工作」约 45%。菜单连通率是生成表，可用率是 2026-10-10 v0.6.0 的估算，两者不能互换。',
+            category: 'AI 编程',
+            date: '2026-11-27',
+            tags: ["GitHub","开源","Rust","Agent"],
+          },
+          {
             id: 'gh-qwenlm-qwen-code',
             title: '3.1万星、737个版本：qwen-code 的开源带着前提',
             url: '../post/gh-qwenlm-qwen-code/gh-qwenlm-qwen-code.html',

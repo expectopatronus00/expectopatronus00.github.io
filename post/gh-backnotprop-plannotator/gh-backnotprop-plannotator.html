@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- head-hints:begin -->
+    <meta name="theme-color" content="#0b0d16" />
+    <link rel="preconnect" href="https://font.emtech.cc" crossorigin />
+    <link rel="dns-prefetch" href="https://font.emtech.cc" />
+    <link rel="stylesheet" href="https://font.emtech.cc/css/LXGWNeoZhiSong/400" />
+    <script src="/home/theme-color.js" defer></script>
+    <!-- head-hints:end -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1.5 万星、11 个 agent：审批权交回浏览器 · EXPECTOPATRONUS</title>
+    <meta name="description" content="Plannotator 是一层本地浏览器审查面：agent 交出计划或 diff，你标注后一键送回。15,216 星、v0.29.4，但源码已到 0.29.5；安装表 11 个 agent，apps 目录 28 项；远程监听 0.0.0.0 无登录，分享链接任何人可读。" />
+    <meta name="keywords" content="GitHub, 开源, Agent Skill, Code Review" />
+    <meta property="og:title" content="1.5 万星、11 个 agent：审批权交回浏览器" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="Plannotator 是一层本地浏览器审查面：agent 交出计划或 diff，你标注后一键送回。15,216 星、v0.29.4，但源码已到 0.29.5；安装表 11 个 agent，apps 目录 28 项；远程监听 0.0.0.0 无登录，分享链接任何人可读。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <link rel="stylesheet" href="../article-common.css" data-shared-css="0d59321e71" />
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+    <!-- seo:begin -->
+    <link rel="canonical" href="https://expectopatronus00.github.io/post/gh-backnotprop-plannotator/gh-backnotprop-plannotator.html" />
+    <meta property="og:url" content="https://expectopatronus00.github.io/post/gh-backnotprop-plannotator/gh-backnotprop-plannotator.html" />
+    <meta property="og:site_name" content="EXPECTOPATRONUS" />
+    <meta property="og:image" content="https://expectopatronus00.github.io/post/gh-backnotprop-plannotator/cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"1.5 万星、11 个 agent：审批权交回浏览器","description":"Plannotator 是一层本地浏览器审查面：agent 交出计划或 diff，你标注后一键送回。15,216 星、v0.29.4，但源码已到 0.29.5；安装表 11 个 agent，apps 目录 28 项；远程监听 0.0.0.0 无登录，分享链接任何人可读。","image":"https://expectopatronus00.github.io/post/gh-backnotprop-plannotator/cover.jpg","inLanguage":"zh-CN","author":{"@type":"Person","name":"expectopatronus","url":"https://expectopatronus00.github.io"},"publisher":{"@type":"Organization","name":"EXPECTOPATRONUS","url":"https://expectopatronus00.github.io"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://expectopatronus00.github.io/post/gh-backnotprop-plannotator/gh-backnotprop-plannotator.html"},"datePublished":"2026-11-27","dateModified":"2026-11-27"}</script>
+    <!-- seo:end -->
+</head>
+  <body>
+    <!-- skip-link:begin -->
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <!-- skip-link:end -->
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head" data-skip-target="1" tabindex="-1" id="main-content">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>1.5 万星、11 个 agent：审批权交回浏览器</h1>
+      <p>agent 交出计划，浏览器开给你批；批准放行，驳回把意见送回。Plannotator 把人放回审批环，15,216 星、36 个发布资产。但 Release 停在 v0.29.4、源码已到 0.29.5，边界得自己守。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-27</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 4 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <picture data-cover-picture="1">
+        <source srcset="cover.webp" type="image/webp" />
+        <img loading="lazy" alt="1.5 万星、11 个 agent：审批权交回浏览器 封面" src="cover.jpg" width="2400" height="1260" decoding="async" data-cover-ready="1" />
+      </picture>
+    </div>
+
+    <article class="article-body">
+<div class="section-marker" data-section="01">
+<h2>01 这件事</h2>
+<p><strong>Plannotator 把「批准还是驳回」做成本地浏览器里的一层审批面，但它接得进多少 agent，和安装器能配好多少，是两件事。</strong></p>
+<p>截至 2026-11-27，backnotprop/plannotator 有 <span class="hl">15,216 星</span>、1,456 fork，2025-12-28 建库，11-26 仍有推送，TypeScript。未结条目 230 个，用分项检索拆成 138 个 issue 与 92 个 PR。它挂在编码 agent 的钩子上，把计划和 diff 拦到浏览器里给你看。</p>
+<table>
+<thead><tr><th>字段</th><th>值</th></tr></thead>
+<tbody>
+<tr><td>星标 / fork</td><td>15,216 / 1,456</td></tr>
+<tr><td>创建 / 推送</td><td>2025-12-28 / 2026-11-26</td></tr>
+<tr><td>未结</td><td>230（138 issue + 92 PR）</td></tr>
+<tr><td>许可</td><td>GitHub 记为 Apache-2.0，仓库双许可</td></tr>
+<tr><td>最新 Release</td><td>v0.29.4（11-25，36 个资产）</td></tr>
+</tbody>
+</table>
+<p>它 2026-11-16 入池，是积压最久的一批。第 11 天复核时星标与推送都还在，按 80 分保留。README 给它的定位是「本地、基于浏览器的审查面」：agent 停下交出计划，你在页面上标注，反馈一键送回。</p>
+</div>
+
+<div class="section-marker" data-section="02">
+<h2>02 核心机制</h2>
+<p><strong>整个机制的开关只有一处：agent 调用 ExitPlanMode，PermissionRequest 钩子触发，本地服务接手。</strong></p>
+<p>计划审查不需要命令。agent 一提出计划，浏览器就打开标注页；你批准，它继续；你驳回，结构化意见回传给 agent，它改完再出一份 plan diff。这个来回才是它真正的卖点，而不是标注本身。</p>
+<ol>
+<li><strong>触发</strong>：agent 调用 ExitPlanMode，钩子截住。</li>
+<li><strong>读取</strong>：本地服务从钩子输入里读出计划。</li>
+<li><strong>审查</strong>：浏览器开标注页，你批注、批准或驳回。</li>
+<li><strong>回传</strong>：批准则放行，驳回则把反馈送回。</li>
+<li><strong>修订</strong>：agent 改完，plan diff 显示改了什么。</li>
+</ol>
+<p>代码审查是另一条入口。<code>/plannotator-review</code> 抓本地 git diff，或按 URL 拉 GitHub PR、GitLab MR；你在页面上逐行评论、暂存文件，反馈回到原会话。它对接 Git、GitButler、Jujutsu 和 Perforce。</p>
+<p>第三个面是 Inbox：<code>plannotator inbox</code> 开一个本地窗口，agent 把问题、文件、引导式审查留在里面；你点一下回答，回复作为下一轮送回原会话，不会占着 agent 等。</p>
+<table>
+<thead><tr><th>审查面</th><th>入口</th><th>送回什么</th></tr></thead>
+<tbody>
+<tr><td>计划审查</td><td>钩子自动</td><td>批准 / 驳回 + 批注</td></tr>
+<tr><td>文档标注</td><td>/plannotator-annotate</td><td>标注意见</td></tr>
+<tr><td>代码审查</td><td>/plannotator-review</td><td>行级评论 / LGTM</td></tr>
+<tr><td>Inbox</td><td>plannotator inbox</td><td>下一轮消息</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="section-marker" data-section="03">
+<h2>03 关键细节与数据</h2>
+<p><strong>三处数字对不齐：Release 与源码版本、安装表与目录、GitHub 许可字段与 README，各差一层。</strong></p>
+<p>Latest Release 是 v0.29.4，11-25 发布、36 个资产，覆盖 macOS、Linux、Windows 的 x64 与 arm64；但 package.json 写的是 <span class="hl">0.29.5</span>。安装器从 Releases 拉二进制，源码构建走另一个版本号，升级时要看清装的是哪一层。</p>
+<p>README 的安装表列 11 个 agent，apps 目录却有 28 项。多出来的 cline-plugin、qwen-code、hermes-plugin、openclaw-plugin 没进安装表；它们各有接入方式，但不能算进「一个安装器全配好」。</p>
+<table>
+<thead><tr><th>对比</th><th>一处</th><th>另一处</th></tr></thead>
+<tbody>
+<tr><td>版本</td><td>Release v0.29.4</td><td>package.json 0.29.5</td></tr>
+<tr><td>agent</td><td>安装表 11 个</td><td>apps 目录 28 项</td></tr>
+<tr><td>许可字段</td><td>GitHub 记 Apache-2.0</td><td>README 双许可可选</td></tr>
+</tbody>
+</table>
+<p>许可这一处尤其容易误读：GitHub API 的 license 字段只给 Apache-2.0，README、package.json 和 CONTRIBUTING 都写「Apache 2.0 或 MIT，任选其一」，仓库根目录也放着两份 LICENSE 文件。二次分发按哪个，得自己定。</p>
+<div class="info-box">
+<p><strong>数据核对（2026-11-27）</strong></p>
+<ul>
+<li>星标、fork、创建与推送时间、许可证字段：GitHub API 实时值。</li>
+<li>未结拆数：分项检索 138 issue + 92 PR = 230。</li>
+<li>v0.29.4 与 36 个资产：releases/latest 原文。</li>
+<li>0.29.5 与双许可：package.json、README、CONTRIBUTING。</li>
+<li>安装表 11 个 agent、命令、端口与过期天数：README 原文。</li>
+<li>apps 28 项、packages 15 项：逐目录 contents 接口计数。</li>
+</ul>
+<p>核对于 2026-11-27。</p>
+</div>
+</div>
+
+<div class="section-marker" data-section="04">
+<h2>04 怎么用</h2>
+<p><strong>安装器会配置大部分 agent，但每个宿主收尾动作不同，Pi 甚至要求跳过安装器。</strong></p>
+<p>一条命令装全套：macOS、Linux、WSL 用 <code>curl -fsSL https://plannotator.ai/install.sh | bash</code>，Windows 用 <code>irm … | iex</code>。它自动探测已装 agent，写钩子、技能和斜杠命令。</p>
+<table>
+<thead><tr><th>Agent</th><th>装完还要做什么</th></tr></thead>
+<tbody>
+<tr><td>Claude Code</td><td>marketplace add 后 install，再重启</td></tr>
+<tr><td>Codex</td><td>无需操作，Stop 钩子自动开</td></tr>
+<tr><td>Copilot CLI</td><td>marketplace add + install + 重启</td></tr>
+<tr><td>Gemini CLI</td><td>自动配置，需 0.36.0 以上</td></tr>
+<tr><td>OpenCode</td><td>opencode.json 加 plugin 字段</td></tr>
+<tr><td>Pi</td><td>跳过安装器，单独装 npm 扩展</td></tr>
+</tbody>
+</table>
+<p>只要二进制就加 <code>--minimal</code>，装到 <code>~/.local/bin</code>，跳过所有技能、钩子和配置。Claude Code 2.1.287 起，审查不再让 agent 干等：它结束回合，你的决定晚点作为消息送达；设 <code>PLANNOTATOR_CLAUDE_MOD=0</code> 可退回旧流程。</p>
+<p>远程场景要手动：SSH 会自动切到固定端口 <span class="hl">19432</span>，devcontainer 或 Docker 里设 <code>PLANNOTATOR_REMOTE=1</code> 并转发端口。设置存在 cookie 而非 localStorage，因为每次钩子调用端口随机。</p>
+</div>
+
+<div class="section-marker" data-section="05">
+<h2>05 冷思考</h2>
+<p><strong>它的设计明确把「别添堵」放在防御前面，这正是边界问题该被单独拿出来的原因。</strong></p>
+<p>远程模式下服务监听 <code>0.0.0.0</code> 且无登录：README 原文说，任何能连到端口的人都能用，哪怕你走了 SSH 隧道。安全边界等于「别把端口开给不信任的网络」，工具自己不守这道门。</p>
+<p>分享也一样。小内容塞进链接本身，大的加密后上传、7 天过期；拿到完整链接的人都能读。关掉要设 <code>PLANNOTATOR_SHARE=disabled</code>。安装校验同样默认关闭，要加 <code>--verify-attestation</code> 或写进配置才启用。</p>
+<p>AGENTS.md 把态度写得更直白：它是开源产品，不是企业关键系统，不要为了防御加确认、警告和门槛。230 个未结里 92 个是 PR，说明还在活跃收补丁；但 0.x 版本号、一天一版的节奏，意味着升级本身就是成本。</p>
+<p><strong>它是把人放回审批环里的一层，而不是替你把边界守住的那一层。</strong>单人本地用，默认值够顺手；多人、远程或要过合规，就得先把端口、分享和校验这三项自己配好。</p>
+</div>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>本地浏览器审查面：标注计划与 diff，一键把反馈送回 agent</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/backnotprop/plannotator" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/backnotprop/plannotator" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 15,216 星 / TypeScript / v0.29.4</span>
+      </a>
+      <a class="plat-card" href="https://plannotator.ai" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 12h17M12 3.5c2.4 2.3 3.6 5.2 3.6 8.5s-1.2 6.2-3.6 8.5c-2.4-2.3-3.6-5.2-3.6-8.5S9.6 5.8 12 3.5z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+        <span class="pn">官网</span>
+        <span class="pd">安装脚本、Inbox 与 Code Review 文档</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=GitHub">#GitHub</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=Agent%20Skill">#Agent Skill</a>
+      <a href="../../home/home.html?q=Code%20Review">#Code Review</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">数据来源：GitHub API（metadata / search/issues / releases/latest / contents 逐目录计数）与 backnotprop/plannotator 仓库 README.md、package.json、CONTRIBUTING.md、SECURITY.md、AGENTS.md 原文。核对时间 2026-11-27。</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
