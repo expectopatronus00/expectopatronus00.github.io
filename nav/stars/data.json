@@ -11,9 +11,9 @@
       "note": "热门",
       "license": "GPL-3.0",
       "language": "Python",
-      "stars": 148769,
-      "forks": 17731,
-      "openIssues": 5658,
+      "stars": 148927,
+      "forks": 17750,
+      "openIssues": 5662,
       "created": "2023-01-17",
       "first": "2026-11-01",
       "last": "2026-11-27"
@@ -28,9 +28,9 @@
       "note": "",
       "license": "NOASSERTION",
       "language": "JavaScript",
-      "stars": 34525,
-      "forks": 2379,
-      "openIssues": 7,
+      "stars": 34549,
+      "forks": 2381,
+      "openIssues": 9,
       "created": "2026-02-23",
       "first": "2026-11-01",
       "last": "2026-11-27"
@@ -45,9 +45,9 @@
       "note": "热门",
       "license": "AGPL-3.0",
       "language": "Python",
-      "stars": 118892,
-      "forks": 13273,
-      "openIssues": 14,
+      "stars": 119379,
+      "forks": 13328,
+      "openIssues": 2,
       "created": "2026-04-09",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -62,9 +62,9 @@
       "note": "",
       "license": "MIT",
       "language": "Python",
-      "stars": 63702,
-      "forks": 7408,
-      "openIssues": 157,
+      "stars": 63842,
+      "forks": 7413,
+      "openIssues": 148,
       "created": "2025-10-30",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -79,9 +79,9 @@
       "note": "热门",
       "license": "MIT",
       "language": "TypeScript",
-      "stars": 479757,
-      "forks": 116623,
-      "openIssues": 1112,
+      "stars": 481116,
+      "forks": 116832,
+      "openIssues": 1092,
       "created": "2026-04-14",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -96,9 +96,9 @@
       "note": "",
       "license": "MIT",
       "language": "TypeScript",
-      "stars": 117386,
-      "forks": 19519,
-      "openIssues": 6804,
+      "stars": 117607,
+      "forks": 19575,
+      "openIssues": 6819,
       "created": "2026-03-02",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -113,9 +113,9 @@
       "note": "",
       "license": "MIT",
       "language": "JavaScript",
-      "stars": 78857,
-      "forks": 5344,
-      "openIssues": 142,
+      "stars": 79271,
+      "forks": 5374,
+      "openIssues": 144,
       "created": "2026-06-18",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -130,9 +130,9 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "TypeScript",
-      "stars": 90873,
-      "forks": 8477,
-      "openIssues": 325,
+      "stars": 91519,
+      "forks": 8539,
+      "openIssues": 330,
       "created": "2026-03-10",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -147,9 +147,9 @@
       "note": "免费",
       "license": "MIT",
       "language": "TypeScript",
-      "stars": 58869,
-      "forks": 8471,
-      "openIssues": 49,
+      "stars": 59300,
+      "forks": 8565,
+      "openIssues": 37,
       "created": "2026-04-21",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -164,9 +164,9 @@
       "note": "",
       "license": "MIT",
       "language": "TypeScript",
-      "stars": 140393,
-      "forks": 8973,
-      "openIssues": 10065,
+      "stars": 142436,
+      "forks": 9118,
+      "openIssues": 10260,
       "created": "2026-03-17",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -181,9 +181,9 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Rust",
-      "stars": 117533,
-      "forks": 7042,
-      "openIssues": 74,
+      "stars": 118049,
+      "forks": 7076,
+      "openIssues": 76,
       "created": "2025-11-16",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -198,9 +198,9 @@
       "note": "",
       "license": "MIT",
       "language": "JavaScript",
-      "stars": 311302,
-      "forks": 45735,
-      "openIssues": 225,
+      "stars": 311850,
+      "forks": 45803,
+      "openIssues": 239,
       "created": "2026-01-18",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -215,9 +215,9 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Rust",
-      "stars": 21967,
-      "forks": 2156,
-      "openIssues": 806,
+      "stars": 21996,
+      "forks": 2161,
+      "openIssues": 803,
       "created": "2026-02-24",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -232,9 +232,9 @@
       "note": "",
       "license": "MIT",
       "language": "TypeScript",
-      "stars": 229409,
-      "forks": 31240,
-      "openIssues": 4155,
+      "stars": 229638,
+      "forks": 31276,
+      "openIssues": 4106,
       "created": "2025-04-30",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -249,9 +249,9 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Python",
-      "stars": 66355,
-      "forks": 6036,
-      "openIssues": 327,
+      "stars": 66990,
+      "forks": 6161,
+      "openIssues": 342,
       "created": "2026-03-08",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -266,9 +266,9 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "TypeScript",
-      "stars": 119991,
-      "forks": 10437,
-      "openIssues": 78,
+      "stars": 120212,
+      "forks": 10459,
+      "openIssues": 109,
       "created": "2025-08-31",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -283,8 +283,8 @@
       "note": "",
       "license": "MIT",
       "language": "Python",
-      "stars": 58581,
-      "forks": 5125,
+      "stars": 58697,
+      "forks": 5133,
       "openIssues": 102,
       "created": "2025-10-19",
       "first": "2026-11-02",
@@ -300,8 +300,8 @@
       "note": "热门",
       "license": "MIT",
       "language": "TypeScript",
-      "stars": 287615,
-      "forks": 35913,
+      "stars": 288038,
+      "forks": 35971,
       "openIssues": 0,
       "created": "2026-08-13",
       "first": "2026-11-02",
@@ -317,9 +317,9 @@
       "note": "",
       "license": "MIT",
       "language": "TypeScript",
-      "stars": 82507,
-      "forks": 9713,
-      "openIssues": 565,
+      "stars": 82561,
+      "forks": 9724,
+      "openIssues": 574,
       "created": "2025-06-02",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -334,9 +334,9 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Python",
-      "stars": 48354,
-      "forks": 5062,
-      "openIssues": 1332,
+      "stars": 48472,
+      "forks": 5087,
+      "openIssues": 1334,
       "created": "2025-11-20",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -351,9 +351,9 @@
       "note": "免费",
       "license": "NOASSERTION",
       "language": "JavaScript",
-      "stars": 88165,
-      "forks": 2498,
-      "openIssues": 239,
+      "stars": 89105,
+      "forks": 2522,
+      "openIssues": 86,
       "created": "2026-09-24",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -368,9 +368,9 @@
       "note": "",
       "license": "MIT",
       "language": "Python",
-      "stars": 27552,
-      "forks": 2628,
-      "openIssues": 40,
+      "stars": 27621,
+      "forks": 2641,
+      "openIssues": 43,
       "created": "2026-04-22",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -385,8 +385,8 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Python",
-      "stars": 37090,
-      "forks": 4113,
+      "stars": 37191,
+      "forks": 4135,
       "openIssues": 177,
       "created": "2026-01-23",
       "first": "2026-11-02",
@@ -402,9 +402,9 @@
       "note": "",
       "license": "MIT",
       "language": "TypeScript",
-      "stars": 80942,
-      "forks": 14285,
-      "openIssues": 3830,
+      "stars": 82170,
+      "forks": 14477,
+      "openIssues": 3893,
       "created": "2026-02-08",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -419,9 +419,9 @@
       "note": "",
       "license": "MIT",
       "language": "Go",
-      "stars": 42022,
-      "forks": 3860,
-      "openIssues": 5270,
+      "stars": 42525,
+      "forks": 3910,
+      "openIssues": 5359,
       "created": "2026-09-23",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -436,9 +436,9 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Rust",
-      "stars": 24535,
-      "forks": 710,
-      "openIssues": 974,
+      "stars": 24564,
+      "forks": 713,
+      "openIssues": 954,
       "created": "2026-08-10",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -453,8 +453,8 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Python",
-      "stars": 21975,
-      "forks": 1870,
+      "stars": 22021,
+      "forks": 1871,
       "openIssues": 127,
       "created": "2026-07-15",
       "first": "2026-11-02",
@@ -470,9 +470,9 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Python",
-      "stars": 18166,
-      "forks": 2027,
-      "openIssues": 192,
+      "stars": 18216,
+      "forks": 2032,
+      "openIssues": 193,
       "created": "2026-08-13",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -487,9 +487,9 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "TypeScript",
-      "stars": 22774,
-      "forks": 2089,
-      "openIssues": 10,
+      "stars": 23115,
+      "forks": 2106,
+      "openIssues": 4,
       "created": "2026-07-19",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -504,9 +504,9 @@
       "note": "",
       "license": "MIT",
       "language": "Rust",
-      "stars": 16473,
-      "forks": 1256,
-      "openIssues": 45,
+      "stars": 16521,
+      "forks": 1267,
+      "openIssues": 34,
       "created": "2026-05-21",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -521,9 +521,9 @@
       "note": "",
       "license": "NOASSERTION",
       "language": "TypeScript",
-      "stars": 19783,
-      "forks": 2142,
-      "openIssues": 707,
+      "stars": 20010,
+      "forks": 2238,
+      "openIssues": 712,
       "created": "2026-01-23",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -538,9 +538,9 @@
       "note": "",
       "license": "MIT",
       "language": "TypeScript",
-      "stars": 11507,
+      "stars": 11526,
       "forks": 1032,
-      "openIssues": 280,
+      "openIssues": 281,
       "created": "2026-07-03",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -555,9 +555,9 @@
       "note": "",
       "license": "MIT",
       "language": "Python",
-      "stars": 12526,
-      "forks": 1802,
-      "openIssues": 638,
+      "stars": 12595,
+      "forks": 1809,
+      "openIssues": 649,
       "created": "2026-07-08",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -572,9 +572,9 @@
       "note": "",
       "license": "MIT",
       "language": "Python",
-      "stars": 9896,
-      "forks": 1120,
-      "openIssues": 31,
+      "stars": 9919,
+      "forks": 1121,
+      "openIssues": 33,
       "created": "2026-09-30",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -589,9 +589,9 @@
       "note": "",
       "license": "MIT",
       "language": "TypeScript",
-      "stars": 11465,
-      "forks": 2657,
-      "openIssues": 1,
+      "stars": 11503,
+      "forks": 2667,
+      "openIssues": 2,
       "created": "2026-09-28",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -606,9 +606,9 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Rust",
-      "stars": 18550,
-      "forks": 2631,
-      "openIssues": 7387,
+      "stars": 18765,
+      "forks": 2658,
+      "openIssues": 7411,
       "created": "2026-10-07",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -623,8 +623,8 @@
       "note": "",
       "license": "MIT",
       "language": "Shell",
-      "stars": 10684,
-      "forks": 404,
+      "stars": 10706,
+      "forks": 405,
       "openIssues": 4,
       "created": "2026-08-29",
       "first": "2026-11-02",
@@ -640,7 +640,7 @@
       "note": "",
       "license": "MIT",
       "language": "TypeScript",
-      "stars": 7734,
+      "stars": 7737,
       "forks": 708,
       "openIssues": 22,
       "created": "2026-08-28",
@@ -657,8 +657,8 @@
       "note": "",
       "license": "MIT",
       "language": "Kotlin",
-      "stars": 8525,
-      "forks": 1359,
+      "stars": 8540,
+      "forks": 1358,
       "openIssues": 33,
       "created": "2026-09-21",
       "first": "2026-11-02",
@@ -674,9 +674,9 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Rust",
-      "stars": 8667,
-      "forks": 1199,
-      "openIssues": 63,
+      "stars": 8736,
+      "forks": 1207,
+      "openIssues": 69,
       "created": "2026-08-07",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -691,8 +691,8 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Python",
-      "stars": 8346,
-      "forks": 687,
+      "stars": 8365,
+      "forks": 692,
       "openIssues": 2,
       "created": "2026-08-22",
       "first": "2026-11-02",
@@ -708,8 +708,8 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Python",
-      "stars": 7620,
-      "forks": 734,
+      "stars": 7611,
+      "forks": 733,
       "openIssues": 242,
       "created": "2026-08-31",
       "first": "2026-11-02",
@@ -725,9 +725,9 @@
       "note": "",
       "license": "MIT",
       "language": "Python",
-      "stars": 10746,
-      "forks": 1985,
-      "openIssues": 47,
+      "stars": 10828,
+      "forks": 2000,
+      "openIssues": 48,
       "created": "2026-10-03",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -742,8 +742,8 @@
       "note": "",
       "license": "MIT",
       "language": "TypeScript",
-      "stars": 6055,
-      "forks": 285,
+      "stars": 6059,
+      "forks": 286,
       "openIssues": 3,
       "created": "2026-09-29",
       "first": "2026-11-02",
@@ -759,9 +759,9 @@
       "note": "",
       "license": "MIT",
       "language": "Python",
-      "stars": 3962,
+      "stars": 3964,
       "forks": 202,
-      "openIssues": 14,
+      "openIssues": 15,
       "created": "2026-09-01",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -776,9 +776,9 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "TypeScript",
-      "stars": 9881,
-      "forks": 1778,
-      "openIssues": 400,
+      "stars": 10014,
+      "forks": 1801,
+      "openIssues": 442,
       "created": "2026-08-13",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -793,9 +793,9 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Python",
-      "stars": 4953,
-      "forks": 819,
-      "openIssues": 21,
+      "stars": 4971,
+      "forks": 822,
+      "openIssues": 23,
       "created": "2026-08-28",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -810,7 +810,7 @@
       "note": "",
       "license": "MIT",
       "language": "JavaScript",
-      "stars": 6689,
+      "stars": 6700,
       "forks": 459,
       "openIssues": 16,
       "created": "2026-10-02",
@@ -827,7 +827,7 @@
       "note": "",
       "license": "MIT",
       "language": "JavaScript",
-      "stars": 4494,
+      "stars": 4499,
       "forks": 364,
       "openIssues": 11,
       "created": "2026-08-09",
@@ -844,9 +844,9 @@
       "note": "",
       "license": "MIT",
       "language": "Swift",
-      "stars": 5363,
-      "forks": 751,
-      "openIssues": 18,
+      "stars": 5417,
+      "forks": 756,
+      "openIssues": 14,
       "created": "2026-10-11",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -861,7 +861,7 @@
       "note": "",
       "license": "MIT",
       "language": "Python",
-      "stars": 3960,
+      "stars": 3968,
       "forks": 246,
       "openIssues": 7,
       "created": "2026-08-28",
@@ -878,8 +878,8 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Python",
-      "stars": 4565,
-      "forks": 510,
+      "stars": 4583,
+      "forks": 511,
       "openIssues": 33,
       "created": "2026-08-09",
       "first": "2026-11-02",
@@ -912,8 +912,8 @@
       "note": "",
       "license": "MIT",
       "language": "Python",
-      "stars": 5907,
-      "forks": 425,
+      "stars": 5947,
+      "forks": 428,
       "openIssues": 1,
       "created": "2026-10-15",
       "first": "2026-11-02",
@@ -929,9 +929,9 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Python",
-      "stars": 2902,
+      "stars": 2904,
       "forks": 268,
-      "openIssues": 9,
+      "openIssues": 8,
       "created": "2026-08-17",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -946,9 +946,9 @@
       "note": "",
       "license": "NOASSERTION",
       "language": "TypeScript",
-      "stars": 3802,
+      "stars": 3901,
       "forks": 22,
-      "openIssues": 2,
+      "openIssues": 4,
       "created": "2026-10-02",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -963,8 +963,8 @@
       "note": "",
       "license": "GPL-3.0",
       "language": "Kotlin",
-      "stars": 3727,
-      "forks": 462,
+      "stars": 3751,
+      "forks": 469,
       "openIssues": 186,
       "created": "2026-09-23",
       "first": "2026-11-02",
@@ -980,9 +980,9 @@
       "note": "",
       "license": "MIT",
       "language": "JavaScript",
-      "stars": 2502,
-      "forks": 173,
-      "openIssues": 3,
+      "stars": 2544,
+      "forks": 175,
+      "openIssues": 2,
       "created": "2026-09-22",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -997,9 +997,9 @@
       "note": "",
       "license": "MIT",
       "language": "Python",
-      "stars": 11527,
-      "forks": 962,
-      "openIssues": 34,
+      "stars": 11888,
+      "forks": 985,
+      "openIssues": 48,
       "created": "2026-09-03",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -1014,7 +1014,7 @@
       "note": "",
       "license": "MIT",
       "language": "TypeScript",
-      "stars": 2188,
+      "stars": 2190,
       "forks": 61,
       "openIssues": 7,
       "created": "2026-10-12",
@@ -1065,9 +1065,9 @@
       "note": "",
       "license": "MIT",
       "language": "",
-      "stars": 4193,
-      "forks": 5033,
-      "openIssues": 3513,
+      "stars": 4280,
+      "forks": 5130,
+      "openIssues": 3635,
       "created": "2026-09-08",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -1082,7 +1082,7 @@
       "note": "",
       "license": "MIT",
       "language": "Python",
-      "stars": 2243,
+      "stars": 2244,
       "forks": 664,
       "openIssues": 3,
       "created": "2026-10-12",
@@ -1099,8 +1099,8 @@
       "note": "",
       "license": "MIT",
       "language": "",
-      "stars": 1748,
-      "forks": 175,
+      "stars": 1762,
+      "forks": 176,
       "openIssues": 5,
       "created": "2026-09-12",
       "first": "2026-11-02",
@@ -1133,9 +1133,9 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "TypeScript",
-      "stars": 2371,
+      "stars": 2380,
       "forks": 190,
-      "openIssues": 9,
+      "openIssues": 10,
       "created": "2026-09-15",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -1150,8 +1150,8 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Python",
-      "stars": 1978,
-      "forks": 208,
+      "stars": 1990,
+      "forks": 210,
       "openIssues": 17,
       "created": "2026-10-13",
       "first": "2026-11-02",
@@ -1167,8 +1167,8 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "JavaScript",
-      "stars": 1859,
-      "forks": 187,
+      "stars": 1868,
+      "forks": 189,
       "openIssues": 2,
       "created": "2026-10-06",
       "first": "2026-11-02",
@@ -1184,7 +1184,7 @@
       "note": "",
       "license": "MIT",
       "language": "TypeScript",
-      "stars": 1061,
+      "stars": 1063,
       "forks": 97,
       "openIssues": 36,
       "created": "2026-10-08",
@@ -1201,8 +1201,8 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Markdown",
-      "stars": 1104,
-      "forks": 170,
+      "stars": 1109,
+      "forks": 172,
       "openIssues": 0,
       "created": "2026-09-25",
       "first": "2026-11-02",
@@ -1218,9 +1218,9 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Python",
-      "stars": 1298,
+      "stars": 1305,
       "forks": 143,
-      "openIssues": 73,
+      "openIssues": 74,
       "created": "2026-09-29",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -1252,7 +1252,7 @@
       "note": "",
       "license": "MIT",
       "language": "Python",
-      "stars": 631,
+      "stars": 632,
       "forks": 53,
       "openIssues": 0,
       "created": "2026-08-27",
@@ -1303,8 +1303,8 @@
       "note": "",
       "license": "NOASSERTION",
       "language": "Python",
-      "stars": 3767,
-      "forks": 280,
+      "stars": 4002,
+      "forks": 290,
       "openIssues": 30,
       "created": "2026-10-05",
       "first": "2026-11-02",
@@ -1320,9 +1320,9 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "Rust",
-      "stars": 623,
-      "forks": 69,
-      "openIssues": 210,
+      "stars": 633,
+      "forks": 70,
+      "openIssues": 214,
       "created": "2026-10-02",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -1337,7 +1337,7 @@
       "note": "",
       "license": "MIT",
       "language": "JavaScript",
-      "stars": 575,
+      "stars": 574,
       "forks": 44,
       "openIssues": 5,
       "created": "2026-10-08",
@@ -1354,8 +1354,8 @@
       "note": "",
       "license": "Apache-2.0",
       "language": "HTML",
-      "stars": 547,
-      "forks": 89,
+      "stars": 548,
+      "forks": 90,
       "openIssues": 7,
       "created": "2026-09-11",
       "first": "2026-11-02",
@@ -1371,8 +1371,8 @@
       "note": "",
       "license": "NOASSERTION",
       "language": "JavaScript",
-      "stars": 1553,
-      "forks": 150,
+      "stars": 1569,
+      "forks": 153,
       "openIssues": 41,
       "created": "2026-10-05",
       "first": "2026-11-02",
@@ -1405,9 +1405,9 @@
       "note": "",
       "license": "NOASSERTION",
       "language": "Python",
-      "stars": 789,
-      "forks": 159,
-      "openIssues": 64,
+      "stars": 794,
+      "forks": 160,
+      "openIssues": 63,
       "created": "2026-09-01",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -1439,9 +1439,9 @@
       "note": "",
       "license": "NOASSERTION",
       "language": "JavaScript",
-      "stars": 584,
-      "forks": 50,
-      "openIssues": 5,
+      "stars": 599,
+      "forks": 51,
+      "openIssues": 6,
       "created": "2026-10-03",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -1456,9 +1456,9 @@
       "note": "",
       "license": "MIT",
       "language": "Python",
-      "stars": 352,
+      "stars": 349,
       "forks": 91,
-      "openIssues": 0,
+      "openIssues": 1,
       "created": "2026-10-06",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -1474,7 +1474,7 @@
       "license": "AGPL-3.0",
       "language": "Shell",
       "stars": 289,
-      "forks": 49,
+      "forks": 50,
       "openIssues": 0,
       "created": "2026-10-14",
       "first": "2026-11-02",
@@ -1490,8 +1490,8 @@
       "note": "",
       "license": "GPL-3.0",
       "language": "TypeScript",
-      "stars": 571,
-      "forks": 77,
+      "stars": 576,
+      "forks": 80,
       "openIssues": 6,
       "created": "2026-10-10",
       "first": "2026-11-02",
@@ -1507,8 +1507,8 @@
       "note": "",
       "license": "AGPL-3.0",
       "language": "Elixir",
-      "stars": 685,
-      "forks": 58,
+      "stars": 725,
+      "forks": 60,
       "openIssues": 14,
       "created": "2026-09-30",
       "first": "2026-11-02",
@@ -1524,7 +1524,7 @@
       "note": "",
       "license": "GPL-3.0",
       "language": "Rust",
-      "stars": 264,
+      "stars": 266,
       "forks": 22,
       "openIssues": 34,
       "created": "2026-10-01",
@@ -1541,9 +1541,9 @@
       "note": "",
       "license": "MIT",
       "language": "Python",
-      "stars": 80608,
-      "forks": 14445,
-      "openIssues": 65,
+      "stars": 80879,
+      "forks": 14503,
+      "openIssues": 62,
       "created": "2026-03-18",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -1558,8 +1558,8 @@
       "note": "",
       "license": "NOASSERTION",
       "language": "TypeScript",
-      "stars": 31577,
-      "forks": 3735,
+      "stars": 31676,
+      "forks": 3747,
       "openIssues": 130,
       "created": "2026-07-29",
       "first": "2026-11-02",
@@ -1575,9 +1575,9 @@
       "note": "",
       "license": "MIT",
       "language": "Python",
-      "stars": 40797,
-      "forks": 3501,
-      "openIssues": 177,
+      "stars": 40820,
+      "forks": 3502,
+      "openIssues": 176,
       "created": "2025-04-01",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -1592,9 +1592,9 @@
       "note": "免费",
       "license": "Apache-2.0",
       "language": "Kotlin",
-      "stars": 10769,
-      "forks": 705,
-      "openIssues": 32,
+      "stars": 10785,
+      "forks": 708,
+      "openIssues": 31,
       "created": "2026-03-16",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -1609,9 +1609,9 @@
       "note": "热门",
       "license": "MIT",
       "language": "Shell",
-      "stars": 170441,
-      "forks": 27709,
-      "openIssues": 278,
+      "stars": 170627,
+      "forks": 27751,
+      "openIssues": 301,
       "created": "2025-10-13",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -1626,8 +1626,8 @@
       "note": "本周 +2.6万星",
       "license": "MIT",
       "language": "TypeScript",
-      "stars": 24665,
-      "forks": 3103,
+      "stars": 24738,
+      "forks": 3111,
       "openIssues": 0,
       "created": "2026-10-31",
       "first": "2026-11-02",
@@ -1643,9 +1643,9 @@
       "note": "本月 +4.4万星",
       "license": "Apache-2.0",
       "language": "Python",
-      "stars": 26399,
-      "forks": 3263,
-      "openIssues": 269,
+      "stars": 26411,
+      "forks": 3264,
+      "openIssues": 273,
       "created": "2026-10-16",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -1660,9 +1660,9 @@
       "note": "创建以来 +2.4万",
       "license": "MIT",
       "language": "Python",
-      "stars": 24764,
+      "stars": 24778,
       "forks": 1904,
-      "openIssues": 207,
+      "openIssues": 212,
       "created": "2026-09-16",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -1677,9 +1677,9 @@
       "note": "创建以来 +3.8万",
       "license": "MIT",
       "language": "C++",
-      "stars": 48438,
-      "forks": 5461,
-      "openIssues": 1659,
+      "stars": 48722,
+      "forks": 5502,
+      "openIssues": 1710,
       "created": "2026-09-24",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -1694,9 +1694,9 @@
       "note": "创建以来 +3.5万",
       "license": "Apache-2.0",
       "language": "Python",
-      "stars": 35994,
-      "forks": 3219,
-      "openIssues": 110,
+      "stars": 36017,
+      "forks": 3221,
+      "openIssues": 104,
       "created": "2026-09-18",
       "first": "2026-11-02",
       "last": "2026-11-27"
@@ -1786,7 +1786,7 @@
       ],
       [
         "2026-11-27",
-        148769
+        148927
       ]
     ],
     "mksglu/context-mode": [
@@ -1872,7 +1872,7 @@
       ],
       [
         "2026-11-27",
-        34525
+        34549
       ]
     ],
     "debpalash/VoiceStudio": [
@@ -1954,7 +1954,7 @@
       ],
       [
         "2026-11-27",
-        118892
+        119379
       ]
     ],
     "vectorize-io/hindsight": [
@@ -2036,7 +2036,7 @@
       ],
       [
         "2026-11-27",
-        63702
+        63842
       ]
     ],
     "morluto/rea": [
@@ -2118,7 +2118,7 @@
       ],
       [
         "2026-11-27",
-        479757
+        481116
       ]
     ],
     "paperclipai/paperclip": [
@@ -2200,7 +2200,7 @@
       ],
       [
         "2026-11-27",
-        117386
+        117607
       ]
     ],
     "cloudflare/security-audit-skill": [
@@ -2282,7 +2282,7 @@
       ],
       [
         "2026-11-27",
-        78857
+        79271
       ]
     ],
     "heygen-com/hyperframes": [
@@ -2364,7 +2364,7 @@
       ],
       [
         "2026-11-27",
-        90873
+        91519
       ]
     ],
     "tashfeenahmed/freellmapi": [
@@ -2446,7 +2446,7 @@
       ],
       [
         "2026-11-27",
-        58869
+        59300
       ]
     ],
     "stablyai/orca": [
@@ -2528,7 +2528,7 @@
       ],
       [
         "2026-11-27",
-        140393
+        142436
       ]
     ],
     "pbakaus/impeccable": [
@@ -2610,7 +2610,7 @@
       ],
       [
         "2026-11-27",
-        117533
+        118049
       ]
     ],
     "affaan-m/ECC": [
@@ -2692,7 +2692,7 @@
       ],
       [
         "2026-11-27",
-        311302
+        311850
       ]
     ],
     "NVIDIA/OpenShell": [
@@ -2774,7 +2774,7 @@
       ],
       [
         "2026-11-27",
-        21967
+        21996
       ]
     ],
     "anomalyco/opencode": [
@@ -2856,7 +2856,7 @@
       ],
       [
         "2026-11-27",
-        229409
+        229638
       ]
     ],
     "HKUDS/CLI-Anything": [
@@ -2938,7 +2938,7 @@
       ],
       [
         "2026-11-27",
-        66355
+        66990
       ]
     ],
     "thedotmack/claude-mem": [
@@ -3020,7 +3020,7 @@
       ],
       [
         "2026-11-27",
-        119991
+        120212
       ]
     ],
     "K-Dense-AI/scientific-agent-skills": [
@@ -3102,7 +3102,7 @@
       ],
       [
         "2026-11-27",
-        58581
+        58697
       ]
     ],
     "deepseek-ai/deepseek-harness": [
@@ -3184,7 +3184,7 @@
       ],
       [
         "2026-11-27",
-        287615
+        288038
       ]
     ],
     "ruvnet/ruflo": [
@@ -3266,7 +3266,7 @@
       ],
       [
         "2026-11-27",
-        82507
+        82561
       ]
     ],
     "anthropics/claude-plugins-official": [
@@ -3348,7 +3348,7 @@
       ],
       [
         "2026-11-27",
-        48354
+        48472
       ]
     ],
     "Ebony-Vinyl/dsh-our-free-model": [
@@ -3430,7 +3430,7 @@
       ],
       [
         "2026-11-27",
-        88165
+        89105
       ]
     ],
     "earthtojake/text-to-cad": [
@@ -3512,7 +3512,7 @@
       ],
       [
         "2026-11-27",
-        27552
+        27621
       ]
     ],
     "anthropics/knowledge-work-plugins": [
@@ -3594,7 +3594,7 @@
       ],
       [
         "2026-11-27",
-        37090
+        37191
       ]
     ],
     "pingdotgg/t3code": [
@@ -3676,7 +3676,7 @@
       ],
       [
         "2026-11-27",
-        80942
+        82170
       ]
     ],
     "yetone/magpie": [
@@ -3758,7 +3758,7 @@
       ],
       [
         "2026-11-27",
-        42022
+        42525
       ]
     ],
     "lexmount/moli": [
@@ -3840,7 +3840,7 @@
       ],
       [
         "2026-11-27",
-        24535
+        24564
       ]
     ],
     "img2threejs/img2threejs": [
@@ -3922,7 +3922,7 @@
       ],
       [
         "2026-11-27",
-        21975
+        22021
       ]
     ],
     "google/artemis": [
@@ -4004,7 +4004,7 @@
       ],
       [
         "2026-11-27",
-        18166
+        18216
       ]
     ],
     "Vincentwei1021/video-shotcraft": [
@@ -4086,7 +4086,7 @@
       ],
       [
         "2026-11-27",
-        22774
+        23115
       ]
     ],
     "akitaonrails/ai-memory": [
@@ -4168,7 +4168,7 @@
       ],
       [
         "2026-11-27",
-        16473
+        16521
       ]
     ],
     "cursor/plugins": [
@@ -4250,7 +4250,7 @@
       ],
       [
         "2026-11-27",
-        19783
+        20010
       ]
     ],
     "trailhq/Trail-Code": [
@@ -4332,7 +4332,7 @@
       ],
       [
         "2026-11-27",
-        11507
+        11526
       ]
     ],
     "TencentCloud/Octop": [
@@ -4414,7 +4414,7 @@
       ],
       [
         "2026-11-27",
-        12526
+        12595
       ]
     ],
     "rehan-remade/universal-modder": [
@@ -4496,7 +4496,7 @@
       ],
       [
         "2026-11-27",
-        9896
+        9919
       ]
     ],
     "KKKKhazix/AIHOT": [
@@ -4578,7 +4578,7 @@
       ],
       [
         "2026-11-27",
-        11465
+        11503
       ]
     ],
     "tangency-labs/solidcraft": [
@@ -4660,7 +4660,7 @@
       ],
       [
         "2026-11-27",
-        18550
+        18765
       ]
     ],
     "Ryze-AI-Adgent/open-seo-mcp-skills": [
@@ -4742,7 +4742,7 @@
       ],
       [
         "2026-11-27",
-        10684
+        10706
       ]
     ],
     "XiaoDuoYa/codex-with-chatgpt": [
@@ -4824,7 +4824,7 @@
       ],
       [
         "2026-11-27",
-        7734
+        7737
       ]
     ],
     "jev-chat/jev-chat-jarvis": [
@@ -4906,7 +4906,7 @@
       ],
       [
         "2026-11-27",
-        8525
+        8540
       ]
     ],
     "deeplethe/utopia": [
@@ -4988,7 +4988,7 @@
       ],
       [
         "2026-11-27",
-        8667
+        8736
       ]
     ],
     "bojieli/ai-infra-book": [
@@ -5070,7 +5070,7 @@
       ],
       [
         "2026-11-27",
-        8346
+        8365
       ]
     ],
     "Human-Agent-Society/reef": [
@@ -5152,7 +5152,7 @@
       ],
       [
         "2026-11-27",
-        7620
+        7611
       ]
     ],
     "Jakeschincariol/replica-skill": [
@@ -5234,7 +5234,7 @@
       ],
       [
         "2026-11-27",
-        10746
+        10828
       ]
     ],
     "shader-effects-inc/shaders": [
@@ -5316,7 +5316,7 @@
       ],
       [
         "2026-11-27",
-        6055
+        6059
       ]
     ],
     "tigerless-labs/agent-memory": [
@@ -5398,7 +5398,7 @@
       ],
       [
         "2026-11-27",
-        3962
+        3964
       ]
     ],
     "elie222/rakazo": [
@@ -5480,7 +5480,7 @@
       ],
       [
         "2026-11-27",
-        9881
+        10014
       ]
     ],
     "ZJU-REAL/Easel": [
@@ -5562,7 +5562,7 @@
       ],
       [
         "2026-11-27",
-        4953
+        4971
       ]
     ],
     "QingYunA/answer-me-with-html": [
@@ -5644,7 +5644,7 @@
       ],
       [
         "2026-11-27",
-        6689
+        6700
       ]
     ],
     "Leonxlnx/unlazy": [
@@ -5726,7 +5726,7 @@
       ],
       [
         "2026-11-27",
-        4494
+        4499
       ]
     ],
     "onehumanbeing/esp32-iphone-agent": [
@@ -5808,7 +5808,7 @@
       ],
       [
         "2026-11-27",
-        5363
+        5417
       ]
     ],
     "Nanako0129/sepia": [
@@ -5890,7 +5890,7 @@
       ],
       [
         "2026-11-27",
-        3960
+        3968
       ]
     ],
     "HarnessRouter/harnessrouter": [
@@ -5972,7 +5972,7 @@
       ],
       [
         "2026-11-27",
-        4565
+        4583
       ]
     ],
     "fuxicodex/Fuxi": [
@@ -6136,7 +6136,7 @@
       ],
       [
         "2026-11-27",
-        5907
+        5947
       ]
     ],
     "xzf-thu/VoiceMem": [
@@ -6218,7 +6218,7 @@
       ],
       [
         "2026-11-27",
-        2902
+        2904
       ]
     ],
     "Folkbench/folkbench": [
@@ -6300,7 +6300,7 @@
       ],
       [
         "2026-11-27",
-        3802
+        3901
       ]
     ],
     "nano-muse/nanoMuse": [
@@ -6382,7 +6382,7 @@
       ],
       [
         "2026-11-27",
-        3727
+        3751
       ]
     ],
     "amontlabs/lcu": [
@@ -6464,7 +6464,7 @@
       ],
       [
         "2026-11-27",
-        2502
+        2544
       ]
     ],
     "kajisho5/ffmpeg-skill": [
@@ -6546,7 +6546,7 @@
       ],
       [
         "2026-11-27",
-        11527
+        11888
       ]
     ],
     "deeplethe/solid-glass": [
@@ -6628,7 +6628,7 @@
       ],
       [
         "2026-11-27",
-        2188
+        2190
       ]
     ],
     "trhhubsd/ARTEX": [
@@ -6722,7 +6722,7 @@
       ],
       [
         "2026-11-27",
-        4193
+        4280
       ]
     ],
     "zhuyansen/new-term-radar": [
@@ -6804,7 +6804,7 @@
       ],
       [
         "2026-11-27",
-        2243
+        2244
       ]
     ],
     "youngyangyang04/llm-master": [
@@ -6886,7 +6886,7 @@
       ],
       [
         "2026-11-27",
-        1748
+        1762
       ]
     ],
     "Harvil1/codeAgent": [
@@ -7050,7 +7050,7 @@
       ],
       [
         "2026-11-27",
-        2371
+        2380
       ]
     ],
     "datalab-to/indra": [
@@ -7132,7 +7132,7 @@
       ],
       [
         "2026-11-27",
-        1978
+        1990
       ]
     ],
     "Tejashmakwana/motionmaxxing": [
@@ -7214,7 +7214,7 @@
       ],
       [
         "2026-11-27",
-        1859
+        1868
       ]
     ],
     "thesysdev/open-intelligent-ui": [
@@ -7296,7 +7296,7 @@
       ],
       [
         "2026-11-27",
-        1061
+        1063
       ]
     ],
     "amitshekhariitbhu/ai-system-design": [
@@ -7378,7 +7378,7 @@
       ],
       [
         "2026-11-27",
-        1104
+        1109
       ]
     ],
     "strands-labs/strands-decider": [
@@ -7460,7 +7460,7 @@
       ],
       [
         "2026-11-27",
-        1298
+        1305
       ]
     ],
     "Ayzzz123/mcd-coupon-strategist": [
@@ -7548,7 +7548,7 @@
       ],
       [
         "2026-11-27",
-        631
+        632
       ]
     ],
     "xop01/ai_goodpractice": [
@@ -7794,7 +7794,7 @@
       ],
       [
         "2026-11-27",
-        3767
+        4002
       ]
     ],
     "strands-agents/box": [
@@ -7876,7 +7876,7 @@
       ],
       [
         "2026-11-27",
-        623
+        633
       ]
     ],
     "pinganbbOvO/ai-companion-kit": [
@@ -7958,7 +7958,7 @@
       ],
       [
         "2026-11-27",
-        575
+        574
       ]
     ],
     "modelscope/ms-cookbook": [
@@ -8040,7 +8040,7 @@
       ],
       [
         "2026-11-27",
-        547
+        548
       ]
     ],
     "hanzohanzhe/Grandet": [
@@ -8122,7 +8122,7 @@
       ],
       [
         "2026-11-27",
-        1553
+        1569
       ]
     ],
     "FengZhenfei/carrel": [
@@ -8286,7 +8286,7 @@
       ],
       [
         "2026-11-27",
-        789
+        794
       ]
     ],
     "songshikang0111/awesome-REA-cases": [
@@ -8450,7 +8450,7 @@
       ],
       [
         "2026-11-27",
-        584
+        599
       ]
     ],
     "LosaLosSantos/aurelio-finance": [
@@ -8532,7 +8532,7 @@
       ],
       [
         "2026-11-27",
-        352
+        349
       ]
     ],
     "shuyu-labs/transwork": [
@@ -8696,7 +8696,7 @@
       ],
       [
         "2026-11-27",
-        571
+        576
       ]
     ],
     "AFK-surf/Comma": [
@@ -8778,7 +8778,7 @@
       ],
       [
         "2026-11-27",
-        685
+        725
       ]
     ],
     "RoversX/ThinkTerm": [
@@ -8860,7 +8860,7 @@
       ],
       [
         "2026-11-27",
-        264
+        266
       ]
     ],
     "rohitg00/ai-engineering-from-scratch": [
@@ -8942,7 +8942,7 @@
       ],
       [
         "2026-11-27",
-        80608
+        80879
       ]
     ],
     "hypit-ai/hypit": [
@@ -9024,7 +9024,7 @@
       ],
       [
         "2026-11-27",
-        31577
+        31676
       ]
     ],
     "VectifyAI/PageIndex": [
@@ -9106,7 +9106,7 @@
       ],
       [
         "2026-11-27",
-        40797
+        40820
       ]
     ],
     "android/skills": [
@@ -9188,7 +9188,7 @@
       ],
       [
         "2026-11-27",
-        10769
+        10785
       ]
     ],
     "msitarzewski/agency-agents": [
@@ -9270,7 +9270,7 @@
       ],
       [
         "2026-11-27",
-        170441
+        170627
       ]
     ],
     "deepseek-ai/dsh-superagent-prototype": [
@@ -9352,7 +9352,7 @@
       ],
       [
         "2026-11-27",
-        24665
+        24738
       ]
     ],
     "deepseek-ai/DeepInfer": [
@@ -9434,7 +9434,7 @@
       ],
       [
         "2026-11-27",
-        26399
+        26411
       ]
     ],
     "browser-use/jev-ultrafast": [
@@ -9516,7 +9516,7 @@
       ],
       [
         "2026-11-27",
-        24764
+        24778
       ]
     ],
     "Niko1221/Strata": [
@@ -9598,7 +9598,7 @@
       ],
       [
         "2026-11-27",
-        48438
+        48722
       ]
     ],
     "NandhaKishorM/laya": [
@@ -9680,7 +9680,7 @@
       ],
       [
         "2026-11-27",
-        35994
+        36017
       ]
     ]
   }
