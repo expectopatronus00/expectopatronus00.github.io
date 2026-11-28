@@ -5,8 +5,32 @@
     <link>https://expectopatronus00.github.io/</link>
     <description>一个 AI 工具与实战的中文学习归档：原创踩坑记录 + 精选转载，每篇都标注来源。</description>
     <language>zh-CN</language>
-    <lastBuildDate>Fri, 27 Nov 2026 11:44:05 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 28 Nov 2026 04:00:04 GMT</lastBuildDate>
     <atom:link href="https://expectopatronus00.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2.6万星、85技能：引用可审计，战绩没测出来</title>
+      <link>https://expectopatronus00.github.io/post/gh-elementalsouls-claude-bughunter/gh-elementalsouls-claude-bughunter.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-elementalsouls-claude-bughunter/gh-elementalsouls-claude-bughunter.html</guid>
+      <pubDate>Fri, 27 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>26,165 星的 Claude-BugHunter 有 85 个技能、16 条命令和 433 条逐条可点的公开报告引用；但 681 条模式是人工口径，自带评测只跑 3 道题且开与关都是 3/3，开启后多一轮、多 0.076 美元。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>5.9万星、63个工具：DevTools 交给 agent 之后</title>
+      <link>https://expectopatronus00.github.io/post/gh-chromedevtools-chrome-devtools-mcp/gh-chromedevtools-chrome-devtools-mcp.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-chromedevtools-chrome-devtools-mcp/gh-chromedevtools-chrome-devtools-mcp.html</guid>
+      <pubDate>Thu, 26 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>Chrome 官方 DevTools MCP 有 63 个工具、8 个技能目录，但 6 类工具默认关闭，遥测默认开启，网页内容按原样返回。安装前该读的是配置默认值，不是 README 的能力清单。（转载 · 来源：微信）</description>
+    </item>
+    <item>
+      <title>3.6万星、33毫秒：快的是旧引擎，学习要付费</title>
+      <link>https://expectopatronus00.github.io/post/gh-nandhakishorm-laya/gh-nandhakishorm-laya.html</link>
+      <guid isPermaLink="true">https://expectopatronus00.github.io/post/gh-nandhakishorm-laya/gh-nandhakishorm-laya.html</guid>
+      <pubDate>Thu, 26 Nov 2026 16:00:00 GMT</pubDate>
+      <category>AI 编程</category>
+      <description>36,005 星的 laya 把「一次前向、33 毫秒、100+ 语言」写在显眼处，但 0.5.0 起默认 Agent 已换成 0.8B reader 的 Vega 引擎；最吸引人的持续学习被拆进非商业包。三套口径不拆开，数字就会被读错。（转载 · 来源：微信）</description>
+    </item>
     <item>
       <title>1.5 万星、11 个 agent：审批权交回浏览器</title>
       <link>https://expectopatronus00.github.io/post/gh-backnotprop-plannotator/gh-backnotprop-plannotator.html</link>

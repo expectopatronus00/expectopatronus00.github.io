@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- head-hints:begin -->
+    <meta name="theme-color" content="#0b0d16" />
+    <link rel="preconnect" href="https://font.emtech.cc" crossorigin />
+    <link rel="dns-prefetch" href="https://font.emtech.cc" />
+    <link rel="stylesheet" href="https://font.emtech.cc/css/LXGWNeoZhiSong/400" />
+    <script src="/home/theme-color.js" defer></script>
+    <!-- head-hints:end -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3.6万星、33毫秒：快的是旧引擎，学习要付费 · EXPECTOPATRONUS</title>
+    <meta name="description" content="36,005 星的 laya 把「一次前向、33 毫秒、100+ 语言」写在显眼处，但 0.5.0 起默认 Agent 已换成 0.8B reader 的 Vega 引擎；最吸引人的持续学习被拆进非商业包。三套口径不拆开，数字就会被读错。" />
+    <meta name="keywords" content="GitHub, 开源, 决策模型, Agent" />
+    <meta property="og:title" content="3.6万星、33毫秒：快的是旧引擎，学习要付费" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="36,005 星的 laya 把「一次前向、33 毫秒、100+ 语言」写在显眼处，但 0.5.0 起默认 Agent 已换成 0.8B reader 的 Vega 引擎；最吸引人的持续学习被拆进非商业包。三套口径不拆开，数字就会被读错。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <link rel="stylesheet" href="../article-common.css" data-shared-css="0d59321e71" />
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+    <!-- seo:begin -->
+    <link rel="canonical" href="https://expectopatronus00.github.io/post/gh-nandhakishorm-laya/gh-nandhakishorm-laya.html" />
+    <meta property="og:url" content="https://expectopatronus00.github.io/post/gh-nandhakishorm-laya/gh-nandhakishorm-laya.html" />
+    <meta property="og:site_name" content="EXPECTOPATRONUS" />
+    <meta property="og:image" content="https://expectopatronus00.github.io/post/gh-nandhakishorm-laya/cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"3.6万星、33毫秒：快的是旧引擎，学习要付费","description":"36,005 星的 laya 把「一次前向、33 毫秒、100+ 语言」写在显眼处，但 0.5.0 起默认 Agent 已换成 0.8B reader 的 Vega 引擎；最吸引人的持续学习被拆进非商业包。三套口径不拆开，数字就会被读错。","image":"https://expectopatronus00.github.io/post/gh-nandhakishorm-laya/cover.jpg","inLanguage":"zh-CN","author":{"@type":"Person","name":"expectopatronus","url":"https://expectopatronus00.github.io"},"publisher":{"@type":"Organization","name":"EXPECTOPATRONUS","url":"https://expectopatronus00.github.io"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://expectopatronus00.github.io/post/gh-nandhakishorm-laya/gh-nandhakishorm-laya.html"},"datePublished":"2026-11-27","dateModified":"2026-11-27"}</script>
+    <!-- seo:end -->
+</head>
+  <body>
+    <!-- skip-link:begin -->
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <!-- skip-link:end -->
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head" data-skip-target="1" tabindex="-1" id="main-content">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>3.6万星、33毫秒：快的是旧引擎，学习要付费</h1>
+      <p>36,005 星、3,219 fork，laya 在 11 月 26 日发布 v0.5.5。README 最显眼的一行写着「一次前向 33 毫秒、100+ 语言」，但同一份文档承认：这组数字属于经典编码器。真正的默认引擎与持续学习，另算。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-27</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 4 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <picture data-cover-picture="1">
+        <source srcset="cover.webp" type="image/webp" />
+        <img loading="lazy" alt="3.6万星、33毫秒：快的是旧引擎，学习要付费 封面" src="cover.jpg" width="2400" height="1260" decoding="async" data-cover-ready="1" />
+      </picture>
+    </div>
+
+    <article class="article-body">
+<div class="section-marker" data-section="01">
+<h2>01 这件事</h2>
+<p><strong>36,005 星的 laya 把「一次前向、33 毫秒、100+ 语言」写在最显眼处，但这句话描述的是它不再默认的那一套引擎。</strong></p>
+<p>NandhaKishorM/laya 创建于 2026-09-18，11-26 仍在推送，主语言 Python，Apache-2.0。仓库简介称它是非自回归 System 1 决策引擎：typed choice、score 与 yes/no 决策一次前向完成，路由器按请求挑 checkpoint。</p>
+<table>
+<thead><tr><th>字段</th><th>实测值</th><th>来源</th></tr></thead>
+<tbody>
+<tr><td>星标 / fork</td><td>36,005 / 3,219</td><td>仓库接口</td></tr>
+<tr><td>未结条目</td><td>113（54 issue + 59 PR）</td><td>仓库 + search/issues</td></tr>
+<tr><td>版本 / 标签</td><td>77 release / 77 tag</td><td>接口分 3 页</td></tr>
+<tr><td>最新稳定版</td><td>v0.5.5（11-26）</td><td>latest release</td></tr>
+<tr><td>提交 / 贡献者</td><td>2,990 次 / 180 个账号</td><td>接口分 2 页</td></tr>
+</tbody>
+</table>
+<p>它入池时记 35,593 星，这次复核涨到 36,005，积压 11 天热度未衰减。首位贡献者提交 1,138 次，占 38.1%；账号数包含匿名账号，不等于实际人数。</p>
+<p>完整树有 2,614 个条目、2,421 个 blob、61.11 MB。六种语言 SDK 占 1,505 个文件、45.55 MB（74.5%），Python 核心目录只有 51 个文件、1.48 MB。这是个多语言客户端仓库，不只是一次模型推理。</p>
+</div>
+
+<div class="section-marker" data-section="02">
+<h2>02 核心机制</h2>
+<p><strong>从 0.5.0 起，<span class="hl">默认 Agent 已换成带 0.8B reader 的 Vega 引擎</span>；33 毫秒那套要显式点名才会加载。</strong></p>
+<p>README 的 Quickstart 写得很直白：<code>laya.Agent()</code> 现在加载新引擎，底下是冻结的 0.8B reader，上面叠一个小型物理决策层；每种答案都带共形预测集、abstain 标记、分布外标记和算好的 route。</p>
+<table>
+<thead><tr><th>项目</th><th>经典 checkpoint</th><th>默认 Vega 引擎</th></tr></thead>
+<tbody>
+<tr><td>上下文</td><td>512 或 1,024 token，超出切窗</td><td>73,728 token，整篇读</td></tr>
+<tr><td>T4 文本延迟</td><td>单条 32.8 ms，批量约 16 ms/条</td><td>约 72 ms/条</td></tr>
+<tr><td>从标签学习</td><td>梯度微调</td><td><code>agent.fit(rows)</code>，秒级</td></tr>
+<tr><td>输入类型</td><td>仅文本</td><td>文本、图像、音频、视频</td></tr>
+<tr><td>拒绝策略</td><td>自选 <code>min_confidence</code></td><td>abstain、unbound、预测集与 route</td></tr>
+</tbody>
+</table>
+<p>路由器按固定顺序分流：图像和音频走 Vega，超过快模型上下文的长文本走 Vega，非英语或非拉丁文字走 Vega，装过拟合头的题目走 Vega，其余才用经典编码器。可强制指定模式。</p>
+<p>新引擎的 <code>unbound</code> 只报告、不直接路由。README 自己给了原因：在正常 banking77 数据上它也有 71% 触发率，若照它分流，大部分正确答案会被送人工复核。</p>
+</div>
+
+<div class="section-marker" data-section="03">
+<h2>03 关键细节与数据</h2>
+<p><strong>同一份 README 把「赢 Jev」和「基础 checkpoint 接近随机」放在同一页，摘任何一个数字都会失真。</strong></p>
+<p>路由表的数字来自仓库实测，Jev 一栏是第三方发布、仓库没有 API 亲自跑过，样本和提示都不同。两组数字不能当同一场考试的成绩单。</p>
+<table>
+<thead><tr><th>项目</th><th>Jev 1.13（第三方发布）</th><th>laya 路由（仓库实测）</th></tr></thead>
+<tbody>
+<tr><td>typed-decisions，2,000 决策</td><td>0.727</td><td>0.766</td></tr>
+<tr><td>AG News，4 类</td><td>0.910</td><td>0.950</td></tr>
+<tr><td>Banking77，72 / 77 类</td><td>0.870</td><td>0.425</td></tr>
+<tr><td>ECE，越低越好</td><td>0.246</td><td>0.081</td></tr>
+<tr><td>单条 p50 延迟</td><td>236–276 ms</td><td>32.8 ms</td></tr>
+<tr><td>权重 / 成本</td><td>闭源 API / 每百万 token 0.042 美元</td><td>Apache-2.0 / 自托管 0 美元</td></tr>
+</tbody>
+</table>
+<p>标签一多就翻车：77 个选项在默认 256-token 头预算里每个只分到三四个 token。README 把Banking77 失利归为架构性预算约束，建议调大 <code>head_max_len</code>、用嵌入做短名单，或走 <code>predict_tournament</code> 分组。</p>
+<p>更硬的一句在「诚实限制」：基础 checkpoint 在 typed-decisions 零样本只有 0.362 与 0.352，随机基线 0.318、多数类基线 0.461。0.766 是拿该基准训练切分微调过的 checkpoint 跑出来的。</p>
+<p>持续学习那组数字属于新引擎。14 个模板、31 个问题，每模板约 600 条生成样本，之后按确认答案增量学习，每模板留 60 条测试。</p>
+<table>
+<thead><tr><th>阶段</th><th>laya.Learner</th><th>Jev 1.14（确认答案写进 criteria）</th></tr></thead>
+<tbody>
+<tr><td>第一天</td><td>84.7%</td><td>89.5%</td></tr>
+<tr><td>40 条确认答案</td><td>91.6%</td><td>91.5%</td></tr>
+<tr><td>120 条确认答案</td><td>96.0%</td><td>92.6%</td></tr>
+</tbody>
+</table>
+<p>代价也算得清：300 条答案在 8 核 CPU 上 34 秒、6.4 GB 内存；同样 300 行微调传统编码器要 GPU 89 秒、9 GB，并重写全部 4.21 亿权重。</p>
+<p>但<span class="hl">学习功能不在 Apache-2.0 里</span>。从 0.5.4 起，<code>laya.Learner</code>、<code>laya.Escalator</code> 和 <code>laya.vllm_teacher</code> 改由独立包 vegaml-learn 提供，采用 PolyForm Noncommercial 1.0.0，公司、产品或付费服务要另买许可。</p>
+</div>
+
+<div class="section-marker" data-section="04">
+<h2>04 怎么用</h2>
+<p><strong>把它当可定制的本地判断层，别当开箱即用的通用分类器。</strong></p>
+<p>安装是一行 <code>pip install -U laya</code>，Python 3.10 起。要旧引擎就点名经典 checkpoint 或传 <code>vegaml=False</code>；要新增学习能力再单独装 vegaml-learn，代码不改。</p>
+<ul>
+<li>写问题：choice 给选项与描述，score 给有序等级，noul 给是否类判断。</li>
+<li>看输出：按 route 决定是否放行，不拿单一置信度做闸门。</li>
+<li>调长文：多语 checkpoint 默认 1,024 token，长文档须传 <code>max_len=8192</code>。</li>
+<li>调标签：超过 20 个选项先扩头预算，或先做短名单，或分组决策。</li>
+<li>做验收：在自己的数据上跑 fit / calibrate，再核对 ECE 与逐类错误。</li>
+</ul>
+<p>自托管要补两处配置。SECURITY.md 写明：<code>LAYA_API_KEY</code> 不设时 <code>laya-serve</code> 无认证，默认又绑在 0.0.0.0:8000；非隔离环境至少要显式绑回环地址并设令牌。</p>
+<p>该文件还限制了选项数不超过 100、单请求 token 预算默认封顶 8,192，并把并发缓冲请求限制在 16。这些是防资源放大的护栏，不是模型 accuracy 的保证。</p>
+</div>
+
+<div class="section-marker" data-section="05">
+<h2>05 冷思考</h2>
+<p><strong>最该警惕的不是速度，而是三套口径被混着引用：旧引擎的速度、新引擎的能力、非商业包的学习。</strong></p>
+<p>项目把 Jev 的闭源 API 价格写进对比表，却承认对方数字不是自己测的；又把微调后的 0.766 和零样本的 0.362 并列在文档里。任何只搬最高分的转述，都比 README 本身更激进。</p>
+<p>许可分层同样容易被忽略。主体 Apache-2.0 让代码可自由使用，学习组件却要商业许可；一个团队按「开源免费」立项，跑到第二个季度才会撞上这堵墙。SECURITY.md 的「支持版本」表还停在 0.3.x，而稳定版已是 v0.5.5，安全文档与发布节奏也没对齐。</p>
+<div class="info-box">
+<strong>数据核对</strong>
+<ul>
+<li>仓库身份：36,005 星 / 3,219 fork，09-18 创建，pushed 11-26，Apache-2.0。</li>
+<li>v0.5.5（11-26），77 release / 77 tag；未结 113 = 54 issue + 59 PR。</li>
+<li>2,990 提交 / 180 账号，首位 1,138 次（38.1%）。</li>
+<li>完整树 2,614 条目 / 2,421 blob / 61.11 MB；六种 SDK 45.55 MB（74.5%）。</li>
+<li>33 ms 属经典多语 checkpoint；默认引擎 T4 约 72 ms。Jev 数字为第三方发布。</li>
+<li>0.766 来自在该基准训练切分上微调的 checkpoint；基础零样本 0.362 / 0.352。</li>
+<li>学习组件在 vegaml-learn，PolyForm Noncommercial 1.0.0；主体 Apache-2.0。</li>
+</ul>
+核对时间 2026-11-27。
+</div>
+<p>判断是：适合拿它做可控、可改、能自托管的专用判断层，前提是你愿意自己准备标签、调头预算、验拒答策略，并在商用前把学习组件单独算进成本。想要一个不调参就能替你判断的模型，这份 README 自己也没答应。</p>
+</div>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>一次前向给出带校准概率的结构化决策，支持本地自托管。</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/NandhaKishorM/laya" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/NandhaKishorM/laya" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 非自回归决策引擎与 Vega 引擎</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=GitHub">#GitHub</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=%E5%86%B3%E7%AD%96%E6%A8%A1%E5%9E%8B">#决策模型</a>
+      <a href="../../home/home.html?q=Agent">#Agent</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">项目：NandhaKishorM/laya · GitHub · Apache-2.0（学习组件另计）</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>

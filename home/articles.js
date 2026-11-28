@@ -3,6 +3,33 @@
 // url 字段使用相对 home/ 目录的路径（../post/xxx/xxx.html），首页渲染时需去掉 ../ 前缀
 window.articles = [
           {
+            id: 'gh-elementalsouls-claude-bughunter',
+            title: '2.6万星、85技能：引用可审计，战绩没测出来',
+            url: '../post/gh-elementalsouls-claude-bughunter/gh-elementalsouls-claude-bughunter.html',
+            summary: '26,165 星的 Claude-BugHunter 有 85 个技能、16 条命令和 433 条逐条可点的公开报告引用；但 681 条模式是人工口径，自带评测只跑 3 道题且开与关都是 3/3，开启后多一轮、多 0.076 美元。',
+            category: 'AI 编程',
+            date: '2026-11-28',
+            tags: ["GitHub","开源","Agent Skill","安全"],
+          },
+          {
+            id: 'gh-chromedevtools-chrome-devtools-mcp',
+            title: '5.9万星、63个工具：DevTools 交给 agent 之后',
+            url: '../post/gh-chromedevtools-chrome-devtools-mcp/gh-chromedevtools-chrome-devtools-mcp.html',
+            summary: 'Chrome 官方 DevTools MCP 有 63 个工具、8 个技能目录，但 6 类工具默认关闭，遥测默认开启，网页内容按原样返回。安装前该读的是配置默认值，不是 README 的能力清单。',
+            category: 'AI 编程',
+            date: '2026-11-27',
+            tags: ["GitHub","开源","Agent Skill","DevTools","MCP"],
+          },
+          {
+            id: 'gh-nandhakishorm-laya',
+            title: '3.6万星、33毫秒：快的是旧引擎，学习要付费',
+            url: '../post/gh-nandhakishorm-laya/gh-nandhakishorm-laya.html',
+            summary: '36,005 星的 laya 把「一次前向、33 毫秒、100+ 语言」写在显眼处，但 0.5.0 起默认 Agent 已换成 0.8B reader 的 Vega 引擎；最吸引人的持续学习被拆进非商业包。三套口径不拆开，数字就会被读错。',
+            category: 'AI 编程',
+            date: '2026-11-27',
+            tags: ["GitHub","开源","决策模型","Agent"],
+          },
+          {
             id: 'gh-backnotprop-plannotator',
             title: '1.5 万星、11 个 agent：审批权交回浏览器',
             url: '../post/gh-backnotprop-plannotator/gh-backnotprop-plannotator.html',

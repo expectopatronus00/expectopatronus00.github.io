@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- head-hints:begin -->
+    <meta name="theme-color" content="#0b0d16" />
+    <link rel="preconnect" href="https://font.emtech.cc" crossorigin />
+    <link rel="dns-prefetch" href="https://font.emtech.cc" />
+    <link rel="stylesheet" href="https://font.emtech.cc/css/LXGWNeoZhiSong/400" />
+    <script src="/home/theme-color.js" defer></script>
+    <!-- head-hints:end -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2.6万星、85技能：引用可审计，战绩没测出来 · EXPECTOPATRONUS</title>
+    <meta name="description" content="26,165 星的 Claude-BugHunter 有 85 个技能、16 条命令和 433 条逐条可点的公开报告引用；但 681 条模式是人工口径，自带评测只跑 3 道题且开与关都是 3/3，开启后多一轮、多 0.076 美元。" />
+    <meta name="keywords" content="GitHub, 开源, Agent Skill, 安全" />
+    <meta property="og:title" content="2.6万星、85技能：引用可审计，战绩没测出来" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="26,165 星的 Claude-BugHunter 有 85 个技能、16 条命令和 433 条逐条可点的公开报告引用；但 681 条模式是人工口径，自带评测只跑 3 道题且开与关都是 3/3，开启后多一轮、多 0.076 美元。" />
+    <link rel="shortcut icon" href="../../home/logo.svg" type="image/svg+xml" />
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme') || 'dark';
+          if (t === 'light') document.documentElement.dataset.theme = 'light';
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/CormorantGaramond-var-normal.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin href="../../home/fonts/SourceSerif4-var-normal.woff2" />
+    <link rel="stylesheet" href="../../home/fonts.css" />
+    <link rel="stylesheet" href="../../home/design-tokens.css" />
+    <link rel="stylesheet" href="../article-common.css" data-shared-css="0d59321e71" />
+      <link rel="stylesheet" href="../../post/article-read.css" data-read-css="1" />
+    <!-- seo:begin -->
+    <link rel="canonical" href="https://expectopatronus00.github.io/post/gh-elementalsouls-claude-bughunter/gh-elementalsouls-claude-bughunter.html" />
+    <meta property="og:url" content="https://expectopatronus00.github.io/post/gh-elementalsouls-claude-bughunter/gh-elementalsouls-claude-bughunter.html" />
+    <meta property="og:site_name" content="EXPECTOPATRONUS" />
+    <meta property="og:image" content="https://expectopatronus00.github.io/post/gh-elementalsouls-claude-bughunter/cover.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"2.6万星、85技能：引用可审计，战绩没测出来","description":"26,165 星的 Claude-BugHunter 有 85 个技能、16 条命令和 433 条逐条可点的公开报告引用；但 681 条模式是人工口径，自带评测只跑 3 道题且开与关都是 3/3，开启后多一轮、多 0.076 美元。","image":"https://expectopatronus00.github.io/post/gh-elementalsouls-claude-bughunter/cover.jpg","inLanguage":"zh-CN","author":{"@type":"Person","name":"expectopatronus","url":"https://expectopatronus00.github.io"},"publisher":{"@type":"Organization","name":"EXPECTOPATRONUS","url":"https://expectopatronus00.github.io"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://expectopatronus00.github.io/post/gh-elementalsouls-claude-bughunter/gh-elementalsouls-claude-bughunter.html"},"datePublished":"2026-11-28","dateModified":"2026-11-28"}</script>
+    <!-- seo:end -->
+</head>
+  <body>
+    <!-- skip-link:begin -->
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <!-- skip-link:end -->
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="../../index.html" class="brand"><span class="logo">E</span><span>expectopatronus</span></a>
+        <div class="nav-links">
+          <a href="../../index.html">首页</a>
+          <a href="../../home/home.html" class="is-active">文章</a>
+          <a href="../../home/series.html">系列</a>
+          <a href="../../home/about.html">关于</a>
+          <a href="../../nav/index.html" target="_blank"
+            >导航站 <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 3l-9 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          ></a>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="主题切换"><svg class="icon theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button>
+      </div>
+    </nav>
+
+        <section class="page-head" data-skip-target="1" tabindex="-1" id="main-content">
+      <div class="eyebrow">SKILL · 开源项目</div>
+      <h1>2.6万星、85技能：引用可审计，战绩没测出来</h1>
+      <p>26,165 星、85 个技能、16 条命令。Claude-BugHunter 的目录数得清：433 条 HackerOne 链接可逐条点开。难数的是效果——评测只跑 3 道题，开与不开都是 3/3，开启后多一轮、多 0.076 美元。</p>
+      <div class="meta">
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5.5 20c1.2-3.5 4-5 6.5-5s5.3 1.5 6.5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> expectopatronus</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3.5 10h17M8 3.5v4M16 3.5v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 2026-11-28</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 7.5v5l3 2" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> 约 4 分钟阅读</span>
+        <span><svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 3 7.5l9 4.5 9-4.5-9-4.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M3 12l9 4.5 9-4.5M3 16.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> 原创 · AI 编程</span>
+      </div>
+    </section>
+
+    <div class="hero-image">
+      <picture data-cover-picture="1">
+        <source srcset="cover.webp" type="image/webp" />
+        <img loading="lazy" alt="2.6万星、85技能：引用可审计，战绩没测出来 封面" src="cover.jpg" width="2400" height="1260" decoding="async" data-cover-ready="1" />
+      </picture>
+    </div>
+
+    <article class="article-body">
+<div class="section-marker" data-section="01">
+<h2>01 这件事</h2>
+<p><strong>26,165 星装得下 85 个技能、16 条命令和 433 条可点开的引用，却装不下一句「它能挖到洞」的证明。</strong></p>
+<p>elementalsouls/Claude-BugHunter 创建于 2026-05-05，11-27 仍在推送，主语言 Python。它是给 Claude Code 用的漏洞挖掘与红队知识包，仓库简介写 85 skills、16 slash commands、681 disclosed-report patterns。</p>
+<table>
+<thead><tr><th>字段</th><th>实测值</th><th>来源</th></tr></thead>
+<tbody>
+<tr><td>星标 / fork</td><td>26,165 / 2,689</td><td>仓库接口</td></tr>
+<tr><td>未结条目</td><td>23（5 issue + 18 PR）</td><td>仓库 + search/issues</td></tr>
+<tr><td>创建 / 推送</td><td>05-05 / 11-27</td><td>仓库接口</td></tr>
+<tr><td>文件树</td><td>512 条目 / 387 blob / 4.80 MB</td><td>完整 tree</td></tr>
+<tr><td>提交 / 贡献者</td><td>385 次 / 21 个账号</td><td>接口分页</td></tr>
+<tr><td>最新发布</td><td>v2.1（06-05，说明写 51→71 skills）</td><td>latest release</td></tr>
+</tbody>
+</table>
+<p>入池时雷达记 26,108 星，本次复核涨到 26,165，积压 10 天热度未衰减。贡献者里机器人账号 107 次、作者 105 次、第三位 93 次，三者合计 305 次，占 385 次提交的 79.2%。</p>
+<p>许可证是两段式：Python 与 shell 代码走 MIT，技能方法、词表、正则目录和文档走 CC BY 4.0。README 要求商用时署名并链回仓库，NOTICE 另列上游署名。</p>
+</div>
+
+<div class="section-marker" data-section="02">
+<h2>02 核心机制</h2>
+<p><strong>四层结构把它定义成查阅与流程手册，不是自动扫描器；越界判断交给规则和门禁。</strong></p>
+<ul>
+<li>Think：方法论与红队心态两个技能，给出非线性流程和判断纪律。</li>
+<li>Hunt webapps：58 个 hunt-* 技能，按漏洞类给检测模式、载荷与绕过表。</li>
+<li>Hit the perimeter：企业身份与基础设施链路，覆盖 M365、Okta、vCenter。</li>
+<li>Ship it：分级验证、报告模板与证据脱敏，提交前过 7-Question Gate。</li>
+</ul>
+<p>技能按主题描述自动触发，不必念名字。docs/skills.md 是生成物，把 85 个技能分五类；这是数得清的部分。</p>
+<table>
+<thead><tr><th>分类</th><th>技能数</th><th>典型内容</th></tr></thead>
+<tbody>
+<tr><td>Hunt — web app vuln classes</td><td>58</td><td>XSS、SQLi、SSRF、IDOR</td></tr>
+<tr><td>Enterprise platform attack</td><td>10</td><td>M365/Entra、Okta、vCenter</td></tr>
+<tr><td>Recon &amp; OSINT</td><td>5</td><td>web2-recon、offensive-osint</td></tr>
+<tr><td>Methodology &amp; mindset</td><td>5</td><td>bb-methodology、redteam-mindset</td></tr>
+<tr><td>Reporting &amp; validation</td><td>7</td><td>triage-validation、report-writing</td></tr>
+</tbody>
+</table>
+<p>README 说收录 5 种 harness，但知识层可以搬过去，斜杠命令和 hunt 引擎只在 Claude Code 里保留。换句话说，跨宿主复用的是文档，不是执行路径。</p>
+<p>SECURITY.md 把「scope enforced in code」讲得更具体：验证技能的第 3 问查目标是否在范围内，第 2 问查影响是否列入项目接受清单。越界时默认降级或要求补链，不鼓励继续验证。</p>
+</div>
+
+<div class="section-marker" data-section="03">
+<h2>03 关键细节与数据</h2>
+<p><strong>433 条引用可以逐条点开；681 条模式是作者自己维护的口径，仓库里没有可复算的清单。</strong></p>
+<p>docs/disclosed-reports/ 下有 36 份按漏洞类命名的模式库，加一份说明共 37 个文件、416,261 字节。逐个提取其中的 HackerOne 链接并去重，得到 433 条，与 README 的「433 now individually cited」一致。</p>
+<table>
+<thead><tr><th>数字</th><th>怎么来的</th><th>能不能复算</th></tr></thead>
+<tbody>
+<tr><td>433 条引用</td><td>本地对 36 份模式库提取链接去重</td><td>能，本次复算一致</td></tr>
+<tr><td>681 条模式</td><td>README / CHANGELOG 自述</td><td>不能，研究脚本称其为人工口径</td></tr>
+<tr><td>1,122</td><td>85 份技能中 70 份的 report_count 求和</td><td>能，但含重复引用</td></tr>
+<tr><td>85 / 16</td><td>文件树里的 SKILL.md 与 commands/*.md</td><td>能，与 README 一致</td></tr>
+<tr><td>71 → 85</td><td>v2.1 发布说明 / 当前 main</td><td>能，14 个技能尚未进发布</td></tr>
+</tbody>
+</table>
+<p>681 的口径还会打架：docs/architecture.md 写「Total disclosed reports curated: 681」，而研究脚本说明与 CHANGELOG 都把它叫 pattern-count。同一页并列两个数字，读者很容易当成同一分母。</p>
+<p>CVE 覆盖也要拆开。docs/cve-coverage.md 的快照停在 2026-05-15：1,592 条 KEV 中索引 91 条，180 天回看有 53 条在范围内，已索引 0 条、缺口 53 条。README 说「每周刷新」，但仓库只有一份 yml.template，没有启用的对应 workflow。</p>
+</div>
+
+<div class="section-marker" data-section="04">
+<h2>04 怎么用</h2>
+<p><strong>按授权范围装，按安装方式分清哪些能力真的跟着走。</strong></p>
+<ul>
+<li>插件安装：先加 marketplace 再装 claude-bughunter@elementalsouls，技能与命令带命名空间，不往 ~/.claude/ 复制文件。</li>
+<li>复制安装：clone 后跑 scripts/install.sh 或 install.ps1，写进目标宿主技能目录。</li>
+<li>多宿主：加 --all --burp-mcp，把 Burp MCP 一起接进已安装的宿主。</li>
+<li>命令行：pipx 安装后用 cbh 跑 recon 与报告流程，不依赖模型做范围判定。</li>
+</ul>
+<p>授权是硬前提。SECURITY.md 只覆盖外部攻击面，明确排除内网 AD、C2、后渗透与规避检测。README 还提醒 Anthropic 的实时防护会默认拦下漏洞利用类请求，授权工作应走免费的 CVP 申请。</p>
+<p>想验证效果，可以用仓库自带的 eval：先起本地 Juice Shop，再跑 python3 eval/run_eval.py。脚本用开技能与关技能做消融，模型保持不变，目标每次重置到未解题状态。</p>
+<p>那套评测不进 CI。BASELINE.md 写明它需要 Docker、Burp 和已登录的 claude CLI，结果文件被 gitignore，只把汇总表提交进仓库。</p>
+</div>
+
+<div class="section-marker" data-section="05">
+<h2>05 冷思考</h2>
+<p><strong>仓库唯一一份实测基线是 3 道题打平，技能开启后更慢也更贵；「battle-tested」没有对应的成功率数字。</strong></p>
+<table>
+<thead><tr><th>条件</th><th>解出</th><th>中位轮次</th><th>中位成本</th></tr></thead>
+<tbody>
+<tr><td>关技能</td><td>3/3</td><td>2</td><td>$0.178</td></tr>
+<tr><td>开技能</td><td>3/3</td><td>3</td><td>$0.254</td></tr>
+<tr><td>差值</td><td>+0</td><td>+1</td><td>+$0.076</td></tr>
+</tbody>
+</table>
+<p>BASELINE.md 自己解释这是天花板效应：Juice Shop 的解法早就在训练数据里，curl 就能答完。作者也写明 PortSwigger 实验室才可能测出技能差，但需要账号和手工启动实例，目前半阻塞。</p>
+<p>更值得盯的是版本边界。最新发布仍是 06-05 的 v2.1，说明写的是 51→71 skills；当前 main 已有 85 个技能，84→85 和命令扩到 16 条都挂在 Unreleased。同期 CHANGELOG 记录了一组范围判定的 fail-open 修复，包括 IPv6 非规范写法绕过拒绝规则、URL 主机被重写后把请求发到范围外。</p>
+<p>这些修复都在同一段 Unreleased 里。按发布版安装与直接跟 main，拿到的不是同一套边界保证。</p>
+<div class="info-box">
+<strong>数据核对</strong>
+<ul>
+<li>仓库：26,165 星 / 2,689 fork；23 未结 = 5 issue + 18 PR；pushed 11-27。</li>
+<li>文件树 512 条目 / 387 blob / 4.80 MB；85 份 SKILL.md、16 个命令文件。</li>
+<li>36 份模式库去重得 433 条 HackerOne 链接；681 为自述模式数，1,122 为 report_count 合计。</li>
+<li>评测 3/3 打平，中位轮次 2→3、成本 $0.178→$0.254（2026-08-25）。</li>
+<li>KEV 快照 2026-05-15：53 条范围内、0 已索引、53 缺口；刷新仅有模板。</li>
+<li>v2.1（06-05）写 71 skills；85 技能与范围修复都在 Unreleased。</li>
+<li>385 提交 / 21 账号，前三 305 次（79.2%）。</li>
+</ul>
+核对时间 2026-11-28。
+</div>
+<p>判断是：把它当成一份可回溯、可引用、能按主题调阅的红队查阅库很合适，尤其适合已确定授权边界、愿意自己跑验收的人。想用星标数替代效果验证，或把 v2.1 当成当前 main 的等价物，都会高估它。</p>
+</div>
+
+    <div class="cta-box">
+      <div class="content">
+        <h3>去看原始仓库</h3>
+        <p>把公开披露报告蒸馏成可按主题调阅的红队技能库。</p>
+      <a class="cta-btn" id="cta-link" href="https://github.com/elementalsouls/Claude-BugHunter" target="_blank" rel="noopener">
+          <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> 前往 GitHub
+        </a>
+      </div>
+    </div>
+    <div class="platforms">
+      <h2>相关平台</h2>
+      <div class="platform-list">
+      <a class="plat-card" href="https://github.com/elementalsouls/Claude-BugHunter" target="_blank" rel="noopener">
+        <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+        <span class="pn">GitHub</span>
+        <span class="pd">repo · 85 技能 / 16 命令的红队知识包</span>
+      </a>
+      </div>
+    </div>
+    <div class="tags-row">
+      <a href="../../home/home.html?q=GitHub">#GitHub</a>
+      <a href="../../home/home.html?q=%E5%BC%80%E6%BA%90">#开源</a>
+      <a href="../../home/home.html?q=Agent%20Skill">#Agent Skill</a>
+      <a href="../../home/home.html?q=%E5%AE%89%E5%85%A8">#安全</a>
+    </div>
+</article>
+
+    <footer class="site-footer">
+      <div class="footer-content">
+        <div>
+          <div class="footer-brand">expectopatronus</div>
+          <div class="footer-meta">项目：elementalsouls/Claude-BugHunter · GitHub · MIT（内容 CC BY 4.0）</div>
+        </div>
+        <div class="footer-social">
+          <a href="https://github.com/expectopatronus00" target="_blank" aria-label="GitHub"
+            ><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.58 2 12.26c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.48l-.01-1.7c-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.29.1-2.69 0 0 .84-.27 2.75 1.05A9.3 9.3 0 0 1 12 7.07c.85 0 1.7.12 2.5.35 1.91-1.32 2.75-1.05 2.75-1.05.55 1.4.2 2.43.1 2.69.64.72 1.03 1.64 1.03 2.76 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9l-.01 2.82c0 .27.18.58.69.48A10.03 10.03 0 0 0 22 12.26C22 6.58 17.52 2 12 2z"/></svg>
+          ></a>
+          <a href="mailto:18821772508@163.com" aria-label="Email"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 7 9-7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </footer>
+
+    <button class="floating-top" id="back-to-top" aria-label="返回顶部"><svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M5 12l7-7 7 7" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+
+    <script src="../../post/article.js" defer data-article-enhance="1"></script>
+
+    <script>
+      (function () {
+        var MOON_SVG = '<path d="M21 13.5A9 9 0 0 1 10.5 3a7.5 7.5 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>';
+        var SUN_SVG = '<circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+        var saved = localStorage.getItem('theme') || 'dark';
+        if (saved === 'light') document.documentElement.dataset.theme = 'light';
+        var btnSvg = document.querySelector('#theme-toggle svg');
+        if (btnSvg) btnSvg.innerHTML = saved === 'light' ? SUN_SVG : MOON_SVG;
+        var btn = document.getElementById('theme-toggle');
+        if (btn)
+          btn.addEventListener('click', function () {
+            var next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('theme', next);
+            var btnSvg2 = document.querySelector('#theme-toggle svg');
+            if (btnSvg2) btnSvg2.innerHTML = next === 'light' ? SUN_SVG : MOON_SVG;
+          });
+        var back = document.getElementById('back-to-top');
+        window.addEventListener('scroll', function () {
+          if (back) back.classList.toggle('visible', window.scrollY > 300);
+        });
+        if (back)
+          back.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        var cta = document.getElementById('cta-link');
+        if (cta) {
+          cta.addEventListener('click', function (e) {
+            e.preventDefault();
+            var url = this.href;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(window.location.href).then(function () {
+                window.open(url, '_blank', 'noopener');
+              });
+            } else {
+              window.open(url, '_blank', 'noopener');
+            }
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
